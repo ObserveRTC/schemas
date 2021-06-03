@@ -1,0 +1,101 @@
+{
+    "type" : "record",
+    "name" : "PcDataChannelReport",
+    "namespace" : "org.observertc.webrtc.schemas.reports",
+    "doc" : "A Report created for PeerConnection Data Channel.",
+    "fields" : [
+    /* WebRTC App Resource Identifiers */
+    {
+      "name" : "serviceUUID",
+      "doc": "The service UUID reported by the OutboundAudioTrackReport",
+      "type" : "string"
+    }, {
+      "name" : "serviceName",
+      "doc": "The resolved service name the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "mediaUnitId",
+      "doc": "The media unit id provided as resource identifier and belongs to the report",
+      "type" : "string"
+    }, 
+    /* Report Metadata */
+    {
+      "name" : "callUUID",
+      "doc": "The generated unique identifier of a call the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "callName",
+      "doc": "The provided call name reported by the OutboundAudioTrackReport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "clientId",
+      "doc": "The generated unique identifier of a client the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "peerConnectionUUID",
+      "doc": "The unique identifier of the peer connection the report is generated for",
+      "type" :  "string"
+    }, {
+      "name" : "sampleSeq",
+      "doc": "The consecutively incresaed sample sequence reports are generated from",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "userId",
+      "doc": "The provided name of the user participating in the call",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "marker",
+      "doc": "The marker the originated sample is reported with",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "timestamp",
+      "doc": "The timestamp when data is sampled for the report",
+      "type" : "long"
+    },
+    /* Data Channel stats */
+    {
+        "name" : "label",
+        "doc": "The label of the data channel",
+        "type" : ["null", "string"],
+        "default": null
+    }, {
+        "name" : "protocol",
+        "doc": "The protocol used for the data channel",
+        "type" : ["null", "string"],
+        "default": null
+    }, {
+        "name" : "state",
+        "doc": "The state of the data channel",
+        "type" : ["null", "string"],
+        "default": null
+    }, {
+        "name" : "messagesSent",
+        "doc": "Represents the total number of API message events sent",
+        "type" : ["null", "int"],
+        "default": null
+    }, {
+        "name" : "bytesSent",
+        "doc": "Represents the total number of payload bytes sent on the corresponded data channel",
+        "type" : ["null", "long"],
+        "default": null
+    }, {
+        "name" : "messagesReceived",
+        "doc": "Represents the total number of API message events received on the corresponded data channel",
+        "type" : ["null", "int"],
+        "default": null
+    }, {
+        "name" : "bytesReceived",
+        "doc": "Represents the total number of payload bytes received on the corresponded data channel",
+        "type" : ["null", "long"],
+        "default": null
+    }
+    /* Observer calculated values */
+  ]
+}

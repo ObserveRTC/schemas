@@ -1,0 +1,75 @@
+{
+    "type" : "record",
+    "name" : "PcMetaReport",
+    "namespace" : "org.observertc.webrtc.schemas.reports",
+    "doc" : "A Report created for PeerConnection Meta Data. It is reported to have a betetr overview of the peer connection defined media sources, local and remote candidates, etc.",
+    "fields" : [
+    /* WebRTC App Resource Identifiers */
+    {
+      "name" : "serviceUUID",
+      "doc": "The service UUID reported by the OutboundAudioTrackReport",
+      "type" : "string"
+    }, {
+      "name" : "serviceName",
+      "doc": "The resolved service name the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "mediaUnitId",
+      "doc": "The media unit id provided as resource identifier and belongs to the report",
+      "type" : "string"
+    }, 
+    /* Report Metadata */
+    {
+      "name" : "callUUID",
+      "doc": "The generated unique identifier of a call the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "callName",
+      "doc": "The provided call name reported by the OutboundAudioTrackReport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "clientId",
+      "doc": "The generated unique identifier of a client the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "peerConnectionUUID",
+      "doc": "The unique identifier of the peer connection the report is generated for",
+      "type" :  "string"
+    }, {
+      "name" : "sampleSeq",
+      "doc": "The consecutively incresaed sample sequence reports are generated from",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "userId",
+      "doc": "The provided name of the user participating in the call",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "marker",
+      "doc": "The marker the originated sample is reported with",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "timestamp",
+      "doc": "The timestamp when data is sampled for the report",
+      "type" : "long"
+    },
+    /* Arbitrary data belongs to */
+    {
+      "name" : "metaType",
+      "doc": "The type of the meta data reported for the peer connection",
+      "type" : ["null", "string"],
+      "default": null
+    }, {
+      "name" : "metaPayload",
+      "doc": "The payload for the metadata reported for the peeer connection",
+      "type" : ["null", "string"],
+      "default": null
+    }
+    /* Observer calculated values */
+]}

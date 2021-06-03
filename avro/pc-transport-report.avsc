@@ -1,0 +1,468 @@
+{
+    "type" : "record",
+    "name" : "PcTransportReport",
+    "namespace" : "org.observertc.webrtc.schemas.reports",
+    "doc" : "A Report created for PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates",
+    "fields" : [
+    /* WebRTC App Resource Identifiers */
+    {
+      "name" : "serviceUUID",
+      "doc": "The service UUID reported by the OutboundAudioTrackReport",
+      "type" : "string"
+    }, {
+      "name" : "serviceName",
+      "doc": "The resolved service name the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "mediaUnitId",
+      "doc": "The media unit id provided as resource identifier and belongs to the report",
+      "type" : "string"
+    }, 
+    /* Report Metadata */
+    {
+      "name" : "callUUID",
+      "doc": "The generated unique identifier of a call the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "callName",
+      "doc": "The provided call name reported by the OutboundAudioTrackReport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "clientId",
+      "doc": "The generated unique identifier of a client the report belongs to",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "peerConnectionUUID",
+      "doc": "The unique identifier of the peer connection the report is generated for",
+      "type" :  "string"
+    }, {
+      "name" : "sampleSeq",
+      "doc": "The consecutively incresaed sample sequence reports are generated from",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "userId",
+      "doc": "The provided name of the user participating in the call",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "marker",
+      "doc": "The marker the originated sample is reported with",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "timestamp",
+      "doc": "The timestamp when data is sampled for the report",
+      "type" : "long"
+    },
+    /* Peer Connection stats */
+    {
+      "name" : "dataChannelsOpened",
+      "doc": "Represents the number of data channels opened on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "dataChannelsClosed",
+      "doc": "Represents the number of data channels closed on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "dataChannelsRequested",
+      "doc": "Represents the number of data channels requested on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "dataChannelsAccepted",
+      "doc": "Represents the number of data channels accepted on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    },
+    /* Transport stats */
+    {
+      "name" : "packetsSent",
+      "doc": "Represents the total number of packets sent on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "packetsReceived",
+      "doc": "Represents the total number of packets received on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "bytesSent",
+      "doc": "Represents the total amount of bytes sent on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "bytesReceived",
+      "doc": "Represents the total amount of bytes received on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "iceRole",
+      "doc": "Represent the current role of ICE under DTLS Transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "iceLocalUsernameFragment",
+      "doc": "Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "dtlsState",
+      "doc": "Represents the current state of DTLS for the peer connection transport layer",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "iceTransportState",
+      "doc": "Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "tlsVersion",
+      "doc": "Represents the version number of the TLS used in the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "dtlsCipher",
+      "doc": "Represents the name of the DTLS cipher used in the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "srtpCipher",
+      "doc": "Represents the name of the SRTP cipher used in the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "tlsGroup",
+      "doc": "Represents the name of the IANA TLS Supported Groups used in the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "selectedCandidatePairChanges",
+      "doc": "The total number of candidate pair changes over the peer connection",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, 
+    /* Local Certificate */
+    {
+      "name" : "localFingerprint",
+      "doc": "The fingerprint of the certificate certifies the local endpoint of the transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "localFingerprintAlgorithm",
+      "doc": "The algorithm generate the fingerprint of the certificate certifies the local endpoint of the transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "localBase64Certificate",
+      "doc": "The base64 encoded certificate for the local endpoint corresponded to the transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    },
+    /* Remote Certificate */
+    {
+      "name" : "remoteFingerprint",
+      "doc": "The fingerprint of the certificate certifies the remote endpoint of the transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "remoteFingerprintAlgorithm",
+      "doc": "The algorithm generate the fingerprint of the certificate certifies the remote endpoint of the transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "remoteBase64Certificate",
+      "doc": "The base64 encoded certificate for the remote endpoint corresponded to the transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    },
+    /* ICE Local Candidate */
+    {
+      "name" : "localAddress",
+      "doc": "The address of the candidate (IPv4, IPv6, FQDN)",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "localPort",
+      "doc": "The locally used port to communicate with the remote peer",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "localProtocol",
+      "doc": "The protocol used by the local endpoint for the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "localCandidateType",
+      "doc": "The type of the ICE candidate used at the local endpoint on the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "localCandidatePriority",
+      "doc": "The priority of the ICE candidate used at the local endpoint on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "localCandidateICEServerUrl",
+      "doc": "The url of the ICE server used by the local endpoint on the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "localCandidateRelayProtocol",
+      "doc": "The relay protocol of the ICE candidate used by the local endpoint on the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    },
+    /* ICE Remote Candidate */
+    {
+      "name" : "remoteAddress",
+      "doc": "The address of the candidate (IPv4, IPv6, FQDN)",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "remotePort",
+      "doc": "The remotely used port to communicate with the remote peer",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "remoteProtocol",
+      "doc": "The protocol used by the remote endpoint for the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "remoteCandidateType",
+      "doc": "The type of the ICE candidate used at the remote endpoint on the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "remoteCandidatePriority",
+      "doc": "The priority of the ICE candidate used at the remote endpoint on the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "remoteCandidateICEServerUrl",
+      "doc": "The url of the ICE server used by the remote endpoint on the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "remoteCandidateRelayProtocol",
+      "doc": "The relay protocol of the ICE candidate used by the remote endpoint on the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    },
+    /* ICE Candidate Pair */
+    {
+      "name" : "iceCandidatePairState",
+      "doc": "The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairPacketsSent",
+      "doc": "The total number of packets sent using the last selected candidate pair over the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairPacketsReceived",
+      "doc": "The total number of packets received using the last selected candidate pair over the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairBytesSent",
+      "doc": "The total number of bytes sent using the last selected candidate pair over the corresponded transport",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairBytesReceived",
+      "doc": "The total number of bytes received using the last selected candidate pair over the corresponded transport",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairLastPacketSentTimestamp",
+      "doc": "Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairLastPacketReceivedTimestamp",
+      "doc": "Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairFirstRequestTimestamp",
+      "doc": "Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairLastRequestTimestamp",
+      "doc": "Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "iceCandidatePairLastResponseTimestamp",
+      "doc": "Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "stunProvidedTotalRoundTripTime",
+      "doc": "Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport",
+      "type" : [ "null", "double" ],
+      "default" : null
+    }, {
+      "name" : "stunProvidedCurrentRoundTripTime",
+      "doc": "Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport",
+      "type" : [ "null", "double" ],
+      "default" : null
+    }, {
+      "name" : "availableOutgoingBitrate",
+      "doc": "The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport",
+      "type" : [ "null", "double" ],
+      "default" : null
+    }, {
+      "name" : "availableIncomingBitrate",
+      "doc": "The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport",
+      "type" : [ "null", "double" ],
+      "default" : null
+    }, {
+      "name" : "circuitBreakerTriggerCount",
+      "doc": "The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairRequestsReceived",
+      "doc": "Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairRequestsSent",
+      "doc": "Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairResponsesReceived",
+      "doc": "Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairResponsesSent",
+      "doc": "Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairRetransmissionReceived",
+      "doc": "Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairRetransmissionSent",
+      "doc": "Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    },  {
+      "name" : "candidatePairConsentRequestsSent",
+      "doc": "Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairConsentExpiredTimestamp",
+      "doc": "Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairBytesDiscardedOnSend",
+      "doc": "Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairRequestBytesSent",
+      "doc": "Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairConsentRequestBytesSent",
+      "doc": "Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "long" ],
+      "default" : null
+    }, {
+      "name" : "candidatePairResponseBytesSent",
+      "doc": "Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    },
+    /* SCTP stats */
+    {
+      "name" : "sctpSmoothedRoundTripTime",
+      "doc": "The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. ",
+      "type" : ["null", "double"],
+      "default": null
+    },
+    {
+        "name" : "sctpSongestionWindow",
+        "doc": "The latest congestion window, corresponding to spinfo_cwnd.",
+        "type" : ["null", "double"],
+        "default": null
+    },
+    {
+        "name" : "sctpReceiverWindow",
+        "doc": "The latest receiver window, corresponding to sstat_rwnd.",
+        "type" : ["null", "double"],
+        "default": null
+    }, {
+        "name" : "sctpMtu",
+        "doc": "The latest maximum transmission unit, corresponding to spinfo_mtu.",
+        "type" : ["null", "int"],
+        "default": null
+    }, {
+        "name" : "sctpUnackData",
+        "doc": "The number of unacknowledged DATA chunks, corresponding to sstat_unackdata.",
+        "type" : ["null", "int"],
+        "default": null
+    },
+    /* Observer Calculated Values */
+    {
+      "name" : "dataBytesSent",
+      "doc": "The sum of bytes sent using data channels corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "dataPacketsSent",
+      "doc": "The sum of packets sent using data channels corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "mediaBytesSent",
+      "doc": "The sum of bytes sent using RTP streams corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    },{
+      "name" : "mediaPacketsSent",
+      "doc": "The sum of packets sent using RTP streams corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "dataBytesReceived",
+      "doc": "The sum of bytes received using data channels corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "dataPacketsReceived",
+      "doc": "The sum of packets received using data channels corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }, {
+      "name" : "mediaBytesReceived",
+      "doc": "The sum of bytes received using RTP streams corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    },{
+      "name" : "mediaPacketsReceived",
+      "doc": "The sum of packets received using RTP streams corresponded to the transport",
+      "type" : [ "null", "int" ],
+      "default" : null
+    }
+  ]
+}
