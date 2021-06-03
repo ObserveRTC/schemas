@@ -86,7 +86,8 @@ const start = async () => {
             "pc-data-channel-report",
             "observer-sentinel-report",
             "client-meta-report",
-            "extension-report"
+            "observed-extension-report",
+            "call-meta-report"
         ];
         avroSchemaNames.forEach(schemaName => {
             makeAvroReportEndpoint(schemaName);

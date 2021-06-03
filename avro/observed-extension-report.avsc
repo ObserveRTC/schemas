@@ -1,8 +1,8 @@
 {
     "type" : "record",
-    "name" : "PcDataChannelReport",
+    "name" : "ObservedExtensionReport",
     "namespace" : "org.observertc.webrtc.schemas.reports",
-    "doc" : "A Report created for PeerConnection Data Channel.",
+    "doc" : "A Report created for Extended provided arbitrary data.",
     "fields" : [
     /* WebRTC App Resource Identifiers */
     {
@@ -36,10 +36,6 @@
       "type" : [ "null", "string" ],
       "default" : null
     }, {
-      "name" : "peerConnectionUUID",
-      "doc": "The unique identifier of the peer connection the report is generated for",
-      "type" :  "string"
-    }, {
       "name" : "sampleSeq",
       "doc": "The consecutively incresaed sample sequence reports are generated from",
       "type" : [ "null", "string" ],
@@ -59,43 +55,17 @@
       "doc": "The timestamp when data is sampled for the report",
       "type" : "long"
     },
-    /* Data Channel stats */
+    /* Arbitrary data belongs to */
     {
-        "name" : "label",
-        "doc": "The label of the data channel",
-        "type" : ["null", "string"],
-        "default": null
+      "name" : "extensionType",
+      "doc": "The type of the meta data reported for the the extension report",
+      "type" : ["null", "string"],
+      "default": null
     }, {
-        "name" : "protocol",
-        "doc": "The protocol used for the data channel",
-        "type" : ["null", "string"],
-        "default": null
-    }, {
-        "name" : "state",
-        "doc": "The state of the data channel",
-        "type" : ["null", "string"],
-        "default": null
-    }, {
-        "name" : "messagesSent",
-        "doc": "Represents the total number of API message events sent",
-        "type" : ["null", "int"],
-        "default": null
-    }, {
-        "name" : "bytesSent",
-        "doc": "Represents the total number of payload bytes sent on the corresponded data channel",
-        "type" : ["null", "long"],
-        "default": null
-    }, {
-        "name" : "messagesReceived",
-        "doc": "Represents the total number of API message events received on the corresponded data channel",
-        "type" : ["null", "int"],
-        "default": null
-    }, {
-        "name" : "bytesReceived",
-        "doc": "Represents the total number of payload bytes received on the corresponded data channel",
-        "type" : ["null", "long"],
-        "default": null
+      "name" : "extensionPayload",
+      "doc": "The payload for the metadata reported for the extension report",
+      "type" : ["null", "string"],
+      "default": null
     }
     /* Observer calculated values */
-  ]
-}
+]}

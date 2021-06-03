@@ -26,8 +26,8 @@
     "type" : [ "null", "string" ],
     "default" : null
   }, {
-    "name" : "callName",
-    "doc": "The provided call name reported by the OutboundAudioTrackReport",
+    "name" : "roomName",
+    "doc": "The provided roomName name the report is made from",
     "type" : [ "null", "string" ],
     "default" : null
   }, {

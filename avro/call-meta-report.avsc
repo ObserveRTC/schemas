@@ -1,8 +1,8 @@
 {
     "type" : "record",
-    "name" : "ExtensionReport",
+    "name" : "CallMetaReport",
     "namespace" : "org.observertc.webrtc.schemas.reports",
-    "doc" : "A Report created for Extended provided arbitrary data.",
+    "doc" : "A Report created for Client Meta Data.",
     "fields" : [
     /* WebRTC App Resource Identifiers */
     {
@@ -14,10 +14,6 @@
       "doc": "The resolved service name the report belongs to",
       "type" : [ "null", "string" ],
       "default" : null
-    }, {
-      "name" : "mediaUnitId",
-      "doc": "The media unit id provided as resource identifier and belongs to the report",
-      "type" : "string"
     }, 
     /* Report Metadata */
     {
@@ -26,8 +22,8 @@
       "type" : [ "null", "string" ],
       "default" : null
     }, {
-      "name" : "callName",
-      "doc": "The provided call name reported by the OutboundAudioTrackReport",
+      "name" : "roomName",
+      "doc": "The provided roomName name the report is made from",
       "type" : [ "null", "string" ],
       "default" : null
     }, {
@@ -47,7 +43,7 @@
       "default" : null
     }, {
       "name" : "marker",
-      "doc": "The marker the originated sample is reported with",
+      "doc": "The marker reported by the OutboundAudioTrackReport",
       "type" : [ "null", "string" ],
       "default" : null
     }, {
@@ -57,13 +53,13 @@
     },
     /* Arbitrary data belongs to */
     {
-      "name" : "extensionType",
-      "doc": "The type of the meta data reported for the the extension report",
+      "name" : "metaType",
+      "doc": "The type of the meta data reported for the peer connection",
       "type" : ["null", "string"],
       "default": null
     }, {
-      "name" : "extensionPayload",
-      "doc": "The payload for the metadata reported for the extension report",
+      "name" : "metaPayload",
+      "doc": "The payload for the metadata reported for the peeer connection",
       "type" : ["null", "string"],
       "default": null
     }
