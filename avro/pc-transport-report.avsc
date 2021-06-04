@@ -64,28 +64,6 @@
     "doc": "The timestamp when data is sampled for the report",
     "type" : "long"
   },
-  /* Peer Connection stats */
-  {
-    "name" : "dataChannelsOpened",
-    "doc": "Represents the number of data channels opened on the corresponded transport",
-    "type" : [ "null", "int" ],
-    "default" : null
-  }, {
-    "name" : "dataChannelsClosed",
-    "doc": "Represents the number of data channels closed on the corresponded transport",
-    "type" : [ "null", "int" ],
-    "default" : null
-  }, {
-    "name" : "dataChannelsRequested",
-    "doc": "Represents the number of data channels requested on the corresponded transport",
-    "type" : [ "null", "int" ],
-    "default" : null
-  }, {
-    "name" : "dataChannelsAccepted",
-    "doc": "Represents the number of data channels accepted on the corresponded transport",
-    "type" : [ "null", "int" ],
-    "default" : null
-  },
   /* Transport stats */
   {
     "name" : "packetsSent",
