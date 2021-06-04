@@ -4,10 +4,10 @@
   "namespace" : "org.observertc.webrtc.schemas.reports",
   "doc" : "A Report created for PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates",
   "fields" : [
-  /* WebRTC App Resource Identifiers */
+  /* Report MetaFields */
   {
     "name" : "serviceId",
-    "doc": "The unique identifier of the service the report belongs to",
+    "doc": "The unique identifier of the service",
     "type" : "string"
   }, {
     "name" : "serviceName",
@@ -18,42 +18,6 @@
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
     "type" : "string"
-  }, 
-  /* Report Metadata */
-  {
-    "name" : "callId",
-    "doc": "The generated unique identifier of a call the report belongs to",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "roomId",
-    "doc": "The provided room id name the report is made from",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "clientId",
-    "doc": "The generated unique identifier of a client the report belongs to",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "userId",
-    "doc": "The provided name of the user participating in the call",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "peerConnectionId",
-    "doc": "The unique identifier of the peer connection the report is generated for",
-    "type" :  "string"
-  }, {
-    "name" : "sampleSeq",
-    "doc": "The consecutively incresaed sample sequence reports are generated from",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "label",
-    "doc": "The custom defined label the peer connection is labeled with",
-    "type" : [ "null", "string" ],
-    "default" : null
   }, {
     "name" : "marker",
     "doc": "The marker the originated sample is reported with",
@@ -61,9 +25,38 @@
     "default" : null
   }, {
     "name" : "timestamp",
-    "doc": "The timestamp when data is sampled for the report",
+    "doc": "The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)",
     "type" : "long"
   },
+  /* Peer Connection Report Fields */
+  {
+    "name" : "callId",
+    "doc": "The generated unique identifier of the call",
+    "type" : "string"
+  }, {
+    "name" : "roomId",
+    "doc": "webrtc app provided room id",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "clientId",
+    "doc": "The generated unique identifier of the client",
+    "type" : "string"
+  }, {
+    "name" : "userId",
+    "doc": "webrtc app provided user identifier",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "peerConnectionId",
+    "doc": "The unique identifier of the peer connection",
+    "type" :  "string"
+  }, {
+    "name" : "label",
+    "doc": "The webrtc app provided label the peer connection is marked with",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, 
   /* Transport stats */
   {
     "name" : "packetsSent",
@@ -405,47 +398,5 @@
     "type" : ["null", "int"],
     "default": null
   }
-    /* Observer Calculated Values */
-    // {
-    //   "name" : "dataBytesSent",
-    //   "doc": "The sum of bytes sent using data channels corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // }, {
-    //   "name" : "dataPacketsSent",
-    //   "doc": "The sum of packets sent using data channels corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // }, {
-    //   "name" : "mediaBytesSent",
-    //   "doc": "The sum of bytes sent using RTP streams corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // },{
-    //   "name" : "mediaPacketsSent",
-    //   "doc": "The sum of packets sent using RTP streams corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // }, {
-    //   "name" : "dataBytesReceived",
-    //   "doc": "The sum of bytes received using data channels corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // }, {
-    //   "name" : "dataPacketsReceived",
-    //   "doc": "The sum of packets received using data channels corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // }, {
-    //   "name" : "mediaBytesReceived",
-    //   "doc": "The sum of bytes received using RTP streams corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // },{
-    //   "name" : "mediaPacketsReceived",
-    //   "doc": "The sum of packets received using RTP streams corresponded to the transport",
-    //   "type" : [ "null", "int" ],
-    //   "default" : null
-    // }
   ]
 }

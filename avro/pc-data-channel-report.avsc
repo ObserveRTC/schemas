@@ -4,61 +4,65 @@
     "namespace" : "org.observertc.webrtc.schemas.reports",
     "doc" : "A Report created for PeerConnection Data Channel.",
     "fields" : [
-    /* WebRTC App Resource Identifiers */
-    {
-      "name" : "serviceUUID",
-      "doc": "The service UUID reported by the OutboundAudioTrackReport",
-      "type" : "string"
-    }, {
-      "name" : "serviceName",
-      "doc": "The resolved service name the report belongs to",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "mediaUnitId",
-      "doc": "The media unit id provided as resource identifier and belongs to the report",
-      "type" : "string"
-    }, 
-    /* Report Metadata */
-    {
-      "name" : "callUUID",
-      "doc": "The generated unique identifier of a call the report belongs to",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "roomName",
-      "doc": "The provided roomName name the report is made from",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "clientId",
-      "doc": "The generated unique identifier of a client the report belongs to",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "peerConnectionUUID",
-      "doc": "The unique identifier of the peer connection the report is generated for",
-      "type" :  "string"
-    }, {
-      "name" : "sampleSeq",
-      "doc": "The consecutively incresaed sample sequence reports are generated from",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "userId",
-      "doc": "The provided name of the user participating in the call",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "marker",
-      "doc": "The marker the originated sample is reported with",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "timestamp",
-      "doc": "The timestamp when data is sampled for the report",
-      "type" : "long"
-    },
+  /* Report MetaFields */
+  {
+    "name" : "serviceId",
+    "doc": "The unique identifier of the service",
+    "type" : "string"
+  }, {
+    "name" : "serviceName",
+    "doc": "The resolved service name configured for the service Id",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "mediaUnitId",
+    "doc": "The media unit id the report belongs to",
+    "type" : "string"
+  }, {
+    "name" : "marker",
+    "doc": "The marker the originated sample is reported with",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "timestamp",
+    "doc": "The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)",
+    "type" : "long"
+  },
+  /* Peer Connection Report Fields */
+  {
+    "name" : "callId",
+    "doc": "The generated unique identifier of the call",
+    "type" : "string"
+  }, {
+    "name" : "roomId",
+    "doc": "webrtc app provided room id",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "clientId",
+    "doc": "The generated unique identifier of the client",
+    "type" : "string"
+  }, {
+    "name" : "userId",
+    "doc": "webrtc app provided user identifier",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "peerConnectionId",
+    "doc": "The unique identifier of the peer connection",
+    "type" :  "string"
+  }, {
+    "name" : "label",
+    "doc": "The webrtc app provided label the peer connection is marked with",
+    "type" : [ "null", "string" ],
+    "default" : null
+  },
+  /* Sample Report Feilds */
+  {
+    "name" : "sampleSeq",
+    "doc": "The sequence number of the sample the report is generated from",
+    "type" : "int"
+  },
     /* Data Channel stats */
     {
         "name" : "label",

@@ -1,8 +1,8 @@
 {
   "type" : "record",
-  "name" : "PcMetaReport",
+  "name" : "ObserverExtensionReport",
   "namespace" : "org.observertc.webrtc.schemas.reports",
-  "doc" : "A Report created for PeerConnection Meta Data. It is reported to have a betetr overview of the peer connection defined media sources, local and remote candidates, etc.",
+  "doc" : "A Report created for Extended provided arbitrary data.",
   "fields" : [
   /* Report MetaFields */
   {
@@ -17,7 +17,8 @@
   }, {
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
-    "type" : "string"
+    "type" : [ "null", "string" ],
+    "default" : null
   }, {
     "name" : "marker",
     "doc": "The marker the originated sample is reported with",
@@ -28,7 +29,7 @@
     "doc": "The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)",
     "type" : "long"
   },
-  /* Additional Fields help identifying the metadata */
+  /* Event helper field to identify source */
   {
     "name" : "callId",
     "doc": "The generated unique identifier of the call",
@@ -56,20 +57,29 @@
     "default" : null
   }, {
     "name" : "sampleSeq",
-    "doc": "The sequence number of the sample the report related to",
+    "doc": "The sequence number of the sample the event may related to",
     "type" : [ "null", "int" ],
     "default" : null
   },
-  /* Meta Report Fields */
+  /* Event Report Fields */
   {
-    "name" : "type",
-    "doc": "The type of the reported metadata",
+    "name" : "name",
+    "doc": "The name of the event",
     "type" : "string"
   }, {
-    "name" : "payload",
-    "doc": "the payload of the reported metadata",
+    "name" : "message",
+    "doc": "the human readable message of the event",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "value",
+    "doc": "the value of the event",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "attachments",
+    "doc": "attachment the event may created with",
     "type" : [ "null", "string" ],
     "default" : null
   }
-  /* Observer calculated values */
 ]}

@@ -1,36 +1,45 @@
 {
-    "type" : "record",
-    "name" : "ObserverSentinelReport",
-    "namespace" : "org.observertc.webrtc.schemas.reports",
-    "doc" : "Observer Sentinel Reports",
-    "fields" : [
-    /* Report Metadata */
-    {
-      "name" : "timestamp",
-      "doc": "The timestamp when sentinel reported the value",
-      "type" : "long"
-    },
-    /* Sentinel specific values */
-    {
-      "name" : "sentinelName",
-      "doc": "The name of the sentinel reports data",
-      "type" : ["null", "string"],
-      "default": null
-    }, {
-      "name" : "counterValue",
-      "doc": "The value of the Counter type sentinel",
-      "type" : ["null", "long"],
-      "default": null
-    }, {
-      "name" : "gaugeValue",
-      "doc": "The value of the Gauge type sentinel",
-      "type" : ["null", "double"],
-      "default": null
-    }, {
-      "name" : "summaryValue",
-      "doc": "The value of the Summary type sentinel",
-      "type" : ["null", "string"],
-      "default": null
-    }
+  "type" : "record",
+  "name" : "ObserverSentinelReport",
+  "namespace" : "org.observertc.webrtc.schemas.reports",
+  "doc" : "Observer Sentinel Reports",
+  "fields" : [
+  /* WebRTC App Resource Identifiers */
+  {
+    "name" : "serviceId",
+    "doc": "The unique identifier of the service the report belongs to",
+    "type" : "string"
+  }, {
+    "name" : "serviceName",
+    "doc": "The resolved service name configured for the service Id",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "mediaUnitId",
+    "doc": "The media unit id the report belongs to",
+    "type" : "string"
+  }, 
+  /* Sentinel specific values */
+  {
+    "name" : "sentinelName",
+    "doc": "The name of the sentinel reports data",
+    "type" : ["null", "string"],
+    "default": null
+  }, {
+    "name" : "counterValue",
+    "doc": "The value of the Counter type sentinel",
+    "type" : ["null", "long"],
+    "default": null
+  }, {
+    "name" : "gaugeValue",
+    "doc": "The value of the Gauge type sentinel",
+    "type" : ["null", "double"],
+    "default": null
+  }, {
+    "name" : "summaryValue",
+    "doc": "The value of the Summary type sentinel",
+    "type" : ["null", "string"],
+    "default": null
+  }
     
 ]}
