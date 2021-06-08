@@ -1,4 +1,4 @@
-## Schema Generator Helper App for ObserveRTC
+## Schema Generator for ObserveRTC
 
 ```shell
 optional arguments:
