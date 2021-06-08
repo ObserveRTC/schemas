@@ -16,8 +16,11 @@
     "assets:": "./avro"
   },
   "dependencies": {
+    "argparse": "^2.0.1",
     "avro-js": "^1.10.2",
     "fastify": "^3.17.0",
-    "nodemon": "^2.0.7"
+    "json-schema-to-markdown": "^1.1.1",
+    "nodemon": "^2.0.7",
+    "typescript-json-schema": "^0.50.1"
   }
 }

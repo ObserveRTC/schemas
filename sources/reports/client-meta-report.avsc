@@ -1,10 +1,9 @@
 {
     "type" : "record",
-    "name" : "ClientMetaReport",
+    "name" : "CallMetaReport",
     "namespace" : "org.observertc.webrtc.schemas.reports",
-    "doc" : "A Report created for Client Meta Data.",
+    "doc" : "Metadata belongs to a call and can be useful",
     "fields" : [
-    /* WebRTC App Resource Identifiers */
     /* Report MetaFields */
     {
       "name" : "serviceId",
@@ -34,7 +33,8 @@
     {
       "name" : "callId",
       "doc": "The generated unique identifier of the call",
-      "type" : "string"
+      "type" : ["null", "string"],
+      "default": null
     }, {
       "name" : "roomId",
       "doc": "webrtc app provided room id",
@@ -66,26 +66,17 @@
       "type" : [ "null", "int" ],
       "default" : null
     },
-    /* Event Report Fields */
+    /* Arbitrary data belongs to */
     {
-      "name" : "name",
-      "doc": "The name of the event",
-      "type" : "string"
+      "name" : "type",
+      "doc": "The type of the meta data reported for the peer connection",
+      "type" : ["null", "string"],
+      "default": null
     }, {
-      "name" : "message",
-      "doc": "the human readable message of the event",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "value",
-      "doc": "the value of the event",
-      "type" : [ "null", "string" ],
-      "default" : null
-    }, {
-      "name" : "attachments",
-      "doc": "attachment the event may created with",
-      "type" : [ "null", "string" ],
-      "default" : null
+      "name" : "payload",
+      "doc": "The payload for the metadata reported for the peeer connection",
+      "type" : ["null", "string"],
+      "default": null
     }
     /* Observer calculated values */
 ]}

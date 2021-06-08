@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "clientId": {
+      "description": "The unique generated",
+      "type": "string"
+    },
+    "sampleSeq": {
+      "description": "The sequence number a source assigns to the sample. \nEvery time the source make a sample at a client \nthis number is monothonically incremented.\n\nAlways presented",
+      "type": "number"
+    },
+    "roomId": {
+      "description": "The WebRTC app configured room id the client was at the call.\nIf it is configured, then every sample carries this information.\n\nIf it is configured, it is presented in every sample.",
+      "type": "string"
+    },
+    "userId": {
+      "description": "The WebRTC app configured user id of the client.\nIf it is configured, then every sample carries this information.\n\nIf it is configured, it is presented in every sample.",
+      "type": "string"
+    },
+    "engine": {
+      "description": "The engine",
+      "$ref": "#/definitions/Engine"
+    },
+    "platform": {
+      "description": "The platform",
+      "$ref": "#/definitions/Platform"
+    },
+    "mediaSources": {
+      "description": "A list of media sources a client uses",
+      "items": {
+        "$ref": "#/definitions/MediaSource"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "clientId"
+  ],
+  "definitions": {
+    "Engine": {
+      "type": "object"
+    },
+    "Platform": {
+      "type": "object"
+    },
+    "MediaSource": {
+      "type": "object",
+      "properties": {
+        "myId": {
+          "description": "id of the media source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "myId"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

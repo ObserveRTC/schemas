@@ -52,8 +52,8 @@
     "doc": "The unique identifier of the peer connection",
     "type" :  "string"
   }, {
-    "name" : "label",
-    "doc": "The webrtc app provided label the peer connection is marked with",
+    "name" : "peerConnectionLabel",
+    "doc": "The webrtc app provided label for the peer connection",
     "type" : [ "null", "string" ],
     "default" : null
   },

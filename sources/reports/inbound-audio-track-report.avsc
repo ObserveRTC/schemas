@@ -58,6 +58,23 @@
     "type" : [ "null", "string" ],
     "default" : null
   }, 
+  /* Remote Identifier */
+  {
+    "name" : "remoteUserId",
+    "doc": "The webrtc app provided user id the track belongs to, or if the webrtc app did not provided the observer tried to match it",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "remoteClientId",
+    "doc": "The observer matched remote client Id",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, {
+    "name" : "remotePeerConnectionId",
+    "doc": "The observer matched remote Peer Connection Id",
+    "type" : [ "null", "string" ],
+    "default" : null
+  }, 
   /* Sample Based Report Fields */
   {
     "name" : "sampleSeq",
