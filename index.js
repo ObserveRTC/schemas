@@ -64,6 +64,9 @@ function parseReportSchemaFromPath(path) {
     return { parsedSchema, parsedObject };
 }
 
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+  }
 
 class MarkdownSchemaDescription {
     constructor() {
@@ -94,7 +97,7 @@ class MarkdownSchemaDescription {
         this._rows.push({
             name,
             value: required ? "Required " + type : "Optional " + type,
-            description: description.replace("\n", "<br />"),
+            description: replaceAll(description, "\n", "<br />"),
         });
         return this;
     }
