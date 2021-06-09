@@ -5,48 +5,37 @@
 Name | Value | Description 
 --- | --- | ---
 clientId | Required string | The unique generated client id the report is generated from
-sampleSeq | Optional number | The sequence number a source assigns to the sample. 
-Every time the source make a sample at a client 
+sampleSeq | Optional number | The sequence number a source assigns to the sample. <br />Every time the source make a sample at a client 
 this number is monothonically incremented.
-roomId | Optional string | The WebRTC app configured room id the client was at the call.
-If it is configured, then every sample carries this information.
-userId | Optional string | The WebRTC app configured user id of the client.
-If it is configured, then every sample carries this information.
+roomId | Optional string | The WebRTC app configured room id the client was at the call.<br />If it is configured, then every sample carries this information.
+userId | Optional string | The WebRTC app configured user id of the client.<br />If it is configured, then every sample carries this information.
 engine | Optional Engine | The engine
 platform | Optional Platform | The platform
 browser | Optional Browser | Details of the browser the client has
 os | Optional OperationSystem | Details about the operation system the client has
-mediaConstraints | Optional array | List of the media constraints the client has
-
+mediaConstraints | Optional array | List of the media constraints the client has<br />
 Only presented if any changes occurred in the client
 devices | Optional array | List of the media devices the client has.
-userMediaErrors | Optional array | List of user media errors
-
+userMediaErrors | Optional array | List of user media errors<br />
 Only presented if any changes occurred in the client
 extensionStats | Optional array | List of the extension stats added by the webrtc app
-iceServers | Optional array | List of ICE server the client has
-
+iceServers | Optional array | List of ICE server the client has<br />
 Only presented if any changes occurred in the client
 pcTransports | Optional array | List of the peer connection transport object.
-mediaSources | Optional array | A list of media sources a client uses.
-This attribute only updates if there is a change in the list of source.
+mediaSources | Optional array | A list of media sources a client uses.<br />This attribute only updates if there is a change in the list of source.
 
 Only presented if any changes occurred in the client
-codecs | Optional array | List of codec the client has
-
+codecs | Optional array | List of codec the client has<br />
 Only presented if any changes occurred in the client
-certificates | Optional array | The certificates the client provided
-
+certificates | Optional array | The certificates the client provided<br />
 Only presented if any changes occurred in the client
 inboundAudioTracks | Optional array | The inbound audio track statistics
 inboundVideoTracks | Optional array | The inbound video track statistics
 outboundAudioTracks | Optional array | The outbound audio track statistics
 outboundVideoTracks | Optional array | The outbound video track statistics
-iceLocalCandidates | Optional array | Local ICE candidates
-
+iceLocalCandidates | Optional array | Local ICE candidates<br />
 Only presented if any changes occurred in the client
-iceRemoteCandidates | Optional array | Remote ICE candidates
-
+iceRemoteCandidates | Optional array | Remote ICE candidates<br />
 Only presented if any changes occurred in the client
 dataChannels | Optional array | Data channels
 timestamp | Required number | The timestamp when the sample is created
@@ -177,43 +166,32 @@ candidatePairRequestBytesSent | Optional number | The total number bytes sent as
 candidatePairConsentRequestBytesSent | Optional number | The total number bytes sent in consent packets on the peer connection using the selected candidate pair
 candidatePairResponseBytesSent | Optional number | The total number bytes sent as response packets on the peer connection using the selected candidate pair
 localAddress | Optional string | The local address of the ICE candidate at the local endpoint (IPv4, IPv6, FQDN)
-localPort | Optional number | The port number used by the local ICE candidate for connectivity
-
+localPort | Optional number | The port number used by the local ICE candidate for connectivity<br />
 Possible values: UDP, TCP
 localProtocol | Optional string | The protocol used by the local ICE candidate for connectivity
-localCandidateType | Optional string | The type of the candidate used for communication.
-
+localCandidateType | Optional string | The type of the candidate used for communication.<br />
 Possible values: host, srflx, prflx, relay
-localRelayProtocol | Optional string | It is the protocol used by the endpoint to communicate with the TURN server.
-
+localRelayProtocol | Optional string | It is the protocol used by the endpoint to communicate with the TURN server.<br />
 Possible values: UDP, TCP, TLS
 remoteAddress | Optional string | The local address of the ICE candidate at the remote endpoint (IPv4, IPv6, FQDN)
-remotePort | Optional number | The port number used by the remote ICE candidate for connectivity
-
+remotePort | Optional number | The port number used by the remote ICE candidate for connectivity<br />
 Possible values: UDP, TCP
 remoteProtocol | Optional string | The protocol used by the remote ICE candidate for connectivity
-remoteCandidateType | Optional string | The type of the remote candidate used for communication.
-
+remoteCandidateType | Optional string | The type of the remote candidate used for communication.<br />
 Possible values: host, srflx, prflx, relay
-remoteRelayProtocol | Optional string | It is the protocol used by the remote endpoint to communicate with the TURN server.
-
+remoteRelayProtocol | Optional string | It is the protocol used by the remote endpoint to communicate with the TURN server.<br />
 Possible values: UDP, TCP, TLS
-sentMediaPackets | Optional number | Client calculated metric.
-The total number of media packets sent by all tracks using the peer connection.
+sentMediaPackets | Optional number | Client calculated metric.<br />The total number of media packets sent by all tracks using the peer connection.
 
 Note: Take care of the fact that tracks are attached and detached significantly changing the value of this field
-receivedMediaPackets | Optional number | Client calculated metric.
-The total number of media packets received by all tracks using the peer connection.
+receivedMediaPackets | Optional number | Client calculated metric.<br />The total number of media packets received by all tracks using the peer connection.
 
 Note: Take care of the fact that tracks are attached and detached significantly changing the value of this field
-lostMediaPackets | Optional number | Client calculated metric.
-The total number of media packets lost by all tracks using the peer connection.
+lostMediaPackets | Optional number | Client calculated metric.<br />The total number of media packets lost by all tracks using the peer connection.
 
 Note: Take care of the fact that tracks are attached and detached significantly changing the value of this field
-videoRttAvg | Optional number | Client calculated metric.
-A smoothed average value calculated by averaging all of the video tracks sent on the peer connection
-audioRttAvg | Optional number | Client calculated metric.
-A smoothed average value calculated by averaging all of the audio tracks sent on the peer connection
+videoRttAvg | Optional number | Client calculated metric.<br />A smoothed average value calculated by averaging all of the video tracks sent on the peer connection
+audioRttAvg | Optional number | Client calculated metric.<br />A smoothed average value calculated by averaging all of the audio tracks sent on the peer connection
 
 
 ### MediaSourceStat
@@ -228,17 +206,14 @@ NOTE: This name is postfixed with "stat" in order to avoid collision of the Medi
 Name | Value | Description 
 --- | --- | ---
 trackIdentifier | Optional string | The unique generated identifier the corresponded track has
-kind | Optional string | The type of the media the Mediasource produces.
-
+kind | Optional string | The type of the media the Mediasource produces.<br />
 Possible values are: "audio", "video"
 relayedSource | Optional string | Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.
 audioLevel | Optional number | the audio level of the media source.
-totalAudioEnergy | Optional number | The audio energy of the media source
-
+totalAudioEnergy | Optional number | The audio energy of the media source<br />
 For calculation see https://www.w3.org/TR/webrtc-stats/#dom-rtcaudiosourcestats-totalaudioenergy
 totalSamplesDuration | Optional number | The duration of the audio type media source
-echoReturnLoss | Optional number | if echo cancellation is applied on the media source, then 
-this number represents the loss calculation defined in https://www.itu.int/rec/T-REC-G.168-201504-I/en
+echoReturnLoss | Optional number | if echo cancellation is applied on the media source, then <br />this number represents the loss calculation defined in https://www.itu.int/rec/T-REC-G.168-201504-I/en
 echoReturnLossEnhancement | Optional number | similar to the echo return loss calculation
 width | Optional number | The width, in pixels, of the last frame originating from the media source
 height | Optional number | The height, in pixels, of the last frame originating from the media source
@@ -340,8 +315,7 @@ remoteTimestamp | Optional number | The remote timestamp of the RTCP packets rep
 reportsSent | Optional number | The total number of SR reports sent by the remote endpoint on the corresponded RTP stream
 ended | Optional boolean | Flag indicate if the MediaTrack has been eded or not
 payloadType | Optional string | The type of the payload the RTP stream carries
-codecType | Optional string | The type of the codec role inthe endpoint.
-
+codecType | Optional string | The type of the codec role inthe endpoint.<br />
 Possible values are: "audio", and "video"
 mimeType | Optional string | The MIME type of the media codec
 clockRate | Optional number | the clock rate of the media source generates samples or frames

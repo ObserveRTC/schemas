@@ -94,7 +94,7 @@ class MarkdownSchemaDescription {
         this._rows.push({
             name,
             value: required ? "Required " + type : "Optional " + type,
-            description,
+            description: description.replace("\n", "<br />"),
         });
         return this;
     }
