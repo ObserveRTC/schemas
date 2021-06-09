@@ -912,7 +912,9 @@ interface InboundAudioTrack {
    */
   sdpFmtpLine?: string;
 
-  // attached fields!
+// !!!!!!!!!!!!!!!!!!!!!!
+// attached fields
+// !!!!!!!!!!!!!!!!!!!!!
   /**
    * The identifier of the MediaTrack the client plays the audio out
    */
@@ -928,30 +930,1151 @@ interface InboundAudioTrack {
  * used by the client as inbound
  */
 interface InboundVideoTrack {
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// RTCInboundRtpStreamStats related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcinboundrtpstreamstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The SSRC identifier of the corresponded RTP stream.
+   */
+  ssrc?: number;
+  
+  /**
+   * The total number of packets received on the corresponded RTP stream,
+   */
+  packetsReceived?: number;
 
+  /**
+   * The total number of packets lost on the corresponded RTP stream
+   */
+  packetsLost?: number;
+
+  /**
+   * The last RR reported jitter on the corresponded RTP stream
+   */
+  jitter?: number;
+
+  /**
+   * The total number of discarded packets on the corresponded RTP stream.
+   */
+  packetsDiscarded?: number;
+
+  /**
+   * The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.
+   */
+  packetsRepaired?: number;
+
+  /**
+   * The number of packets lost in burst period on the corresponded RTP stream.
+   */
+  burstPacketsLost?: number;
+
+  /**
+   * The total number of packets discarded during a burst period on the corresponded RTP stream.
+   */
+  burstPacketsDiscarded?: number;
+
+  /**
+   * The total number of burst lost happened on the coerresponded RTP stream
+   */
+  burstLossCount?: number;
+
+  /**
+   * The number of burst discards happened on the corresponded RTP stream.
+   */
+  burstDiscardCount?: number;
+
+  /**
+   * The loss rate during burst period on the corresponded RTP stream.
+   */
+  burstLossRate?: number;
+
+  /**
+   * The discard rate during burst period on the corresponded RTP stream.
+   */
+  burstDiscardRate?: number;
+
+  /**
+   * The loss rate during a gap period on the corresponded RTP stream.
+   */
+  gapLossRate?: number;
+
+  /**
+   * The discard rate during a gap period on the corresponded RTP stream
+   */
+  gapDiscardRate?: number;
+
+  /**
+   * The total number of frames dropped on the corresponded RTP stream
+   */
+  framesDropped?: number; // only video
+
+  /**
+   * The total number of frames partially lost on the corresponded RTP stream
+   */
+  partialFramesLost?: number; // only video
+
+  /**
+   * The total number of frames fully lost on the corresponded RTP stream
+   */
+  fullFramesLost?: number; // only video
+
+  /**
+   * The total number of frames decoded on the corresponded RTP stream
+   */
+  framesDecoded?: number; // only video
+
+  /**
+   * The total number of keyframes decoded on the corresponded RTP stream
+   */
+  keyFramesDecoded?: number; // only video
+
+  /**
+   * The width of the frame of the video sent by the remote source on the corresponded RTP stream
+   */
+  frameWidth?: number; // only video
+
+  /**
+   * The height of the frame of the video sent by the remote source on the corresponded RTP stream
+   */
+  frameHeight?: number; // only video
+
+  /**
+   * The bit depth in pixels of the frame of the video sent by the remote source on the corresponded RTP stream
+   */
+  frameBitDepth?: number; // only video
+
+  /**
+   * The frame per seconds of the video sent by the remote source on the corresponded RTP stream
+   */
+  framesPerSecond?: number; // only vidoe
+
+  /**
+   * The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
+   */
+  qpSum?: number; // only video
+
+  /**
+   * 
+   * The total tiem spent on decoding video on the corresponded RTP stream
+   */
+  totalDecodeTime?: number; // only video
+
+  /**
+   * The total interframe delay
+   */
+  totalInterFrameDelay?: number; // only video
+
+  /**
+   * The squere total of the interframe delay (together with teh interframe delay you can calculate the variance)
+   */
+  totalSquaredInterFrameDelay?: number; // only video
+  
+  /**
+   * The RTP timestamp of the last received packet on the corresponded RTP stream
+   */
+  lastPacketReceivedTimestamp?: number;
+
+  /**
+   * The RTCP average interval of sending compound RTCP reports
+   */
+  averageRtcpInterval?: number;
+
+  /**
+   * The total amount of header bytes received on the corresponded RTP stream.
+   */
+  headerBytesReceived?: number;
+
+  /**
+   * The total number of FEC packets received on the corresponded RTP stream.
+   */
+  fecPacketsReceived?: number;
+
+  /**
+   * The total number of FEC packets discafrded on the corresponded RTP stream.
+   */
+  fecPacketsDiscarded?: number;
+
+  /**
+   * The total amount of payload bytes received on the corresponded RTP stream
+   */
+  bytesReceived?: number;
+
+  /**
+   * The total number of packets failed to be decrypted on the corresponded RTP stream
+   */
+  packetsFailedDecryption?: number;
+
+  /**
+   * The total number of duplicated packets appeared on the corresponded RTP stream.
+   */
+  packetsDuplicated?: number;
+
+  /**
+   * The ratio of the DSCP packets on the corresponded RTP straem
+   */
+  perDscpPacketsReceived?: number;
+
+
+  /**
+   * The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+   */
+  firCount?: number; // only video
+
+  /**
+   * The total number of Picture Loss Indication sent on the corresponded RTP stream
+   */
+  pliCount?: number; // only video
+
+  /**
+   * The total number of negative acknowledgement received on the corresponded RTP stream
+   */
+  nackCount?: number;
+
+  /**
+   * The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
+   */
+  sliCount?: number;
+
+  /**
+   * The total processing delay of the RTP packets from the moment they received until the moment the jitter buffer emits them on the corresponded RTP strema.
+   */
+  totalProcessingDelay?: number;
+
+  /**
+   * The estimated timestamp of the jitterbuffer emits the RTP packets on the corresponded RTP stream.
+   */
+  estimatedPlayoutTimestamp?: number;
+
+  /**
+   * The total delay encountered by the jitter buffer for the RTP stream to allevaite the effect of jitter on the transport.
+   */
+  jitterBufferDelay?: number;
+
+  /**
+   * The total number of emits happened for the corresponded RTP stream.
+   */
+  jitterBufferEmittedCount?: number;
+
+  /**
+   * The total number of frames received on the corresponded RTP stream.
+   */
+  framesReceived?: number;
+
+  /**
+   * The library implements the decoder for the media source
+   */
+  decoderImplementation?: string;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// RTCRemoteOutboundRtpStreamStats related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteoutboundrtpstreamstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The total number of packets sent by the remote endpoint on the corresponded RTP stream
+   */
+  packetsSent?: number;
+  /**
+   * The total amount of bytes sent by the remote endpoint on the corresponded RTP stream
+   */
+  bytesSent?: number;
+  /**
+   * The remote timestamp of the RTCP packets reported in the SR
+   */
+  remoteTimestamp?: number;
+
+  /**
+   * The total number of SR reports sent by the remote endpoint on the corresponded RTP stream
+   */
+  reportsSent?: number;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Receiver related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcstatstype-receiver
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * Flag indicate if the MediaTrack has been eded or not
+   */
+  ended?: boolean;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Media Codec related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtccodecstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The type of the payload the RTP stream carries
+   */
+  payloadType?: string;
+  /**
+   * The type of the codec role inthe endpoint.
+   * 
+   * Possible values are: "audio", and "video"
+   */
+  codecType?: string;
+
+  /**
+   * The MIME type of the media codec
+   */
+  mimeType?: string;
+
+  /**
+   * the clock rate of the media source generates samples or frames
+   */
+  clockRate?: number;
+
+  /**
+   * The corresponded SDP line in SDP negotiation
+   */
+  sdpFmtpLine?: string;
+
+// !!!!!!!!!!!!!!!!!!!!!!
+// attached fields
+// !!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The identifier of the MediaTrack the client plays the audio out
+   */
+  trackId?: string;
+  /**
+   * The unique generated identifier of the peer connection the inbound audio track belongs to
+   */
+  peerConnectionId?: string;
 }
 
 /**
- * A compound object used 
+ * A compound object giving information about the audio track the client uses
  */
 interface OutboundAudioTrack {
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Outbound RTP related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The SSRC identifier of the corresponded RTP stream
+   */
+  ssrc?: number;
+
+  /**
+   * The total number of packets sent on the corresponded RTP stream
+   */
+  packetsSent?: number;
+
+  /**
+   * The total amount of payload bytes sent on the corresponded RTP stream
+   */
+  bytesSent?: number;
+
+  /**
+   * If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
+   */
+  rtxSsrc?: number;
+
+  /**
+   * The rid parameter of the corresponded RTP stream
+   */
+  rid?: string;
+
+  /**
+   * The last RTP packet sent timestamp
+   */
+  lastPacketSentTimestamp?: number;
+
+  /**
+   * The total amount of header bytes sent on the corresponded RTP stream
+   */
+  headerBytesSent?: number;
+
+  /**
+   * The packets discarded at sending on the corresponded RTP stream
+   */
+  packetsDiscardedOnSend?: number;
+
+  /**
+   * The bytes discarded at sending on the corresponded RTP stream.
+   */
+  bytesDiscardedOnSend?: number;
+
+  /**
+   * The total number of FEC packets sent on the corresponded RTP stream.
+   */
+  fecPacketsSent?: number;
+
+  /**
+   * The total number of retransmitted packets sent on the corresponded RTP stream.
+   */
+  retransmittedPacketsSent?: number;
+
+  /**
+   * The total number of retransmitted bytes sent on the corresponded RTP stream
+   */
+  retransmittedBytesSent?: number;
+
+  /**
+   * The media codec targeted bit rate
+   */
+  targetBitrate?: number;
+
+  /**
+   * The total number of samples the media source sent
+   */
+  totalSamplesSent?: number; // audio only
+
+  /**
+   * The total number of samples encoded with SILK
+   */
+  samplesEncodedWithSilk?: number; // audio only
+
+  /**
+   * The total number of samples encoded with CELT
+   */
+  samplesEncodedWithCelt?: number; // audio only
+
+  /**
+   * The media encoder voice activity flag shipped to teh RTP strem by adding a V flag indicator to the headers
+   */
+  voiceActivityFlag?: number; // only audio
+
+  /**
+   * The total amount of delay in seconds the packets subjected to wait before sending. This can be either because of a pace bufffer, or other enforced waiting.
+   */
+  totalPacketSendDelay?: number;
+
+  /**
+   * The average RTCP interval for SR compound packets
+   */
+  averageRtcpInterval?: number;
+
+  /**
+   * The ratio of the DSCP packets sent on the corresponded RTP stream.
+   */
+  perDscpPacketsSent?: number;
+
+  /**
+   * The total number of negative acknowledgement sent on the corresponded RTP stream
+   */
+  nackCount?: number;
+
+  /**
+   * The libray name of the media encoder
+   */
+  encoderImplementation?: string;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Remote Inbound RTP related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+/**
+   * The total number of packets received on the corresponded RTP stream,
+   */
+  packetsReceived?: number;
+
+  /**
+   * The total number of packets lost on the corresponded RTP stream
+   */
+  packetsLost?: number;
+
+  /**
+   * The last RR reported jitter on the corresponded RTP stream
+   */
+  jitter?: number;
+
+  /**
+   * The total number of discarded packets on the corresponded RTP stream.
+   */
+  packetsDiscarded?: number;
+
+  /**
+   * The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.
+   */
+  packetsRepaired?: number;
+
+  /**
+   * The number of packets lost in burst period on the corresponded RTP stream.
+   */
+  burstPacketsLost?: number;
+
+  /**
+   * The total number of packets discarded during a burst period on the corresponded RTP stream.
+   */
+  burstPacketsDiscarded?: number;
+
+  /**
+   * The total number of burst lost happened on the coerresponded RTP stream
+   */
+  burstLossCount?: number;
+
+  /**
+   * The number of burst discards happened on the corresponded RTP stream.
+   */
+  burstDiscardCount?: number;
+
+  /**
+   * The loss rate during burst period on the corresponded RTP stream.
+   */
+  burstLossRate?: number;
+
+  /**
+   * The discard rate during burst period on the corresponded RTP stream.
+   */
+  burstDiscardRate?: number;
+
+  /**
+   * The loss rate during a gap period on the corresponded RTP stream.
+   */
+  gapLossRate?: number;
+
+  /**
+   * The discard rate during a gap period on the corresponded RTP stream
+   */
+  gapDiscardRate?: number;
+
+  /**
+   * The last RTT measurements based on the last SR-RR
+   */
+  roundTripTime?: number;
+
+  /**
+   * The total sum of the RTT measurements on the corresponded RTP stream
+   */
+  totalRoundTripTime?: number;
+
+  /**
+   * The last RR reported fractional lost
+   */
+  fractionLost?: number;
+
+  /**
+   * The number of RR compound report received on the corresponded RTP stream
+   */
+  reportsReceived?: number;
+
+  /**
+   * The number of RTT measurement calculated on the corresponded RTP stream
+   */
+  roundTripTimeMeasurements?: number;
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// MediaSourceStat related fields
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.
+   */
+  relayedSource?: string;
+
+  /**
+   *  the audio level of the media source.
+   */
+  audioLevel?: number;
+
+  /**
+   * The audio energy of the media source
+   * 
+   * For calculation see https://www.w3.org/TR/webrtc-stats/#dom-rtcaudiosourcestats-totalaudioenergy
+   */
+  totalAudioEnergy?: number;
+
+  /**
+   * The duration of the audio type media source
+   */
+  totalSamplesDuration?: number;
+  
+  /**
+   * if echo cancellation is applied on the media source, then 
+   * this number represents the loss calculation defined in https://www.itu.int/rec/T-REC-G.168-201504-I/en
+   */
+  echoReturnLoss?: number;
+
+  /**
+   * similar to the echo return loss calculation
+   */
+  echoReturnLossEnhancement?: number; 
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Sender related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcstatstype-sender
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * Flag indicate if the MediaTrack has been eded or not
+   */
+  ended?: boolean;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Media Codec related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtccodecstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The type of the payload the RTP stream carries
+   */
+  payloadType?: string;
+  /**
+   * The type of the codec role inthe endpoint.
+   * 
+   * Possible values are: "audio", and "video"
+   */
+  codecType?: string;
+
+  /**
+   * The MIME type of the media codec
+   */
+  mimeType?: string;
+
+  /**
+   * the clock rate of the media source generates samples or frames
+   */
+  clockRate?: number;
+
+  /**
+   * The number of channels the media source has. 
+   */
+  channels?: number; // auido only and only if there is stereo
+
+  /**
+   * The corresponded SDP line in SDP negotiation
+   */
+  sdpFmtpLine?: string;
+
+// !!!!!!!!!!!!!!!!!!!!!!
+// attached fields
+// !!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The identifier of the MediaTrack the client plays the audio out
+   */
+  trackId?: string;
+  /**
+   * The unique generated identifier of the peer connection the inbound audio track belongs to
+   */
+  peerConnectionId?: string;
 
 }
 
 interface OutboundVideoTrack {
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Outbound RTP related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The SSRC identifier of the corresponded RTP stream
+   */
+  ssrc?: number;
+
+  /**
+   * The total number of packets sent on the corresponded RTP stream
+   */
+  packetsSent?: number;
+
+  /**
+   * The total amount of payload bytes sent on the corresponded RTP stream
+   */
+  bytesSent?: number;
+
+  /**
+   * If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
+   */
+  rtxSsrc?: number;
+
+  /**
+   * The rid parameter of the corresponded RTP stream
+   */
+  rid?: string;
+
+  /**
+   * The last RTP packet sent timestamp
+   */
+  lastPacketSentTimestamp?: number;
+
+  /**
+   * The total amount of header bytes sent on the corresponded RTP stream
+   */
+  headerBytesSent?: number;
+
+  /**
+   * The packets discarded at sending on the corresponded RTP stream
+   */
+  packetsDiscardedOnSend?: number;
+
+  /**
+   * The bytes discarded at sending on the corresponded RTP stream.
+   */
+  bytesDiscardedOnSend?: number;
+
+  /**
+   * The total number of FEC packets sent on the corresponded RTP stream.
+   */
+  fecPacketsSent?: number;
+
+  /**
+   * The total number of retransmitted packets sent on the corresponded RTP stream.
+   */
+  retransmittedPacketsSent?: number;
+
+  /**
+   * The total number of retransmitted bytes sent on the corresponded RTP stream
+   */
+  retransmittedBytesSent?: number;
+
+  /**
+   * The media codec targeted bit rate
+   */
+  targetBitrate?: number;
+
+  /**
+   * The total encoded bytes targeted by the media encoder. this is the sum of the encoded frames
+   */
+  totalEncodedBytesTarget?: number;
+
+  /**
+   * The frame width in pixels of the frames targeted by the media encoder
+   */
+  frameWidth?: number; // video only
+
+  /**
+   * The frame width the media encoder targeted
+   */
+  frameHeight?: number; // video only
+
+  /**
+   * The frame depth in pixles on the corresponded RTP stream
+   */
+  frameBitDepth?: number; // video only
+
+  /**
+   * The encoded number of frames in the last second on the corresponded media source
+   */
+  framesPerSecond?: number; // video only
+
+  /**
+   * The total number of frames sent on the corresponded RTP stream
+   */
+  framesSent?: number; // video only
+
+  /**
+   * The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream
+   */
+  hugeFramesSent?: number; // video only
+
+  /**
+   * The total number of frames encoded by the media source
+   */
+  framesEncoded?: number; // video only
+
+  /**
+   * The total number of keyframes encoded on the corresponded RTP stream
+   */
+  keyFramesEncoded?: number; // video only
+
+  /**
+   * The total number of frames discarded on the corresponded RTP stream.
+   */
+  framesDiscardedOnSend?: number; // video only
+
+  /**
+   * The sum of the QP the media encoder provided on the corresponded RTP stream.
+   */
+  qpSum?: number; // video only
+
+  /**
+   * The total time in seconds spent in encoding media frames for the corresponded RTP stream.
+   */
+  totalEncodeTime?: number; // video only
+
+
+  /**
+   * The total amount of delay in seconds the packets subjected to wait before sending. This can be either because of a pace bufffer, or other enforced waiting.
+   */
+  totalPacketSendDelay?: number;
+
+  /**
+   * The average RTCP interval for SR compound packets
+   */
+  averageRtcpInterval?: number;
+
+  /**
+   * The reason for quality limitation happeened on the corresponded RTP stream
+   */
+  qualityLimitationReason?: string; // video only
+  
+  /**
+   * the total sum of duration of the quality limitation happened on the corresponded RTP stream
+   */
+  qualityLimitationDurations?: number; // video only
+
+  /**
+   * The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
+   */
+  qualityLimitationResolutionChanges?: number; // video only
+  /**
+   * The ratio of the DSCP packets sent on the corresponded RTP stream.
+   */
+  perDscpPacketsSent?: number;
+
+  /**
+   * The total number of negative acknowledgement sent on the corresponded RTP stream
+   */
+  nackCount?: number;
+
+  /**
+   * The total number of FIR counted on the corresponded RTP stream
+   */
+  firCount?: number;
+
+  /**
+   * The total number of picture loss indication happeend on teh corresaponded mRTP stream
+   */
+  pliCount?: number;
+
+  /**
+   * The total number of SLI occured on the corresponded RTP stream
+   */
+  sliCount?: number;
+
+  /**
+   * The libray name of the media encoder
+   */
+  encoderImplementation?: string;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Remote Inbound RTP related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+/**
+   * The total number of packets received on the corresponded RTP stream,
+   */
+  packetsReceived?: number;
+
+  /**
+   * The total number of packets lost on the corresponded RTP stream
+   */
+  packetsLost?: number;
+
+  /**
+   * The last RR reported jitter on the corresponded RTP stream
+   */
+  jitter?: number;
+
+  /**
+   * The total number of discarded packets on the corresponded RTP stream.
+   */
+  packetsDiscarded?: number;
+
+  /**
+   * The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.
+   */
+  packetsRepaired?: number;
+
+  /**
+   * The number of packets lost in burst period on the corresponded RTP stream.
+   */
+  burstPacketsLost?: number;
+
+  /**
+   * The total number of packets discarded during a burst period on the corresponded RTP stream.
+   */
+  burstPacketsDiscarded?: number;
+
+  /**
+   * The total number of burst lost happened on the coerresponded RTP stream
+   */
+  burstLossCount?: number;
+
+  /**
+   * The number of burst discards happened on the corresponded RTP stream.
+   */
+  burstDiscardCount?: number;
+
+  /**
+   * The loss rate during burst period on the corresponded RTP stream.
+   */
+  burstLossRate?: number;
+
+  /**
+   * The discard rate during burst period on the corresponded RTP stream.
+   */
+  burstDiscardRate?: number;
+
+  /**
+   * The loss rate during a gap period on the corresponded RTP stream.
+   */
+  gapLossRate?: number;
+
+  /**
+   * The discard rate during a gap period on the corresponded RTP stream
+   */
+  gapDiscardRate?: number;
+
+  /**
+   * The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
+   */
+  framesDropped?: number;
+
+  /**
+   * The total number of partial frames reported to be lost by the remote endpoint on the corresponded RTP stream.
+   */
+  partialFramesList?: number;
+
+  /**
+   * The total number of full frames lost at the remote endpoint on the corresponded RTP stream.
+   */
+  fullFramesList?: number;
+
+  /**
+   * The last RTT measurements based on the last SR-RR
+   */
+  roundTripTime?: number;
+
+  /**
+   * The total sum of the RTT measurements on the corresponded RTP stream
+   */
+  totalRoundTripTime?: number;
+
+  /**
+   * The last RR reported fractional lost
+   */
+  fractionLost?: number;
+
+  /**
+   * The number of RR compound report received on the corresponded RTP stream
+   */
+  reportsReceived?: number;
+
+  /**
+   * The number of RTT measurement calculated on the corresponded RTP stream
+   */
+  roundTripTimeMeasurements?: number;
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// MediaSourceStat related fields
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.
+   */
+  relayedSource?: string;
+  /**
+   * The width, in pixels, of the last frame originating from the media source
+   */
+  width?: number; 
+  /**
+   * The height, in pixels, of the last frame originating from the media source
+   */
+  height?: number;
+
+  /**
+   * The bit depth per pixels, of the last frame originating from the media source
+   */
+  bitDepth?: number;
+
+  /**
+   * The total number of frames originated from the media source
+   */
+  frames?: number;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Sender related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcstatstype-sender
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * Flag indicate if the MediaTrack has been eded or not
+   */
+  ended?: boolean;
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Media Codec related fields
+// └-> https://www.w3.org/TR/webrtc-stats/#dom-rtccodecstats
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The type of the payload the RTP stream carries
+   */
+  payloadType?: string;
+  /**
+   * The type of the codec role inthe endpoint.
+   * 
+   * Possible values are: "audio", and "video"
+   */
+  codecType?: string;
+
+  /**
+   * The MIME type of the media codec
+   */
+  mimeType?: string;
+
+  /**
+   * the clock rate of the media source generates samples or frames
+   */
+  clockRate?: number;
+
+  /**
+   * The number of channels the media source has. 
+   */
+  channels?: number; // auido only and only if there is stereo
+
+  /**
+   * The corresponded SDP line in SDP negotiation
+   */
+  sdpFmtpLine?: string;
+
+// !!!!!!!!!!!!!!!!!!!!!!
+// attached fields
+// !!!!!!!!!!!!!!!!!!!!!
+  /**
+   * The identifier of the MediaTrack the client plays the audio out
+   */
+  trackId?: string;
+  /**
+   * The unique generated identifier of the peer connection the inbound audio track belongs to
+   */
+  peerConnectionId?: string;
 }
 
 interface ICELocalCandidate {
+  /**
+   * The unique identifier of the local candidate
+   */
+  id: string;
+  /**
+   * The unique identifier of the transport the local candidate belongs to
+   */
+  transportId?: string;
 
+  /**
+   * The address of the local endpoint (Ipv4, Ipv6, FQDN)
+   */
+  address?: string;
+
+  /**
+   * The port number of the local endpoint the ICE uses
+   */
+  port?: number;
+
+  /**
+   * The protocol for the ICE
+   */
+  protocol?: string;
+
+  /**
+   * The type of the local candidate
+   */
+  candidateType?: string
+
+  /**
+   * The priority of the local candidate
+   */
+  priority?: string
+
+  /**
+   * The url of the ICE server
+   */
+  url?: string;
+
+  /**
+   * The relay protocol the local candidate uses
+   */
+  relayProtocol?: string;
+
+  /**
+   * Refers to the peer connection the local candidate belongs to
+   */
+  peerConnectionId?: string;
 }
 
 interface ICERemoteCandidate {
+  /**
+   * The unique identifier of the remote candidate
+   */
+  id: string;
 
+  /**
+   * The address of the remote endpoint (Ipv4, Ipv6, FQDN)
+   */
+  address?: string;
+
+  /**
+   * The port number of the remote endpoint the ICE uses
+   */
+  port?: number;
+
+  /**
+   * The protocol for the ICE
+   */
+  protocol?: string;
+
+  /**
+   * The type of the remote candidate
+   */
+  candidateType?: string
+
+  /**
+   * The priority of the remote candidate
+   */
+  priority?: string
+
+  /**
+   * The url of the ICE server
+   */
+  url?: string;
+
+  /**
+   * The relay protocol the remote candidate uses
+   */
+  relayProtocol?: string;
+
+  /**
+   * Refers to the peer connection the remote candidate belongs to
+   */
+  peerConnectionId?: string;
 }
 
 interface DataChannel {
+// webrtcStats defined fields (https://www.w3.org/TR/webrtc-stats/#dom-rtcstatstype-csrc)
+// └-> RTCStat (https://www.w3.org/TR/webrtc-stats/#dom-rtcstats)
+  /**
+   * Unique identifier of the data channel
+   */
+  id?: string;
 
+// └-> RTCDataChannelStats (https://www.w3.org/TR/webrtc-stats/#dom-rtcdatachannelstats)
+  /**
+   * The label the data channel provided at the creation
+   */
+  label?: string
+
+  /**
+   * The protocol the data channel use to transfer data
+   */
+  protocol?: string;
+
+  /**
+   * The unique identifier of the data channel
+   */
+  dataChannelIdentifier?: string;
+
+  /**
+   * The state of the data channel
+   */
+  state?: string;
+
+  /**
+   * The total number of messages sent on this data channel. this is not equal to the number of packets sent, as messages are chunked to packets
+   */
+  messagesSent?: number;
+
+  /**
+   * The amount of bytes sent on the corresponded data channel
+   */
+  bytesSent?: string;
+
+  /**
+   * The number of messages received on the corresponded data channel
+   */
+  messagesReceived?: number;
+
+  /**
+   * The total amount of bytes received on the corresponded data channel
+   */
+  bytesReceived?: number;
 }
 
 interface ClientSample {

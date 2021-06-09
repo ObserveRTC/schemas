@@ -862,23 +862,889 @@
     },
     "InboundVideoTrack": {
       "description": "A compound stat object used by the client giving information about a video track \nused by the client as inbound",
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "ssrc": {
+          "description": "The SSRC identifier of the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsReceived": {
+          "description": "The total number of packets received on the corresponded RTP stream,",
+          "type": "number"
+        },
+        "packetsLost": {
+          "description": "The total number of packets lost on the corresponded RTP stream",
+          "type": "number"
+        },
+        "jitter": {
+          "description": "The last RR reported jitter on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDiscarded": {
+          "description": "The total number of discarded packets on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsRepaired": {
+          "description": "The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstPacketsLost": {
+          "description": "The number of packets lost in burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstPacketsDiscarded": {
+          "description": "The total number of packets discarded during a burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstLossCount": {
+          "description": "The total number of burst lost happened on the coerresponded RTP stream",
+          "type": "number"
+        },
+        "burstDiscardCount": {
+          "description": "The number of burst discards happened on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstLossRate": {
+          "description": "The loss rate during burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstDiscardRate": {
+          "description": "The discard rate during burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "gapLossRate": {
+          "description": "The loss rate during a gap period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "gapDiscardRate": {
+          "description": "The discard rate during a gap period on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesDropped": {
+          "description": "The total number of frames dropped on the corresponded RTP stream",
+          "type": "number"
+        },
+        "partialFramesLost": {
+          "description": "The total number of frames partially lost on the corresponded RTP stream",
+          "type": "number"
+        },
+        "fullFramesLost": {
+          "description": "The total number of frames fully lost on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesDecoded": {
+          "description": "The total number of frames decoded on the corresponded RTP stream",
+          "type": "number"
+        },
+        "keyFramesDecoded": {
+          "description": "The total number of keyframes decoded on the corresponded RTP stream",
+          "type": "number"
+        },
+        "frameWidth": {
+          "description": "The width of the frame of the video sent by the remote source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "frameHeight": {
+          "description": "The height of the frame of the video sent by the remote source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "frameBitDepth": {
+          "description": "The bit depth in pixels of the frame of the video sent by the remote source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesPerSecond": {
+          "description": "The frame per seconds of the video sent by the remote source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "qpSum": {
+          "description": "The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "totalDecodeTime": {
+          "description": "The total tiem spent on decoding video on the corresponded RTP stream",
+          "type": "number"
+        },
+        "totalInterFrameDelay": {
+          "description": "The total interframe delay",
+          "type": "number"
+        },
+        "totalSquaredInterFrameDelay": {
+          "description": "The squere total of the interframe delay (together with teh interframe delay you can calculate the variance)",
+          "type": "number"
+        },
+        "lastPacketReceivedTimestamp": {
+          "description": "The RTP timestamp of the last received packet on the corresponded RTP stream",
+          "type": "number"
+        },
+        "averageRtcpInterval": {
+          "description": "The RTCP average interval of sending compound RTCP reports",
+          "type": "number"
+        },
+        "headerBytesReceived": {
+          "description": "The total amount of header bytes received on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsReceived": {
+          "description": "The total number of FEC packets received on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsDiscarded": {
+          "description": "The total number of FEC packets discafrded on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "bytesReceived": {
+          "description": "The total amount of payload bytes received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsFailedDecryption": {
+          "description": "The total number of packets failed to be decrypted on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDuplicated": {
+          "description": "The total number of duplicated packets appeared on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "perDscpPacketsReceived": {
+          "description": "The ratio of the DSCP packets on the corresponded RTP straem",
+          "type": "number"
+        },
+        "firCount": {
+          "description": "The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "pliCount": {
+          "description": "The total number of Picture Loss Indication sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "nackCount": {
+          "description": "The total number of negative acknowledgement received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "sliCount": {
+          "description": "The total number of SLI indicator sent from the endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "totalProcessingDelay": {
+          "description": "The total processing delay of the RTP packets from the moment they received until the moment the jitter buffer emits them on the corresponded RTP strema.",
+          "type": "number"
+        },
+        "estimatedPlayoutTimestamp": {
+          "description": "The estimated timestamp of the jitterbuffer emits the RTP packets on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "jitterBufferDelay": {
+          "description": "The total delay encountered by the jitter buffer for the RTP stream to allevaite the effect of jitter on the transport.",
+          "type": "number"
+        },
+        "jitterBufferEmittedCount": {
+          "description": "The total number of emits happened for the corresponded RTP stream.",
+          "type": "number"
+        },
+        "framesReceived": {
+          "description": "The total number of frames received on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "decoderImplementation": {
+          "description": "The library implements the decoder for the media source",
+          "type": "string"
+        },
+        "packetsSent": {
+          "description": "The total number of packets sent by the remote endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "bytesSent": {
+          "description": "The total amount of bytes sent by the remote endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "remoteTimestamp": {
+          "description": "The remote timestamp of the RTCP packets reported in the SR",
+          "type": "number"
+        },
+        "reportsSent": {
+          "description": "The total number of SR reports sent by the remote endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "ended": {
+          "description": "Flag indicate if the MediaTrack has been eded or not",
+          "type": "boolean"
+        },
+        "payloadType": {
+          "description": "The type of the payload the RTP stream carries",
+          "type": "string"
+        },
+        "codecType": {
+          "description": "The type of the codec role inthe endpoint.\n\nPossible values are: \"audio\", and \"video\"",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type of the media codec",
+          "type": "string"
+        },
+        "clockRate": {
+          "description": "the clock rate of the media source generates samples or frames",
+          "type": "number"
+        },
+        "sdpFmtpLine": {
+          "description": "The corresponded SDP line in SDP negotiation",
+          "type": "string"
+        },
+        "trackId": {
+          "description": "The identifier of the MediaTrack the client plays the audio out",
+          "type": "string"
+        },
+        "peerConnectionId": {
+          "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
+          "type": "string"
+        }
+      }
     },
     "OutboundAudioTrack": {
-      "description": "A compound object used",
-      "type": "object"
+      "description": "A compound object giving information about the audio track the client uses",
+      "type": "object",
+      "properties": {
+        "ssrc": {
+          "description": "The SSRC identifier of the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsSent": {
+          "description": "The total number of packets sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "bytesSent": {
+          "description": "The total amount of payload bytes sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtxSsrc": {
+          "description": "If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.",
+          "type": "number"
+        },
+        "rid": {
+          "description": "The rid parameter of the corresponded RTP stream",
+          "type": "string"
+        },
+        "lastPacketSentTimestamp": {
+          "description": "The last RTP packet sent timestamp",
+          "type": "number"
+        },
+        "headerBytesSent": {
+          "description": "The total amount of header bytes sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDiscardedOnSend": {
+          "description": "The packets discarded at sending on the corresponded RTP stream",
+          "type": "number"
+        },
+        "bytesDiscardedOnSend": {
+          "description": "The bytes discarded at sending on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsSent": {
+          "description": "The total number of FEC packets sent on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "retransmittedPacketsSent": {
+          "description": "The total number of retransmitted packets sent on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "retransmittedBytesSent": {
+          "description": "The total number of retransmitted bytes sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "targetBitrate": {
+          "description": "The media codec targeted bit rate",
+          "type": "number"
+        },
+        "totalSamplesSent": {
+          "description": "The total number of samples the media source sent",
+          "type": "number"
+        },
+        "samplesEncodedWithSilk": {
+          "description": "The total number of samples encoded with SILK",
+          "type": "number"
+        },
+        "samplesEncodedWithCelt": {
+          "description": "The total number of samples encoded with CELT",
+          "type": "number"
+        },
+        "voiceActivityFlag": {
+          "description": "The media encoder voice activity flag shipped to teh RTP strem by adding a V flag indicator to the headers",
+          "type": "number"
+        },
+        "totalPacketSendDelay": {
+          "description": "The total amount of delay in seconds the packets subjected to wait before sending. This can be either because of a pace bufffer, or other enforced waiting.",
+          "type": "number"
+        },
+        "averageRtcpInterval": {
+          "description": "The average RTCP interval for SR compound packets",
+          "type": "number"
+        },
+        "perDscpPacketsSent": {
+          "description": "The ratio of the DSCP packets sent on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "nackCount": {
+          "description": "The total number of negative acknowledgement sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "encoderImplementation": {
+          "description": "The libray name of the media encoder",
+          "type": "string"
+        },
+        "packetsReceived": {
+          "description": "The total number of packets received on the corresponded RTP stream,",
+          "type": "number"
+        },
+        "packetsLost": {
+          "description": "The total number of packets lost on the corresponded RTP stream",
+          "type": "number"
+        },
+        "jitter": {
+          "description": "The last RR reported jitter on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDiscarded": {
+          "description": "The total number of discarded packets on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsRepaired": {
+          "description": "The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstPacketsLost": {
+          "description": "The number of packets lost in burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstPacketsDiscarded": {
+          "description": "The total number of packets discarded during a burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstLossCount": {
+          "description": "The total number of burst lost happened on the coerresponded RTP stream",
+          "type": "number"
+        },
+        "burstDiscardCount": {
+          "description": "The number of burst discards happened on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstLossRate": {
+          "description": "The loss rate during burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstDiscardRate": {
+          "description": "The discard rate during burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "gapLossRate": {
+          "description": "The loss rate during a gap period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "gapDiscardRate": {
+          "description": "The discard rate during a gap period on the corresponded RTP stream",
+          "type": "number"
+        },
+        "roundTripTime": {
+          "description": "The last RTT measurements based on the last SR-RR",
+          "type": "number"
+        },
+        "totalRoundTripTime": {
+          "description": "The total sum of the RTT measurements on the corresponded RTP stream",
+          "type": "number"
+        },
+        "fractionLost": {
+          "description": "The last RR reported fractional lost",
+          "type": "number"
+        },
+        "reportsReceived": {
+          "description": "The number of RR compound report received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "roundTripTimeMeasurements": {
+          "description": "The number of RTT measurement calculated on the corresponded RTP stream",
+          "type": "number"
+        },
+        "relayedSource": {
+          "description": "Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.",
+          "type": "string"
+        },
+        "audioLevel": {
+          "description": "the audio level of the media source.",
+          "type": "number"
+        },
+        "totalAudioEnergy": {
+          "description": "The audio energy of the media source\n\nFor calculation see https://www.w3.org/TR/webrtc-stats/#dom-rtcaudiosourcestats-totalaudioenergy",
+          "type": "number"
+        },
+        "totalSamplesDuration": {
+          "description": "The duration of the audio type media source",
+          "type": "number"
+        },
+        "echoReturnLoss": {
+          "description": "if echo cancellation is applied on the media source, then \nthis number represents the loss calculation defined in https://www.itu.int/rec/T-REC-G.168-201504-I/en",
+          "type": "number"
+        },
+        "echoReturnLossEnhancement": {
+          "description": "similar to the echo return loss calculation",
+          "type": "number"
+        },
+        "ended": {
+          "description": "Flag indicate if the MediaTrack has been eded or not",
+          "type": "boolean"
+        },
+        "payloadType": {
+          "description": "The type of the payload the RTP stream carries",
+          "type": "string"
+        },
+        "codecType": {
+          "description": "The type of the codec role inthe endpoint.\n\nPossible values are: \"audio\", and \"video\"",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type of the media codec",
+          "type": "string"
+        },
+        "clockRate": {
+          "description": "the clock rate of the media source generates samples or frames",
+          "type": "number"
+        },
+        "channels": {
+          "description": "The number of channels the media source has.",
+          "type": "number"
+        },
+        "sdpFmtpLine": {
+          "description": "The corresponded SDP line in SDP negotiation",
+          "type": "string"
+        },
+        "trackId": {
+          "description": "The identifier of the MediaTrack the client plays the audio out",
+          "type": "string"
+        },
+        "peerConnectionId": {
+          "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
+          "type": "string"
+        }
+      }
     },
     "OutboundVideoTrack": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "ssrc": {
+          "description": "The SSRC identifier of the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsSent": {
+          "description": "The total number of packets sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "bytesSent": {
+          "description": "The total amount of payload bytes sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtxSsrc": {
+          "description": "If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.",
+          "type": "number"
+        },
+        "rid": {
+          "description": "The rid parameter of the corresponded RTP stream",
+          "type": "string"
+        },
+        "lastPacketSentTimestamp": {
+          "description": "The last RTP packet sent timestamp",
+          "type": "number"
+        },
+        "headerBytesSent": {
+          "description": "The total amount of header bytes sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDiscardedOnSend": {
+          "description": "The packets discarded at sending on the corresponded RTP stream",
+          "type": "number"
+        },
+        "bytesDiscardedOnSend": {
+          "description": "The bytes discarded at sending on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsSent": {
+          "description": "The total number of FEC packets sent on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "retransmittedPacketsSent": {
+          "description": "The total number of retransmitted packets sent on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "retransmittedBytesSent": {
+          "description": "The total number of retransmitted bytes sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "targetBitrate": {
+          "description": "The media codec targeted bit rate",
+          "type": "number"
+        },
+        "totalEncodedBytesTarget": {
+          "description": "The total encoded bytes targeted by the media encoder. this is the sum of the encoded frames",
+          "type": "number"
+        },
+        "frameWidth": {
+          "description": "The frame width in pixels of the frames targeted by the media encoder",
+          "type": "number"
+        },
+        "frameHeight": {
+          "description": "The frame width the media encoder targeted",
+          "type": "number"
+        },
+        "frameBitDepth": {
+          "description": "The frame depth in pixles on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesPerSecond": {
+          "description": "The encoded number of frames in the last second on the corresponded media source",
+          "type": "number"
+        },
+        "framesSent": {
+          "description": "The total number of frames sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "hugeFramesSent": {
+          "description": "The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesEncoded": {
+          "description": "The total number of frames encoded by the media source",
+          "type": "number"
+        },
+        "keyFramesEncoded": {
+          "description": "The total number of keyframes encoded on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesDiscardedOnSend": {
+          "description": "The total number of frames discarded on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "qpSum": {
+          "description": "The sum of the QP the media encoder provided on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "totalEncodeTime": {
+          "description": "The total time in seconds spent in encoding media frames for the corresponded RTP stream.",
+          "type": "number"
+        },
+        "totalPacketSendDelay": {
+          "description": "The total amount of delay in seconds the packets subjected to wait before sending. This can be either because of a pace bufffer, or other enforced waiting.",
+          "type": "number"
+        },
+        "averageRtcpInterval": {
+          "description": "The average RTCP interval for SR compound packets",
+          "type": "number"
+        },
+        "qualityLimitationReason": {
+          "description": "The reason for quality limitation happeened on the corresponded RTP stream",
+          "type": "string"
+        },
+        "qualityLimitationDurations": {
+          "description": "the total sum of duration of the quality limitation happened on the corresponded RTP stream",
+          "type": "number"
+        },
+        "qualityLimitationResolutionChanges": {
+          "description": "The total number of resolution changes occured ont he corresponded RTP stream due to quality changes",
+          "type": "number"
+        },
+        "perDscpPacketsSent": {
+          "description": "The ratio of the DSCP packets sent on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "nackCount": {
+          "description": "The total number of negative acknowledgement sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "firCount": {
+          "description": "The total number of FIR counted on the corresponded RTP stream",
+          "type": "number"
+        },
+        "pliCount": {
+          "description": "The total number of picture loss indication happeend on teh corresaponded mRTP stream",
+          "type": "number"
+        },
+        "sliCount": {
+          "description": "The total number of SLI occured on the corresponded RTP stream",
+          "type": "number"
+        },
+        "encoderImplementation": {
+          "description": "The libray name of the media encoder",
+          "type": "string"
+        },
+        "packetsReceived": {
+          "description": "The total number of packets received on the corresponded RTP stream,",
+          "type": "number"
+        },
+        "packetsLost": {
+          "description": "The total number of packets lost on the corresponded RTP stream",
+          "type": "number"
+        },
+        "jitter": {
+          "description": "The last RR reported jitter on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDiscarded": {
+          "description": "The total number of discarded packets on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsRepaired": {
+          "description": "The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstPacketsLost": {
+          "description": "The number of packets lost in burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstPacketsDiscarded": {
+          "description": "The total number of packets discarded during a burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstLossCount": {
+          "description": "The total number of burst lost happened on the coerresponded RTP stream",
+          "type": "number"
+        },
+        "burstDiscardCount": {
+          "description": "The number of burst discards happened on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstLossRate": {
+          "description": "The loss rate during burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "burstDiscardRate": {
+          "description": "The discard rate during burst period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "gapLossRate": {
+          "description": "The loss rate during a gap period on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "gapDiscardRate": {
+          "description": "The discard rate during a gap period on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesDropped": {
+          "description": "The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream",
+          "type": "number"
+        },
+        "partialFramesList": {
+          "description": "The total number of partial frames reported to be lost by the remote endpoint on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fullFramesList": {
+          "description": "The total number of full frames lost at the remote endpoint on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "roundTripTime": {
+          "description": "The last RTT measurements based on the last SR-RR",
+          "type": "number"
+        },
+        "totalRoundTripTime": {
+          "description": "The total sum of the RTT measurements on the corresponded RTP stream",
+          "type": "number"
+        },
+        "fractionLost": {
+          "description": "The last RR reported fractional lost",
+          "type": "number"
+        },
+        "reportsReceived": {
+          "description": "The number of RR compound report received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "roundTripTimeMeasurements": {
+          "description": "The number of RTT measurement calculated on the corresponded RTP stream",
+          "type": "number"
+        },
+        "relayedSource": {
+          "description": "Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.",
+          "type": "string"
+        },
+        "width": {
+          "description": "The width, in pixels, of the last frame originating from the media source",
+          "type": "number"
+        },
+        "height": {
+          "description": "The height, in pixels, of the last frame originating from the media source",
+          "type": "number"
+        },
+        "bitDepth": {
+          "description": "The bit depth per pixels, of the last frame originating from the media source",
+          "type": "number"
+        },
+        "frames": {
+          "description": "The total number of frames originated from the media source",
+          "type": "number"
+        },
+        "ended": {
+          "description": "Flag indicate if the MediaTrack has been eded or not",
+          "type": "boolean"
+        },
+        "payloadType": {
+          "description": "The type of the payload the RTP stream carries",
+          "type": "string"
+        },
+        "codecType": {
+          "description": "The type of the codec role inthe endpoint.\n\nPossible values are: \"audio\", and \"video\"",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type of the media codec",
+          "type": "string"
+        },
+        "clockRate": {
+          "description": "the clock rate of the media source generates samples or frames",
+          "type": "number"
+        },
+        "channels": {
+          "description": "The number of channels the media source has.",
+          "type": "number"
+        },
+        "sdpFmtpLine": {
+          "description": "The corresponded SDP line in SDP negotiation",
+          "type": "string"
+        },
+        "trackId": {
+          "description": "The identifier of the MediaTrack the client plays the audio out",
+          "type": "string"
+        },
+        "peerConnectionId": {
+          "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
+          "type": "string"
+        }
+      }
     },
     "ICELocalCandidate": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The unique identifier of the local candidate",
+          "type": "string"
+        },
+        "transportId": {
+          "description": "The unique identifier of the transport the local candidate belongs to",
+          "type": "string"
+        },
+        "address": {
+          "description": "The address of the local endpoint (Ipv4, Ipv6, FQDN)",
+          "type": "string"
+        },
+        "port": {
+          "description": "The port number of the local endpoint the ICE uses",
+          "type": "number"
+        },
+        "protocol": {
+          "description": "The protocol for the ICE",
+          "type": "string"
+        },
+        "candidateType": {
+          "description": "The type of the local candidate",
+          "type": "string"
+        },
+        "priority": {
+          "description": "The priority of the local candidate",
+          "type": "string"
+        },
+        "url": {
+          "description": "The url of the ICE server",
+          "type": "string"
+        },
+        "relayProtocol": {
+          "description": "The relay protocol the local candidate uses",
+          "type": "string"
+        },
+        "peerConnectionId": {
+          "description": "Refers to the peer connection the local candidate belongs to",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
     },
     "ICERemoteCandidate": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The unique identifier of the remote candidate",
+          "type": "string"
+        },
+        "address": {
+          "description": "The address of the remote endpoint (Ipv4, Ipv6, FQDN)",
+          "type": "string"
+        },
+        "port": {
+          "description": "The port number of the remote endpoint the ICE uses",
+          "type": "number"
+        },
+        "protocol": {
+          "description": "The protocol for the ICE",
+          "type": "string"
+        },
+        "candidateType": {
+          "description": "The type of the remote candidate",
+          "type": "string"
+        },
+        "priority": {
+          "description": "The priority of the remote candidate",
+          "type": "string"
+        },
+        "url": {
+          "description": "The url of the ICE server",
+          "type": "string"
+        },
+        "relayProtocol": {
+          "description": "The relay protocol the remote candidate uses",
+          "type": "string"
+        },
+        "peerConnectionId": {
+          "description": "Refers to the peer connection the remote candidate belongs to",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
     },
     "DataChannel": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the data channel",
+          "type": "string"
+        },
+        "label": {
+          "description": "The label the data channel provided at the creation",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol the data channel use to transfer data",
+          "type": "string"
+        },
+        "dataChannelIdentifier": {
+          "description": "The unique identifier of the data channel",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of the data channel",
+          "type": "string"
+        },
+        "messagesSent": {
+          "description": "The total number of messages sent on this data channel. this is not equal to the number of packets sent, as messages are chunked to packets",
+          "type": "number"
+        },
+        "bytesSent": {
+          "description": "The amount of bytes sent on the corresponded data channel",
+          "type": "string"
+        },
+        "messagesReceived": {
+          "description": "The number of messages received on the corresponded data channel",
+          "type": "number"
+        },
+        "bytesReceived": {
+          "description": "The total amount of bytes received on the corresponded data channel",
+          "type": "number"
+        }
+      }
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"
