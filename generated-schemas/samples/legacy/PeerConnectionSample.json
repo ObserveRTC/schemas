@@ -1,0 +1,907 @@
+{
+  "type": "object",
+  "properties": {
+    "peerConnectionId": {
+      "type": "string"
+    },
+    "browserId": {
+      "type": "string"
+    },
+    "callId": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "timeZoneOffsetInMinute": {
+      "type": "number"
+    },
+    "receiverStats": {
+      "type": "array",
+      "items": [
+        {
+          "$ref": "#/definitions/ObserveRTCStats"
+        }
+      ],
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "senderStats": {
+      "type": "array",
+      "items": [
+        {
+          "$ref": "#/definitions/ObserveRTCStats"
+        }
+      ],
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "iceStats": {
+      "type": "array",
+      "items": [
+        {
+          "$ref": "#/definitions/ObserveRTCCIceStats"
+        }
+      ],
+      "minItems": 1,
+      "maxItems": 1
+    }
+  },
+  "required": [
+    "browserId",
+    "callId",
+    "iceStats",
+    "peerConnectionId",
+    "receiverStats",
+    "senderStats",
+    "timeZoneOffsetInMinute",
+    "userId"
+  ],
+  "definitions": {
+    "ObserveRTCStats": {
+      "type": "object",
+      "properties": {
+        "rtcStats": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MediaSource"
+            },
+            {
+              "$ref": "#/definitions/CandidatePair"
+            },
+            {
+              "$ref": "#/definitions/Track"
+            },
+            {
+              "$ref": "#/definitions/OutboundRTP"
+            },
+            {
+              "$ref": "#/definitions/InboundRTP"
+            },
+            {
+              "$ref": "#/definitions/RemoteInboundRTP"
+            }
+          ]
+        }
+      },
+      "required": [
+        "rtcStats"
+      ]
+    },
+    "MediaSource": {
+      "type": "object",
+      "properties": {
+        "audioLevel": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "audio",
+            "video"
+          ],
+          "type": "string"
+        },
+        "framesPerSecond": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "totalAudioEnergy": {
+          "type": "number"
+        },
+        "totalSamplesDuration": {
+          "type": "number"
+        },
+        "trackIdentifier": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "media-source"
+          ]
+        }
+      },
+      "required": [
+        "audioLevel",
+        "framesPerSecond",
+        "height",
+        "id",
+        "kind",
+        "timestamp",
+        "totalAudioEnergy",
+        "totalSamplesDuration",
+        "trackIdentifier",
+        "type",
+        "width"
+      ]
+    },
+    "CandidatePair": {
+      "type": "object",
+      "properties": {
+        "availableOutgoingBitrate": {
+          "type": "number"
+        },
+        "bytesReceived": {
+          "type": "number"
+        },
+        "bytesSent": {
+          "type": "number"
+        },
+        "consentRequestsSent": {
+          "type": "number"
+        },
+        "currentRoundTripTime": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        },
+        "localCandidateId": {
+          "type": "string"
+        },
+        "nominated": {
+          "type": "boolean"
+        },
+        "priority": {
+          "type": "number"
+        },
+        "remoteCandidateId": {
+          "type": "string"
+        },
+        "requestsReceived": {
+          "type": "number"
+        },
+        "requestsSent": {
+          "type": "number"
+        },
+        "responsesReceived": {
+          "type": "number"
+        },
+        "responsesSent": {
+          "type": "number"
+        },
+        "state": {
+          "enum": [
+            "failed",
+            "frozen",
+            "in-progress",
+            "succeeded",
+            "waiting"
+          ],
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "totalRoundTripTime": {
+          "type": "number"
+        },
+        "transportId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "candidate-pair"
+          ]
+        },
+        "writable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "availableOutgoingBitrate",
+        "bytesReceived",
+        "bytesSent",
+        "consentRequestsSent",
+        "currentRoundTripTime",
+        "id",
+        "localCandidateId",
+        "nominated",
+        "priority",
+        "remoteCandidateId",
+        "requestsReceived",
+        "requestsSent",
+        "responsesReceived",
+        "responsesSent",
+        "state",
+        "timestamp",
+        "totalRoundTripTime",
+        "transportId",
+        "type",
+        "writable"
+      ]
+    },
+    "Track": {
+      "type": "object",
+      "properties": {
+        "detached": {
+          "type": "boolean"
+        },
+        "ended": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "audio",
+            "video"
+          ],
+          "type": "string"
+        },
+        "mediaSourceId": {
+          "type": "string"
+        },
+        "remoteSource": {
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "trackIdentifier": {
+          "type": "string"
+        },
+        "frameHeight": {
+          "type": "number"
+        },
+        "frameWidth": {
+          "type": "number"
+        },
+        "framesSent": {
+          "type": "number"
+        },
+        "hugeFramesSent": {
+          "type": "number"
+        },
+        "audioLevel": {
+          "type": "number"
+        },
+        "concealedSamples": {
+          "type": "number"
+        },
+        "concealmentEvents": {
+          "type": "number"
+        },
+        "insertedSamplesForDeceleration": {
+          "type": "number"
+        },
+        "jitterBufferDelay": {
+          "type": "number"
+        },
+        "jitterBufferEmittedCount": {
+          "type": "number"
+        },
+        "removedSamplesForAcceleration": {
+          "type": "number"
+        },
+        "silentConcealedSamples": {
+          "type": "number"
+        },
+        "totalAudioEnergy": {
+          "type": "number"
+        },
+        "totalSamplesDuration": {
+          "type": "number"
+        },
+        "totalSamplesReceived": {
+          "type": "number"
+        },
+        "framesDecoded": {
+          "type": "number"
+        },
+        "framesDropped": {
+          "type": "number"
+        },
+        "framesReceived": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "track"
+          ]
+        }
+      },
+      "required": [
+        "audioLevel",
+        "concealedSamples",
+        "concealmentEvents",
+        "detached",
+        "ended",
+        "frameHeight",
+        "frameWidth",
+        "framesDecoded",
+        "framesDropped",
+        "framesReceived",
+        "framesSent",
+        "hugeFramesSent",
+        "id",
+        "insertedSamplesForDeceleration",
+        "jitterBufferDelay",
+        "jitterBufferEmittedCount",
+        "kind",
+        "mediaSourceId",
+        "remoteSource",
+        "removedSamplesForAcceleration",
+        "silentConcealedSamples",
+        "timestamp",
+        "totalAudioEnergy",
+        "totalSamplesDuration",
+        "totalSamplesReceived",
+        "trackIdentifier",
+        "type"
+      ]
+    },
+    "OutboundRTP": {
+      "type": "object",
+      "properties": {
+        "bytesSent": {
+          "type": "number"
+        },
+        "codecId": {
+          "type": "string"
+        },
+        "headerBytesSent": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        },
+        "isRemote": {
+          "type": "boolean"
+        },
+        "kind": {
+          "enum": [
+            "audio",
+            "video"
+          ],
+          "type": "string"
+        },
+        "mediaSourceId": {
+          "type": "string"
+        },
+        "mediaType": {
+          "enum": [
+            "audio",
+            "video"
+          ],
+          "type": "string"
+        },
+        "packetsSent": {
+          "type": "number"
+        },
+        "remoteId": {
+          "type": "string"
+        },
+        "retransmittedBytesSent": {
+          "type": "number"
+        },
+        "retransmittedPacketsSent": {
+          "type": "number"
+        },
+        "ssrc": {
+          "type": "number"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "trackId": {
+          "type": "string"
+        },
+        "transportId": {
+          "type": "string"
+        },
+        "encoderImplementation": {
+          "type": "string"
+        },
+        "firCount": {
+          "type": "number"
+        },
+        "framesEncoded": {
+          "type": "number"
+        },
+        "keyFramesEncoded": {
+          "type": "number"
+        },
+        "nackCount": {
+          "type": "number"
+        },
+        "pliCount": {
+          "type": "number"
+        },
+        "qpSum": {
+          "type": "number"
+        },
+        "qualityLimitationReason": {
+          "enum": [
+            "bandwidth",
+            "cpu",
+            "none",
+            "other"
+          ],
+          "type": "string"
+        },
+        "qualityLimitationResolutionChanges": {
+          "type": "number"
+        },
+        "totalEncodeTime": {
+          "type": "number"
+        },
+        "totalEncodedBytesTarget": {
+          "type": "number"
+        },
+        "totalPacketSendDelay": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "outbound-rtp"
+          ]
+        }
+      },
+      "required": [
+        "bytesSent",
+        "codecId",
+        "encoderImplementation",
+        "firCount",
+        "framesEncoded",
+        "headerBytesSent",
+        "id",
+        "isRemote",
+        "keyFramesEncoded",
+        "kind",
+        "mediaSourceId",
+        "mediaType",
+        "nackCount",
+        "packetsSent",
+        "pliCount",
+        "qpSum",
+        "qualityLimitationReason",
+        "qualityLimitationResolutionChanges",
+        "remoteId",
+        "retransmittedBytesSent",
+        "retransmittedPacketsSent",
+        "ssrc",
+        "timestamp",
+        "totalEncodeTime",
+        "totalEncodedBytesTarget",
+        "totalPacketSendDelay",
+        "trackId",
+        "transportId",
+        "type"
+      ]
+    },
+    "InboundRTP": {
+      "type": "object",
+      "properties": {
+        "bytesReceived": {
+          "type": "number"
+        },
+        "codecId": {
+          "type": "string"
+        },
+        "estimatedPlayoutTimestamp": {
+          "type": "number"
+        },
+        "fecPacketsDiscarded": {
+          "type": "number"
+        },
+        "fecPacketsReceived": {
+          "type": "number"
+        },
+        "headerBytesReceived": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        },
+        "isRemote": {
+          "type": "boolean"
+        },
+        "jitter": {
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "audio",
+            "video"
+          ],
+          "type": "string"
+        },
+        "lastPacketReceivedTimestamp": {
+          "type": "number"
+        },
+        "mediaType": {
+          "enum": [
+            "audio",
+            "video"
+          ],
+          "type": "string"
+        },
+        "packetsLost": {
+          "type": "number"
+        },
+        "packetsReceived": {
+          "type": "number"
+        },
+        "ssrc": {
+          "type": "number"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "trackId": {
+          "type": "string"
+        },
+        "transportId": {
+          "type": "string"
+        },
+        "decoderImplementation": {
+          "type": "string"
+        },
+        "firCount": {
+          "type": "number"
+        },
+        "framesDecoded": {
+          "type": "number"
+        },
+        "keyFramesDecoded": {
+          "type": "number"
+        },
+        "nackCount": {
+          "type": "number"
+        },
+        "pliCount": {
+          "type": "number"
+        },
+        "qpSum": {
+          "type": "number"
+        },
+        "totalDecodeTime": {
+          "type": "number"
+        },
+        "totalInterFrameDelay": {
+          "type": "number"
+        },
+        "totalSquaredInterFrameDelay": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "inbound-rtp"
+          ]
+        }
+      },
+      "required": [
+        "bytesReceived",
+        "codecId",
+        "decoderImplementation",
+        "estimatedPlayoutTimestamp",
+        "fecPacketsDiscarded",
+        "fecPacketsReceived",
+        "firCount",
+        "framesDecoded",
+        "headerBytesReceived",
+        "id",
+        "isRemote",
+        "jitter",
+        "keyFramesDecoded",
+        "kind",
+        "lastPacketReceivedTimestamp",
+        "mediaType",
+        "nackCount",
+        "packetsLost",
+        "packetsReceived",
+        "pliCount",
+        "qpSum",
+        "ssrc",
+        "timestamp",
+        "totalDecodeTime",
+        "totalInterFrameDelay",
+        "totalSquaredInterFrameDelay",
+        "trackId",
+        "transportId",
+        "type"
+      ]
+    },
+    "RemoteInboundRTP": {
+      "type": "object",
+      "properties": {
+        "codecId": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "jitter": {
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "audio",
+            "video"
+          ],
+          "type": "string"
+        },
+        "localId": {
+          "type": "string"
+        },
+        "packetsLost": {
+          "type": "number"
+        },
+        "roundTripTime": {
+          "type": "number"
+        },
+        "ssrc": {
+          "type": "number"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "transportId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "remote-inbound-rtp"
+          ]
+        }
+      },
+      "required": [
+        "codecId",
+        "id",
+        "jitter",
+        "kind",
+        "localId",
+        "packetsLost",
+        "roundTripTime",
+        "ssrc",
+        "timestamp",
+        "transportId",
+        "type"
+      ]
+    },
+    "ObserveRTCCIceStats": {
+      "type": "object",
+      "properties": {
+        "localCandidates": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#/definitions/ICECandidate"
+            }
+          ],
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "remoteCandidates": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#/definitions/ICECandidate"
+            }
+          ],
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "iceCandidatePair": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#/definitions/CandidatePair"
+            }
+          ],
+          "minItems": 1,
+          "maxItems": 1
+        }
+      },
+      "required": [
+        "iceCandidatePair",
+        "localCandidates",
+        "remoteCandidates"
+      ]
+    },
+    "ICECandidate": {
+      "type": "object",
+      "properties": {
+        "candidate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RemoteCandidate"
+            },
+            {
+              "$ref": "#/definitions/LocalCandidate"
+            }
+          ]
+        }
+      },
+      "required": [
+        "candidate"
+      ]
+    },
+    "RemoteCandidate": {
+      "type": "object",
+      "properties": {
+        "candidateType": {
+          "enum": [
+            "host",
+            "prflx",
+            "relay",
+            "srflx"
+          ],
+          "type": "string"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "isRemote": {
+          "type": "boolean",
+          "enum": [
+            true
+          ]
+        },
+        "port": {
+          "type": "number"
+        },
+        "priority": {
+          "type": "number"
+        },
+        "protocol": {
+          "enum": [
+            "tcp",
+            "udp"
+          ],
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "transportId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "remote-candidate"
+          ]
+        }
+      },
+      "required": [
+        "candidateType",
+        "deleted",
+        "id",
+        "ip",
+        "isRemote",
+        "port",
+        "priority",
+        "protocol",
+        "timestamp",
+        "transportId",
+        "type"
+      ]
+    },
+    "LocalCandidate": {
+      "type": "object",
+      "properties": {
+        "candidateType": {
+          "enum": [
+            "host",
+            "prflx",
+            "relay",
+            "srflx"
+          ],
+          "type": "string"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "isRemote": {
+          "type": "boolean",
+          "enum": [
+            false
+          ]
+        },
+        "networkType": {
+          "enum": [
+            "bluetooth",
+            "cellular",
+            "ethernet",
+            "unknown",
+            "vpn",
+            "wifi",
+            "wimax"
+          ],
+          "type": "string"
+        },
+        "port": {
+          "type": "number"
+        },
+        "priority": {
+          "type": "number"
+        },
+        "protocol": {
+          "enum": [
+            "tcp",
+            "udp"
+          ],
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "transportId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "local-candidate"
+          ]
+        }
+      },
+      "required": [
+        "candidateType",
+        "deleted",
+        "id",
+        "ip",
+        "isRemote",
+        "networkType",
+        "port",
+        "priority",
+        "protocol",
+        "timestamp",
+        "transportId",
+        "type"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

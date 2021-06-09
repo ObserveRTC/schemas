@@ -4,14 +4,40 @@ const TJS = require("typescript-json-schema");
 
 const CONFIG = {
     reports: {
-        sourcePath: "./sources/reports",
-        version: "3.0.0"
+        // v2: {
+        //     sourcePath: "./sources/reports/v2",
+        //     revision: 3,
+        // },
+        v3: {
+            sourcePath: "./sources/reports/v3",
+            revision: 1,
+        }
     },
     samples: {
-        sourcePath: "./sources/samples",
-        version: "1.0.0",
+        legacy: {
+            sourcePath: "./sources/samples/legacy",
+            revision: 1,
+        },
+        // v1: {
+        //     sourcePath: "./sources/samples/v1",
+        //     revision: 1,
+        // },
+        v2: {
+            sourcePath: "./sources/samples/v2",
+            revision: 1,
+        },
     }
-};
+}
+// const CONFIG = {
+//     reports: {
+//         sourcePath: "./sources/reports",
+//         version: "3.0.0"
+//     },
+//     samples: {
+//         sourcePath: "./sources/samples",
+//         version: "2.0.0",
+//     }
+// };
 
 function parseVersion(version) {
     const arr = version.split('.');
@@ -97,8 +123,10 @@ class MarkdownSchemaDescription {
         
         if (0 < this._preMarks.length) {
             result.push("\n");
-            result.push(...this._preMarks);
-            
+            this._postMarks.forEach(preMd => {
+                result.push("\n\n");
+                result.push(preMd);
+            });
         }
 
         if (0 < this._rows.length) {
@@ -113,8 +141,11 @@ class MarkdownSchemaDescription {
         }
 
         if (0 < this._postMarks.length) {
-            result.push("\n\n");
-            result.push(...this._postMarks);
+            result.push("\n");
+            this._postMarks.forEach(postMd => {
+                result.push("\n");
+                result.push(postMd);
+            });
         }
 
         return result.join('\n');
@@ -194,7 +225,6 @@ function parseSampleSchemaFromPath({ samples, basePath, outputPath }) {
 
     // We can either get the schema for one file and one type...
     // const schema = TJS.generateSchema(program, "ClientSample", settings);
-
     const generator = TJS.buildGenerator(program, settings);
     const result = new Map();
     samples.forEach(sample => {
@@ -224,8 +254,8 @@ class SchemaGenerator {
                 generator._sampleOutputPath = value;
                 return result;
             },
-            withAddedVersionTxt: value => {
-                generator._addsVersionTxt = value;
+            withMeta: value => {
+                generator._addMetaFile = value;
                 return result;
             },
             build: () => {
@@ -242,7 +272,11 @@ class SchemaGenerator {
         this._markdownDocs = true;
         this._addsVersionTxt = true;
 
-        this._reportNames = [
+        this._reportV2Names = [
+            "report",
+        ];
+
+        this._reportV3Names = [
             "outbound-audio-track-report",
             "outbound-video-track-report",
             "inbound-audio-track-report",
@@ -255,112 +289,105 @@ class SchemaGenerator {
             "observer-event-report"
         ];
 
-        this._sampleNames = [
+        this._sampleLegacyNames = [
+            "PeerConnectionSample",
+        ];
+
+        this._sampleV2Names = [
             "ClientSample",
         ];
     }
 
     async generate() {
-        await this._generateReportsSchema();
-        
-        await this._generateSamplesSchema();
+        await this._generateReportsSchema({
+            sourcePath: CONFIG.reports.v3.sourcePath,
+            revision: CONFIG.reports.v3.revision,
+            outputPath: this._outputPath + "/reports/v3",
+            reportNames: this._reportV3Names,
+        });
+
+        await this._generateSamplesSchema({
+            sourcePath: CONFIG.samples.legacy.sourcePath,
+            revision: CONFIG.samples.legacy.revision,
+            outputPath: this._outputPath + "/samples/legacy",
+            sampleNames: this._sampleLegacyNames,
+        });
+
+        await this._generateSamplesSchema({
+            sourcePath: CONFIG.samples.v2.sourcePath,
+            revision: CONFIG.samples.v2.revision,
+            outputPath: this._outputPath + "/samples/v2",
+            sampleNames: this._sampleV2Names,
+        });
+        // await this._generateSamplesSchema();
     }
 
-    async _generateReportsSchema() {
-        const version = CONFIG.reports.version;
-        const { major } = parseVersion(version);
-        let reportPath;
-        if (this._reportOutputPath) {
-            reportPath = this._reportOutputPath;
-        } else {
-            reportPath = this._outputPath + "/reports/v" + major + "/";
-        }
+    async _generateReportsSchema({ sourcePath, revision, outputPath, reportNames }) {
         return new Promise((resolve, reject) => {
-            fs.mkdir(reportPath, { recursive: true }, (err) => {
+            fs.mkdir(outputPath, { recursive: true }, (err) => {
                 if (err) {
                     reject(err);
                     return;
                 }
-                for (const reportName of this._reportNames) {
-                    const path = CONFIG.reports.sourcePath + "/" + reportName + ".avsc";
-                    const { parsedObject, parsedSchema } = parseReportSchemaFromPath(path);
+                for (const reportName of reportNames) {
+                    const srcPath = sourcePath + "/" + reportName + ".avsc";
+                    const dstPathBase = outputPath + "/" + reportName;
+                    const { parsedObject } = parseReportSchemaFromPath(srcPath);
                     const savedSchemaText = JSON.stringify(parsedObject, null, 2)
-                    fs.writeFileSync(reportPath + reportName + ".avsc", savedSchemaText);
+                    fs.writeFileSync(dstPathBase + ".avsc", savedSchemaText);
                     console.log("REPORT SCHEMA: " + reportName + " is successfully generated");
                     if (this._markdownDocs === true) {
                         const markdown = makeMarkdownDocFromReportSchema(parsedObject)
-                        fs.writeFileSync(reportPath + reportName + ".md", markdown);
+                        fs.writeFileSync(dstPathBase + ".md", markdown);
                         console.log("REPORT MARKDOWN: " + reportName + " is successfully generated");
                     }
                 }
-                if (this._addsVersionTxt === true) {
-                    fs.writeFileSync(reportPath + "version.txt", version);
+                if (this._addMetaFile === true) {
+                    fs.writeFileSync(outputPath + "/meta.txt", [
+                        "revision: " + revision
+                    ].join("\n"));
                 }
                 resolve();
             });
         });
     }
 
-    async _generateSamplesSchema() {
-        const version = CONFIG.samples.version;
-        const { major } = parseVersion(version);
-        let samplePath;
-        if (this._sampleOutputPath) {
-            samplePath = this._sampleOutputPath;
-        } else {
-            samplePath = this._outputPath + "/samples/v" + major + "/";
-        }
+    async _generateSamplesSchema({ sourcePath, outputPath, revision, sampleNames}) {
         return new Promise((resolve, reject) => {
-            fs.mkdir(samplePath, { recursive: true }, (err) => {
+            fs.mkdir(outputPath, { recursive: true }, (err) => {
                 if (err) {
                     reject(err);
                     return;
                 }
                 
                 const schemas = parseSampleSchemaFromPath({
-                    samples: this._sampleNames,
-                    basePath: CONFIG.samples.sourcePath,
-                    outputPath: samplePath
+                    samples: sampleNames,
+                    basePath: sourcePath,
+                    outputPath,
                 });
                 for (const [sampleName, generatedSchema] of schemas.entries()) {
                     const generatedSchemaText = JSON.stringify(generatedSchema, null, 2);
-                    fs.writeFileSync(samplePath + "/" + sampleName + ".json", generatedSchemaText);
+                    fs.writeFileSync(outputPath + "/" + sampleName + ".json", generatedSchemaText);
                     console.log("SAMPLE SCHEMA: " + sampleName + " is successfully generated");
                     if (this._markdownDocs === true) {
-                        const markdown = makeMarkdownDocFromJsonSchema(sampleName, generatedSchema)
-                        fs.writeFileSync(samplePath + sampleName + ".md", markdown);
-                        console.log("SAMPLE MARKDOWN: " + sampleName + " is successfully generated");
+                        try {
+                            const markdown = makeMarkdownDocFromJsonSchema(sampleName, generatedSchema)
+                            fs.writeFileSync(outputPath + "/" + sampleName + ".md", markdown);
+                            console.log("SAMPLE MARKDOWN: " + sampleName + " is successfully generated");    
+                        } catch (error) {
+                            console.error("SAMPLE MARKDOWN: Unsuccessfull documentation creation: " + error);
+                        }
+                        
                     }
                 }
-                if (this._addsVersionTxt === true) {
-                    fs.writeFileSync(samplePath + "version.txt", version);
+                if (this._addMetaFile === true) {
+                    fs.writeFileSync(outputPath + "/meta.txt", [
+                        "revision: " + revision
+                    ].join("\n"));
                 }
                 resolve();
             });
         });
-    }
-
-    _generateMkdocs(reportSchemas, sampleSchemas) {
-
-        // const parse = require('json-schema-to-markdown');
-        // const markdown = parse(s1, "##");
-
-        fs.writeFileSync('./output/ClientSample.schema.json', JSON.stringify(s1, null, 1));
-        fs.writeFileSync('./output/ClientSample.md', markdown);
-
-    }
-
-}
-
-const generatorBuilder = SchemaGenerator.builder()
-
-const start = async () => {
-    try {
-        const generator = generatorBuilder.build();
-        generator.generate();
-    } catch (err) {
-        console.error(err);
-        process.exit(1)
     }
 }
 
@@ -373,27 +400,23 @@ const parser = new ArgumentParser({
 });
 
 parser.add_argument('-o', '--outputPath', { help: 'The output path the schemas will be generated', default: "./generated-schemas" });
-parser.add_argument('-ro', '--reportsOutput', { help: 'The explicit output path for the generated report schemas and markdowns.', default: null });
-parser.add_argument('-so', '--samplesOutput', { help: 'The explicit output path for the generated sample schemas and markdowns.', default: null });
-parser.add_argument('-m', '--markdowns', { help: 'flag to determine if markdown should be generated or not', default: true });
-parser.add_argument('-av', '--addsVersionTxt', { help: 'flag to determine if the version.txt is added to the output or not', default: true });
+parser.add_argument('-md', '--markdowns', { help: 'flag to determine if markdown should be generated or not', default: true });
+parser.add_argument('-m', '--meta', { help: 'flag to determine if the meta.txt is added to the output path or not', default: true });
 
 const parsedArgs = parser.parse_args();
-generatorBuilder
+const generatorBuilder = SchemaGenerator.builder()
     .withOutputPath(parsedArgs.outputPath)
     .withMarkdownDocs(parsedArgs.markdowns)
-    .withAddedVersionTxt(parsedArgs.addsVersionTxt)
+    .withMeta(parsedArgs.meta)
 
-if (parsedArgs.reportsOutput) {
-    generatorBuilder
-        .withReportsOutputPath(parsedArgs.reportsOutput)
-    ;
-}
-
-if (parsedArgs.samplesOutput) {
-    generatorBuilder
-        .withSamplesOutputPath(parsedArgs.samplesOutput)
-    ;
+const start = async () => {
+    try {
+        const generator = generatorBuilder.build();
+        generator.generate();
+    } catch (err) {
+        console.error(err);
+        process.exit(1)
+    }
 }
 
 start();
