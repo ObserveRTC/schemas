@@ -6,17 +6,14 @@ const CONFIG = {
     reports: {
         // v2: {
         //     sourcePath: "./sources/reports/v2",
-        //     revision: 3,
         // },
         v3: {
             sourcePath: "./sources/reports/v3",
-            revision: 1,
         }
     },
     samples: {
         legacy: {
             sourcePath: "./sources/samples/legacy",
-            revision: 1,
         },
         // v1: {
         //     sourcePath: "./sources/samples/v1",
@@ -24,7 +21,6 @@ const CONFIG = {
         // },
         v2: {
             sourcePath: "./sources/samples/v2",
-            revision: 1,
         },
     }
 }
@@ -58,10 +54,16 @@ function removeComments(string){
 // avro-js brokes with comments, java did not.
 function parseReportSchemaFromPath(path) {
     const schemaText = fs.readFileSync(path, 'utf-8');
+    const regexpRevision =  /@revision: (?<revision>\d+)/mg;
+    const revisionMatch = regexpRevision.exec(schemaText);
+    let revision = -1;
+    if (revisionMatch && revisionMatch.groups && revisionMatch.groups.revision) {
+        revision = revisionMatch.groups.revision;
+    }
     const schemaString = removeComments(schemaText);
     const parsedSchema = avro.parse(schemaString);
     const parsedObject = JSON.parse(schemaString);
-    return { parsedSchema, parsedObject };
+    return { parsedSchema, parsedObject, revision };
 }
 
 function replaceAll(str, find, replace) {
@@ -219,7 +221,23 @@ function parseSampleSchemaFromPath({ samples, basePath, outputPath }) {
     };
 
     // optionally pass a base path
-    const baseSamples = samples.map(sample => basePath + "/" + sample + ".ts")
+    const baseSamples = samples.map(sample => basePath + "/" + sample + ".ts");
+    const revisions = new Map();
+    const regexpRevision =  /@revision: (?<revision>\d+)/mg;
+    for (let i = 0; i < samples.length; ++i) {
+        const baseSample = baseSamples[i];
+        const sample = samples[i];
+        const schemaText = fs.readFileSync(baseSample, 'utf-8');
+        const revisionMatch = regexpRevision.exec(schemaText);
+        if (revisionMatch && revisionMatch.groups && revisionMatch.groups.revision) {
+            const revision = revisionMatch.groups.revision;
+            revisions.set(sample, revision); 
+        }
+    }
+    baseSamples.forEach(baseSample => {
+        
+    });
+    
     const program = TJS.getProgramFromFiles(
         baseSamples,
         compilerOptions,
@@ -229,12 +247,12 @@ function parseSampleSchemaFromPath({ samples, basePath, outputPath }) {
     // We can either get the schema for one file and one type...
     // const schema = TJS.generateSchema(program, "ClientSample", settings);
     const generator = TJS.buildGenerator(program, settings);
-    const result = new Map();
+    const schemas = new Map();
     samples.forEach(sample => {
         const schema = generator.getSchemaForSymbol(sample);
-        result.set(sample, schema);
+        schemas.set(sample, schema);
     });
-    return result;
+    return { schemas, revisions };
 }
 
 class SchemaGenerator {
@@ -332,10 +350,14 @@ class SchemaGenerator {
                     reject(err);
                     return;
                 }
+                const revisions = new Map();
                 for (const reportName of reportNames) {
                     const srcPath = sourcePath + "/" + reportName + ".avsc";
                     const dstPathBase = outputPath + "/" + reportName;
-                    const { parsedObject } = parseReportSchemaFromPath(srcPath);
+                    const { parsedObject, revision} = parseReportSchemaFromPath(srcPath);
+                    if (revision) {
+                        revisions.set(reportName, revision);
+                    }
                     const savedSchemaText = JSON.stringify(parsedObject, null, 2)
                     fs.writeFileSync(dstPathBase + ".avsc", savedSchemaText);
                     console.log("REPORT SCHEMA: " + reportName + " is successfully generated");
@@ -346,8 +368,13 @@ class SchemaGenerator {
                     }
                 }
                 if (this._addMetaFile === true) {
+                    const revisionText = [];
+                    for (const [sample, revision] of revisions) {
+                        revisionText.push("\t" + sample + ": " + revision);
+                    }
                     fs.writeFileSync(outputPath + "/meta.txt", [
-                        "revision: " + revision
+                        "Revisions:",
+                        ...revisionText,
                     ].join("\n"));
                 }
                 resolve();
@@ -355,7 +382,7 @@ class SchemaGenerator {
         });
     }
 
-    async _generateSamplesSchema({ sourcePath, outputPath, revision, sampleNames}) {
+    async _generateSamplesSchema({ sourcePath, outputPath, sampleNames}) {
         return new Promise((resolve, reject) => {
             fs.mkdir(outputPath, { recursive: true }, (err) => {
                 if (err) {
@@ -363,11 +390,12 @@ class SchemaGenerator {
                     return;
                 }
                 
-                const schemas = parseSampleSchemaFromPath({
+                const {schemas, revisions} = parseSampleSchemaFromPath({
                     samples: sampleNames,
                     basePath: sourcePath,
                     outputPath,
                 });
+                
                 for (const [sampleName, generatedSchema] of schemas.entries()) {
                     const generatedSchemaText = JSON.stringify(generatedSchema, null, 2);
                     fs.writeFileSync(outputPath + "/" + sampleName + ".json", generatedSchemaText);
@@ -384,8 +412,13 @@ class SchemaGenerator {
                     }
                 }
                 if (this._addMetaFile === true) {
+                    const revisionText = [];
+                    for (const [sample, revision] of revisions) {
+                        revisionText.push("\t" + sample + ": " + revision);
+                    }
                     fs.writeFileSync(outputPath + "/meta.txt", [
-                        "revision: " + revision
+                        "Revisions:",
+                        ...revisionText,
                     ].join("\n"));
                 }
                 resolve();

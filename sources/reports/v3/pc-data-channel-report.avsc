@@ -1,3 +1,4 @@
+/* @revision: 1 */
 {
     "type" : "record",
     "name" : "PcDataChannelReport",
