@@ -24,16 +24,6 @@ const CONFIG = {
         },
     }
 }
-// const CONFIG = {
-//     reports: {
-//         sourcePath: "./sources/reports",
-//         version: "3.0.0"
-//     },
-//     samples: {
-//         sourcePath: "./sources/samples",
-//         version: "2.0.0",
-//     }
-// };
 
 function parseVersion(version) {
     const arr = version.split('.');
@@ -67,6 +57,9 @@ function parseReportSchemaFromPath(path) {
 }
 
 function replaceAll(str, find, replace) {
+    if (!str) {
+        return str;
+    }
     return str.replace(new RegExp(find, 'g'), replace);
   }
 
@@ -96,6 +89,9 @@ class MarkdownSchemaDescription {
     }
 
     withTableRow({ name, required, type, description }) {
+        if (!description) {
+            console.warn(`Field ${this._title}.${name} does not have any description. Do you want to add one? It is prooved to be useful. `)
+        }
         this._rows.push({
             name,
             value: required ? "Required " + type : "Optional " + type,
