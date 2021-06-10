@@ -2141,7 +2141,7 @@ interface ClientSample {
   /**
    * List of the media devices the client has.
    */
-  devices?: string[];
+  mediaDevices?: string[];
 
   /**
    * List of user media errors
