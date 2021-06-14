@@ -153,20 +153,26 @@ class MarkdownSchemaDescription {
     }
 }
 
-function makeMarkdownDocFromReportSchema(avroSchema) {
+function makeMarkdownDocFromReportSchema(avroSchema, typeMap) {
     const markdown = new MarkdownSchemaDescription()
         .withTitle(avroSchema.name)
         .withDescription(avroSchema.doc)
     ;
     avroSchema.fields.forEach(field => {
         const required = field.default === undefined;
+        const type = required ? field.type : field.type[1];
         markdown.withTableRow({
             name: field.name,
             description: field.doc,
             required,
-            type: required ? field.type : field.type[1],
-        })
+            type,
+        });
+        if (typeMap) {
+            typeMap.set(field.name, type);
+        }
     });
+    
+    
     const result = markdown.build();
     return result;
 }
@@ -258,6 +264,7 @@ class POJOBuilder {
         this._description = null;
         this._fields = [];
         this._nestedClasses = [];
+        this._typeMap = new Map();
     }
 
     withClassName(value) {
@@ -275,8 +282,16 @@ class POJOBuilder {
         return this;
     }
 
+    withTypeMap(value) {
+        this._typeMap = value;
+        return this;
+    }
+
     _getJavaType(fieldName, type, itemsType) {
         let result;
+        if (this._typeMap && this._typeMap.has(fieldName)) {
+            type = this._typeMap.get(fieldName);
+        }
         if (type === "array") {
             result = this._getJavaType(fieldName, itemsType, null) + "[]";
         } else if (type === "string") {
@@ -340,16 +355,17 @@ class POJOBuilder {
 }
 
 
-function makePojoForSampleSchema(jsonSchemaName, jsonSchema, level = 0) {
+function makePojoForSampleSchema(jsonSchemaName, jsonSchema, level, reportTypes) {
     const pojo = new POJOBuilder()
         .withClassName(jsonSchemaName)
         .withClassDescription(jsonSchema.description)
         .withLevel(level)
+        .withTypeMap(reportTypes)
     ;
     const definitions = jsonSchema.definitions;
     if (definitions) {
         for (const [defName, defSchema] of Object.entries(definitions)) {
-            const embeddedClass = makePojoForSampleSchema(defName, defSchema, level + 1);
+            const embeddedClass = makePojoForSampleSchema(defName, defSchema, level + 1, reportTypes);
             pojo.withNestedClass(embeddedClass);
         }
     }
@@ -452,7 +468,7 @@ class SchemaGenerator {
     }
 
     async generate() {
-        await this._generateReportsSchema({
+        const reportTypes = await this._generateReportsSchema({
             sourcePath: CONFIG.reports.v3.sourcePath,
             revision: CONFIG.reports.v3.revision,
             outputPath: this._outputPath + "/reports/v3",
@@ -473,6 +489,7 @@ class SchemaGenerator {
             outputPath: this._outputPath + "/samples/v2",
             sampleNames: this._sampleV2Names,
             generateJava: true,
+            reportTypes,
         });
         // await this._generateSamplesSchema();
     }
@@ -484,6 +501,7 @@ class SchemaGenerator {
                     reject(err);
                     return;
                 }
+                const typeMap = new Map();
                 const revisions = new Map();
                 for (const reportName of reportNames) {
                     const srcPath = sourcePath + "/" + reportName + ".avsc";
@@ -496,7 +514,7 @@ class SchemaGenerator {
                     fs.writeFileSync(dstPathBase + ".avsc", savedSchemaText);
                     console.log("REPORT SCHEMA: " + reportName + " is successfully generated");
                     if (this._markdownDocs === true) {
-                        const markdown = makeMarkdownDocFromReportSchema(parsedObject)
+                        const markdown = makeMarkdownDocFromReportSchema(parsedObject, typeMap)
                         fs.writeFileSync(dstPathBase + ".md", markdown);
                         console.log("REPORT MARKDOWN: " + reportName + " is successfully generated");
                     }
@@ -511,12 +529,12 @@ class SchemaGenerator {
                         ...revisionText,
                     ].join("\n"));
                 }
-                resolve();
+                resolve(typeMap);
             });
         });
     }
 
-    async _generateSamplesSchema({ sourcePath, outputPath, sampleNames, generateJava }) {
+    async _generateSamplesSchema({ sourcePath, outputPath, sampleNames, generateJava, reportTypes }) {
         return new Promise((resolve, reject) => {
             fs.mkdir(outputPath, { recursive: true }, (err) => {
                 if (err) {
@@ -544,7 +562,7 @@ class SchemaGenerator {
                         }
                     }
                     if (generateJava) {
-                        const pojo = makePojoForSampleSchema(sampleName, generatedSchema);
+                        const pojo = makePojoForSampleSchema(sampleName, generatedSchema, 0, reportTypes);
                         fs.writeFileSync(outputPath + "/" + sampleName + ".java", pojo);
                     }
                 }
