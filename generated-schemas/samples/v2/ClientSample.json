@@ -52,7 +52,7 @@
         "type": "string"
       }
     },
-    "devices": {
+    "mediaDevices": {
       "description": "List of the media devices the client has.",
       "type": "array",
       "items": {
