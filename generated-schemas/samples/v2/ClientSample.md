@@ -13,7 +13,7 @@ platform | Optional Platform | The platform
 browser | Optional Browser | Details of the browser the client has
 os | Optional OperationSystem | Details about the operation system the client has
 mediaConstraints | Optional array | List of the media constraints the client has<br /><br />Only presented if any changes occurred in the client
-devices | Optional array | List of the media devices the client has.
+mediaDevices | Optional array | List of the media devices the client has.
 userMediaErrors | Optional array | List of user media errors<br /><br />Only presented if any changes occurred in the client
 extensionStats | Optional array | List of the extension stats added by the webrtc app
 iceServers | Optional array | List of ICE server the client has<br /><br />Only presented if any changes occurred in the client
