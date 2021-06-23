@@ -2252,4 +2252,14 @@ interface ClientSample {
    * The timestamp when the sample is created
    */
   timestamp: number;
+
+  /**
+   * The client app running offsets from GMT in hours
+   */
+  timeZoneOffsetInHours?: number;
+
+  /**
+   * A sample marker indicate an additional information from the app
+   */
+  marker?: string;
 }

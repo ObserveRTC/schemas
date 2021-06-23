@@ -160,6 +160,14 @@
     "timestamp": {
       "description": "The timestamp when the sample is created",
       "type": "number"
+    },
+    "timeZoneOffsetInHours": {
+      "description": "The client app running offsets from GMT in hours",
+      "type": "number"
+    },
+    "marker": {
+      "description": "A sample marker indicate an additional information from the app",
+      "type": "string"
     }
   },
   "required": [

@@ -12,11 +12,6 @@
     "doc": "The unique identifier of the service",
     "type" : "string"
   }, {
-    "name" : "serviceName",
-    "doc": "The resolved service name configured for the service Id",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
     "type" : "string"

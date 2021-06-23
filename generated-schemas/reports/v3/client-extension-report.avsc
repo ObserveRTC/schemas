@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "ObserverExtensionReport",
+  "name": "ClientExtensionReport",
   "namespace": "org.observertc.webrtc.schemas.reports",
   "doc": "A Report created for Extended provided arbitrary data.",
   "fields": [

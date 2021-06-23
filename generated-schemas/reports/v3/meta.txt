@@ -1,8 +1,8 @@
 Revisions:
-	outbound-audio-track-report: 1
-	outbound-video-track-report: 1
 	inbound-audio-track-report: 1
 	inbound-video-track-report: 1
+	outbound-audio-track-report: 1
+	outbound-video-track-report: 1
 	pc-transport-report: 1
 	pc-data-channel-report: 1
 	call-event-report: 1
