@@ -9,19 +9,19 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to
-marker | string | No | The marker the originated sample is reported with
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 callId | string | Yes | The generated unique identifier of the call
-roomId | string | No | webrtc app provided room id
 clientId | string | Yes | The generated unique identifier of the client
-userId | string | No | webrtc app provided user identifier
 peerConnectionId | string | Yes | The unique identifier of the peer connection
+sampleSeq | int | Yes | The sequence number of the sample the report is generated from
+ssrc | long | Yes | The RTP SSRC field
+marker | string | No | The marker the originated sample is reported with
+roomId | string | No | webrtc app provided room id
+userId | string | No | webrtc app provided user identifier
 label | string | No | The webrtc app provided label the peer connection is labeled with
 remoteUserId | string | No | The webrtc app provided user id the track belongs to, or if the webrtc app did not provided the observer tried to match it
 remoteClientId | string | No | The observer matched remote client Id
 remotePeerConnectionId | string | No | The observer matched remote Peer Connection Id
-sampleSeq | int | Yes | The sequence number of the sample the report is generated from
-ssrc | long | Yes | The RTP SSRC field
 packetsReceived | int | No | The total number of packets received on the corresponded synchronization source
 packetsLost | int | No | The total number of bytes received on the corresponded synchronization source
 jitter | double | No | The corresponded synchronization source reported jitter

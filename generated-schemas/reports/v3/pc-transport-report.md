@@ -9,13 +9,13 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to
-marker | string | No | The marker the originated sample is reported with
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 callId | string | Yes | The generated unique identifier of the call
-roomId | string | No | webrtc app provided room id
 clientId | string | Yes | The generated unique identifier of the client
-userId | string | No | webrtc app provided user identifier
 peerConnectionId | string | Yes | The unique identifier of the peer connection
+marker | string | No | The marker the originated sample is reported with
+roomId | string | No | webrtc app provided room id
+userId | string | No | webrtc app provided user identifier
 label | string | No | The webrtc app provided label the peer connection is marked with
 packetsSent | int | No | Represents the total number of packets sent on the corresponded transport
 packetsReceived | int | No | Represents the total number of packets received on the corresponded transport
