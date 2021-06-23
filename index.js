@@ -56,6 +56,75 @@ function parseReportSchemaFromPath(path) {
     return { parsedSchema, parsedObject, revision };
 }
 
+function createMediaTrackReportSchema({inbAudTrackSchemaParsedObj, inbVidTrackSchemaParsedObj, outbAudTrackSchemaParsedObj, outbVidTrackSchemaParsedObj}) {
+    const result = {
+        type: "record",
+        name: "MediaTrackReport",
+        namespace: "org.observertc.webrtc.schemas.reports",
+        doc: "A General Flat merged Media Track Report for in-, outbound video and audio tracks",
+        fields: [],
+    };
+    const allFields = new Set();
+    [
+        inbAudTrackSchemaParsedObj, 
+        inbVidTrackSchemaParsedObj, 
+        outbAudTrackSchemaParsedObj, 
+        outbVidTrackSchemaParsedObj
+    ].forEach(schemaObj => schemaObj.fields.forEach(field => allFields.add(field.name)));
+    const onlyAudioFields = new Set(allFields);
+    const onlyVideoFields = new Set(allFields);
+    const onlyInboundFields = new Set(allFields);
+    const onlyOutboundFields = new Set(allFields);
+
+    inbAudTrackSchemaParsedObj.fields.forEach(field => {
+        const foundInResult = 0 < result.fields.filter(resultField => resultField.name === field.name).length;
+        if (!foundInResult) {
+            result.fields.push(field);
+        }
+        onlyVideoFields.delete(field.name);
+        onlyOutboundFields.delete(field.name);
+    });
+    inbVidTrackSchemaParsedObj.fields.forEach(field => {
+        const foundInResult = 0 < result.fields.filter(resultField => resultField.name === field.name).length;
+        if (!foundInResult) {
+            result.fields.push(field);
+        }
+        onlyAudioFields.delete(field.name);
+        onlyOutboundFields.delete(field.name);
+    });
+    outbAudTrackSchemaParsedObj.fields.forEach(field => {
+        const foundInResult = 0 < result.fields.filter(resultField => resultField.name === field.name).length;
+        if (!foundInResult) {
+            result.fields.push(field);
+        }
+        onlyVideoFields.delete(field.name);
+        onlyInboundFields.delete(field.name);
+    });
+    outbVidTrackSchemaParsedObj.fields.forEach(field => {
+        const foundInResult = 0 < result.fields.filter(resultField => resultField.name === field.name).length;
+        if (!foundInResult) {
+            result.fields.push(field);
+        }
+        onlyAudioFields.delete(field.name);
+        onlyInboundFields.delete(field.name);
+    });
+    result.fields.forEach(field => {
+        if (onlyInboundFields.has(field.name)) {
+            field.doc = "Only For Inbound Media Track Reports\n" + field.doc;
+        }
+        if (onlyOutboundFields.has(field.name)) {
+            field.doc = "Only For Outbound Media Track Reports\n" + field.doc;
+        }
+        if (onlyAudioFields.has(field.name)) {
+            field.doc = "Only For Audio Reports\n" + field.doc;
+        }
+        if (onlyVideoFields.has(field.name)) {
+            field.doc = "Only For Video Reports\n" + field.doc;
+        }
+    });
+    return result;
+}
+
 function replaceAll(str, find, replace) {
     if (!str) {
         return str;
@@ -94,7 +163,8 @@ class MarkdownSchemaDescription {
         }
         this._rows.push({
             name,
-            value: required ? "Required " + type : "Optional " + type,
+            required: required ? "Yes" : "No",
+            type,
             description: replaceAll(description, "\n", "<br />"),
         });
         return this;
@@ -132,11 +202,11 @@ class MarkdownSchemaDescription {
 
         if (0 < this._rows.length) {
             result.push("\n");
-            result.push("Name | Value | Description ");
-            result.push("--- | --- | ---");
+            result.push("Name | Type | Required | Description ");
+            result.push("--- | --- | --- | ---");
     
             this._rows.forEach(row => {
-                const resultRow = [row.name, row.value, row.description].join(' | ');
+                const resultRow = [row.name, row.type, row.required, row.description].join(' | ');
                 result.push(resultRow);
             });
         }
@@ -444,12 +514,19 @@ class SchemaGenerator {
         this._reportV2Names = [
             "report",
         ];
+        
+        this._mediaTrackReportNames = {
+            inbAudTrackSchemaParsedObj: "inbound-audio-track-report",
+            inbVidTrackSchemaParsedObj: "inbound-video-track-report",
+            outbAudTrackSchemaParsedObj: "outbound-audio-track-report", 
+            outbVidTrackSchemaParsedObj: "outbound-video-track-report",
+        }
 
         this._reportV3Names = [
-            "outbound-audio-track-report",
-            "outbound-video-track-report",
-            "inbound-audio-track-report",
-            "inbound-video-track-report",
+            this._mediaTrackReportNames.inbAudTrackSchemaParsedObj,
+            this._mediaTrackReportNames.inbVidTrackSchemaParsedObj,
+            this._mediaTrackReportNames.outbAudTrackSchemaParsedObj,
+            this._mediaTrackReportNames.outbVidTrackSchemaParsedObj,
             "pc-transport-report",
             "pc-data-channel-report",
             "call-event-report",
@@ -473,6 +550,7 @@ class SchemaGenerator {
             revision: CONFIG.reports.v3.revision,
             outputPath: this._outputPath + "/reports/v3",
             reportNames: this._reportV3Names,
+            mediaTrackReportNames: this._mediaTrackReportNames,
         });
 
         await this._generateSamplesSchema({
@@ -494,23 +572,30 @@ class SchemaGenerator {
         // await this._generateSamplesSchema();
     }
 
-    async _generateReportsSchema({ sourcePath, revision, outputPath, reportNames }) {
+    async _generateReportsSchema({ sourcePath, revision, outputPath, reportNames, mediaTrackReportNames }) {
         return new Promise((resolve, reject) => {
             fs.mkdir(outputPath, { recursive: true }, (err) => {
                 if (err) {
                     reject(err);
                     return;
                 }
+                const reverseFields = Object.entries(mediaTrackReportNames).map(([key, value]) => [value, key]);
+                const mediaTrackReportNamesMap = new Map(reverseFields);
+                const mediaTrackReportParsedObj = {};
                 const typeMap = new Map();
                 const revisions = new Map();
                 for (const reportName of reportNames) {
                     const srcPath = sourcePath + "/" + reportName + ".avsc";
                     const dstPathBase = outputPath + "/" + reportName;
-                    const { parsedObject, revision} = parseReportSchemaFromPath(srcPath);
+                    const { parsedObject, revision } = parseReportSchemaFromPath(srcPath);
                     if (revision) {
                         revisions.set(reportName, revision);
                     }
-                    const savedSchemaText = JSON.stringify(parsedObject, null, 2)
+                    if (mediaTrackReportNamesMap.has(reportName)) {
+                        const fieldName = mediaTrackReportNamesMap.get(reportName);
+                        mediaTrackReportParsedObj[fieldName] = parsedObject;
+                    }
+                    const savedSchemaText = JSON.stringify(parsedObject, null, 2);
                     fs.writeFileSync(dstPathBase + ".avsc", savedSchemaText);
                     console.log("REPORT SCHEMA: " + reportName + " is successfully generated");
                     if (this._markdownDocs === true) {
@@ -519,6 +604,15 @@ class SchemaGenerator {
                         console.log("REPORT MARKDOWN: " + reportName + " is successfully generated");
                     }
                 }
+                const mediaTrackParsedObj = createMediaTrackReportSchema(mediaTrackReportParsedObj);
+                const mediaTrackJSONStr = JSON.stringify(mediaTrackParsedObj, null, 2)
+                fs.writeFileSync(outputPath + "/mediaTrackReport.avsc", mediaTrackJSONStr);
+                if (this._markdownDocs === true) {
+                    const markdown = makeMarkdownDocFromReportSchema(mediaTrackParsedObj, typeMap)
+                    fs.writeFileSync(outputPath + "/mediaTrackReport.md", markdown);
+                    console.log("REPORT MARKDOWN: MediaTrackReport is successfully generated");
+                }
+
                 if (this._addMetaFile === true) {
                     const revisionText = [];
                     for (const [sample, revision] of revisions) {

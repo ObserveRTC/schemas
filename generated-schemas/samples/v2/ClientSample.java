@@ -179,6 +179,18 @@ Only presented if any changes occurred in the client
 	@JsonProperty("timestamp")
 	public long timestamp;
 	
+	/**
+	* The client app running offsets from GMT in hours
+	*/
+	@JsonProperty("timeZoneOffsetInHours")
+	public int timeZoneOffsetInHours;
+	
+	/**
+	* A sample marker indicate an additional information from the app
+	*/
+	@JsonProperty("marker")
+	public String marker;
+	
 	/** 
 	* Engine
 	*/
@@ -332,7 +344,7 @@ from https://www.w3.org/TR/webrtc-stats/
 		* Represents the total number of payload bytes sent on this RTCIceTransport, i.e., not including headers, padding or ICE connectivity checks.
 		*/
 		@JsonProperty("bytesSent")
-		public long bytesSent;
+		public int bytesSent;
 		
 			/**
 		* Represents the total number of payload bytes received on this RTCIceTransport, i.e., not including headers, padding or ICE connectivity checks.
@@ -980,7 +992,7 @@ Fields related to [RTCCodecStats](https://www.w3.org/TR/webrtc-stats/#dom-rtccod
 		* The discard rate during burst period on the corresponded RTP stream.
 		*/
 		@JsonProperty("burstDiscardRate")
-		public int burstDiscardRate;
+		public double burstDiscardRate;
 		
 			/**
 		* The loss rate during a gap period on the corresponded RTP stream.
@@ -1172,7 +1184,7 @@ Fields related to [RTCCodecStats](https://www.w3.org/TR/webrtc-stats/#dom-rtccod
 		* The total amount of bytes sent by the remote endpoint on the corresponded RTP stream
 		*/
 		@JsonProperty("bytesSent")
-		public long bytesSent;
+		public int bytesSent;
 		
 			/**
 		* The remote timestamp of the RTCP packets reported in the SR
@@ -1320,7 +1332,7 @@ used by the client as inbound
 		* The discard rate during burst period on the corresponded RTP stream.
 		*/
 		@JsonProperty("burstDiscardRate")
-		public int burstDiscardRate;
+		public double burstDiscardRate;
 		
 			/**
 		* The loss rate during a gap period on the corresponded RTP stream.
@@ -1536,7 +1548,7 @@ used by the client as inbound
 		* The total amount of bytes sent by the remote endpoint on the corresponded RTP stream
 		*/
 		@JsonProperty("bytesSent")
-		public long bytesSent;
+		public int bytesSent;
 		
 			/**
 		* The remote timestamp of the RTCP packets reported in the SR
@@ -1623,7 +1635,7 @@ Possible values are: "audio", and "video"
 		* The total amount of payload bytes sent on the corresponded RTP stream
 		*/
 		@JsonProperty("bytesSent")
-		public long bytesSent;
+		public int bytesSent;
 		
 			/**
 		* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.
@@ -1803,7 +1815,7 @@ Possible values are: "audio", and "video"
 		* The discard rate during burst period on the corresponded RTP stream.
 		*/
 		@JsonProperty("burstDiscardRate")
-		public int burstDiscardRate;
+		public double burstDiscardRate;
 		
 			/**
 		* The loss rate during a gap period on the corresponded RTP stream.
@@ -1965,7 +1977,7 @@ Possible values are: "audio", and "video"
 		* The total amount of payload bytes sent on the corresponded RTP stream
 		*/
 		@JsonProperty("bytesSent")
-		public long bytesSent;
+		public int bytesSent;
 		
 			/**
 		* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.
@@ -2229,7 +2241,7 @@ Possible values are: "audio", and "video"
 		* The discard rate during burst period on the corresponded RTP stream.
 		*/
 		@JsonProperty("burstDiscardRate")
-		public int burstDiscardRate;
+		public double burstDiscardRate;
 		
 			/**
 		* The loss rate during a gap period on the corresponded RTP stream.
@@ -2552,7 +2564,7 @@ Possible values are: "audio", and "video"
 		* The amount of bytes sent on the corresponded data channel
 		*/
 		@JsonProperty("bytesSent")
-		public long bytesSent;
+		public int bytesSent;
 		
 			/**
 		* The number of messages received on the corresponded data channel
