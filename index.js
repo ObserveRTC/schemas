@@ -199,13 +199,21 @@ class MarkdownSchemaDescription {
                 result.push(preMd);
             });
         }
-
+        const compareRows = (rowA, rowB) => {
+            if (rowA.required === "Yes" && rowB.required === "No") {
+                return -1;
+            }
+            if (rowA.required === "No" && rowB.required === "Yes") {
+                return 1;
+            }
+            return 0;
+        };
         if (0 < this._rows.length) {
             result.push("\n");
             result.push("Name | Type | Required | Description ");
             result.push("--- | --- | --- | ---");
-    
-            this._rows.forEach(row => {
+            
+            this._rows.sort(compareRows).forEach(row => {
                 const resultRow = [row.name, row.type, row.required, row.description].join(' | ');
                 result.push(resultRow);
             });
@@ -606,10 +614,11 @@ class SchemaGenerator {
                 }
                 const mediaTrackParsedObj = createMediaTrackReportSchema(mediaTrackReportParsedObj);
                 const mediaTrackJSONStr = JSON.stringify(mediaTrackParsedObj, null, 2)
-                fs.writeFileSync(outputPath + "/mediaTrackReport.avsc", mediaTrackJSONStr);
+                const mediaTrackReportFileName = "media-track-report"
+                fs.writeFileSync(outputPath + "/" + mediaTrackReportFileName + ".avsc", mediaTrackJSONStr);
                 if (this._markdownDocs === true) {
                     const markdown = makeMarkdownDocFromReportSchema(mediaTrackParsedObj, typeMap)
-                    fs.writeFileSync(outputPath + "/mediaTrackReport.md", markdown);
+                    fs.writeFileSync(outputPath + "/" + mediaTrackReportFileName + ".md", markdown);
                     console.log("REPORT MARKDOWN: MediaTrackReport is successfully generated");
                 }
 

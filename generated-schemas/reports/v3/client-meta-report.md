@@ -8,9 +8,9 @@ Metadata belongs to a call and can be useful
 Name | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
+timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 mediaUnitId | string | No | The media unit id the report belongs to
 marker | string | No | The marker the originated sample is reported with
-timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 callId | string | No | The generated unique identifier of the call
 roomId | string | No | webrtc app provided room id
 clientId | string | No | The generated unique identifier of the client

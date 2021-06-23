@@ -9,16 +9,16 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to
-marker | string | No | The marker the originated sample is reported with
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 callId | string | Yes | The generated unique identifier of the call
-roomId | string | No | webrtc app provided room id
 clientId | string | Yes | The generated unique identifier of the client
-userId | string | No | webrtc app provided user identifier
 peerConnectionId | string | Yes | The unique identifier of the peer connection
-label | string | No | The webrtc app provided label the peer connection is labeled with
 sampleSeq | int | Yes | The sequence number of the sample the report is generated from
 ssrc | long | Yes | The RTP SSRC field
+marker | string | No | The marker the originated sample is reported with
+roomId | string | No | webrtc app provided room id
+userId | string | No | webrtc app provided user identifier
+label | string | No | The webrtc app provided label the peer connection is labeled with
 packetsSent | int | No | The total number of packets sent on the corresponded synchronization source
 bytesSent | long | No | The total number of bytes sent on the corresponded synchronization source
 rid | long | No |  The rid encoding parameter of the corresponded synchronization source
