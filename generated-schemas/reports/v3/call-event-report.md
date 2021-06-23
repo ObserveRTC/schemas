@@ -17,6 +17,7 @@ roomId | string | No | webrtc app provided room id
 clientId | string | No | The generated unique identifier of the client
 userId | string | No | webrtc app provided user identifier
 peerConnectionId | string | No | The unique identifier of the peer connection
+mediaTrackId | string | No | The unique identifier of the media track
 sampleTimestamp | long | No | The timestamp of the sample the event related to
 sampleSeq | int | No | The sequence number of the sample the event may related to
 message | string | No | the human readable message of the event

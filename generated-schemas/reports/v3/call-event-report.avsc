@@ -78,6 +78,15 @@
       "default": null
     },
     {
+      "name": "mediaTrackId",
+      "doc": "The unique identifier of the media track",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "sampleTimestamp",
       "doc": "The timestamp of the sample the event related to",
       "type": [
