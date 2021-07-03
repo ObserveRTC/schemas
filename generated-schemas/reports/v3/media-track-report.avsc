@@ -382,7 +382,7 @@
       "doc": "Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source",
       "type": [
         "null",
-        "int"
+        "long"
       ],
       "default": null
     },
@@ -463,7 +463,7 @@
       "doc": "Only For Video Reports\nThe total number of frames dropped at decoding process on the corresponding synchronization source",
       "type": [
         "null",
-        "double"
+        "int"
       ],
       "default": null
     },

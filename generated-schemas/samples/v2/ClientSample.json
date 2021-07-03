@@ -70,7 +70,7 @@
       "description": "List of the extension stats added by the webrtc app",
       "type": "array",
       "items": {
-        "type": "string"
+        "$ref": "#/definitions/ExtensionStat"
       }
     },
     "iceServers": {
@@ -234,6 +234,20 @@
         },
         "versionName": {
           "description": "The version name of the operation system",
+          "type": "string"
+        }
+      }
+    },
+    "ExtensionStat": {
+      "description": "The ExtensionStat class is a custom defined payload, and type pair, which sent to the endpoint with the intention of landing in the backend database without any transformation",
+      "type": "object",
+      "properties": {
+        "extensionType": {
+          "description": "The custom defined type of the extension",
+          "type": "string"
+        },
+        "payload": {
+          "description": "The payload of the extension",
           "type": "string"
         }
       }
@@ -482,6 +496,10 @@
           "description": "It is the protocol used by the endpoint to communicate with the TURN server.\n\nPossible values: UDP, TCP, TLS",
           "type": "string"
         },
+        "localCandidateICEServerUrl": {
+          "description": "The url of the ICE server used by the \nlocal endpoint on the corresponded transport",
+          "type": "string"
+        },
         "remoteAddress": {
           "description": "The local address of the ICE candidate at the remote endpoint (IPv4, IPv6, FQDN)",
           "type": "string"
@@ -496,6 +514,10 @@
         },
         "remoteCandidateType": {
           "description": "The type of the remote candidate used for communication.\n\nPossible values: host, srflx, prflx, relay",
+          "type": "string"
+        },
+        "remoteCandidateICEServerUrl": {
+          "description": "The url of the ICE server used by the \nremote endpoint on the corresponded transport",
           "type": "string"
         },
         "remoteRelayProtocol": {
@@ -1162,6 +1184,10 @@
           "description": "The media codec targeted bit rate",
           "type": "number"
         },
+        "totalEncodedBytesTarget": {
+          "description": "The total encoded bytes targeted by the media encoder. this is the sum of the encoded frames",
+          "type": "number"
+        },
         "totalSamplesSent": {
           "description": "The total number of samples the media source sent",
           "type": "number"
@@ -1751,6 +1777,10 @@
         "bytesReceived": {
           "description": "The total amount of bytes received on the corresponded data channel",
           "type": "number"
+        },
+        "peerConnectionId": {
+          "description": "The unique generated identifier of the peer connection the data channel belongs to",
+          "type": "string"
         }
       }
     }

@@ -52,7 +52,7 @@ jitterBufferDelay | double | No | The total time of RTP packets spent in jitterb
 jitterBufferEmittedCount | int | No | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
 decoderImplementation | string | No | Indicate the name of the decoder implementation library
 packetsSent | int | No | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
-bytesSent | int | No | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
+bytesSent | long | No | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
 remoteTimestamp | double | No | The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
 reportsSent | int | No | The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
 ended | boolean | No | Flag represents if the receiver ended the media stream track or not.

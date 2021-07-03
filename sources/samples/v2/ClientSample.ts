@@ -397,6 +397,12 @@ interface PeerConnectionTransport {
    */
   localRelayProtocol?: string;
 
+  /**
+   * The url of the ICE server used by the 
+   * local endpoint on the corresponded transport
+   */
+  localCandidateICEServerUrl?: string;
+
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // RTCIceCandidateStats related fields
 // └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcicecandidatestats
@@ -424,6 +430,12 @@ interface PeerConnectionTransport {
    * Possible values: host, srflx, prflx, relay
    */
   remoteCandidateType?: string;
+
+  /**
+   * The url of the ICE server used by the 
+   * remote endpoint on the corresponded transport
+   */
+  remoteCandidateICEServerUrl?: string;
 
   /**
    * It is the protocol used by the remote endpoint to communicate with the TURN server.
@@ -556,6 +568,21 @@ interface MediaSourceStat {
    * The number of frames origianted from the media source in the last second
    */
   framesPerSecond?: number;
+}
+
+/**
+ * The ExtensionStat class is a custom defined payload, and type pair, which sent to the endpoint with the intention of landing in the backend database without any transformation
+ */
+interface ExtensionStat {
+  /**
+   * The custom defined type of the extension
+   */
+  extensionType?: string;
+
+  /**
+   * The payload of the extension
+   */
+  payload?: string;
 }
 
 /**
@@ -1313,6 +1340,11 @@ interface OutboundAudioTrack {
    * The media codec targeted bit rate
    */
   targetBitrate?: number;
+
+  /**
+   * The total encoded bytes targeted by the media encoder. this is the sum of the encoded frames
+   */
+  totalEncodedBytesTarget?: number;
 
   /**
    * The total number of samples the media source sent
@@ -2075,6 +2107,11 @@ interface DataChannel {
    * The total amount of bytes received on the corresponded data channel
    */
   bytesReceived?: number;
+
+  /**
+   * The unique generated identifier of the peer connection the data channel belongs to
+   */
+  peerConnectionId?: string;
 }
 
 interface ClientSample {
@@ -2153,7 +2190,7 @@ interface ClientSample {
   /**
    * List of the extension stats added by the webrtc app
    */
-  extensionStats?: string[]
+  extensionStats?: ExtensionStat[]
 
   /**
    * List of ICE server the client has

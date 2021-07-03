@@ -237,7 +237,7 @@
   }, {
     "name" : "bytesSent",
     "doc" : "Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source",
-    "type" : ["null", "int"],
+    "type" : ["null", "long"],
     "default" : null
   }, {
     "name" : "remoteTimestamp",

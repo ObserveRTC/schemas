@@ -86,6 +86,19 @@ version | string | No | The version number of the operation system
 versionName | string | No | The version name of the operation system
 
 
+### ExtensionStat
+---
+
+
+The ExtensionStat class is a custom defined payload, and type pair, which sent to the endpoint with the intention of landing in the backend database without any transformation
+
+
+Name | Type | Required | Description 
+--- | --- | --- | ---
+extensionType | string | No | The custom defined type of the extension
+payload | string | No | The payload of the extension
+
+
 ### PeerConnectionTransport
 ---
 
@@ -162,10 +175,12 @@ localPort | number | No | The port number used by the local ICE candidate for co
 localProtocol | string | No | The protocol used by the local ICE candidate for connectivity
 localCandidateType | string | No | The type of the candidate used for communication.<br /><br />Possible values: host, srflx, prflx, relay
 localRelayProtocol | string | No | It is the protocol used by the endpoint to communicate with the TURN server.<br /><br />Possible values: UDP, TCP, TLS
+localCandidateICEServerUrl | string | No | The url of the ICE server used by the <br />local endpoint on the corresponded transport
 remoteAddress | string | No | The local address of the ICE candidate at the remote endpoint (IPv4, IPv6, FQDN)
 remotePort | number | No | The port number used by the remote ICE candidate for connectivity<br /><br />Possible values: UDP, TCP
 remoteProtocol | string | No | The protocol used by the remote ICE candidate for connectivity
 remoteCandidateType | string | No | The type of the remote candidate used for communication.<br /><br />Possible values: host, srflx, prflx, relay
+remoteCandidateICEServerUrl | string | No | The url of the ICE server used by the <br />remote endpoint on the corresponded transport
 remoteRelayProtocol | string | No | It is the protocol used by the remote endpoint to communicate with the TURN server.<br /><br />Possible values: UDP, TCP, TLS
 sentMediaPackets | number | No | Client calculated metric.<br />The total number of media packets sent by all tracks using the peer connection.<br /><br />Note: Take care of the fact that tracks are attached and detached significantly changing the value of this field
 receivedMediaPackets | number | No | Client calculated metric.<br />The total number of media packets received by all tracks using the peer connection.<br /><br />Note: Take care of the fact that tracks are attached and detached significantly changing the value of this field
@@ -394,6 +409,7 @@ fecPacketsSent | number | No | The total number of FEC packets sent on the corre
 retransmittedPacketsSent | number | No | The total number of retransmitted packets sent on the corresponded RTP stream.
 retransmittedBytesSent | number | No | The total number of retransmitted bytes sent on the corresponded RTP stream
 targetBitrate | number | No | The media codec targeted bit rate
+totalEncodedBytesTarget | number | No | The total encoded bytes targeted by the media encoder. this is the sum of the encoded frames
 totalSamplesSent | number | No | The total number of samples the media source sent
 samplesEncodedWithSilk | number | No | The total number of samples encoded with SILK
 samplesEncodedWithCelt | number | No | The total number of samples encoded with CELT
@@ -567,3 +583,4 @@ messagesSent | number | No | The total number of messages sent on this data chan
 bytesSent | string | No | The amount of bytes sent on the corresponded data channel
 messagesReceived | number | No | The number of messages received on the corresponded data channel
 bytesReceived | number | No | The total amount of bytes received on the corresponded data channel
+peerConnectionId | string | No | The unique generated identifier of the peer connection the data channel belongs to

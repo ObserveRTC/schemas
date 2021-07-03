@@ -57,6 +57,11 @@
         "type" : [ "null", "string" ],
         "default" : null
       }, {
+        "name" : "SSRC",
+        "doc": "The SSRC identifier of the RTP stream a trackId belongs to",
+        "type" : [ "null", "long" ],
+        "default" : null
+      }, {
         "name" : "sampleTimestamp",
         "doc": "The timestamp of the sample the event related to",
         "type" : [ "null", "long" ],

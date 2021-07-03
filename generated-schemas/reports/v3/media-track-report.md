@@ -52,7 +52,7 @@ jitterBufferDelay | double | No | Only For Inbound Media Track Reports<br />The 
 jitterBufferEmittedCount | int | No | Only For Inbound Media Track Reports<br />The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
 decoderImplementation | string | No | Only For Inbound Media Track Reports<br />Indicate the name of the decoder implementation library
 packetsSent | int | No | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
-bytesSent | int | No | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
+bytesSent | long | No | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
 remoteTimestamp | double | No | Only For Inbound Media Track Reports<br />The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
 reportsSent | int | No | Only For Inbound Media Track Reports<br />The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
 ended | boolean | No | Flag represents if the receiver ended the media stream track or not.
@@ -61,7 +61,7 @@ mimeType | string | No | the MIME type of the codec (e.g.: video/vp8)
 clockRate | long | No | The negotiated clock rate the RTP timestamp is generated of
 channels | int | No | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
 sdpFmtpLine | string | No | The a=fmtp line in the SDP corresponding to the codec
-framesDropped | double | No | Only For Video Reports<br />The total number of frames dropped at decoding process on the corresponding synchronization source
+framesDropped | int | No | Only For Video Reports<br />The total number of frames dropped at decoding process on the corresponding synchronization source
 partialFramesLost | double | No | Only For Video Reports<br />The total number of partial frames lost at decoding process on the corresponding synchronization source
 fullFramesLost | int | No | Only For Video Reports<br />The total number of full frames lost at decoding process on the corresponding synchronization source
 framesDecoded | int | No | Only For Video Reports<br />Only For Inbound Media Track Reports<br />Indicate the number of frames completly and without error decoded on the corresponded synchronization source (ssrc)
