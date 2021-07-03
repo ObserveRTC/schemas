@@ -64,22 +64,12 @@
   },
   /* Event Report Fields */
   {
-    "name" : "name",
+    "name" : "extensionType",
     "doc": "The name of the event",
     "type" : "string"
   }, {
-    "name" : "message",
+    "name" : "payload",
     "doc": "the human readable message of the event",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "value",
-    "doc": "the value of the event",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "attachments",
-    "doc": "attachment the event may created with",
     "type" : [ "null", "string" ],
     "default" : null
   }

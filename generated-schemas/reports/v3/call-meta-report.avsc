@@ -1,8 +1,8 @@
 {
   "type": "record",
-  "name": "CallEventReport",
+  "name": "CallMetaReport",
   "namespace": "org.observertc.webrtc.schemas.reports",
-  "doc": "Events happened in calls.",
+  "doc": "Metadata belongs to a call and can be useful",
   "fields": [
     {
       "name": "serviceId",
@@ -78,24 +78,6 @@
       "default": null
     },
     {
-      "name": "mediaTrackId",
-      "doc": "The unique identifier of the media track",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "SSRC",
-      "doc": "The SSRC identifier of the RTP stream a trackId belongs to",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
       "name": "sampleTimestamp",
       "doc": "The timestamp of the sample the event related to",
       "type": [
@@ -114,13 +96,8 @@
       "default": null
     },
     {
-      "name": "name",
-      "doc": "The name of the event",
-      "type": "string"
-    },
-    {
-      "name": "message",
-      "doc": "the human readable message of the event",
+      "name": "type",
+      "doc": "The type of the meta data reported for the peer connection",
       "type": [
         "null",
         "string"
@@ -128,17 +105,8 @@
       "default": null
     },
     {
-      "name": "value",
-      "doc": "the value of the event",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "attachments",
-      "doc": "attachment the event may created with",
+      "name": "payload",
+      "doc": "The payload for the metadata reported for the peeer connection",
       "type": [
         "null",
         "string"

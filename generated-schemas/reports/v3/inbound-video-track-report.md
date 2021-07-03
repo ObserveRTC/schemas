@@ -32,10 +32,10 @@ burstPacketsDiscarded | int | No | The total number of packets discarded in burs
 burstLossCount | int | No | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
 burstDiscardCount | int | No | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
 burstLossRate | double | No | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | int | No | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
+burstDiscardRate | double | No | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 gapLossRate | double | No | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 gapDiscardRate | double | No | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-framesDropped | double | No | The total number of frames dropped at decoding process on the corresponding synchronization source
+framesDropped | int | No | The total number of frames dropped at decoding process on the corresponding synchronization source
 partialFramesLost | double | No | The total number of partial frames lost at decoding process on the corresponding synchronization source
 fullFramesLost | int | No | The total number of full frames lost at decoding process on the corresponding synchronization source
 framesDecoded | int | No | Indicate the number of frames completly and without error decoded on the corresponded synchronization source (ssrc)
@@ -68,7 +68,7 @@ jitterBufferEmittedCount | int | No | The total number of audio samples or video
 framesReceived | int | No | Represents the total number of complete frames received on the corresponded synchronization source (ssrc)
 decoderImplementation | string | No | Indicate the name of the decoder implementation library
 packetsSent | int | No | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
-bytesSent | int | No | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
+bytesSent | long | No | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
 remoteTimestamp | double | No | The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
 reportsSent | int | No | The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
 ended | boolean | No | Flag represents if the receiver ended the media stream track or not.

@@ -75,6 +75,11 @@ function createMediaTrackReportSchema({inbAudTrackSchemaParsedObj, inbVidTrackSc
     const onlyVideoFields = new Set(allFields);
     const onlyInboundFields = new Set(allFields);
     const onlyOutboundFields = new Set(allFields);
+    
+    const inbAMappings = new Map();
+    const inbVMappings = new Map();
+    const outbAMappings = new Map();
+    const outbVMappings = new Map();
 
     inbAudTrackSchemaParsedObj.fields.forEach(field => {
         const foundInResult = 0 < result.fields.filter(resultField => resultField.name === field.name).length;
@@ -238,10 +243,17 @@ function makeMarkdownDocFromReportSchema(avroSchema, typeMap) {
     ;
     avroSchema.fields.forEach(field => {
         const required = field.default === undefined;
-        const type = required ? field.type : field.type[1];
+        let description = field.doc;
+        let type = required ? field.type : field.type[1];
+        if (typeof type !== 'string') {
+            if (type.type && type.type === 'enum') {
+                type = "enum";
+                description += " (Possible values are: " + field.type.symbols.join(",\n") + ")";
+            }
+        }
         markdown.withTableRow({
             name: field.name,
-            description: field.doc,
+            description,
             required,
             type,
         });
@@ -368,14 +380,27 @@ class POJOBuilder {
     _getJavaType(fieldName, type, itemsType) {
         let result;
         if (this._typeMap && this._typeMap.has(fieldName)) {
-            type = this._typeMap.get(fieldName);
+            const typeCandidate = this._typeMap.get(fieldName);
+            if (typeCandidate !== 'enum') {
+                type = typeCandidate;
+            }
         }
         if (type === "array") {
             result = this._getJavaType(fieldName, itemsType, null) + "[]";
         } else if (type === "string") {
             result = "String";
         } else if (type === "number") {
-            result = 0 <= fieldName.indexOf("byte") ? "long" : "int";
+            result = 0 <= fieldName.indexOf("byte") ? "Long" : "Integer";
+        } else if (type === "int") { 
+            result = 0 <= fieldName.indexOf("byte") ? "Long" : "Integer";
+        } else if (type === "long") { 
+            result = "Long";
+        } else if (type === "double") { 
+            result = "Double";
+        } else if (type === "float") { 
+            result = "Float";
+        } else if (type === "bytes") { // in java sample we will use the String
+            result = "String"; 
         } else {
             result = type;
         }
@@ -537,10 +562,11 @@ class SchemaGenerator {
             this._mediaTrackReportNames.outbVidTrackSchemaParsedObj,
             "pc-transport-report",
             "pc-data-channel-report",
-            "call-event-report",
             "client-extension-report",
-            "client-meta-report",
-            "observer-event-report"
+            "call-meta-report",
+            "call-event-report",
+            "observer-event-report",
+            "report"
         ];
 
         this._sampleLegacyNames = [

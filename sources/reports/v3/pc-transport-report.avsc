@@ -67,12 +67,12 @@
   }, {
     "name" : "bytesSent",
     "doc": "Represents the total amount of bytes sent on the corresponded transport",
-    "type" : [ "null", "int" ],
+    "type" : [ "null", "long" ],
     "default" : null
   }, {
     "name" : "bytesReceived",
     "doc": "Represents the total amount of bytes received on the corresponded transport",
-    "type" : [ "null", "int" ],
+    "type" : [ "null", "long" ],
     "default" : null
   }, {
     "name" : "iceRole",
@@ -120,40 +120,6 @@
     "type" : [ "null", "int" ],
     "default" : null
   }, 
-  /* Local Certificate */
-  {
-    "name" : "localFingerprint",
-    "doc": "The fingerprint of the certificate certifies the local endpoint of the transport",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "localFingerprintAlgorithm",
-    "doc": "The algorithm generate the fingerprint of the certificate certifies the local endpoint of the transport",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "localBase64Certificate",
-    "doc": "The base64 encoded certificate for the local endpoint corresponded to the transport",
-    "type" : [ "null", "string" ],
-    "default" : null
-  },
-  /* Remote Certificate */
-  {
-    "name" : "remoteFingerprint",
-    "doc": "The fingerprint of the certificate certifies the remote endpoint of the transport",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "remoteFingerprintAlgorithm",
-    "doc": "The algorithm generate the fingerprint of the certificate certifies the remote endpoint of the transport",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "remoteBase64Certificate",
-    "doc": "The base64 encoded certificate for the remote endpoint corresponded to the transport",
-    "type" : [ "null", "string" ],
-    "default" : null
-  },
   /* ICE Local Candidate */
   {
     "name" : "localAddress",
@@ -174,11 +140,6 @@
     "name" : "localCandidateType",
     "doc": "The type of the ICE candidate used at the local endpoint on the corresponded transport",
     "type" : [ "null", "string" ],
-    "default" : null
-  }, {
-    "name" : "localCandidatePriority",
-    "doc": "The priority of the ICE candidate used at the local endpoint on the corresponded transport",
-    "type" : [ "null", "int" ],
     "default" : null
   }, {
     "name" : "localCandidateICEServerUrl",
@@ -213,11 +174,6 @@
     "type" : [ "null", "string" ],
     "default" : null
   }, {
-    "name" : "remoteCandidatePriority",
-    "doc": "The priority of the ICE candidate used at the remote endpoint on the corresponded transport",
-    "type" : [ "null", "int" ],
-    "default" : null
-  }, {
     "name" : "remoteCandidateICEServerUrl",
     "doc": "The url of the ICE server used by the remote endpoint on the corresponded transport",
     "type" : [ "null", "string" ],
@@ -230,77 +186,77 @@
   },
   /* ICE Candidate Pair */
   {
-    "name" : "iceCandidatePairState",
+    "name" : "candidatePairState",
     "doc": "The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport",
     "type" : [ "null", "string" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairPacketsSent",
+    "name" : "candidatePairPacketsSent",
     "doc": "The total number of packets sent using the last selected candidate pair over the corresponded transport",
     "type" : [ "null", "int" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairPacketsReceived",
+    "name" : "candidatePairPacketsReceived",
     "doc": "The total number of packets received using the last selected candidate pair over the corresponded transport",
     "type" : [ "null", "int" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairBytesSent",
+    "name" : "candidatePairBytesSent",
     "doc": "The total number of bytes sent using the last selected candidate pair over the corresponded transport",
     "type" : [ "null", "long" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairBytesReceived",
+    "name" : "candidatePairBytesReceived",
     "doc": "The total number of bytes received using the last selected candidate pair over the corresponded transport",
     "type" : [ "null", "long" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairLastPacketSentTimestamp",
+    "name" : "candidatePairLastPacketSentTimestamp",
     "doc": "Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)",
     "type" : [ "null", "long" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairLastPacketReceivedTimestamp",
+    "name" : "candidatePairLastPacketReceivedTimestamp",
     "doc": "Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)",
     "type" : [ "null", "long" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairFirstRequestTimestamp",
+    "name" : "candidatePairFirstRequestTimestamp",
     "doc": "Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
     "type" : [ "null", "long" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairLastRequestTimestamp",
+    "name" : "candidatePairLastRequestTimestamp",
     "doc": "Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
     "type" : [ "null", "long" ],
     "default" : null
   }, {
-    "name" : "iceCandidatePairLastResponseTimestamp",
+    "name" : "candidatePairLastResponseTimestamp",
     "doc": "Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
     "type" : [ "null", "long" ],
     "default" : null
   }, {
-    "name" : "stunProvidedTotalRoundTripTime",
+    "name" : "candidatePairTotalRoundTripTime",
     "doc": "Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport",
     "type" : [ "null", "double" ],
     "default" : null
   }, {
-    "name" : "stunProvidedCurrentRoundTripTime",
+    "name" : "candidatePairCurrentRoundTripTime",
     "doc": "Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport",
     "type" : [ "null", "double" ],
     "default" : null
   }, {
-    "name" : "availableOutgoingBitrate",
+    "name" : "candidatePairAvailableOutgoingBitrate",
     "doc": "The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport",
     "type" : [ "null", "double" ],
     "default" : null
   }, {
-    "name" : "availableIncomingBitrate",
+    "name" : "candidatePairAvailableIncomingBitrate",
     "doc": "The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport",
     "type" : [ "null", "double" ],
     "default" : null
   }, {
-    "name" : "circuitBreakerTriggerCount",
+    "name" : "candidatePairCircuitBreakerTriggerCount",
     "doc": "The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair",
     "type" : [ "null", "int" ],
     "default" : null
@@ -350,6 +306,11 @@
     "type" : [ "null", "long" ],
     "default" : null
   }, {
+    "name" : "candidatePairPacketsDiscardedOnSend",
+    "doc": "Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
+    "type" : [ "null", "long" ],
+    "default" : null
+  }, {
     "name" : "candidatePairRequestBytesSent",
     "doc": "Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport",
     "type" : [ "null", "long" ],
@@ -362,7 +323,7 @@
   }, {
     "name" : "candidatePairResponseBytesSent",
     "doc": "Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport",
-    "type" : [ "null", "int" ],
+    "type" : [ "null", "long" ],
     "default" : null
   },
   /* SCTP stats */
