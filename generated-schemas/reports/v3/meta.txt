@@ -3,8 +3,12 @@ Revisions:
 	inbound-video-track-report: 1
 	outbound-audio-track-report: 1
 	outbound-video-track-report: 1
-	pc-transport-report: 1
-	pc-data-channel-report: 1
+	sfu-inbound-rtp-stream-report: 1
+	sfu-outbound-rtp-stream-report: 1
+	sfu-sctp-stream-report: 1
+	sfu-transport-report: 1
+	client-transport-report: 2
+	client-data-channel-report: 2
 	client-extension-report: 1
 	call-meta-report: 1
 	call-event-report: 1

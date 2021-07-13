@@ -616,7 +616,7 @@
       "doc": "Only For Outbound Media Track Reports\n The rid encoding parameter of the corresponded synchronization source",
       "type": [
         "null",
-        "long"
+        "string"
       ],
       "default": null
     },

@@ -1,0 +1,532 @@
+{
+  "description": "A compound object holds a set of measurements belonging to a aspecific time",
+  "type": "object",
+  "properties": {
+    "sfuId": {
+      "description": "a Unique generated id for the sfu samples are originated from",
+      "type": "string"
+    },
+    "inboundRtpStreams": {
+      "description": "array of measurements related to inbound RTP streams",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SfuInboundRtpStream"
+      }
+    },
+    "outboudRtpStreams": {
+      "description": "array of measurements related to outbound RTP streams",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SfuOutboundRtpStream"
+      }
+    },
+    "sctpStreams": {
+      "description": "array of measurements of SCTP streams",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SctpStream"
+      }
+    },
+    "sfuTransports": {
+      "description": "array of measurements of SFU peer connection transports",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SfuTransport"
+      }
+    },
+    "timestamp": {
+      "description": "The timestamp when the sample is created",
+      "type": "number"
+    },
+    "timeZoneOffsetInHours": {
+      "description": "The client app running offsets from GMT in hours",
+      "type": "number"
+    },
+    "marker": {
+      "description": "A sample marker indicate an additional information from the app",
+      "type": "string"
+    }
+  },
+  "required": [
+    "sfuId",
+    "timestamp"
+  ],
+  "definitions": {
+    "SfuInboundRtpStream": {
+      "type": "object",
+      "properties": {
+        "transportId": {
+          "description": "The id of the transport the stream belongs to",
+          "type": "string"
+        },
+        "trackId": {
+          "description": "Indicate the id of the track the RTP stream corresponds to at the Client side",
+          "type": "string"
+        },
+        "outboundStreamId": {
+          "description": "id of the outbound rtp stream mapped inside SFU",
+          "type": "string"
+        },
+        "streamId": {
+          "description": "unique identifier for the stream",
+          "type": "string"
+        },
+        "ssrc": {
+          "description": "The SSRC identifier of the corresponded RTP stream",
+          "type": "number"
+        },
+        "mediaType": {
+          "description": "The type of the media the stream carries",
+          "type": "string"
+        },
+        "payloadType": {
+          "description": "The type of the payload the RTP stream carries",
+          "type": "number"
+        },
+        "mimeType": {
+          "description": "The MIME type of the media codec",
+          "type": "string"
+        },
+        "clockRate": {
+          "description": "the clock rate of the media source generates samples or frames",
+          "type": "number"
+        },
+        "sdpFmtpLine": {
+          "description": "The corresponded SDP line in SDP negotiation",
+          "type": "string"
+        },
+        "rid": {
+          "description": "The rid parameter of the corresponded RTP stream",
+          "type": "string"
+        },
+        "rtxSsrc": {
+          "description": "If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.",
+          "type": "number"
+        },
+        "targetBitrate": {
+          "description": "The bitrate the corresponded stream targets to.",
+          "type": "number"
+        },
+        "voiceActivityFlag": {
+          "description": "The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through",
+          "type": "boolean"
+        },
+        "firCount": {
+          "description": "The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "pliCount": {
+          "description": "The total number of Picture Loss Indication sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "nackCount": {
+          "description": "The total number of negative acknowledgement received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "sliCount": {
+          "description": "The total number of SLI indicator sent from the endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsLost": {
+          "description": "The total number of packets lost on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsReceived": {
+          "description": "The total number of packets received on the corresponded RTP stream,",
+          "type": "number"
+        },
+        "packetsDiscarded": {
+          "description": "The total number of discarded packets on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsRepaired": {
+          "description": "The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsFailedDecryption": {
+          "description": "The total number of packets failed to be decrypted on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDuplicated": {
+          "description": "The total number of duplicated packets appeared on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsReceived": {
+          "description": "The total number of FEC packets received on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsDiscarded": {
+          "description": "The total number of FEC packets discarded on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "bytesReceived": {
+          "description": "The total amount of payload bytes received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtcpSrReceived": {
+          "description": "The total number of SR reports received by the remote endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtcpRrSent": {
+          "description": "The total number of RR reports sent by the the local endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtxPacketsReceived": {
+          "description": "If rtx packets are received on the same stream then this number indicates how may has been received",
+          "type": "number"
+        },
+        "rtxPacketsDiscarded": {
+          "description": "If rtx packets are received on the same stream then this number indicates how may has been discarded",
+          "type": "number"
+        },
+        "framesReceived": {
+          "description": "The number of frames received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesDecoded": {
+          "description": "Indicate the number of frames the Sfu has been decoded",
+          "type": "number"
+        },
+        "keyFramesDecoded": {
+          "description": "Indicate the number of keyframes the Sfu has been decoded",
+          "type": "number"
+        },
+        "fractionLost": {
+          "description": "The calculated fractionLost of the stream",
+          "type": "number"
+        },
+        "jitter": {
+          "description": "The calculated jitter for the stream",
+          "type": "number"
+        },
+        "roundTripTime": {
+          "description": "The calculated round trip time for the corresponded RTP stream",
+          "type": "number"
+        },
+        "attachments": {
+          "description": "Arbitrary attachments holds relevant information about the stream",
+          "type": "string"
+        }
+      },
+      "required": [
+        "streamId",
+        "transportId"
+      ]
+    },
+    "SfuOutboundRtpStream": {
+      "type": "object",
+      "properties": {
+        "transportId": {
+          "description": "The id of the transport the stream belongs to",
+          "type": "string"
+        },
+        "trackId": {
+          "description": "Indicate the id of the track the RTP stream corresponds to at the Client side",
+          "type": "string"
+        },
+        "inboundStreamId": {
+          "description": "id of the inbound rtp stream mapped inside SFU",
+          "type": "string"
+        },
+        "streamId": {
+          "description": "unique identifier for the stream",
+          "type": "string"
+        },
+        "ssrc": {
+          "description": "The SSRC identifier of the corresponded RTP stream",
+          "type": "number"
+        },
+        "mediaType": {
+          "description": "The type of the media the stream carries",
+          "type": "string"
+        },
+        "payloadType": {
+          "description": "The type of the payload the RTP stream carries",
+          "type": "number"
+        },
+        "mimeType": {
+          "description": "The MIME type of the media codec",
+          "type": "string"
+        },
+        "clockRate": {
+          "description": "the clock rate of the media source generates samples or frames",
+          "type": "number"
+        },
+        "sdpFmtpLine": {
+          "description": "The corresponded SDP line in SDP negotiation",
+          "type": "string"
+        },
+        "rid": {
+          "description": "The rid parameter of the corresponded RTP stream",
+          "type": "string"
+        },
+        "rtxSsrc": {
+          "description": "If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.",
+          "type": "number"
+        },
+        "targetBitrate": {
+          "description": "The bitrate the corresponded stream targets to.",
+          "type": "number"
+        },
+        "voiceActivityFlag": {
+          "description": "The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through",
+          "type": "boolean"
+        },
+        "firCount": {
+          "description": "The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream",
+          "type": "number"
+        },
+        "pliCount": {
+          "description": "The total number of Picture Loss Indication sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "nackCount": {
+          "description": "The total number of negative acknowledgement received on the corresponded RTP stream",
+          "type": "number"
+        },
+        "sliCount": {
+          "description": "The total number of SLI indicator sent from the endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsSent": {
+          "description": "The total number of packets sent on the corresponded RTP stream,",
+          "type": "number"
+        },
+        "packetsDiscarded": {
+          "description": "The total number of discarded packets on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsRetransmitted": {
+          "description": "The total number of packets retransmitted on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "packetsFailedEncryption": {
+          "description": "The total number of packets failed to be encrypted on the corresponded RTP stream",
+          "type": "number"
+        },
+        "packetsDuplicated": {
+          "description": "The total number of duplicated packets appeared on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsSent": {
+          "description": "The total number of FEC packets sent on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "fecPacketsDiscarded": {
+          "description": "The total number of FEC packets discarded on the corresponded RTP stream.",
+          "type": "number"
+        },
+        "bytesSent": {
+          "description": "The total amount of payload bytes sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtcpSrSent": {
+          "description": "The total number of SR reports sent to the remote endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtcpRrReceived": {
+          "description": "The total number of RR reports received by the the local endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "rtxPacketsSent": {
+          "description": "If rtx packets are sent on the same stream then this number indicates how may has been sent",
+          "type": "number"
+        },
+        "rtxPacketsDiscarded": {
+          "description": "If rtx packets are received on the same stream then this number indicates how may has been discarded",
+          "type": "number"
+        },
+        "framesSent": {
+          "description": "The number of frames sent on the corresponded RTP stream",
+          "type": "number"
+        },
+        "framesEncoded": {
+          "description": "Indicate the number of frames the Sfu has been encoded",
+          "type": "number"
+        },
+        "keyFramesEncoded": {
+          "description": "Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream",
+          "type": "number"
+        },
+        "attachments": {
+          "description": "Arbitrary attachments holds relevant information about the stream",
+          "type": "string"
+        }
+      },
+      "required": [
+        "streamId",
+        "transportId"
+      ]
+    },
+    "SctpStream": {
+      "type": "object",
+      "properties": {
+        "transportId": {
+          "description": "The id of the transport the stream belongs to",
+          "type": "string"
+        },
+        "streamId": {
+          "description": "The id of the sctp stream",
+          "type": "string"
+        },
+        "label": {
+          "description": "The label of the sctp stream",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "The protocol used to establish an sctp stream",
+          "type": "string"
+        },
+        "sctpSmoothedRoundTripTime": {
+          "description": "The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.",
+          "type": "number"
+        },
+        "sctpCongestionWindow": {
+          "description": "The latest congestion window, corresponding to spinfo_cwnd defined in [RFC6458].",
+          "type": "number"
+        },
+        "sctpReceiverWindow": {
+          "description": "The latest receiver window, corresponding to sstat_rwnd defined in [RFC6458].",
+          "type": "number"
+        },
+        "sctpMtu": {
+          "description": "The latest maximum transmission unit, corresponding to spinfo_mtu defined in [RFC6458].",
+          "type": "number"
+        },
+        "sctpUnackData": {
+          "description": "The number of unacknowledged DATA chunks, corresponding to sstat_unackdata defined in [RFC6458].",
+          "type": "number"
+        },
+        "messageReceived": {
+          "description": "The number of message received on the corresponded SCTP stream",
+          "type": "number"
+        },
+        "messageSent": {
+          "description": "The number of message sent on the corresponded SCTP stream",
+          "type": "number"
+        },
+        "bytesReceived": {
+          "description": "The number of bytes received on the corresponded SCTP stream",
+          "type": "number"
+        },
+        "bytesSent": {
+          "description": "The number of bytes sent on the corresponded SCTP stream",
+          "type": "number"
+        }
+      },
+      "required": [
+        "streamId",
+        "transportId"
+      ]
+    },
+    "SfuTransport": {
+      "type": "object",
+      "properties": {
+        "transportId": {
+          "description": "The identifier of the transport",
+          "type": "string"
+        },
+        "serviceId": {
+          "description": "The id of the service the transport belongs to\n\nNOTE: As one SFU may used by many service by one organization, this is an additional information should/can be provided to the Sfu transport",
+          "type": "string"
+        },
+        "dtlsState": {
+          "description": "Set to the current value of the state attribute of the underlying RTCDtlsTransport.",
+          "type": "string"
+        },
+        "iceState": {
+          "description": "Set to the current value of the state attribute of the underlying RTCIceTransport.",
+          "type": "string"
+        },
+        "sctpState": {
+          "description": "The state of the SCTP for this transport",
+          "type": "string"
+        },
+        "iceRole": {
+          "description": "Set to the current value of the role attribute of the underlying ICE role.",
+          "type": "string"
+        },
+        "localAddress": {
+          "description": "The local address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)",
+          "type": "string"
+        },
+        "localPort": {
+          "description": "The local port number",
+          "type": "number"
+        },
+        "protocol": {
+          "description": "The protocol used by the transport\n\nPossible values: UDP, TCP",
+          "type": "string"
+        },
+        "remoteAddress": {
+          "description": "The remote address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)",
+          "type": "string"
+        },
+        "remotePort": {
+          "description": "The remote port number",
+          "type": "number"
+        },
+        "rtpBytesReceived": {
+          "description": "The total amount of RTP bytes received on this transport",
+          "type": "number"
+        },
+        "rtpBytesSent": {
+          "description": "The total amount of RTP bytes sent on this transport",
+          "type": "number"
+        },
+        "rtpPacketsReceived": {
+          "description": "The total amount of RTP packets received on this transport",
+          "type": "number"
+        },
+        "rtpPacketsSent": {
+          "description": "The total amount of RTP packets sent on this transport",
+          "type": "number"
+        },
+        "rtpPacketsLost": {
+          "description": "The total amount of RTP packets lost on this transport",
+          "type": "number"
+        },
+        "rtxBytesReceived": {
+          "description": "The total amount of RTX bytes received on this transport",
+          "type": "number"
+        },
+        "rtxBytesSent": {
+          "description": "The total amount of RTX bytes sent on this transport",
+          "type": "number"
+        },
+        "rtxPacketsReceived": {
+          "description": "The total amount of RTX packets received on this transport",
+          "type": "number"
+        },
+        "rtxPacketsSent": {
+          "description": "The total amount of RTX packets sent on this transport",
+          "type": "number"
+        },
+        "rtxPacketsDiscarded": {
+          "description": "The total amount of RTX packets discarded on this transport",
+          "type": "number"
+        },
+        "sctpBytesReceived": {
+          "description": "The total amount of SCTP bytes received on this transport",
+          "type": "number"
+        },
+        "sctpBytesSent": {
+          "description": "The total amount of SCTP bytes sent on this transport",
+          "type": "number"
+        },
+        "sctpPacketsReceived": {
+          "description": "The total amount of SCTP packets received on this transport",
+          "type": "number"
+        },
+        "sctpPacketsSent": {
+          "description": "The total amount of SCTP packets sent on this transport",
+          "type": "number"
+        }
+      },
+      "required": [
+        "transportId"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

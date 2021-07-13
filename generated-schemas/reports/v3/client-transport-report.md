@@ -1,8 +1,8 @@
-## PcTransportReport
+## ClientTransportReport
 ---
 
 
-A Report created for PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates
+A Report created for Client PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates
 
 
 Name | Type | Required | Description 

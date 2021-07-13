@@ -1,7 +1,7 @@
-/* @revision: 1 */
+/* @revision: 2 */
 {
     "type" : "record",
-    "name" : "PcDataChannelReport",
+    "name" : "ClientDataChannelReport",
     "namespace" : "org.observertc.webrtc.schemas.reports",
     "doc" : "A Report created for PeerConnection Data Channel.",
     "fields" : [

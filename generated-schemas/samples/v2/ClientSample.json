@@ -1,4 +1,5 @@
 {
+  "description": "A compound object holds a set of measurements belonging to a aspecific time",
   "type": "object",
   "properties": {
     "clientId": {

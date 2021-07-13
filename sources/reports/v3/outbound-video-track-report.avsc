@@ -77,7 +77,7 @@
   }, {
     "name" : "rid",
     "doc" : " The rid encoding parameter of the corresponded synchronization source",
-    "type" : ["null", "long"],
+    "type" : ["null", "string"],
     "default" : null
   }, {
     "name" : "lastPacketSentTimestamp",

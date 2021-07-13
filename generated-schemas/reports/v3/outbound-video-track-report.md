@@ -21,7 +21,7 @@ userId | string | No | webrtc app provided user identifier
 label | string | No | The webrtc app provided label the peer connection is labeled with
 packetsSent | int | No | The total number of packets sent on the corresponded synchronization source
 bytesSent | long | No | The total number of bytes sent on the corresponded synchronization source
-rid | long | No |  The rid encoding parameter of the corresponded synchronization source
+rid | string | No |  The rid encoding parameter of the corresponded synchronization source
 lastPacketSentTimestamp | long | No |  the timestamp the last packet was sent. (UTC epoch in ms)
 headerBytesSent | long | No | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
 packetsDiscardedOnSend | int | No | Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)

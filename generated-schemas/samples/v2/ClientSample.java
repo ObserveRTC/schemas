@@ -3,7 +3,7 @@ package org.observertc.webrtc.observer.samples;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /** 
-* undefined
+* A compound object holds a set of measurements belonging to a aspecific time
 */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public  class ClientSample { 
@@ -1674,13 +1674,13 @@ Possible values are: "audio", and "video"
 		* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.
 		*/
 		@JsonProperty("rtxSsrc")
-		public Integer rtxSsrc;
+		public Long rtxSsrc;
 		
 			/**
 		* The rid parameter of the corresponded RTP stream
 		*/
 		@JsonProperty("rid")
-		public Long rid;
+		public String rid;
 		
 			/**
 		* The last RTP packet sent timestamp
@@ -2022,13 +2022,13 @@ Possible values are: "audio", and "video"
 		* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.
 		*/
 		@JsonProperty("rtxSsrc")
-		public Integer rtxSsrc;
+		public Long rtxSsrc;
 		
 			/**
 		* The rid parameter of the corresponded RTP stream
 		*/
 		@JsonProperty("rid")
-		public Long rid;
+		public String rid;
 		
 			/**
 		* The last RTP packet sent timestamp

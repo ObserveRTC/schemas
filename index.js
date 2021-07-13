@@ -560,21 +560,17 @@ class SchemaGenerator {
             this._mediaTrackReportNames.inbVidTrackSchemaParsedObj,
             this._mediaTrackReportNames.outbAudTrackSchemaParsedObj,
             this._mediaTrackReportNames.outbVidTrackSchemaParsedObj,
-            "pc-transport-report",
-            "pc-data-channel-report",
+            "sfu-inbound-rtp-stream-report",
+            "sfu-outbound-rtp-stream-report",
+            "sfu-sctp-stream-report",
+            "sfu-transport-report",
+            "client-transport-report",
+            "client-data-channel-report",
             "client-extension-report",
             "call-meta-report",
             "call-event-report",
             "observer-event-report",
             "report"
-        ];
-
-        this._sampleLegacyNames = [
-            "PeerConnectionSample",
-        ];
-
-        this._sampleV2Names = [
-            "ClientSample",
         ];
     }
 
@@ -588,21 +584,28 @@ class SchemaGenerator {
         });
 
         await this._generateSamplesSchema({
+            sourcePath: CONFIG.samples.v2.sourcePath,
+            outputPath: this._outputPath + "/samples/v2",
+            sampleNames: ["SfuSample"],
+            generateJava: true,
+            reportTypes,
+        });
+
+        await this._generateSamplesSchema({
             sourcePath: CONFIG.samples.legacy.sourcePath,
-            revision: CONFIG.samples.legacy.revision,
             outputPath: this._outputPath + "/samples/legacy",
-            sampleNames: this._sampleLegacyNames,
+            sampleNames: ["PeerConnectionSample"],
             generateJava: false,
         });
 
         await this._generateSamplesSchema({
             sourcePath: CONFIG.samples.v2.sourcePath,
-            revision: CONFIG.samples.v2.revision,
             outputPath: this._outputPath + "/samples/v2",
-            sampleNames: this._sampleV2Names,
+            sampleNames: ["ClientSample"],
             generateJava: true,
             reportTypes,
         });
+
         // await this._generateSamplesSchema();
     }
 
