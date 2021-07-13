@@ -1,9 +1,9 @@
-/* @revision: 1 */
+/* @revision: 2 */
 {
   "type" : "record",
-  "name" : "PcTransportReport",
+  "name" : "ClientTransportReport",
   "namespace" : "org.observertc.webrtc.schemas.reports",
-  "doc" : "A Report created for PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates",
+  "doc" : "A Report created for Client PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates",
   "fields" : [
   /* Report MetaFields */
   {

@@ -2,6 +2,9 @@
 ---
 
 
+A compound object holds a set of measurements belonging to a aspecific time
+
+
 Name | Type | Required | Description 
 --- | --- | --- | ---
 clientId | string | Yes | The unique generated client id the report is generated from

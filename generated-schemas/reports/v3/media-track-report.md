@@ -78,7 +78,7 @@ firCount | int | No | Only For Video Reports<br />Count the total number of Full
 pliCount | int | No | Only For Video Reports<br />Count the total number of Picture Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
 sliCount | int | No | Only For Video Reports<br />Count the total number of Slice Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
 framesReceived | int | No | Only For Video Reports<br />Only For Inbound Media Track Reports<br />Represents the total number of complete frames received on the corresponded synchronization source (ssrc)
-rid | long | No | Only For Outbound Media Track Reports<br /> The rid encoding parameter of the corresponded synchronization source
+rid | string | No | Only For Outbound Media Track Reports<br /> The rid encoding parameter of the corresponded synchronization source
 lastPacketSentTimestamp | long | No | Only For Outbound Media Track Reports<br /> the timestamp the last packet was sent. (UTC epoch in ms)
 headerBytesSent | long | No | Only For Outbound Media Track Reports<br />Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
 packetsDiscardedOnSend | int | No | Only For Outbound Media Track Reports<br />Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)

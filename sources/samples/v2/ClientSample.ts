@@ -2114,6 +2114,9 @@ interface DataChannel {
   peerConnectionId?: string;
 }
 
+/**
+ * A compound object holds a set of measurements belonging to a aspecific time
+ */
 interface ClientSample {
 
   /**
