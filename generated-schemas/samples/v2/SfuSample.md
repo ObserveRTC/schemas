@@ -10,7 +10,7 @@ Name | Type | Required | Description
 sfuId | string | Yes | a Unique generated id for the sfu samples are originated from
 timestamp | number | Yes | The timestamp when the sample is created
 inboundRtpStreams | array | No | array of measurements related to inbound RTP streams
-outboudRtpStreams | array | No | array of measurements related to outbound RTP streams
+outboundRtpStreams | array | No | array of measurements related to outbound RTP streams
 sctpStreams | array | No | array of measurements of SCTP streams
 sfuTransports | array | No | array of measurements of SFU peer connection transports
 timeZoneOffsetInHours | number | No | The client app running offsets from GMT in hours

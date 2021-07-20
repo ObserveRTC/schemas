@@ -13,7 +13,7 @@
         "$ref": "#/definitions/SfuInboundRtpStream"
       }
     },
-    "outboudRtpStreams": {
+    "outboundRtpStreams": {
       "description": "array of measurements related to outbound RTP streams",
       "type": "array",
       "items": {

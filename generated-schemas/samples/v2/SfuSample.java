@@ -23,8 +23,8 @@ public  class SfuSample {
 	/**
 	* array of measurements related to outbound RTP streams
 	*/
-	@JsonProperty("outboudRtpStreams")
-	public SfuOutboundRtpStream[] outboudRtpStreams;
+	@JsonProperty("outboundRtpStreams")
+	public SfuOutboundRtpStream[] outboundRtpStreams;
 	
 	/**
 	* array of measurements of SCTP streams

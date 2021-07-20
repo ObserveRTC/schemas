@@ -950,6 +950,16 @@ interface InboundAudioTrack {
    * The unique generated identifier of the peer connection the inbound audio track belongs to
    */
   peerConnectionId?: string;
+
+  /**
+   * The remote clientId the source outbound track belongs to
+   */
+  remoteClientId?: string;
+
+  /**
+   * The sfuStreamId if the stream is consumed from a SFU
+   */
+  sfuStreamId?: string;
 }
 
 /**
@@ -1265,6 +1275,14 @@ interface InboundVideoTrack {
    * The unique generated identifier of the peer connection the inbound audio track belongs to
    */
   peerConnectionId?: string;
+  /**
+   * The remote clientId the source outbound track belongs to
+   */
+  remoteClientId?: string;
+  /**
+   * The sfuStreamId if the stream is consumed from a SFU
+   */
+  sfuStreamId?: string;
 }
 
 /**
@@ -1578,7 +1596,10 @@ interface OutboundAudioTrack {
    * The unique generated identifier of the peer connection the inbound audio track belongs to
    */
   peerConnectionId?: string;
-
+  /**
+   * The sfuStreamId if the track is produced to a SFU
+   */
+  sfuStreamId?: string;
 }
 
 interface OutboundVideoTrack {
@@ -1959,6 +1980,10 @@ interface OutboundVideoTrack {
    * The unique generated identifier of the peer connection the inbound audio track belongs to
    */
   peerConnectionId?: string;
+  /**
+   * The sfuStreamId if the track is produced to a SFU
+   */
+  sfuStreamId?: string;
 }
 
 interface ICELocalCandidate {

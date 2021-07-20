@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "SfuRTPStreamReport",
+  "name": "SfuInboundRTPStreamReport",
   "namespace": "org.observertc.webrtc.schemas.reports",
   "doc": "A Report created for RTP streams going through the SFU",
   "fields": [

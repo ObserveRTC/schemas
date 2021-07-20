@@ -888,6 +888,14 @@
         "peerConnectionId": {
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
           "type": "string"
+        },
+        "remoteClientId": {
+          "description": "The remote clientId the source outbound track belongs to",
+          "type": "string"
+        },
+        "sfuStreamId": {
+          "description": "The sfuStreamId if the stream is consumed from a SFU",
+          "type": "string"
         }
       }
     },
@@ -1126,6 +1134,14 @@
         "peerConnectionId": {
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
           "type": "string"
+        },
+        "remoteClientId": {
+          "description": "The remote clientId the source outbound track belongs to",
+          "type": "string"
+        },
+        "sfuStreamId": {
+          "description": "The sfuStreamId if the stream is consumed from a SFU",
+          "type": "string"
         }
       }
     },
@@ -1355,6 +1371,10 @@
         },
         "peerConnectionId": {
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
+          "type": "string"
+        },
+        "sfuStreamId": {
+          "description": "The sfuStreamId if the track is produced to a SFU",
           "type": "string"
         }
       }
@@ -1644,6 +1664,10 @@
         },
         "peerConnectionId": {
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
+          "type": "string"
+        },
+        "sfuStreamId": {
+          "description": "The sfuStreamId if the track is produced to a SFU",
           "type": "string"
         }
       }
