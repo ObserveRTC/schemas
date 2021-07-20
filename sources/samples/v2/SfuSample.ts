@@ -585,7 +585,7 @@ export interface SfuSample {
   /**
    * array of measurements related to outbound RTP streams
    */
-  outboudRtpStreams?: SfuOutboundRtpStream[];
+  outboundRtpStreams?: SfuOutboundRtpStream[];
 
   /**
    * array of measurements of SCTP streams

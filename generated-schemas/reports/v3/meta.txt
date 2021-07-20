@@ -3,7 +3,9 @@ Revisions:
 	inbound-video-track-report: 1
 	outbound-audio-track-report: 1
 	outbound-video-track-report: 1
+	sfu-event-report: 1
 	sfu-inbound-rtp-stream-report: 1
+	sfu-meta-report: 1
 	sfu-outbound-rtp-stream-report: 1
 	sfu-sctp-stream-report: 1
 	sfu-transport-report: 1

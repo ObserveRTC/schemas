@@ -318,6 +318,8 @@ channels | number | No | The number of channels the media source has.
 sdpFmtpLine | string | No | The corresponded SDP line in SDP negotiation
 trackId | string | No | The identifier of the MediaTrack the client plays the audio out
 peerConnectionId | string | No | The unique generated identifier of the peer connection the inbound audio track belongs to
+remoteClientId | string | No | The remote clientId the source outbound track belongs to
+sfuStreamId | string | No | The sfuStreamId if the stream is consumed from a SFU
 
 
 ### InboundVideoTrack
@@ -388,6 +390,8 @@ clockRate | number | No | the clock rate of the media source generates samples o
 sdpFmtpLine | string | No | The corresponded SDP line in SDP negotiation
 trackId | string | No | The identifier of the MediaTrack the client plays the audio out
 peerConnectionId | string | No | The unique generated identifier of the peer connection the inbound audio track belongs to
+remoteClientId | string | No | The remote clientId the source outbound track belongs to
+sfuStreamId | string | No | The sfuStreamId if the stream is consumed from a SFU
 
 
 ### OutboundAudioTrack
@@ -455,6 +459,7 @@ channels | number | No | The number of channels the media source has.
 sdpFmtpLine | string | No | The corresponded SDP line in SDP negotiation
 trackId | string | No | The identifier of the MediaTrack the client plays the audio out
 peerConnectionId | string | No | The unique generated identifier of the peer connection the inbound audio track belongs to
+sfuStreamId | string | No | The sfuStreamId if the track is produced to a SFU
 
 
 ### OutboundVideoTrack
@@ -534,6 +539,7 @@ channels | number | No | The number of channels the media source has.
 sdpFmtpLine | string | No | The corresponded SDP line in SDP negotiation
 trackId | string | No | The identifier of the MediaTrack the client plays the audio out
 peerConnectionId | string | No | The unique generated identifier of the peer connection the inbound audio track belongs to
+sfuStreamId | string | No | The sfuStreamId if the track is produced to a SFU
 
 
 ### ICELocalCandidate

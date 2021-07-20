@@ -1287,6 +1287,18 @@ Possible values are: "audio", and "video"
 		@JsonProperty("peerConnectionId")
 		public String peerConnectionId;
 		
+			/**
+		* The remote clientId the source outbound track belongs to
+		*/
+		@JsonProperty("remoteClientId")
+		public String remoteClientId;
+		
+			/**
+		* The sfuStreamId if the stream is consumed from a SFU
+		*/
+		@JsonProperty("sfuStreamId")
+		public String sfuStreamId;
+		
 	}
 	/** 
 	* A compound stat object used by the client giving information about a video track 
@@ -1645,6 +1657,18 @@ Possible values are: "audio", and "video"
 		@JsonProperty("peerConnectionId")
 		public String peerConnectionId;
 		
+			/**
+		* The remote clientId the source outbound track belongs to
+		*/
+		@JsonProperty("remoteClientId")
+		public String remoteClientId;
+		
+			/**
+		* The sfuStreamId if the stream is consumed from a SFU
+		*/
+		@JsonProperty("sfuStreamId")
+		public String sfuStreamId;
+		
 	}
 	/** 
 	* A compound object giving information about the audio track the client uses
@@ -1992,6 +2016,12 @@ Possible values are: "audio", and "video"
 		*/
 		@JsonProperty("peerConnectionId")
 		public String peerConnectionId;
+		
+			/**
+		* The sfuStreamId if the track is produced to a SFU
+		*/
+		@JsonProperty("sfuStreamId")
+		public String sfuStreamId;
 		
 	}
 	/** 
@@ -2427,6 +2457,12 @@ Possible values are: "audio", and "video"
 		*/
 		@JsonProperty("peerConnectionId")
 		public String peerConnectionId;
+		
+			/**
+		* The sfuStreamId if the track is produced to a SFU
+		*/
+		@JsonProperty("sfuStreamId")
+		public String sfuStreamId;
 		
 	}
 	/** 

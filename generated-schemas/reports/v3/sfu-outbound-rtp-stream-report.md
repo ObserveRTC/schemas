@@ -1,4 +1,4 @@
-## SfuRTPStreamReport
+## SfuOutboundRTPStreamReport
 ---
 
 
