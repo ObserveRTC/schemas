@@ -895,6 +895,21 @@ interface InboundAudioTrack {
    */
   reportsSent?: number;
 
+  /**
+   * Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+   */
+  roundTripTime?: number;
+
+  /**
+   * Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+   */
+  totalRoundTripTime?: number;
+
+  /**
+   * Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
+   */
+  roundTripTimeMeasurements?: number;
+  
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Receiver related fields
 // └-> https://www.w3.org/TR/webrtc-stats/#dom-rtcstatstype-receiver
@@ -1224,6 +1239,21 @@ interface InboundVideoTrack {
    * The total number of SR reports sent by the remote endpoint on the corresponded RTP stream
    */
   reportsSent?: number;
+
+  /**
+   * Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+   */
+  roundTripTime?: number;
+
+  /**
+   * Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+   */
+  totalRoundTripTime?: number;
+
+  /**
+   * Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
+   */
+  roundTripTimeMeasurements?: number;
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Receiver related fields
