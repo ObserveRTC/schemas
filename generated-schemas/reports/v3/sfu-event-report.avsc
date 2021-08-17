@@ -5,15 +5,6 @@
   "doc": "Events happened in calls.",
   "fields": [
     {
-      "name": "serviceId",
-      "doc": "The unique identifier of the service",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
       "name": "mediaUnitId",
       "doc": "The media unit id the report belongs to",
       "type": [
@@ -39,6 +30,15 @@
     {
       "name": "sfuId",
       "doc": "The generated unique identifier of the SFU",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "callId",
+      "doc": "The callId the event belongs to",
       "type": [
         "null",
         "string"

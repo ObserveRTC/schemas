@@ -7,11 +7,6 @@
   "fields" : [
   /* Report MetaFields */
   {
-    "name" : "serviceId",
-    "doc": "The unique identifier of the service. Only determined if the corresponded transport has a serviceId",
-    "type" : [ "null", "string" ],
-    "default" : null
-  }, {
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
     "type" : "string"
@@ -45,15 +40,18 @@
   }, {
     "name" : "trackId",
     "doc": "The id of the track the RTP stream related to at the client side",
-    "type" : ["null", "string"]
+    "type" : ["null", "string"],
+    "default": null
   }, {
     "name" : "clientId",
     "doc": "If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to",
-    "type" : ["null", "string"]
+    "type" : ["null", "string"],
+    "default": null
   }, {
     "name" : "callId",
-    "doc": "If the track id was provided by the Sfu, the observer can fill up the information of which call it belongs to",
-    "type" : ["null", "string"]
+    "doc": "The callId the event belongs to",
+    "type" : ["null", "string"],
+    "default": null
   },
   /* RTP stats */
   {
@@ -94,7 +92,7 @@
   }, {
     "name" : "targetBitrate",
     "doc": "he bitrate the corresponded stream targets.",
-    "type" : ["null", "int"],
+    "type" : ["null", "long"],
     "default" : null
   }, {
     "name" : "voiceActivityFlag",

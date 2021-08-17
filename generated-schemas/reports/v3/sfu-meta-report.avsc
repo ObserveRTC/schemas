@@ -2,17 +2,8 @@
   "type": "record",
   "name": "SfuMetaReport",
   "namespace": "org.observertc.webrtc.schemas.reports",
-  "doc": "Metadata belongs to Sfus",
+  "doc": "Metadata belongs to SFUs",
   "fields": [
-    {
-      "name": "serviceId",
-      "doc": "The unique identifier of the service",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
     {
       "name": "mediaUnitId",
       "doc": "The media unit id the report belongs to",
@@ -39,6 +30,15 @@
     {
       "name": "sfuId",
       "doc": "The id of the Sfu",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "callId",
+      "doc": "The callId the event belongs to",
       "type": [
         "null",
         "string"

@@ -27,8 +27,7 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
 streamId | string | Yes | unique identifier for the stream
-trackId | string | No | Indicate the id of the track the RTP stream corresponds to at the Client side
-outboundStreamId | string | No | id of the outbound rtp stream mapped inside SFU
+pipedStreamId | string | No | id of the outbound rtp stream mapped inside SFU
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 mediaType | string | No | The type of the media the stream carries
 payloadType | number | No | The type of the payload the RTP stream carries
@@ -72,9 +71,8 @@ attachments | string | No | Arbitrary attachments holds relevant information abo
 Name | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
-streamId | string | Yes | unique identifier for the stream
-trackId | string | No | Indicate the id of the track the RTP stream corresponds to at the Client side
-inboundStreamId | string | No | id of the inbound rtp stream mapped inside SFU
+streamId | string | Yes | unique identifier of the stream
+pipedStreamId | string | No | id of the inbound rtp stream mapped inside SFU
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 mediaType | string | No | The type of the media the stream carries
 payloadType | number | No | The type of the payload the RTP stream carries

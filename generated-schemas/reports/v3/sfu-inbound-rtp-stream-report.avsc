@@ -5,15 +5,6 @@
   "doc": "A Report created for RTP streams going through the SFU",
   "fields": [
     {
-      "name": "serviceId",
-      "doc": "The unique identifier of the service. Only determined if the corresponded transport has a serviceId",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
       "name": "mediaUnitId",
       "doc": "The media unit id the report belongs to",
       "type": "string"
@@ -58,7 +49,8 @@
       "type": [
         "null",
         "string"
-      ]
+      ],
+      "default": null
     },
     {
       "name": "clientId",
@@ -66,15 +58,17 @@
       "type": [
         "null",
         "string"
-      ]
+      ],
+      "default": null
     },
     {
       "name": "callId",
-      "doc": "If the track id was provided by the Sfu, the observer can fill up the information of which call it belongs to",
+      "doc": "The callId the event belongs to",
       "type": [
         "null",
         "string"
-      ]
+      ],
+      "default": null
     },
     {
       "name": "mediaType",
@@ -144,7 +138,7 @@
       "doc": "he bitrate the corresponded stream targets.",
       "type": [
         "null",
-        "int"
+        "long"
       ],
       "default": null
     },

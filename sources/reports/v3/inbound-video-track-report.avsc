@@ -53,7 +53,12 @@
     "doc": "The webrtc app provided label the peer connection is labeled with",
     "type" : [ "null", "string" ],
     "default" : null
-  }, 
+  }, {
+    "name" : "trackId",
+    "doc": "The id of the track",
+    "type" : [ "null", "string" ],
+    "default" : null
+  },
   /* Remote Identifier */
   {
     "name" : "remoteUserId",

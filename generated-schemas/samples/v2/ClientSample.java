@@ -1232,6 +1232,24 @@ Fields related to [RTCCodecStats](https://www.w3.org/TR/webrtc-stats/#dom-rtccod
 		public Integer reportsSent;
 		
 			/**
+		* Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+		*/
+		@JsonProperty("roundTripTime")
+		public Double roundTripTime;
+		
+			/**
+		* Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+		*/
+		@JsonProperty("totalRoundTripTime")
+		public Double totalRoundTripTime;
+		
+			/**
+		* Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
+		*/
+		@JsonProperty("roundTripTimeMeasurements")
+		public Integer roundTripTimeMeasurements;
+		
+			/**
 		* Flag indicate if the MediaTrack has been eded or not
 		*/
 		@JsonProperty("ended")
@@ -1606,6 +1624,24 @@ used by the client as inbound
 		*/
 		@JsonProperty("reportsSent")
 		public Integer reportsSent;
+		
+			/**
+		* Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+		*/
+		@JsonProperty("roundTripTime")
+		public Double roundTripTime;
+		
+			/**
+		* Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+		*/
+		@JsonProperty("totalRoundTripTime")
+		public Double totalRoundTripTime;
+		
+			/**
+		* Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
+		*/
+		@JsonProperty("roundTripTimeMeasurements")
+		public Integer roundTripTimeMeasurements;
 		
 			/**
 		* Flag indicate if the MediaTrack has been eded or not
