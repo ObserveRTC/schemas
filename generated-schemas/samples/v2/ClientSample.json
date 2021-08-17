@@ -853,6 +853,18 @@
           "description": "The total number of SR reports sent by the remote endpoint on the corresponded RTP stream",
           "type": "number"
         },
+        "roundTripTime": {
+          "description": "Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream",
+          "type": "number"
+        },
+        "totalRoundTripTime": {
+          "description": "Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream",
+          "type": "number"
+        },
+        "roundTripTimeMeasurements": {
+          "description": "Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream",
+          "type": "number"
+        },
         "ended": {
           "description": "Flag indicate if the MediaTrack has been eded or not",
           "type": "boolean"
@@ -1101,6 +1113,18 @@
         },
         "reportsSent": {
           "description": "The total number of SR reports sent by the remote endpoint on the corresponded RTP stream",
+          "type": "number"
+        },
+        "roundTripTime": {
+          "description": "Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream",
+          "type": "number"
+        },
+        "totalRoundTripTime": {
+          "description": "Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream",
+          "type": "number"
+        },
+        "roundTripTimeMeasurements": {
+          "description": "Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream",
           "type": "number"
         },
         "ended": {

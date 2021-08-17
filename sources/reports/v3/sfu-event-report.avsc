@@ -6,12 +6,7 @@
     "doc" : "Events happened in calls.",
     "fields" : [
     /* Report MetaFields */
-    {
-        "name" : "serviceId",
-        "doc": "The unique identifier of the service",
-        "type" : [ "null", "string" ],
-        "default" : null
-      }, {
+      {
         "name" : "mediaUnitId",
         "doc": "The media unit id the report belongs to",
         "type" : [ "null", "string" ],
@@ -26,12 +21,18 @@
         "doc": "The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)",
         "type" : "long"
       },
-      /* Event helper field to identify source */
+      /* Helper field to identify source */
+      
       {
         "name" : "sfuId",
         "doc": "The generated unique identifier of the SFU",
         "type" : [ "null", "string" ],
         "default" : null
+      }, {
+        "name" : "callId",
+        "doc": "The callId the event belongs to",
+        "type" : ["null", "string"],
+        "default": null
       }, {
         "name" : "transportId",
         "doc": "SFU provided transport identifier",
@@ -53,7 +54,7 @@
         "type" : [ "null", "long" ],
         "default" : null
       },
-      /* Event Report Fields */
+      /* Report Fields */
       {
         "name" : "name",
         "doc": "The name of the event",

@@ -7,12 +7,12 @@ A Report created for SFU Transport layer typically created to transfer RTP/SCTP/
 
 Name | Type | Required | Description 
 --- | --- | --- | ---
-serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to
 sfuId | string | Yes | The provided unique identifier of the SFU
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId | string | Yes | The generated unique identifier of the call
+transportId | string | Yes | The generated unique identifier of the transport
 marker | string | No | The marker the originated sample is reported with
+callId | string | No | The generated unique identifier of the call
 roomId | string | No | webrtc app provided room id
 dtlsState | string | No | Represent the current value of the state attribute of the underlying RTCDtlsTransport.
 iceState | string | No | Represent the current value of the state attribute of the underlying RTCIceTransport

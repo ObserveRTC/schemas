@@ -71,6 +71,15 @@
       "default": null
     },
     {
+      "name": "trackId",
+      "doc": "The id of the track",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "sampleSeq",
       "doc": "The sequence number of the sample the report is generated from",
       "type": "int"

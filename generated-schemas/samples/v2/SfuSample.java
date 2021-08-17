@@ -69,16 +69,10 @@ public  class SfuSample {
 		public String transportId;
 		
 			/**
-		* Indicate the id of the track the RTP stream corresponds to at the Client side
-		*/
-		@JsonProperty("trackId")
-		public String trackId;
-		
-			/**
 		* id of the outbound rtp stream mapped inside SFU
 		*/
-		@JsonProperty("outboundStreamId")
-		public String outboundStreamId;
+		@JsonProperty("pipedStreamId")
+		public String pipedStreamId;
 		
 			/**
 		* unique identifier for the stream
@@ -304,19 +298,13 @@ public  class SfuSample {
 		public String transportId;
 		
 			/**
-		* Indicate the id of the track the RTP stream corresponds to at the Client side
-		*/
-		@JsonProperty("trackId")
-		public String trackId;
-		
-			/**
 		* id of the inbound rtp stream mapped inside SFU
 		*/
-		@JsonProperty("inboundStreamId")
-		public String inboundStreamId;
+		@JsonProperty("pipedStreamId")
+		public String pipedStreamId;
 		
 			/**
-		* unique identifier for the stream
+		* unique identifier of the stream
 		*/
 		@JsonProperty("streamId")
 		public String streamId;

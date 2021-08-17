@@ -7,10 +7,6 @@
   "fields" : [
   /* Report MetaFields */
   {
-    "name" : "serviceId",
-    "doc": "The unique identifier of the service",
-    "type" : "string"
-  }, {
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
     "type" : "string"
@@ -32,7 +28,8 @@
   {
     "name" : "callId",
     "doc": "The generated unique identifier of the call",
-    "type" : "string"
+    "type" : [ "null", "string" ],
+    "default" : null
   }, {
     "name" : "roomId",
     "doc": "webrtc app provided room id",
@@ -96,12 +93,12 @@
   }, {
     "name" : "bytesReceived",
     "doc": "The number of bytes received on the corresponded SCTP stream.",
-    "type" : ["null", "int"],
+    "type" : ["null", "long"],
     "default" : null
   }, {
     "name" : "bytesSent",
     "doc": "The number of bytes sent on the corresponded SCTP stream.",
-    "type" : ["null", "int"],
+    "type" : ["null", "long"],
     "default" : null
   }]
 }

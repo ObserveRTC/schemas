@@ -309,6 +309,9 @@ packetsSent | number | No | The total number of packets sent by the remote endpo
 bytesSent | number | No | The total amount of bytes sent by the remote endpoint on the corresponded RTP stream
 remoteTimestamp | number | No | The remote timestamp of the RTCP packets reported in the SR
 reportsSent | number | No | The total number of SR reports sent by the remote endpoint on the corresponded RTP stream
+roundTripTime | number | No | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+totalRoundTripTime | number | No | Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+roundTripTimeMeasurements | number | No | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 ended | boolean | No | Flag indicate if the MediaTrack has been eded or not
 payloadType | string | No | The type of the payload the RTP stream carries
 codecType | string | No | The type of the codec role inthe endpoint.<br /><br />Possible values are: "audio", and "video"
@@ -382,6 +385,9 @@ packetsSent | number | No | The total number of packets sent by the remote endpo
 bytesSent | number | No | The total amount of bytes sent by the remote endpoint on the corresponded RTP stream
 remoteTimestamp | number | No | The remote timestamp of the RTCP packets reported in the SR
 reportsSent | number | No | The total number of SR reports sent by the remote endpoint on the corresponded RTP stream
+roundTripTime | number | No | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+totalRoundTripTime | number | No | Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+roundTripTimeMeasurements | number | No | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 ended | boolean | No | Flag indicate if the MediaTrack has been eded or not
 payloadType | string | No | The type of the payload the RTP stream carries
 codecType | string | No | The type of the codec role inthe endpoint.<br /><br />Possible values are: "audio", and "video"

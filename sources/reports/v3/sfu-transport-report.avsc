@@ -7,10 +7,6 @@
   "fields" : [
   /* Report MetaFields */
   {
-    "name" : "serviceId",
-    "doc": "The unique identifier of the service",
-    "type" : "string"
-  }, {
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
     "type" : "string"
@@ -32,12 +28,17 @@
   {
     "name" : "callId",
     "doc": "The generated unique identifier of the call",
-    "type" : "string"
+    "type" : [ "null", "string" ],
+    "default" : null
   }, {
     "name" : "roomId",
     "doc": "webrtc app provided room id",
     "type" : [ "null", "string" ],
     "default" : null
+  }, {
+    "name" : "transportId",
+    "doc": "The generated unique identifier of the transport",
+    "type" : "string"
   },
   /* Transport stats */
   {

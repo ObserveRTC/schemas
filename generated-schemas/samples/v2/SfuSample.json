@@ -59,11 +59,7 @@
           "description": "The id of the transport the stream belongs to",
           "type": "string"
         },
-        "trackId": {
-          "description": "Indicate the id of the track the RTP stream corresponds to at the Client side",
-          "type": "string"
-        },
-        "outboundStreamId": {
+        "pipedStreamId": {
           "description": "id of the outbound rtp stream mapped inside SFU",
           "type": "string"
         },
@@ -220,16 +216,12 @@
           "description": "The id of the transport the stream belongs to",
           "type": "string"
         },
-        "trackId": {
-          "description": "Indicate the id of the track the RTP stream corresponds to at the Client side",
-          "type": "string"
-        },
-        "inboundStreamId": {
+        "pipedStreamId": {
           "description": "id of the inbound rtp stream mapped inside SFU",
           "type": "string"
         },
         "streamId": {
-          "description": "unique identifier for the stream",
+          "description": "unique identifier of the stream",
           "type": "string"
         },
         "ssrc": {
