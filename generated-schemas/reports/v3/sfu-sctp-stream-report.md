@@ -12,6 +12,7 @@ sfuId | string | Yes | The provided unique identifier of the SFU
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 transportId | string | Yes | The id of the transport the RTP stream uses.
 streamId | string | Yes | The id of the sctp stream
+sfuName | string | No | The provided name of the SFU
 marker | string | No | The marker the originated sample is reported with
 callId | string | No | The generated unique identifier of the call
 roomId | string | No | webrtc app provided room id

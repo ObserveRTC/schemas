@@ -37,6 +37,15 @@
       "default": null
     },
     {
+      "name": "sfuName",
+      "doc": "The provided name of the SFU",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "callId",
       "doc": "The callId the event belongs to",
       "type": [
@@ -55,7 +64,25 @@
       "default": null
     },
     {
-      "name": "rtpStreamId",
+      "name": "streamId",
+      "doc": "Unique identifier of the RTP stream the event is related to",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "sourceId",
+      "doc": "Unique identifier of the RTP stream the event is related to",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "sinkId",
       "doc": "Unique identifier of the RTP stream the event is related to",
       "type": [
         "null",

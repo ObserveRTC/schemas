@@ -6,18 +6,22 @@
       "description": "a Unique generated id for the sfu samples are originated from",
       "type": "string"
     },
-    "inboundRtpStreams": {
+    "sfuName": {
+      "description": "A given name for a certain SFU",
+      "type": "string"
+    },
+    "rtpSources": {
       "description": "array of measurements related to inbound RTP streams",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/SfuInboundRtpStream"
+        "$ref": "#/definitions/SfuRtpSource"
       }
     },
-    "outboundRtpStreams": {
+    "rtpSinks": {
       "description": "array of measurements related to outbound RTP streams",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/SfuOutboundRtpStream"
+        "$ref": "#/definitions/SfuRtpSink"
       }
     },
     "sctpStreams": {
@@ -52,19 +56,19 @@
     "timestamp"
   ],
   "definitions": {
-    "SfuInboundRtpStream": {
+    "SfuRtpSource": {
       "type": "object",
       "properties": {
         "transportId": {
           "description": "The id of the transport the stream belongs to",
           "type": "string"
         },
-        "pipedStreamId": {
-          "description": "id of the outbound rtp stream mapped inside SFU",
-          "type": "string"
-        },
         "streamId": {
           "description": "unique identifier for the stream",
+          "type": "string"
+        },
+        "sourceId": {
+          "description": "id of the source pod",
           "type": "string"
         },
         "ssrc": {
@@ -205,23 +209,24 @@
         }
       },
       "required": [
+        "sourceId",
         "streamId",
         "transportId"
       ]
     },
-    "SfuOutboundRtpStream": {
+    "SfuRtpSink": {
       "type": "object",
       "properties": {
         "transportId": {
           "description": "The id of the transport the stream belongs to",
           "type": "string"
         },
-        "pipedStreamId": {
-          "description": "id of the inbound rtp stream mapped inside SFU",
-          "type": "string"
-        },
         "streamId": {
           "description": "unique identifier of the stream",
+          "type": "string"
+        },
+        "sinkId": {
+          "description": "id of the sink pod",
           "type": "string"
         },
         "ssrc": {
@@ -282,6 +287,10 @@
         },
         "packetsSent": {
           "description": "The total number of packets sent on the corresponded RTP stream,",
+          "type": "number"
+        },
+        "packetsLost": {
+          "description": "The total number of packets lost on the corresponded RTP stream",
           "type": "number"
         },
         "packetsDiscarded": {

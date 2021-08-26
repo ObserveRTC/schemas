@@ -11,6 +11,7 @@ timestamp | long | Yes | The timestamp when the corresponded data is generated f
 mediaUnitId | string | No | The media unit id the report belongs to
 marker | string | No | The marker the originated sample is reported with
 sfuId | string | No | The id of the Sfu
+sfuName | string | No | The provided name of the SFU
 callId | string | No | The callId the event belongs to
 clientId | string | No | The generated unique identifier of the client
 peerConnectionId | string | No | The unique identifier of the peer connection

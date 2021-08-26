@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "SfuInboundRTPStreamReport",
+  "name": "SfuRTPSourceReport",
   "namespace": "org.observertc.webrtc.schemas.reports",
   "doc": "A Report created for RTP streams going through the SFU",
   "fields": [
@@ -13,6 +13,15 @@
       "name": "sfuId",
       "doc": "The provided unique identifier of the SFU",
       "type": "string"
+    },
+    {
+      "name": "sfuName",
+      "doc": "The provided name of the SFU",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
     },
     {
       "name": "marker",
@@ -36,6 +45,11 @@
     {
       "name": "streamId",
       "doc": "The id of the RTP stream.",
+      "type": "string"
+    },
+    {
+      "name": "sourceId",
+      "doc": "The id of the source component of the RTP stream.",
       "type": "string"
     },
     {

@@ -28,6 +28,11 @@
       "type" : [ "null", "string" ],
       "default" : null
     }, {
+      "name" : "sfuName",
+      "doc": "The provided name of the SFU",
+      "type" : [ "null", "string" ],
+      "default" : null
+    }, {
       "name" : "callId",
       "doc": "The callId the event belongs to",
       "type" : [ "null", "string" ],

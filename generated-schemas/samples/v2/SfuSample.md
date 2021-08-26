@@ -9,8 +9,9 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 sfuId | string | Yes | a Unique generated id for the sfu samples are originated from
 timestamp | number | Yes | The timestamp when the sample is created
-inboundRtpStreams | array | No | array of measurements related to inbound RTP streams
-outboundRtpStreams | array | No | array of measurements related to outbound RTP streams
+sfuName | string | No | A given name for a certain SFU
+rtpSources | array | No | array of measurements related to inbound RTP streams
+rtpSinks | array | No | array of measurements related to outbound RTP streams
 sctpStreams | array | No | array of measurements of SCTP streams
 sfuTransports | array | No | array of measurements of SFU peer connection transports
 timeZoneOffsetInHours | number | No | The client app running offsets from GMT in hours
@@ -19,7 +20,7 @@ marker | string | No | A sample marker indicate an additional information from t
 
 
 
-### SfuInboundRtpStream
+### SfuRtpSource
 ---
 
 
@@ -27,7 +28,7 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
 streamId | string | Yes | unique identifier for the stream
-pipedStreamId | string | No | id of the outbound rtp stream mapped inside SFU
+sourceId | string | Yes | id of the source pod
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 mediaType | string | No | The type of the media the stream carries
 payloadType | number | No | The type of the payload the RTP stream carries
@@ -64,7 +65,7 @@ roundTripTime | number | No | The calculated round trip time for the corresponde
 attachments | string | No | Arbitrary attachments holds relevant information about the stream
 
 
-### SfuOutboundRtpStream
+### SfuRtpSink
 ---
 
 
@@ -72,7 +73,7 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
 streamId | string | Yes | unique identifier of the stream
-pipedStreamId | string | No | id of the inbound rtp stream mapped inside SFU
+sinkId | string | No | id of the sink pod
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 mediaType | string | No | The type of the media the stream carries
 payloadType | number | No | The type of the payload the RTP stream carries
@@ -88,6 +89,7 @@ pliCount | number | No | The total number of Picture Loss Indication sent on the
 nackCount | number | No | The total number of negative acknowledgement received on the corresponded RTP stream
 sliCount | number | No | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
 packetsSent | number | No | The total number of packets sent on the corresponded RTP stream,
+packetsLost | number | No | The total number of packets lost on the corresponded RTP stream
 packetsDiscarded | number | No | The total number of discarded packets on the corresponded RTP stream.
 packetsRetransmitted | number | No | The total number of packets retransmitted on the corresponded RTP stream.
 packetsFailedEncryption | number | No | The total number of packets failed to be encrypted on the corresponded RTP stream
