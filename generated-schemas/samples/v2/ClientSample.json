@@ -905,8 +905,8 @@
           "description": "The remote clientId the source outbound track belongs to",
           "type": "string"
         },
-        "sfuStreamId": {
-          "description": "The sfuStreamId if the stream is consumed from a SFU",
+        "sfuSinkId": {
+          "description": "The sink id of the pod from SFU streaming the media",
           "type": "string"
         }
       }
@@ -1163,8 +1163,8 @@
           "description": "The remote clientId the source outbound track belongs to",
           "type": "string"
         },
-        "sfuStreamId": {
-          "description": "The sfuStreamId if the stream is consumed from a SFU",
+        "sfuSinkId": {
+          "description": "The sink id of the pod from SFU streaming the media",
           "type": "string"
         }
       }
@@ -1397,8 +1397,8 @@
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
           "type": "string"
         },
-        "sfuStreamId": {
-          "description": "The sfuStreamId if the track is produced to a SFU",
+        "sfuSourceId": {
+          "description": "The source id of the pod from SFU streaming the media",
           "type": "string"
         }
       }
@@ -1690,8 +1690,8 @@
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
           "type": "string"
         },
-        "sfuStreamId": {
-          "description": "The sfuStreamId if the track is produced to a SFU",
+        "sfuSourceId": {
+          "description": "The sfuSourceId if the track is produced to a SFU",
           "type": "string"
         }
       }

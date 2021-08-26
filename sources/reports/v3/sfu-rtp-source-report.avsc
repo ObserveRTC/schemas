@@ -1,7 +1,7 @@
 /* @revision: 1 */
 {
   "type" : "record",
-  "name" : "SfuOutboundRTPStreamReport",
+  "name" : "SfuRTPSourceReport",
   "namespace" : "org.observertc.webrtc.schemas.reports",
   "doc" : "A Report created for RTP streams going through the SFU",
   "fields" : [
@@ -14,6 +14,11 @@
     "name" : "sfuId",
     "doc": "The provided unique identifier of the SFU",
     "type" : "string"
+  }, {
+    "name" : "sfuName",
+    "doc": "The provided name of the SFU",
+    "type" : [ "null", "string" ],
+    "default" : null
   }, {
     "name" : "marker",
     "doc": "The marker the originated sample is reported with",
@@ -34,24 +39,28 @@
     "doc": "The id of the RTP stream.",
     "type" : "string"
   }, {
+    "name" : "sourceId",
+    "doc": "The id of the source component of the RTP stream.",
+    "type" : "string"
+  }, {
     "name" : "ssrc",
     "doc": "The synchronization source id of the RTP stream",
     "type" : "long"
   }, {
     "name" : "trackId",
     "doc": "The id of the track the RTP stream related to at the client side",
-    "type" : [ "null", "string" ],
-    "default" : null
+    "type" : ["null", "string"],
+    "default": null
   }, {
     "name" : "clientId",
     "doc": "If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to",
-    "type" : [ "null", "string" ],
-    "default" : null
+    "type" : ["null", "string"],
+    "default": null
   }, {
     "name" : "callId",
     "doc": "The callId the event belongs to",
-    "type" : [ "null", "string" ],
-    "default" : null
+    "type" : ["null", "string"],
+    "default": null
   },
   /* RTP stats */
   {
@@ -125,8 +134,8 @@
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "packetsSent",
-    "doc": "The total number of packets sent on the corresponded RTP stream.",
+    "name" : "packetsReceived",
+    "doc": "The total number of packets received on the corresponded RTP stream.",
     "type" : ["null", "int"],
     "default" : null
   }, {
@@ -135,13 +144,13 @@
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "packetsRetransmitted",
-    "doc": "The total number of packets retransmitted on the corresponded RTP stream.",
+    "name" : "packetsRepaired",
+    "doc": "The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.",
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "packetsFailedEncryption",
-    "doc": "The total number of packets failed to be encrypted on the corresponded RTP stream.",
+    "name" : "packetsFailedDecryption",
+    "doc": "The total number of packets failed to be decrypted on the corresponded RTP stream.",
     "type" : ["null", "int"],
     "default" : null
   }, {
@@ -150,8 +159,8 @@
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "fecPacketsSent",
-    "doc": "The total number of FEC packets sent on the corresponded RTP stream.",
+    "name" : "fecPacketsReceived",
+    "doc": "The total number of FEC packets received on the corresponded RTP stream.",
     "type" : ["null", "int"],
     "default" : null
   }, {
@@ -160,23 +169,23 @@
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "bytesSent",
-    "doc": "The total amount of payload bytes sent on the corresponded RTP stream.",
+    "name" : "bytesReceived",
+    "doc": "The total amount of payload bytes received on the corresponded RTP stream.",
     "type" : ["null", "long"],
     "default" : null
   }, {
-    "name" : "rtcpSrSent",
-    "doc": "The total number of SR reports sent by the corresponded RTP stream",
+    "name" : "rtcpSrReceived",
+    "doc": "The total number of SR reports received by the corresponded RTP stream",
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "rtcpRrReceived",
-    "doc": "The total number of RR reports received on the corresponded RTP stream",
+    "name" : "rtcpRrSent",
+    "doc": "The total number of RR reports sent on the corresponded RTP stream",
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "rtxPacketsSent",
-    "doc": "If rtx packets sent on the same stream then this number indicates how may has been sent",
+    "name" : "rtxPacketsReceived",
+    "doc": "If rtx packets are sent or received on the same stream then this number indicates how may has been sent",
     "type" : ["null", "int"],
     "default" : null
   }, {
@@ -185,19 +194,34 @@
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "framesSent",
-    "doc": "The number of frames sent on the corresponded RTP stream",
+    "name" : "framesReceived",
+    "doc": "The number of frames received on the corresponded RTP stream",
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "framesEncoded",
-    "doc": "Indicate the number of frames the Sfu has been encoded",
+    "name" : "framesDecoded",
+    "doc": "Indicate the number of frames the Sfu has been decoded",
     "type" : ["null", "int"],
     "default" : null
   }, {
-    "name" : "keyFramesEncoded",
-    "doc": "Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream",
+    "name" : "keyFramesDecoded",
+    "doc": "Indicate the number of keyframes the Sfu has been decoded",
     "type" : ["null", "int"],
+    "default" : null
+  }, {
+    "name" : "fractionLost",
+    "doc": "The calculated fractionLost of the stream",
+    "type" : ["null", "double"],
+    "default" : null
+  }, {
+    "name" : "jitter",
+    "doc": "The calculated jitter of the stream",
+    "type" : ["null", "double"],
+    "default" : null
+  }, {
+    "name" : "roundTripTime",
+    "doc": "The calculated RTT of the stream",
+    "type" : ["null", "double"],
     "default" : null
   }, {
     "name" : "attachments",

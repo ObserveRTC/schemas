@@ -972,9 +972,9 @@ interface InboundAudioTrack {
   remoteClientId?: string;
 
   /**
-   * The sfuStreamId if the stream is consumed from a SFU
+   * The sink id of the pod from SFU streaming the media
    */
-  sfuStreamId?: string;
+  sfuSinkId?: string;
 }
 
 /**
@@ -1310,9 +1310,9 @@ interface InboundVideoTrack {
    */
   remoteClientId?: string;
   /**
-   * The sfuStreamId if the stream is consumed from a SFU
+   * The sink id of the pod from SFU streaming the media
    */
-  sfuStreamId?: string;
+  sfuSinkId?: string;
 }
 
 /**
@@ -1627,9 +1627,9 @@ interface OutboundAudioTrack {
    */
   peerConnectionId?: string;
   /**
-   * The sfuStreamId if the track is produced to a SFU
+   * The source id of the pod from SFU streaming the media
    */
-  sfuStreamId?: string;
+  sfuSourceId?: string;
 }
 
 interface OutboundVideoTrack {
@@ -2011,9 +2011,9 @@ interface OutboundVideoTrack {
    */
   peerConnectionId?: string;
   /**
-   * The sfuStreamId if the track is produced to a SFU
+   * The sfuSourceId if the track is produced to a SFU
    */
-  sfuStreamId?: string;
+  sfuSourceId?: string;
 }
 
 interface ICELocalCandidate {
