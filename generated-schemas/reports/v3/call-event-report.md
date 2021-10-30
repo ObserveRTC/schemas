@@ -2,14 +2,14 @@
 ---
 
 
-Events happened in calls.
+Events happened in calls. 
 
 
 Name | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-name | string | Yes | The name of the event
+name | string | Yes | The name of the event. Possible values are: CALL_STARTED, CALL_ENDED, CLIENT_JOINED, CLIENT_LEFT, PEER_CONNECTION_OPENED, PEER_CONNECTION_CLOSED, MEDIA_TRACK_ADDED, MEDIA_TRACK_REMOVED
 mediaUnitId | string | No | The media unit id the report belongs to
 marker | string | No | The marker the originated sample is reported with
 callId | string | No | The generated unique identifier of the call

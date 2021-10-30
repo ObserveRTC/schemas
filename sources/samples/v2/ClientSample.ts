@@ -1,4 +1,4 @@
-// @revision: 1
+// @revision: 2
 /**
  * Engine
  */
@@ -1775,14 +1775,29 @@ interface OutboundVideoTrack {
   averageRtcpInterval?: number;
 
   /**
-   * The reason for quality limitation happeened on the corresponded RTP stream
+   *  Time elapsed in seconds when the RTC connection has not limited the quality
+   */
+  qualityLimitationDurationNone?: number; // video only
+
+  /**
+   * Time elapsed in seconds the RTC connection had a limitation because of CPU
+   */
+  qualityLimitationDurationCPU?: number; // video only
+
+  /**
+   * Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
+   */
+  qualityLimitationDurationBandwidth?: number; // video only
+
+  /**
+   * Time elapsed in seconds the RTC connection had a limitation because of Other factor
+   */
+  qualityLimitationDurationOther?: number; // video only
+
+  /**
+   * Indicate a reason for the quality limitation of the corresponded synchronization source
    */
   qualityLimitationReason?: string; // video only
-  
-  /**
-   * the total sum of duration of the quality limitation happened on the corresponded RTP stream
-   */
-  qualityLimitationDurations?: number; // video only
 
   /**
    * The total number of resolution changes occured ont he corresponded RTP stream due to quality changes

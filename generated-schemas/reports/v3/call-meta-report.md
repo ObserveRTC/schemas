@@ -18,5 +18,5 @@ userId | string | No | webrtc app provided user identifier
 peerConnectionId | string | No | The unique identifier of the peer connection
 sampleTimestamp | long | No | The timestamp of the sample the event related to
 sampleSeq | int | No | The sequence number of the sample the event may related to
-type | string | No | The type of the meta data reported for the peer connection
+type | string | No | The type of the meta data. Possible values are: CERTIFICATE, CODEC, ICE_LOCAL_CANDIDATE, ICE_REMOTE_CANDIDATE, ICE_SERVER, MEDIA_CONSTRAINT, MEDIA_DEVICE, MEDIA_SOURCE, USER_MEDIA_ERROR,
 payload | string | No | The payload for the metadata reported for the peeer connection

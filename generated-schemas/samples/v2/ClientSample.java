@@ -2229,16 +2229,34 @@ Possible values are: "audio", and "video"
 		public Double averageRtcpInterval;
 		
 			/**
-		* The reason for quality limitation happeened on the corresponded RTP stream
+		* Time elapsed in seconds when the RTC connection has not limited the quality
+		*/
+		@JsonProperty("qualityLimitationDurationNone")
+		public Double qualityLimitationDurationNone;
+		
+			/**
+		* Time elapsed in seconds the RTC connection had a limitation because of CPU
+		*/
+		@JsonProperty("qualityLimitationDurationCPU")
+		public Double qualityLimitationDurationCPU;
+		
+			/**
+		* Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
+		*/
+		@JsonProperty("qualityLimitationDurationBandwidth")
+		public Double qualityLimitationDurationBandwidth;
+		
+			/**
+		* Time elapsed in seconds the RTC connection had a limitation because of Other factor
+		*/
+		@JsonProperty("qualityLimitationDurationOther")
+		public Double qualityLimitationDurationOther;
+		
+			/**
+		* Indicate a reason for the quality limitation of the corresponded synchronization source
 		*/
 		@JsonProperty("qualityLimitationReason")
 		public String qualityLimitationReason;
-		
-			/**
-		* the total sum of duration of the quality limitation happened on the corresponded RTP stream
-		*/
-		@JsonProperty("qualityLimitationDurations")
-		public Double qualityLimitationDurations;
 		
 			/**
 		* The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
