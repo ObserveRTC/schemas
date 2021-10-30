@@ -2,7 +2,7 @@ Revisions:
 	inbound-audio-track-report: 1
 	inbound-video-track-report: 1
 	outbound-audio-track-report: 1
-	outbound-video-track-report: 1
+	outbound-video-track-report: 2
 	sfu-event-report: 1
 	sfu-rtp-source-report: 1
 	sfu-meta-report: 1

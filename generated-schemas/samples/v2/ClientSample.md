@@ -501,8 +501,11 @@ qpSum | number | No | The sum of the QP the media encoder provided on the corres
 totalEncodeTime | number | No | The total time in seconds spent in encoding media frames for the corresponded RTP stream.
 totalPacketSendDelay | number | No | The total amount of delay in seconds the packets subjected to wait before sending. This can be either because of a pace bufffer, or other enforced waiting.
 averageRtcpInterval | number | No | The average RTCP interval for SR compound packets
-qualityLimitationReason | string | No | The reason for quality limitation happeened on the corresponded RTP stream
-qualityLimitationDurations | number | No | the total sum of duration of the quality limitation happened on the corresponded RTP stream
+qualityLimitationDurationNone | number | No | Time elapsed in seconds when the RTC connection has not limited the quality
+qualityLimitationDurationCPU | number | No | Time elapsed in seconds the RTC connection had a limitation because of CPU
+qualityLimitationDurationBandwidth | number | No | Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
+qualityLimitationDurationOther | number | No | Time elapsed in seconds the RTC connection had a limitation because of Other factor
+qualityLimitationReason | string | No | Indicate a reason for the quality limitation of the corresponded synchronization source
 qualityLimitationResolutionChanges | number | No | The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
 perDscpPacketsSent | number | No | The ratio of the DSCP packets sent on the corresponded RTP stream.
 nackCount | number | No | The total number of negative acknowledgement sent on the corresponded RTP stream

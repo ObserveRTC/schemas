@@ -1514,13 +1514,25 @@
           "description": "The average RTCP interval for SR compound packets",
           "type": "number"
         },
-        "qualityLimitationReason": {
-          "description": "The reason for quality limitation happeened on the corresponded RTP stream",
-          "type": "string"
-        },
-        "qualityLimitationDurations": {
-          "description": "the total sum of duration of the quality limitation happened on the corresponded RTP stream",
+        "qualityLimitationDurationNone": {
+          "description": "Time elapsed in seconds when the RTC connection has not limited the quality",
           "type": "number"
+        },
+        "qualityLimitationDurationCPU": {
+          "description": "Time elapsed in seconds the RTC connection had a limitation because of CPU",
+          "type": "number"
+        },
+        "qualityLimitationDurationBandwidth": {
+          "description": "Time elapsed in seconds the RTC connection had a limitation because of Bandwidth",
+          "type": "number"
+        },
+        "qualityLimitationDurationOther": {
+          "description": "Time elapsed in seconds the RTC connection had a limitation because of Other factor",
+          "type": "number"
+        },
+        "qualityLimitationReason": {
+          "description": "Indicate a reason for the quality limitation of the corresponded synchronization source",
+          "type": "string"
         },
         "qualityLimitationResolutionChanges": {
           "description": "The total number of resolution changes occured ont he corresponded RTP stream due to quality changes",

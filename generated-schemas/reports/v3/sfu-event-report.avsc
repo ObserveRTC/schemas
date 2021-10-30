@@ -110,7 +110,7 @@
     },
     {
       "name": "name",
-      "doc": "The name of the event",
+      "doc": "The name of the event. Possible values are: SFU_JOINED, SFU_LEFT, SFU_TRANSPORT_OPENED, SFU_TRANSPORT_CLOSED, SFU_RTP_STREAM_ADDED, SFU_RTP_STREAM_REMOVED",
       "type": "string"
     },
     {

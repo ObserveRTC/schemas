@@ -45,8 +45,11 @@ qpSum | long | No | The sum of QP values encoded by the encoder corresponded to 
 totalEncodeTime | double | No | The sum of encoding time spent by the encoder corresponded to the synchronization source
 totalPacketSendDelay | double | No | The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
 averageRtcpInterval | double | No | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-qualityLimitationReason | string | No | The reason behind the last a quality limitation changes happened for the corresponding synchronization source (ssrc)
-qualityLimitationDurations | double | No | The total duration of the quality limitations happened for the corresponding synchronization source (ssrc)
+qualityLimitationDurationCPU | double | No | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state due to CPU
+qualityLimitationDurationNone | double | No | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was not in a limited state
+qualityLimitationDurationBandwidth | double | No | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state becasue of bandwidth
+qualityLimitationDurationOther | double | No | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state becaue of other factor
+qualityLimitationReason | string | No | Indicate a reason for the corresponding synchronization source (ssrc) quality is limited
 qualityLimitationResolutionChanges | int | No | The number of quality limiatation changes happened for the corresponding synchronization source (ssrc)
 perDscpPacketsSent | double | No | The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
 nackCount | int | No | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
