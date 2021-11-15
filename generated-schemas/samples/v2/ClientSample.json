@@ -905,8 +905,8 @@
           "description": "The remote clientId the source outbound track belongs to",
           "type": "string"
         },
-        "sfuSinkId": {
-          "description": "The sink id of the pod from SFU streaming the media",
+        "rtpStreamId": {
+          "description": "A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media",
           "type": "string"
         }
       }
@@ -1163,8 +1163,8 @@
           "description": "The remote clientId the source outbound track belongs to",
           "type": "string"
         },
-        "sfuSinkId": {
-          "description": "The sink id of the pod from SFU streaming the media",
+        "rtpStreamId": {
+          "description": "A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media",
           "type": "string"
         }
       }
@@ -1397,8 +1397,8 @@
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
           "type": "string"
         },
-        "sfuSourceId": {
-          "description": "The source id of the pod from SFU streaming the media",
+        "rtpStreamId": {
+          "description": "A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media",
           "type": "string"
         }
       }
@@ -1702,8 +1702,8 @@
           "description": "The unique generated identifier of the peer connection the inbound audio track belongs to",
           "type": "string"
         },
-        "sfuSourceId": {
-          "description": "The sfuSourceId if the track is produced to a SFU",
+        "rtpStreamId": {
+          "description": "A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media",
           "type": "string"
         }
       }

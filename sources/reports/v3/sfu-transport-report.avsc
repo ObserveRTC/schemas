@@ -7,14 +7,13 @@
   "fields" : [
   /* Report MetaFields */
   {
+    "name" : "serviceId",
+    "doc": "The service id the report belongs to",
+    "type" : "string"
+  }, {
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
     "type" : "string"
-  }, {
-    "name" : "sfuName",
-    "doc": "The provided name of the SFU",
-    "type" : [ "null", "string" ],
-    "default" : null
   }, {
     "name" : "sfuId",
     "doc": "The provided unique identifier of the SFU",

@@ -15,22 +15,16 @@ public  class SfuSample {
 	public String sfuId;
 	
 	/**
-	* A given name for a certain SFU
-	*/
-	@JsonProperty("sfuName")
-	public String sfuName;
-	
-	/**
 	* array of measurements related to inbound RTP streams
 	*/
-	@JsonProperty("rtpSources")
-	public SfuRtpSource[] rtpSources;
+	@JsonProperty("inboundRtpPads")
+	public SfuInboundRtpPad[] inboundRtpPads;
 	
 	/**
 	* array of measurements related to outbound RTP streams
 	*/
-	@JsonProperty("rtpSinks")
-	public SfuRtpSink[] rtpSinks;
+	@JsonProperty("outboundRtpPads")
+	public SfuOutboundRtpPad[] outboundRtpPads;
 	
 	/**
 	* array of measurements of SCTP streams
@@ -66,7 +60,7 @@ public  class SfuSample {
 	* undefined
 	*/
 	
-	public static class SfuRtpSource { 
+	public static class SfuInboundRtpPad { 
 	
 			/**
 		* The id of the transport the stream belongs to
@@ -77,14 +71,32 @@ public  class SfuSample {
 			/**
 		* unique identifier for the stream
 		*/
-		@JsonProperty("streamId")
-		public String streamId;
+		@JsonProperty("rtpStreamId")
+		public String rtpStreamId;
 		
 			/**
 		* id of the source pod
 		*/
-		@JsonProperty("sourceId")
-		public String sourceId;
+		@JsonProperty("padId")
+		public String padId;
+		
+			/**
+		* Indicates if this transport is not receive or send traffic outside of the SFU mesh.
+		*/
+		@JsonProperty("internal")
+		public boolean internal;
+		
+			/**
+		* Indicate if this message measurements should be kept and oly used as keep alive message for the transports
+		*/
+		@JsonProperty("skipMeasurements")
+		public boolean skipMeasurements;
+		
+			/**
+		* if the sink is internally piped between the SFUs, this id represents the remote SFU outbound pad id
+		*/
+		@JsonProperty("outboundPadId")
+		public String outboundPadId;
 		
 			/**
 		* The SSRC identifier of the corresponded RTP stream
@@ -295,7 +307,7 @@ public  class SfuSample {
 	* undefined
 	*/
 	
-	public static class SfuRtpSink { 
+	public static class SfuOutboundRtpPad { 
 	
 			/**
 		* The id of the transport the stream belongs to
@@ -306,14 +318,26 @@ public  class SfuSample {
 			/**
 		* unique identifier of the stream
 		*/
-		@JsonProperty("streamId")
-		public String streamId;
+		@JsonProperty("rtpStreamId")
+		public String rtpStreamId;
 		
 			/**
 		* id of the sink pod
 		*/
-		@JsonProperty("sinkId")
-		public String sinkId;
+		@JsonProperty("padId")
+		public String padId;
+		
+			/**
+		* Indicates if this transport is not receive or send traffic outside of the SFU mesh.
+		*/
+		@JsonProperty("internal")
+		public boolean internal;
+		
+			/**
+		* Indicate if this message measurements should be kept and oly used as keep alive message for the transports
+		*/
+		@JsonProperty("skipMeasurements")
+		public boolean skipMeasurements;
 		
 			/**
 		* The SSRC identifier of the corresponded RTP stream
@@ -600,12 +624,16 @@ public  class SfuSample {
 		public String transportId;
 		
 			/**
-		* The id of the service the transport belongs to
-
-NOTE: As one SFU may used by many service by one organization, this is an additional information should/can be provided to the Sfu transport
+		* Indicates if this transport is not receive or send traffic outside of the SFU mesh.
 		*/
-		@JsonProperty("serviceId")
-		public String serviceId;
+		@JsonProperty("internal")
+		public boolean internal;
+		
+			/**
+		* Indicate if this message measurements should be kept and oly used as keep alive message for the transports
+		*/
+		@JsonProperty("skipMeasurements")
+		public boolean skipMeasurements;
 		
 			/**
 		* Set to the current value of the state attribute of the underlying RTCDtlsTransport.

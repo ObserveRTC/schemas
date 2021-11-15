@@ -5,13 +5,13 @@
 A Report created for SFU Transport layer typically created to transfer RTP/SCTP/RTX streams to another client, SFU, MCU, or processing module.
 
 
-Name | Type | Required | Description 
+Attribute | Type | Required | Description 
 --- | --- | --- | ---
+serviceId | string | Yes | The service id the report belongs to
 mediaUnitId | string | Yes | The media unit id the report belongs to
 sfuId | string | Yes | The provided unique identifier of the SFU
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 transportId | string | Yes | The generated unique identifier of the transport
-sfuName | string | No | The provided name of the SFU
 marker | string | No | The marker the originated sample is reported with
 callId | string | No | The generated unique identifier of the call
 roomId | string | No | webrtc app provided room id

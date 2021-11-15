@@ -1312,10 +1312,10 @@ Possible values are: "audio", and "video"
 		public String remoteClientId;
 		
 			/**
-		* The sink id of the pod from SFU streaming the media
+		* A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
 		*/
-		@JsonProperty("sfuSinkId")
-		public String sfuSinkId;
+		@JsonProperty("rtpStreamId")
+		public String rtpStreamId;
 		
 	}
 	/** 
@@ -1700,10 +1700,10 @@ Possible values are: "audio", and "video"
 		public String remoteClientId;
 		
 			/**
-		* The sink id of the pod from SFU streaming the media
+		* A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
 		*/
-		@JsonProperty("sfuSinkId")
-		public String sfuSinkId;
+		@JsonProperty("rtpStreamId")
+		public String rtpStreamId;
 		
 	}
 	/** 
@@ -2054,10 +2054,10 @@ Possible values are: "audio", and "video"
 		public String peerConnectionId;
 		
 			/**
-		* The source id of the pod from SFU streaming the media
+		* A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
 		*/
-		@JsonProperty("sfuSourceId")
-		public String sfuSourceId;
+		@JsonProperty("rtpStreamId")
+		public String rtpStreamId;
 		
 	}
 	/** 
@@ -2513,10 +2513,10 @@ Possible values are: "audio", and "video"
 		public String peerConnectionId;
 		
 			/**
-		* The sfuSourceId if the track is produced to a SFU
+		* A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
 		*/
-		@JsonProperty("sfuSourceId")
-		public String sfuSourceId;
+		@JsonProperty("rtpStreamId")
+		public String rtpStreamId;
 		
 	}
 	/** 

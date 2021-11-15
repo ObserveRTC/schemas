@@ -5,7 +5,7 @@
 A General Flat merged Media Track Report for in-, outbound video and audio tracks
 
 
-Name | Type | Required | Description 
+Attribute | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to
@@ -20,6 +20,8 @@ roomId | string | No | webrtc app provided room id
 userId | string | No | webrtc app provided user identifier
 label | string | No | The webrtc app provided label the peer connection is labeled with
 trackId | string | No | The id of the track
+rtpStreamId | string | No | The id of the RTP stream connected to a remote media unit (such as an SFU)
+remoteTrackId | string | No | Only For Inbound Media Track Reports<br />The id of the remote track this inbound track is originated from
 remoteUserId | string | No | Only For Inbound Media Track Reports<br />The webrtc app provided user id the track belongs to, or if the webrtc app did not provided the observer tried to match it
 remoteClientId | string | No | Only For Inbound Media Track Reports<br />The observer matched remote client Id
 remotePeerConnectionId | string | No | Only For Inbound Media Track Reports<br />The observer matched remote Peer Connection Id

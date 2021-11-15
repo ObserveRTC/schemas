@@ -215,7 +215,7 @@ class MarkdownSchemaDescription {
         };
         if (0 < this._rows.length) {
             result.push("\n");
-            result.push("Name | Type | Required | Description ");
+            result.push("Attribute | Type | Required | Description ");
             result.push("--- | --- | --- | ---");
             
             this._rows.sort(compareRows).forEach(row => {
@@ -561,9 +561,9 @@ class SchemaGenerator {
             this._mediaTrackReportNames.outbAudTrackSchemaParsedObj,
             this._mediaTrackReportNames.outbVidTrackSchemaParsedObj,
             "sfu-event-report",
-            "sfu-rtp-source-report",
+            "sfu-outbound-rtp-pad-report",
             "sfu-meta-report",
-            "sfu-rtp-sink-report",
+            "sfu-inbound-rtp-pad-report",
             "sfu-sctp-stream-report",
             "sfu-transport-report",
             "client-transport-report",

@@ -972,9 +972,9 @@ interface InboundAudioTrack {
   remoteClientId?: string;
 
   /**
-   * The sink id of the pod from SFU streaming the media
+   * A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
    */
-  sfuSinkId?: string;
+  rtpStreamId?: string;
 }
 
 /**
@@ -1310,9 +1310,9 @@ interface InboundVideoTrack {
    */
   remoteClientId?: string;
   /**
-   * The sink id of the pod from SFU streaming the media
+   * A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
    */
-  sfuSinkId?: string;
+  rtpStreamId?: string;
 }
 
 /**
@@ -1627,9 +1627,9 @@ interface OutboundAudioTrack {
    */
   peerConnectionId?: string;
   /**
-   * The source id of the pod from SFU streaming the media
+   * A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
    */
-  sfuSourceId?: string;
+  rtpStreamId?: string;
 }
 
 interface OutboundVideoTrack {
@@ -2026,9 +2026,9 @@ interface OutboundVideoTrack {
    */
   peerConnectionId?: string;
   /**
-   * The sfuSourceId if the track is produced to a SFU
+   * A unique identifier (UUID) for the RTP stream the media content is sent. Typically if a client is joined to an SFU this can be identical to the id the SFU uses to (publish/subscribe, produce/consume, ...) media
    */
-  sfuSourceId?: string;
+  rtpStreamId?: string;
 }
 
 interface ICELocalCandidate {
