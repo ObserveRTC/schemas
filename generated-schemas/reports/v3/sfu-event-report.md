@@ -5,7 +5,7 @@
 Events happened in calls.
 
 
-Name | Type | Required | Description 
+Attribute | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The service id the report belongs to
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)

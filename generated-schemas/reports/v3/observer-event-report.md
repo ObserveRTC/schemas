@@ -5,7 +5,7 @@
 A report created for observer generated events
 
 
-Name | Type | Required | Description 
+Attribute | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)

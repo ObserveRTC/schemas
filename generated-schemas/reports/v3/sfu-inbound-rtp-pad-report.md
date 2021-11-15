@@ -5,7 +5,7 @@
 A Report created for RTP streams going through the SFU
 
 
-Name | Type | Required | Description 
+Attribute | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The service id the report belongs to
 mediaUnitId | string | Yes | The media unit id the report belongs to
