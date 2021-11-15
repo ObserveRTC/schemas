@@ -5,7 +5,7 @@
 A compound object holds a set of measurements belonging to a aspecific time
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 sfuId | string | Yes | a Unique generated id for the sfu samples are originated from
 timestamp | number | Yes | The timestamp when the sample is created
@@ -23,7 +23,7 @@ marker | string | No | A sample marker indicate an additional information from t
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
 rtpStreamId | string | Yes | unique identifier for the stream
@@ -71,7 +71,7 @@ attachments | string | No | Arbitrary attachments holds relevant information abo
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
 rtpStreamId | string | Yes | unique identifier of the stream
@@ -115,7 +115,7 @@ attachments | string | No | Arbitrary attachments holds relevant information abo
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
 streamId | string | Yes | The id of the sctp stream
@@ -136,7 +136,7 @@ bytesSent | number | No | The number of bytes sent on the corresponded SCTP stre
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The identifier of the transport
 internal | boolean | No | Indicates if this transport is not receive or send traffic outside of the SFU mesh.

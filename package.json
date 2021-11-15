@@ -1,11 +1,12 @@
 {
   "name": "schema-2.0",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Schema repository for ObserveRTC",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "keywords": [
     "observertc",
     "schemas"
@@ -18,9 +19,6 @@
   "dependencies": {
     "argparse": "^2.0.1",
     "avro-js": "^1.10.2",
-    "fastify": "^3.17.0",
-    "json-schema-to-markdown": "^1.1.1",
-    "nodemon": "^2.0.7",
-    "typescript-json-schema": "^0.50.1"
+    "json-schema-to-markdown": "^1.1.1"
   }
 }

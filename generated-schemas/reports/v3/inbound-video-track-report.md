@@ -5,7 +5,7 @@
 A Report created for Inbound Video Tracks. A combination of Codec metadata carrying inbound and remote outbound RTP stats measurements
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to
@@ -51,7 +51,7 @@ qpSum | long | No | sum of QP values of frames decoded on the corresponded synch
 totalDecodeTime | long | No | The total number of seconds spent on decoding frames on the corresponded synchronization source (ssrc)
 totalInterFrameDelay | long | No | The total number of inter frame delay on the corresponded synchronization source (ssrc)
 totalSquaredInterFrameDelay | long | No | The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
-lastPacketReceivedTimestamp | boolean | No | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
+lastPacketReceivedTimestamp | double | No | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
 averageRtcpInterval | double | No | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
 headerBytesReceived | long | No | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
 fecPacketsReceived | int | No | Total number of FEC packets received over the corresponding synchronization source (ssrc)

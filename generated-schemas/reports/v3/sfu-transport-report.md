@@ -5,7 +5,7 @@
 A Report created for SFU Transport layer typically created to transfer RTP/SCTP/RTX streams to another client, SFU, MCU, or processing module.
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The service id the report belongs to
 mediaUnitId | string | Yes | The media unit id the report belongs to

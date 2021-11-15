@@ -5,10 +5,11 @@
 A compound object holds a set of measurements belonging to a aspecific time
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 clientId | string | Yes | The unique generated client id the report is generated from
 timestamp | number | Yes | The timestamp when the sample is created
+callId | string | No | Optional. If the client is aware of the callId for some reason (generated while clients are joined to the same room) then the observer will use this id.<br />Otherwise the observer matches the client and assign a callId in reports.
 sampleSeq | number | No | The sequence number a source assigns to the sample. <br />Every time the source make a sample at a client <br />this number is monothonically incremented.
 roomId | string | No | The WebRTC app configured room id the client was at the call.<br />If it is configured, then every sample carries this information.
 userId | string | No | The WebRTC app configured user id of the client.<br />If it is configured, then every sample carries this information.
@@ -45,7 +46,7 @@ marker | string | No | A sample marker indicate an additional information from t
 Engine
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 name | string | No | The name of
 version | string | No | The version of
@@ -58,7 +59,7 @@ version | string | No | The version of
 Platform infromation
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 type | string | No | The type of the platform
 vendor | string | No | The vendor of the platform
@@ -72,7 +73,7 @@ model | string | No | The model of the platform
 Browser infromation
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 name | string | No | The name of the browser
 version | string | No | The version of
@@ -82,11 +83,25 @@ version | string | No | The version of
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 name | string | No | Name of the operation system.
 version | string | No | The version number of the operation system
 versionName | string | No | The version name of the operation system
+
+
+### MediaDevice
+---
+
+
+MediaDevice
+
+
+Field | Type | Required | Description 
+--- | --- | --- | ---
+id | string | Yes | the provided id of the media input / output
+kind | string | No | the kind of the device
+label | string | No | The name of the device
 
 
 ### ExtensionStat
@@ -96,7 +111,7 @@ versionName | string | No | The version name of the operation system
 The ExtensionStat class is a custom defined payload, and type pair, which sent to the endpoint with the intention of landing in the backend database without any transformation
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 extensionType | string | No | The custom defined type of the extension
 payload | string | No | The payload of the extension
@@ -116,7 +131,7 @@ A compounded object built up by using
 from https://www.w3.org/TR/webrtc-stats/
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 peerConnectionId | string | No | The unique generated id for the peer connection
 label | string | No | The webrtc app provided label to the peer connection
@@ -201,7 +216,7 @@ Represents the WebRTC Stats defined [RTCMediaSourceStats](https://www.w3.org/TR/
 NOTE: This name is postfixed with "stat" in order to avoid collision of the MediaSource name part of the standard library and picked up by the schema transpiler
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 trackIdentifier | string | No | The unique generated identifier the corresponded track has
 kind | string | No | The type of the media the Mediasource produces.<br /><br />Possible values are: "audio", "video"
@@ -227,7 +242,7 @@ The Media Codec the client uses to encode / decode certain media
 Fields related to [RTCCodecStats](https://www.w3.org/TR/webrtc-stats/#dom-rtccodecstats)
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 payloadType | string | No | Payload type used in RTP encoding / decoding process.
 codecType | string | No | Either "encode", or "decode" depending on the role the codec plays in the client
@@ -246,7 +261,7 @@ peerConnectionId | string | No | The peer connection id the codec is related to
 Information about a certificate used by the ICE pair on peer connection
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 fingerprint | string | No | The fingerprint of the certificate
 fingerprintAlgorithm | string | No | The hash function used to generate the fingerprint
@@ -261,7 +276,7 @@ issuerCertificateId | string | No | The id of the next certificate in the certif
 A combination of InboundRTPStat, RemoteInboundRTPStat, Receiver, and Codec webrtc stat standard exposed object at the client specific for audio tracks
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream.
 packetsReceived | number | No | The total number of packets received on the corresponded RTP stream,
@@ -333,7 +348,7 @@ A compound stat object used by the client giving information about a video track
 used by the client as inbound
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream.
 packetsReceived | number | No | The total number of packets received on the corresponded RTP stream,
@@ -407,7 +422,7 @@ rtpStreamId | string | No | A unique identifier (UUID) for the RTP stream the me
 A compound object giving information about the audio track the client uses
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 packetsSent | number | No | The total number of packets sent on the corresponded RTP stream
@@ -472,7 +487,7 @@ rtpStreamId | string | No | A unique identifier (UUID) for the RTP stream the me
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 packetsSent | number | No | The total number of packets sent on the corresponded RTP stream
@@ -555,7 +570,7 @@ rtpStreamId | string | No | A unique identifier (UUID) for the RTP stream the me
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 id | string | Yes | The unique identifier of the local candidate
 transportId | string | No | The unique identifier of the transport the local candidate belongs to
@@ -563,7 +578,7 @@ address | string | No | The address of the local endpoint (Ipv4, Ipv6, FQDN)
 port | number | No | The port number of the local endpoint the ICE uses
 protocol | string | No | The protocol for the ICE
 candidateType | string | No | The type of the local candidate
-priority | string | No | The priority of the local candidate
+priority | number | No | The priority of the local candidate
 url | string | No | The url of the ICE server
 relayProtocol | string | No | The relay protocol the local candidate uses
 peerConnectionId | string | No | Refers to the peer connection the local candidate belongs to
@@ -573,14 +588,14 @@ peerConnectionId | string | No | Refers to the peer connection the local candida
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 id | string | Yes | The unique identifier of the remote candidate
 address | string | No | The address of the remote endpoint (Ipv4, Ipv6, FQDN)
 port | number | No | The port number of the remote endpoint the ICE uses
 protocol | string | No | The protocol for the ICE
 candidateType | string | No | The type of the remote candidate
-priority | string | No | The priority of the remote candidate
+priority | number | No | The priority of the remote candidate
 url | string | No | The url of the ICE server
 relayProtocol | string | No | The relay protocol the remote candidate uses
 peerConnectionId | string | No | Refers to the peer connection the remote candidate belongs to
@@ -590,15 +605,15 @@ peerConnectionId | string | No | Refers to the peer connection the remote candid
 ---
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 id | string | No | Unique identifier of the data channel
 label | string | No | The label the data channel provided at the creation
 protocol | string | No | The protocol the data channel use to transfer data
-dataChannelIdentifier | string | No | The unique identifier of the data channel
+dataChannelIdentifier | number | No | The unique identifier of the data channel
 state | string | No | The state of the data channel
 messagesSent | number | No | The total number of messages sent on this data channel. this is not equal to the number of packets sent, as messages are chunked to packets
-bytesSent | string | No | The amount of bytes sent on the corresponded data channel
+bytesSent | number | No | The amount of bytes sent on the corresponded data channel
 messagesReceived | number | No | The number of messages received on the corresponded data channel
 bytesReceived | number | No | The total amount of bytes received on the corresponded data channel
 peerConnectionId | string | No | The unique generated identifier of the peer connection the data channel belongs to

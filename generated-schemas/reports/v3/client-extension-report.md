@@ -5,7 +5,7 @@
 A Report created for Extended provided arbitrary data.
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)

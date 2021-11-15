@@ -5,7 +5,7 @@
 Metadata belongs to SFUs
 
 
-Name | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The service id the report belongs to
 timestamp | long | Yes | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
