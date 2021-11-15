@@ -1,12 +1,16 @@
 /* @revision: 1 */
 {
   "type" : "record",
-  "name" : "SfuRTPSinkReport",
+  "name" : "SfuOutboundRtpPadReport",
   "namespace" : "org.observertc.webrtc.schemas.reports",
   "doc" : "A Report created for RTP streams going through the SFU",
   "fields" : [
   /* Report MetaFields */
   {
+    "name" : "serviceId",
+    "doc": "The service id the report belongs to",
+    "type" : "string"
+  }, {
     "name" : "mediaUnitId",
     "doc": "The media unit id the report belongs to",
     "type" : "string"
@@ -14,11 +18,6 @@
     "name" : "sfuId",
     "doc": "The provided unique identifier of the SFU",
     "type" : "string"
-  }, {
-    "name" : "sfuName",
-    "doc": "The provided name of the SFU",
-    "type" : [ "null", "string" ],
-    "default" : null
   }, {
     "name" : "marker",
     "doc": "The marker the originated sample is reported with",
@@ -35,33 +34,35 @@
     "doc": "The id of the transport the RTP stream uses.",
     "type" : "string"
   }, {
-    "name" : "streamId",
+    "name" : "rtpStreamId",
     "doc": "The id of the RTP stream.",
+    "type" : "string"
+  }, {
+    "name" : "padId",
+    "doc": "The id of Sfu pad.",
     "type" : "string"
   }, {
     "name" : "ssrc",
     "doc": "The synchronization source id of the RTP stream",
     "type" : "long"
-  }, {
-    "name" : "trackId",
-    "doc": "The id of the track the RTP stream related to at the client side",
+  },  {
+    "name" : "callId",
+    "doc": "The callId the event belongs to",
     "type" : [ "null", "string" ],
     "default" : null
-  }, {
-    "name" : "sinkId",
-    "doc": "The id of the sink component of the RTP stream.",
-    "type" : "string"
   }, {
     "name" : "clientId",
     "doc": "If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to",
     "type" : [ "null", "string" ],
     "default" : null
   }, {
-    "name" : "callId",
-    "doc": "The callId the event belongs to",
+    "name" : "trackId",
+    "doc": "The id of the track the RTP stream related to at the client side",
     "type" : [ "null", "string" ],
     "default" : null
   },
+
+  
   /* RTP stats */
   {
     "name" : "mediaType",

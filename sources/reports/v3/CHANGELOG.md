@@ -72,7 +72,7 @@
  * Created
 
 
-## Sfu Inbound Rtp Stream Report
+## Sfu Inbound Rtp Pad Report
 
 ### Revision 1
  * Created
@@ -84,7 +84,7 @@
  * Created
 
 
-## Sfu Outbound Rtp Stream Report
+## Sfu Outbound Rtp Pad Report
 
 ### Revision 1
  * Created

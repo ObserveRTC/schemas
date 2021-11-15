@@ -6,22 +6,18 @@
       "description": "a Unique generated id for the sfu samples are originated from",
       "type": "string"
     },
-    "sfuName": {
-      "description": "A given name for a certain SFU",
-      "type": "string"
-    },
-    "rtpSources": {
+    "inboundRtpPads": {
       "description": "array of measurements related to inbound RTP streams",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/SfuRtpSource"
+        "$ref": "#/definitions/SfuInboundRtpPad"
       }
     },
-    "rtpSinks": {
+    "outboundRtpPads": {
       "description": "array of measurements related to outbound RTP streams",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/SfuRtpSink"
+        "$ref": "#/definitions/SfuOutboundRtpPad"
       }
     },
     "sctpStreams": {
@@ -56,19 +52,31 @@
     "timestamp"
   ],
   "definitions": {
-    "SfuRtpSource": {
+    "SfuInboundRtpPad": {
       "type": "object",
       "properties": {
         "transportId": {
           "description": "The id of the transport the stream belongs to",
           "type": "string"
         },
-        "streamId": {
+        "rtpStreamId": {
           "description": "unique identifier for the stream",
           "type": "string"
         },
-        "sourceId": {
+        "padId": {
           "description": "id of the source pod",
+          "type": "string"
+        },
+        "internal": {
+          "description": "Indicates if this transport is not receive or send traffic outside of the SFU mesh.",
+          "type": "boolean"
+        },
+        "skipMeasurements": {
+          "description": "Indicate if this message measurements should be kept and oly used as keep alive message for the transports",
+          "type": "boolean"
+        },
+        "outboundPadId": {
+          "description": "if the sink is internally piped between the SFUs, this id represents the remote SFU outbound pad id",
           "type": "string"
         },
         "ssrc": {
@@ -209,25 +217,33 @@
         }
       },
       "required": [
-        "sourceId",
-        "streamId",
+        "padId",
+        "rtpStreamId",
         "transportId"
       ]
     },
-    "SfuRtpSink": {
+    "SfuOutboundRtpPad": {
       "type": "object",
       "properties": {
         "transportId": {
           "description": "The id of the transport the stream belongs to",
           "type": "string"
         },
-        "streamId": {
+        "rtpStreamId": {
           "description": "unique identifier of the stream",
           "type": "string"
         },
-        "sinkId": {
+        "padId": {
           "description": "id of the sink pod",
           "type": "string"
+        },
+        "internal": {
+          "description": "Indicates if this transport is not receive or send traffic outside of the SFU mesh.",
+          "type": "boolean"
+        },
+        "skipMeasurements": {
+          "description": "Indicate if this message measurements should be kept and oly used as keep alive message for the transports",
+          "type": "boolean"
         },
         "ssrc": {
           "description": "The SSRC identifier of the corresponded RTP stream",
@@ -355,7 +371,7 @@
         }
       },
       "required": [
-        "streamId",
+        "rtpStreamId",
         "transportId"
       ]
     },
@@ -427,9 +443,13 @@
           "description": "The identifier of the transport",
           "type": "string"
         },
-        "serviceId": {
-          "description": "The id of the service the transport belongs to\n\nNOTE: As one SFU may used by many service by one organization, this is an additional information should/can be provided to the Sfu transport",
-          "type": "string"
+        "internal": {
+          "description": "Indicates if this transport is not receive or send traffic outside of the SFU mesh.",
+          "type": "boolean"
+        },
+        "skipMeasurements": {
+          "description": "Indicate if this message measurements should be kept and oly used as keep alive message for the transports",
+          "type": "boolean"
         },
         "dtlsState": {
           "description": "Set to the current value of the state attribute of the underlying RTCDtlsTransport.",

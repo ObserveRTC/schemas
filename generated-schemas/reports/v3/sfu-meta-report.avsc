@@ -5,6 +5,11 @@
   "doc": "Metadata belongs to SFUs",
   "fields": [
     {
+      "name": "serviceId",
+      "doc": "The service id the report belongs to",
+      "type": "string"
+    },
+    {
       "name": "mediaUnitId",
       "doc": "The media unit id the report belongs to",
       "type": [
@@ -30,15 +35,6 @@
     {
       "name": "sfuId",
       "doc": "The id of the Sfu",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "sfuName",
-      "doc": "The provided name of the SFU",
       "type": [
         "null",
         "string"

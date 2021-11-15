@@ -57,6 +57,11 @@
     "doc": "The id of the track",
     "type" : [ "null", "string" ],
     "default" : null
+  }, {
+    "name" : "rtpStreamId",
+    "doc": "The id of the RTP stream connected to a remote media unit (such as an SFU)",
+    "type" : [ "null", "string" ],
+    "default" : null
   },
   /* Sample Based Report Fields */
   {

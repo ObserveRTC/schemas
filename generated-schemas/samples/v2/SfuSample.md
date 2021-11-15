@@ -9,9 +9,8 @@ Name | Type | Required | Description
 --- | --- | --- | ---
 sfuId | string | Yes | a Unique generated id for the sfu samples are originated from
 timestamp | number | Yes | The timestamp when the sample is created
-sfuName | string | No | A given name for a certain SFU
-rtpSources | array | No | array of measurements related to inbound RTP streams
-rtpSinks | array | No | array of measurements related to outbound RTP streams
+inboundRtpPads | array | No | array of measurements related to inbound RTP streams
+outboundRtpPads | array | No | array of measurements related to outbound RTP streams
 sctpStreams | array | No | array of measurements of SCTP streams
 sfuTransports | array | No | array of measurements of SFU peer connection transports
 timeZoneOffsetInHours | number | No | The client app running offsets from GMT in hours
@@ -20,15 +19,18 @@ marker | string | No | A sample marker indicate an additional information from t
 
 
 
-### SfuRtpSource
+### SfuInboundRtpPad
 ---
 
 
 Name | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
-streamId | string | Yes | unique identifier for the stream
-sourceId | string | Yes | id of the source pod
+rtpStreamId | string | Yes | unique identifier for the stream
+padId | string | Yes | id of the source pod
+internal | boolean | No | Indicates if this transport is not receive or send traffic outside of the SFU mesh.
+skipMeasurements | boolean | No | Indicate if this message measurements should be kept and oly used as keep alive message for the transports
+outboundPadId | string | No | if the sink is internally piped between the SFUs, this id represents the remote SFU outbound pad id
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 mediaType | string | No | The type of the media the stream carries
 payloadType | number | No | The type of the payload the RTP stream carries
@@ -65,15 +67,17 @@ roundTripTime | number | No | The calculated round trip time for the corresponde
 attachments | string | No | Arbitrary attachments holds relevant information about the stream
 
 
-### SfuRtpSink
+### SfuOutboundRtpPad
 ---
 
 
 Name | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The id of the transport the stream belongs to
-streamId | string | Yes | unique identifier of the stream
-sinkId | string | No | id of the sink pod
+rtpStreamId | string | Yes | unique identifier of the stream
+padId | string | No | id of the sink pod
+internal | boolean | No | Indicates if this transport is not receive or send traffic outside of the SFU mesh.
+skipMeasurements | boolean | No | Indicate if this message measurements should be kept and oly used as keep alive message for the transports
 ssrc | number | No | The SSRC identifier of the corresponded RTP stream
 mediaType | string | No | The type of the media the stream carries
 payloadType | number | No | The type of the payload the RTP stream carries
@@ -135,7 +139,8 @@ bytesSent | number | No | The number of bytes sent on the corresponded SCTP stre
 Name | Type | Required | Description 
 --- | --- | --- | ---
 transportId | string | Yes | The identifier of the transport
-serviceId | string | No | The id of the service the transport belongs to<br /><br />NOTE: As one SFU may used by many service by one organization, this is an additional information should/can be provided to the Sfu transport
+internal | boolean | No | Indicates if this transport is not receive or send traffic outside of the SFU mesh.
+skipMeasurements | boolean | No | Indicate if this message measurements should be kept and oly used as keep alive message for the transports
 dtlsState | string | No | Set to the current value of the state attribute of the underlying RTCDtlsTransport.
 iceState | string | No | Set to the current value of the state attribute of the underlying RTCIceTransport.
 sctpState | string | No | The state of the SCTP for this transport

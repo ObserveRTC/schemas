@@ -20,6 +20,7 @@ roomId | string | No | webrtc app provided room id
 userId | string | No | webrtc app provided user identifier
 label | string | No | The webrtc app provided label the peer connection is labeled with
 trackId | string | No | The id of the track
+rtpStreamId | string | No | The id of the RTP stream connected to a remote media unit (such as an SFU)
 packetsSent | int | No | The total number of packets sent on the corresponded synchronization source
 bytesSent | long | No | The total number of bytes sent on the corresponded synchronization source
 rid | string | No |  The rid encoding parameter of the corresponded synchronization source

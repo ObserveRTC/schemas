@@ -5,6 +5,11 @@
   "doc": "Events happened in calls.",
   "fields": [
     {
+      "name": "serviceId",
+      "doc": "The service id the report belongs to",
+      "type": "string"
+    },
+    {
       "name": "mediaUnitId",
       "doc": "The media unit id the report belongs to",
       "type": [
@@ -37,15 +42,6 @@
       "default": null
     },
     {
-      "name": "sfuName",
-      "doc": "The provided name of the SFU",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
       "name": "callId",
       "doc": "The callId the event belongs to",
       "type": [
@@ -64,25 +60,7 @@
       "default": null
     },
     {
-      "name": "streamId",
-      "doc": "Unique identifier of the RTP stream the event is related to",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "sourceId",
-      "doc": "Unique identifier of the RTP stream the event is related to",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "sinkId",
+      "name": "rtpStreamId",
       "doc": "Unique identifier of the RTP stream the event is related to",
       "type": [
         "null",
@@ -100,8 +78,17 @@
       "default": null
     },
     {
+      "name": "sfuPadId",
+      "doc": "Unique identifier of the Sfu Pad the event is related to",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "SSRC",
-      "doc": "The SSRC identifier of the RTP stream realted to",
+      "doc": "The SSRC identifier of the RTP stream related to",
       "type": [
         "null",
         "long"
