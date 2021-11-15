@@ -5,7 +5,7 @@
 A Report created for Outbound Video Tracks. A combination of Video source, Codec metadata carrying outbound and remote inbound RTP stat measurements
 
 
-Attribute | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to

@@ -215,7 +215,7 @@ class MarkdownSchemaDescription {
         };
         if (0 < this._rows.length) {
             result.push("\n");
-            result.push("Attribute | Type | Required | Description ");
+            result.push("Field | Type | Required | Description ");
             result.push("--- | --- | --- | ---");
             
             this._rows.sort(compareRows).forEach(row => {

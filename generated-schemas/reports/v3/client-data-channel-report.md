@@ -5,7 +5,7 @@
 A Report created for PeerConnection Data Channel.
 
 
-Attribute | Type | Required | Description 
+Field | Type | Required | Description 
 --- | --- | --- | ---
 serviceId | string | Yes | The unique identifier of the service
 mediaUnitId | string | Yes | The media unit id the report belongs to
