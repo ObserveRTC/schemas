@@ -1,7 +1,7 @@
 ## ObserveRTC Schemas
 
 This repository contains schemas ObserveRTC uses as inputs and outputs in its services.
-
+ 
 ### Usage 
 
 The generated schemas can be found in the folder `generated-schemas`.
