@@ -1,4 +1,6 @@
-## Schema Generator for ObserveRTC
+## ObserveRTC Schemas
+
+This repository contains schemas ObserveRTC uses as inputs and outputs in its services.
 
 ```shell
 optional arguments:
