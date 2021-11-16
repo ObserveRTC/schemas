@@ -18,7 +18,7 @@ optional arguments:
                         flag to determine if markdown should be generated or not
   -m META, --meta META  flag to determine if the meta.txt is added to the output path or not
 
-```
+``` 
 
 ## Use cases
 
