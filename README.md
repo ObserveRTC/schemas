@@ -4,6 +4,10 @@ This repository contains schemas ObserveRTC uses as inputs and outputs in its se
 
 ### Usage
 
+The generated schemas can be found in the folder `generated-schemas`.
+
+If you want to generate it yourself locally, here is how you can use the app we wrote for it.
+
 
 ```shell
 optional arguments:
