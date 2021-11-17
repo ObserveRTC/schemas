@@ -2190,6 +2190,12 @@ interface DataChannel {
 interface ClientSample {
 
   /**
+   * Optional. If the client is aware of the callId for some reason (generated while clients are joined to the same room) then the observer will use this id.
+   * Otherwise the observer matches the client and assign a callId in reports.
+   */
+  callId?: string;
+
+  /**
    * The unique generated client id the report is generated from
    */
   clientId: string;

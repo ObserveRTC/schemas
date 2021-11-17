@@ -18,6 +18,7 @@
   "dependencies": {
     "argparse": "^2.0.1",
     "avro-js": "^1.10.2",
+    "avro-typescript": "^1.1.0",
     "fastify": "^3.17.0",
     "json-schema-to-markdown": "^1.1.1",
     "nodemon": "^2.0.7",

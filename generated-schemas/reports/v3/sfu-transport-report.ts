@@ -1,0 +1,34 @@
+export interface SFUTransportReport {
+	serviceId: string;
+	mediaUnitId: string;
+	sfuId: string;
+	marker?: null | undefined | string;
+	timestamp: number;
+	callId?: null | undefined | string;
+	roomId?: null | undefined | string;
+	transportId: string;
+	dtlsState?: null | undefined | string;
+	iceState?: null | undefined | string;
+	sctpState?: null | undefined | string;
+	iceRole?: null | undefined | string;
+	localAddress?: null | undefined | string;
+	localPort?: null | undefined | number;
+	protocol?: null | undefined | string;
+	remoteAddress?: null | undefined | string;
+	remotePort?: null | undefined | number;
+	rtpBytesReceived?: null | undefined | number;
+	rtpBytesSent?: null | undefined | number;
+	rtpPacketsReceived?: null | undefined | number;
+	rtpPacketsSent?: null | undefined | number;
+	rtpPacketsLost?: null | undefined | number;
+	rtxBytesReceived?: null | undefined | number;
+	rtxBytesSent?: null | undefined | number;
+	rtxPacketsReceived?: null | undefined | number;
+	rtxPacketsSent?: null | undefined | number;
+	rtxPacketsLost?: null | undefined | number;
+	rtxPacketsDiscarded?: null | undefined | number;
+	sctpBytesReceived?: null | undefined | number;
+	sctpBytesSent?: null | undefined | number;
+	sctpPacketsReceived?: null | undefined | number;
+	sctpPacketsSent?: null | undefined | number;
+}

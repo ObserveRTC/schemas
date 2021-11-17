@@ -2,6 +2,10 @@
   "description": "A compound object holds a set of measurements belonging to a aspecific time",
   "type": "object",
   "properties": {
+    "callId": {
+      "description": "Optional. If the client is aware of the callId for some reason (generated while clients are joined to the same room) then the observer will use this id.\nOtherwise the observer matches the client and assign a callId in reports.",
+      "type": "string"
+    },
     "clientId": {
       "description": "The unique generated client id the report is generated from",
       "type": "string"

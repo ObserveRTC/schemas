@@ -9,6 +9,7 @@ Field | Type | Required | Description
 --- | --- | --- | ---
 clientId | string | Yes | The unique generated client id the report is generated from
 timestamp | number | Yes | The timestamp when the sample is created
+callId | string | No | Optional. If the client is aware of the callId for some reason (generated while clients are joined to the same room) then the observer will use this id.<br />Otherwise the observer matches the client and assign a callId in reports.
 sampleSeq | number | No | The sequence number a source assigns to the sample. <br />Every time the source make a sample at a client <br />this number is monothonically incremented.
 roomId | string | No | The WebRTC app configured room id the client was at the call.<br />If it is configured, then every sample carries this information.
 userId | string | No | The WebRTC app configured user id of the client.<br />If it is configured, then every sample carries this information.

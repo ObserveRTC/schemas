@@ -1,6 +1,7 @@
 const avro = require('avro-js');
 const fs = require('fs');
 const TJS = require("typescript-json-schema");
+const {  avroToTypeScript } = require("avro-typescript");
 
 const CONFIG = {
     reports: {
@@ -636,6 +637,8 @@ class SchemaGenerator {
                     }
                     const savedSchemaText = JSON.stringify(parsedObject, null, 2);
                     fs.writeFileSync(dstPathBase + ".avsc", savedSchemaText);
+                    const typescriptSchemaObject = avroToTypeScript(parsedObject)
+                    fs.writeFileSync(dstPathBase + ".ts", typescriptSchemaObject);
                     console.log("REPORT SCHEMA: " + reportName + " is successfully generated");
                     if (this._markdownDocs === true) {
                         const markdown = makeMarkdownDocFromReportSchema(parsedObject, typeMap)
