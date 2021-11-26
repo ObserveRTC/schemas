@@ -2187,7 +2187,7 @@ interface DataChannel {
 /**
  * A compound object holds a set of measurements belonging to a aspecific time
  */
-interface ClientSample {
+export interface ClientSample {
 
   /**
    * Optional. If the client is aware of the callId for some reason (generated while clients are joined to the same room) then the observer will use this id.

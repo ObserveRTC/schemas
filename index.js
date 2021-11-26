@@ -459,7 +459,7 @@ class POJOBuilder {
 }
 
 
-function makePojoForSampleSchema(jsonSchemaName, jsonSchema, level, reportTypes) {
+function makePojoForSampleSchema(jsonSchemaName, jsonSchema, level, reportTypes, recursiveWalk = true) {
     const pojo = new POJOBuilder()
         .withClassName(jsonSchemaName)
         .withClassDescription(jsonSchema.description)
@@ -469,6 +469,7 @@ function makePojoForSampleSchema(jsonSchemaName, jsonSchema, level, reportTypes)
     const definitions = jsonSchema.definitions;
     if (definitions) {
         for (const [defName, defSchema] of Object.entries(definitions)) {
+            if (!recursiveWalk) continue;
             const embeddedClass = makePojoForSampleSchema(defName, defSchema, level + 1, reportTypes);
             pojo.withNestedClass(embeddedClass);
         }
@@ -591,6 +592,7 @@ class SchemaGenerator {
             outputPath: this._outputPath + "/samples/v2",
             sampleNames: ["SfuSample"],
             generateJava: true,
+            generateJson: true,
             reportTypes,
         });
 
@@ -599,6 +601,7 @@ class SchemaGenerator {
             outputPath: this._outputPath + "/samples/legacy",
             sampleNames: ["PeerConnectionSample"],
             generateJava: false,
+            generateJson: true,
         });
 
         await this._generateSamplesSchema({
@@ -607,6 +610,16 @@ class SchemaGenerator {
             sampleNames: ["ClientSample"],
             generateJava: true,
             reportTypes,
+        });
+
+        await this._generateSamplesSchema({
+            sourcePath: CONFIG.samples.v2.sourcePath,
+            outputPath: this._outputPath + "/samples/v2",
+            sampleNames: ["Samples"],
+            generateJava: true,
+            generateJson: false,
+            reportTypes,
+            dontGenerateNestedClasses: true,
         });
 
         // await this._generateSamplesSchema();
@@ -671,7 +684,7 @@ class SchemaGenerator {
         });
     }
 
-    async _generateSamplesSchema({ sourcePath, outputPath, sampleNames, generateJava, reportTypes }) {
+    async _generateSamplesSchema({ sourcePath, outputPath, sampleNames, generateJava, generateJson, reportTypes, dontGenerateNestedClasses}) {
         return new Promise((resolve, reject) => {
             fs.mkdir(outputPath, { recursive: true }, (err) => {
                 if (err) {
@@ -686,9 +699,11 @@ class SchemaGenerator {
                 });
                 
                 for (const [sampleName, generatedSchema] of schemas.entries()) {
-                    const generatedSchemaText = JSON.stringify(generatedSchema, null, 2);
-                    fs.writeFileSync(outputPath + "/" + sampleName + ".json", generatedSchemaText);
-                    console.log("SAMPLE SCHEMA: " + sampleName + " is successfully generated");
+                    if (generateJson) {
+                        const generatedSchemaText = JSON.stringify(generatedSchema, null, 2);
+                        fs.writeFileSync(outputPath + "/" + sampleName + ".json", generatedSchemaText);
+                        console.log("SAMPLE SCHEMA: " + sampleName + " is successfully generated");
+                    }
                     if (this._markdownDocs === true) {
                         try {
                             const markdown = makeMarkdownDocFromJsonSchema(sampleName, generatedSchema)
@@ -699,7 +714,7 @@ class SchemaGenerator {
                         }
                     }
                     if (generateJava) {
-                        const pojo = makePojoForSampleSchema(sampleName, generatedSchema, 0, reportTypes);
+                        const pojo = makePojoForSampleSchema(sampleName, generatedSchema, 0, reportTypes, !dontGenerateNestedClasses);
                         fs.writeFileSync(outputPath + "/" + sampleName + ".java", pojo);
                     }
                 }
