@@ -1,2 +1,2 @@
 Revisions:
-	ClientSample: 2
+	Samples: 1
