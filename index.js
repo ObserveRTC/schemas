@@ -268,7 +268,7 @@ function makeMarkdownDocFromReportSchema(avroSchema, typeMap) {
     return result;
 }
 
-function makeMarkdownDocFromJsonSchema(jsonSchemaName, jsonSchema, level = 0) {
+function makeMarkdownDocFromJsonSchema(jsonSchemaName, jsonSchema, level = 0, recursiveWalk = true) {
     const markdown = new MarkdownSchemaDescription()
         .withTitle(jsonSchemaName)
         .withDescription(jsonSchema.description)
@@ -277,6 +277,7 @@ function makeMarkdownDocFromJsonSchema(jsonSchemaName, jsonSchema, level = 0) {
     const definitions = jsonSchema.definitions;
     if (definitions) {
         for (const [defName, defSchema] of Object.entries(definitions)) {
+            if (!recursiveWalk) continue;
             const defMarkdownText = makeMarkdownDocFromJsonSchema(defName, defSchema, level + 1);
             markdown.withPostDefinedMarkdown(defMarkdownText);
         }
@@ -619,7 +620,7 @@ class SchemaGenerator {
             generateJava: true,
             generateJson: false,
             reportTypes,
-            dontGenerateNestedClasses: true,
+            recursiveWalk: false,
         });
 
         // await this._generateSamplesSchema();
@@ -684,7 +685,7 @@ class SchemaGenerator {
         });
     }
 
-    async _generateSamplesSchema({ sourcePath, outputPath, sampleNames, generateJava, generateJson, reportTypes, dontGenerateNestedClasses}) {
+    async _generateSamplesSchema({ sourcePath, outputPath, sampleNames, generateJava, generateJson, reportTypes, recursiveWalk = true} = {}) {
         return new Promise((resolve, reject) => {
             fs.mkdir(outputPath, { recursive: true }, (err) => {
                 if (err) {
@@ -702,19 +703,19 @@ class SchemaGenerator {
                     if (generateJson) {
                         const generatedSchemaText = JSON.stringify(generatedSchema, null, 2);
                         fs.writeFileSync(outputPath + "/" + sampleName + ".json", generatedSchemaText);
-                        console.log("SAMPLE SCHEMA: " + sampleName + " is successfully generated");
+                        console.log("SAMPLE SCHEMA: " + sampleName + " is successfully generated, recursiveWalk:", recursiveWalk);
                     }
                     if (this._markdownDocs === true) {
                         try {
-                            const markdown = makeMarkdownDocFromJsonSchema(sampleName, generatedSchema)
+                            const markdown = makeMarkdownDocFromJsonSchema(sampleName, generatedSchema, 0, recursiveWalk)
                             fs.writeFileSync(outputPath + "/" + sampleName + ".md", markdown);
-                            console.log("SAMPLE MARKDOWN: " + sampleName + " is successfully generated");    
+                            console.log("SAMPLE MARKDOWN: " + sampleName + " is successfully generated, recursiveWalk:", recursiveWalk);    
                         } catch (error) {
                             console.error("SAMPLE MARKDOWN: Unsuccessfull documentation creation: " + error);
                         }
                     }
                     if (generateJava) {
-                        const pojo = makePojoForSampleSchema(sampleName, generatedSchema, 0, reportTypes, !dontGenerateNestedClasses);
+                        const pojo = makePojoForSampleSchema(sampleName, generatedSchema, 0, reportTypes, recursiveWalk);
                         fs.writeFileSync(outputPath + "/" + sampleName + ".java", pojo);
                     }
                 }
