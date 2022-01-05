@@ -39,7 +39,7 @@ burstDiscardRate | double | No | The fraction of RTP packets discarded during bu
 gapLossRate | double | No | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 gapDiscardRate | double | No | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 voiceActivityFlag | boolean | No | Indicate if the last RTP packet received contained voice activity based on the presence of the V bit in the extension header
-lastPacketReceivedTimestamp | boolean | No | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
+lastPacketReceivedTimestamp | double | No | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
 averageRtcpInterval | double | No | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
 headerBytesReceived | long | No | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
 fecPacketsReceived | int | No | Total number of FEC packets received over the corresponding synchronization source (ssrc)

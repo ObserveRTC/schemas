@@ -618,7 +618,7 @@ class SchemaGenerator {
             outputPath: this._outputPath + "/samples/v2",
             sampleNames: ["Samples"],
             generateJava: true,
-            generateJson: false,
+            generateJson: true,
             reportTypes,
             recursiveWalk: false,
         });

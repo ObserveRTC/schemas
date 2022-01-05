@@ -31,7 +31,7 @@ export interface InboundAudioTrackReport {
 	gapLossRate?: null | undefined | number;
 	gapDiscardRate?: null | undefined | number;
 	voiceActivityFlag?: null | undefined | boolean;
-	lastPacketReceivedTimestamp?: null | undefined | boolean;
+	lastPacketReceivedTimestamp?: null | undefined | number;
 	averageRtcpInterval?: null | undefined | number;
 	headerBytesReceived?: null | undefined | number;
 	fecPacketsReceived?: null | undefined | number;
