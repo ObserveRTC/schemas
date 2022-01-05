@@ -43,7 +43,7 @@ export interface InboundVideoTrackReport {
 	totalDecodeTime?: null | undefined | number;
 	totalInterFrameDelay?: null | undefined | number;
 	totalSquaredInterFrameDelay?: null | undefined | number;
-	lastPacketReceivedTimestamp?: null | undefined | boolean;
+	lastPacketReceivedTimestamp?: null | undefined | number;
 	averageRtcpInterval?: null | undefined | number;
 	headerBytesReceived?: null | undefined | number;
 	fecPacketsReceived?: null | undefined | number;

@@ -1056,7 +1056,7 @@ Fields related to [RTCCodecStats](https://www.w3.org/TR/webrtc-stats/#dom-rtccod
 		* The RTP timestamp of the last received packet on the corresponded RTP stream
 		*/
 		@JsonProperty("lastPacketReceivedTimestamp")
-		public boolean lastPacketReceivedTimestamp;
+		public Double lastPacketReceivedTimestamp;
 		
 			/**
 		* The RTCP average interval of sending compound RTCP reports
@@ -1498,7 +1498,7 @@ used by the client as inbound
 		* The RTP timestamp of the last received packet on the corresponded RTP stream
 		*/
 		@JsonProperty("lastPacketReceivedTimestamp")
-		public boolean lastPacketReceivedTimestamp;
+		public Double lastPacketReceivedTimestamp;
 		
 			/**
 		* The RTCP average interval of sending compound RTCP reports
