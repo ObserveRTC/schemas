@@ -5,23 +5,23 @@ on:
       - main
 
 jobs:
-  publish:
+  publish-npm:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./npm-lib
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Install
-        working-directory: npm-lib
+      
+      - run: npm install -g yarn
+      - name: install packages
         run: yarn
+        working-directory: ${{env.working-directory}}
 
-      - name: Build
-        working-directory: npm-lib
-        run: yarn build
-
-      - uses: JS-DevTools/npm-publish@v1
-        working-directory: npm-lib
-        with:
-          access: public
-          token: ${{ secrets.NPM_TOKEN }}
+      - name: publish
+        run: npm publish
+        working-directory: ${{env.working-directory}}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
