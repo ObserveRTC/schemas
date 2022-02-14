@@ -3,6 +3,7 @@ import path from "path";
 
 const README_MD_FILENAME = "README.md";
 const INDEX_TS_FILENAME = "index.ts";
+const PACKAGE_JSON_FILE = "package.json";
 
 export class NpmLib {
     constructor(basePath) {
@@ -25,6 +26,14 @@ export class NpmLib {
 
     addW3cStatsIdentifiers(w3cStatsIdentifiers) {
         this._w3cStatsIdentifiers = w3cStatsIdentifiers;
+    }
+
+    addVersion(version) {
+        
+    }
+
+    addChangelog(changelog) {
+
     }
 
     make() {

@@ -1,7 +1,7 @@
 {
   "name": "schema-2.0",
-  "version": "2.0.0",
-  "description": "Schema repository for ObserveRTC",
+  "version": "2.0.0-beta.1",
+  "description": "Generator scripts for Schema repository for ObserveRTC",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
