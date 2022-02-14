@@ -79,7 +79,7 @@ Only presented if any changes occurred in the client
 	* List of the media devices the client has.
 	*/
 	@JsonProperty("mediaDevices")
-	public String[] mediaDevices;
+	public MediaDevice[] mediaDevices;
 	
 	/**
 	* List of user media errors
@@ -284,6 +284,31 @@ Only presented if any changes occurred in the client
 		*/
 		@JsonProperty("versionName")
 		public String versionName;
+		
+	}
+	/** 
+	* MediaDevice
+	*/
+	
+	public static class MediaDevice { 
+	
+			/**
+		* the provided id of the media input / output
+		*/
+		@JsonProperty("id")
+		public String id;
+		
+			/**
+		* the kind of the device
+		*/
+		@JsonProperty("kind")
+		public String kind;
+		
+			/**
+		* The name of the device
+		*/
+		@JsonProperty("label")
+		public String label;
 		
 	}
 	/** 
@@ -2572,7 +2597,7 @@ Possible values are: "audio", and "video"
 		* The priority of the local candidate
 		*/
 		@JsonProperty("priority")
-		public String priority;
+		public Integer priority;
 		
 			/**
 		* The url of the ICE server
@@ -2633,7 +2658,7 @@ Possible values are: "audio", and "video"
 		* The priority of the remote candidate
 		*/
 		@JsonProperty("priority")
-		public String priority;
+		public Integer priority;
 		
 			/**
 		* The url of the ICE server
@@ -2682,7 +2707,7 @@ Possible values are: "audio", and "video"
 		* The unique identifier of the data channel
 		*/
 		@JsonProperty("dataChannelIdentifier")
-		public String dataChannelIdentifier;
+		public Integer dataChannelIdentifier;
 		
 			/**
 		* The state of the data channel

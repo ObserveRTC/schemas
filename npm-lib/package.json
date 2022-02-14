@@ -1,0 +1,31 @@
+{
+    "name": "@observertc/schema",
+    "version": "2.0.0-beta.1",
+    "description": "ObserveRTC Schema Library",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "engines": {
+      "node": ">=10"
+    },
+    "scripts": {
+      "prepare": "npm run build",
+      "build": "tsc",
+      "version": "npm run format && git add -A src",
+      "postversion": "git push && git push --tags"
+    },
+    "keywords": [
+      "webrtc",
+      "schemas",
+      "observertc"
+    ],
+    "author": "Balazs Kreith, Pallab Gain",
+    "license": "Apache-2.0",
+    "devDependencies": {
+      "typescript": "^4.5.5"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/observertc/schemas"
+    }
+  }
+  

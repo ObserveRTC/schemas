@@ -1,0 +1,26 @@
+{
+    "name": "ClientSample",
+    "type": "record",
+    "doc": "docs",
+    "fields": [
+        {
+            "name" : "sfuId",
+            "doc": "Unique generated id for the sfu samples are originated from",
+            "type" : "string"
+        }, {
+            "name": "timestamp",
+            "doc": "The timestamp the sample is created in GMT",
+            "type": "long"
+        }, {
+            "name": "timeZoneOffsetInHours",
+            "doc": "The offset from GMT in hours",
+            "type": ["null", "int"],
+            "default": null
+        }, {
+            "name": "marker",
+            "doc": "Special marker for the samples",
+            "type": ["null", "string"],
+            "default": null
+        }
+    ]
+}

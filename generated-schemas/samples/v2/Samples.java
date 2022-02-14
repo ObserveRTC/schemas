@@ -9,6 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public  class Samples { 
 
 	/**
+	* Additional meta information about the carried payloads
+	*/
+	@JsonProperty("meta")
+	public SamplesMeta meta;
+	
+	/**
 	* array of client samples
 	*/
 	@JsonProperty("clientSamples")
@@ -19,5 +25,11 @@ public  class Samples {
 	*/
 	@JsonProperty("sfuSamples")
 	public SfuSample[] sfuSamples;
+	
+	/**
+	* Additional control flags indicate various operation has to be performed
+	*/
+	@JsonProperty("controlFlags")
+	public ControlFlags controlFlags;
 	
 }
