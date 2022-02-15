@@ -2069,7 +2069,7 @@ export type ClientSample = {
 	/**
 	* The WebRTC app provided List of the media devices the client has.
 	*/
-	mediaDevices?: MediaDevice;
+	mediaDevices?: MediaDevice[];
 
 	/**
 	* The WebRTC app provided List of user media errors the client has.

@@ -258,44 +258,47 @@ export const schema = {
                 "type": [
                   "null",
                   {
-                    "name": "MediaDevice",
-                    "type": "record",
-                    "fields": [
-                      {
-                        "name": "id",
-                        "type": [
-                          "null",
-                          "string"
-                        ],
-                        "doc": "the provided id of the media input / output",
-                        "default": null
-                      },
-                      {
-                        "name": "kind",
-                        "type": [
-                          "null",
-                          {
-                            "type": "enum",
-                            "name": "InputMediaDeviceKind",
-                            "doc": "the kind of the device",
-                            "symbols": [
-                              "videoinput",
-                              "audioinput",
-                              "audiooutput"
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "name": "label",
-                        "type": [
-                          "null",
-                          "string"
-                        ],
-                        "doc": "The name of the device",
-                        "default": null
-                      }
-                    ]
+                    "type": "array",
+                    "items": {
+                      "name": "MediaDevice",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "id",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "doc": "the provided id of the media input / output",
+                          "default": null
+                        },
+                        {
+                          "name": "kind",
+                          "type": [
+                            "null",
+                            {
+                              "type": "enum",
+                              "name": "InputMediaDeviceKind",
+                              "doc": "the kind of the device",
+                              "symbols": [
+                                "videoinput",
+                                "audioinput",
+                                "audiooutput"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "label",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "doc": "The name of the device",
+                          "default": null
+                        }
+                      ]
+                    }
                   }
                 ],
                 "default": null
