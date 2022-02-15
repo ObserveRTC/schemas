@@ -1925,11 +1925,15 @@ export type ExtensionStat = {
 * The WebRTC app provided List of the media devices the client has.
 */
 export type MediaDevice = {
-	kind: undefined;
 	/**
 	* the provided id of the media input / output
 	*/
 	id?: string;
+
+	/**
+	* The media kind of the media device
+	*/
+	kind?: "videoinput" | "audioinput" | "audiooutput";
 
 	/**
 	* The name of the device

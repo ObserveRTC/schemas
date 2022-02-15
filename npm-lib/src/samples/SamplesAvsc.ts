@@ -274,19 +274,20 @@ export const schema = {
                         },
                         {
                           "name": "kind",
+                          "doc": "The media kind of the media device",
                           "type": [
                             "null",
                             {
                               "type": "enum",
                               "name": "InputMediaDeviceKind",
-                              "doc": "the kind of the device",
                               "symbols": [
                                 "videoinput",
                                 "audioinput",
                                 "audiooutput"
                               ]
                             }
-                          ]
+                          ],
+                          "default": null
                         },
                         {
                           "name": "label",
