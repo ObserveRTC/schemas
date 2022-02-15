@@ -1,8 +1,7 @@
 /**
 * Events happened in calls.
 */
-export type SfuEventReport = 
-{
+export type SfuEventReport = {
 	/**
 	* The service id the report belongs to
 	*/

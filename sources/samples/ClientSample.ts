@@ -1211,7 +1211,7 @@ export interface InboundVideoTrack {
   /**
    * The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
    */
-  sliCount?: number;
+  sliCount?: number; // video only
 
   /**
    * The total processing delay of the RTP packets from the moment they received until the moment the jitter buffer emits them on the corresponded RTP strema.

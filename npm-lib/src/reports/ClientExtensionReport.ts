@@ -1,8 +1,7 @@
 /**
 * A Report created for Extended provided arbitrary data.
 */
-export type ClientExtensionReport = 
-{
+export type ClientExtensionReport = {
 	/**
 	* The unique identifier of the service
 	*/

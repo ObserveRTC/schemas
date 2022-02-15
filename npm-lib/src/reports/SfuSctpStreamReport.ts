@@ -1,8 +1,7 @@
 /**
 * A Report created for SCTP streams going through the SFU
 */
-export type SfuSctpStreamReport = 
-{
+export type SfuSctpStreamReport = {
 	/**
 	* The service id the report belongs to
 	*/

@@ -1,8 +1,7 @@
 /**
 * Metadata belongs to a call and can be useful
 */
-export type CallMetaReport = 
-{
+export type CallMetaReport = {
 	/**
 	* The unique identifier of the service
 	*/

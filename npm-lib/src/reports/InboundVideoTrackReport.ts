@@ -1,8 +1,7 @@
 /**
 * A Report created for Inbound Video Tracks. A combination of Codec metadata carrying inbound and remote outbound RTP stats measurements
 */
-export type InboundVideoTrackReport = 
-{
+export type InboundVideoTrackReport = {
 	/**
 	* The unique identifier of the service
 	*/

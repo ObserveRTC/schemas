@@ -1,8 +1,7 @@
 /**
 * A Report created for PeerConnection Data Channel.
 */
-export type ClientDataChannelReport = 
-{
+export type ClientDataChannelReport = {
 	/**
 	* The unique identifier of the service
 	*/

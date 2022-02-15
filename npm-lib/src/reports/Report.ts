@@ -1,8 +1,7 @@
 /**
 * A multiplexed Report object wraps an encoded report in bytes format
 */
-export type Report = 
-{
+export type Report = {
 	/**
 	* The type of the report
 	*/

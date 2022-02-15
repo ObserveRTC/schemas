@@ -1,8 +1,7 @@
 /**
 * A Report created for Client PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates
 */
-export type ClientTransportReport = 
-{
+export type ClientTransportReport = {
 	/**
 	* The unique identifier of the service
 	*/

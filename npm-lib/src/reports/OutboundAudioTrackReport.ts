@@ -1,8 +1,7 @@
 /**
 * A Report created for Outbound Audio Tracks. A combination of Audio source, Codec metadata carrying outbound and remote inbound RTP stat measurements
 */
-export type OutboundAudioTrackReport = 
-{
+export type OutboundAudioTrackReport = {
 	/**
 	* The unique identifier of the service
 	*/

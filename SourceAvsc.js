@@ -23,8 +23,8 @@ export class SourceAvsc {
 
     getAvsc() {
         let result = this._source;
-        result = removeComments(result);
         result = chunks.paste(result);
+        result = removeComments(result);
         const json = JSON.parse(result);
         result = JSON.stringify(json, null, 2);
         return result;

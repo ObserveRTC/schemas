@@ -1,8 +1,7 @@
 /**
 * Metadata belongs to SFUs
 */
-export type SfuMetaReport = 
-{
+export type SfuMetaReport = {
 	/**
 	* The service id the report belongs to
 	*/

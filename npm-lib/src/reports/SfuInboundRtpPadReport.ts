@@ -1,8 +1,7 @@
 /**
 * A Report created for RTP streams going through the SFU
 */
-export type SfuInboundRtpPadReport = 
-{
+export type SfuInboundRtpPadReport = {
 	/**
 	* The service id the report belongs to
 	*/

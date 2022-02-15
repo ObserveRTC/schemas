@@ -24,14 +24,13 @@ class TsObj {
             "/**",
             "* " + this._description,
             "*/",
-            "export type " + this._name + " = ",
+            "export type " + this._name + " = {",
         ];
         this._fields.sort((a, b) => {
             const priorityA = a.required ? 10 : 0;
             const priorityB = b.required ? 10 : 0;
             return priorityB - priorityA;
         });
-        result.push("{");
         for (const { name, type, desc, required } of this._fields) {
             if (desc) {
                 result.push("\t/**");
@@ -127,10 +126,15 @@ export function makeTsModule(avroSchema) {
     const exports = [];
     const modules = [];
     if (dependencies && 0 < dependencies.length) {
-        for (const dependency of dependencies) {
+        while (0 < dependencies.length) {
+            const dependency = dependencies.pop();
             modules.push(dependency.toString());
             exports.push(dependency.name);
         }
+        // for (const dependency of dependencies) {
+        //     modules.push(dependency.toString());
+        //     exports.push(dependency.name);
+        // }
     }
     modules.push(mainTsObj.toString());
     exports.push(mainTsObj.name);

@@ -8,7 +8,7 @@ import path from "path";
 import * as chunks from "./chunks.js"
 
 const SOURCE_PATH = "./sources";
-const NPM_LIB_PATH = "./npm-lib/src";
+const NPM_LIB_PATH = "./npm-lib";
 const W3C_STATS_IDENTIFIERS = "./sources/w3c/W3cStatsIdentifiers.ts";
 
 function fetchChunks() {
@@ -85,6 +85,8 @@ const main = async () => {
             markdown,
         });
     }
+    npmLib.changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
+    npmLib.version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
     npmLib.clear();
     npmLib.make();
 };

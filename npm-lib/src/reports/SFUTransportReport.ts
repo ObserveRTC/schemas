@@ -1,8 +1,7 @@
 /**
 * A Report created for SFU Transport layer typically created to transfer RTP/SCTP/RTX streams to another client, SFU, MCU, or processing module.
 */
-export type SFUTransportReport = 
-{
+export type SFUTransportReport = {
 	/**
 	* The service id the report belongs to
 	*/

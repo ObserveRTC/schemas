@@ -1,8 +1,7 @@
 /**
 * A report created for observer generated events
 */
-export type ObserverEventReport = 
-{
+export type ObserverEventReport = {
 	/**
 	* The unique identifier of the service
 	*/

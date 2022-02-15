@@ -1,6 +1,47 @@
 ObserveRTC Schemas
 ---
-
+Javascript bindings for ObserveRTC schemas
+- [reports](#reports)
+	* [CallEventReport](#CallEventReport)
+	* [CallMetaReport](#CallMetaReport)
+	* [ClientDataChannelReport](#ClientDataChannelReport)
+	* [ClientExtensionReport](#ClientExtensionReport)
+	* [ClientTransportReport](#ClientTransportReport)
+	* [InboundAudioTrackReport](#InboundAudioTrackReport)
+	* [InboundVideoTrackReport](#InboundVideoTrackReport)
+	* [ObserverEventReport](#ObserverEventReport)
+	* [OutboundAudioTrackReport](#OutboundAudioTrackReport)
+	* [OutboundVideoTrackReport](#OutboundVideoTrackReport)
+	* [Report](#Report)
+	* [SfuEventReport](#SfuEventReport)
+	* [SfuInboundRtpPadReport](#SfuInboundRtpPadReport)
+	* [SfuMetaReport](#SfuMetaReport)
+	* [SfuOutboundRtpPadReport](#SfuOutboundRtpPadReport)
+	* [SfuSctpStreamReport](#SfuSctpStreamReport)
+	* [SFUTransportReport](#SFUTransportReport)
+- [samples](#samples)
+	* [SfuSample](#SfuSample)
+	* [DataChannel](#DataChannel)
+	* [IceRemoteCandidate](#IceRemoteCandidate)
+	* [IceLocalCandidate](#IceLocalCandidate)
+	* [OutboundVideoTrack](#OutboundVideoTrack)
+	* [OutboundAudioTrack](#OutboundAudioTrack)
+	* [InboundVideoTrack](#InboundVideoTrack)
+	* [InboundAudioTrack](#InboundAudioTrack)
+	* [Certificate](#Certificate)
+	* [Codec](#Codec)
+	* [MediaSrouceStat](#MediaSrouceStat)
+	* [PeerConnectionTransport](#PeerConnectionTransport)
+	* [ExtensionStat](#ExtensionStat)
+	* [OperationSystem](#OperationSystem)
+	* [Browser](#Browser)
+	* [Platform](#Platform)
+	* [Engine](#Engine)
+	* [ClientSample](#ClientSample)
+	* [ControlFlags](#ControlFlags)
+	* [SamplesMeta](#SamplesMeta)
+	* [Samples](#Samples)
+- [Changelog](#Changelog)
 ## CallEventReport
 
 
@@ -757,3 +798,22 @@ sctpBytesSent | long | No | The total amount of SCTP bytes sent on this transpor
 sctpPacketsReceived | int | No | The total amount of SCTP packets received on this transport
 sctpPacketsSent | int | No | The total amount of SCTP packets sent on this transport
 
+
+## Samples
+
+
+Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.
+
+
+Field | Type | Required | Description 
+--- | --- | --- | ---
+meta | [object Object] | No | Additional meta information about the carried payloads
+controlFlags | [object Object] | No | Additional control flags indicate various operation has to be performed
+clientSamples | [object Object] | No | Samples taken from the client
+sfuSamples | [object Object] | No | Samples taken from an Sfu
+
+
+## Changelog
+## 2.0.0
+
+init

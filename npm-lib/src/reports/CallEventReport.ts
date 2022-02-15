@@ -1,8 +1,7 @@
 /**
 * Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.
 */
-export type CallEventReport = 
-{
+export type CallEventReport = {
 	/**
 	* The unique identifier of the service
 	*/
