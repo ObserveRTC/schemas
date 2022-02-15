@@ -61,7 +61,7 @@ export type DataChannel = {
 	/**
 	* The unique identifier of the data channel
 	*/
-	dataChannelIdentifier?: string;
+	dataChannelIdentifier?: number;
 
 	/**
 	* The state of the data channel
@@ -1475,7 +1475,7 @@ export type Certificate = {
 /**
 * List of codec the client has
 */
-export type Codec = {
+export type MediaCodecStats = {
 	/**
 	* Payload type used in RTP encoding / decoding process.
 	*/
@@ -1511,7 +1511,7 @@ export type Codec = {
 /**
 * WebRTC App provided information related to the operation system the client uses.
 */
-export type MediaSrouceStat = {
+export type MediaSourceStat = {
 	/**
 	* The unique identifier of the corresponded media track
 	*/
@@ -1922,6 +1922,23 @@ export type ExtensionStat = {
 }
 
 /**
+* The WebRTC app provided List of the media devices the client has.
+*/
+export type MediaDevice = {
+	kind: undefined;
+	/**
+	* the provided id of the media input / output
+	*/
+	id?: string;
+
+	/**
+	* The name of the device
+	*/
+	label?: string;
+
+}
+
+/**
 * WebRTC App provided information related to the operation system the client uses.
 */
 export type OperationSystem = {
@@ -2037,7 +2054,7 @@ export type ClientSample = {
 	/**
 	* WebRTC App provided information related to the browser the client uses.
 	*/
-	browsers?: Browser;
+	browser?: Browser;
 
 	/**
 	* WebRTC App provided information related to the operation system the client uses.
@@ -2052,7 +2069,7 @@ export type ClientSample = {
 	/**
 	* The WebRTC app provided List of the media devices the client has.
 	*/
-	mediaDevices?: string[];
+	mediaDevices?: MediaDevice;
 
 	/**
 	* The WebRTC app provided List of user media errors the client has.
@@ -2077,12 +2094,12 @@ export type ClientSample = {
 	/**
 	* WebRTC App provided information related to the operation system the client uses.
 	*/
-	mediaSources?: MediaSrouceStat[];
+	mediaSources?: MediaSourceStat[];
 
 	/**
 	* List of codec the client has
 	*/
-	codecs?: Codec[];
+	codecs?: MediaCodecStats[];
 
 	/**
 	* List of certificates the client provided

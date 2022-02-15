@@ -177,7 +177,7 @@ export const schema = {
                 "default": null
               },
               {
-                "name": "browsers",
+                "name": "browser",
                 "doc": "WebRTC App provided information related to the browser the client uses.",
                 "type": [
                   "null",
@@ -258,8 +258,44 @@ export const schema = {
                 "type": [
                   "null",
                   {
-                    "type": "array",
-                    "items": "string"
+                    "name": "MediaDevice",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "id",
+                        "type": [
+                          "null",
+                          "string"
+                        ],
+                        "doc": "the provided id of the media input / output",
+                        "default": null
+                      },
+                      {
+                        "name": "kind",
+                        "type": [
+                          "null",
+                          {
+                            "type": "enum",
+                            "name": "InputMediaDeviceKind",
+                            "doc": "the kind of the device",
+                            "symbols": [
+                              "videoinput",
+                              "audioinput",
+                              "audiooutput"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "label",
+                        "type": [
+                          "null",
+                          "string"
+                        ],
+                        "doc": "The name of the device",
+                        "default": null
+                      }
+                    ]
                   }
                 ],
                 "default": null
@@ -912,7 +948,7 @@ export const schema = {
                   {
                     "type": "array",
                     "items": {
-                      "name": "MediaSrouceStat",
+                      "name": "MediaSourceStat",
                       "type": "record",
                       "fields": [
                         {
@@ -1053,7 +1089,7 @@ export const schema = {
                   {
                     "type": "array",
                     "items": {
-                      "name": "Codec",
+                      "name": "MediaCodecStats",
                       "type": "record",
                       "fields": [
                         {
@@ -3738,7 +3774,7 @@ export const schema = {
                           "doc": "The unique identifier of the data channel",
                           "type": [
                             "null",
-                            "string"
+                            "int"
                           ],
                           "default": null
                         },

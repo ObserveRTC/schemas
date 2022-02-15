@@ -71,7 +71,7 @@
             }],
             "default": null
         }, {
-            "name" : "browsers",
+            "name" : "browser",
             "doc": "WebRTC App provided information related to the browser the client uses.",
             "type" : ["null", {
                 "name": "Browser",
@@ -120,8 +120,27 @@
             "name" : "mediaDevices",
             "doc": "The WebRTC app provided List of the media devices the client has.",
             "type" : ["null", {
-                "type": "array",
-                "items": "string"
+                "name": "MediaDevice",
+                "type": "record",
+                "fields": [{
+                    "name": "id",
+                    "type": ["null", "string"],
+                    "doc": "the provided id of the media input / output",
+                    "default": null
+                }, {
+                    "name": "kind",
+                    "type": ["null", {
+                        "type": "enum",
+                        "name": "InputMediaDeviceKind",
+                        "doc": "the kind of the device",
+                        "symbols": ["videoinput", "audioinput", "audiooutput"]
+                    }]
+                }, {
+                    "name": "label",
+                    "type": ["null", "string"],
+                    "doc": "The name of the device",
+                    "default": null
+                }]
             }],
             "default": null
         }, {
@@ -532,7 +551,7 @@
             "type" : ["null", {
                 "type": "array",
                 "items": {
-                    "name": "MediaSrouceStat",
+                    "name": "MediaSourceStat",
                     "type": "record",
                     "fields": [
                     /** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -628,7 +647,7 @@
             "type" : ["null", {
                 "type": "array",
                 "items": {
-                    "name": "Codec",
+                    "name": "MediaCodecStats",
                     "type": "record",
                     "fields": [
                     /** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -2275,8 +2294,8 @@
                         "default" : null
                     },
                     /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    * RTCIceCandidateStats
-                    * └-> https://www.w3.org/TR/webrtc-stats/#icecandidate-dict*
+                    * RTCDataChannelStats
+                    * └-> https://www.w3.org/TR/webrtc-stats/#dcstats-dict*
                     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
                     {
                         "name" : "id",
@@ -2306,7 +2325,7 @@
                     }, {
                         "name" : "dataChannelIdentifier",
                         "doc": "The unique identifier of the data channel",
-                        "type" : [ "null", "string"],
+                        "type" : [ "null", "int"],
                         "default" : null
                     }, {
                         "name" : "state",
