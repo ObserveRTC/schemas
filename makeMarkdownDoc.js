@@ -78,11 +78,18 @@ class MarkdownSchemaDescription {
         };
         if (0 < this._rows.length) {
             result.push("\n");
-            result.push("Field | Type | Required | Description ");
-            result.push("--- | --- | --- | ---");
-            
+            // result.push("Field | Type | Required | Description ");
+            // result.push("--- | --- | --- | ---");
+            // this._rows.sort(compareRows).forEach(row => {
+            //     const resultRow = [row.name, row.type, row.required, row.description].join(' | ');
+            //     result.push(resultRow);
+            // });
+
+            result.push("Field | Description ");
+            result.push("--- | ---");
             this._rows.sort(compareRows).forEach(row => {
-                const resultRow = [row.name, row.type, row.required, row.description].join(' | ');
+                const name = row.name + (row.required === "Yes" ? " (**Requred**)" : "");
+                const resultRow = [name, row.description].join(' | ');
                 result.push(resultRow);
             });
         }
@@ -104,6 +111,7 @@ class MarkdownSchemaDescription {
  * @param {avsc} avroSchema 
  */
 export function makeMarkdownDoc(avroSchema) {
+    const preMarkdowns = [];
     const markdown = new MarkdownSchemaDescription()
         .withTitle(avroSchema.name)
         .withDescription(avroSchema.doc)
@@ -111,21 +119,34 @@ export function makeMarkdownDoc(avroSchema) {
     avroSchema.fields.forEach(field => {
         const required = field.default === undefined;
         let description = field.doc;
-        let type = required ? field.type : field.type[1];
-        if (typeof type !== 'string') {
-            if (type.type && type.type === 'enum') {
-                type = "enum";
-                description += " (Possible values are: " + field.type.symbols.join(",\n") + ")";
+        let fieldType = required ? field.type : field.type[1];
+        let fieldName = field.name;
+        if (typeof fieldType !== 'string') {
+            if (fieldType.type && fieldType.type === 'record') {
+                const preMarkdown = makeMarkdownDoc(fieldType);
+                preMarkdowns.push(preMarkdown);
+                fieldType = fieldType.name;
+            } else if (fieldType.type && fieldType.type === 'array') {
+                if (fieldType.items && typeof fieldType.items === "string") {
+                    fieldType += "[]";
+                } else if (fieldType.items && typeof fieldType.items !== "string") {
+                    const preMarkdown = makeMarkdownDoc(fieldType.items);
+                    preMarkdowns.push(preMarkdown);
+                    fieldType = fieldType.items.name + "[]";
+                }
+            } else if (fieldType.type && fieldType.type === 'enum') {
+                description += " (Possible values are: " + fieldType.symbols.join(",\n") + ")";
+                fieldType = "enum";
             }
         }
         markdown.withTableRow({
-            name: field.name,
+            name: fieldName,
             description,
             required,
-            type,
+            type: fieldType,
         });
        
     });
-    const result = markdown.build();
+    const result = preMarkdowns.join("\n\n") +  markdown.build();
     return result;
 }
