@@ -88,7 +88,7 @@ class MarkdownSchemaDescription {
             result.push("Field | Description ");
             result.push("--- | ---");
             this._rows.sort(compareRows).forEach(row => {
-                const name = row.name + (row.required === "Yes" ? " (**Requred**)" : "");
+                const name = row.name + (row.required === "Yes" ? " (**Mandatory**)" : "");
                 const resultRow = [name, row.description].join(' | ');
                 result.push(resultRow);
             });

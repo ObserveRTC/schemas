@@ -234,6 +234,15 @@ export const schema = {
                         ],
                         "doc": "The version of the operation system",
                         "default": null
+                      },
+                      {
+                        "name": "versionName",
+                        "type": [
+                          "null",
+                          "string"
+                        ],
+                        "doc": "The name of the version of the operation system",
+                        "default": null
                       }
                     ]
                   }

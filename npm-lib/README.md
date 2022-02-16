@@ -51,9 +51,9 @@ Observer created reports related to events (call started, call ended, client joi
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-name (**Requred**) | The name of the event. Possible values are: CALL_STARTED, CALL_ENDED, CLIENT_JOINED, CLIENT_LEFT, PEER_CONNECTION_OPENED, PEER_CONNECTION_CLOSED, MEDIA_TRACK_ADDED, MEDIA_TRACK_REMOVED
+serviceId (**Mandatory**) | The unique identifier of the service
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+name (**Mandatory**) | The name of the event. Possible values are: CALL_STARTED, CALL_ENDED, CLIENT_JOINED, CLIENT_LEFT, PEER_CONNECTION_OPENED, PEER_CONNECTION_CLOSED, MEDIA_TRACK_ADDED, MEDIA_TRACK_REMOVED
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
 callId | The generated unique identifier of the call
@@ -78,8 +78,8 @@ Metadata belongs to a call and can be useful
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+serviceId (**Mandatory**) | The unique identifier of the service
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
 callId | The generated unique identifier of the call
@@ -101,13 +101,13 @@ A Report created for PeerConnection Data Channel.
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId (**Requred**) | The generated unique identifier of the call
-clientId (**Requred**) | The generated unique identifier of the client
-peerConnectionId (**Requred**) | The unique identifier of the peer connection
-sampleSeq (**Requred**) | The sequence number of the sample the report is generated from
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
@@ -129,9 +129,9 @@ A Report created for Extended provided arbitrary data.
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-extensionType (**Requred**) | The name of the event
+serviceId (**Mandatory**) | The unique identifier of the service
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+extensionType (**Mandatory**) | The name of the event
 serviceName | The resolved service name configured for the service Id
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
@@ -152,12 +152,12 @@ A Report created for Client PeerConnection Transport. It is a combination of Tra
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId (**Requred**) | The generated unique identifier of the call
-clientId (**Requred**) | The generated unique identifier of the client
-peerConnectionId (**Requred**) | The unique identifier of the peer connection
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
@@ -230,14 +230,14 @@ A Report created for Inbound Audio Tracks. A combination of Codec metadata carry
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId (**Requred**) | The generated unique identifier of the call
-clientId (**Requred**) | The generated unique identifier of the client
-peerConnectionId (**Requred**) | The unique identifier of the peer connection
-sampleSeq (**Requred**) | The sequence number of the sample the report is generated from
-ssrc (**Requred**) | The RTP SSRC field
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
+ssrc (**Mandatory**) | The RTP SSRC field
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
@@ -297,14 +297,14 @@ A Report created for Inbound Video Tracks. A combination of Codec metadata carry
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId (**Requred**) | The generated unique identifier of the call
-clientId (**Requred**) | The generated unique identifier of the client
-peerConnectionId (**Requred**) | The unique identifier of the peer connection
-sampleSeq (**Requred**) | The sequence number of the sample the report is generated from
-ssrc (**Requred**) | The RTP SSRC field
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
+ssrc (**Mandatory**) | The RTP SSRC field
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
@@ -379,10 +379,10 @@ A report created for observer generated events
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId (**Requred**) | The generated unique identifier of the call
-name (**Requred**) | The name of the event
+serviceId (**Mandatory**) | The unique identifier of the service
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+name (**Mandatory**) | The name of the event
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
@@ -404,14 +404,14 @@ A Report created for Outbound Audio Tracks. A combination of Audio source, Codec
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId (**Requred**) | The generated unique identifier of the call
-clientId (**Requred**) | The generated unique identifier of the client
-peerConnectionId (**Requred**) | The unique identifier of the peer connection
-sampleSeq (**Requred**) | The sequence number of the sample the report is generated from
-ssrc (**Requred**) | The RTP SSRC field
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
+ssrc (**Mandatory**) | The RTP SSRC field
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
@@ -479,14 +479,14 @@ A Report created for Outbound Video Tracks. A combination of Video source, Codec
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The unique identifier of the service
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-callId (**Requred**) | The generated unique identifier of the call
-clientId (**Requred**) | The generated unique identifier of the client
-peerConnectionId (**Requred**) | The unique identifier of the peer connection
-sampleSeq (**Requred**) | The sequence number of the sample the report is generated from
-ssrc (**Requred**) | The RTP SSRC field
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
+ssrc (**Mandatory**) | The RTP SSRC field
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
@@ -572,8 +572,8 @@ A multiplexed Report object wraps an encoded report in bytes format
 
 Field | Description 
 --- | ---
-type (**Requred**) | The type of the report
-payload (**Requred**) | The payload of contans the actual report
+type (**Mandatory**) | The type of the report
+payload (**Mandatory**) | The payload of contans the actual report
 
 
 ## SfuEventReport
@@ -584,9 +584,9 @@ Events happened in calls.
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The service id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-name (**Requred**) | The name of the event. Possible values are: SFU_JOINED, SFU_LEFT, SFU_TRANSPORT_OPENED, SFU_TRANSPORT_CLOSED, SFU_RTP_STREAM_ADDED, SFU_RTP_STREAM_REMOVED
+serviceId (**Mandatory**) | The service id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+name (**Mandatory**) | The name of the event. Possible values are: SFU_JOINED, SFU_LEFT, SFU_TRANSPORT_OPENED, SFU_TRANSPORT_CLOSED, SFU_RTP_STREAM_ADDED, SFU_RTP_STREAM_REMOVED
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
 sfuId | The generated unique identifier of the SFU
@@ -609,14 +609,14 @@ A Report created for RTP streams going through the SFU
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The service id the report belongs to
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-sfuId (**Requred**) | The provided unique identifier of the SFU
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-transportId (**Requred**) | The id of the transport the RTP stream uses.
-rtpStreamId (**Requred**) | The id of the RTP stream.
-padId (**Requred**) | The id of Sfu pad.
-ssrc (**Requred**) | The synchronization source id of the RTP stream
+serviceId (**Mandatory**) | The service id the report belongs to
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+sfuId (**Mandatory**) | The provided unique identifier of the SFU
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+transportId (**Mandatory**) | The id of the transport the RTP stream uses.
+rtpStreamId (**Mandatory**) | The id of the RTP stream.
+padId (**Mandatory**) | The id of Sfu pad.
+ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
 trackId | The id of the track the RTP stream related to at the client side
 clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
@@ -664,8 +664,8 @@ Metadata belongs to SFUs
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The service id the report belongs to
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+serviceId (**Mandatory**) | The service id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
 sfuId | The id of the Sfu
@@ -684,14 +684,14 @@ A Report created for RTP streams going through the SFU
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The service id the report belongs to
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-sfuId (**Requred**) | The provided unique identifier of the SFU
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-transportId (**Requred**) | The id of the transport the RTP stream uses.
-rtpStreamId (**Requred**) | The id of the RTP stream.
-padId (**Requred**) | The id of Sfu pad.
-ssrc (**Requred**) | The synchronization source id of the RTP stream
+serviceId (**Mandatory**) | The service id the report belongs to
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+sfuId (**Mandatory**) | The provided unique identifier of the SFU
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+transportId (**Mandatory**) | The id of the transport the RTP stream uses.
+rtpStreamId (**Mandatory**) | The id of the RTP stream.
+padId (**Mandatory**) | The id of Sfu pad.
+ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
 callId | The callId the event belongs to
 clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
@@ -736,12 +736,12 @@ A Report created for SCTP streams going through the SFU
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The service id the report belongs to
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-sfuId (**Requred**) | The provided unique identifier of the SFU
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-transportId (**Requred**) | The id of the transport the RTP stream uses.
-streamId (**Requred**) | The id of the sctp stream
+serviceId (**Mandatory**) | The service id the report belongs to
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+sfuId (**Mandatory**) | The provided unique identifier of the SFU
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+transportId (**Mandatory**) | The id of the transport the RTP stream uses.
+streamId (**Mandatory**) | The id of the sctp stream
 marker | The marker the originated sample is reported with
 callId | The generated unique identifier of the call
 roomId | webrtc app provided room id
@@ -766,11 +766,11 @@ A Report created for SFU Transport layer typically created to transfer RTP/SCTP/
 
 Field | Description 
 --- | ---
-serviceId (**Requred**) | The service id the report belongs to
-mediaUnitId (**Requred**) | The media unit id the report belongs to
-sfuId (**Requred**) | The provided unique identifier of the SFU
-timestamp (**Requred**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
-transportId (**Requred**) | The generated unique identifier of the transport
+serviceId (**Mandatory**) | The service id the report belongs to
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+sfuId (**Mandatory**) | The provided unique identifier of the SFU
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+transportId (**Mandatory**) | The generated unique identifier of the transport
 marker | The marker the originated sample is reported with
 callId | The generated unique identifier of the call
 roomId | webrtc app provided room id
@@ -846,6 +846,7 @@ Field | Description
 --- | ---
 name | The name of the operation system (e.g.: linux) the webrtc app uses
 version | The version of the operation system
+versionName | The name of the version of the operation system
 
 ## MediaDevice
 
@@ -861,15 +862,15 @@ label | The name of the device
 
 Field | Description 
 --- | ---
-type (**Requred**) | The type of the extension stats the custom app provides
-payload (**Requred**) | The payload of the extension stats the custom app provides
+type (**Mandatory**) | The type of the extension stats the custom app provides
+payload (**Mandatory**) | The payload of the extension stats the custom app provides
 
 ## PeerConnectionTransport
 
 
 Field | Description 
 --- | ---
-peerConnectionId (**Requred**) | The unique identifier of the peer connection
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
 label | The webrtc app provided label the peer connection is marked with
 dataChannelsOpened | Represents the number of unique RTCDataChannels that have entered the "open" state during their lifetime.
 dataChannelsClosed | Represents the number of unique RTCDataChannels that had the "open" state, but now they are "closed"
@@ -980,7 +981,7 @@ issuerCertificateId | The id of the next certificate in the certificate chain
 
 Field | Description 
 --- | ---
-ssrc (**Requred**) | The RTP SSRC field
+ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 remoteClientId | The remote clientId the source outbound track belongs to
@@ -1042,7 +1043,7 @@ sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
 
 Field | Description 
 --- | ---
-ssrc (**Requred**) | The RTP SSRC field
+ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 remoteClientId | The remote clientId the source outbound track belongs to
@@ -1109,7 +1110,7 @@ sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
 
 Field | Description 
 --- | ---
-ssrc (**Requred**) | The RTP SSRC field
+ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
@@ -1171,7 +1172,7 @@ sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
 
 Field | Description 
 --- | ---
-ssrc (**Requred**) | The RTP SSRC field
+ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
@@ -1299,8 +1300,8 @@ docs
 
 Field | Description 
 --- | ---
-clientId (**Requred**) | Unique id of the client providing samples. Must be a valid UUID
-timestamp (**Requred**) | The timestamp the sample is created in GMT
+clientId (**Mandatory**) | Unique id of the client providing samples. Must be a valid UUID
+timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 callId | If it is provided the server uses the given id to match clients in the same call. Must be a valid UUID. 
 sampleSeq | The sequence number a source assigns to the sample. Every time the source make a sample at a client this number should be monothonically incremented.
 roomId | The WebRTC app configured room id the client joined for the call.
@@ -1336,8 +1337,8 @@ docs
 
 Field | Description 
 --- | ---
-sfuId (**Requred**) | Unique generated id for the sfu samples are originated from
-timestamp (**Requred**) | The timestamp the sample is created in GMT
+sfuId (**Mandatory**) | Unique generated id for the sfu samples are originated from
+timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples## Samples
 

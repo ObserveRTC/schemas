@@ -1956,6 +1956,11 @@ export type OperationSystem = {
 	*/
 	version?: string;
 
+	/**
+	* The name of the version of the operation system
+	*/
+	versionName?: string;
+
 }
 
 /**
