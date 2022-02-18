@@ -15,8 +15,8 @@ function fetchChunks() {
     for (const schemaType of ["reports", "samples"]) {
         const schemaPath = path.join(SOURCE_PATH, schemaType);
         for (const file of fs.readdirSync(schemaPath)) {
-            if (!file.endsWith(".avsc.chunk")) continue;
-            const chunkId = file.substr(0, file.length - ".avsc.chunk".length);
+            if (!file.endsWith(".chunk.avsc")) continue;
+            const chunkId = file.substr(0, file.length - ".chunk.avsc".length);
             const filePath = path.join(schemaPath, file);
             const chunk = fs.readFileSync(filePath, 'utf-8');
             chunks.add(chunkId, chunk);
@@ -31,6 +31,7 @@ function fetchSources() {
         const schemaPath = path.join(SOURCE_PATH, schemaType);
         for (const file of fs.readdirSync(schemaPath)) {
             if (!file.endsWith("avsc")) continue;
+            if (file.endsWith(".chunk.avsc")) continue;
             const fileName = file.substr(0, file.length - 5);
             const filePath = path.join(schemaPath, file);
             const avsc = fs.readFileSync(filePath, 'utf-8');

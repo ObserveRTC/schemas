@@ -3910,6 +3910,1056 @@ export const schema = {
                   "string"
                 ],
                 "default": null
+              },
+              {
+                "name": "transports",
+                "doc": "The Sfu Transports obtained measurements",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "SfuTransport",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "noReport",
+                          "doc": "Flag indicate to not generate report from this sample",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "transportId",
+                          "doc": "The generated unique identifier of the transport",
+                          "type": "string"
+                        },
+                        {
+                          "name": "dtlsState",
+                          "doc": "Represent the current value of the state attribute of the underlying RTCDtlsTransport.",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "iceState",
+                          "doc": "Represent the current value of the state attribute of the underlying RTCIceTransport",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpState",
+                          "doc": "Represents the the current value of the SCTP state of the transport of the SFU",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "iceRole",
+                          "doc": "Represent the current value of the role SFU takes place in ICE",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "localAddress",
+                          "doc": "The local address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "localPort",
+                          "doc": "The local port number",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "protocol",
+                          "doc": "The protocol used by the transport",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "remoteAddress",
+                          "doc": "The remote address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "remotePort",
+                          "doc": "The remote port number",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtpBytesReceived",
+                          "doc": "The total amount of RTP bytes received on this transport",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtpBytesSent",
+                          "doc": "The total amount of RTP bytes sent on this transport",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtpPacketsReceived",
+                          "doc": "The total amount of RTP packets received on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtpPacketsSent",
+                          "doc": "The total amount of RTP packets sent on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtpPacketsLost",
+                          "doc": "The total amount of RTP packets lost on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxBytesReceived",
+                          "doc": "The total amount of RTX bytes received on this transport",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxBytesSent",
+                          "doc": "The total amount of RTX bytes sent on this transport",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsReceived",
+                          "doc": "The total amount of RTX packets received on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsSent",
+                          "doc": "The total amount of RTX packets sent on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsLost",
+                          "doc": "The total amount of RTX packets lost on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsDiscarded",
+                          "doc": "The total amount of RTX packets discarded on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpBytesReceived",
+                          "doc": "The total amount of SCTP bytes received on this transport",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpBytesSent",
+                          "doc": "The total amount of SCTP bytes sent on this transport",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpPacketsReceived",
+                          "doc": "The total amount of SCTP packets received on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpPacketsSent",
+                          "doc": "The total amount of SCTP packets sent on this transport",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
+                "name": "inboundRtpPads",
+                "doc": "The Sfu Inbound Rtp Pad obtained measurements",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "SfuInboundRtpPad",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "noReport",
+                          "doc": "Flag indicate to not generate report from this sample",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "transportId",
+                          "doc": "The id of the transport the RTP stream uses.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "rtpStreamId",
+                          "doc": "The id of the RTP stream.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "padId",
+                          "doc": "The id of Sfu pad.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "ssrc",
+                          "doc": "The synchronization source id of the RTP stream",
+                          "type": "long"
+                        },
+                        {
+                          "name": "mediaType",
+                          "doc": "the type of the media the stream carries (\"audio\" or \"video\")",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "payloadType",
+                          "doc": "The payload type field of the RTP header",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "mimeType",
+                          "doc": "The negotiated mimeType in the SDP",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "clockRate",
+                          "doc": "The clock rate of the media source the RTP header carries",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sdpFmtpLine",
+                          "doc": "The actual SDP line from the negotiation related to this RTP stream",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rid",
+                          "doc": " The rid parameter of the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxSsrc",
+                          "doc": "If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. ",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "targetBitrate",
+                          "doc": "he bitrate the corresponded stream targets.",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "voiceActivityFlag",
+                          "doc": "The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "firCount",
+                          "doc": "The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "pliCount",
+                          "doc": "The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "nackCount",
+                          "doc": "The total number of negative acknowledgement received on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sliCount",
+                          "doc": "The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsLost",
+                          "doc": "The total number of packets lost on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsReceived",
+                          "doc": "The total number of packets received on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsDiscarded",
+                          "doc": "The total number of discarded packets on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsRepaired",
+                          "doc": "The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsFailedDecryption",
+                          "doc": "The total number of packets failed to be decrypted on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsDuplicated",
+                          "doc": "The total number of duplicated packets appeared on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "fecPacketsReceived",
+                          "doc": "The total number of FEC packets received on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "fecPacketsDiscarded",
+                          "doc": "The total number of FEC packets discarded on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "bytesReceived",
+                          "doc": "The total amount of payload bytes received on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtcpSrReceived",
+                          "doc": "The total number of SR reports received by the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtcpRrSent",
+                          "doc": "The total number of RR reports sent on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsReceived",
+                          "doc": "If rtx packets are sent or received on the same stream then this number indicates how may has been sent",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsDiscarded",
+                          "doc": "If rtx packets are received on the same stream then this number indicates how may has been discarded",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "framesReceived",
+                          "doc": "The number of frames received on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "framesDecoded",
+                          "doc": "Indicate the number of frames the Sfu has been decoded",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "keyFramesDecoded",
+                          "doc": "Indicate the number of keyframes the Sfu has been decoded",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "fractionLost",
+                          "doc": "The calculated fractionLost of the stream",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "jitter",
+                          "doc": "The calculated jitter of the stream",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "roundTripTime",
+                          "doc": "The calculated RTT of the stream",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
+                "name": "outboundRtpPads",
+                "doc": "The Sfu Outbound Rtp Pad obtained measurements",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "SfuOutboundRtpPad",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "noReport",
+                          "doc": "Flag indicate to not generate report from this sample",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "transportId",
+                          "doc": "The id of the transport the RTP stream uses.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "rtpStreamId",
+                          "doc": "The id of the RTP stream.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "padId",
+                          "doc": "The id of Sfu pad.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "ssrc",
+                          "doc": "The synchronization source id of the RTP stream",
+                          "type": "long"
+                        },
+                        {
+                          "name": "callId",
+                          "doc": "The callId the event belongs to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "clientId",
+                          "doc": "If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "trackId",
+                          "doc": "The id of the track the RTP stream related to at the client side",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "mediaType",
+                          "doc": "the type of the media the stream carries (\"audio\" or \"video\")",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "payloadType",
+                          "doc": "The payload type field of the RTP header",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "mimeType",
+                          "doc": "The negotiated mimeType in the SDP",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "clockRate",
+                          "doc": "The clock rate of the media source the RTP header carries",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sdpFmtpLine",
+                          "doc": "The actual SDP line from the negotiation related to this RTP stream",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rid",
+                          "doc": " The rid parameter of the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxSsrc",
+                          "doc": "If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. ",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "targetBitrate",
+                          "doc": "he bitrate the corresponded stream targets.",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "voiceActivityFlag",
+                          "doc": "The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "firCount",
+                          "doc": "The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "pliCount",
+                          "doc": "The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "nackCount",
+                          "doc": "The total number of negative acknowledgement received on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sliCount",
+                          "doc": "The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsLost",
+                          "doc": "The total number of packets lost on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsSent",
+                          "doc": "The total number of packets sent on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsDiscarded",
+                          "doc": "The total number of discarded packets on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsRetransmitted",
+                          "doc": "The total number of packets retransmitted on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsFailedEncryption",
+                          "doc": "The total number of packets failed to be encrypted on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "packetsDuplicated",
+                          "doc": "The total number of duplicated packets appeared on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "fecPacketsSent",
+                          "doc": "The total number of FEC packets sent on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "fecPacketsDiscarded",
+                          "doc": "The total number of FEC packets discarded on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "bytesSent",
+                          "doc": "The total amount of payload bytes sent on the corresponded RTP stream.",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtcpSrSent",
+                          "doc": "The total number of SR reports sent by the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtcpRrReceived",
+                          "doc": "The total number of RR reports received on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsSent",
+                          "doc": "If rtx packets sent on the same stream then this number indicates how may has been sent",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "rtxPacketsDiscarded",
+                          "doc": "If rtx packets are received on the same stream then this number indicates how may has been discarded",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "framesSent",
+                          "doc": "The number of frames sent on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "framesEncoded",
+                          "doc": "Indicate the number of frames the Sfu has been encoded",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "keyFramesEncoded",
+                          "doc": "Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
+                "name": "sctpStreams",
+                "doc": "The Sfu Outbound Rtp Pad obtained measurements",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "SfuSctpStream",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "noReport",
+                          "doc": "Flag indicate to not generate report from this sample",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "transportId",
+                          "doc": "The id of the transport the RTP stream uses.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "streamId",
+                          "doc": "The id of the sctp stream",
+                          "type": "string"
+                        },
+                        {
+                          "name": "label",
+                          "doc": "The label of the sctp stream",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "protocol",
+                          "doc": "The protocol used to establish an sctp stream",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpSmoothedRoundTripTime",
+                          "doc": "The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpCongestionWindow",
+                          "doc": "The latest congestion window, corresponding to spinfo_cwnd defined in [RFC6458].",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpReceiverWindow",
+                          "doc": "The latest receiver window, corresponding to sstat_rwnd defined in [RFC6458].",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpMtu",
+                          "doc": "The latest maximum transmission unit, corresponding to spinfo_mtu defined in [RFC6458].",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sctpUnackData",
+                          "doc": "The number of unacknowledged DATA chunks, corresponding to sstat_unackdata defined in [RFC6458].",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "messageReceived",
+                          "doc": "The number of message received on the corresponded SCTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "messageSent",
+                          "doc": "The number of message sent on the corresponded SCTP stream.",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "bytesReceived",
+                          "doc": "The number of bytes received on the corresponded SCTP stream.",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "bytesSent",
+                          "doc": "The number of bytes sent on the corresponded SCTP stream.",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
               }
             ]
           }

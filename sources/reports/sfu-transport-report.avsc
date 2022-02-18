@@ -39,7 +39,8 @@
     "doc": "webrtc app provided room id",
     "type" : [ "null", "string" ],
     "default" : null
-  }, {
+  }, 
+  {
     "name" : "transportId",
     "doc": "The generated unique identifier of the transport",
     "type" : "string"

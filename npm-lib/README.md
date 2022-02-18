@@ -20,6 +20,10 @@ Javascript bindings for ObserveRTC schemas
 	* [SfuSctpStreamReport](#SfuSctpStreamReport)
 	* [SFUTransportReport](#SFUTransportReport)
 - [samples](#samples)
+	* [SfuSctpStream](#SfuSctpStream)
+	* [SfuOutboundRtpPad](#SfuOutboundRtpPad)
+	* [SfuInboundRtpPad](#SfuInboundRtpPad)
+	* [SfuTransport](#SfuTransport)
 	* [SfuSample](#SfuSample)
 	* [DataChannel](#DataChannel)
 	* [IceRemoteCandidate](#IceRemoteCandidate)
@@ -1329,7 +1333,143 @@ dataChannels | List of Data channels
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples
 
-## SfuSample
+## SfuTransport
+
+
+Field | Description 
+--- | ---
+transportId (**Mandatory**) | The generated unique identifier of the transport
+noReport | Flag indicate to not generate report from this sample
+dtlsState | Represent the current value of the state attribute of the underlying RTCDtlsTransport.
+iceState | Represent the current value of the state attribute of the underlying RTCIceTransport
+sctpState | Represents the the current value of the SCTP state of the transport of the SFU
+iceRole | Represent the current value of the role SFU takes place in ICE
+localAddress | The local address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
+localPort | The local port number
+protocol | The protocol used by the transport
+remoteAddress | The remote address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
+remotePort | The remote port number
+rtpBytesReceived | The total amount of RTP bytes received on this transport
+rtpBytesSent | The total amount of RTP bytes sent on this transport
+rtpPacketsReceived | The total amount of RTP packets received on this transport
+rtpPacketsSent | The total amount of RTP packets sent on this transport
+rtpPacketsLost | The total amount of RTP packets lost on this transport
+rtxBytesReceived | The total amount of RTX bytes received on this transport
+rtxBytesSent | The total amount of RTX bytes sent on this transport
+rtxPacketsReceived | The total amount of RTX packets received on this transport
+rtxPacketsSent | The total amount of RTX packets sent on this transport
+rtxPacketsLost | The total amount of RTX packets lost on this transport
+rtxPacketsDiscarded | The total amount of RTX packets discarded on this transport
+sctpBytesReceived | The total amount of SCTP bytes received on this transport
+sctpBytesSent | The total amount of SCTP bytes sent on this transport
+sctpPacketsReceived | The total amount of SCTP packets received on this transport
+sctpPacketsSent | The total amount of SCTP packets sent on this transport
+
+## SfuInboundRtpPad
+
+
+Field | Description 
+--- | ---
+transportId (**Mandatory**) | The id of the transport the RTP stream uses.
+rtpStreamId (**Mandatory**) | The id of the RTP stream.
+padId (**Mandatory**) | The id of Sfu pad.
+ssrc (**Mandatory**) | The synchronization source id of the RTP stream
+noReport | Flag indicate to not generate report from this sample
+mediaType | the type of the media the stream carries ("audio" or "video")
+payloadType | The payload type field of the RTP header
+mimeType | The negotiated mimeType in the SDP
+clockRate | The clock rate of the media source the RTP header carries
+sdpFmtpLine | The actual SDP line from the negotiation related to this RTP stream
+rid |  The rid parameter of the corresponded RTP stream
+rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
+targetBitrate | he bitrate the corresponded stream targets.
+voiceActivityFlag | The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
+firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
+pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
+nackCount | The total number of negative acknowledgement received on the corresponded RTP stream.
+sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
+packetsLost | The total number of packets lost on the corresponded RTP stream.
+packetsReceived | The total number of packets received on the corresponded RTP stream.
+packetsDiscarded | The total number of discarded packets on the corresponded RTP stream.
+packetsRepaired | The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.
+packetsFailedDecryption | The total number of packets failed to be decrypted on the corresponded RTP stream.
+packetsDuplicated | The total number of duplicated packets appeared on the corresponded RTP stream.
+fecPacketsReceived | The total number of FEC packets received on the corresponded RTP stream.
+fecPacketsDiscarded | The total number of FEC packets discarded on the corresponded RTP stream.
+bytesReceived | The total amount of payload bytes received on the corresponded RTP stream.
+rtcpSrReceived | The total number of SR reports received by the corresponded RTP stream
+rtcpRrSent | The total number of RR reports sent on the corresponded RTP stream
+rtxPacketsReceived | If rtx packets are sent or received on the same stream then this number indicates how may has been sent
+rtxPacketsDiscarded | If rtx packets are received on the same stream then this number indicates how may has been discarded
+framesReceived | The number of frames received on the corresponded RTP stream
+framesDecoded | Indicate the number of frames the Sfu has been decoded
+keyFramesDecoded | Indicate the number of keyframes the Sfu has been decoded
+fractionLost | The calculated fractionLost of the stream
+jitter | The calculated jitter of the stream
+roundTripTime | The calculated RTT of the stream
+
+## SfuOutboundRtpPad
+
+
+Field | Description 
+--- | ---
+transportId (**Mandatory**) | The id of the transport the RTP stream uses.
+rtpStreamId (**Mandatory**) | The id of the RTP stream.
+padId (**Mandatory**) | The id of Sfu pad.
+ssrc (**Mandatory**) | The synchronization source id of the RTP stream
+noReport | Flag indicate to not generate report from this sample
+callId | The callId the event belongs to
+clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
+trackId | The id of the track the RTP stream related to at the client side
+mediaType | the type of the media the stream carries ("audio" or "video")
+payloadType | The payload type field of the RTP header
+mimeType | The negotiated mimeType in the SDP
+clockRate | The clock rate of the media source the RTP header carries
+sdpFmtpLine | The actual SDP line from the negotiation related to this RTP stream
+rid |  The rid parameter of the corresponded RTP stream
+rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
+targetBitrate | he bitrate the corresponded stream targets.
+voiceActivityFlag | The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
+firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
+pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
+nackCount | The total number of negative acknowledgement received on the corresponded RTP stream.
+sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
+packetsLost | The total number of packets lost on the corresponded RTP stream.
+packetsSent | The total number of packets sent on the corresponded RTP stream.
+packetsDiscarded | The total number of discarded packets on the corresponded RTP stream.
+packetsRetransmitted | The total number of packets retransmitted on the corresponded RTP stream.
+packetsFailedEncryption | The total number of packets failed to be encrypted on the corresponded RTP stream.
+packetsDuplicated | The total number of duplicated packets appeared on the corresponded RTP stream.
+fecPacketsSent | The total number of FEC packets sent on the corresponded RTP stream.
+fecPacketsDiscarded | The total number of FEC packets discarded on the corresponded RTP stream.
+bytesSent | The total amount of payload bytes sent on the corresponded RTP stream.
+rtcpSrSent | The total number of SR reports sent by the corresponded RTP stream
+rtcpRrReceived | The total number of RR reports received on the corresponded RTP stream
+rtxPacketsSent | If rtx packets sent on the same stream then this number indicates how may has been sent
+rtxPacketsDiscarded | If rtx packets are received on the same stream then this number indicates how may has been discarded
+framesSent | The number of frames sent on the corresponded RTP stream
+framesEncoded | Indicate the number of frames the Sfu has been encoded
+keyFramesEncoded | Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
+
+## SfuSctpStream
+
+
+Field | Description 
+--- | ---
+transportId (**Mandatory**) | The id of the transport the RTP stream uses.
+streamId (**Mandatory**) | The id of the sctp stream
+noReport | Flag indicate to not generate report from this sample
+label | The label of the sctp stream
+protocol | The protocol used to establish an sctp stream
+sctpSmoothedRoundTripTime | The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.
+sctpCongestionWindow | The latest congestion window, corresponding to spinfo_cwnd defined in [RFC6458].
+sctpReceiverWindow | The latest receiver window, corresponding to sstat_rwnd defined in [RFC6458].
+sctpMtu | The latest maximum transmission unit, corresponding to spinfo_mtu defined in [RFC6458].
+sctpUnackData | The number of unacknowledged DATA chunks, corresponding to sstat_unackdata defined in [RFC6458].
+messageReceived | The number of message received on the corresponded SCTP stream.
+messageSent | The number of message sent on the corresponded SCTP stream.
+bytesReceived | The number of bytes received on the corresponded SCTP stream.
+bytesSent | The number of bytes sent on the corresponded SCTP stream.## SfuSample
 
 
 docs
@@ -1340,7 +1480,11 @@ Field | Description
 sfuId (**Mandatory**) | Unique generated id for the sfu samples are originated from
 timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 timeZoneOffsetInHours | The offset from GMT in hours
-marker | Special marker for the samples## Samples
+marker | Special marker for the samples
+transports | The Sfu Transports obtained measurements
+inboundRtpPads | The Sfu Inbound Rtp Pad obtained measurements
+outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements
+sctpStreams | The Sfu Outbound Rtp Pad obtained measurements## Samples
 
 
 Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.

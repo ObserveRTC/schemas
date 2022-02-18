@@ -1,4 +1,598 @@
 /**
+* The Sfu Outbound Rtp Pad obtained measurements
+*/
+export type SfuSctpStream = {
+	/**
+	* The id of the transport the RTP stream uses.
+	*/
+	transportId: string;
+
+	/**
+	* The id of the sctp stream
+	*/
+	streamId: string;
+
+	/**
+	* Flag indicate to not generate report from this sample
+	*/
+	noReport?: boolean;
+
+	/**
+	* The label of the sctp stream
+	*/
+	label?: string;
+
+	/**
+	* The protocol used to establish an sctp stream
+	*/
+	protocol?: string;
+
+	/**
+	* The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.
+	*/
+	sctpSmoothedRoundTripTime?: number;
+
+	/**
+	* The latest congestion window, corresponding to spinfo_cwnd defined in [RFC6458].
+	*/
+	sctpCongestionWindow?: number;
+
+	/**
+	* The latest receiver window, corresponding to sstat_rwnd defined in [RFC6458].
+	*/
+	sctpReceiverWindow?: number;
+
+	/**
+	* The latest maximum transmission unit, corresponding to spinfo_mtu defined in [RFC6458].
+	*/
+	sctpMtu?: number;
+
+	/**
+	* The number of unacknowledged DATA chunks, corresponding to sstat_unackdata defined in [RFC6458].
+	*/
+	sctpUnackData?: number;
+
+	/**
+	* The number of message received on the corresponded SCTP stream.
+	*/
+	messageReceived?: number;
+
+	/**
+	* The number of message sent on the corresponded SCTP stream.
+	*/
+	messageSent?: number;
+
+	/**
+	* The number of bytes received on the corresponded SCTP stream.
+	*/
+	bytesReceived?: number;
+
+	/**
+	* The number of bytes sent on the corresponded SCTP stream.
+	*/
+	bytesSent?: number;
+
+}
+
+/**
+* The Sfu Outbound Rtp Pad obtained measurements
+*/
+export type SfuOutboundRtpPad = {
+	/**
+	* The id of the transport the RTP stream uses.
+	*/
+	transportId: string;
+
+	/**
+	* The id of the RTP stream.
+	*/
+	rtpStreamId: string;
+
+	/**
+	* The id of Sfu pad.
+	*/
+	padId: string;
+
+	/**
+	* The synchronization source id of the RTP stream
+	*/
+	ssrc: number;
+
+	/**
+	* Flag indicate to not generate report from this sample
+	*/
+	noReport?: boolean;
+
+	/**
+	* The callId the event belongs to
+	*/
+	callId?: string;
+
+	/**
+	* If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
+	*/
+	clientId?: string;
+
+	/**
+	* The id of the track the RTP stream related to at the client side
+	*/
+	trackId?: string;
+
+	/**
+	* the type of the media the stream carries ("audio" or "video")
+	*/
+	mediaType?: string;
+
+	/**
+	* The payload type field of the RTP header
+	*/
+	payloadType?: number;
+
+	/**
+	* The negotiated mimeType in the SDP
+	*/
+	mimeType?: string;
+
+	/**
+	* The clock rate of the media source the RTP header carries
+	*/
+	clockRate?: number;
+
+	/**
+	* The actual SDP line from the negotiation related to this RTP stream
+	*/
+	sdpFmtpLine?: string;
+
+	/**
+	*  The rid parameter of the corresponded RTP stream
+	*/
+	rid?: string;
+
+	/**
+	* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
+	*/
+	rtxSsrc?: number;
+
+	/**
+	* he bitrate the corresponded stream targets.
+	*/
+	targetBitrate?: number;
+
+	/**
+	* The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
+	*/
+	voiceActivityFlag?: boolean;
+
+	/**
+	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
+	*/
+	firCount?: number;
+
+	/**
+	* The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
+	*/
+	pliCount?: number;
+
+	/**
+	* The total number of negative acknowledgement received on the corresponded RTP stream.
+	*/
+	nackCount?: number;
+
+	/**
+	* The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
+	*/
+	sliCount?: number;
+
+	/**
+	* The total number of packets lost on the corresponded RTP stream.
+	*/
+	packetsLost?: number;
+
+	/**
+	* The total number of packets sent on the corresponded RTP stream.
+	*/
+	packetsSent?: number;
+
+	/**
+	* The total number of discarded packets on the corresponded RTP stream.
+	*/
+	packetsDiscarded?: number;
+
+	/**
+	* The total number of packets retransmitted on the corresponded RTP stream.
+	*/
+	packetsRetransmitted?: number;
+
+	/**
+	* The total number of packets failed to be encrypted on the corresponded RTP stream.
+	*/
+	packetsFailedEncryption?: number;
+
+	/**
+	* The total number of duplicated packets appeared on the corresponded RTP stream.
+	*/
+	packetsDuplicated?: number;
+
+	/**
+	* The total number of FEC packets sent on the corresponded RTP stream.
+	*/
+	fecPacketsSent?: number;
+
+	/**
+	* The total number of FEC packets discarded on the corresponded RTP stream.
+	*/
+	fecPacketsDiscarded?: number;
+
+	/**
+	* The total amount of payload bytes sent on the corresponded RTP stream.
+	*/
+	bytesSent?: number;
+
+	/**
+	* The total number of SR reports sent by the corresponded RTP stream
+	*/
+	rtcpSrSent?: number;
+
+	/**
+	* The total number of RR reports received on the corresponded RTP stream
+	*/
+	rtcpRrReceived?: number;
+
+	/**
+	* If rtx packets sent on the same stream then this number indicates how may has been sent
+	*/
+	rtxPacketsSent?: number;
+
+	/**
+	* If rtx packets are received on the same stream then this number indicates how may has been discarded
+	*/
+	rtxPacketsDiscarded?: number;
+
+	/**
+	* The number of frames sent on the corresponded RTP stream
+	*/
+	framesSent?: number;
+
+	/**
+	* Indicate the number of frames the Sfu has been encoded
+	*/
+	framesEncoded?: number;
+
+	/**
+	* Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
+	*/
+	keyFramesEncoded?: number;
+
+}
+
+/**
+* The Sfu Inbound Rtp Pad obtained measurements
+*/
+export type SfuInboundRtpPad = {
+	/**
+	* The id of the transport the RTP stream uses.
+	*/
+	transportId: string;
+
+	/**
+	* The id of the RTP stream.
+	*/
+	rtpStreamId: string;
+
+	/**
+	* The id of Sfu pad.
+	*/
+	padId: string;
+
+	/**
+	* The synchronization source id of the RTP stream
+	*/
+	ssrc: number;
+
+	/**
+	* Flag indicate to not generate report from this sample
+	*/
+	noReport?: boolean;
+
+	/**
+	* the type of the media the stream carries ("audio" or "video")
+	*/
+	mediaType?: string;
+
+	/**
+	* The payload type field of the RTP header
+	*/
+	payloadType?: number;
+
+	/**
+	* The negotiated mimeType in the SDP
+	*/
+	mimeType?: string;
+
+	/**
+	* The clock rate of the media source the RTP header carries
+	*/
+	clockRate?: number;
+
+	/**
+	* The actual SDP line from the negotiation related to this RTP stream
+	*/
+	sdpFmtpLine?: string;
+
+	/**
+	*  The rid parameter of the corresponded RTP stream
+	*/
+	rid?: string;
+
+	/**
+	* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
+	*/
+	rtxSsrc?: number;
+
+	/**
+	* he bitrate the corresponded stream targets.
+	*/
+	targetBitrate?: number;
+
+	/**
+	* The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
+	*/
+	voiceActivityFlag?: boolean;
+
+	/**
+	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
+	*/
+	firCount?: number;
+
+	/**
+	* The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
+	*/
+	pliCount?: number;
+
+	/**
+	* The total number of negative acknowledgement received on the corresponded RTP stream.
+	*/
+	nackCount?: number;
+
+	/**
+	* The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
+	*/
+	sliCount?: number;
+
+	/**
+	* The total number of packets lost on the corresponded RTP stream.
+	*/
+	packetsLost?: number;
+
+	/**
+	* The total number of packets received on the corresponded RTP stream.
+	*/
+	packetsReceived?: number;
+
+	/**
+	* The total number of discarded packets on the corresponded RTP stream.
+	*/
+	packetsDiscarded?: number;
+
+	/**
+	* The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.
+	*/
+	packetsRepaired?: number;
+
+	/**
+	* The total number of packets failed to be decrypted on the corresponded RTP stream.
+	*/
+	packetsFailedDecryption?: number;
+
+	/**
+	* The total number of duplicated packets appeared on the corresponded RTP stream.
+	*/
+	packetsDuplicated?: number;
+
+	/**
+	* The total number of FEC packets received on the corresponded RTP stream.
+	*/
+	fecPacketsReceived?: number;
+
+	/**
+	* The total number of FEC packets discarded on the corresponded RTP stream.
+	*/
+	fecPacketsDiscarded?: number;
+
+	/**
+	* The total amount of payload bytes received on the corresponded RTP stream.
+	*/
+	bytesReceived?: number;
+
+	/**
+	* The total number of SR reports received by the corresponded RTP stream
+	*/
+	rtcpSrReceived?: number;
+
+	/**
+	* The total number of RR reports sent on the corresponded RTP stream
+	*/
+	rtcpRrSent?: number;
+
+	/**
+	* If rtx packets are sent or received on the same stream then this number indicates how may has been sent
+	*/
+	rtxPacketsReceived?: number;
+
+	/**
+	* If rtx packets are received on the same stream then this number indicates how may has been discarded
+	*/
+	rtxPacketsDiscarded?: number;
+
+	/**
+	* The number of frames received on the corresponded RTP stream
+	*/
+	framesReceived?: number;
+
+	/**
+	* Indicate the number of frames the Sfu has been decoded
+	*/
+	framesDecoded?: number;
+
+	/**
+	* Indicate the number of keyframes the Sfu has been decoded
+	*/
+	keyFramesDecoded?: number;
+
+	/**
+	* The calculated fractionLost of the stream
+	*/
+	fractionLost?: number;
+
+	/**
+	* The calculated jitter of the stream
+	*/
+	jitter?: number;
+
+	/**
+	* The calculated RTT of the stream
+	*/
+	roundTripTime?: number;
+
+}
+
+/**
+* The Sfu Transports obtained measurements
+*/
+export type SfuTransport = {
+	/**
+	* The generated unique identifier of the transport
+	*/
+	transportId: string;
+
+	/**
+	* Flag indicate to not generate report from this sample
+	*/
+	noReport?: boolean;
+
+	/**
+	* Represent the current value of the state attribute of the underlying RTCDtlsTransport.
+	*/
+	dtlsState?: string;
+
+	/**
+	* Represent the current value of the state attribute of the underlying RTCIceTransport
+	*/
+	iceState?: string;
+
+	/**
+	* Represents the the current value of the SCTP state of the transport of the SFU
+	*/
+	sctpState?: string;
+
+	/**
+	* Represent the current value of the role SFU takes place in ICE
+	*/
+	iceRole?: string;
+
+	/**
+	* The local address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
+	*/
+	localAddress?: string;
+
+	/**
+	* The local port number
+	*/
+	localPort?: number;
+
+	/**
+	* The protocol used by the transport
+	*/
+	protocol?: string;
+
+	/**
+	* The remote address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
+	*/
+	remoteAddress?: string;
+
+	/**
+	* The remote port number
+	*/
+	remotePort?: number;
+
+	/**
+	* The total amount of RTP bytes received on this transport
+	*/
+	rtpBytesReceived?: number;
+
+	/**
+	* The total amount of RTP bytes sent on this transport
+	*/
+	rtpBytesSent?: number;
+
+	/**
+	* The total amount of RTP packets received on this transport
+	*/
+	rtpPacketsReceived?: number;
+
+	/**
+	* The total amount of RTP packets sent on this transport
+	*/
+	rtpPacketsSent?: number;
+
+	/**
+	* The total amount of RTP packets lost on this transport
+	*/
+	rtpPacketsLost?: number;
+
+	/**
+	* The total amount of RTX bytes received on this transport
+	*/
+	rtxBytesReceived?: number;
+
+	/**
+	* The total amount of RTX bytes sent on this transport
+	*/
+	rtxBytesSent?: number;
+
+	/**
+	* The total amount of RTX packets received on this transport
+	*/
+	rtxPacketsReceived?: number;
+
+	/**
+	* The total amount of RTX packets sent on this transport
+	*/
+	rtxPacketsSent?: number;
+
+	/**
+	* The total amount of RTX packets lost on this transport
+	*/
+	rtxPacketsLost?: number;
+
+	/**
+	* The total amount of RTX packets discarded on this transport
+	*/
+	rtxPacketsDiscarded?: number;
+
+	/**
+	* The total amount of SCTP bytes received on this transport
+	*/
+	sctpBytesReceived?: number;
+
+	/**
+	* The total amount of SCTP bytes sent on this transport
+	*/
+	sctpBytesSent?: number;
+
+	/**
+	* The total amount of SCTP packets received on this transport
+	*/
+	sctpPacketsReceived?: number;
+
+	/**
+	* The total amount of SCTP packets sent on this transport
+	*/
+	sctpPacketsSent?: number;
+
+}
+
+/**
 * docs
 */
 export type SfuSample = {
@@ -21,6 +615,26 @@ export type SfuSample = {
 	* Special marker for the samples
 	*/
 	marker?: string;
+
+	/**
+	* The Sfu Transports obtained measurements
+	*/
+	transports?: SfuTransport[];
+
+	/**
+	* The Sfu Inbound Rtp Pad obtained measurements
+	*/
+	inboundRtpPads?: SfuInboundRtpPad[];
+
+	/**
+	* The Sfu Outbound Rtp Pad obtained measurements
+	*/
+	outboundRtpPads?: SfuOutboundRtpPad[];
+
+	/**
+	* The Sfu Outbound Rtp Pad obtained measurements
+	*/
+	sctpStreams?: SfuSctpStream[];
 
 }
 
