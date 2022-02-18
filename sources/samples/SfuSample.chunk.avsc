@@ -215,7 +215,11 @@
                         {
                             "name" : "mediaType",
                             "doc": "the type of the media the stream carries (\"audio\" or \"video\")",
-                            "type" : ["null", "string"],
+                            "type": ["null", {
+                                "type": "enum",
+                                "name": "InboundMediaType",
+                                "symbols": ["audio", "video"]
+                            }],
                             "default" : null
                         }, {
                             "name" : "payloadType",
@@ -431,7 +435,11 @@
                         {
                             "name" : "mediaType",
                             "doc": "the type of the media the stream carries (\"audio\" or \"video\")",
-                            "type" : ["null", "string"],
+                            "type": ["null", {
+                                "type": "enum",
+                                "name": "OutboundMediaType",
+                                "symbols": ["audio", "video"]
+                            }],
                             "default" : null
                         }, {
                             "name" : "payloadType",

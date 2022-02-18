@@ -4203,7 +4203,14 @@ export const schema = {
                           "doc": "the type of the media the stream carries (\"audio\" or \"video\")",
                           "type": [
                             "null",
-                            "string"
+                            {
+                              "type": "enum",
+                              "name": "InboundMediaType",
+                              "symbols": [
+                                "audio",
+                                "video"
+                              ]
+                            }
                           ],
                           "default": null
                         },
@@ -4564,7 +4571,14 @@ export const schema = {
                           "doc": "the type of the media the stream carries (\"audio\" or \"video\")",
                           "type": [
                             "null",
-                            "string"
+                            {
+                              "type": "enum",
+                              "name": "OutboundMediaType",
+                              "symbols": [
+                                "audio",
+                                "video"
+                              ]
+                            }
                           ],
                           "default": null
                         },

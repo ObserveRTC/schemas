@@ -1375,7 +1375,7 @@ mediaStreamId (**Mandatory**) | The id of the Media stream.
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample
-mediaType | the type of the media the stream carries ("audio" or "video")
+mediaType | the type of the media the stream carries ("audio" or "video") (Possible values are: audio,<br />video)
 payloadType | The payload type field of the RTP header
 mimeType | The negotiated mimeType in the SDP
 clockRate | The clock rate of the media source the RTP header carries
@@ -1421,7 +1421,7 @@ noReport | Flag indicate to not generate report from this sample
 callId | The callId the event belongs to
 clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
 trackId | The id of the track the RTP stream related to at the client side
-mediaType | the type of the media the stream carries ("audio" or "video")
+mediaType | the type of the media the stream carries ("audio" or "video") (Possible values are: audio,<br />video)
 payloadType | The payload type field of the RTP header
 mimeType | The negotiated mimeType in the SDP
 clockRate | The clock rate of the media source the RTP header carries

@@ -121,7 +121,7 @@ export type SfuOutboundRtpPad = {
 	/**
 	* the type of the media the stream carries ("audio" or "video")
 	*/
-	mediaType?: string;
+	mediaType?: "audio" | "video";
 
 	/**
 	* The payload type field of the RTP header
@@ -297,7 +297,7 @@ export type SfuInboundRtpPad = {
 	/**
 	* the type of the media the stream carries ("audio" or "video")
 	*/
-	mediaType?: string;
+	mediaType?: "audio" | "video";
 
 	/**
 	* The payload type field of the RTP header
