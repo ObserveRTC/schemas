@@ -596,7 +596,7 @@ marker | The marker the originated sample is reported with
 sfuId | The generated unique identifier of the SFU
 callId | The callId the event belongs to
 transportId | SFU provided transport identifier
-rtpStreamId | Unique identifier of the RTP stream the event is related to
+mediaStreamId | Unique identifier of the Media stream the event is related to
 sctpStreamId | Unique identifier of the SCTP stream the event is related to
 sfuPadId | Unique identifier of the Sfu Pad the event is related to
 SSRC | The SSRC identifier of the RTP stream related to
@@ -618,7 +618,7 @@ mediaUnitId (**Mandatory**) | The media unit id the report belongs to
 sfuId (**Mandatory**) | The provided unique identifier of the SFU
 timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-rtpStreamId (**Mandatory**) | The id of the RTP stream.
+mediaStreamId (**Mandatory**) | Unique identifier of the Media stream the event is related to
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
@@ -693,7 +693,7 @@ mediaUnitId (**Mandatory**) | The media unit id the report belongs to
 sfuId (**Mandatory**) | The provided unique identifier of the SFU
 timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-rtpStreamId (**Mandatory**) | The id of the RTP stream.
+mediaStreamId (**Mandatory**) | Unique identifier of the Media stream the event is related to
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
@@ -1371,7 +1371,7 @@ sctpPacketsSent | The total amount of SCTP packets sent on this transport
 Field | Description 
 --- | ---
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-rtpStreamId (**Mandatory**) | The id of the RTP stream.
+mediaStreamId (**Mandatory**) | The id of the Media stream.
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample
@@ -1414,7 +1414,7 @@ roundTripTime | The calculated RTT of the stream
 Field | Description 
 --- | ---
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-rtpStreamId (**Mandatory**) | The id of the RTP stream.
+mediaStreamId (**Mandatory**) | The id of the Media stream.
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample

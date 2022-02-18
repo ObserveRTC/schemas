@@ -4184,8 +4184,8 @@ export const schema = {
                           "type": "string"
                         },
                         {
-                          "name": "rtpStreamId",
-                          "doc": "The id of the RTP stream.",
+                          "name": "mediaStreamId",
+                          "doc": "The id of the Media stream.",
                           "type": "string"
                         },
                         {
@@ -4518,8 +4518,8 @@ export const schema = {
                           "type": "string"
                         },
                         {
-                          "name": "rtpStreamId",
-                          "doc": "The id of the RTP stream.",
+                          "name": "mediaStreamId",
+                          "doc": "The id of the Media stream.",
                           "type": "string"
                         },
                         {

@@ -43,9 +43,9 @@ export type SfuEventReport = {
 	transportId?: string;
 
 	/**
-	* Unique identifier of the RTP stream the event is related to
+	* Unique identifier of the Media stream the event is related to
 	*/
-	rtpStreamId?: string;
+	mediaStreamId?: string;
 
 	/**
 	* Unique identifier of the SCTP stream the event is related to

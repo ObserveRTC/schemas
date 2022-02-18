@@ -34,8 +34,8 @@
     "doc": "The id of the transport the RTP stream uses.",
     "type" : "string"
   }, {
-    "name" : "rtpStreamId",
-    "doc": "The id of the RTP stream.",
+    "name" : "mediaStreamId",
+    "doc": "Unique identifier of the Media stream the event is related to",
     "type" : "string"
   }, {
     "name" : "padId",

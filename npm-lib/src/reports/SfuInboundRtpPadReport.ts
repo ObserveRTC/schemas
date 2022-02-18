@@ -28,9 +28,9 @@ export type SfuInboundRtpPadReport = {
 	transportId: string;
 
 	/**
-	* The id of the RTP stream.
+	* Unique identifier of the Media stream the event is related to
 	*/
-	rtpStreamId: string;
+	mediaStreamId: string;
 
 	/**
 	* The id of Sfu pad.

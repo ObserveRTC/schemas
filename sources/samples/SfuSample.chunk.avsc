@@ -199,8 +199,8 @@
                             "doc": "The id of the transport the RTP stream uses.",
                             "type" : "string"
                         }, {
-                            "name" : "rtpStreamId",
-                            "doc": "The id of the RTP stream.",
+                            "name" : "mediaStreamId",
+                            "doc": "The id of the Media stream.",
                             "type" : "string"
                         }, {
                             "name" : "padId",
@@ -400,8 +400,8 @@
                             "doc": "The id of the transport the RTP stream uses.",
                             "type" : "string"
                         }, {
-                            "name" : "rtpStreamId",
-                            "doc": "The id of the RTP stream.",
+                            "name" : "mediaStreamId",
+                            "doc": "The id of the Media stream.",
                             "type" : "string"
                         }, {
                             "name" : "padId",

@@ -60,8 +60,8 @@ export const schema = {
       "default": null
     },
     {
-      "name": "rtpStreamId",
-      "doc": "Unique identifier of the RTP stream the event is related to",
+      "name": "mediaStreamId",
+      "doc": "Unique identifier of the Media stream the event is related to",
       "type": [
         "null",
         "string"

@@ -39,8 +39,8 @@ export const schema = {
       "type": "string"
     },
     {
-      "name": "rtpStreamId",
-      "doc": "The id of the RTP stream.",
+      "name": "mediaStreamId",
+      "doc": "Unique identifier of the Media stream the event is related to",
       "type": "string"
     },
     {

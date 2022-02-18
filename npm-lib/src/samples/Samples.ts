@@ -84,9 +84,9 @@ export type SfuOutboundRtpPad = {
 	transportId: string;
 
 	/**
-	* The id of the RTP stream.
+	* The id of the Media stream.
 	*/
-	rtpStreamId: string;
+	mediaStreamId: string;
 
 	/**
 	* The id of Sfu pad.
@@ -275,9 +275,9 @@ export type SfuInboundRtpPad = {
 	transportId: string;
 
 	/**
-	* The id of the RTP stream.
+	* The id of the Media stream.
 	*/
-	rtpStreamId: string;
+	mediaStreamId: string;
 
 	/**
 	* The id of Sfu pad.
