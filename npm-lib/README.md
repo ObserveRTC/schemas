@@ -20,6 +20,7 @@ Javascript bindings for ObserveRTC schemas
 	* [SfuSctpStreamReport](#SfuSctpStreamReport)
 	* [SFUTransportReport](#SFUTransportReport)
 - [samples](#samples)
+	* [SfuExtensionStats](#SfuExtensionStats)
 	* [SfuSctpStream](#SfuSctpStream)
 	* [SfuOutboundRtpPad](#SfuOutboundRtpPad)
 	* [SfuInboundRtpPad](#SfuInboundRtpPad)
@@ -1370,8 +1371,8 @@ sctpPacketsSent | The total amount of SCTP packets sent on this transport
 
 Field | Description 
 --- | ---
-transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-mediaStreamId (**Mandatory**) | The id of the Media stream.
+transportId (**Mandatory**) | The id of the transport the RTP Pad uses.
+mediaStreamId (**Mandatory**) | The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side. 
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample
@@ -1414,7 +1415,8 @@ roundTripTime | The calculated RTT of the stream
 Field | Description 
 --- | ---
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-mediaStreamId (**Mandatory**) | The id of the Media stream.
+mediaStreamId (**Mandatory**) | The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side.
+mediaSinkId (**Mandatory**) | The id of a group of RTP pad sinks the media stream out from the SFU.
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample
@@ -1469,7 +1471,15 @@ sctpUnackData | The number of unacknowledged DATA chunks, corresponding to sstat
 messageReceived | The number of message received on the corresponded SCTP stream.
 messageSent | The number of message sent on the corresponded SCTP stream.
 bytesReceived | The number of bytes received on the corresponded SCTP stream.
-bytesSent | The number of bytes sent on the corresponded SCTP stream.## SfuSample
+bytesSent | The number of bytes sent on the corresponded SCTP stream.
+
+## SfuExtensionStats
+
+
+Field | Description 
+--- | ---
+type (**Mandatory**) | The type of the extension stats the custom app provides
+payload (**Mandatory**) | The payload of the extension stats the custom app provides## SfuSample
 
 
 docs
@@ -1484,7 +1494,8 @@ marker | Special marker for the samples
 transports | The Sfu Transports obtained measurements
 inboundRtpPads | The Sfu Inbound Rtp Pad obtained measurements
 outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements
-sctpStreams | The Sfu Outbound Rtp Pad obtained measurements## Samples
+sctpStreams | The Sfu Outbound Rtp Pad obtained measurements
+extensionStats | The Sfu provided custom stats payload## Samples
 
 
 Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.

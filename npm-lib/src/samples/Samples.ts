@@ -1,4 +1,20 @@
 /**
+* The Sfu provided custom stats payload
+*/
+export type SfuExtensionStats = {
+	/**
+	* The type of the extension stats the custom app provides
+	*/
+	type: string;
+
+	/**
+	* The payload of the extension stats the custom app provides
+	*/
+	payload: string;
+
+}
+
+/**
 * The Sfu Outbound Rtp Pad obtained measurements
 */
 export type SfuSctpStream = {
@@ -84,9 +100,14 @@ export type SfuOutboundRtpPad = {
 	transportId: string;
 
 	/**
-	* The id of the Media stream.
+	* The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side.
 	*/
 	mediaStreamId: string;
+
+	/**
+	* The id of a group of RTP pad sinks the media stream out from the SFU.
+	*/
+	mediaSinkId: string;
 
 	/**
 	* The id of Sfu pad.
@@ -270,12 +291,12 @@ export type SfuOutboundRtpPad = {
 */
 export type SfuInboundRtpPad = {
 	/**
-	* The id of the transport the RTP stream uses.
+	* The id of the transport the RTP Pad uses.
 	*/
 	transportId: string;
 
 	/**
-	* The id of the Media stream.
+	* The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side. 
 	*/
 	mediaStreamId: string;
 
@@ -635,6 +656,11 @@ export type SfuSample = {
 	* The Sfu Outbound Rtp Pad obtained measurements
 	*/
 	sctpStreams?: SfuSctpStream[];
+
+	/**
+	* The Sfu provided custom stats payload
+	*/
+	extensionStats?: SfuExtensionStats[];
 
 }
 

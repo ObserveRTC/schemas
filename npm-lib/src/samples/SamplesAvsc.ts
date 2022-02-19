@@ -4180,12 +4180,12 @@ export const schema = {
                         },
                         {
                           "name": "transportId",
-                          "doc": "The id of the transport the RTP stream uses.",
+                          "doc": "The id of the transport the RTP Pad uses.",
                           "type": "string"
                         },
                         {
                           "name": "mediaStreamId",
-                          "doc": "The id of the Media stream.",
+                          "doc": "The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side. ",
                           "type": "string"
                         },
                         {
@@ -4205,7 +4205,7 @@ export const schema = {
                             "null",
                             {
                               "type": "enum",
-                              "name": "InboundMediaType",
+                              "name": "SfuInboundMediaType",
                               "symbols": [
                                 "audio",
                                 "video"
@@ -4526,7 +4526,12 @@ export const schema = {
                         },
                         {
                           "name": "mediaStreamId",
-                          "doc": "The id of the Media stream.",
+                          "doc": "The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side.",
+                          "type": "string"
+                        },
+                        {
+                          "name": "mediaSinkId",
+                          "doc": "The id of a group of RTP pad sinks the media stream out from the SFU.",
                           "type": "string"
                         },
                         {
@@ -4573,7 +4578,7 @@ export const schema = {
                             "null",
                             {
                               "type": "enum",
-                              "name": "OutboundMediaType",
+                              "name": "SfuOutboundMediaType",
                               "symbols": [
                                 "audio",
                                 "video"
@@ -4968,6 +4973,33 @@ export const schema = {
                             "long"
                           ],
                           "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
+                "name": "extensionStats",
+                "doc": "The Sfu provided custom stats payload",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "SfuExtensionStats",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "type",
+                          "type": "string",
+                          "doc": "The type of the extension stats the custom app provides"
+                        },
+                        {
+                          "name": "payload",
+                          "type": "string",
+                          "doc": "The payload of the extension stats the custom app provides"
                         }
                       ]
                     }
