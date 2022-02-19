@@ -1372,7 +1372,7 @@ sctpPacketsSent | The total amount of SCTP packets sent on this transport
 Field | Description 
 --- | ---
 transportId (**Mandatory**) | The id of the transport the RTP Pad uses.
-mediaStreamId (**Mandatory**) | The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side. 
+sourceId (**Mandatory**) | The id of the media source the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media. 
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample
@@ -1415,8 +1415,8 @@ roundTripTime | The calculated RTT of the stream
 Field | Description 
 --- | ---
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-mediaStreamId (**Mandatory**) | The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side.
-mediaSinkId (**Mandatory**) | The id of a group of RTP pad sinks the media stream out from the SFU.
+sourceId (**Mandatory**) | The id of the source this outbound rtp pad sinks the media from
+sinkId (**Mandatory**) | The id of a group of RTP pad sinks the media stream out from the SFU.
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample

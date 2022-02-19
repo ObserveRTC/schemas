@@ -4184,8 +4184,8 @@ export const schema = {
                           "type": "string"
                         },
                         {
-                          "name": "mediaStreamId",
-                          "doc": "The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side. ",
+                          "name": "sourceId",
+                          "doc": "The id of the media source the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media. ",
                           "type": "string"
                         },
                         {
@@ -4525,12 +4525,12 @@ export const schema = {
                           "type": "string"
                         },
                         {
-                          "name": "mediaStreamId",
-                          "doc": "The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side.",
+                          "name": "sourceId",
+                          "doc": "The id of the source this outbound rtp pad sinks the media from",
                           "type": "string"
                         },
                         {
-                          "name": "mediaSinkId",
+                          "name": "sinkId",
                           "doc": "The id of a group of RTP pad sinks the media stream out from the SFU.",
                           "type": "string"
                         },

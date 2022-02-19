@@ -100,14 +100,14 @@ export type SfuOutboundRtpPad = {
 	transportId: string;
 
 	/**
-	* The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side.
+	* The id of the source this outbound rtp pad sinks the media from
 	*/
-	mediaStreamId: string;
+	sourceId: string;
 
 	/**
 	* The id of a group of RTP pad sinks the media stream out from the SFU.
 	*/
-	mediaSinkId: string;
+	sinkId: string;
 
 	/**
 	* The id of Sfu pad.
@@ -296,9 +296,9 @@ export type SfuInboundRtpPad = {
 	transportId: string;
 
 	/**
-	* The id of the media stream the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media and it is **not** equivalent the id of the media stream the browser bundle media tracks together at the **client** side. 
+	* The id of the media source the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media. 
 	*/
-	mediaStreamId: string;
+	sourceId: string;
 
 	/**
 	* The id of Sfu pad.
