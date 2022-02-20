@@ -1372,7 +1372,7 @@ sctpPacketsSent | The total amount of SCTP packets sent on this transport
 Field | Description 
 --- | ---
 transportId (**Mandatory**) | The id of the transport the RTP Pad uses.
-sourceId (**Mandatory**) | The id of the media source the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media. 
+sourceId (**Mandatory**) | The id of the media source the RTP pad belongs to. This id is to group rtp pads (e.g.: simulcast) carrying payloads to the same media. 
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample

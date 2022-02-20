@@ -4185,7 +4185,7 @@ export const schema = {
                         },
                         {
                           "name": "sourceId",
-                          "doc": "The id of the media source the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media. ",
+                          "doc": "The id of the media source the RTP pad belongs to. This id is to group rtp pads (e.g.: simulcast) carrying payloads to the same media. ",
                           "type": "string"
                         },
                         {

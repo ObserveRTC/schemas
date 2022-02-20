@@ -296,7 +296,7 @@ export type SfuInboundRtpPad = {
 	transportId: string;
 
 	/**
-	* The id of the media source the RTP pad belongs to. This id is to group rtp pads carrying payloads to the same media. 
+	* The id of the media source the RTP pad belongs to. This id is to group rtp pads (e.g.: simulcast) carrying payloads to the same media. 
 	*/
 	sourceId: string;
 
