@@ -17,7 +17,7 @@ export type SfuExtensionStats = {
 /**
 * The Sfu Outbound Rtp Pad obtained measurements
 */
-export type SfuSctpStream = {
+export type SfuSctpChannel = {
 	/**
 	* The id of the transport the RTP stream uses.
 	*/
@@ -27,6 +27,11 @@ export type SfuSctpStream = {
 	* The id of the sctp stream
 	*/
 	streamId: string;
+
+	/**
+	* The id of the sctp stream
+	*/
+	channelId: string;
 
 	/**
 	* Flag indicate to not generate report from this sample
@@ -655,7 +660,7 @@ export type SfuSample = {
 	/**
 	* The Sfu Outbound Rtp Pad obtained measurements
 	*/
-	sctpStreams?: SfuSctpStream[];
+	sctpChannels?: SfuSctpChannel[];
 
 	/**
 	* The Sfu provided custom stats payload

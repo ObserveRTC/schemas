@@ -4846,14 +4846,14 @@ export const schema = {
                 "default": null
               },
               {
-                "name": "sctpStreams",
+                "name": "sctpChannels",
                 "doc": "The Sfu Outbound Rtp Pad obtained measurements",
                 "type": [
                   "null",
                   {
                     "type": "array",
                     "items": {
-                      "name": "SfuSctpStream",
+                      "name": "SfuSctpChannel",
                       "type": "record",
                       "fields": [
                         {
@@ -4872,6 +4872,11 @@ export const schema = {
                         },
                         {
                           "name": "streamId",
+                          "doc": "The id of the sctp stream",
+                          "type": "string"
+                        },
+                        {
+                          "name": "channelId",
                           "doc": "The id of the sctp stream",
                           "type": "string"
                         },

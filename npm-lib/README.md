@@ -21,7 +21,7 @@ Javascript bindings for ObserveRTC schemas
 	* [SFUTransportReport](#SFUTransportReport)
 - [samples](#samples)
 	* [SfuExtensionStats](#SfuExtensionStats)
-	* [SfuSctpStream](#SfuSctpStream)
+	* [SfuSctpChannel](#SfuSctpChannel)
 	* [SfuOutboundRtpPad](#SfuOutboundRtpPad)
 	* [SfuInboundRtpPad](#SfuInboundRtpPad)
 	* [SfuTransport](#SfuTransport)
@@ -1453,13 +1453,14 @@ framesSent | The number of frames sent on the corresponded RTP stream
 framesEncoded | Indicate the number of frames the Sfu has been encoded
 keyFramesEncoded | Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
 
-## SfuSctpStream
+## SfuSctpChannel
 
 
 Field | Description 
 --- | ---
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
 streamId (**Mandatory**) | The id of the sctp stream
+channelId (**Mandatory**) | The id of the sctp stream
 noReport | Flag indicate to not generate report from this sample
 label | The label of the sctp stream
 protocol | The protocol used to establish an sctp stream
@@ -1494,7 +1495,7 @@ marker | Special marker for the samples
 transports | The Sfu Transports obtained measurements
 inboundRtpPads | The Sfu Inbound Rtp Pad obtained measurements
 outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements
-sctpStreams | The Sfu Outbound Rtp Pad obtained measurements
+sctpChannels | The Sfu Outbound Rtp Pad obtained measurements
 extensionStats | The Sfu provided custom stats payload## Samples
 
 
