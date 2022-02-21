@@ -867,9 +867,9 @@ export type OutboundVideoTrack = {
 	peerConnectionId?: string;
 
 	/**
-	* The id of the RTP stream connected to a remote media unit (such as an SFU)
+	* The id of the SFU stream this track is related to
 	*/
-	rtpStreamId?: string;
+	sfuStreamId?: string;
 
 	/**
 	* The total number of packets sent on the corresponded synchronization source
@@ -1228,9 +1228,9 @@ export type OutboundAudioTrack = {
 	peerConnectionId?: string;
 
 	/**
-	* The id of the RTP stream connected to a remote media unit (such as an SFU)
+	* The id of the SFU stream this track is related to
 	*/
-	rtpStreamId?: string;
+	sfuStreamId?: string;
 
 	/**
 	* The total number of packets sent on the corresponded synchronization source
@@ -1519,9 +1519,9 @@ export type InboundVideoTrack = {
 	remoteClientId?: string;
 
 	/**
-	* The id of the RTP stream connected to a remote media unit (such as an SFU)
+	* The id of the sink this track belongs to in the SFU
 	*/
-	rtpStreamId?: string;
+	sfuSinkId?: string;
 
 	/**
 	* The total number of packets received on the corresponded synchronization source
@@ -1830,9 +1830,9 @@ export type InboundAudioTrack = {
 	remoteClientId?: string;
 
 	/**
-	* The id of the RTP stream connected to a remote media unit (such as an SFU)
+	* The id of the sink this track belongs to in the SFU
 	*/
-	rtpStreamId?: string;
+	sfuSinkId?: string;
 
 	/**
 	* The total number of packets received on the corresponded synchronization source

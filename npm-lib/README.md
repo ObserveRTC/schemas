@@ -990,7 +990,7 @@ ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 remoteClientId | The remote clientId the source outbound track belongs to
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuSinkId | The id of the sink this track belongs to in the SFU
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
@@ -1052,7 +1052,7 @@ ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 remoteClientId | The remote clientId the source outbound track belongs to
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuSinkId | The id of the sink this track belongs to in the SFU
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
@@ -1118,7 +1118,7 @@ Field | Description
 ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuStreamId | The id of the SFU stream this track is related to
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
 rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
@@ -1180,7 +1180,7 @@ Field | Description
 ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuStreamId | The id of the SFU stream this track is related to
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
 rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 

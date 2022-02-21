@@ -1264,8 +1264,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "rtpStreamId",
-                          "doc": "The id of the RTP stream connected to a remote media unit (such as an SFU)",
+                          "name": "sfuSinkId",
+                          "doc": "The id of the sink this track belongs to in the SFU",
                           "type": [
                             "null",
                             "string"
@@ -1781,8 +1781,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "rtpStreamId",
-                          "doc": "The id of the RTP stream connected to a remote media unit (such as an SFU)",
+                          "name": "sfuSinkId",
+                          "doc": "The id of the sink this track belongs to in the SFU",
                           "type": [
                             "null",
                             "string"
@@ -2334,8 +2334,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "rtpStreamId",
-                          "doc": "The id of the RTP stream connected to a remote media unit (such as an SFU)",
+                          "name": "sfuStreamId",
+                          "doc": "The id of the SFU stream this track is related to",
                           "type": [
                             "null",
                             "string"
@@ -2851,8 +2851,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "rtpStreamId",
-                          "doc": "The id of the RTP stream connected to a remote media unit (such as an SFU)",
+                          "name": "sfuStreamId",
+                          "doc": "The id of the SFU stream this track is related to",
                           "type": [
                             "null",
                             "string"
