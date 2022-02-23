@@ -43,6 +43,11 @@
                             "name" : "transportId",
                             "doc": "The generated unique identifier of the transport",
                             "type" : "string"
+                        }, {
+                            "name" : "internal",
+                            "doc": "Flag to indicate that the transport is used as an internal transport between SFU instances",
+                            "type" : ["null", "boolean"],
+                            "default": null
                         },
                           /* Transport stats */
                         {
@@ -419,7 +424,7 @@
                             "name" : "ssrc",
                             "doc": "The synchronization source id of the RTP stream",
                             "type" : "long"
-                        },  {
+                        }, {
                             "name" : "callId",
                             "doc": "The callId the event belongs to",
                             "type" : [ "null", "string" ],

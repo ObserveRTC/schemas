@@ -1341,6 +1341,7 @@ Field | Description
 --- | ---
 transportId (**Mandatory**) | The generated unique identifier of the transport
 noReport | Flag indicate to not generate report from this sample
+internal | Flag to indicate that the transport is used as an internal transport between SFU instances
 dtlsState | Represent the current value of the state attribute of the underlying RTCDtlsTransport.
 iceState | Represent the current value of the state attribute of the underlying RTCIceTransport
 sctpState | Represents the the current value of the SCTP state of the transport of the SFU

@@ -497,6 +497,11 @@ export type SfuTransport = {
 	noReport?: boolean;
 
 	/**
+	* Flag to indicate that the transport is used as an internal transport between SFU instances
+	*/
+	internal?: boolean;
+
+	/**
 	* Represent the current value of the state attribute of the underlying RTCDtlsTransport.
 	*/
 	dtlsState?: string;

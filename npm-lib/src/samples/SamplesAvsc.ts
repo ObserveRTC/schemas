@@ -3937,6 +3937,15 @@ export const schema = {
                           "type": "string"
                         },
                         {
+                          "name": "internal",
+                          "doc": "Flag to indicate that the transport is used as an internal transport between SFU instances",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "dtlsState",
                           "doc": "Represent the current value of the state attribute of the underlying RTCDtlsTransport.",
                           "type": [
