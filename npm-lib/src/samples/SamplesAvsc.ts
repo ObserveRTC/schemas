@@ -4847,6 +4847,33 @@ export const schema = {
                             "int"
                           ],
                           "default": null
+                        },
+                        {
+                          "name": "fractionLost",
+                          "doc": "The calculated fractionLost of the stream",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "jitter",
+                          "doc": "The calculated jitter of the stream",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "roundTripTime",
+                          "doc": "The calculated RTT of the stream",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
                         }
                       ]
                     }

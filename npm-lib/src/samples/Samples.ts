@@ -289,6 +289,21 @@ export type SfuOutboundRtpPad = {
 	*/
 	keyFramesEncoded?: number;
 
+	/**
+	* The calculated fractionLost of the stream
+	*/
+	fractionLost?: number;
+
+	/**
+	* The calculated jitter of the stream
+	*/
+	jitter?: number;
+
+	/**
+	* The calculated RTT of the stream
+	*/
+	roundTripTime?: number;
+
 }
 
 /**
