@@ -19,6 +19,7 @@
   "dependencies": {
     "argparse": "^2.0.1",
     "avro-js": "^1.10.2",
-    "json-schema-to-markdown": "^1.1.1"
+    "json-schema-to-markdown": "^1.1.1",
+    "typedoc": "^0.22.12"
   }
 }

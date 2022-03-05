@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+// import * as typedoc from "typedoc";
 
 const README_MD_FILENAME = "README.md";
 const INDEX_TS_FILENAME = "index.ts";
@@ -101,9 +102,33 @@ export class NpmLib {
             fs.writeFileSync(packagePath, packageText);
             exports.push(`export const version = "${this._version}";`);
         }
-        const indexPath = path.join(this._basePath, INDEX_TS_FILENAME);
+        const indexPath = path.join(this._srcPath, INDEX_TS_FILENAME);
         fs.writeFileSync(indexPath, exports.join("\n"));
     }
+
+    // async _generateDocs() {
+    //     const app = new TypeDoc.Application();
+    //     // If you want TypeDoc to load tsconfig.json / typedoc.json files
+    //     app.options.addReader(new TypeDoc.TSConfigReader());
+    //     app.options.addReader(new TypeDoc.TypeDocReader());
+
+    //     app.bootstrap({
+    //         // typedoc options here
+    //         entryPoints: ["src/index.ts"],
+    //     });
+
+    //     const project = app.convert();
+
+    //     if (project) {
+    //         // Project may not have converted correctly
+    //         const outputDir = "docs";
+
+    //         // Rendered docs
+    //         await app.generateDocs(project, outputDir);
+    //         // Alternatively generate JSON output
+    //         await app.generateJson(project, outputDir + "/documentation.json");
+    //     }
+    // }
 
     clear() {
         for (const schemaTypes of ["reports", "samples"]) {
