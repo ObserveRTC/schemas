@@ -92,8 +92,6 @@ export class NpmLib {
         }
         const readmePath = path.join(this._basePath, README_MD_FILENAME);
         fs.writeFileSync(readmePath, readmeMd.join("\n"));
-        const indexPath = path.join(this._basePath, INDEX_TS_FILENAME);
-        fs.writeFileSync(indexPath, exports.join("\n"));
         if (this._version) {
             const packagePath = path.join(this._basePath, "package.json");
             let packageText = fs.readFileSync(packagePath);
@@ -101,7 +99,10 @@ export class NpmLib {
             packageJson["version"] = this._version;
             packageText = JSON.stringify(packageJson, null, 2);
             fs.writeFileSync(packagePath, packageText);
+            exports.push(`export const version = "${this._version}";`);
         }
+        const indexPath = path.join(this._basePath, INDEX_TS_FILENAME);
+        fs.writeFileSync(indexPath, exports.join("\n"));
     }
 
     clear() {
