@@ -43,9 +43,14 @@ export type SfuEventReport = {
 	transportId?: string;
 
 	/**
-	* Unique identifier of the Media stream the event is related to
+	* Unique identifier of the SFU stream id the rtp pad belongs to
 	*/
 	mediaStreamId?: string;
+
+	/**
+	* Unique identifier of the SFU stream id the rtp pad belongs to
+	*/
+	mediaSinkId?: string;
 
 	/**
 	* Unique identifier of the SCTP stream the event is related to
@@ -55,12 +60,7 @@ export type SfuEventReport = {
 	/**
 	* Unique identifier of the Sfu Pad the event is related to
 	*/
-	sfuPadId?: string;
-
-	/**
-	* The SSRC identifier of the RTP stream related to
-	*/
-	SSRC?: number;
+	rtpPadId?: string;
 
 	/**
 	* the human readable message of the event

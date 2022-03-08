@@ -23,7 +23,7 @@ export type SfuMetaReport = {
 	marker?: string;
 
 	/**
-	* The id of the Sfu
+	* The generated unique identifier of the SFU
 	*/
 	sfuId?: string;
 
@@ -33,14 +33,29 @@ export type SfuMetaReport = {
 	callId?: string;
 
 	/**
-	* The generated unique identifier of the client
+	* SFU provided transport identifier
 	*/
-	clientId?: string;
+	transportId?: string;
 
 	/**
-	* The unique identifier of the peer connection
+	* Unique identifier of the SFU stream id the rtp pad belongs to
 	*/
-	peerConnectionId?: string;
+	mediaStreamId?: string;
+
+	/**
+	* Unique identifier of the SFU stream id the rtp pad belongs to
+	*/
+	mediaSinkId?: string;
+
+	/**
+	* Unique identifier of the SCTP stream the event is related to
+	*/
+	sctpStreamId?: string;
+
+	/**
+	* Unique identifier of the Sfu Pad the event is related to
+	*/
+	rtpPadId?: string;
 
 	/**
 	* The type of the meta data reported for the peer connection

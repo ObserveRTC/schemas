@@ -61,7 +61,16 @@ export const schema = {
     },
     {
       "name": "mediaStreamId",
-      "doc": "Unique identifier of the Media stream the event is related to",
+      "doc": "Unique identifier of the SFU stream id the rtp pad belongs to",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "mediaSinkId",
+      "doc": "Unique identifier of the SFU stream id the rtp pad belongs to",
       "type": [
         "null",
         "string"
@@ -78,20 +87,11 @@ export const schema = {
       "default": null
     },
     {
-      "name": "sfuPadId",
+      "name": "rtpPadId",
       "doc": "Unique identifier of the Sfu Pad the event is related to",
       "type": [
         "null",
         "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "SSRC",
-      "doc": "The SSRC identifier of the RTP stream related to",
-      "type": [
-        "null",
-        "long"
       ],
       "default": null
     },

@@ -34,7 +34,7 @@ export const schema = {
     },
     {
       "name": "sfuId",
-      "doc": "The id of the Sfu",
+      "doc": "The generated unique identifier of the SFU",
       "type": [
         "null",
         "string"
@@ -51,8 +51,8 @@ export const schema = {
       "default": null
     },
     {
-      "name": "clientId",
-      "doc": "The generated unique identifier of the client",
+      "name": "transportId",
+      "doc": "SFU provided transport identifier",
       "type": [
         "null",
         "string"
@@ -60,8 +60,35 @@ export const schema = {
       "default": null
     },
     {
-      "name": "peerConnectionId",
-      "doc": "The unique identifier of the peer connection",
+      "name": "mediaStreamId",
+      "doc": "Unique identifier of the SFU stream id the rtp pad belongs to",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "mediaSinkId",
+      "doc": "Unique identifier of the SFU stream id the rtp pad belongs to",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "sctpStreamId",
+      "doc": "Unique identifier of the SCTP stream the event is related to",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "rtpPadId",
+      "doc": "Unique identifier of the Sfu Pad the event is related to",
       "type": [
         "null",
         "string"

@@ -94,7 +94,7 @@ export class NpmLib {
         const readmePath = path.join(this._basePath, README_MD_FILENAME);
         fs.writeFileSync(readmePath, readmeMd.join("\n"));
         if (this._version) {
-            const packagePath = path.join(this._basePath, "package.json");
+            const packagePath = path.join(this._basePath, PACKAGE_JSON_FILE);
             let packageText = fs.readFileSync(packagePath);
             const packageJson = JSON.parse(packageText);
             packageJson["version"] = this._version;

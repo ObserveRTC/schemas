@@ -597,10 +597,10 @@ marker | The marker the originated sample is reported with
 sfuId | The generated unique identifier of the SFU
 callId | The callId the event belongs to
 transportId | SFU provided transport identifier
-mediaStreamId | Unique identifier of the Media stream the event is related to
+mediaStreamId | Unique identifier of the SFU stream id the rtp pad belongs to
+mediaSinkId | Unique identifier of the SFU stream id the rtp pad belongs to
 sctpStreamId | Unique identifier of the SCTP stream the event is related to
-sfuPadId | Unique identifier of the Sfu Pad the event is related to
-SSRC | The SSRC identifier of the RTP stream related to
+rtpPadId | Unique identifier of the Sfu Pad the event is related to
 message | the human readable message of the event
 value | the value of the event
 attachments | attachment the event may created with
@@ -673,10 +673,13 @@ serviceId (**Mandatory**) | The service id the report belongs to
 timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
-sfuId | The id of the Sfu
+sfuId | The generated unique identifier of the SFU
 callId | The callId the event belongs to
-clientId | The generated unique identifier of the client
-peerConnectionId | The unique identifier of the peer connection
+transportId | SFU provided transport identifier
+mediaStreamId | Unique identifier of the SFU stream id the rtp pad belongs to
+mediaSinkId | Unique identifier of the SFU stream id the rtp pad belongs to
+sctpStreamId | Unique identifier of the SCTP stream the event is related to
+rtpPadId | Unique identifier of the Sfu Pad the event is related to
 type | The type of the meta data reported for the peer connection
 payload | The payload for the metadata reported for the peeer connection
 
