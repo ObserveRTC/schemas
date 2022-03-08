@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "OutboundAudioTrackReport",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.reports",
   "doc": "A Report created for Outbound Audio Tracks. A combination of Audio source, Codec metadata carrying outbound and remote inbound RTP stat measurements",
   "fields": [
     {

@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "SfuInboundRtpPadReport",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.reports",
   "doc": "A Report created for RTP streams going through the SFU",
   "fields": [
     {

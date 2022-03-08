@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "SfuEventReport",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.reports",
   "doc": "Events happened in calls.",
   "fields": [
     {

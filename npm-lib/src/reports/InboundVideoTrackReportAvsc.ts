@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "InboundVideoTrackReport",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.reports",
   "doc": "A Report created for Inbound Video Tracks. A combination of Codec metadata carrying inbound and remote outbound RTP stats measurements",
   "fields": [
     {
@@ -265,7 +265,7 @@ export const schema = {
       "doc": "The total number of partial frames lost at decoding process on the corresponding synchronization source",
       "type": [
         "null",
-        "double"
+        "int"
       ],
       "default": null
     },

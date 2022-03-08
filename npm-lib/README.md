@@ -1085,6 +1085,7 @@ jitterBufferDelay | The total time of RTP packets spent in jitterbuffer waiting 
 jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
 decoderImplementation | Indicate the name of the decoder implementation library
 framesDropped | The total number of frames dropped on the corresponded RTP stream
+framesDecoded | The total number of frames decoded on the corresponded RTP stream
 partialFramesLost | The total number of frames partially lost on the corresponded RTP stream
 fullFramesLost | The total number of frames fully lost on the corresponded RTP stream
 keyFramesDecoded | The total number of keyframes decoded on the corresponded RTP stream
@@ -1095,6 +1096,7 @@ framesPerSecond | The frame per seconds of the video sent by the remote source o
 qpSum | The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
 totalDecodeTime | The total tiem spent on decoding video on the corresponded RTP stream
 totalInterFrameDelay | The total interframe delay
+totalSquaredInterFrameDelay | The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
 firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
 pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
 sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
@@ -1201,6 +1203,9 @@ totalPacketSendDelay | The total number of delay packets buffered at the sender 
 averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
 perDscpPacketsSent | The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
+firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
+sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
 encoderImplementation | Indicate the name of the encoder implementation library
 frameWidth | The frame width in pixels of the frames targeted by the media encoder
 frameHeight | The frame width the media encoder targeted
@@ -1239,7 +1244,7 @@ reportsReceived | The total number of RR reports received, which is the base of 
 roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
 framesDropped | The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
 partialFramesLost | The total number of partial frames reported to be lost by the remote endpoint on the corresponded RTP stream.
-fullFramesList | The total number of full frames lost at the remote endpoint on the corresponded RTP stream.
+fullFramesLost | The total number of full frames lost at the remote endpoint on the corresponded RTP stream.
 relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
 width | The width, in pixels, of the last frame originating from the media source
 height | The height, in pixels, of the last frame originating from the media source

@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "SfuMetaReport",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.reports",
   "doc": "Metadata belongs to SFUs",
   "fields": [
     {

@@ -2,7 +2,7 @@
 {
   "type" : "record",
   "name" : "SfuSctpStreamReport",
-  "namespace" : "org.observertc.schemas",
+  "namespace" : "org.observertc.schemas.reports",
   "doc" : "A Report created for SCTP streams going through the SFU",
   "fields" : [
   /* Report MetaFields */

@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "Samples",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.samples",
   "doc": "Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.",
   "fields": [
     {
@@ -2056,6 +2056,15 @@ export const schema = {
                           "default": null
                         },
                         {
+                          "name": "framesDecoded",
+                          "doc": "The total number of frames decoded on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "partialFramesLost",
                           "doc": "The total number of frames partially lost on the corresponded RTP stream",
                           "type": [
@@ -2141,7 +2150,16 @@ export const schema = {
                           "doc": "The total interframe delay",
                           "type": [
                             "null",
-                            "double"
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "totalSquaredInterFrameDelay",
+                          "doc": "The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays",
+                          "type": [
+                            "null",
+                            "long"
                           ],
                           "default": null
                         },
@@ -3018,6 +3036,33 @@ export const schema = {
                           "default": null
                         },
                         {
+                          "name": "firCount",
+                          "doc": "The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "pliCount",
+                          "doc": "The total number of Picture Loss Indication sent on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sliCount",
+                          "doc": "The total number of SLI indicator sent from the endpoint on the corresponded RTP stream",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "encoderImplementation",
                           "doc": "Indicate the name of the encoder implementation library",
                           "type": [
@@ -3112,7 +3157,7 @@ export const schema = {
                           "doc": "The sum of the QP the media encoder provided on the corresponded RTP stream.",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null
                         },
@@ -3360,7 +3405,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "fullFramesList",
+                          "name": "fullFramesLost",
                           "doc": "The total number of full frames lost at the remote endpoint on the corresponded RTP stream.",
                           "type": [
                             "null",

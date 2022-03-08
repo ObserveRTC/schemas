@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "ClientDataChannelReport",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.reports",
   "doc": "A Report created for PeerConnection Data Channel.",
   "fields": [
     {

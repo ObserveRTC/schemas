@@ -977,6 +977,21 @@ export type OutboundVideoTrack = {
 	nackCount?: number;
 
 	/**
+	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+	*/
+	firCount?: number;
+
+	/**
+	* The total number of Picture Loss Indication sent on the corresponded RTP stream
+	*/
+	pliCount?: number;
+
+	/**
+	* The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
+	*/
+	sliCount?: number;
+
+	/**
 	* Indicate the name of the encoder implementation library
 	*/
 	encoderImplementation?: string;
@@ -1169,7 +1184,7 @@ export type OutboundVideoTrack = {
 	/**
 	* The total number of full frames lost at the remote endpoint on the corresponded RTP stream.
 	*/
-	fullFramesList?: number;
+	fullFramesLost?: number;
 
 	/**
 	* True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
@@ -1689,6 +1704,11 @@ export type InboundVideoTrack = {
 	framesDropped?: number;
 
 	/**
+	* The total number of frames decoded on the corresponded RTP stream
+	*/
+	framesDecoded?: number;
+
+	/**
 	* The total number of frames partially lost on the corresponded RTP stream
 	*/
 	partialFramesLost?: number;
@@ -1737,6 +1757,11 @@ export type InboundVideoTrack = {
 	* The total interframe delay
 	*/
 	totalInterFrameDelay?: number;
+
+	/**
+	* The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
+	*/
+	totalSquaredInterFrameDelay?: number;
 
 	/**
 	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream

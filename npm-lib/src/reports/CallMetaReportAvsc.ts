@@ -1,7 +1,7 @@
 export const schema = {
   "type": "record",
   "name": "CallMetaReport",
-  "namespace": "org.observertc.schemas",
+  "namespace": "org.observertc.schemas.reports",
   "doc": "Metadata belongs to a call and can be useful",
   "fields": [
     {
