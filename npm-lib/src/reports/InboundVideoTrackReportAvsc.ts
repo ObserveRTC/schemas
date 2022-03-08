@@ -80,8 +80,17 @@ export const schema = {
       "default": null
     },
     {
-      "name": "rtpStreamId",
-      "doc": "The id of the RTP stream connected to a remote media unit (such as an SFU)",
+      "name": "sfuStreamId",
+      "doc": "The id of the Sfu stream the media from",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "sfuSinkId",
+      "doc": "The id of the sink the Sfu streamed the media out",
       "type": [
         "null",
         "string"
@@ -346,7 +355,7 @@ export const schema = {
       "doc": "The total number of seconds spent on decoding frames on the corresponded synchronization source (ssrc)",
       "type": [
         "null",
-        "long"
+        "double"
       ],
       "default": null
     },

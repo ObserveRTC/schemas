@@ -68,9 +68,9 @@ export type OutboundAudioTrackReport = {
 	trackId?: string;
 
 	/**
-	* The id of the RTP stream connected to a remote media unit (such as an SFU)
+	* The id of the Sfu stream corresponds to the outbound track
 	*/
-	rtpStreamId?: string;
+	sfuStreamId?: string;
 
 	/**
 	* The total number of packets sent on the corresponded synchronization source

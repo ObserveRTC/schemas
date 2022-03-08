@@ -248,7 +248,8 @@ roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
 label | The webrtc app provided label the peer connection is labeled with
 trackId | The id of the track
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuStreamId | The id of the Sfu stream the media from
+sfuSinkId | The id of the sink the Sfu streamed the media out
 remoteTrackId | The id of the remote track this inbound track is originated from
 remoteUserId | The webrtc app provided user id the track belongs to, or if the webrtc app did not provided the observer tried to match it
 remoteClientId | The observer matched remote client Id
@@ -315,7 +316,8 @@ roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
 label | The webrtc app provided label the peer connection is labeled with
 trackId | The id of the track
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuStreamId | The id of the Sfu stream the media from
+sfuSinkId | The id of the sink the Sfu streamed the media out
 remoteTrackId | The id of the remote track this inbound track is originated from
 remoteUserId | The webrtc app provided user id the track belongs to, or if the webrtc app did not provided the observer tried to match it
 remoteClientId | The observer matched remote client Id
@@ -422,7 +424,7 @@ roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
 label | The webrtc app provided label the peer connection is labeled with
 trackId | The id of the track
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuStreamId | The id of the Sfu stream corresponds to the outbound track
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
 rid |  The rid encoding parameter of the corresponded synchronization source
@@ -497,7 +499,7 @@ roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
 label | The webrtc app provided label the peer connection is labeled with
 trackId | The id of the track
-rtpStreamId | The id of the RTP stream connected to a remote media unit (such as an SFU)
+sfuStreamId | The id of the Sfu stream corresponds to the outbound track
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
 rid |  The rid encoding parameter of the corresponded synchronization source
@@ -619,8 +621,8 @@ mediaUnitId (**Mandatory**) | The media unit id the report belongs to
 sfuId (**Mandatory**) | The provided unique identifier of the SFU
 timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-mediaStreamId (**Mandatory**) | Unique identifier of the Media stream the event is related to
-padId (**Mandatory**) | The id of Sfu pad.
+sfuStreamId (**Mandatory**) | Unique identifier of the Sfu stream the event is related to
+rtpPadId (**Mandatory**) | The id of RTP pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
 trackId | The id of the track the RTP stream related to at the client side
@@ -658,7 +660,6 @@ keyFramesDecoded | Indicate the number of keyframes the Sfu has been decoded
 fractionLost | The calculated fractionLost of the stream
 jitter | The calculated jitter of the stream
 roundTripTime | The calculated RTT of the stream
-attachments | Arbitrary attachments holds relevant information about the stream.
 
 
 ## SfuMetaReport
@@ -697,8 +698,9 @@ mediaUnitId (**Mandatory**) | The media unit id the report belongs to
 sfuId (**Mandatory**) | The provided unique identifier of the SFU
 timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-mediaStreamId (**Mandatory**) | Unique identifier of the Media stream the event is related to
-padId (**Mandatory**) | The id of Sfu pad.
+sfuStreamId (**Mandatory**) | Unique identifier of the Sfu stream the event is related to
+sfuSinkId (**Mandatory**) | Unique identifier of the Sfu sink the event is related to
+rtpPadId (**Mandatory**) | The id of RTP pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
 callId | The callId the event belongs to
@@ -733,7 +735,6 @@ rtxPacketsDiscarded | If rtx packets are received on the same stream then this n
 framesSent | The number of frames sent on the corresponded RTP stream
 framesEncoded | Indicate the number of frames the Sfu has been encoded
 keyFramesEncoded | Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
-attachments | Arbitrary attachments holds relevant information about the stream.
 
 
 ## SfuSctpStreamReport

@@ -68,9 +68,14 @@ export type InboundVideoTrackReport = {
 	trackId?: string;
 
 	/**
-	* The id of the RTP stream connected to a remote media unit (such as an SFU)
+	* The id of the Sfu stream the media from
 	*/
-	rtpStreamId?: string;
+	sfuStreamId?: string;
+
+	/**
+	* The id of the sink the Sfu streamed the media out
+	*/
+	sfuSinkId?: string;
 
 	/**
 	* The id of the remote track this inbound track is originated from

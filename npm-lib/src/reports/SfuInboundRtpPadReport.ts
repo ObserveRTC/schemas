@@ -28,14 +28,14 @@ export type SfuInboundRtpPadReport = {
 	transportId: string;
 
 	/**
-	* Unique identifier of the Media stream the event is related to
+	* Unique identifier of the Sfu stream the event is related to
 	*/
-	mediaStreamId: string;
+	sfuStreamId: string;
 
 	/**
-	* The id of Sfu pad.
+	* The id of RTP pad.
 	*/
-	padId: string;
+	rtpPadId: string;
 
 	/**
 	* The synchronization source id of the RTP stream
@@ -221,10 +221,5 @@ export type SfuInboundRtpPadReport = {
 	* The calculated RTT of the stream
 	*/
 	roundTripTime?: number;
-
-	/**
-	* Arbitrary attachments holds relevant information about the stream.
-	*/
-	attachments?: string;
 
 }

@@ -28,14 +28,19 @@ export type SfuOutboundRtpPadReport = {
 	transportId: string;
 
 	/**
-	* Unique identifier of the Media stream the event is related to
+	* Unique identifier of the Sfu stream the event is related to
 	*/
-	mediaStreamId: string;
+	sfuStreamId: string;
 
 	/**
-	* The id of Sfu pad.
+	* Unique identifier of the Sfu sink the event is related to
 	*/
-	padId: string;
+	sfuSinkId: string;
+
+	/**
+	* The id of RTP pad.
+	*/
+	rtpPadId: string;
 
 	/**
 	* The synchronization source id of the RTP stream
@@ -206,10 +211,5 @@ export type SfuOutboundRtpPadReport = {
 	* Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
 	*/
 	keyFramesEncoded?: number;
-
-	/**
-	* Arbitrary attachments holds relevant information about the stream.
-	*/
-	attachments?: string;
 
 }

@@ -39,13 +39,13 @@ export const schema = {
       "type": "string"
     },
     {
-      "name": "mediaStreamId",
-      "doc": "Unique identifier of the Media stream the event is related to",
+      "name": "sfuStreamId",
+      "doc": "Unique identifier of the Sfu stream the event is related to",
       "type": "string"
     },
     {
-      "name": "padId",
-      "doc": "The id of Sfu pad.",
+      "name": "rtpPadId",
+      "doc": "The id of RTP pad.",
       "type": "string"
     },
     {
@@ -365,15 +365,6 @@ export const schema = {
       "type": [
         "null",
         "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "attachments",
-      "doc": "Arbitrary attachments holds relevant information about the stream.",
-      "type": [
-        "null",
-        "string"
       ],
       "default": null
     }

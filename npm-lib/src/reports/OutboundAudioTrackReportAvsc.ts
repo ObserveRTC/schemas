@@ -80,8 +80,8 @@ export const schema = {
       "default": null
     },
     {
-      "name": "rtpStreamId",
-      "doc": "The id of the RTP stream connected to a remote media unit (such as an SFU)",
+      "name": "sfuStreamId",
+      "doc": "The id of the Sfu stream corresponds to the outbound track",
       "type": [
         "null",
         "string"
