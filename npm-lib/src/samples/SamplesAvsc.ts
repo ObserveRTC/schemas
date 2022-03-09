@@ -4238,6 +4238,15 @@ export const schema = {
                           "type": "string"
                         },
                         {
+                          "name": "internal",
+                          "doc": "Flag to indicate that the rtp pad is used as an internal communication between SFU instances",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "streamId",
                           "doc": "The id of the media stream the RTP pad belongs to. This id is to group rtp pads (e.g.: simulcast) carrying payloads to the same media. ",
                           "type": "string"
@@ -4577,6 +4586,15 @@ export const schema = {
                           "name": "transportId",
                           "doc": "The id of the transport the RTP stream uses.",
                           "type": "string"
+                        },
+                        {
+                          "name": "internal",
+                          "doc": "Flag to indicate that the rtp pad is used as an internal communication between SFU instances",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
                         },
                         {
                           "name": "streamId",

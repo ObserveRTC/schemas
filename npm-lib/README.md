@@ -1386,6 +1386,7 @@ streamId (**Mandatory**) | The id of the media stream the RTP pad belongs to. Th
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample
+internal | Flag to indicate that the rtp pad is used as an internal communication between SFU instances
 mediaType | the type of the media the stream carries ("audio" or "video") (Possible values are: audio,<br />video)
 payloadType | The payload type field of the RTP header
 mimeType | The negotiated mimeType in the SDP
@@ -1430,6 +1431,7 @@ sinkId (**Mandatory**) | The id of a group of RTP pad sinks the media stream out
 padId (**Mandatory**) | The id of Sfu pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 noReport | Flag indicate to not generate report from this sample
+internal | Flag to indicate that the rtp pad is used as an internal communication between SFU instances
 callId | The callId the event belongs to
 clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
 trackId | The id of the track the RTP stream related to at the client side

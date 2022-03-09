@@ -130,6 +130,11 @@ export type SfuOutboundRtpPad = {
 	noReport?: boolean;
 
 	/**
+	* Flag to indicate that the rtp pad is used as an internal communication between SFU instances
+	*/
+	internal?: boolean;
+
+	/**
 	* The callId the event belongs to
 	*/
 	callId?: string;
@@ -334,6 +339,11 @@ export type SfuInboundRtpPad = {
 	* Flag indicate to not generate report from this sample
 	*/
 	noReport?: boolean;
+
+	/**
+	* Flag to indicate that the rtp pad is used as an internal communication between SFU instances
+	*/
+	internal?: boolean;
 
 	/**
 	* the type of the media the stream carries ("audio" or "video")
