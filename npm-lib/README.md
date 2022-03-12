@@ -625,6 +625,7 @@ sfuStreamId (**Mandatory**) | Unique identifier of the Sfu stream the event is r
 rtpPadId (**Mandatory**) | The id of RTP pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
+internal | Flag indicate if the sfu rtp pad is used as an internal rtp session between SFUs
 trackId | The id of the track the RTP stream related to at the client side
 clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
 callId | The callId the event belongs to
@@ -703,6 +704,7 @@ sfuSinkId (**Mandatory**) | Unique identifier of the Sfu sink the event is relat
 rtpPadId (**Mandatory**) | The id of RTP pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
+internal | Flag indicate if the sfu rtp pad is used as an internal rtp session between SFUs
 callId | The callId the event belongs to
 clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
 trackId | The id of the track the RTP stream related to at the client side

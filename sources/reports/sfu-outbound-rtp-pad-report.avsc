@@ -24,6 +24,11 @@
     "type" : [ "null", "string" ],
     "default" : null
   }, {
+    "name" : "internal",
+    "doc": "Flag indicate if the sfu rtp pad is used as an internal rtp session between SFUs",
+    "type" : [ "null", "boolean" ],
+    "default" : null
+  }, {
     "name" : "timestamp",
     "doc": "The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)",
     "type" : "long"

@@ -48,6 +48,11 @@ export type SfuInboundRtpPadReport = {
 	marker?: string;
 
 	/**
+	* Flag indicate if the sfu rtp pad is used as an internal rtp session between SFUs
+	*/
+	internal?: boolean;
+
+	/**
 	* The id of the track the RTP stream related to at the client side
 	*/
 	trackId?: string;
