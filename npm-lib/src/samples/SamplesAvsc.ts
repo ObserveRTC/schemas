@@ -1714,7 +1714,7 @@ export const schema = {
                           "doc": "The negotiated clock rate the RTP timestamp is generated of",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },
@@ -2505,7 +2505,7 @@ export const schema = {
                           "doc": "The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)",
                           "type": [
                             "null",
-                            "double"
+                            "int"
                           ],
                           "default": null
                         },
@@ -2811,7 +2811,7 @@ export const schema = {
                           "doc": "The negotiated clock rate the RTP timestamp is generated of",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },

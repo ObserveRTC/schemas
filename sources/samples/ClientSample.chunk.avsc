@@ -1039,7 +1039,7 @@
                     }, {
                         "name" : "clockRate",
                         "doc" : "The negotiated clock rate the RTP timestamp is generated of",
-                        "type" : ["null", "long"],
+                        "type" : ["null", "int"],
                         "default" : null
                     }, {
                         "name" : "channels",
@@ -1521,7 +1521,7 @@
                     }, {
                         "name" : "perDscpPacketsSent",
                         "doc" : "The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)",
-                        "type" : ["null", "double"],
+                        "type" : ["null", "int"],
                         "default" : null
                     }, {
                         "name" : "nackCount",
@@ -1715,7 +1715,7 @@
                     }, {
                         "name" : "clockRate",
                         "doc" : "The negotiated clock rate the RTP timestamp is generated of",
-                        "type" : ["null", "long"],
+                        "type" : ["null", "int"],
                         "default" : null
                     }, {
                         "name" : "channels",
