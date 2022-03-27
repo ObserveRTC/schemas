@@ -2150,7 +2150,7 @@ export const schema = {
                           "doc": "The total interframe delay",
                           "type": [
                             "null",
-                            "long"
+                            "double"
                           ],
                           "default": null
                         },
@@ -2159,7 +2159,7 @@ export const schema = {
                           "doc": "The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays",
                           "type": [
                             "null",
-                            "long"
+                            "double"
                           ],
                           "default": null
                         },
