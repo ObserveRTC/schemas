@@ -3548,15 +3548,6 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "transportId",
-                          "doc": "The unique identifier of the transport the local candidate belongs to",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
                           "name": "address",
                           "doc": "The address of the local endpoint (Ipv4, Ipv6, FQDN)",
                           "type": [
@@ -3663,15 +3654,6 @@ export const schema = {
                         {
                           "name": "id",
                           "doc": "The unique identifier of the local candidate",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "transportId",
-                          "doc": "The unique identifier of the transport the local candidate belongs to",
                           "type": [
                             "null",
                             "string"

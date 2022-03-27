@@ -1267,7 +1267,6 @@ Field | Description
 --- | ---
 peerConnectionId | Refers to the peer connection the local candidate belongs to
 id | The unique identifier of the local candidate
-transportId | The unique identifier of the transport the local candidate belongs to
 address | The address of the local endpoint (Ipv4, Ipv6, FQDN)
 port | The port number of the local endpoint the ICE uses
 protocol | The protocol for the ICE (Possible values are: tcp,<br />udp)
@@ -1283,7 +1282,6 @@ Field | Description
 --- | ---
 peerConnectionId | Refers to the peer connection the local candidate belongs to
 id | The unique identifier of the local candidate
-transportId | The unique identifier of the transport the local candidate belongs to
 address | The address of the local endpoint (Ipv4, Ipv6, FQDN)
 port | The port number of the local endpoint the ICE uses
 protocol | The protocol for the ICE (Possible values are: tcp,<br />udp)

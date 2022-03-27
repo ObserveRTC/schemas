@@ -780,11 +780,6 @@ export type IceRemoteCandidate = {
 	id?: string;
 
 	/**
-	* The unique identifier of the transport the local candidate belongs to
-	*/
-	transportId?: string;
-
-	/**
 	* The address of the local endpoint (Ipv4, Ipv6, FQDN)
 	*/
 	address?: string;
@@ -834,11 +829,6 @@ export type IceLocalCandidate = {
 	* The unique identifier of the local candidate
 	*/
 	id?: string;
-
-	/**
-	* The unique identifier of the transport the local candidate belongs to
-	*/
-	transportId?: string;
 
 	/**
 	* The address of the local endpoint (Ipv4, Ipv6, FQDN)
