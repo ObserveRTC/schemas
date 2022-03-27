@@ -871,7 +871,7 @@ export const schema = {
                           "doc": "Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },
@@ -1399,7 +1399,7 @@ export const schema = {
                           "doc": "Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)",
                           "type": [
                             "null",
-                            "double"
+                            "long"
                           ],
                           "default": null
                         },
@@ -1471,7 +1471,7 @@ export const schema = {
                           "doc": "The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)",
                           "type": [
                             "null",
-                            "double"
+                            "int"
                           ],
                           "default": null
                         },
@@ -1498,7 +1498,7 @@ export const schema = {
                           "doc": "The estimated playout time of the corresponded synchronization source",
                           "type": [
                             "null",
-                            "double"
+                            "long"
                           ],
                           "default": null
                         },
@@ -1642,7 +1642,7 @@ export const schema = {
                           "doc": "The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)",
                           "type": [
                             "null",
-                            "double"
+                            "long"
                           ],
                           "default": null
                         },
@@ -1678,7 +1678,7 @@ export const schema = {
                           "doc": "Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream",
                           "type": [
                             "null",
-                            "double"
+                            "int"
                           ],
                           "default": null
                         },
@@ -1916,7 +1916,7 @@ export const schema = {
                           "doc": "Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)",
                           "type": [
                             "null",
-                            "double"
+                            "long"
                           ],
                           "default": null
                         },
@@ -1988,7 +1988,7 @@ export const schema = {
                           "doc": "The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)",
                           "type": [
                             "null",
-                            "double"
+                            "int"
                           ],
                           "default": null
                         },
@@ -2015,7 +2015,7 @@ export const schema = {
                           "doc": "The estimated playout time of the corresponded synchronization source",
                           "type": [
                             "null",
-                            "double"
+                            "long"
                           ],
                           "default": null
                         },
@@ -2222,7 +2222,7 @@ export const schema = {
                           "doc": "The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)",
                           "type": [
                             "null",
-                            "double"
+                            "long"
                           ],
                           "default": null
                         },
@@ -2258,7 +2258,7 @@ export const schema = {
                           "doc": "Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream",
                           "type": [
                             "null",
-                            "double"
+                            "int"
                           ],
                           "default": null
                         },
