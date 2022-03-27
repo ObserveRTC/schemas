@@ -244,7 +244,7 @@
                         }, {
                             "name" : "clockRate",
                             "doc": "The clock rate of the media source the RTP header carries",
-                            "type" : ["null", "long"],
+                            "type" : ["null", "int"],
                             "default" : null
                         }, {
                             "name" : "sdpFmtpLine",
@@ -264,7 +264,7 @@
                         }, {
                             "name" : "targetBitrate",
                             "doc": "he bitrate the corresponded stream targets.",
-                            "type" : ["null", "long"],
+                            "type" : ["null", "int"],
                             "default" : null
                         }, {
                             "name" : "voiceActivityFlag",
@@ -473,7 +473,7 @@
                         }, {
                             "name" : "clockRate",
                             "doc": "The clock rate of the media source the RTP header carries",
-                            "type" : ["null", "long"],
+                            "type" : ["null", "int"],
                             "default" : null
                         }, {
                             "name" : "sdpFmtpLine",
@@ -493,7 +493,7 @@
                         }, {
                             "name" : "targetBitrate",
                             "doc": "he bitrate the corresponded stream targets.",
-                            "type" : ["null", "long"],
+                            "type" : ["null", "int"],
                             "default" : null
                         }, {
                             "name" : "voiceActivityFlag",

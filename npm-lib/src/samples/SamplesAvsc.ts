@@ -4282,7 +4282,7 @@ export const schema = {
                           "doc": "The clock rate of the media source the RTP header carries",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },
@@ -4318,7 +4318,7 @@ export const schema = {
                           "doc": "he bitrate the corresponded stream targets.",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },
@@ -4664,7 +4664,7 @@ export const schema = {
                           "doc": "The clock rate of the media source the RTP header carries",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },
@@ -4700,7 +4700,7 @@ export const schema = {
                           "doc": "he bitrate the corresponded stream targets.",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },
