@@ -18,11 +18,6 @@ export type ClientExtensionReport = {
 	extensionType: string;
 
 	/**
-	* The resolved service name configured for the service Id
-	*/
-	serviceName?: string;
-
-	/**
 	* The media unit id the report belongs to
 	*/
 	mediaUnitId?: string;

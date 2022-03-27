@@ -16,14 +16,15 @@ function fetchChunks() {
         const schemaPath = path.join(SOURCE_PATH, schemaType);
         for (const file of fs.readdirSync(schemaPath)) {
             if (!file.endsWith(".chunk.avsc")) continue;
+            // if (!file.endsWith(".avsc")) continue;
             const chunkId = file.substr(0, file.length - ".chunk.avsc".length);
+            // const chunkId = file.substr(0, file.length - ".avsc".length);
             const filePath = path.join(schemaPath, file);
             const chunk = fs.readFileSync(filePath, 'utf-8');
             chunks.add(chunkId, chunk);
         }
     }
 }
-
 
 function fetchSources() {
     const sources = new Map();
@@ -48,6 +49,7 @@ function fetchSources() {
 
 const main = async () => {
     fetchChunks();
+    // console.log(chunks.chunkIds());
     const sources = fetchSources();
     const npmLib = new NpmLib(NPM_LIB_PATH);
     const w3cStatsIdentifiers = fs.readFileSync(W3C_STATS_IDENTIFIERS, 'utf-8');
@@ -70,7 +72,6 @@ const main = async () => {
             console.warn(schema, err);
             break;
         }
-        
 
         const schemaName = schema.name;
         const markdown = makeMarkdownDoc(schema);
@@ -93,3 +94,34 @@ const main = async () => {
 };
 
 main();
+
+
+// function makeReportSchema() {
+//     const reportFileName = "report.avsc";
+//     const schemaPath = path.join(SOURCE_PATH, "reports");
+//     const reportSchema = JSON.parse(fs.readFileSync(path.join(schemaPath, reportFileName), 'utf-8'));
+//     const fields = new Set();
+//     for (const field of reportSchema.fields) {
+//         fields.set(field.name, field);
+//     }
+//     for (const file of fs.readdirSync(schemaPath)) {
+//         if (!file.endsWith("avsc") || file === reportFileName) continue;
+//         const filePath = path.join(schemaPath, file);
+//         const text = fs.readFileSync(filePath, 'utf-8');
+//         const schema = JSON.parse(text);
+//         for (const field of schema.fields) {
+//             const existingField = fields.get(field.name);
+//             if (!existingField) {
+//                 fields.set(field.name, field);
+//                 continue;
+//             }
+//             // merge existing field with the new field
+//             existingField.doc
+//             const types = new Set();
+//             if (typeof existingField.type === "string") types.add(existingField.type);
+//             else existingField.type.forEach(t => types.add(t));
+            
+//         }
+        
+//     }
+// }

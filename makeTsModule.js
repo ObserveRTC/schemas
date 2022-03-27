@@ -96,15 +96,22 @@ function makeTsObj(avroSchema) {
     for (const field of avroSchema.fields) {
         const required = field.default === undefined;
         const fieldDoc = field.doc;
-        let avroType = required ? field.type : field.type[1];
-        const { tsType, tsObj, tsDependencies } = getTsType(avroType);
-        if (tsObj) {
-            dependencies.push(tsObj);
-            if (tsDependencies) {
-                dependencies.push(...tsDependencies);
+        const avroTypes = Array.isArray(field.type) ? field.type : [field.type];
+        const tsTypes = [];
+        for (const avroType of avroTypes) {
+            if (avroType === "null") continue;
+            const { tsType, tsObj, tsDependencies } = getTsType(avroType);
+            if (tsObj) {
+                dependencies.push(tsObj);
+                if (tsDependencies) {
+                    dependencies.push(...tsDependencies);
+                }
+                tsObj.setDescriptionIfNotExists(fieldDoc);
             }
-            tsObj.setDescriptionIfNotExists(fieldDoc);
+            tsTypes.push(tsType);
         }
+        // let avroType = required ? field.type : field.type[1];
+        const tsType = tsTypes.join(" | ");
         mainTsObj.addField({
             name: field.name,
             type: tsType,

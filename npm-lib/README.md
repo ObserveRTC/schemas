@@ -137,7 +137,6 @@ Field | Description
 serviceId (**Mandatory**) | The unique identifier of the service
 timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 extensionType (**Mandatory**) | The name of the event
-serviceName | The resolved service name configured for the service Id
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
 callId | The generated unique identifier of the call
@@ -581,6 +580,7 @@ Field | Description
 --- | ---
 type (**Mandatory**) | The type of the report
 payload (**Mandatory**) | The payload of contans the actual report
+schemaVersion | The version of the schema the payload holds
 
 
 ## SfuEventReport

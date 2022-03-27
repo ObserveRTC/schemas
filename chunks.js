@@ -1,4 +1,4 @@
-const INCLUDE_CHUNK_PATTERN = /\"@include-chunk (\w+)\"/g;
+const INCLUDE_CHUNK_PATTERN = /\"@include-chunk ([\w-]+)\"/g;
 const chunks = new Map();
 
 export function add(chunkId, chunk) {
@@ -7,6 +7,10 @@ export function add(chunkId, chunk) {
     }
     chunks.set(chunkId, chunk);
     // console.log(chunkId, "has been added");
+}
+
+export function chunkIds() {
+    return Array.from(chunks.keys());
 }
 
 export function paste(str) {
@@ -25,5 +29,6 @@ export function paste(str) {
     for (const [from, to] of replaces.entries()) {
         result = result.replace(from, to);
     }
+    // console.log(result);
     return result;
 }

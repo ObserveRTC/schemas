@@ -10,6 +10,15 @@ export const schema = {
       "type": "string"
     },
     {
+      "name": "schemaVersion",
+      "doc": "The version of the schema the payload holds",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "payload",
       "doc": "The payload of contans the actual report",
       "type": "bytes"

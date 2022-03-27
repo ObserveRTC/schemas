@@ -1074,7 +1074,7 @@ export const schema = {
                           "name": "frames",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "doc": "The total number of frames originated from the media source",
                           "default": null
@@ -2469,7 +2469,7 @@ export const schema = {
                           "doc": "Reflects the current encoder target in bits per second.",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },
@@ -2986,7 +2986,7 @@ export const schema = {
                           "doc": "Reflects the current encoder target in bits per second.",
                           "type": [
                             "null",
-                            "long"
+                            "int"
                           ],
                           "default": null
                         },

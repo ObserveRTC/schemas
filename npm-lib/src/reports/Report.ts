@@ -12,4 +12,9 @@ export type Report = {
 	*/
 	payload: string;
 
+	/**
+	* The version of the schema the payload holds
+	*/
+	schemaVersion?: string;
+
 }

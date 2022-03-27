@@ -638,7 +638,7 @@
                         "default": null
                     }, {
                         "name": "frames",
-                        "type": ["null", "long"],
+                        "type": ["null", "int"],
                         "doc": "The total number of frames originated from the media source",
                         "default": null
                     }, {
@@ -1501,7 +1501,7 @@
                     }, {
                         "name" : "targetBitrate",
                         "doc" : "Reflects the current encoder target in bits per second.",
-                        "type" : ["null", "long"],
+                        "type" : ["null", "int"],
                         "default" : null
                     }, {
                         "name" : "totalEncodedBytesTarget",
@@ -1826,7 +1826,7 @@
                     }, {
                         "name" : "targetBitrate",
                         "doc" : "Reflects the current encoder target in bits per second.",
-                        "type" : ["null", "long"],
+                        "type" : ["null", "int"],
                         "default" : null
                     }, {
                         "name" : "totalEncodedBytesTarget",
