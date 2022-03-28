@@ -235,7 +235,7 @@
   }, {
     "name" : "lastPacketReceivedTimestamp",
     "doc" : "Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)",
-    "type" : ["null", "double"],
+    "type" : ["null", "long"],
     "default" : null
   }, {
     "name" : "averageRtcpInterval",
@@ -305,7 +305,7 @@
   }, {
     "name" : "estimatedPlayoutTimestamp",
     "doc" : "The estimated playout time of the corresponded synchronization source",
-    "type" : ["null", "double"],
+    "type" : ["null", "long"],
     "default" : null
   }, {
     "name" : "jitterBufferDelay",
@@ -342,7 +342,7 @@
   }, {
     "name" : "remoteTimestamp",
     "doc" : "The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)",
-    "type" : ["null", "double"],
+    "type" : ["null", "long"],
     "default" : null
   }, {
     "name" : "reportsSent",

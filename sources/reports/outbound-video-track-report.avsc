@@ -416,7 +416,7 @@
   }, {
     "name" : "clockRate",
     "doc" : "The negotiated clock rate the RTP timestamp is generated of",
-    "type" : ["null", "long"],
+    "type" : ["null", "int"],
     "default" : null
   }, {
     "name" : "channels",

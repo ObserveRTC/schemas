@@ -535,7 +535,7 @@ export const schema = {
       "doc": "The negotiated clock rate the RTP timestamp is generated of",
       "type": [
         "null",
-        "long"
+        "int"
       ],
       "default": null
     },

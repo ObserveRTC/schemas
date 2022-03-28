@@ -382,7 +382,7 @@ export const schema = {
       "doc": "Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)",
       "type": [
         "null",
-        "double"
+        "long"
       ],
       "default": null
     },
@@ -508,7 +508,7 @@ export const schema = {
       "doc": "The estimated playout time of the corresponded synchronization source",
       "type": [
         "null",
-        "double"
+        "long"
       ],
       "default": null
     },
@@ -571,7 +571,7 @@ export const schema = {
       "doc": "The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)",
       "type": [
         "null",
-        "double"
+        "long"
       ],
       "default": null
     },
