@@ -346,7 +346,7 @@ export const schema = {
       "doc": "The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)",
       "type": [
         "null",
-        "double"
+        "int"
       ],
       "default": null
     },

@@ -162,7 +162,7 @@ export const schema = {
       "doc": "he bitrate the corresponded stream targets.",
       "type": [
         "null",
-        "long"
+        "int"
       ],
       "default": null
     },

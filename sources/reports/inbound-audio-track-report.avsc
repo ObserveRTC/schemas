@@ -217,7 +217,7 @@
   }, {
     "name" : "perDscpPacketsReceived",
     "doc" : "The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)",
-    "type" : ["null", "double"],
+    "type" : ["null", "int"],
     "default" : null
   }, {
     "name" : "nackCount",

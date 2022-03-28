@@ -111,7 +111,7 @@
   }, {
     "name" : "targetBitrate",
     "doc": "he bitrate the corresponded stream targets.",
-    "type" : ["null", "long"],
+    "type" : ["null", "int"],
     "default" : null
   }, {
     "name" : "voiceActivityFlag",
