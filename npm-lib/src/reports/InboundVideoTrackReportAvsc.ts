@@ -364,7 +364,7 @@ export const schema = {
       "doc": "The total number of inter frame delay on the corresponded synchronization source (ssrc)",
       "type": [
         "null",
-        "long"
+        "double"
       ],
       "default": null
     },

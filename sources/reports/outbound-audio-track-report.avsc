@@ -127,7 +127,7 @@
   }, {
     "name" : "targetBitrate",
     "doc" : "Reflects the current encoder target in bits per second.",
-    "type" : ["null", "long"],
+    "type" : ["null", "int"],
     "default" : null
   }, {
     "name" : "totalEncodedBytesTarget",

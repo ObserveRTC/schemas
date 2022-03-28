@@ -274,7 +274,7 @@ export const schema = {
       "doc": "Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)",
       "type": [
         "null",
-        "double"
+        "long"
       ],
       "default": null
     },

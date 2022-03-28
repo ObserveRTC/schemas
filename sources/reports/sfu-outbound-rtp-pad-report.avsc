@@ -91,7 +91,7 @@
   }, {
     "name" : "clockRate",
     "doc": "The clock rate of the media source the RTP header carries",
-    "type" : ["null", "long"],
+    "type" : ["null", "int"],
     "default" : null
   }, {
     "name" : "sdpFmtpLine",

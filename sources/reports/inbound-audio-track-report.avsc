@@ -177,7 +177,7 @@
   }, {
     "name" : "lastPacketReceivedTimestamp",
     "doc" : "Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)",
-    "type" : ["null", "double"],
+    "type" : ["null", "long"],
     "default" : null
   }, {
     "name" : "averageRtcpInterval",

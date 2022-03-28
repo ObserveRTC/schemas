@@ -516,7 +516,7 @@ export const schema = {
       "doc": "Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
       "type": [
         "null",
-        "long"
+        "int"
       ],
       "default": null
     },

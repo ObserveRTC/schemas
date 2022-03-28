@@ -193,7 +193,7 @@ export const schema = {
       "doc": "Reflects the current encoder target in bits per second.",
       "type": [
         "null",
-        "long"
+        "int"
       ],
       "default": null
     },

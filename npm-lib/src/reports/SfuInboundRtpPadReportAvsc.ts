@@ -121,7 +121,7 @@ export const schema = {
       "doc": "The clock rate of the media source the RTP header carries",
       "type": [
         "null",
-        "long"
+        "int"
       ],
       "default": null
     },

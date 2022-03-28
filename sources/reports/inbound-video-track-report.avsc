@@ -225,7 +225,7 @@
   }, {
     "name" : "totalInterFrameDelay",
     "doc" : "The total number of inter frame delay on the corresponded synchronization source (ssrc)",
-    "type" : ["null", "long"],
+    "type" : ["null", "double"],
     "default" : null
   }, {
     "name" : "totalSquaredInterFrameDelay",
