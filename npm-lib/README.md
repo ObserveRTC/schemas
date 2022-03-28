@@ -452,7 +452,6 @@ packetsDiscarded | The total number of packets missed the playout point and ther
 packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
 burstPacketsLost | The total number of packets lost in burst (RFC6958)
 burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
 burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
 burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
@@ -543,7 +542,6 @@ packetsDiscarded | The total number of packets missed the playout point and ther
 packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
 burstPacketsLost | The total number of packets lost in burst (RFC6958)
 burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
 burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
 burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
