@@ -293,6 +293,11 @@ export type OutboundVideoTrackReport = {
 	burstPacketsDiscarded?: number;
 
 	/**
+	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
+	*/
+	burstLossCount?: number;
+
+	/**
 	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
 	*/
 	burstDiscardCount?: number;

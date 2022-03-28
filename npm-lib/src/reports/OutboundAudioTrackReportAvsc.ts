@@ -351,6 +351,15 @@ export const schema = {
       "default": null
     },
     {
+      "name": "burstLossCount",
+      "doc": "The total number of burst happened causes burstPacketsLost on the corresponding synchronization source",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
       "name": "burstDiscardCount",
       "doc": "The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source",
       "type": [
