@@ -14,6 +14,7 @@ Javascript bindings for ObserveRTC schemas
 	* [OutboundVideoTrackReport](#OutboundVideoTrackReport)
 	* [Report](#Report)
 	* [SfuEventReport](#SfuEventReport)
+	* [SfuExtensionReport](#SfuExtensionReport)
 	* [SfuInboundRtpPadReport](#SfuInboundRtpPadReport)
 	* [SfuMetaReport](#SfuMetaReport)
 	* [SfuOutboundRtpPadReport](#SfuOutboundRtpPadReport)
@@ -606,6 +607,29 @@ rtpPadId | Unique identifier of the Sfu Pad the event is related to
 message | the human readable message of the event
 value | the value of the event
 attachments | attachment the event may created with
+
+
+## SfuExtensionReport
+
+
+A Report created for Extended provided arbitrary data.
+
+
+Field | Description 
+--- | ---
+serviceId (**Mandatory**) | The service id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+extensionType (**Mandatory**) | The name of the event
+mediaUnitId | The media unit id the report belongs to
+marker | The marker the originated sample is reported with
+sfuId | The generated unique identifier of the SFU
+callId | The callId the event belongs to
+transportId | SFU provided transport identifier
+mediaStreamId | Unique identifier of the SFU stream id the rtp pad belongs to
+mediaSinkId | Unique identifier of the SFU stream id the rtp pad belongs to
+sctpStreamId | Unique identifier of the SCTP stream the event is related to
+rtpPadId | Unique identifier of the Sfu Pad the event is related to
+payload | the human readable message of the event
 
 
 ## SfuInboundRtpPadReport
