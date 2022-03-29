@@ -33,36 +33,6 @@ export type SfuExtensionReport = {
 	sfuId?: string;
 
 	/**
-	* The callId the event belongs to
-	*/
-	callId?: string;
-
-	/**
-	* SFU provided transport identifier
-	*/
-	transportId?: string;
-
-	/**
-	* Unique identifier of the SFU stream id the rtp pad belongs to
-	*/
-	mediaStreamId?: string;
-
-	/**
-	* Unique identifier of the SFU stream id the rtp pad belongs to
-	*/
-	mediaSinkId?: string;
-
-	/**
-	* Unique identifier of the SCTP stream the event is related to
-	*/
-	sctpStreamId?: string;
-
-	/**
-	* Unique identifier of the Sfu Pad the event is related to
-	*/
-	rtpPadId?: string;
-
-	/**
 	* the human readable message of the event
 	*/
 	payload?: string;

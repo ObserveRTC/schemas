@@ -623,12 +623,6 @@ extensionType (**Mandatory**) | The name of the event
 mediaUnitId | The media unit id the report belongs to
 marker | The marker the originated sample is reported with
 sfuId | The generated unique identifier of the SFU
-callId | The callId the event belongs to
-transportId | SFU provided transport identifier
-mediaStreamId | Unique identifier of the SFU stream id the rtp pad belongs to
-mediaSinkId | Unique identifier of the SFU stream id the rtp pad belongs to
-sctpStreamId | Unique identifier of the SCTP stream the event is related to
-rtpPadId | Unique identifier of the Sfu Pad the event is related to
 payload | the human readable message of the event
 
 

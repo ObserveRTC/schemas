@@ -42,60 +42,6 @@ export const schema = {
       "default": null
     },
     {
-      "name": "callId",
-      "doc": "The callId the event belongs to",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "transportId",
-      "doc": "SFU provided transport identifier",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "mediaStreamId",
-      "doc": "Unique identifier of the SFU stream id the rtp pad belongs to",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "mediaSinkId",
-      "doc": "Unique identifier of the SFU stream id the rtp pad belongs to",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "sctpStreamId",
-      "doc": "Unique identifier of the SCTP stream the event is related to",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "rtpPadId",
-      "doc": "Unique identifier of the Sfu Pad the event is related to",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
       "name": "extensionType",
       "doc": "The name of the event",
       "type": "string"
