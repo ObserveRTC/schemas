@@ -21,6 +21,8 @@ Javascript bindings for ObserveRTC schemas
 	* [SfuSctpStreamReport](#SfuSctpStreamReport)
 	* [SFUTransportReport](#SFUTransportReport)
 - [samples](#samples)
+	* [TurnSession](#TurnSession)
+	* [TurnSample](#TurnSample)
 	* [SfuExtensionStats](#SfuExtensionStats)
 	* [SfuSctpChannel](#SfuSctpChannel)
 	* [SfuOutboundRtpPad](#SfuOutboundRtpPad)
@@ -1529,7 +1531,46 @@ transports | The Sfu Transports obtained measurements
 inboundRtpPads | The Sfu Inbound Rtp Pad obtained measurements
 outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements
 sctpChannels | The Sfu Outbound Rtp Pad obtained measurements
-extensionStats | The Sfu provided custom stats payload## Samples
+extensionStats | The Sfu provided custom stats payload
+
+## TurnSession
+
+
+Field | Description 
+--- | ---
+sessionId (**Mandatory**) | Flag indicate to not generate report from this sample
+realm (**Mandatory**) | The Authentication Realm (RFC 8656)
+username (**Mandatory**) | The username of the used in authentication
+clientId (**Mandatory**) | The id of the client the TURN session belongs to (ClientSample)
+started | The timestamp when the session has been started. Epoch in milliseconds, GMT
+nonceExpirationTime | For each Allocate request, the server SHOULD generate a new random nonce when the allocation is first attempted following the randomness recommendations in [RFC4086] and SHOULD expire the nonce at least once every hour during the lifetime of the allocation.  Epoch in millis GMT
+clientTransportProtocol | the transport protocol betwwen the client and the server
+relayTransportProtocol | the transport protocol between the server and the peer
+serverAddress | The address of the server the client connected to
+serverPort | The portnumber the server listens the client requests
+peerAddress | The address of the address the serever connect to
+peerPort | The portnumber the server connects to
+averageSendingBitrateToClient | the bitrate the TURN server sending to the client
+averageReceivingBitrateFromClient | the bitrate the TURN server receiving from the client
+receivedBytesFromClient | the amount of bytes received from the client
+sentBytesToClient | the amount of bytes sent to the client
+receivedPacketsFromClient | the amount of packets received from the client
+sentPacketsToClient | the amount of packets sent to the client
+averageSendingBitrateToPeer | the bitrate the TURN server sending to theb peer
+averageReceivingBitrateFromPeer | the bitrate the TURN server receiving from the peer
+receivedBytesFromPeer | the amount of bytes received from the peer
+sentBytesToPeer | the amount of bytes sent to the peer
+receivedPacketsFromPeer | the amount of packets received from the peer
+sentPacketsToPeer | the amount of packets sent to the peer## TurnSample
+
+
+docs
+
+
+Field | Description 
+--- | ---
+serverId (**Mandatory**) | A unique id of the turn server
+sessions | Session data## Samples
 
 
 Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.
@@ -1541,6 +1582,7 @@ meta | Additional meta information about the carried payloads
 controlFlags | Additional control flags indicate various operation has to be performed
 clientSamples | Samples taken from the client
 sfuSamples | Samples taken from an Sfu
+turnSamples | Samples taken from the TURN server
 
 
 ## Changelog

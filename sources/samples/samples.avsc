@@ -55,6 +55,15 @@
                 "items": "@include-chunk SfuSample"
             }],
             "default": null
+        },
+        {
+            "name" : "turnSamples",
+            "doc": "Samples taken from the TURN server",
+            "type" : ["null", {
+                "type": "array",
+                "items": "@include-chunk TurnSample"
+            }],
+            "default": null
         }
     ]
 }

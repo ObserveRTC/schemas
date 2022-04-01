@@ -5098,6 +5098,255 @@ export const schema = {
         }
       ],
       "default": null
+    },
+    {
+      "name": "turnSamples",
+      "doc": "Samples taken from the TURN server",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "TurnSample",
+            "type": "record",
+            "doc": "docs",
+            "fields": [
+              {
+                "name": "serverId",
+                "doc": "A unique id of the turn server",
+                "type": "string"
+              },
+              {
+                "name": "sessions",
+                "doc": "Session data",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "TurnSession",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "sessionId",
+                          "doc": "Flag indicate to not generate report from this sample",
+                          "type": "string"
+                        },
+                        {
+                          "name": "realm",
+                          "doc": "The Authentication Realm (RFC 8656)",
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        },
+                        {
+                          "name": "username",
+                          "doc": "The username of the used in authentication",
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        },
+                        {
+                          "name": "clientId",
+                          "doc": "The id of the client the TURN session belongs to (ClientSample)",
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        },
+                        {
+                          "name": "started",
+                          "doc": "The timestamp when the session has been started. Epoch in milliseconds, GMT",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "nonceExpirationTime",
+                          "doc": "For each Allocate request, the server SHOULD generate a new random nonce when the allocation is first attempted following the randomness recommendations in [RFC4086] and SHOULD expire the nonce at least once every hour during the lifetime of the allocation.  Epoch in millis GMT",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "clientTransportProtocol",
+                          "doc": "the transport protocol betwwen the client and the server",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "relayTransportProtocol",
+                          "doc": "the transport protocol between the server and the peer",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "serverAddress",
+                          "doc": "The address of the server the client connected to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "serverPort",
+                          "doc": "The portnumber the server listens the client requests",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "peerAddress",
+                          "doc": "The address of the address the serever connect to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "peerPort",
+                          "doc": "The portnumber the server connects to",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "averageSendingBitrateToClient",
+                          "doc": "the bitrate the TURN server sending to the client",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "averageReceivingBitrateFromClient",
+                          "doc": "the bitrate the TURN server receiving from the client",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "receivedBytesFromClient",
+                          "doc": "the amount of bytes received from the client",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sentBytesToClient",
+                          "doc": "the amount of bytes sent to the client",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "receivedPacketsFromClient",
+                          "doc": "the amount of packets received from the client",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sentPacketsToClient",
+                          "doc": "the amount of packets sent to the client",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "averageSendingBitrateToPeer",
+                          "doc": "the bitrate the TURN server sending to theb peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "averageReceivingBitrateFromPeer",
+                          "doc": "the bitrate the TURN server receiving from the peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "receivedBytesFromPeer",
+                          "doc": "the amount of bytes received from the peer",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sentBytesToPeer",
+                          "doc": "the amount of bytes sent to the peer",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "receivedPacketsFromPeer",
+                          "doc": "the amount of packets received from the peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sentPacketsToPeer",
+                          "doc": "the amount of packets sent to the peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
     }
   ]
 }

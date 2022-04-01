@@ -597,8 +597,39 @@ message Samples {
 		optional string marker = 8;
 		optional uint32 timeZoneOffsetInHours = 9;
 	}
+	message TurnSample {
+		message TurnSession {
+			required string sessionId = 1;
+			optional uint32 averageReceivingBitrateFromClient = 2;
+			optional uint32 averageReceivingBitrateFromPeer = 3;
+			optional uint32 averageSendingBitrateToClient = 4;
+			optional uint32 averageSendingBitrateToPeer = 5;
+			optional string clientId = 6;
+			optional string clientTransportProtocol = 7;
+			optional uint64 nonceExpirationTime = 8;
+			optional string peerAddress = 9;
+			optional uint32 peerPort = 10;
+			optional string realm = 11;
+			optional uint64 receivedBytesFromClient = 12;
+			optional uint64 receivedBytesFromPeer = 13;
+			optional uint32 receivedPacketsFromClient = 14;
+			optional uint32 receivedPacketsFromPeer = 15;
+			optional string relayTransportProtocol = 16;
+			optional uint64 sentBytesToClient = 17;
+			optional uint64 sentBytesToPeer = 18;
+			optional uint32 sentPacketsToClient = 19;
+			optional uint32 sentPacketsToPeer = 20;
+			optional string serverAddress = 21;
+			optional uint32 serverPort = 22;
+			optional uint64 started = 23;
+			optional string username = 24;
+		}
+		repeated TurnSession sessions = 1;
+		required string serverId = 2;
+	}
 	repeated ClientSample clientSamples = 1;
 	repeated SfuSample sfuSamples = 2;
-	optional ControlFlags controlFlags = 3;
-	optional SamplesMeta meta = 4;
+	repeated TurnSample turnSamples = 3;
+	optional ControlFlags controlFlags = 4;
+	optional SamplesMeta meta = 5;
 }

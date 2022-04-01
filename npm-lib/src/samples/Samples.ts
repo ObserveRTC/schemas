@@ -1,4 +1,146 @@
 /**
+* Session data
+*/
+export type TurnSession = {
+	/**
+	* Flag indicate to not generate report from this sample
+	*/
+	sessionId: string;
+
+	/**
+	* The Authentication Realm (RFC 8656)
+	*/
+	realm: string;
+
+	/**
+	* The username of the used in authentication
+	*/
+	username: string;
+
+	/**
+	* The id of the client the TURN session belongs to (ClientSample)
+	*/
+	clientId: string;
+
+	/**
+	* The timestamp when the session has been started. Epoch in milliseconds, GMT
+	*/
+	started?: number;
+
+	/**
+	* For each Allocate request, the server SHOULD generate a new random nonce when the allocation is first attempted following the randomness recommendations in [RFC4086] and SHOULD expire the nonce at least once every hour during the lifetime of the allocation.  Epoch in millis GMT
+	*/
+	nonceExpirationTime?: number;
+
+	/**
+	* the transport protocol betwwen the client and the server
+	*/
+	clientTransportProtocol?: string;
+
+	/**
+	* the transport protocol between the server and the peer
+	*/
+	relayTransportProtocol?: string;
+
+	/**
+	* The address of the server the client connected to
+	*/
+	serverAddress?: string;
+
+	/**
+	* The portnumber the server listens the client requests
+	*/
+	serverPort?: number;
+
+	/**
+	* The address of the address the serever connect to
+	*/
+	peerAddress?: string;
+
+	/**
+	* The portnumber the server connects to
+	*/
+	peerPort?: number;
+
+	/**
+	* the bitrate the TURN server sending to the client
+	*/
+	averageSendingBitrateToClient?: number;
+
+	/**
+	* the bitrate the TURN server receiving from the client
+	*/
+	averageReceivingBitrateFromClient?: number;
+
+	/**
+	* the amount of bytes received from the client
+	*/
+	receivedBytesFromClient?: number;
+
+	/**
+	* the amount of bytes sent to the client
+	*/
+	sentBytesToClient?: number;
+
+	/**
+	* the amount of packets received from the client
+	*/
+	receivedPacketsFromClient?: number;
+
+	/**
+	* the amount of packets sent to the client
+	*/
+	sentPacketsToClient?: number;
+
+	/**
+	* the bitrate the TURN server sending to theb peer
+	*/
+	averageSendingBitrateToPeer?: number;
+
+	/**
+	* the bitrate the TURN server receiving from the peer
+	*/
+	averageReceivingBitrateFromPeer?: number;
+
+	/**
+	* the amount of bytes received from the peer
+	*/
+	receivedBytesFromPeer?: number;
+
+	/**
+	* the amount of bytes sent to the peer
+	*/
+	sentBytesToPeer?: number;
+
+	/**
+	* the amount of packets received from the peer
+	*/
+	receivedPacketsFromPeer?: number;
+
+	/**
+	* the amount of packets sent to the peer
+	*/
+	sentPacketsToPeer?: number;
+
+}
+
+/**
+* docs
+*/
+export type TurnSample = {
+	/**
+	* A unique id of the turn server
+	*/
+	serverId: string;
+
+	/**
+	* Session data
+	*/
+	sessions?: TurnSession[];
+
+}
+
+/**
 * The Sfu provided custom stats payload
 */
 export type SfuExtensionStats = {
@@ -2897,5 +3039,10 @@ export type Samples = {
 	* Samples taken from an Sfu
 	*/
 	sfuSamples?: SfuSample[];
+
+	/**
+	* Samples taken from the TURN server
+	*/
+	turnSamples?: TurnSample[];
 
 }
