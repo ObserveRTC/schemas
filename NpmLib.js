@@ -29,10 +29,11 @@ export class NpmLib {
         });
     }
 
-    addProtobufSchema({ fileName, protobufSchema}) {
+    addProtobufSchema({ fileName, protobufSchema, protobufJson }) {
         this._protobufEntries.push({
             fileName,
             protobufSchema,
+            protobufJson,
         })
     }
 
@@ -80,12 +81,19 @@ export class NpmLib {
             }
         }
         for (const protobufEntry of this._protobufEntries) {
-            const { fileName, protobufSchema } = protobufEntry;
+            const { fileName, protobufSchema, protobufJson } = protobufEntry;
             const file = fileName + ".ts";
             const protobufFileName = path.join(this._srcPath, "samples", file);
             const module = `export const schema = \`\n${protobufSchema}\n\`;`;
             fs.writeFileSync(protobufFileName, module);
             exports.push(`export { schema as ${fileName} } from "./samples/${fileName}";`);
+
+            const jsonFileName = fileName + "Json";
+            const jsonFile = jsonFileName + ".ts";
+            const jsonProtobufFileName = path.join(this._srcPath, "samples", jsonFile);
+            const jsonModule = `export const jsonDescriptor = ${protobufJson};`;
+            fs.writeFileSync(jsonProtobufFileName, jsonModule);
+            exports.push(`export { jsonDescriptor as ${jsonFileName} } from "./samples/${jsonFileName}";`);
         }
         if (this._w3cStatsIdentifiers) {
             const w3cStatsIdentifiersPath = path.join(this._srcPath, "w3c", "W3cStatsIdentifiers.ts");

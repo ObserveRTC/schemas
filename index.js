@@ -7,6 +7,16 @@ import avro from "avro-js";
 import path from "path";
 import * as chunks from "./chunks.js"
 import { ProtobufConverter } from "./ProtobufConverter.js";
+import * as pbjs from "protobufjs/cli/pbjs.js";
+
+const makeProtobufJson = path => new Promise(resolve => {
+    pbjs.main([ path ], function(err, output) {
+        if (err)
+            throw err;
+        resolve(output);
+    });
+})
+
 
 const SOURCE_PATH = "./sources";
 const NPM_LIB_PATH = "./npm-lib";
@@ -64,9 +74,12 @@ function fetchSources() {
     return sources;
 }
 
+
+
 const main = async () => {
     fetchChunks();
     // console.log(chunks.chunkIds());
+    
     const sources = fetchSources();
     const npmLib = new NpmLib(NPM_LIB_PATH);
     const w3cStatsIdentifiers = fs.readFileSync(W3C_STATS_IDENTIFIERS, 'utf-8');
@@ -109,10 +122,15 @@ const main = async () => {
     if (samplesSource) {
         const schema = JSON.parse(samplesSource.getAvsc());
         const protobufSchema = convertToProtobufSchema(schema);
+        const samplesProtoPath = "./ProtobufSamples.proto";
+        fs.writeFileSync(samplesProtoPath, protobufSchema);
+        const protobufJson = await makeProtobufJson(samplesProtoPath);
+        fs.rmSync(samplesProtoPath);
         npmLib.addProtobufSchema({
             fileName: "ProtobufSamples",
             protobufSchema,
-        })
+            protobufJson,
+        });
     } else {
         console.warn(`There was no Samples avro schema to generate the protobuf schema`);
     }

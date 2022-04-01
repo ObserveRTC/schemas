@@ -37,5 +37,6 @@ export * from "./reports/SFUTransportReport";
 export { schema as AvroSamples } from "./samples/SamplesAvsc";
 export * from "./samples/Samples";
 export { schema as ProtobufSamples } from "./samples/ProtobufSamples";
+export { jsonDescriptor as ProtobufSamplesJson } from "./samples/ProtobufSamplesJson";
 export * as W3CStats from "./w3c/W3cStatsIdentifiers";
-export const version = "2.0.0-beta.52";
+export const version = "2.0.0-beta.53";
