@@ -1,3 +1,4 @@
+export const schema = `
 syntax = "proto2";
 
 message Samples {
@@ -633,3 +634,4 @@ message Samples {
 	optional ControlFlags controlFlags = 4;
 	optional SamplesMeta meta = 5;
 }
+`;

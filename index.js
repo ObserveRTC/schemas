@@ -110,7 +110,7 @@ const main = async () => {
         const schema = JSON.parse(samplesSource.getAvsc());
         const protobufSchema = convertToProtobufSchema(schema);
         npmLib.addProtobufSchema({
-            fileName: "ProtobufSamples.proto",
+            fileName: "ProtobufSamples",
             protobufSchema,
         })
     } else {
