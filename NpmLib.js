@@ -14,6 +14,7 @@ export class NpmLib {
         this._w3cStatsIdentifiers = null;
         this._version = null;
         this._changelog = null;
+        this._protobufEntries = [];
     }
 
     addEntry({ schemaName, exports, fileName, schemaType, avsc, typescript, markdown }) {
@@ -26,6 +27,13 @@ export class NpmLib {
             typescript,
             markdown,
         });
+    }
+
+    addProtobufSchema({ fileName, protobufSchema}) {
+        this._protobufEntries.push({
+            fileName,
+            protobufSchema,
+        })
     }
 
     addW3cStatsIdentifiers(w3cStatsIdentifiers) {
@@ -70,6 +78,11 @@ export class NpmLib {
                     toc[schemaType].push(moduleExport);
                 }
             }
+        }
+        for (const protobufEntry of this._protobufEntries) {
+            const { fileName, protobufSchema } = protobufEntry;
+            const protobufFileName = path.join(this._srcPath, "assets", fileName);
+            fs.writeFileSync(protobufFileName, protobufSchema);
         }
         if (this._w3cStatsIdentifiers) {
             const w3cStatsIdentifiersPath = path.join(this._srcPath, "w3c", "W3cStatsIdentifiers.ts");

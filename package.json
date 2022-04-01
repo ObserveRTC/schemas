@@ -20,6 +20,7 @@
     "argparse": "^2.0.1",
     "avro-js": "^1.10.2",
     "json-schema-to-markdown": "^1.1.1",
+    "protobufjs": "^6.11.2",
     "typedoc": "^0.22.12"
   }
 }

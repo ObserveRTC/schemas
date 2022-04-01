@@ -1,12 +1,15 @@
 {
   "name": "@observertc/schemas",
-  "version": "2.0.0-beta.48",
+  "version": "2.0.0-beta.49",
   "description": "ObserveRTC Library for Schemas",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "engines": {
     "node": ">=10"
   },
+  "files": [
+    "./src/assets/*"
+  ],
   "scripts": {
     "prepare": "npm run build",
     "build": "tsc",

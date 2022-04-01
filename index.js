@@ -6,10 +6,27 @@ import { makeTsModule } from "./makeTsModule.js";
 import avro from "avro-js";
 import path from "path";
 import * as chunks from "./chunks.js"
+import { ProtobufConverter } from "./ProtobufConverter.js";
 
 const SOURCE_PATH = "./sources";
 const NPM_LIB_PATH = "./npm-lib";
 const W3C_STATS_IDENTIFIERS = "./sources/w3c/W3cStatsIdentifiers.ts";
+
+function convertToProtobufSchema(avroSchema) {
+    const samplesProto = ProtobufConverter.from(avroSchema);
+    const samplesProtoStr = samplesProto.toLines().join("\n");
+
+    const samplesModule = [
+        `syntax = "proto2";`,
+        ``,
+        // `option java_outer_classname = "Protobuf${samplesProto.name}";`,
+        // `option java_package = "org.observertc.observer.samples";`,
+        // ``,
+        samplesProtoStr
+    ].join("\n");
+    return samplesModule;
+    // fs.writeFileSync(outputPath, samplesModule);
+}
 
 function fetchChunks() {
     for (const schemaType of ["reports", "samples"]) {
@@ -86,6 +103,18 @@ const main = async () => {
             typescript: module,
             markdown,
         });
+    }
+    // generate protobuf schema if we can
+    const samplesSource = sources.get("samples");
+    if (samplesSource) {
+        const schema = JSON.parse(samplesSource.getAvsc());
+        const protobufSchema = convertToProtobufSchema(schema);
+        npmLib.addProtobufSchema({
+            fileName: "ProtobufSamples.proto",
+            protobufSchema,
+        })
+    } else {
+        console.warn(`There was no Samples avro schema to generate the protobuf schema`);
     }
     npmLib.changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
     npmLib.version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
