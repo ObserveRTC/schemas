@@ -1,6 +1,8 @@
 export const schema = `
 syntax = "proto2";
 
+package org.observertc.schemas.protobuf;
+
 message Samples {
 	message SamplesMeta {
 		optional string schemaVersion = 1;

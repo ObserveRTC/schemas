@@ -29,6 +29,8 @@ function convertToProtobufSchema(avroSchema) {
     const samplesModule = [
         `syntax = "proto2";`,
         ``,
+        `package org.observertc.schemas.protobuf;`,
+        ``,
         // `option java_outer_classname = "Protobuf${samplesProto.name}";`,
         // `option java_package = "org.observertc.observer.samples";`,
         // ``,
