@@ -5117,6 +5117,120 @@ export const schema = {
                 "type": "string"
               },
               {
+                "name": "allocations",
+                "doc": "Peer Alloocation data",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "TurnPeerAllocation",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "peerId",
+                          "doc": "a unique id for the allocation",
+                          "type": "string"
+                        },
+                        {
+                          "name": "sessionId",
+                          "doc": "The corresponded session the allocation belongs to",
+                          "type": "string"
+                        },
+                        {
+                          "name": "relayedAddress",
+                          "doc": "The allocated address",
+                          "type": "string"
+                        },
+                        {
+                          "name": "relayedPort",
+                          "doc": "The allocated port",
+                          "type": "int"
+                        },
+                        {
+                          "name": "transportProtocol",
+                          "doc": "protocol (TCP, UDP)",
+                          "type": "string"
+                        },
+                        {
+                          "name": "peerAddress",
+                          "doc": "The address of the address the serever connect to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "peerPort",
+                          "doc": "The portnumber the server connects to",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sendingBitrate",
+                          "doc": "the bitrate the TURN server sending to the peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "receivingBitrate",
+                          "doc": "the bitrate the TURN server receiving from the peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sentBytes",
+                          "doc": "the amount of bytes sent to the peer",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "receivedBytes",
+                          "doc": "the amount of bytes received from the peer",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sentPackets",
+                          "doc": "the amount of packets sent to the peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "receivedPackets",
+                          "doc": "the amount of packets received from the peer",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
                 "name": "sessions",
                 "doc": "Session data",
                 "type": [
@@ -5138,7 +5252,8 @@ export const schema = {
                           "type": [
                             "null",
                             "string"
-                          ]
+                          ],
+                          "default": null
                         },
                         {
                           "name": "username",
@@ -5146,7 +5261,8 @@ export const schema = {
                           "type": [
                             "null",
                             "string"
-                          ]
+                          ],
+                          "default": null
                         },
                         {
                           "name": "clientId",
@@ -5154,7 +5270,8 @@ export const schema = {
                           "type": [
                             "null",
                             "string"
-                          ]
+                          ],
+                          "default": null
                         },
                         {
                           "name": "started",
@@ -5171,24 +5288,6 @@ export const schema = {
                           "type": [
                             "null",
                             "long"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "clientTransportProtocol",
-                          "doc": "the transport protocol betwwen the client and the server",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "relayTransportProtocol",
-                          "doc": "the transport protocol between the server and the peer",
-                          "type": [
-                            "null",
-                            "string"
                           ],
                           "default": null
                         },
@@ -5211,8 +5310,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "peerAddress",
-                          "doc": "The address of the address the serever connect to",
+                          "name": "transportProtocol",
+                          "doc": "the transport protocol betwwen the client and the server (TCP, UDP, TCPTLS, UDPTLS, SCTP, SCTPTLS)",
                           "type": [
                             "null",
                             "string"
@@ -5220,8 +5319,17 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "peerPort",
-                          "doc": "The portnumber the server connects to",
+                          "name": "clientAddress",
+                          "doc": "The address of the client connected from",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "clientPort",
+                          "doc": "The portnumber the client requested from",
                           "type": [
                             "null",
                             "int"
@@ -5229,7 +5337,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "averageSendingBitrateToClient",
+                          "name": "sendingBitrate",
                           "doc": "the bitrate the TURN server sending to the client",
                           "type": [
                             "null",
@@ -5238,7 +5346,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "averageReceivingBitrateFromClient",
+                          "name": "receivingBitrate",
                           "doc": "the bitrate the TURN server receiving from the client",
                           "type": [
                             "null",
@@ -5247,16 +5355,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "receivedBytesFromClient",
-                          "doc": "the amount of bytes received from the client",
-                          "type": [
-                            "null",
-                            "long"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sentBytesToClient",
+                          "name": "sentBytes",
                           "doc": "the amount of bytes sent to the client",
                           "type": [
                             "null",
@@ -5265,16 +5364,16 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "receivedPacketsFromClient",
-                          "doc": "the amount of packets received from the client",
+                          "name": "receivedBytes",
+                          "doc": "the amount of bytes received from the client",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null
                         },
                         {
-                          "name": "sentPacketsToClient",
+                          "name": "sentPackets",
                           "doc": "the amount of packets sent to the client",
                           "type": [
                             "null",
@@ -5283,53 +5382,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "averageSendingBitrateToPeer",
-                          "doc": "the bitrate the TURN server sending to theb peer",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "averageReceivingBitrateFromPeer",
-                          "doc": "the bitrate the TURN server receiving from the peer",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "receivedBytesFromPeer",
-                          "doc": "the amount of bytes received from the peer",
-                          "type": [
-                            "null",
-                            "long"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sentBytesToPeer",
-                          "doc": "the amount of bytes sent to the peer",
-                          "type": [
-                            "null",
-                            "long"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "receivedPacketsFromPeer",
-                          "doc": "the amount of packets received from the peer",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sentPacketsToPeer",
-                          "doc": "the amount of packets sent to the peer",
+                          "name": "receivedPackets",
+                          "doc": "the amount of packets received from the client",
                           "type": [
                             "null",
                             "int"

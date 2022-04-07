@@ -22,6 +22,7 @@ Javascript bindings for ObserveRTC schemas
 	* [SFUTransportReport](#SFUTransportReport)
 - [samples](#samples)
 	* [TurnSession](#TurnSession)
+	* [TurnPeerAllocation](#TurnPeerAllocation)
 	* [TurnSample](#TurnSample)
 	* [SfuExtensionStats](#SfuExtensionStats)
 	* [SfuSctpChannel](#SfuSctpChannel)
@@ -1533,35 +1534,47 @@ outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements
 sctpChannels | The Sfu Outbound Rtp Pad obtained measurements
 extensionStats | The Sfu provided custom stats payload
 
+## TurnPeerAllocation
+
+
+Field | Description 
+--- | ---
+peerId (**Mandatory**) | a unique id for the allocation
+sessionId (**Mandatory**) | The corresponded session the allocation belongs to
+relayedAddress (**Mandatory**) | The allocated address
+relayedPort (**Mandatory**) | The allocated port
+transportProtocol (**Mandatory**) | protocol (TCP, UDP)
+peerAddress | The address of the address the serever connect to
+peerPort | The portnumber the server connects to
+sendingBitrate | the bitrate the TURN server sending to the peer
+receivingBitrate | the bitrate the TURN server receiving from the peer
+sentBytes | the amount of bytes sent to the peer
+receivedBytes | the amount of bytes received from the peer
+sentPackets | the amount of packets sent to the peer
+receivedPackets | the amount of packets received from the peer
+
 ## TurnSession
 
 
 Field | Description 
 --- | ---
 sessionId (**Mandatory**) | Flag indicate to not generate report from this sample
-realm (**Mandatory**) | The Authentication Realm (RFC 8656)
-username (**Mandatory**) | The username of the used in authentication
-clientId (**Mandatory**) | The id of the client the TURN session belongs to (ClientSample)
+realm | The Authentication Realm (RFC 8656)
+username | The username of the used in authentication
+clientId | The id of the client the TURN session belongs to (ClientSample)
 started | The timestamp when the session has been started. Epoch in milliseconds, GMT
 nonceExpirationTime | For each Allocate request, the server SHOULD generate a new random nonce when the allocation is first attempted following the randomness recommendations in [RFC4086] and SHOULD expire the nonce at least once every hour during the lifetime of the allocation.  Epoch in millis GMT
-clientTransportProtocol | the transport protocol betwwen the client and the server
-relayTransportProtocol | the transport protocol between the server and the peer
 serverAddress | The address of the server the client connected to
 serverPort | The portnumber the server listens the client requests
-peerAddress | The address of the address the serever connect to
-peerPort | The portnumber the server connects to
-averageSendingBitrateToClient | the bitrate the TURN server sending to the client
-averageReceivingBitrateFromClient | the bitrate the TURN server receiving from the client
-receivedBytesFromClient | the amount of bytes received from the client
-sentBytesToClient | the amount of bytes sent to the client
-receivedPacketsFromClient | the amount of packets received from the client
-sentPacketsToClient | the amount of packets sent to the client
-averageSendingBitrateToPeer | the bitrate the TURN server sending to theb peer
-averageReceivingBitrateFromPeer | the bitrate the TURN server receiving from the peer
-receivedBytesFromPeer | the amount of bytes received from the peer
-sentBytesToPeer | the amount of bytes sent to the peer
-receivedPacketsFromPeer | the amount of packets received from the peer
-sentPacketsToPeer | the amount of packets sent to the peer## TurnSample
+transportProtocol | the transport protocol betwwen the client and the server (TCP, UDP, TCPTLS, UDPTLS, SCTP, SCTPTLS)
+clientAddress | The address of the client connected from
+clientPort | The portnumber the client requested from
+sendingBitrate | the bitrate the TURN server sending to the client
+receivingBitrate | the bitrate the TURN server receiving from the client
+sentBytes | the amount of bytes sent to the client
+receivedBytes | the amount of bytes received from the client
+sentPackets | the amount of packets sent to the client
+receivedPackets | the amount of packets received from the client## TurnSample
 
 
 docs
@@ -1570,6 +1583,7 @@ docs
 Field | Description 
 --- | ---
 serverId (**Mandatory**) | A unique id of the turn server
+allocations | Peer Alloocation data
 sessions | Session data## Samples
 
 

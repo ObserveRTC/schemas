@@ -10,17 +10,17 @@ export type TurnSession = {
 	/**
 	* The Authentication Realm (RFC 8656)
 	*/
-	realm: string;
+	realm?: string;
 
 	/**
 	* The username of the used in authentication
 	*/
-	username: string;
+	username?: string;
 
 	/**
 	* The id of the client the TURN session belongs to (ClientSample)
 	*/
-	clientId: string;
+	clientId?: string;
 
 	/**
 	* The timestamp when the session has been started. Epoch in milliseconds, GMT
@@ -33,16 +33,6 @@ export type TurnSession = {
 	nonceExpirationTime?: number;
 
 	/**
-	* the transport protocol betwwen the client and the server
-	*/
-	clientTransportProtocol?: string;
-
-	/**
-	* the transport protocol between the server and the peer
-	*/
-	relayTransportProtocol?: string;
-
-	/**
 	* The address of the server the client connected to
 	*/
 	serverAddress?: string;
@@ -51,6 +41,82 @@ export type TurnSession = {
 	* The portnumber the server listens the client requests
 	*/
 	serverPort?: number;
+
+	/**
+	* the transport protocol betwwen the client and the server (TCP, UDP, TCPTLS, UDPTLS, SCTP, SCTPTLS)
+	*/
+	transportProtocol?: string;
+
+	/**
+	* The address of the client connected from
+	*/
+	clientAddress?: string;
+
+	/**
+	* The portnumber the client requested from
+	*/
+	clientPort?: number;
+
+	/**
+	* the bitrate the TURN server sending to the client
+	*/
+	sendingBitrate?: number;
+
+	/**
+	* the bitrate the TURN server receiving from the client
+	*/
+	receivingBitrate?: number;
+
+	/**
+	* the amount of bytes sent to the client
+	*/
+	sentBytes?: number;
+
+	/**
+	* the amount of bytes received from the client
+	*/
+	receivedBytes?: number;
+
+	/**
+	* the amount of packets sent to the client
+	*/
+	sentPackets?: number;
+
+	/**
+	* the amount of packets received from the client
+	*/
+	receivedPackets?: number;
+
+}
+
+/**
+* Peer Alloocation data
+*/
+export type TurnPeerAllocation = {
+	/**
+	* a unique id for the allocation
+	*/
+	peerId: string;
+
+	/**
+	* The corresponded session the allocation belongs to
+	*/
+	sessionId: string;
+
+	/**
+	* The allocated address
+	*/
+	relayedAddress: string;
+
+	/**
+	* The allocated port
+	*/
+	relayedPort: number;
+
+	/**
+	* protocol (TCP, UDP)
+	*/
+	transportProtocol: string;
 
 	/**
 	* The address of the address the serever connect to
@@ -63,64 +129,34 @@ export type TurnSession = {
 	peerPort?: number;
 
 	/**
-	* the bitrate the TURN server sending to the client
+	* the bitrate the TURN server sending to the peer
 	*/
-	averageSendingBitrateToClient?: number;
-
-	/**
-	* the bitrate the TURN server receiving from the client
-	*/
-	averageReceivingBitrateFromClient?: number;
-
-	/**
-	* the amount of bytes received from the client
-	*/
-	receivedBytesFromClient?: number;
-
-	/**
-	* the amount of bytes sent to the client
-	*/
-	sentBytesToClient?: number;
-
-	/**
-	* the amount of packets received from the client
-	*/
-	receivedPacketsFromClient?: number;
-
-	/**
-	* the amount of packets sent to the client
-	*/
-	sentPacketsToClient?: number;
-
-	/**
-	* the bitrate the TURN server sending to theb peer
-	*/
-	averageSendingBitrateToPeer?: number;
+	sendingBitrate?: number;
 
 	/**
 	* the bitrate the TURN server receiving from the peer
 	*/
-	averageReceivingBitrateFromPeer?: number;
-
-	/**
-	* the amount of bytes received from the peer
-	*/
-	receivedBytesFromPeer?: number;
+	receivingBitrate?: number;
 
 	/**
 	* the amount of bytes sent to the peer
 	*/
-	sentBytesToPeer?: number;
+	sentBytes?: number;
 
 	/**
-	* the amount of packets received from the peer
+	* the amount of bytes received from the peer
 	*/
-	receivedPacketsFromPeer?: number;
+	receivedBytes?: number;
 
 	/**
 	* the amount of packets sent to the peer
 	*/
-	sentPacketsToPeer?: number;
+	sentPackets?: number;
+
+	/**
+	* the amount of packets received from the peer
+	*/
+	receivedPackets?: number;
 
 }
 
@@ -132,6 +168,11 @@ export type TurnSample = {
 	* A unique id of the turn server
 	*/
 	serverId: string;
+
+	/**
+	* Peer Alloocation data
+	*/
+	allocations?: TurnPeerAllocation[];
 
 	/**
 	* Session data

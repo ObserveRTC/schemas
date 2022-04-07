@@ -2368,18 +2368,84 @@ export const jsonDescriptor = {
                         },
                         "TurnSample": {
                           "fields": {
+                            "allocations": {
+                              "rule": "repeated",
+                              "type": "TurnPeerAllocation",
+                              "id": 1
+                            },
                             "sessions": {
                               "rule": "repeated",
                               "type": "TurnSession",
-                              "id": 1
+                              "id": 2
                             },
                             "serverId": {
                               "rule": "required",
                               "type": "string",
-                              "id": 2
+                              "id": 3
                             }
                           },
                           "nested": {
+                            "TurnPeerAllocation": {
+                              "fields": {
+                                "peerId": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "relayedAddress": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "relayedPort": {
+                                  "rule": "required",
+                                  "type": "uint32",
+                                  "id": 3
+                                },
+                                "sessionId": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 4
+                                },
+                                "transportProtocol": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 5
+                                },
+                                "peerAddress": {
+                                  "type": "string",
+                                  "id": 6
+                                },
+                                "peerPort": {
+                                  "type": "uint32",
+                                  "id": 7
+                                },
+                                "receivedBytes": {
+                                  "type": "uint64",
+                                  "id": 8
+                                },
+                                "receivedPackets": {
+                                  "type": "uint32",
+                                  "id": 9
+                                },
+                                "receivingBitrate": {
+                                  "type": "uint32",
+                                  "id": 10
+                                },
+                                "sendingBitrate": {
+                                  "type": "uint32",
+                                  "id": 11
+                                },
+                                "sentBytes": {
+                                  "type": "uint64",
+                                  "id": 12
+                                },
+                                "sentPackets": {
+                                  "type": "uint32",
+                                  "id": 13
+                                }
+                              }
+                            },
                             "TurnSession": {
                               "fields": {
                                 "sessionId": {
@@ -2387,97 +2453,69 @@ export const jsonDescriptor = {
                                   "type": "string",
                                   "id": 1
                                 },
-                                "averageReceivingBitrateFromClient": {
-                                  "type": "uint32",
+                                "clientAddress": {
+                                  "type": "string",
                                   "id": 2
-                                },
-                                "averageReceivingBitrateFromPeer": {
-                                  "type": "uint32",
-                                  "id": 3
-                                },
-                                "averageSendingBitrateToClient": {
-                                  "type": "uint32",
-                                  "id": 4
-                                },
-                                "averageSendingBitrateToPeer": {
-                                  "type": "uint32",
-                                  "id": 5
                                 },
                                 "clientId": {
                                   "type": "string",
-                                  "id": 6
+                                  "id": 3
                                 },
-                                "clientTransportProtocol": {
-                                  "type": "string",
-                                  "id": 7
+                                "clientPort": {
+                                  "type": "uint32",
+                                  "id": 4
                                 },
                                 "nonceExpirationTime": {
                                   "type": "uint64",
-                                  "id": 8
-                                },
-                                "peerAddress": {
-                                  "type": "string",
-                                  "id": 9
-                                },
-                                "peerPort": {
-                                  "type": "uint32",
-                                  "id": 10
+                                  "id": 5
                                 },
                                 "realm": {
                                   "type": "string",
+                                  "id": 6
+                                },
+                                "receivedBytes": {
+                                  "type": "uint64",
+                                  "id": 7
+                                },
+                                "receivedPackets": {
+                                  "type": "uint32",
+                                  "id": 8
+                                },
+                                "receivingBitrate": {
+                                  "type": "uint32",
+                                  "id": 9
+                                },
+                                "sendingBitrate": {
+                                  "type": "uint32",
+                                  "id": 10
+                                },
+                                "sentBytes": {
+                                  "type": "uint64",
                                   "id": 11
                                 },
-                                "receivedBytesFromClient": {
-                                  "type": "uint64",
+                                "sentPackets": {
+                                  "type": "uint32",
                                   "id": 12
-                                },
-                                "receivedBytesFromPeer": {
-                                  "type": "uint64",
-                                  "id": 13
-                                },
-                                "receivedPacketsFromClient": {
-                                  "type": "uint32",
-                                  "id": 14
-                                },
-                                "receivedPacketsFromPeer": {
-                                  "type": "uint32",
-                                  "id": 15
-                                },
-                                "relayTransportProtocol": {
-                                  "type": "string",
-                                  "id": 16
-                                },
-                                "sentBytesToClient": {
-                                  "type": "uint64",
-                                  "id": 17
-                                },
-                                "sentBytesToPeer": {
-                                  "type": "uint64",
-                                  "id": 18
-                                },
-                                "sentPacketsToClient": {
-                                  "type": "uint32",
-                                  "id": 19
-                                },
-                                "sentPacketsToPeer": {
-                                  "type": "uint32",
-                                  "id": 20
                                 },
                                 "serverAddress": {
                                   "type": "string",
-                                  "id": 21
+                                  "id": 13
                                 },
                                 "serverPort": {
                                   "type": "uint32",
-                                  "id": 22
+                                  "id": 14
                                 },
                                 "started": {
                                   "type": "uint64",
-                                  "id": 23
+                                  "id": 15
+                                },
+                                "transportProtocol": {
+                                  "type": "string",
+                                  "id": 16
                                 },
                                 "username": {
                                   "type": "string",
-                                  "id": 24
+                                  "id": 17
                                 }
                               }
                             }

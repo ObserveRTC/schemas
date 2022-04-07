@@ -601,34 +601,43 @@ message Samples {
 		optional uint32 timeZoneOffsetInHours = 9;
 	}
 	message TurnSample {
+		message TurnPeerAllocation {
+			required string peerId = 1;
+			required string relayedAddress = 2;
+			required uint32 relayedPort = 3;
+			required string sessionId = 4;
+			required string transportProtocol = 5;
+			optional string peerAddress = 6;
+			optional uint32 peerPort = 7;
+			optional uint64 receivedBytes = 8;
+			optional uint32 receivedPackets = 9;
+			optional uint32 receivingBitrate = 10;
+			optional uint32 sendingBitrate = 11;
+			optional uint64 sentBytes = 12;
+			optional uint32 sentPackets = 13;
+		}
 		message TurnSession {
 			required string sessionId = 1;
-			optional uint32 averageReceivingBitrateFromClient = 2;
-			optional uint32 averageReceivingBitrateFromPeer = 3;
-			optional uint32 averageSendingBitrateToClient = 4;
-			optional uint32 averageSendingBitrateToPeer = 5;
-			optional string clientId = 6;
-			optional string clientTransportProtocol = 7;
-			optional uint64 nonceExpirationTime = 8;
-			optional string peerAddress = 9;
-			optional uint32 peerPort = 10;
-			optional string realm = 11;
-			optional uint64 receivedBytesFromClient = 12;
-			optional uint64 receivedBytesFromPeer = 13;
-			optional uint32 receivedPacketsFromClient = 14;
-			optional uint32 receivedPacketsFromPeer = 15;
-			optional string relayTransportProtocol = 16;
-			optional uint64 sentBytesToClient = 17;
-			optional uint64 sentBytesToPeer = 18;
-			optional uint32 sentPacketsToClient = 19;
-			optional uint32 sentPacketsToPeer = 20;
-			optional string serverAddress = 21;
-			optional uint32 serverPort = 22;
-			optional uint64 started = 23;
-			optional string username = 24;
+			optional string clientAddress = 2;
+			optional string clientId = 3;
+			optional uint32 clientPort = 4;
+			optional uint64 nonceExpirationTime = 5;
+			optional string realm = 6;
+			optional uint64 receivedBytes = 7;
+			optional uint32 receivedPackets = 8;
+			optional uint32 receivingBitrate = 9;
+			optional uint32 sendingBitrate = 10;
+			optional uint64 sentBytes = 11;
+			optional uint32 sentPackets = 12;
+			optional string serverAddress = 13;
+			optional uint32 serverPort = 14;
+			optional uint64 started = 15;
+			optional string transportProtocol = 16;
+			optional string username = 17;
 		}
-		repeated TurnSession sessions = 1;
-		required string serverId = 2;
+		repeated TurnPeerAllocation allocations = 1;
+		repeated TurnSession sessions = 2;
+		required string serverId = 3;
 	}
 	repeated ClientSample clientSamples = 1;
 	repeated SfuSample sfuSamples = 2;
