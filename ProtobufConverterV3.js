@@ -1,7 +1,7 @@
 
-export class ProtobufConverter {
+export class ProtobufConverterV3 {
     static from(schema) {
-        const result = new ProtobufConverter();
+        const result = new ProtobufConverterV3();
         result._name = schema.name;
         for (const field of schema.fields) {
             try {
@@ -59,7 +59,7 @@ export class ProtobufConverter {
             return;
         }
         if (isObject) {
-            const nestedClass = ProtobufConverter.from(type, !!this._builderFields, this._uuidFields);
+            const nestedClass = ProtobufConverterV3.from(type, !!this._builderFields, this._uuidFields);
             nestedClass.level = this._level + 1;
             // console.log("nestedBuilder", this._builderFields, !!this._builderFields);
             this._nestedClasses.push(nestedClass);
@@ -121,8 +121,8 @@ export class ProtobufConverter {
         let result = [];
 
         if (isArray) result.push(`repeated`)
-        else if (required) result.push(`required`);
-        else result.push(`optional`);
+        // else if (required) result.push(`required`);
+        // else result.push(`optional`);
 
         result.push(type);
         result.push(`${name} = ${fieldNum}`);

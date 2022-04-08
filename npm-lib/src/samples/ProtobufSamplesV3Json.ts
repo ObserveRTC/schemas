@@ -134,12 +134,10 @@ export const jsonDescriptor = {
                               "id": 16
                             },
                             "clientId": {
-                              "rule": "required",
                               "type": "string",
                               "id": 17
                             },
                             "timestamp": {
-                              "rule": "required",
                               "type": "int64",
                               "id": 18
                             },
@@ -260,12 +258,10 @@ export const jsonDescriptor = {
                             "ExtensionStat": {
                               "fields": {
                                 "payload": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
                                 "type": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 2
                                 }
@@ -274,7 +270,6 @@ export const jsonDescriptor = {
                             "PeerConnectionTransport": {
                               "fields": {
                                 "peerConnectionId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
@@ -639,7 +634,6 @@ export const jsonDescriptor = {
                             "InboundAudioTrack": {
                               "fields": {
                                 "ssrc": {
-                                  "rule": "required",
                                   "type": "int64",
                                   "id": 1
                                 },
@@ -868,7 +862,6 @@ export const jsonDescriptor = {
                             "InboundVideoTrack": {
                               "fields": {
                                 "ssrc": {
-                                  "rule": "required",
                                   "type": "int64",
                                   "id": 1
                                 },
@@ -1125,7 +1118,6 @@ export const jsonDescriptor = {
                             "OutboundAudioTrack": {
                               "fields": {
                                 "ssrc": {
-                                  "rule": "required",
                                   "type": "int64",
                                   "id": 1
                                 },
@@ -1354,7 +1346,6 @@ export const jsonDescriptor = {
                             "OutboundVideoTrack": {
                               "fields": {
                                 "ssrc": {
-                                  "rule": "required",
                                   "type": "int64",
                                   "id": 1
                                 },
@@ -1814,12 +1805,10 @@ export const jsonDescriptor = {
                               "id": 5
                             },
                             "sfuId": {
-                              "rule": "required",
                               "type": "string",
                               "id": 6
                             },
                             "timestamp": {
-                              "rule": "required",
                               "type": "int64",
                               "id": 7
                             },
@@ -1836,7 +1825,6 @@ export const jsonDescriptor = {
                             "SfuTransport": {
                               "fields": {
                                 "transportId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
@@ -1949,22 +1937,18 @@ export const jsonDescriptor = {
                             "SfuInboundRtpPad": {
                               "fields": {
                                 "padId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
                                 "ssrc": {
-                                  "rule": "required",
                                   "type": "int64",
                                   "id": 2
                                 },
                                 "streamId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 3
                                 },
                                 "transportId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 4
                                 },
@@ -2109,27 +2093,22 @@ export const jsonDescriptor = {
                             "SfuOutboundRtpPad": {
                               "fields": {
                                 "padId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
                                 "sinkId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 2
                                 },
                                 "ssrc": {
-                                  "rule": "required",
                                   "type": "int64",
                                   "id": 3
                                 },
                                 "streamId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 4
                                 },
                                 "transportId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 5
                                 },
@@ -2286,17 +2265,14 @@ export const jsonDescriptor = {
                             "SfuSctpChannel": {
                               "fields": {
                                 "channelId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
                                 "streamId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 2
                                 },
                                 "transportId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 3
                                 },
@@ -2353,12 +2329,10 @@ export const jsonDescriptor = {
                             "SfuExtensionStats": {
                               "fields": {
                                 "payload": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
                                 "type": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 2
                                 }
@@ -2379,7 +2353,6 @@ export const jsonDescriptor = {
                               "id": 2
                             },
                             "serverId": {
-                              "rule": "required",
                               "type": "string",
                               "id": 3
                             }
@@ -2388,27 +2361,22 @@ export const jsonDescriptor = {
                             "TurnPeerAllocation": {
                               "fields": {
                                 "peerId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },
                                 "relayedAddress": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 2
                                 },
                                 "relayedPort": {
-                                  "rule": "required",
                                   "type": "int32",
                                   "id": 3
                                 },
                                 "sessionId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 4
                                 },
                                 "transportProtocol": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 5
                                 },
@@ -2449,7 +2417,6 @@ export const jsonDescriptor = {
                             "TurnSession": {
                               "fields": {
                                 "sessionId": {
-                                  "rule": "required",
                                   "type": "string",
                                   "id": 1
                                 },

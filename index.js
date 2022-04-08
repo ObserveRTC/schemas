@@ -7,6 +7,7 @@ import avro from "avro-js";
 import path from "path";
 import * as chunks from "./chunks.js"
 import { ProtobufConverter } from "./ProtobufConverter.js";
+import { ProtobufConverterV3 } from "./ProtobufConverterV3.js";
 import * as pbjs from "protobufjs/cli/pbjs.js";
 
 const makeProtobufJson = path => new Promise(resolve => {
@@ -28,6 +29,24 @@ function convertToProtobufSchema(avroSchema) {
 
     const samplesModule = [
         `syntax = "proto2";`,
+        ``,
+        `package org.observertc.schemas.protobuf;`,
+        ``,
+        // `option java_outer_classname = "Protobuf${samplesProto.name}";`,
+        // `option java_package = "org.observertc.observer.samples";`,
+        // ``,
+        samplesProtoStr
+    ].join("\n");
+    return samplesModule;
+    // fs.writeFileSync(outputPath, samplesModule);
+}
+
+function convertToProtobufSchemaV3(avroSchema) {
+    const samplesProto = ProtobufConverterV3.from(avroSchema);
+    const samplesProtoStr = samplesProto.toLines().join("\n");
+
+    const samplesModule = [
+        `syntax = "proto3";`,
         ``,
         `package org.observertc.schemas.protobuf;`,
         ``,
@@ -132,6 +151,17 @@ const main = async () => {
             fileName: "ProtobufSamples",
             protobufSchema,
             protobufJson,
+        });
+
+        const protobufSchemaV3 = convertToProtobufSchemaV3(schema);
+        const samplesProtoPathV3 = "./ProtobufSamplesV3.proto";
+        fs.writeFileSync(samplesProtoPathV3, protobufSchemaV3);
+        const protobufJsonV3 = await makeProtobufJson(samplesProtoPathV3);
+        fs.rmSync(samplesProtoPathV3);
+        npmLib.addProtobufSchema({
+            fileName: "ProtobufSamplesV3",
+            protobufSchema: protobufSchemaV3,
+            protobufJson: protobufJsonV3,
         });
     } else {
         console.warn(`There was no Samples avro schema to generate the protobuf schema`);

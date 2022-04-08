@@ -38,5 +38,7 @@ export { schema as AvroSamples } from "./samples/SamplesAvsc";
 export * from "./samples/Samples";
 export { schema as ProtobufSamples } from "./samples/ProtobufSamples";
 export { jsonDescriptor as ProtobufSamplesJson } from "./samples/ProtobufSamplesJson";
+export { schema as ProtobufSamplesV3 } from "./samples/ProtobufSamplesV3";
+export { jsonDescriptor as ProtobufSamplesV3Json } from "./samples/ProtobufSamplesV3Json";
 export * as W3CStats from "./w3c/W3cStatsIdentifiers";
 export const version = "2.0.0-beta.55";
