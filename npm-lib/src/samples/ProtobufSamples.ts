@@ -435,25 +435,26 @@ message Samples {
 		repeated string iceServers = 7;
 		repeated InboundAudioTrack inboundAudioTracks = 8;
 		repeated InboundVideoTrack inboundVideoTracks = 9;
-		repeated string mediaConstraints = 10;
-		repeated MediaDevice mediaDevices = 11;
-		repeated MediaSourceStat mediaSources = 12;
-		repeated OutboundAudioTrack outboundAudioTracks = 13;
-		repeated OutboundVideoTrack outboundVideoTracks = 14;
-		repeated PeerConnectionTransport pcTransports = 15;
-		repeated string userMediaErrors = 16;
-		required string clientId = 17;
-		required int64 timestamp = 18;
-		optional Browser browser = 19;
-		optional string callId = 20;
-		optional Engine engine = 21;
-		optional string marker = 22;
-		optional OperationSystem os = 23;
-		optional Platform platform = 24;
-		optional string roomId = 25;
-		optional int32 sampleSeq = 26;
-		optional int32 timeZoneOffsetInHours = 27;
-		optional string userId = 28;
+		repeated string localSDPs = 10;
+		repeated string mediaConstraints = 11;
+		repeated MediaDevice mediaDevices = 12;
+		repeated MediaSourceStat mediaSources = 13;
+		repeated OutboundAudioTrack outboundAudioTracks = 14;
+		repeated OutboundVideoTrack outboundVideoTracks = 15;
+		repeated PeerConnectionTransport pcTransports = 16;
+		repeated string userMediaErrors = 17;
+		required string clientId = 18;
+		required int64 timestamp = 19;
+		optional Browser browser = 20;
+		optional string callId = 21;
+		optional Engine engine = 22;
+		optional string marker = 23;
+		optional OperationSystem os = 24;
+		optional Platform platform = 25;
+		optional string roomId = 26;
+		optional int32 sampleSeq = 27;
+		optional int32 timeZoneOffsetInHours = 28;
+		optional string userId = 29;
 	}
 	message SfuSample {
 		message SfuTransport {

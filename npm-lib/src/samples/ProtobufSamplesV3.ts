@@ -435,25 +435,26 @@ message Samples {
 		repeated string iceServers = 7;
 		repeated InboundAudioTrack inboundAudioTracks = 8;
 		repeated InboundVideoTrack inboundVideoTracks = 9;
-		repeated string mediaConstraints = 10;
-		repeated MediaDevice mediaDevices = 11;
-		repeated MediaSourceStat mediaSources = 12;
-		repeated OutboundAudioTrack outboundAudioTracks = 13;
-		repeated OutboundVideoTrack outboundVideoTracks = 14;
-		repeated PeerConnectionTransport pcTransports = 15;
-		repeated string userMediaErrors = 16;
-		string clientId = 17;
-		int64 timestamp = 18;
-		Browser browser = 19;
-		string callId = 20;
-		Engine engine = 21;
-		string marker = 22;
-		OperationSystem os = 23;
-		Platform platform = 24;
-		string roomId = 25;
-		int32 sampleSeq = 26;
-		int32 timeZoneOffsetInHours = 27;
-		string userId = 28;
+		repeated string localSDPs = 10;
+		repeated string mediaConstraints = 11;
+		repeated MediaDevice mediaDevices = 12;
+		repeated MediaSourceStat mediaSources = 13;
+		repeated OutboundAudioTrack outboundAudioTracks = 14;
+		repeated OutboundVideoTrack outboundVideoTracks = 15;
+		repeated PeerConnectionTransport pcTransports = 16;
+		repeated string userMediaErrors = 17;
+		string clientId = 18;
+		int64 timestamp = 19;
+		Browser browser = 20;
+		string callId = 21;
+		Engine engine = 22;
+		string marker = 23;
+		OperationSystem os = 24;
+		Platform platform = 25;
+		string roomId = 26;
+		int32 sampleSeq = 27;
+		int32 timeZoneOffsetInHours = 28;
+		string userId = 29;
 	}
 	message SfuSample {
 		message SfuTransport {

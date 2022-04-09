@@ -2969,6 +2969,11 @@ export type ClientSample = {
 	iceServers?: string[];
 
 	/**
+	* The local part of the Signal Description Protocol to establish connections
+	*/
+	localSDPs?: string[];
+
+	/**
 	* Compound object related to Peer Connection Transport Stats
 	*/
 	pcTransports?: PeerConnectionTransport[];

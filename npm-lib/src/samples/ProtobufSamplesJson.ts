@@ -98,90 +98,95 @@ export const jsonDescriptor = {
                               "type": "InboundVideoTrack",
                               "id": 9
                             },
-                            "mediaConstraints": {
+                            "localSDPs": {
                               "rule": "repeated",
                               "type": "string",
                               "id": 10
                             },
+                            "mediaConstraints": {
+                              "rule": "repeated",
+                              "type": "string",
+                              "id": 11
+                            },
                             "mediaDevices": {
                               "rule": "repeated",
                               "type": "MediaDevice",
-                              "id": 11
+                              "id": 12
                             },
                             "mediaSources": {
                               "rule": "repeated",
                               "type": "MediaSourceStat",
-                              "id": 12
+                              "id": 13
                             },
                             "outboundAudioTracks": {
                               "rule": "repeated",
                               "type": "OutboundAudioTrack",
-                              "id": 13
+                              "id": 14
                             },
                             "outboundVideoTracks": {
                               "rule": "repeated",
                               "type": "OutboundVideoTrack",
-                              "id": 14
+                              "id": 15
                             },
                             "pcTransports": {
                               "rule": "repeated",
                               "type": "PeerConnectionTransport",
-                              "id": 15
+                              "id": 16
                             },
                             "userMediaErrors": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 16
+                              "id": 17
                             },
                             "clientId": {
                               "rule": "required",
                               "type": "string",
-                              "id": 17
+                              "id": 18
                             },
                             "timestamp": {
                               "rule": "required",
                               "type": "int64",
-                              "id": 18
+                              "id": 19
                             },
                             "browser": {
                               "type": "Browser",
-                              "id": 19
+                              "id": 20
                             },
                             "callId": {
                               "type": "string",
-                              "id": 20
+                              "id": 21
                             },
                             "engine": {
                               "type": "Engine",
-                              "id": 21
+                              "id": 22
                             },
                             "marker": {
                               "type": "string",
-                              "id": 22
+                              "id": 23
                             },
                             "os": {
                               "type": "OperationSystem",
-                              "id": 23
+                              "id": 24
                             },
                             "platform": {
                               "type": "Platform",
-                              "id": 24
+                              "id": 25
                             },
                             "roomId": {
                               "type": "string",
-                              "id": 25
+                              "id": 26
                             },
                             "sampleSeq": {
                               "type": "int32",
-                              "id": 26
+                              "id": 27
                             },
                             "timeZoneOffsetInHours": {
                               "type": "int32",
-                              "id": 27
+                              "id": 28
                             },
                             "userId": {
                               "type": "string",
-                              "id": 28
+                              "id": 29
                             }
                           },
                           "nested": {

@@ -98,7 +98,7 @@ userId | webrtc app provided user identifier
 peerConnectionId | The unique identifier of the peer connection
 sampleTimestamp | The timestamp of the sample the event related to
 sampleSeq | The sequence number of the sample the event may related to
-type | The type of the meta data. Possible values are: CERTIFICATE, CODEC, ICE_LOCAL_CANDIDATE, ICE_REMOTE_CANDIDATE, ICE_SERVER, MEDIA_CONSTRAINT, MEDIA_DEVICE, MEDIA_SOURCE, USER_MEDIA_ERROR,
+type | The type of the meta data. Possible values are: CERTIFICATE, CODEC, ICE_LOCAL_CANDIDATE, ICE_REMOTE_CANDIDATE, ICE_SERVER, MEDIA_CONSTRAINT, MEDIA_DEVICE, MEDIA_SOURCE, USER_MEDIA_ERROR, LOCAL_SDP
 payload | The payload for the metadata reported for the peeer connection
 
 
@@ -1350,6 +1350,7 @@ mediaDevices | The WebRTC app provided List of the media devices the client has.
 userMediaErrors | The WebRTC app provided List of user media errors the client has.
 extensionStats | The WebRTC app provided custom stats payload
 iceServers | The WebRTC app provided List of ICE server the client used.
+localSDPs | The local part of the Signal Description Protocol to establish connections
 pcTransports | Compound object related to Peer Connection Transport Stats
 mediaSources | WebRTC App provided information related to the operation system the client uses.
 codecs | List of codec the client has
