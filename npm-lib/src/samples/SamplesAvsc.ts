@@ -365,6 +365,18 @@ export const schema = {
                 "default": null
               },
               {
+                "name": "localSDPs",
+                "doc": "The local part of the Signal Description Protocol to establish connections",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": "string"
+                  }
+                ],
+                "default": null
+              },
+              {
                 "name": "pcTransports",
                 "doc": "Compound object related to Peer Connection Transport Stats",
                 "type": [
