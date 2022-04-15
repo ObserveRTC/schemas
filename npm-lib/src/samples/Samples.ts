@@ -3043,22 +3043,16 @@ export type ClientSample = {
 /**
 * Additional control flags indicate various operation has to be performed
 */
-export type ControlFlags = {
+export type Controls = {
 	/**
 	* Indicate that the server should close the connection
 	*/
 	close?: boolean;
 
-}
-
-/**
-* Additional meta information about the carried payloads
-*/
-export type SamplesMeta = {
 	/**
-	* Indicate the version of the schema for compatibility measures.
+	* Holds a new claim to process
 	*/
-	schemaVersion?: string;
+	accessClaim?: string;
 
 }
 
@@ -3067,14 +3061,9 @@ export type SamplesMeta = {
 */
 export type Samples = {
 	/**
-	* Additional meta information about the carried payloads
-	*/
-	meta?: SamplesMeta;
-
-	/**
 	* Additional control flags indicate various operation has to be performed
 	*/
-	controlFlags?: ControlFlags;
+	controls?: Controls;
 
 	/**
 	* Samples taken from the client

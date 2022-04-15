@@ -25,29 +25,21 @@ export const jsonDescriptor = {
                           "type": "TurnSample",
                           "id": 3
                         },
-                        "controlFlags": {
-                          "type": "ControlFlags",
+                        "controls": {
+                          "type": "Controls",
                           "id": 4
-                        },
-                        "meta": {
-                          "type": "SamplesMeta",
-                          "id": 5
                         }
                       },
                       "nested": {
-                        "SamplesMeta": {
+                        "Controls": {
                           "fields": {
-                            "schemaVersion": {
+                            "accessClaim": {
                               "type": "string",
                               "id": 1
-                            }
-                          }
-                        },
-                        "ControlFlags": {
-                          "fields": {
+                            },
                             "close": {
                               "type": "bool",
-                              "id": 1
+                              "id": 2
                             }
                           }
                         },

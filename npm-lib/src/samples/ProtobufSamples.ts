@@ -4,11 +4,9 @@ syntax = "proto2";
 package org.observertc.schemas.protobuf;
 
 message Samples {
-	message SamplesMeta {
-		optional string schemaVersion = 1;
-	}
-	message ControlFlags {
-		optional bool close = 1;
+	message Controls {
+		optional string accessClaim = 1;
+		optional bool close = 2;
 	}
 	message ClientSample {
 		message Engine {
@@ -643,7 +641,6 @@ message Samples {
 	repeated ClientSample clientSamples = 1;
 	repeated SfuSample sfuSamples = 2;
 	repeated TurnSample turnSamples = 3;
-	optional ControlFlags controlFlags = 4;
-	optional SamplesMeta meta = 5;
+	optional Controls controls = 4;
 }
 `;

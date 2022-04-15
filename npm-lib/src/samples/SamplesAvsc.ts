@@ -5,35 +5,12 @@ export const schema = {
   "doc": "Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.",
   "fields": [
     {
-      "name": "meta",
-      "doc": "Additional meta information about the carried payloads",
-      "type": [
-        "null",
-        {
-          "name": "SamplesMeta",
-          "type": "record",
-          "fields": [
-            {
-              "name": "schemaVersion",
-              "type": [
-                "null",
-                "string"
-              ],
-              "doc": "Indicate the version of the schema for compatibility measures.",
-              "default": null
-            }
-          ]
-        }
-      ],
-      "default": null
-    },
-    {
-      "name": "controlFlags",
+      "name": "controls",
       "doc": "Additional control flags indicate various operation has to be performed",
       "type": [
         "null",
         {
-          "name": "ControlFlags",
+          "name": "Controls",
           "type": "record",
           "fields": [
             {
@@ -42,6 +19,15 @@ export const schema = {
               "type": [
                 "null",
                 "boolean"
+              ],
+              "default": null
+            },
+            {
+              "name": "accessClaim",
+              "doc": "Holds a new claim to process",
+              "type": [
+                "null",
+                "string"
               ],
               "default": null
             }

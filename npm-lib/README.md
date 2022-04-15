@@ -48,8 +48,7 @@ Javascript bindings for ObserveRTC schemas
 	* [Platform](#Platform)
 	* [Engine](#Engine)
 	* [ClientSample](#ClientSample)
-	* [ControlFlags](#ControlFlags)
-	* [SamplesMeta](#SamplesMeta)
+	* [Controls](#Controls)
 	* [Samples](#Samples)
 - [Changelog](#Changelog)
 ## CallEventReport
@@ -832,19 +831,13 @@ sctpPacketsReceived | The total amount of SCTP packets received on this transpor
 sctpPacketsSent | The total amount of SCTP packets sent on this transport
 
 
-## SamplesMeta
-
-
-Field | Description 
---- | ---
-schemaVersion | Indicate the version of the schema for compatibility measures.
-
-## ControlFlags
+## Controls
 
 
 Field | Description 
 --- | ---
 close | Indicate that the server should close the connection
+accessClaim | Holds a new claim to process
 
 ## Engine
 
@@ -1593,8 +1586,7 @@ Observer created reports related to events (call started, call ended, client joi
 
 Field | Description 
 --- | ---
-meta | Additional meta information about the carried payloads
-controlFlags | Additional control flags indicate various operation has to be performed
+controls | Additional control flags indicate various operation has to be performed
 clientSamples | Samples taken from the client
 sfuSamples | Samples taken from an Sfu
 turnSamples | Samples taken from the TURN server
