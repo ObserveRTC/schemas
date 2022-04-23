@@ -28,8 +28,8 @@ export class NpmMonitorLib {
     make() {
         const samplesOutputPath = path.join(this._srcPath, "samples", "Samples.ts");
         fs.writeFileSync(samplesOutputPath, this._samplesTs);
-        const protobufSamplesOutputPath = path.join(this._srcPath, "samples", "ProtobufSamples.ts");
-        fs.writeFileSync(protobufSamplesOutputPath, this._protobufSamples);
+        // const protobufSamplesOutputPath = path.join(this._srcPath, "samples", "ProtobufSamples.ts");
+        // fs.writeFileSync(protobufSamplesOutputPath, this._protobufSamples);
         const w3cOutputPath = path.join(this._srcPath, "w3c", "W3cStatsIdentifiers.ts");
         fs.writeFileSync(w3cOutputPath, this._w3cStatsIdentifiers);
         const indexTsPath = path.join(this._srcPath, INDEX_TS_FILENAME);
@@ -44,7 +44,7 @@ export class NpmMonitorLib {
 
         const indexLines = [
             `export * from "./samples/Samples";`,
-            `export { schema as ProtobufSamples } from "./samples/ProtobufSamples";`,
+            // `export { schema as ProtobufSamples } from "./samples/ProtobufSamples";`,
             `export * as W3CStats from "./w3c/W3cStatsIdentifiers";`,
             `export const version = "${this._version}";`,
         ]

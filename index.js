@@ -142,13 +142,12 @@ const main = async () => {
     }
     // generate protobuf schema if we can
     const samplesSource = sources.get("samples");
+    const samplesProtoPath = "./ProtobufSamples.proto";
     if (samplesSource) {
         const schema = JSON.parse(samplesSource.getAvsc());
         const protobufSchema = convertToProtobufSchema(schema);
-        const samplesProtoPath = "./ProtobufSamples.proto";
         fs.writeFileSync(samplesProtoPath, protobufSchema);
         const protobufJson = await makeProtobufJson(samplesProtoPath);
-        fs.rmSync(samplesProtoPath);
         npmLib.addProtobufSchema({
             fileName: "ProtobufSamples",
             protobufSchema,
@@ -182,6 +181,8 @@ const main = async () => {
     });
     npmMonitorLib.version = version;
     npmMonitorLib.make();
+    fs.copyFileSync(samplesProtoPath, path.join(NPM_MONITOR_BASE_PATH, "SamplesProtobuf.proto"));
+    fs.rmSync(samplesProtoPath);
 };
 
 main();
