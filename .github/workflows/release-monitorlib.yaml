@@ -1,0 +1,34 @@
+name: Release schemas library for monitors
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./npm-monitor-lib
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      
+      - run: npm install -g yarn
+      - name: install packages
+        run: yarn
+        working-directory: ${{env.working-directory}}
+
+      # - name: publish
+      #   run: npm publish --access public
+      #   working-directory: ${{env.working-directory}}
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Publish
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --ignore-scripts --access public
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

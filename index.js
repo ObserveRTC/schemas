@@ -9,6 +9,7 @@ import * as chunks from "./chunks.js"
 import { ProtobufConverter } from "./ProtobufConverter.js";
 import { ProtobufConverterV3 } from "./ProtobufConverterV3.js";
 import * as pbjs from "protobufjs/cli/pbjs.js";
+import { NpmMonitorLib } from './NpmMonitorLib.js';
 
 const makeProtobufJson = path => new Promise(resolve => {
     pbjs.main([ path ], function(err, output) {
@@ -21,6 +22,7 @@ const makeProtobufJson = path => new Promise(resolve => {
 
 const SOURCE_PATH = "./sources";
 const NPM_LIB_PATH = "./npm-lib";
+const NPM_MONITOR_BASE_PATH = "./npm-monitor-lib";
 const W3C_STATS_IDENTIFIERS = "./sources/w3c/W3cStatsIdentifiers.ts";
 
 function convertToProtobufSchema(avroSchema) {
@@ -166,10 +168,20 @@ const main = async () => {
     } else {
         console.warn(`There was no Samples avro schema to generate the protobuf schema`);
     }
+    const version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
     npmLib.changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
-    npmLib.version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
+    npmLib.version = version
     npmLib.clear();
     npmLib.make();
+
+    const npmMonitorLib = new NpmMonitorLib(NPM_MONITOR_BASE_PATH);
+    npmMonitorLib.add({ 
+        samplesTs: fs.readFileSync(path.join(NPM_LIB_PATH, "src", "samples", "Samples.ts")), 
+        protobufSamples: fs.readFileSync(path.join(NPM_LIB_PATH, "src", "samples", "ProtobufSamples.ts")), 
+        w3cStatsIdentifiers,
+    });
+    npmMonitorLib.version = version;
+    npmMonitorLib.make();
 };
 
 main();
