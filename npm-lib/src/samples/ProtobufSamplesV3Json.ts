@@ -826,33 +826,37 @@ export const jsonDescriptor = {
                                   "type": "string",
                                   "id": 49
                                 },
+                                "sfuStreamId": {
+                                  "type": "string",
+                                  "id": 50
+                                },
                                 "silentConcealedSamples": {
                                   "type": "int32",
-                                  "id": 50
+                                  "id": 51
                                 },
                                 "totalProcessingDelay": {
                                   "type": "double",
-                                  "id": 51
+                                  "id": 52
                                 },
                                 "totalRoundTripTime": {
                                   "type": "double",
-                                  "id": 52
+                                  "id": 53
                                 },
                                 "totalSamplesDecoded": {
                                   "type": "int32",
-                                  "id": 53
+                                  "id": 54
                                 },
                                 "totalSamplesReceived": {
                                   "type": "int32",
-                                  "id": 54
+                                  "id": 55
                                 },
                                 "trackId": {
                                   "type": "string",
-                                  "id": 55
+                                  "id": 56
                                 },
                                 "voiceActivityFlag": {
                                   "type": "bool",
-                                  "id": 56
+                                  "id": 57
                                 }
                               }
                             },
@@ -1082,33 +1086,37 @@ export const jsonDescriptor = {
                                   "type": "string",
                                   "id": 56
                                 },
+                                "sfuStreamId": {
+                                  "type": "string",
+                                  "id": 57
+                                },
                                 "sliCount": {
                                   "type": "int32",
-                                  "id": 57
+                                  "id": 58
                                 },
                                 "totalDecodeTime": {
                                   "type": "double",
-                                  "id": 58
+                                  "id": 59
                                 },
                                 "totalInterFrameDelay": {
                                   "type": "double",
-                                  "id": 59
+                                  "id": 60
                                 },
                                 "totalProcessingDelay": {
                                   "type": "double",
-                                  "id": 60
+                                  "id": 61
                                 },
                                 "totalRoundTripTime": {
                                   "type": "double",
-                                  "id": 61
+                                  "id": 62
                                 },
                                 "totalSquaredInterFrameDelay": {
                                   "type": "double",
-                                  "id": 62
+                                  "id": 63
                                 },
                                 "trackId": {
                                   "type": "string",
-                                  "id": 63
+                                  "id": 64
                                 }
                               }
                             },

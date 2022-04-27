@@ -1262,6 +1262,15 @@ export const schema = {
                           "default": null
                         },
                         {
+                          "name": "sfuStreamId",
+                          "doc": "The id of the SFU stream this track is sinked from",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "sfuSinkId",
                           "doc": "The id of the sink this track belongs to in the SFU",
                           "type": [
@@ -1772,6 +1781,15 @@ export const schema = {
                         {
                           "name": "remoteClientId",
                           "doc": "The remote clientId the source outbound track belongs to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sfuStreamId",
+                          "doc": "The id of the SFU stream this track is sinked from",
                           "type": [
                             "null",
                             "string"

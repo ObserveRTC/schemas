@@ -107,6 +107,7 @@ const main = async () => {
     const npmLib = new NpmLib(NPM_LIB_PATH);
     const w3cStatsIdentifiers = fs.readFileSync(W3C_STATS_IDENTIFIERS, 'utf-8');
     npmLib.addW3cStatsIdentifiers(w3cStatsIdentifiers);
+    const markdownLists = [];
     for (const [fileName, source] of sources) {
         const avsc = source.getAvsc();
         const schemaType = source.getSchemaType();
@@ -127,8 +128,9 @@ const main = async () => {
         }
 
         const schemaName = schema.name;
-        const markdown = makeMarkdownDoc(schema);
-
+        const { markdownDoc, list } = makeMarkdownDoc(schema);
+        markdownLists.push(...list);
+// console.log(list);
         const { module, exports } = makeTsModule(schema);
         npmLib.addEntry({
             fileName,
@@ -137,9 +139,10 @@ const main = async () => {
             avsc,
             exports,
             typescript: module,
-            markdown,
+            markdown: markdownDoc,
         });
     }
+    fs.writeFileSync(`schemaList.md`, markdownLists.join(`\n`))
     // generate protobuf schema if we can
     const samplesSource = sources.get("samples");
     const samplesProtoPath = "./ProtobufSamples.proto";

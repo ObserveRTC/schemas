@@ -1737,6 +1737,11 @@ export type InboundVideoTrack = {
 	remoteClientId?: string;
 
 	/**
+	* The id of the SFU stream this track is sinked from
+	*/
+	sfuStreamId?: string;
+
+	/**
 	* The id of the sink this track belongs to in the SFU
 	*/
 	sfuSinkId?: string;
@@ -2056,6 +2061,11 @@ export type InboundAudioTrack = {
 	* The remote clientId the source outbound track belongs to
 	*/
 	remoteClientId?: string;
+
+	/**
+	* The id of the SFU stream this track is sinked from
+	*/
+	sfuStreamId?: string;
 
 	/**
 	* The id of the sink this track belongs to in the SFU

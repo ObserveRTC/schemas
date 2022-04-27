@@ -181,13 +181,14 @@ message Samples {
 			int32 samplesDecodedWithSilk = 47;
 			string sdpFmtpLine = 48;
 			string sfuSinkId = 49;
-			int32 silentConcealedSamples = 50;
-			double totalProcessingDelay = 51;
-			double totalRoundTripTime = 52;
-			int32 totalSamplesDecoded = 53;
-			int32 totalSamplesReceived = 54;
-			string trackId = 55;
-			bool voiceActivityFlag = 56;
+			string sfuStreamId = 50;
+			int32 silentConcealedSamples = 51;
+			double totalProcessingDelay = 52;
+			double totalRoundTripTime = 53;
+			int32 totalSamplesDecoded = 54;
+			int32 totalSamplesReceived = 55;
+			string trackId = 56;
+			bool voiceActivityFlag = 57;
 		}
 		message InboundVideoTrack {
 			int64 ssrc = 1;
@@ -246,13 +247,14 @@ message Samples {
 			int32 roundTripTimeMeasurements = 54;
 			string sdpFmtpLine = 55;
 			string sfuSinkId = 56;
-			int32 sliCount = 57;
-			double totalDecodeTime = 58;
-			double totalInterFrameDelay = 59;
-			double totalProcessingDelay = 60;
-			double totalRoundTripTime = 61;
-			double totalSquaredInterFrameDelay = 62;
-			string trackId = 63;
+			string sfuStreamId = 57;
+			int32 sliCount = 58;
+			double totalDecodeTime = 59;
+			double totalInterFrameDelay = 60;
+			double totalProcessingDelay = 61;
+			double totalRoundTripTime = 62;
+			double totalSquaredInterFrameDelay = 63;
+			string trackId = 64;
 		}
 		message OutboundAudioTrack {
 			int64 ssrc = 1;

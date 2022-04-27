@@ -7,7 +7,12 @@ class MarkdownSchemaDescription {
         this._preMarks = [];
         this._rows = [];
         this._postMarks = [];
+        this._list = [];
         this._level = 0;
+    }
+
+    getList() {
+        return this._list;
     }
 
     withLevel(value) {
@@ -87,11 +92,14 @@ class MarkdownSchemaDescription {
 
             result.push("Field | Description ");
             result.push("--- | ---");
+            this._list.push(`${this._title}`);
             this._rows.sort(compareRows).forEach(row => {
                 const name = row.name + (row.required === "Yes" ? " (**Mandatory**)" : "");
                 const resultRow = [name, row.description].join(' | ');
                 result.push(resultRow);
+                this._list.push(` * **${row.name}**: ${row.description}`);
             });
+            
         }
 
         if (0 < this._postMarks.length) {
@@ -116,6 +124,7 @@ export function makeMarkdownDoc(avroSchema) {
         .withTitle(avroSchema.name)
         .withDescription(avroSchema.doc)
     ;
+    const preMarkdownList = [];
     avroSchema.fields.forEach(field => {
         const required = field.default === undefined;
         let description = field.doc;
@@ -123,15 +132,17 @@ export function makeMarkdownDoc(avroSchema) {
         let fieldName = field.name;
         if (typeof fieldType !== 'string') {
             if (fieldType.type && fieldType.type === 'record') {
-                const preMarkdown = makeMarkdownDoc(fieldType);
+                const { markdownDoc: preMarkdown, list } = makeMarkdownDoc(fieldType);
                 preMarkdowns.push(preMarkdown);
+                preMarkdownList.push(...list);
                 fieldType = fieldType.name;
             } else if (fieldType.type && fieldType.type === 'array') {
                 if (fieldType.items && typeof fieldType.items === "string") {
                     fieldType += "[]";
                 } else if (fieldType.items && typeof fieldType.items !== "string") {
-                    const preMarkdown = makeMarkdownDoc(fieldType.items);
+                    const { markdownDoc: preMarkdown, list } = makeMarkdownDoc(fieldType.items);
                     preMarkdowns.push(preMarkdown);
+                    preMarkdownList.push(...list);
                     fieldType = fieldType.items.name + "[]";
                 }
             } else if (fieldType.type && fieldType.type === 'enum') {
@@ -147,6 +158,7 @@ export function makeMarkdownDoc(avroSchema) {
         });
        
     });
-    const result = preMarkdowns.join("\n\n") +  markdown.build();
-    return result;
+    const markdownDoc = preMarkdowns.join("\n\n") +  markdown.build();
+    const list = [...preMarkdownList, ...markdown.getList()];
+    return { markdownDoc, list };
 }

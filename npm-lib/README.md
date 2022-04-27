@@ -97,7 +97,7 @@ userId | webrtc app provided user identifier
 peerConnectionId | The unique identifier of the peer connection
 sampleTimestamp | The timestamp of the sample the event related to
 sampleSeq | The sequence number of the sample the event may related to
-type | The type of the meta data. Possible values are: CERTIFICATE, CODEC, ICE_LOCAL_CANDIDATE, ICE_REMOTE_CANDIDATE, ICE_SERVER, MEDIA_CONSTRAINT, MEDIA_DEVICE, MEDIA_SOURCE, USER_MEDIA_ERROR, LOCAL_SDP
+type | The type of the meta data. Possible values are: OPERATION_SYSTEM, ENGINE, PLATFORM, BROWSER, CERTIFICATE, CODEC, ICE_LOCAL_CANDIDATE, ICE_REMOTE_CANDIDATE, ICE_SERVER, MEDIA_CONSTRAINT, MEDIA_DEVICE, MEDIA_SOURCE, USER_MEDIA_ERROR, LOCAL_SDP
 payload | The payload for the metadata reported for the peeer connection
 
 
@@ -1010,6 +1010,7 @@ ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 remoteClientId | The remote clientId the source outbound track belongs to
+sfuStreamId | The id of the SFU stream this track is sinked from
 sfuSinkId | The id of the sink this track belongs to in the SFU
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
@@ -1072,6 +1073,7 @@ ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
 peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
 remoteClientId | The remote clientId the source outbound track belongs to
+sfuStreamId | The id of the SFU stream this track is sinked from
 sfuSinkId | The id of the sink this track belongs to in the SFU
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source

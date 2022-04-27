@@ -181,13 +181,14 @@ message Samples {
 			optional int32 samplesDecodedWithSilk = 47;
 			optional string sdpFmtpLine = 48;
 			optional string sfuSinkId = 49;
-			optional int32 silentConcealedSamples = 50;
-			optional double totalProcessingDelay = 51;
-			optional double totalRoundTripTime = 52;
-			optional int32 totalSamplesDecoded = 53;
-			optional int32 totalSamplesReceived = 54;
-			optional string trackId = 55;
-			optional bool voiceActivityFlag = 56;
+			optional string sfuStreamId = 50;
+			optional int32 silentConcealedSamples = 51;
+			optional double totalProcessingDelay = 52;
+			optional double totalRoundTripTime = 53;
+			optional int32 totalSamplesDecoded = 54;
+			optional int32 totalSamplesReceived = 55;
+			optional string trackId = 56;
+			optional bool voiceActivityFlag = 57;
 		}
 		message InboundVideoTrack {
 			required int64 ssrc = 1;
@@ -246,13 +247,14 @@ message Samples {
 			optional int32 roundTripTimeMeasurements = 54;
 			optional string sdpFmtpLine = 55;
 			optional string sfuSinkId = 56;
-			optional int32 sliCount = 57;
-			optional double totalDecodeTime = 58;
-			optional double totalInterFrameDelay = 59;
-			optional double totalProcessingDelay = 60;
-			optional double totalRoundTripTime = 61;
-			optional double totalSquaredInterFrameDelay = 62;
-			optional string trackId = 63;
+			optional string sfuStreamId = 57;
+			optional int32 sliCount = 58;
+			optional double totalDecodeTime = 59;
+			optional double totalInterFrameDelay = 60;
+			optional double totalProcessingDelay = 61;
+			optional double totalRoundTripTime = 62;
+			optional double totalSquaredInterFrameDelay = 63;
+			optional string trackId = 64;
 		}
 		message OutboundAudioTrack {
 			required int64 ssrc = 1;
