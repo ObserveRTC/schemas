@@ -1,6 +1,6 @@
 {
   "name": "@observertc/monitor-schemas",
-  "version": "2.0.0-beta.65",
+  "version": "2.0.0",
   "description": "ObserveRTC Library for Schemas",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
