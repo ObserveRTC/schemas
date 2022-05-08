@@ -774,6 +774,7 @@ timestamp (**Mandatory**) | The timestamp when the corresponded data is generate
 transportId (**Mandatory**) | The id of the transport the RTP stream uses.
 streamId (**Mandatory**) | The id of the sctp stream
 marker | The marker the originated sample is reported with
+internal | Flag indicate if the sctp channel is used as an internal transport between SFUs
 callId | The generated unique identifier of the call
 roomId | webrtc app provided room id
 label | The label of the sctp stream
@@ -803,6 +804,7 @@ sfuId (**Mandatory**) | The provided unique identifier of the SFU
 timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
 transportId (**Mandatory**) | The generated unique identifier of the transport
 marker | The marker the originated sample is reported with
+internal | Flag indicate if the sfu transport is used as an internal transport between SFUs
 callId | The generated unique identifier of the call
 roomId | webrtc app provided room id
 dtlsState | Represent the current value of the state attribute of the underlying RTCDtlsTransport.
@@ -1494,6 +1496,7 @@ transportId (**Mandatory**) | The id of the transport the RTP stream uses.
 streamId (**Mandatory**) | The id of the sctp stream
 channelId (**Mandatory**) | The id of the sctp stream
 noReport | Flag indicate to not generate report from this sample
+internal | Flag to indicate that the SCTP channel is used as an internally between SFU instances
 label | The label of the sctp stream
 protocol | The protocol used to establish an sctp stream
 sctpSmoothedRoundTripTime | The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.

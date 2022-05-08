@@ -27,6 +27,11 @@
     "name" : "timestamp",
     "doc": "The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)",
     "type" : "long"
+  }, {
+    "name" : "internal",
+    "doc": "Flag indicate if the sctp channel is used as an internal transport between SFUs",
+    "type" : [ "null", "boolean" ],
+    "default" : null
   },
   /* Report Fields */
   {

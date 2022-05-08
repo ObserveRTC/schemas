@@ -222,6 +222,11 @@ export type SfuSctpChannel = {
 	noReport?: boolean;
 
 	/**
+	* Flag to indicate that the SCTP channel is used as an internally between SFU instances
+	*/
+	internal?: boolean;
+
+	/**
 	* The label of the sctp stream
 	*/
 	label?: string;
