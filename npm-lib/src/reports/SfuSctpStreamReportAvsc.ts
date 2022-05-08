@@ -34,6 +34,15 @@ export const schema = {
       "type": "long"
     },
     {
+      "name": "internal",
+      "doc": "Flag indicate if the sctp channel is used as an internal transport between SFUs",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "default": null
+    },
+    {
       "name": "callId",
       "doc": "The generated unique identifier of the call",
       "type": [

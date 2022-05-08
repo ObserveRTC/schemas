@@ -4978,6 +4978,15 @@ export const schema = {
                           "type": "string"
                         },
                         {
+                          "name": "internal",
+                          "doc": "Flag to indicate that the SCTP channel is used as an internally between SFU instances",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "label",
                           "doc": "The label of the sctp stream",
                           "type": [

@@ -38,6 +38,11 @@ export type SfuSctpStreamReport = {
 	marker?: string;
 
 	/**
+	* Flag indicate if the sctp channel is used as an internal transport between SFUs
+	*/
+	internal?: boolean;
+
+	/**
 	* The generated unique identifier of the call
 	*/
 	callId?: string;

@@ -2313,45 +2313,49 @@ export const jsonDescriptor = {
                                   "type": "int64",
                                   "id": 5
                                 },
+                                "internal": {
+                                  "type": "bool",
+                                  "id": 6
+                                },
                                 "label": {
                                   "type": "string",
-                                  "id": 6
+                                  "id": 7
                                 },
                                 "messageReceived": {
                                   "type": "int32",
-                                  "id": 7
+                                  "id": 8
                                 },
                                 "messageSent": {
                                   "type": "int32",
-                                  "id": 8
+                                  "id": 9
                                 },
                                 "noReport": {
                                   "type": "bool",
-                                  "id": 9
+                                  "id": 10
                                 },
                                 "protocol": {
                                   "type": "string",
-                                  "id": 10
+                                  "id": 11
                                 },
                                 "sctpCongestionWindow": {
                                   "type": "double",
-                                  "id": 11
+                                  "id": 12
                                 },
                                 "sctpMtu": {
                                   "type": "int32",
-                                  "id": 12
+                                  "id": 13
                                 },
                                 "sctpReceiverWindow": {
                                   "type": "double",
-                                  "id": 13
+                                  "id": 14
                                 },
                                 "sctpSmoothedRoundTripTime": {
                                   "type": "double",
-                                  "id": 14
+                                  "id": 15
                                 },
                                 "sctpUnackData": {
                                   "type": "int32",
-                                  "id": 15
+                                  "id": 16
                                 }
                               }
                             },

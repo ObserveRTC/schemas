@@ -33,6 +33,11 @@ export type SFUTransportReport = {
 	marker?: string;
 
 	/**
+	* Flag indicate if the sfu transport is used as an internal transport between SFUs
+	*/
+	internal?: boolean;
+
+	/**
 	* The generated unique identifier of the call
 	*/
 	callId?: string;

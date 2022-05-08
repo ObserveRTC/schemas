@@ -576,16 +576,17 @@ message Samples {
 			required string transportId = 3;
 			optional int64 bytesReceived = 4;
 			optional int64 bytesSent = 5;
-			optional string label = 6;
-			optional int32 messageReceived = 7;
-			optional int32 messageSent = 8;
-			optional bool noReport = 9;
-			optional string protocol = 10;
-			optional double sctpCongestionWindow = 11;
-			optional int32 sctpMtu = 12;
-			optional double sctpReceiverWindow = 13;
-			optional double sctpSmoothedRoundTripTime = 14;
-			optional int32 sctpUnackData = 15;
+			optional bool internal = 6;
+			optional string label = 7;
+			optional int32 messageReceived = 8;
+			optional int32 messageSent = 9;
+			optional bool noReport = 10;
+			optional string protocol = 11;
+			optional double sctpCongestionWindow = 12;
+			optional int32 sctpMtu = 13;
+			optional double sctpReceiverWindow = 14;
+			optional double sctpSmoothedRoundTripTime = 15;
+			optional int32 sctpUnackData = 16;
 		}
 		message SfuExtensionStats {
 			required string payload = 1;
