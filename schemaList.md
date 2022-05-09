@@ -562,6 +562,7 @@ SfuOutboundRtpPadReport
  * **framesSent**: The number of frames sent on the corresponded RTP stream
  * **framesEncoded**: Indicate the number of frames the Sfu has been encoded
  * **keyFramesEncoded**: Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
+ * **roundTripTime**: The calculated RTT of the stream
 SfuSctpStreamReport
  * **serviceId**: The service id the report belongs to
  * **mediaUnitId**: The media unit id the report belongs to
