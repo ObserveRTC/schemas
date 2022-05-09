@@ -2,15 +2,16 @@
 
 This repository contains schemas for ObserveRTC.
 
-## Use the Schema
+# Install
 
-For npm projects:
-
+## NPM
 ```javascript
 npm i @observertc/schemas
 ```
 
-## Versioning
+
+
+# Versioning
 
 Schemas uses semver of `MAJOR`.`MINOR`.`PATCH` version number. 
 In ObserveRTC this semver structure is mapped to `ConceptVersion`.`SamplesVersion`.`ReportsVersion`.
@@ -20,14 +21,14 @@ Increasing the number of `PATCH`, `MINOR`, or `MAJOR` imply the followings:
  * `MINOR` changes on the schema imply add, remove or modify fields in Reports and Samples.
  * `MAJOR` changes on the schema imply groundbreaking conceptual changes in the schema renders it incompatible with the previous concept.
 
-### Change the schema
+## Change the schema
 
-#### Schema change requests
+### Schema change requests
 
 Depending on which minor (or major) version is coming, you can write it in the [discussion](https://github.com/ObserveRTC/schemas/discussions).
 
 
-#### Create PR for schema changes
+## Create PR for schema changes
 
 Discussion is good to request a schema, PR is better.
 Step to create a PR (after you cloned the repo):
@@ -36,7 +37,10 @@ Step to create a PR (after you cloned the repo):
 3. Generate `npm-lib` typescripts (see below)
 4. open the PR
 
-### Generate npm-lib typescripts
+
+
+
+# Develop
 
 To run the schema generator for npm-lib:
 
