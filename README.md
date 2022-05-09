@@ -10,11 +10,22 @@ For npm projects:
 npm i @observertc/schemas
 ```
 
+## Versioning
+
+Schemas uses semver of `MAJOR`.`MINOR`.`PATCH` version number. 
+In ObserveRTC this semver structure is mapped to `ConceptVersion`.`SamplesVersion`.`ReportsVersion`.
+
+Increasing the number of `PATCH`, `MINOR`, or `MAJOR` imply the followings:
+ * `PATCH` changes on the schema imply add, remove or modify fields in the Reports, but exclude any changes in the Samples
+ * `MINOR` changes on the schema imply add, remove or modify fields in Reports and Samples.
+ * `MAJOR` changes on the schema imply groundbreaking conceptual changes in the schema renders it incompatible with the previous concept.
+
 ### Change the schema
 
 #### Schema change requests
 
-[Create an issue](https://github.com/ObserveRTC/schemas/issues/new?assignees=&labels=&template=schema-change-request.md) and state the request.
+Depending on which minor (or major) version is coming, you can write it in the [discussion](https://github.com/ObserveRTC/schemas/discussions).
+
 
 #### Create PR for schema changes
 

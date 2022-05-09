@@ -218,6 +218,11 @@
     "doc": "Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream",
     "type" : ["null", "int"],
     "default" : null
+  }, {
+    "name" : "roundTripTime",
+    "doc": "The calculated RTT of the stream",
+    "type" : ["null", "double"],
+    "default" : null
   }
 ]
 }
