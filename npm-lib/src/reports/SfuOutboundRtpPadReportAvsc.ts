@@ -354,6 +354,15 @@ export const schema = {
         "int"
       ],
       "default": null
+    },
+    {
+      "name": "roundTripTime",
+      "doc": "The calculated RTT of the stream",
+      "type": [
+        "null",
+        "double"
+      ],
+      "default": null
     }
   ]
 }

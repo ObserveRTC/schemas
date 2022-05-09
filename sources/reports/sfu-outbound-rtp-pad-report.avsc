@@ -69,7 +69,7 @@
     "doc": "The id of the track the RTP stream related to at the client side",
     "type" : [ "null", "string" ],
     "default" : null
-  },
+  }, 
 
   
   /* RTP stats */
@@ -217,6 +217,11 @@
     "name" : "keyFramesEncoded",
     "doc": "Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream",
     "type" : ["null", "int"],
+    "default" : null
+  }, {
+    "name" : "roundTripTime",
+    "doc": "The calculated RTT of the stream",
+    "type" : ["null", "double"],
     "default" : null
   }
 ]
