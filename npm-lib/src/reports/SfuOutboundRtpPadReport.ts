@@ -217,4 +217,9 @@ export type SfuOutboundRtpPadReport = {
 	*/
 	keyFramesEncoded?: number;
 
+	/**
+	* The calculated RTT of the stream
+	*/
+	roundTripTime?: number;
+
 }
