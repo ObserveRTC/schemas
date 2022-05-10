@@ -43,6 +43,42 @@ export const schema = {
       "type": "long"
     },
     {
+      "name": "remoteSfuId",
+      "doc": "only added if it is internal. The id of the remote Sfu that outbound rtp pad matched with this internal inbound rtp pad",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "remoteTransportId",
+      "doc": "only added if it is internal. The id of the remote transportId that outbound rtp pad matched with this internal inbound rtp pad",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "remoteSinkId",
+      "doc": "only added if it is internal. The id of the remote sinkId that outbound rtp pad matched with this internal inbound rtp pad",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "remoteRtpPadId",
+      "doc": "only added if it is internal. The id of the remote outbound rtp pad matched with this internal inbound rtp pad",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "transportId",
       "doc": "The id of the transport the RTP stream uses.",
       "type": "string"
