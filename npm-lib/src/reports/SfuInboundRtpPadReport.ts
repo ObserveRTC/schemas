@@ -53,6 +53,26 @@ export type SfuInboundRtpPadReport = {
 	internal?: boolean;
 
 	/**
+	* only added if it is internal. The id of the remote Sfu that outbound rtp pad matched with this internal inbound rtp pad
+	*/
+	remoteSfuId?: string;
+
+	/**
+	* only added if it is internal. The id of the remote transportId that outbound rtp pad matched with this internal inbound rtp pad
+	*/
+	remoteTransportId?: string;
+
+	/**
+	* only added if it is internal. The id of the remote sinkId that outbound rtp pad matched with this internal inbound rtp pad
+	*/
+	remoteSinkId?: string;
+
+	/**
+	* only added if it is internal. The id of the remote outbound rtp pad matched with this internal inbound rtp pad
+	*/
+	remoteRtpPadId?: string;
+
+	/**
 	* The id of the track the RTP stream related to at the client side
 	*/
 	trackId?: string;

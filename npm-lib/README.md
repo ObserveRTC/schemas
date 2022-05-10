@@ -646,6 +646,10 @@ rtpPadId (**Mandatory**) | The id of RTP pad.
 ssrc (**Mandatory**) | The synchronization source id of the RTP stream
 marker | The marker the originated sample is reported with
 internal | Flag indicate if the sfu rtp pad is used as an internal rtp session between SFUs
+remoteSfuId | only added if it is internal. The id of the remote Sfu that outbound rtp pad matched with this internal inbound rtp pad
+remoteTransportId | only added if it is internal. The id of the remote transportId that outbound rtp pad matched with this internal inbound rtp pad
+remoteSinkId | only added if it is internal. The id of the remote sinkId that outbound rtp pad matched with this internal inbound rtp pad
+remoteRtpPadId | only added if it is internal. The id of the remote outbound rtp pad matched with this internal inbound rtp pad
 trackId | The id of the track the RTP stream related to at the client side
 clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
 callId | The callId the event belongs to
