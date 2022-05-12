@@ -1,0 +1,1 @@
+serviceId,mediaUnitId,sfuId,timestamp,transportId,streamId,marker,internal,callId,roomId,label,protocol,sctpSmoothedRoundTripTime,sctpCongestionWindow,sctpReceiverWindow,sctpMtu,sctpUnackData,messageReceived,messageSent,bytesReceived,bytesSent

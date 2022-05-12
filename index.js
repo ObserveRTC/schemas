@@ -6,60 +6,15 @@ import { makeTsModule } from "./makeTsModule.js";
 import avro from "avro-js";
 import path from "path";
 import * as chunks from "./chunks.js"
-import { ProtobufConverter } from "./ProtobufConverter.js";
-import { ProtobufConverterV3 } from "./ProtobufConverterV3.js";
-import * as pbjs from "protobufjs/cli/pbjs.js";
+import * as protobufUtils from "./protobufUtils.js";
+import { makeRedshiftSql } from "./makeRedshiftSql.js"
 import { NpmMonitorLib } from './NpmMonitorLib.js';
-
-const makeProtobufJson = path => new Promise(resolve => {
-    pbjs.main([ path ], function(err, output) {
-        if (err)
-            throw err;
-        resolve(output);
-    });
-})
 
 
 const SOURCE_PATH = "./sources";
 const NPM_LIB_PATH = "./npm-lib";
 const NPM_MONITOR_BASE_PATH = "./npm-monitor-lib";
 const W3C_STATS_IDENTIFIERS = "./sources/w3c/W3cStatsIdentifiers.ts";
-
-function convertToProtobufSchema(avroSchema) {
-    const samplesProto = ProtobufConverter.from(avroSchema);
-    const samplesProtoStr = samplesProto.toLines().join("\n");
-
-    const samplesModule = [
-        `syntax = "proto2";`,
-        ``,
-        `package org.observertc.schemas.protobuf;`,
-        ``,
-        // `option java_outer_classname = "Protobuf${samplesProto.name}";`,
-        // `option java_package = "org.observertc.observer.samples";`,
-        // ``,
-        samplesProtoStr
-    ].join("\n");
-    return samplesModule;
-    // fs.writeFileSync(outputPath, samplesModule);
-}
-
-function convertToProtobufSchemaV3(avroSchema) {
-    const samplesProto = ProtobufConverterV3.from(avroSchema);
-    const samplesProtoStr = samplesProto.toLines().join("\n");
-
-    const samplesModule = [
-        `syntax = "proto3";`,
-        ``,
-        `package org.observertc.schemas.protobuf;`,
-        ``,
-        // `option java_outer_classname = "Protobuf${samplesProto.name}";`,
-        // `option java_package = "org.observertc.observer.samples";`,
-        // ``,
-        samplesProtoStr
-    ].join("\n");
-    return samplesModule;
-    // fs.writeFileSync(outputPath, samplesModule);
-}
 
 function fetchChunks() {
     for (const schemaType of ["reports", "samples"]) {
@@ -148,19 +103,19 @@ const main = async () => {
     const samplesProtoPath = "./ProtobufSamples.proto";
     if (samplesSource) {
         const schema = JSON.parse(samplesSource.getAvsc());
-        const protobufSchema = convertToProtobufSchema(schema);
+        const protobufSchema = protobufUtils.convertToProtobufSchema(schema);
         fs.writeFileSync(samplesProtoPath, protobufSchema);
-        const protobufJson = await makeProtobufJson(samplesProtoPath);
+        const protobufJson = await protobufUtils.makeProtobufJson(samplesProtoPath);
         npmLib.addProtobufSchema({
             fileName: "ProtobufSamples",
             protobufSchema,
             protobufJson,
         });
 
-        const protobufSchemaV3 = convertToProtobufSchemaV3(schema);
+        const protobufSchemaV3 = protobufUtils.convertToProtobufSchemaV3(schema);
         const samplesProtoPathV3 = "./ProtobufSamplesV3.proto";
         fs.writeFileSync(samplesProtoPathV3, protobufSchemaV3);
-        const protobufJsonV3 = await makeProtobufJson(samplesProtoPathV3);
+        const protobufJsonV3 = await protobufUtils.makeProtobufJson(samplesProtoPathV3);
         fs.rmSync(samplesProtoPathV3);
         npmLib.addProtobufSchema({
             fileName: "ProtobufSamplesV3",
@@ -186,37 +141,15 @@ const main = async () => {
     npmMonitorLib.make();
     fs.copyFileSync(samplesProtoPath, path.join(NPM_MONITOR_BASE_PATH, "SamplesProtobuf.proto"));
     fs.rmSync(samplesProtoPath);
+
+    const reportTypes = Array.from(sources.keys()).filter(sourceKey => sourceKey.includes("-report"));
+    for (const reportType of reportTypes) {
+        const avsc = sources.get(reportType).getAvsc()
+        const avroSchema = JSON.parse(avsc);
+        const { createTable, csvColumnList } = makeRedshiftSql(avroSchema);
+        fs.writeFileSync(`./redshift/${reportType}.sql`, createTable);
+        fs.writeFileSync(`./redshift/${reportType}-columns-order.csv`, csvColumnList);
+    }
 };
 
 main();
-
-
-// function makeReportSchema() {
-//     const reportFileName = "report.avsc";
-//     const schemaPath = path.join(SOURCE_PATH, "reports");
-//     const reportSchema = JSON.parse(fs.readFileSync(path.join(schemaPath, reportFileName), 'utf-8'));
-//     const fields = new Set();
-//     for (const field of reportSchema.fields) {
-//         fields.set(field.name, field);
-//     }
-//     for (const file of fs.readdirSync(schemaPath)) {
-//         if (!file.endsWith("avsc") || file === reportFileName) continue;
-//         const filePath = path.join(schemaPath, file);
-//         const text = fs.readFileSync(filePath, 'utf-8');
-//         const schema = JSON.parse(text);
-//         for (const field of schema.fields) {
-//             const existingField = fields.get(field.name);
-//             if (!existingField) {
-//                 fields.set(field.name, field);
-//                 continue;
-//             }
-//             // merge existing field with the new field
-//             existingField.doc
-//             const types = new Set();
-//             if (typeof existingField.type === "string") types.add(existingField.type);
-//             else existingField.type.forEach(t => types.add(t));
-            
-//         }
-        
-//     }
-// }

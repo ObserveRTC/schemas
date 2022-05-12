@@ -1,0 +1,1 @@
+serviceId,mediaUnitId,timestamp,callId,clientId,peerConnectionId,sampleSeq,marker,roomId,userId,peerConnectionLabel,label,protocol,state,messagesSent,bytesSent,messagesReceived,bytesReceived
