@@ -1,0 +1,15 @@
+create table  IF NOT EXISTS CallMetaReport (
+	serviceId	VARCHAR(255)	not null,
+	timestamp	BIGINT	not null,
+	callId	CHAR(36),
+	clientId	CHAR(36),
+	marker	VARCHAR(65535),
+	mediaUnitId	VARCHAR(255),
+	payload	VARCHAR(65535),
+	peerConnectionId	CHAR(36),
+	roomId	VARCHAR(255),
+	sampleSeq	INTEGER,
+	sampleTimestamp	BIGINT,
+	type	VARCHAR(65535),
+	userId	VARCHAR(255),
+)

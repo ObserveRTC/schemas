@@ -1,0 +1,17 @@
+create table  IF NOT EXISTS ObserverEventReport (
+	serviceId	VARCHAR(255)	not null,
+	timestamp	BIGINT	not null,
+	callId	CHAR(36)	not null,
+	name	VARCHAR(65535)	not null,
+	attachments	VARCHAR(65535),
+	clientId	CHAR(36),
+	marker	VARCHAR(65535),
+	mediaUnitId	VARCHAR(255),
+	message	VARCHAR(65535),
+	peerConnectionId	CHAR(36),
+	roomId	VARCHAR(255),
+	sampleSeq	INTEGER,
+	sampleTimestamp	BIGINT,
+	userId	VARCHAR(255),
+	value	VARCHAR(65535),
+)

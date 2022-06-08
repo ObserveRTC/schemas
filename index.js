@@ -64,6 +64,7 @@ const main = async () => {
     npmLib.addW3cStatsIdentifiers(w3cStatsIdentifiers);
     const markdownLists = [];
     const csvColumnLists = new Map();
+    const redshiftTables = new Map();
     for (const [fileName, source] of sources) {
         const avsc = source.getAvsc();
         const schemaType = source.getSchemaType();
@@ -85,9 +86,10 @@ const main = async () => {
 
         let csvHeader = undefined;
         if (fileName.includes("-report")) {
-            const { csvColumnList } = makeRedshiftSql(schema);
+            const { csvColumnList, createTable: redshiftTable } = makeRedshiftSql(schema);
             csvHeader = csvColumnList.split(",");
             csvColumnLists.set(fileName, csvColumnList);
+            redshiftTables.set(fileName, redshiftTable);
         }
         
 
@@ -158,6 +160,13 @@ const main = async () => {
     }
     fs.writeFileSync(`./csv-headers/generated.txt`, `Generated from schema version ${version} at ${new Date().toGMTString()}`);
 
+    for (const [fileName, redshiftTable] of redshiftTables) {
+        fs.writeFileSync(`./redshift-tables/${fileName}.sql`, redshiftTable);
+    }
+    fs.writeFileSync(`./redshift-tables/generated.txt`, `Generated from schema version ${version} at ${new Date().toGMTString()}`);
+
+
+    
     // redshift support
     // const reportTypes = Array.from(sources.keys()).filter(sourceKey => sourceKey.includes("-report"));
     // for (const reportType of reportTypes) {

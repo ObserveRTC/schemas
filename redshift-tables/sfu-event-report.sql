@@ -1,0 +1,17 @@
+create table  IF NOT EXISTS SfuEventReport (
+	serviceId	VARCHAR(255)	not null,
+	timestamp	BIGINT	not null,
+	name	VARCHAR(65535)	not null,
+	attachments	VARCHAR(65535),
+	callId	CHAR(36),
+	marker	VARCHAR(65535),
+	mediaSinkId	VARCHAR(255),
+	mediaStreamId	VARCHAR(255),
+	mediaUnitId	VARCHAR(255),
+	message	VARCHAR(65535),
+	rtpPadId	VARCHAR(255),
+	sctpStreamId	VARCHAR(255),
+	sfuId	CHAR(36),
+	transportId	CHAR(36),
+	value	VARCHAR(65535),
+)
