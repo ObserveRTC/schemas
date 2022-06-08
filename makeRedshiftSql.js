@@ -1,4 +1,10 @@
 function fieldComparator(a, b) {
+    if (a.required && b.required) {
+        return 10 + a.name.localeCompare(b.name);
+    }
+    if (!a.required && !b.required) {
+        return a.name.localeCompare(b.name);
+    }
     const priorityA = a.required ? 10 : 0;
     const priorityB = b.required ? 10 : 0;
     return priorityB - priorityA;

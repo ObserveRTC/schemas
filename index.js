@@ -63,6 +63,7 @@ const main = async () => {
     const w3cStatsIdentifiers = fs.readFileSync(W3C_STATS_IDENTIFIERS, 'utf-8');
     npmLib.addW3cStatsIdentifiers(w3cStatsIdentifiers);
     const markdownLists = [];
+    const csvColumnLists = new Map();
     for (const [fileName, source] of sources) {
         const avsc = source.getAvsc();
         const schemaType = source.getSchemaType();
@@ -82,6 +83,14 @@ const main = async () => {
             break;
         }
 
+        let csvHeader = undefined;
+        if (fileName.includes("-report")) {
+            const { csvColumnList } = makeRedshiftSql(schema);
+            csvHeader = csvColumnList.split(",");
+            csvColumnLists.set(fileName, csvColumnList);
+        }
+        
+
         const schemaName = schema.name;
         const { markdownDoc, list } = makeMarkdownDoc(schema);
         markdownLists.push(...list);
@@ -95,6 +104,7 @@ const main = async () => {
             exports,
             typescript: module,
             markdown: markdownDoc,
+            csvHeader,
         });
     }
     fs.writeFileSync(`schemaList.md`, markdownLists.join(`\n`))
@@ -142,14 +152,21 @@ const main = async () => {
     fs.copyFileSync(samplesProtoPath, path.join(NPM_MONITOR_BASE_PATH, "SamplesProtobuf.proto"));
     fs.rmSync(samplesProtoPath);
 
-    const reportTypes = Array.from(sources.keys()).filter(sourceKey => sourceKey.includes("-report"));
-    for (const reportType of reportTypes) {
-        const avsc = sources.get(reportType).getAvsc()
-        const avroSchema = JSON.parse(avsc);
-        const { createTable, csvColumnList } = makeRedshiftSql(avroSchema);
-        fs.writeFileSync(`./redshift/${reportType}.sql`, createTable);
-        fs.writeFileSync(`./redshift/${reportType}-columns-order.csv`, csvColumnList);
+    // csv support
+    for (const [fileName, csvHeader] of csvColumnLists) {
+        fs.writeFileSync(`./csv-headers/${fileName}-header.csv`, csvHeader);
     }
+    fs.writeFileSync(`./csv-headers/generated.txt`, `Generated from schema version ${version} at ${new Date().toGMTString()}`);
+
+    // redshift support
+    // const reportTypes = Array.from(sources.keys()).filter(sourceKey => sourceKey.includes("-report"));
+    // for (const reportType of reportTypes) {
+    //     const avsc = sources.get(reportType).getAvsc()
+    //     const avroSchema = JSON.parse(avsc);
+    //     const { createTable, csvColumnList } = makeRedshiftSql(avroSchema);
+    //     fs.writeFileSync(`./redshift/${reportType}.sql`, createTable);
+    //     fs.writeFileSync(`./csv-headers/${reportType}-columns.csv`, csvColumnList);
+    // }
 };
 
 main();
