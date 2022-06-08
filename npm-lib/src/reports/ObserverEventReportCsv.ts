@@ -1,0 +1,1 @@
+export const header = ["serviceId", "timestamp", "callId", "name", "attachments", "clientId", "marker", "mediaUnitId", "message", "peerConnectionId", "roomId", "sampleSeq", "sampleTimestamp", "userId", "value"];

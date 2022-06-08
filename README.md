@@ -1,6 +1,14 @@
 ## ObserveRTC Schemas
 
-This repository contains schemas for ObserveRTC.
+This repository holds the communication schemas for ObserveRTC.
+Schemas describes the communication between services in ObserveRTC stack. Schema is manifested into 
+diffeerent languages to make it easy to integrate ObserveRTC.
+Currently the following language bindings are generated from the schema:
+
+ * [typescript/javascript](#npm) available as an npm library.
+ * [Redshift](redshift/) to integrate Reports for AWS Redshift.
+ * [csv](csv/) when exporting Reports in csv format from observer, the orders of the columns might be important
+
 
 # Install
 
@@ -8,7 +16,6 @@ This repository contains schemas for ObserveRTC.
 ```javascript
 npm i @observertc/schemas
 ```
-
 
 
 # Versioning

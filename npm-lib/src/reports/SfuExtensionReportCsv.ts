@@ -1,0 +1,1 @@
+export const header = ["serviceId", "timestamp", "extensionType", "marker", "mediaUnitId", "payload", "sfuId"];

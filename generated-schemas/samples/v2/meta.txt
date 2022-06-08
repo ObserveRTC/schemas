@@ -1,6 +1,0 @@
-<<<<<<< HEAD
-Revisions:
-=======
-Revisions:
-	Samples: 1
->>>>>>> origin

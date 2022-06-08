@@ -1603,6 +1603,11 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 2.0.4
+
+### Added
+ * csv column list for every report. Generated from the schema, required fields first, and fields are in sorted order
+
 ## 2.0.3
 
 ### Added

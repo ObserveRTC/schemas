@@ -17,7 +17,7 @@ export class NpmLib {
         this._protobufEntries = [];
     }
 
-    addEntry({ schemaName, exports, fileName, schemaType, avsc, typescript, markdown }) {
+    addEntry({ schemaName, exports, fileName, schemaType, avsc, typescript, markdown, csvHeader }) {
         this._entries.push({
             fileName,
             exports,
@@ -26,6 +26,7 @@ export class NpmLib {
             avsc,
             typescript,
             markdown,
+            csvHeader,
         });
     }
 
@@ -61,6 +62,7 @@ export class NpmLib {
                 avsc,
                 typescript,
                 markdown,
+                csvHeader,
             } = entry;
             const avscOutputFileName = path.join(schemaType, schemaName) + "Avsc";
             const avscOutputFilePath = path.join(this._srcPath, avscOutputFileName);
@@ -68,6 +70,12 @@ export class NpmLib {
             const tsOutputFilePath = path.join(this._srcPath, tsOutputFileName);
             fs.writeFileSync(avscOutputFilePath + ".ts", "export const schema = " + avsc);
             fs.writeFileSync(tsOutputFilePath + ".ts", typescript);
+            if (csvHeader) {
+                const csvOutputFileName = path.join(schemaType, schemaName) + "Csv";
+                const csvOutputFilePath = path.join(this._srcPath, csvOutputFileName);
+                fs.writeFileSync(csvOutputFilePath + ".ts", "export const header = [\"" + csvHeader.join("\", \"") + "\"];");
+                exports.push(`export { header as CsvHeader${schemaName} } from "./${csvOutputFileName}";`);
+            }
             schemaMarkdowns.push(markdown, "\n");
             exports.push(`export { schema as Avro${schemaName} } from "./${avscOutputFileName}";`);
             exports.push(`export * from "./${tsOutputFileName}";`);
