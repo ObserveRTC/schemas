@@ -19,9 +19,24 @@ function nameConverter(fieldName) {
     return fieldName.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 }
 
+const uuidFields = new Set([
+    "callId",
+    "clientId",
+    "peerConnectionId",
+    "trackId",
+    "streamId",
+    "sinkId",
+    "sfuStreamId",
+    "sfuSinkId",
+    "sfuId",
+    "transportId",
+    "padId",
+    "channelId",
+]);
+
 class RedshiftSql {
     constructor({ name, desc}) {
-        this._name = name;
+        this._name = nameConverter(name);
         this._description = desc;
         this._fields = [];
     }
@@ -39,6 +54,7 @@ class RedshiftSql {
         return {
             createTable: this._makeCreateTableString(),
             csvColumnList: this._makeColumnCsvList(),
+            knexSchema: this._makeKnexSchema(),
         }
     }
 
@@ -47,7 +63,11 @@ class RedshiftSql {
         const result = [
             `create table  IF NOT EXISTS ${tableName} (`
         ]
-        for (const { name, type, required } of this._fields) {
+        const sortIds = new Set(Array.from(uuidFields).map(s => s.toLowerCase()));
+        const sortKeys = [];
+        const fieldsLength = this._fields.length;
+        for (let i = 0; i < fieldsLength; ++i) {
+            const { name, type, required } = this._fields[i];
             const properties = [
                 name,
                 type,
@@ -55,32 +75,73 @@ class RedshiftSql {
             if (required) {
                 properties.push("not null");
             }
+            if (sortIds.has(name)) {
+                sortKeys.push(name);
+            }
             const column = properties.join(`\t`);
-            result.push(`\t${column},`);
+            result.push(`\t${column}${i != fieldsLength - 1 ? ",":""}`);
+            // result.push(`\t${column},`);
         }
-        result.push(`)`);
+        result.push(`) diststyle even;`);
+        result.push(`ALTER TABLE ${tableName} ALTER diststyle KEY DISTKEY serviceid;`);
+        if (0 < sortKeys.length) {
+            result.push(`ALTER TABLE ${tableName} ALTER COMPOUND SORTKEY (${sortKeys.join(", ")});`)
+        }
+        return result.join(`\n`);
+    }
+
+    _makeKnexSchema() {
+        const tableName = this._name;
+        const result = [
+            `const schemaName = "schema";`,
+            `const tableName = "${tableName}";`,
+            
+            `exports.up = function (knex) {`,
+            `\treturn knex.schema.withSchema(schemaName).createTable(tableName, (table) => {`,
+        ];
+        const fieldsLength = this._fields.length;
+        for (let i = 0; i < fieldsLength; ++i) {
+            const { name, type, required } = this._fields[i];
+            const jsCommands = [];
+            if (name === "timestamp") {
+                jsCommands.push(`table.timestamp("timestamp", { useTz: false })`);
+            } else if (name === "payload"){
+                jsCommands.push(`unstructuredDataColumn(table, "payload")`);
+            } else if (type === "CHAR(36)") {
+                jsCommands.push(`table.specificType("${name}", "${type}")`);
+            } else if (type === "VARCHAR(255)") {
+                jsCommands.push(`table.string("${name}", 255)`);
+            } else if (type === "VARCHAR(65535)") {
+                jsCommands.push(`table.text("${name}")`);
+            } else if (type === "REAL") {
+                jsCommands.push(`table.text("${name}")`);
+            } else if (type === "INTEGER") {
+                jsCommands.push(`table.integer("${name}")`);
+            } else if (type === "BIGINT") {
+                jsCommands.push(`table.bigInteger("${name}")`);
+            } else if (type === "BOOLEAN") {
+                jsCommands.push(`table.boolean("${name}")`);
+            } else {
+                jsCommands.push(`table.specificType("${name}", "${type}")`);
+            }
+            if (required) {
+                jsCommands.push("notNull()");
+            }
+            result.push(`\t\t${jsCommands.join(".")};`);
+        }
+        result.push(`\t});`);
+        result.push(`};`);
         return result.join(`\n`);
     }
 
     _makeColumnCsvList() {
-        return this._fields.map(field => field.name).join(`,`);
+        if (this._fields.length < 1) return "";
+        // return `"` + this._fields.map(field => field.name.toLowerCase()).join(`",\n"`) + `"`;
+        return this._fields.map(field => field.name.toLowerCase()).join(`, `);
     }
 
 }
-const uuidFields = new Set([
-    "callId",
-    "clientId",
-    "peerConnectionId",
-    "trackId",
-    "streamId",
-    "sinkId",
-    "sfuStreamId",
-    "sfuSinkId",
-    "sfuId",
-    "transportId",
-    "padId",
-    "channelId",
-]);
+
 
 function getRedshiftType(fieldName, avroFieldType) {
     if (avroFieldType === "string") {
@@ -126,15 +187,18 @@ export function makeRedshiftSql(avroSchema) {
         const type = getRedshiftType(name, avroFieldType);
 
         result.addField({
-            name,
+            name: name.toLowerCase(),
             doc: field.doc,
             required,
             type,
         });
     }
-    const { createTable, csvColumnList } = result.make();
+    const { createTable, csvColumnList, knexSchema } = result.make();
     return {
         createTable,
-        csvColumnList
+        csvColumnList,
+        knexSchema
     }
 }
+
+

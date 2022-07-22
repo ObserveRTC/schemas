@@ -10,7 +10,6 @@ import * as protobufUtils from "./protobufUtils.js";
 import { makeRedshiftSql } from "./makeRedshiftSql.js"
 import { NpmMonitorLib } from './NpmMonitorLib.js';
 
-
 const SOURCE_PATH = "./sources";
 const NPM_LIB_PATH = "./npm-lib";
 const NPM_MONITOR_BASE_PATH = "./npm-monitor-lib";
@@ -65,6 +64,7 @@ const main = async () => {
     const markdownLists = [];
     const csvColumnLists = new Map();
     const redshiftTables = new Map();
+    const knexSchemas = new Map();
     for (const [fileName, source] of sources) {
         const avsc = source.getAvsc();
         const schemaType = source.getSchemaType();
@@ -86,10 +86,11 @@ const main = async () => {
 
         let csvHeader = undefined;
         if (fileName.includes("-report")) {
-            const { csvColumnList, createTable: redshiftTable } = makeRedshiftSql(schema);
+            const { csvColumnList, createTable: redshiftTable, knexSchema } = makeRedshiftSql(schema);
             csvHeader = csvColumnList.split(",");
             csvColumnLists.set(fileName, csvColumnList);
             redshiftTables.set(fileName, redshiftTable);
+            knexSchemas.set(fileName, knexSchema);
         }
         
 
@@ -156,10 +157,12 @@ const main = async () => {
 
     // csv support
     for (const [fileName, csvHeader] of csvColumnLists) {
-        fs.writeFileSync(`./csv-headers/${fileName}-header.csv`, csvHeader);
+        fs.writeFileSync(`./redshift-tables/${fileName}-columns.txt`, csvHeader);
     }
-    fs.writeFileSync(`./csv-headers/generated.txt`, `Generated from schema version ${version} at ${new Date().toGMTString()}`);
-
+    for (const [fileName, knexSchema] of knexSchemas) {
+        fs.writeFileSync(`./redshift-tables/${fileName}-knex.js`, knexSchema);
+    }
+    
     for (const [fileName, redshiftTable] of redshiftTables) {
         fs.writeFileSync(`./redshift-tables/${fileName}.sql`, redshiftTable);
     }

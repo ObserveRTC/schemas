@@ -1,15 +1,17 @@
-create table  IF NOT EXISTS CallMetaReport (
-	serviceId	VARCHAR(255)	not null,
+create table  IF NOT EXISTS call_meta_report (
+	serviceid	VARCHAR(255)	not null,
 	timestamp	BIGINT	not null,
-	callId	CHAR(36),
-	clientId	CHAR(36),
+	callid	CHAR(36),
+	clientid	CHAR(36),
 	marker	VARCHAR(65535),
-	mediaUnitId	VARCHAR(255),
+	mediaunitid	VARCHAR(255),
 	payload	VARCHAR(65535),
-	peerConnectionId	CHAR(36),
-	roomId	VARCHAR(255),
-	sampleSeq	INTEGER,
-	sampleTimestamp	BIGINT,
+	peerconnectionid	CHAR(36),
+	roomid	VARCHAR(255),
+	sampleseq	INTEGER,
+	sampletimestamp	BIGINT,
 	type	VARCHAR(65535),
-	userId	VARCHAR(255),
-)
+	userid	VARCHAR(255)
+) diststyle even;
+ALTER TABLE call_meta_report ALTER diststyle KEY DISTKEY serviceid;
+ALTER TABLE call_meta_report ALTER COMPOUND SORTKEY (callid, clientid, peerconnectionid);
