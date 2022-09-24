@@ -57,7 +57,7 @@ export const jsonDescriptor = {
                             },
                             "dataChannels": {
                               "rule": "repeated",
-                              "type": "DataChannel",
+                              "type": "DataChannelStats",
                               "id": 3
                             },
                             "extensionStats": {
@@ -65,120 +65,125 @@ export const jsonDescriptor = {
                               "type": "ExtensionStat",
                               "id": 4
                             },
+                            "iceCandidatePairs": {
+                              "rule": "repeated",
+                              "type": "IceCandidatePairStats",
+                              "id": 5
+                            },
                             "iceLocalCandidates": {
                               "rule": "repeated",
                               "type": "IceLocalCandidate",
-                              "id": 5
+                              "id": 6
                             },
                             "iceRemoteCandidates": {
                               "rule": "repeated",
                               "type": "IceRemoteCandidate",
-                              "id": 6
+                              "id": 7
                             },
                             "iceServers": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 7
+                              "id": 8
                             },
                             "inboundAudioTracks": {
                               "rule": "repeated",
                               "type": "InboundAudioTrack",
-                              "id": 8
+                              "id": 9
                             },
                             "inboundVideoTracks": {
                               "rule": "repeated",
                               "type": "InboundVideoTrack",
-                              "id": 9
+                              "id": 10
                             },
                             "localSDPs": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 10
+                              "id": 11
                             },
                             "mediaConstraints": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 11
+                              "id": 12
                             },
                             "mediaDevices": {
                               "rule": "repeated",
                               "type": "MediaDevice",
-                              "id": 12
+                              "id": 13
                             },
                             "mediaSources": {
                               "rule": "repeated",
                               "type": "MediaSourceStat",
-                              "id": 13
+                              "id": 14
                             },
                             "outboundAudioTracks": {
                               "rule": "repeated",
                               "type": "OutboundAudioTrack",
-                              "id": 14
+                              "id": 15
                             },
                             "outboundVideoTracks": {
                               "rule": "repeated",
                               "type": "OutboundVideoTrack",
-                              "id": 15
+                              "id": 16
                             },
                             "pcTransports": {
                               "rule": "repeated",
                               "type": "PeerConnectionTransport",
-                              "id": 16
+                              "id": 17
                             },
                             "userMediaErrors": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 17
+                              "id": 18
                             },
                             "clientId": {
                               "rule": "required",
                               "type": "string",
-                              "id": 18
+                              "id": 19
                             },
                             "timestamp": {
                               "rule": "required",
                               "type": "int64",
-                              "id": 19
+                              "id": 20
                             },
                             "browser": {
                               "type": "Browser",
-                              "id": 20
+                              "id": 21
                             },
                             "callId": {
                               "type": "string",
-                              "id": 21
+                              "id": 22
                             },
                             "engine": {
                               "type": "Engine",
-                              "id": 22
+                              "id": 23
                             },
                             "marker": {
                               "type": "string",
-                              "id": 23
+                              "id": 24
                             },
                             "os": {
                               "type": "OperationSystem",
-                              "id": 24
+                              "id": 25
                             },
                             "platform": {
                               "type": "Platform",
-                              "id": 25
+                              "id": 26
                             },
                             "roomId": {
                               "type": "string",
-                              "id": 26
+                              "id": 27
                             },
                             "sampleSeq": {
                               "type": "int32",
-                              "id": 27
+                              "id": 28
                             },
                             "timeZoneOffsetInHours": {
                               "type": "int32",
-                              "id": 28
+                              "id": 29
                             },
                             "userId": {
                               "type": "string",
-                              "id": 29
+                              "id": 30
                             }
                           },
                           "nested": {
@@ -268,7 +273,7 @@ export const jsonDescriptor = {
                                 }
                               }
                             },
-                            "PeerConnectionTransport": {
+                            "DataChannelStats": {
                               "fields": {
                                 "peerConnectionId": {
                                   "rule": "required",
@@ -283,249 +288,213 @@ export const jsonDescriptor = {
                                   "type": "int64",
                                   "id": 3
                                 },
-                                "candidatePairAvailableIncomingBitrate": {
-                                  "type": "double",
+                                "dataChannelIdentifier": {
+                                  "type": "int32",
                                   "id": 4
-                                },
-                                "candidatePairAvailableOutgoingBitrate": {
-                                  "type": "double",
-                                  "id": 5
-                                },
-                                "candidatePairBytesDiscardedOnSend": {
-                                  "type": "int64",
-                                  "id": 6
-                                },
-                                "candidatePairBytesReceived": {
-                                  "type": "int64",
-                                  "id": 7
-                                },
-                                "candidatePairBytesSent": {
-                                  "type": "int64",
-                                  "id": 8
-                                },
-                                "candidatePairCircuitBreakerTriggerCount": {
-                                  "type": "int32",
-                                  "id": 9
-                                },
-                                "candidatePairConsentExpiredTimestamp": {
-                                  "type": "int64",
-                                  "id": 10
-                                },
-                                "candidatePairConsentRequestBytesSent": {
-                                  "type": "int64",
-                                  "id": 11
-                                },
-                                "candidatePairConsentRequestsSent": {
-                                  "type": "int32",
-                                  "id": 12
-                                },
-                                "candidatePairCurrentRoundTripTime": {
-                                  "type": "double",
-                                  "id": 13
-                                },
-                                "candidatePairFirstRequestTimestamp": {
-                                  "type": "int64",
-                                  "id": 14
-                                },
-                                "candidatePairLastPacketReceivedTimestamp": {
-                                  "type": "int64",
-                                  "id": 15
-                                },
-                                "candidatePairLastPacketSentTimestamp": {
-                                  "type": "int64",
-                                  "id": 16
-                                },
-                                "candidatePairLastRequestTimestamp": {
-                                  "type": "int64",
-                                  "id": 17
-                                },
-                                "candidatePairLastResponseTimestamp": {
-                                  "type": "int64",
-                                  "id": 18
-                                },
-                                "candidatePairPacketsDiscardedOnSend": {
-                                  "type": "int32",
-                                  "id": 19
-                                },
-                                "candidatePairPacketsReceived": {
-                                  "type": "int32",
-                                  "id": 20
-                                },
-                                "candidatePairPacketsSent": {
-                                  "type": "int32",
-                                  "id": 21
-                                },
-                                "candidatePairRequestBytesSent": {
-                                  "type": "int64",
-                                  "id": 22
-                                },
-                                "candidatePairRequestsReceived": {
-                                  "type": "int32",
-                                  "id": 23
-                                },
-                                "candidatePairRequestsSent": {
-                                  "type": "int32",
-                                  "id": 24
-                                },
-                                "candidatePairResponseBytesSent": {
-                                  "type": "int64",
-                                  "id": 25
-                                },
-                                "candidatePairResponsesReceived": {
-                                  "type": "int32",
-                                  "id": 26
-                                },
-                                "candidatePairResponsesSent": {
-                                  "type": "int32",
-                                  "id": 27
-                                },
-                                "candidatePairRetransmissionReceived": {
-                                  "type": "int32",
-                                  "id": 28
-                                },
-                                "candidatePairRetransmissionSent": {
-                                  "type": "int32",
-                                  "id": 29
-                                },
-                                "candidatePairState": {
-                                  "type": "string",
-                                  "id": 30
-                                },
-                                "candidatePairTotalRoundTripTime": {
-                                  "type": "double",
-                                  "id": 31
-                                },
-                                "dataChannelsAccepted": {
-                                  "type": "int32",
-                                  "id": 32
-                                },
-                                "dataChannelsClosed": {
-                                  "type": "int32",
-                                  "id": 33
-                                },
-                                "dataChannelsOpened": {
-                                  "type": "int32",
-                                  "id": 34
-                                },
-                                "dataChannelsRequested": {
-                                  "type": "int32",
-                                  "id": 35
-                                },
-                                "dtlsCipher": {
-                                  "type": "string",
-                                  "id": 36
-                                },
-                                "dtlsState": {
-                                  "type": "string",
-                                  "id": 37
-                                },
-                                "iceLocalUsernameFragment": {
-                                  "type": "string",
-                                  "id": 38
-                                },
-                                "iceRole": {
-                                  "type": "string",
-                                  "id": 39
-                                },
-                                "iceState": {
-                                  "type": "string",
-                                  "id": 40
                                 },
                                 "label": {
                                   "type": "string",
-                                  "id": 41
+                                  "id": 5
                                 },
-                                "localAddress": {
-                                  "type": "string",
-                                  "id": 42
-                                },
-                                "localCandidateICEServerUrl": {
-                                  "type": "string",
-                                  "id": 43
-                                },
-                                "localCandidateRelayProtocol": {
-                                  "type": "string",
-                                  "id": 44
-                                },
-                                "localCandidateType": {
-                                  "type": "string",
-                                  "id": 45
-                                },
-                                "localPort": {
+                                "messageReceived": {
                                   "type": "int32",
-                                  "id": 46
+                                  "id": 6
                                 },
-                                "localProtocol": {
+                                "messageSent": {
+                                  "type": "int32",
+                                  "id": 7
+                                },
+                                "protocol": {
                                   "type": "string",
-                                  "id": 47
+                                  "id": 8
+                                },
+                                "state": {
+                                  "type": "string",
+                                  "id": 9
+                                }
+                              }
+                            },
+                            "PeerConnectionTransport": {
+                              "fields": {
+                                "peerConnectionId": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "transportId": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "bytesReceived": {
+                                  "type": "int64",
+                                  "id": 3
+                                },
+                                "bytesSent": {
+                                  "type": "int64",
+                                  "id": 4
+                                },
+                                "dtlsCipher": {
+                                  "type": "string",
+                                  "id": 5
+                                },
+                                "dtlsRole": {
+                                  "type": "string",
+                                  "id": 6
+                                },
+                                "dtlsState": {
+                                  "type": "string",
+                                  "id": 7
+                                },
+                                "iceLocalUsernameFragment": {
+                                  "type": "string",
+                                  "id": 8
+                                },
+                                "iceRole": {
+                                  "type": "string",
+                                  "id": 9
+                                },
+                                "iceState": {
+                                  "type": "string",
+                                  "id": 10
+                                },
+                                "localCertificateId": {
+                                  "type": "string",
+                                  "id": 11
                                 },
                                 "packetsReceived": {
                                   "type": "int32",
-                                  "id": 48
+                                  "id": 12
                                 },
                                 "packetsSent": {
                                   "type": "int32",
-                                  "id": 49
+                                  "id": 13
                                 },
-                                "remoteAddress": {
+                                "remoteCertificateId": {
                                   "type": "string",
-                                  "id": 50
-                                },
-                                "remoteCandidateICEServerUrl": {
-                                  "type": "string",
-                                  "id": 51
-                                },
-                                "remoteCandidateRelayProtocol": {
-                                  "type": "string",
-                                  "id": 52
-                                },
-                                "remoteCandidateType": {
-                                  "type": "string",
-                                  "id": 53
-                                },
-                                "remotePort": {
-                                  "type": "int32",
-                                  "id": 54
-                                },
-                                "remoteProtocol": {
-                                  "type": "string",
-                                  "id": 55
-                                },
-                                "sctpCongestionWindow": {
-                                  "type": "double",
-                                  "id": 56
-                                },
-                                "sctpMtu": {
-                                  "type": "int32",
-                                  "id": 57
-                                },
-                                "sctpReceiverWindow": {
-                                  "type": "double",
-                                  "id": 58
-                                },
-                                "sctpSmoothedRoundTripTime": {
-                                  "type": "double",
-                                  "id": 59
-                                },
-                                "sctpUnackData": {
-                                  "type": "int32",
-                                  "id": 60
+                                  "id": 14
                                 },
                                 "selectedCandidatePairChanges": {
                                   "type": "int32",
-                                  "id": 61
+                                  "id": 15
+                                },
+                                "selectedCandidatePairId": {
+                                  "type": "string",
+                                  "id": 16
                                 },
                                 "srtpCipher": {
                                   "type": "string",
-                                  "id": 62
+                                  "id": 17
                                 },
                                 "tlsGroup": {
                                   "type": "string",
-                                  "id": 63
+                                  "id": 18
                                 },
                                 "tlsVersion": {
                                   "type": "string",
-                                  "id": 64
+                                  "id": 19
+                                }
+                              }
+                            },
+                            "IceCandidatePairStats": {
+                              "fields": {
+                                "candidatePairId": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "peerConnectionId": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "availableIncomingBitrate": {
+                                  "type": "double",
+                                  "id": 3
+                                },
+                                "availableOutgoingBitrate": {
+                                  "type": "double",
+                                  "id": 4
+                                },
+                                "bytesDiscardedOnSend": {
+                                  "type": "int64",
+                                  "id": 5
+                                },
+                                "bytesReceived": {
+                                  "type": "int64",
+                                  "id": 6
+                                },
+                                "bytesSent": {
+                                  "type": "int64",
+                                  "id": 7
+                                },
+                                "consentRequestsSent": {
+                                  "type": "int32",
+                                  "id": 8
+                                },
+                                "currentRoundTripTime": {
+                                  "type": "double",
+                                  "id": 9
+                                },
+                                "lastPacketReceivedTimestamp": {
+                                  "type": "int64",
+                                  "id": 10
+                                },
+                                "lastPacketSentTimestamp": {
+                                  "type": "int64",
+                                  "id": 11
+                                },
+                                "localCandidateId": {
+                                  "type": "string",
+                                  "id": 12
+                                },
+                                "nominated": {
+                                  "type": "bool",
+                                  "id": 13
+                                },
+                                "packetsDiscardedOnSend": {
+                                  "type": "int32",
+                                  "id": 14
+                                },
+                                "packetsReceived": {
+                                  "type": "int32",
+                                  "id": 15
+                                },
+                                "packetsSent": {
+                                  "type": "int32",
+                                  "id": 16
+                                },
+                                "remoteCandidateId": {
+                                  "type": "string",
+                                  "id": 17
+                                },
+                                "requestsReceived": {
+                                  "type": "int32",
+                                  "id": 18
+                                },
+                                "requestsSent": {
+                                  "type": "int32",
+                                  "id": 19
+                                },
+                                "responsesReceived": {
+                                  "type": "int32",
+                                  "id": 20
+                                },
+                                "responsesSent": {
+                                  "type": "int32",
+                                  "id": 21
+                                },
+                                "state": {
+                                  "type": "string",
+                                  "id": 22
+                                },
+                                "totalRoundTripTime": {
+                                  "type": "double",
+                                  "id": 23
+                                },
+                                "transportId": {
+                                  "type": "string",
+                                  "id": 24
                                 }
                               }
                             },
@@ -535,53 +504,65 @@ export const jsonDescriptor = {
                                   "type": "double",
                                   "id": 1
                                 },
-                                "bitDepth": {
-                                  "type": "int32",
+                                "droppedSamplesDuration": {
+                                  "type": "double",
                                   "id": 2
+                                },
+                                "droppedSamplesEvents": {
+                                  "type": "int32",
+                                  "id": 3
                                 },
                                 "echoReturnLoss": {
                                   "type": "double",
-                                  "id": 3
+                                  "id": 4
                                 },
                                 "echoReturnLossEnhancement": {
                                   "type": "double",
-                                  "id": 4
+                                  "id": 5
                                 },
                                 "frames": {
                                   "type": "int32",
-                                  "id": 5
+                                  "id": 6
                                 },
                                 "framesPerSecond": {
                                   "type": "double",
-                                  "id": 6
+                                  "id": 7
                                 },
                                 "height": {
                                   "type": "int32",
-                                  "id": 7
+                                  "id": 8
                                 },
                                 "kind": {
                                   "type": "string",
-                                  "id": 8
+                                  "id": 9
                                 },
                                 "relayedSource": {
                                   "type": "bool",
-                                  "id": 9
+                                  "id": 10
                                 },
                                 "totalAudioEnergy": {
                                   "type": "double",
-                                  "id": 10
+                                  "id": 11
+                                },
+                                "totalCaptureDelay": {
+                                  "type": "double",
+                                  "id": 12
+                                },
+                                "totalSamplesCaptured": {
+                                  "type": "double",
+                                  "id": 13
                                 },
                                 "totalSamplesDuration": {
                                   "type": "double",
-                                  "id": 11
+                                  "id": 14
                                 },
                                 "trackIdentifier": {
                                   "type": "string",
-                                  "id": 12
+                                  "id": 15
                                 },
                                 "width": {
                                   "type": "int32",
-                                  "id": 13
+                                  "id": 16
                                 }
                               }
                             },
@@ -640,229 +621,173 @@ export const jsonDescriptor = {
                                   "type": "int64",
                                   "id": 1
                                 },
-                                "averageRtcpInterval": {
-                                  "type": "double",
+                                "audioLevel": {
+                                  "type": "int32",
                                   "id": 2
-                                },
-                                "burstDiscardCount": {
-                                  "type": "int32",
-                                  "id": 3
-                                },
-                                "burstDiscardRate": {
-                                  "type": "double",
-                                  "id": 4
-                                },
-                                "burstLossCount": {
-                                  "type": "int32",
-                                  "id": 5
-                                },
-                                "burstLossRate": {
-                                  "type": "double",
-                                  "id": 6
-                                },
-                                "burstPacketsDiscarded": {
-                                  "type": "int32",
-                                  "id": 7
-                                },
-                                "burstPacketsLost": {
-                                  "type": "int32",
-                                  "id": 8
                                 },
                                 "bytesReceived": {
                                   "type": "int64",
-                                  "id": 9
+                                  "id": 3
                                 },
                                 "bytesSent": {
                                   "type": "int64",
-                                  "id": 10
-                                },
-                                "channels": {
-                                  "type": "int32",
-                                  "id": 11
-                                },
-                                "clockRate": {
-                                  "type": "int32",
-                                  "id": 12
+                                  "id": 4
                                 },
                                 "concealedSamples": {
                                   "type": "int32",
-                                  "id": 13
+                                  "id": 5
                                 },
                                 "concealmentEvents": {
                                   "type": "int32",
-                                  "id": 14
+                                  "id": 6
                                 },
                                 "decoderImplementation": {
                                   "type": "string",
-                                  "id": 15
-                                },
-                                "ended": {
-                                  "type": "bool",
-                                  "id": 16
+                                  "id": 7
                                 },
                                 "estimatedPlayoutTimestamp": {
                                   "type": "int64",
-                                  "id": 17
+                                  "id": 8
                                 },
                                 "fecPacketsDiscarded": {
                                   "type": "int32",
-                                  "id": 18
+                                  "id": 9
                                 },
                                 "fecPacketsReceived": {
                                   "type": "int32",
-                                  "id": 19
-                                },
-                                "gapDiscardRate": {
-                                  "type": "double",
-                                  "id": 20
-                                },
-                                "gapLossRate": {
-                                  "type": "double",
-                                  "id": 21
+                                  "id": 10
                                 },
                                 "headerBytesReceived": {
                                   "type": "int64",
-                                  "id": 22
+                                  "id": 11
                                 },
                                 "insertedSamplesForDeceleration": {
                                   "type": "int32",
-                                  "id": 23
+                                  "id": 12
                                 },
                                 "jitter": {
                                   "type": "double",
-                                  "id": 24
+                                  "id": 13
                                 },
                                 "jitterBufferDelay": {
                                   "type": "double",
-                                  "id": 25
+                                  "id": 14
                                 },
                                 "jitterBufferEmittedCount": {
                                   "type": "int32",
-                                  "id": 26
+                                  "id": 15
+                                },
+                                "jitterBufferMinimumDelay": {
+                                  "type": "double",
+                                  "id": 16
+                                },
+                                "jitterBufferTargetDelay": {
+                                  "type": "double",
+                                  "id": 17
                                 },
                                 "lastPacketReceivedTimestamp": {
                                   "type": "int64",
-                                  "id": 27
-                                },
-                                "mimeType": {
-                                  "type": "string",
-                                  "id": 28
+                                  "id": 18
                                 },
                                 "nackCount": {
                                   "type": "int32",
-                                  "id": 29
+                                  "id": 19
                                 },
                                 "packetsDiscarded": {
                                   "type": "int32",
-                                  "id": 30
-                                },
-                                "packetsDuplicated": {
-                                  "type": "int32",
-                                  "id": 31
-                                },
-                                "packetsFailedDecryption": {
-                                  "type": "int32",
-                                  "id": 32
+                                  "id": 20
                                 },
                                 "packetsLost": {
                                   "type": "int32",
-                                  "id": 33
+                                  "id": 21
                                 },
                                 "packetsReceived": {
                                   "type": "int32",
-                                  "id": 34
-                                },
-                                "packetsRepaired": {
-                                  "type": "int32",
-                                  "id": 35
+                                  "id": 22
                                 },
                                 "packetsSent": {
                                   "type": "int32",
-                                  "id": 36
-                                },
-                                "payloadType": {
-                                  "type": "int32",
-                                  "id": 37
+                                  "id": 23
                                 },
                                 "peerConnectionId": {
                                   "type": "string",
-                                  "id": 38
-                                },
-                                "perDscpPacketsReceived": {
-                                  "type": "int32",
-                                  "id": 39
+                                  "id": 24
                                 },
                                 "remoteClientId": {
                                   "type": "string",
-                                  "id": 40
+                                  "id": 25
                                 },
                                 "remoteTimestamp": {
                                   "type": "int64",
-                                  "id": 41
+                                  "id": 26
                                 },
                                 "removedSamplesForAcceleration": {
                                   "type": "int32",
-                                  "id": 42
+                                  "id": 27
                                 },
                                 "reportsSent": {
                                   "type": "int32",
-                                  "id": 43
+                                  "id": 28
                                 },
                                 "roundTripTime": {
                                   "type": "double",
-                                  "id": 44
+                                  "id": 29
                                 },
                                 "roundTripTimeMeasurements": {
                                   "type": "int32",
-                                  "id": 45
-                                },
-                                "samplesDecodedWithCelt": {
-                                  "type": "int32",
-                                  "id": 46
-                                },
-                                "samplesDecodedWithSilk": {
-                                  "type": "int32",
-                                  "id": 47
-                                },
-                                "sdpFmtpLine": {
-                                  "type": "string",
-                                  "id": 48
+                                  "id": 30
                                 },
                                 "sfuSinkId": {
                                   "type": "string",
-                                  "id": 49
+                                  "id": 31
                                 },
                                 "sfuStreamId": {
                                   "type": "string",
-                                  "id": 50
+                                  "id": 32
                                 },
                                 "silentConcealedSamples": {
                                   "type": "int32",
-                                  "id": 51
+                                  "id": 33
+                                },
+                                "synthesizedSamplesDuration": {
+                                  "type": "int32",
+                                  "id": 34
+                                },
+                                "synthesizedSamplesEvents": {
+                                  "type": "int32",
+                                  "id": 35
+                                },
+                                "totalAudioEnergy": {
+                                  "type": "int32",
+                                  "id": 36
+                                },
+                                "totalPlayoutDelay": {
+                                  "type": "double",
+                                  "id": 37
                                 },
                                 "totalProcessingDelay": {
                                   "type": "double",
-                                  "id": 52
+                                  "id": 38
                                 },
                                 "totalRoundTripTime": {
                                   "type": "double",
-                                  "id": 53
+                                  "id": 39
                                 },
-                                "totalSamplesDecoded": {
+                                "totalSamplesCount": {
                                   "type": "int32",
-                                  "id": 54
+                                  "id": 40
+                                },
+                                "totalSamplesDuration": {
+                                  "type": "int32",
+                                  "id": 41
                                 },
                                 "totalSamplesReceived": {
                                   "type": "int32",
-                                  "id": 55
+                                  "id": 42
                                 },
                                 "trackId": {
                                   "type": "string",
-                                  "id": 56
-                                },
-                                "voiceActivityFlag": {
-                                  "type": "bool",
-                                  "id": 57
+                                  "id": 43
                                 }
                               }
                             },
@@ -873,257 +798,173 @@ export const jsonDescriptor = {
                                   "type": "int64",
                                   "id": 1
                                 },
-                                "averageRtcpInterval": {
-                                  "type": "double",
-                                  "id": 2
-                                },
-                                "burstDiscardCount": {
-                                  "type": "int32",
-                                  "id": 3
-                                },
-                                "burstDiscardRate": {
-                                  "type": "double",
-                                  "id": 4
-                                },
-                                "burstLossCount": {
-                                  "type": "int32",
-                                  "id": 5
-                                },
-                                "burstLossRate": {
-                                  "type": "double",
-                                  "id": 6
-                                },
-                                "burstPacketsDiscarded": {
-                                  "type": "int32",
-                                  "id": 7
-                                },
-                                "burstPacketsLost": {
-                                  "type": "int32",
-                                  "id": 8
-                                },
                                 "bytesReceived": {
                                   "type": "int64",
-                                  "id": 9
+                                  "id": 2
                                 },
                                 "bytesSent": {
                                   "type": "int64",
-                                  "id": 10
-                                },
-                                "channels": {
-                                  "type": "int32",
-                                  "id": 11
-                                },
-                                "clockRate": {
-                                  "type": "int32",
-                                  "id": 12
+                                  "id": 3
                                 },
                                 "decoderImplementation": {
                                   "type": "string",
-                                  "id": 13
-                                },
-                                "ended": {
-                                  "type": "bool",
-                                  "id": 14
+                                  "id": 4
                                 },
                                 "estimatedPlayoutTimestamp": {
                                   "type": "int64",
-                                  "id": 15
+                                  "id": 5
                                 },
                                 "fecPacketsDiscarded": {
                                   "type": "int32",
-                                  "id": 16
+                                  "id": 6
                                 },
                                 "fecPacketsReceived": {
                                   "type": "int32",
-                                  "id": 17
+                                  "id": 7
                                 },
                                 "firCount": {
                                   "type": "int32",
-                                  "id": 18
-                                },
-                                "frameBitDepth": {
-                                  "type": "int32",
-                                  "id": 19
+                                  "id": 8
                                 },
                                 "frameHeight": {
                                   "type": "int32",
-                                  "id": 20
+                                  "id": 9
                                 },
                                 "frameWidth": {
                                   "type": "int32",
-                                  "id": 21
+                                  "id": 10
                                 },
                                 "framesDecoded": {
                                   "type": "int32",
-                                  "id": 22
+                                  "id": 11
                                 },
                                 "framesDropped": {
-                                  "type": "int32",
-                                  "id": 23
+                                  "type": "double",
+                                  "id": 12
                                 },
                                 "framesPerSecond": {
                                   "type": "double",
-                                  "id": 24
+                                  "id": 13
                                 },
                                 "framesReceived": {
                                   "type": "int32",
-                                  "id": 25
-                                },
-                                "fullFramesLost": {
-                                  "type": "int32",
-                                  "id": 26
-                                },
-                                "gapDiscardRate": {
-                                  "type": "double",
-                                  "id": 27
-                                },
-                                "gapLossRate": {
-                                  "type": "double",
-                                  "id": 28
+                                  "id": 14
                                 },
                                 "headerBytesReceived": {
                                   "type": "int64",
-                                  "id": 29
+                                  "id": 15
                                 },
                                 "jitter": {
                                   "type": "double",
-                                  "id": 30
+                                  "id": 16
                                 },
                                 "jitterBufferDelay": {
                                   "type": "double",
-                                  "id": 31
+                                  "id": 17
                                 },
                                 "jitterBufferEmittedCount": {
                                   "type": "int32",
-                                  "id": 32
+                                  "id": 18
+                                },
+                                "jitterBufferMinimumDelay": {
+                                  "type": "double",
+                                  "id": 19
+                                },
+                                "jitterBufferTargetDelay": {
+                                  "type": "double",
+                                  "id": 20
                                 },
                                 "keyFramesDecoded": {
                                   "type": "int32",
-                                  "id": 33
+                                  "id": 21
                                 },
                                 "lastPacketReceivedTimestamp": {
                                   "type": "int64",
-                                  "id": 34
-                                },
-                                "mimeType": {
-                                  "type": "string",
-                                  "id": 35
+                                  "id": 22
                                 },
                                 "nackCount": {
                                   "type": "int32",
-                                  "id": 36
+                                  "id": 23
                                 },
                                 "packetsDiscarded": {
                                   "type": "int32",
-                                  "id": 37
-                                },
-                                "packetsDuplicated": {
-                                  "type": "int32",
-                                  "id": 38
-                                },
-                                "packetsFailedDecryption": {
-                                  "type": "int32",
-                                  "id": 39
+                                  "id": 24
                                 },
                                 "packetsLost": {
                                   "type": "int32",
-                                  "id": 40
+                                  "id": 25
                                 },
                                 "packetsReceived": {
                                   "type": "int32",
-                                  "id": 41
-                                },
-                                "packetsRepaired": {
-                                  "type": "int32",
-                                  "id": 42
+                                  "id": 26
                                 },
                                 "packetsSent": {
                                   "type": "int32",
-                                  "id": 43
-                                },
-                                "partialFramesLost": {
-                                  "type": "int32",
-                                  "id": 44
-                                },
-                                "payloadType": {
-                                  "type": "int32",
-                                  "id": 45
+                                  "id": 27
                                 },
                                 "peerConnectionId": {
                                   "type": "string",
-                                  "id": 46
-                                },
-                                "perDscpPacketsReceived": {
-                                  "type": "int32",
-                                  "id": 47
+                                  "id": 28
                                 },
                                 "pliCount": {
                                   "type": "int32",
-                                  "id": 48
+                                  "id": 29
                                 },
                                 "qpSum": {
                                   "type": "int64",
-                                  "id": 49
+                                  "id": 30
                                 },
                                 "remoteClientId": {
                                   "type": "string",
-                                  "id": 50
+                                  "id": 31
                                 },
                                 "remoteTimestamp": {
                                   "type": "int64",
-                                  "id": 51
+                                  "id": 32
                                 },
                                 "reportsSent": {
                                   "type": "int32",
-                                  "id": 52
+                                  "id": 33
                                 },
                                 "roundTripTime": {
                                   "type": "double",
-                                  "id": 53
+                                  "id": 34
                                 },
                                 "roundTripTimeMeasurements": {
                                   "type": "int32",
-                                  "id": 54
-                                },
-                                "sdpFmtpLine": {
-                                  "type": "string",
-                                  "id": 55
+                                  "id": 35
                                 },
                                 "sfuSinkId": {
                                   "type": "string",
-                                  "id": 56
+                                  "id": 36
                                 },
                                 "sfuStreamId": {
                                   "type": "string",
-                                  "id": 57
-                                },
-                                "sliCount": {
-                                  "type": "int32",
-                                  "id": 58
+                                  "id": 37
                                 },
                                 "totalDecodeTime": {
                                   "type": "double",
-                                  "id": 59
+                                  "id": 38
                                 },
                                 "totalInterFrameDelay": {
                                   "type": "double",
-                                  "id": 60
+                                  "id": 39
                                 },
                                 "totalProcessingDelay": {
                                   "type": "double",
-                                  "id": 61
+                                  "id": 40
                                 },
                                 "totalRoundTripTime": {
                                   "type": "double",
-                                  "id": 62
+                                  "id": 41
                                 },
                                 "totalSquaredInterFrameDelay": {
                                   "type": "double",
-                                  "id": 63
+                                  "id": 42
                                 },
                                 "trackId": {
                                   "type": "string",
-                                  "id": 64
+                                  "id": 43
                                 }
                               }
                             },
@@ -1134,225 +975,137 @@ export const jsonDescriptor = {
                                   "type": "int64",
                                   "id": 1
                                 },
-                                "audioLevel": {
-                                  "type": "double",
+                                "active": {
+                                  "type": "bool",
                                   "id": 2
                                 },
-                                "averageRtcpInterval": {
+                                "audioLevel": {
                                   "type": "double",
                                   "id": 3
                                 },
-                                "burstDiscardCount": {
-                                  "type": "int32",
+                                "averageRtcpInterval": {
+                                  "type": "double",
                                   "id": 4
-                                },
-                                "burstDiscardRate": {
-                                  "type": "double",
-                                  "id": 5
-                                },
-                                "burstLossCount": {
-                                  "type": "int32",
-                                  "id": 6
-                                },
-                                "burstLossRate": {
-                                  "type": "double",
-                                  "id": 7
-                                },
-                                "burstPacketsDiscarded": {
-                                  "type": "int32",
-                                  "id": 8
-                                },
-                                "burstPacketsLost": {
-                                  "type": "int32",
-                                  "id": 9
-                                },
-                                "bytesDiscardedOnSend": {
-                                  "type": "int64",
-                                  "id": 10
                                 },
                                 "bytesSent": {
                                   "type": "int64",
-                                  "id": 11
+                                  "id": 5
                                 },
-                                "channels": {
-                                  "type": "int32",
-                                  "id": 12
+                                "droppedSamplesDuration": {
+                                  "type": "double",
+                                  "id": 6
                                 },
-                                "clockRate": {
+                                "droppedSamplesEvents": {
                                   "type": "int32",
-                                  "id": 13
+                                  "id": 7
                                 },
                                 "echoReturnLoss": {
                                   "type": "double",
-                                  "id": 14
+                                  "id": 8
                                 },
                                 "echoReturnLossEnhancement": {
                                   "type": "double",
-                                  "id": 15
+                                  "id": 9
                                 },
                                 "encoderImplementation": {
                                   "type": "string",
-                                  "id": 16
-                                },
-                                "ended": {
-                                  "type": "bool",
-                                  "id": 17
-                                },
-                                "fecPacketsSent": {
-                                  "type": "int32",
-                                  "id": 18
+                                  "id": 10
                                 },
                                 "fractionLost": {
                                   "type": "double",
-                                  "id": 19
-                                },
-                                "gapDiscardRate": {
-                                  "type": "double",
-                                  "id": 20
-                                },
-                                "gapLossRate": {
-                                  "type": "double",
-                                  "id": 21
+                                  "id": 11
                                 },
                                 "headerBytesSent": {
                                   "type": "int64",
-                                  "id": 22
+                                  "id": 12
                                 },
                                 "jitter": {
                                   "type": "double",
-                                  "id": 23
-                                },
-                                "lastPacketSentTimestamp": {
-                                  "type": "int64",
-                                  "id": 24
-                                },
-                                "mimeType": {
-                                  "type": "string",
-                                  "id": 25
+                                  "id": 13
                                 },
                                 "nackCount": {
                                   "type": "int32",
-                                  "id": 26
-                                },
-                                "packetsDiscarded": {
-                                  "type": "int32",
-                                  "id": 27
-                                },
-                                "packetsDiscardedOnSend": {
-                                  "type": "int32",
-                                  "id": 28
+                                  "id": 14
                                 },
                                 "packetsLost": {
                                   "type": "int32",
-                                  "id": 29
+                                  "id": 15
                                 },
                                 "packetsReceived": {
                                   "type": "int32",
-                                  "id": 30
-                                },
-                                "packetsRepaired": {
-                                  "type": "int32",
-                                  "id": 31
+                                  "id": 16
                                 },
                                 "packetsSent": {
                                   "type": "int32",
-                                  "id": 32
-                                },
-                                "payloadType": {
-                                  "type": "int32",
-                                  "id": 33
+                                  "id": 17
                                 },
                                 "peerConnectionId": {
                                   "type": "string",
-                                  "id": 34
-                                },
-                                "perDscpPacketsSent": {
-                                  "type": "int32",
-                                  "id": 35
+                                  "id": 18
                                 },
                                 "relayedSource": {
                                   "type": "bool",
-                                  "id": 36
-                                },
-                                "reportsReceived": {
-                                  "type": "int32",
-                                  "id": 37
+                                  "id": 19
                                 },
                                 "retransmittedBytesSent": {
                                   "type": "int64",
-                                  "id": 38
+                                  "id": 20
                                 },
                                 "retransmittedPacketsSent": {
                                   "type": "int32",
-                                  "id": 39
+                                  "id": 21
                                 },
                                 "rid": {
                                   "type": "string",
-                                  "id": 40
+                                  "id": 22
                                 },
                                 "roundTripTime": {
                                   "type": "double",
-                                  "id": 41
+                                  "id": 23
                                 },
                                 "roundTripTimeMeasurements": {
                                   "type": "int32",
-                                  "id": 42
-                                },
-                                "rtxSsrc": {
-                                  "type": "int64",
-                                  "id": 43
-                                },
-                                "samplesEncodedWithCelt": {
-                                  "type": "int32",
-                                  "id": 44
-                                },
-                                "samplesEncodedWithSilk": {
-                                  "type": "int32",
-                                  "id": 45
-                                },
-                                "sdpFmtpLine": {
-                                  "type": "string",
-                                  "id": 46
+                                  "id": 24
                                 },
                                 "sfuStreamId": {
                                   "type": "string",
-                                  "id": 47
+                                  "id": 25
                                 },
                                 "targetBitrate": {
                                   "type": "int32",
-                                  "id": 48
+                                  "id": 26
                                 },
                                 "totalAudioEnergy": {
                                   "type": "double",
-                                  "id": 49
+                                  "id": 27
+                                },
+                                "totalCaptureDelay": {
+                                  "type": "double",
+                                  "id": 28
                                 },
                                 "totalEncodedBytesTarget": {
                                   "type": "int64",
-                                  "id": 50
+                                  "id": 29
                                 },
                                 "totalPacketSendDelay": {
                                   "type": "double",
-                                  "id": 51
+                                  "id": 30
                                 },
                                 "totalRoundTripTime": {
                                   "type": "double",
-                                  "id": 52
+                                  "id": 31
+                                },
+                                "totalSamplesCaptured": {
+                                  "type": "double",
+                                  "id": 32
                                 },
                                 "totalSamplesDuration": {
                                   "type": "double",
-                                  "id": 53
-                                },
-                                "totalSamplesSent": {
-                                  "type": "int32",
-                                  "id": 54
+                                  "id": 33
                                 },
                                 "trackId": {
                                   "type": "string",
-                                  "id": 55
-                                },
-                                "voiceActivityFlag": {
-                                  "type": "bool",
-                                  "id": 56
+                                  "id": 34
                                 }
                               }
                             },
@@ -1363,297 +1116,185 @@ export const jsonDescriptor = {
                                   "type": "int64",
                                   "id": 1
                                 },
-                                "averageRtcpInterval": {
-                                  "type": "double",
+                                "active": {
+                                  "type": "bool",
                                   "id": 2
                                 },
-                                "bitDepth": {
-                                  "type": "int32",
+                                "averageRtcpInterval": {
+                                  "type": "double",
                                   "id": 3
-                                },
-                                "burstDiscardCount": {
-                                  "type": "int32",
-                                  "id": 4
-                                },
-                                "burstDiscardRate": {
-                                  "type": "double",
-                                  "id": 5
-                                },
-                                "burstLossCount": {
-                                  "type": "int32",
-                                  "id": 6
-                                },
-                                "burstLossRate": {
-                                  "type": "double",
-                                  "id": 7
-                                },
-                                "burstPacketsDiscarded": {
-                                  "type": "int32",
-                                  "id": 8
-                                },
-                                "burstPacketsLost": {
-                                  "type": "int32",
-                                  "id": 9
-                                },
-                                "bytesDiscardedOnSend": {
-                                  "type": "int64",
-                                  "id": 10
                                 },
                                 "bytesSent": {
                                   "type": "int64",
-                                  "id": 11
-                                },
-                                "channels": {
-                                  "type": "int32",
-                                  "id": 12
-                                },
-                                "clockRate": {
-                                  "type": "int32",
-                                  "id": 13
+                                  "id": 4
                                 },
                                 "encoderImplementation": {
                                   "type": "string",
-                                  "id": 14
-                                },
-                                "ended": {
-                                  "type": "bool",
-                                  "id": 15
-                                },
-                                "fecPacketsSent": {
-                                  "type": "int32",
-                                  "id": 16
+                                  "id": 5
                                 },
                                 "firCount": {
                                   "type": "int32",
-                                  "id": 17
+                                  "id": 6
                                 },
                                 "fractionLost": {
                                   "type": "double",
-                                  "id": 18
-                                },
-                                "frameBitDepth": {
-                                  "type": "int32",
-                                  "id": 19
+                                  "id": 7
                                 },
                                 "frameHeight": {
                                   "type": "int32",
-                                  "id": 20
+                                  "id": 8
                                 },
                                 "frameWidth": {
                                   "type": "int32",
-                                  "id": 21
+                                  "id": 9
                                 },
                                 "frames": {
                                   "type": "int32",
-                                  "id": 22
-                                },
-                                "framesDiscardedOnSend": {
-                                  "type": "int32",
-                                  "id": 23
+                                  "id": 10
                                 },
                                 "framesDropped": {
                                   "type": "int32",
-                                  "id": 24
+                                  "id": 11
                                 },
                                 "framesEncoded": {
                                   "type": "int32",
-                                  "id": 25
+                                  "id": 12
                                 },
                                 "framesPerSecond": {
                                   "type": "double",
-                                  "id": 26
+                                  "id": 13
                                 },
                                 "framesSent": {
                                   "type": "int32",
-                                  "id": 27
-                                },
-                                "fullFramesLost": {
-                                  "type": "int32",
-                                  "id": 28
-                                },
-                                "gapDiscardRate": {
-                                  "type": "double",
-                                  "id": 29
-                                },
-                                "gapLossRate": {
-                                  "type": "double",
-                                  "id": 30
+                                  "id": 14
                                 },
                                 "headerBytesSent": {
                                   "type": "int64",
-                                  "id": 31
+                                  "id": 15
                                 },
                                 "height": {
                                   "type": "int32",
-                                  "id": 32
+                                  "id": 16
                                 },
                                 "hugeFramesSent": {
                                   "type": "int32",
-                                  "id": 33
+                                  "id": 17
                                 },
                                 "jitter": {
                                   "type": "double",
-                                  "id": 34
+                                  "id": 18
                                 },
                                 "keyFramesEncoded": {
                                   "type": "int32",
-                                  "id": 35
-                                },
-                                "lastPacketSentTimestamp": {
-                                  "type": "int64",
-                                  "id": 36
-                                },
-                                "mimeType": {
-                                  "type": "string",
-                                  "id": 37
+                                  "id": 19
                                 },
                                 "nackCount": {
                                   "type": "int32",
-                                  "id": 38
-                                },
-                                "packetsDiscarded": {
-                                  "type": "int32",
-                                  "id": 39
-                                },
-                                "packetsDiscardedOnSend": {
-                                  "type": "int32",
-                                  "id": 40
+                                  "id": 20
                                 },
                                 "packetsLost": {
                                   "type": "int32",
-                                  "id": 41
+                                  "id": 21
                                 },
                                 "packetsReceived": {
                                   "type": "int32",
-                                  "id": 42
-                                },
-                                "packetsRepaired": {
-                                  "type": "int32",
-                                  "id": 43
+                                  "id": 22
                                 },
                                 "packetsSent": {
                                   "type": "int32",
-                                  "id": 44
-                                },
-                                "partialFramesLost": {
-                                  "type": "int32",
-                                  "id": 45
-                                },
-                                "payloadType": {
-                                  "type": "int32",
-                                  "id": 46
+                                  "id": 23
                                 },
                                 "peerConnectionId": {
                                   "type": "string",
-                                  "id": 47
-                                },
-                                "perDscpPacketsSent": {
-                                  "type": "int32",
-                                  "id": 48
+                                  "id": 24
                                 },
                                 "pliCount": {
                                   "type": "int32",
-                                  "id": 49
+                                  "id": 25
                                 },
                                 "qpSum": {
                                   "type": "int64",
-                                  "id": 50
+                                  "id": 26
                                 },
                                 "qualityLimitationDurationBandwidth": {
                                   "type": "double",
-                                  "id": 51
+                                  "id": 27
                                 },
                                 "qualityLimitationDurationCPU": {
                                   "type": "double",
-                                  "id": 52
+                                  "id": 28
                                 },
                                 "qualityLimitationDurationNone": {
                                   "type": "double",
-                                  "id": 53
+                                  "id": 29
                                 },
                                 "qualityLimitationDurationOther": {
                                   "type": "double",
-                                  "id": 54
+                                  "id": 30
                                 },
                                 "qualityLimitationReason": {
                                   "type": "string",
-                                  "id": 55
+                                  "id": 31
                                 },
                                 "qualityLimitationResolutionChanges": {
                                   "type": "int32",
-                                  "id": 56
+                                  "id": 32
                                 },
                                 "relayedSource": {
                                   "type": "bool",
-                                  "id": 57
-                                },
-                                "reportsReceived": {
-                                  "type": "int32",
-                                  "id": 58
+                                  "id": 33
                                 },
                                 "retransmittedBytesSent": {
                                   "type": "int64",
-                                  "id": 59
+                                  "id": 34
                                 },
                                 "retransmittedPacketsSent": {
                                   "type": "int32",
-                                  "id": 60
+                                  "id": 35
                                 },
                                 "rid": {
                                   "type": "string",
-                                  "id": 61
+                                  "id": 36
                                 },
                                 "roundTripTime": {
                                   "type": "double",
-                                  "id": 62
+                                  "id": 37
                                 },
                                 "roundTripTimeMeasurements": {
                                   "type": "int32",
-                                  "id": 63
-                                },
-                                "rtxSsrc": {
-                                  "type": "int64",
-                                  "id": 64
-                                },
-                                "sdpFmtpLine": {
-                                  "type": "string",
-                                  "id": 65
+                                  "id": 38
                                 },
                                 "sfuStreamId": {
                                   "type": "string",
-                                  "id": 66
-                                },
-                                "sliCount": {
-                                  "type": "int32",
-                                  "id": 67
+                                  "id": 39
                                 },
                                 "targetBitrate": {
                                   "type": "int32",
-                                  "id": 68
+                                  "id": 40
                                 },
                                 "totalEncodeTime": {
                                   "type": "double",
-                                  "id": 69
+                                  "id": 41
                                 },
                                 "totalEncodedBytesTarget": {
                                   "type": "int64",
-                                  "id": 70
+                                  "id": 42
                                 },
                                 "totalPacketSendDelay": {
                                   "type": "double",
-                                  "id": 71
+                                  "id": 43
                                 },
                                 "totalRoundTripTime": {
                                   "type": "double",
-                                  "id": 72
+                                  "id": 44
                                 },
                                 "trackId": {
                                   "type": "string",
-                                  "id": 73
+                                  "id": 45
                                 },
                                 "width": {
                                   "type": "int32",
-                                  "id": 74
+                                  "id": 46
                                 }
                               }
                             },
@@ -1734,58 +1375,6 @@ export const jsonDescriptor = {
                                 "url": {
                                   "type": "string",
                                   "id": 9
-                                }
-                              }
-                            },
-                            "DataChannel": {
-                              "fields": {
-                                "address": {
-                                  "type": "string",
-                                  "id": 1
-                                },
-                                "bytesReceived": {
-                                  "type": "int64",
-                                  "id": 2
-                                },
-                                "bytesSent": {
-                                  "type": "int64",
-                                  "id": 3
-                                },
-                                "dataChannelIdentifier": {
-                                  "type": "int32",
-                                  "id": 4
-                                },
-                                "id": {
-                                  "type": "string",
-                                  "id": 5
-                                },
-                                "label": {
-                                  "type": "string",
-                                  "id": 6
-                                },
-                                "messagesReceived": {
-                                  "type": "int32",
-                                  "id": 7
-                                },
-                                "messagesSent": {
-                                  "type": "int32",
-                                  "id": 8
-                                },
-                                "peerConnectionId": {
-                                  "type": "string",
-                                  "id": 9
-                                },
-                                "port": {
-                                  "type": "int32",
-                                  "id": 10
-                                },
-                                "protocol": {
-                                  "type": "string",
-                                  "id": 11
-                                },
-                                "state": {
-                                  "type": "string",
-                                  "id": 12
                                 }
                               }
                             }

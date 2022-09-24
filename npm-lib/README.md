@@ -6,12 +6,13 @@ Javascript bindings for ObserveRTC schemas
 	* [CallMetaReport](#CallMetaReport)
 	* [ClientDataChannelReport](#ClientDataChannelReport)
 	* [ClientExtensionReport](#ClientExtensionReport)
-	* [ClientTransportReport](#ClientTransportReport)
+	* [IceCandidatePairReport](#IceCandidatePairReport)
 	* [InboundAudioTrackReport](#InboundAudioTrackReport)
 	* [InboundVideoTrackReport](#InboundVideoTrackReport)
 	* [ObserverEventReport](#ObserverEventReport)
 	* [OutboundAudioTrackReport](#OutboundAudioTrackReport)
 	* [OutboundVideoTrackReport](#OutboundVideoTrackReport)
+	* [PeerConnectionTransportReport](#PeerConnectionTransportReport)
 	* [Report](#Report)
 	* [SfuEventReport](#SfuEventReport)
 	* [SfuExtensionReport](#SfuExtensionReport)
@@ -30,7 +31,6 @@ Javascript bindings for ObserveRTC schemas
 	* [SfuInboundRtpPad](#SfuInboundRtpPad)
 	* [SfuTransport](#SfuTransport)
 	* [SfuSample](#SfuSample)
-	* [DataChannel](#DataChannel)
 	* [IceRemoteCandidate](#IceRemoteCandidate)
 	* [IceLocalCandidate](#IceLocalCandidate)
 	* [OutboundVideoTrack](#OutboundVideoTrack)
@@ -40,7 +40,9 @@ Javascript bindings for ObserveRTC schemas
 	* [Certificate](#Certificate)
 	* [MediaCodecStats](#MediaCodecStats)
 	* [MediaSourceStat](#MediaSourceStat)
+	* [IceCandidatePairStats](#IceCandidatePairStats)
 	* [PeerConnectionTransport](#PeerConnectionTransport)
+	* [DataChannelStats](#DataChannelStats)
 	* [ExtensionStat](#ExtensionStat)
 	* [MediaDevice](#MediaDevice)
 	* [OperationSystem](#OperationSystem)
@@ -151,10 +153,10 @@ sampleSeq | The sequence number of the sample the event may related to
 payload | the human readable message of the event
 
 
-## ClientTransportReport
+## IceCandidatePairReport
 
 
-A Report created for Client PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates
+A Report created for ICE candidate pairs
 
 
 Field | Description 
@@ -165,68 +167,39 @@ timestamp (**Mandatory**) | The timestamp when the corresponded data is generate
 callId (**Mandatory**) | The generated unique identifier of the call
 clientId (**Mandatory**) | The generated unique identifier of the client
 peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
 label | The webrtc app provided label the peer connection is marked with
-packetsSent | Represents the total number of packets sent on the corresponded transport
-packetsReceived | Represents the total number of packets received on the corresponded transport
-bytesSent | Represents the total amount of bytes sent on the corresponded transport
-bytesReceived | Represents the total amount of bytes received on the corresponded transport
-iceRole | Represent the current role of ICE under DTLS Transport
-iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
-dtlsState | Represents the current state of DTLS for the peer connection transport layer
-iceTransportState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
-tlsVersion | Represents the version number of the TLS used in the corresponded transport
-dtlsCipher | Represents the name of the DTLS cipher used in the corresponded transport
-srtpCipher | Represents the name of the SRTP cipher used in the corresponded transport
-tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
-selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
-localAddress | The address of the candidate (IPv4, IPv6, FQDN)
-localPort | The locally used port to communicate with the remote peer
-localProtocol | The protocol used by the local endpoint for the corresponded transport
-localCandidateType | The type of the ICE candidate used at the local endpoint on the corresponded transport
-localCandidateICEServerUrl | The url of the ICE server used by the local endpoint on the corresponded transport
-localCandidateRelayProtocol | The relay protocol of the ICE candidate used by the local endpoint on the corresponded transport
-remoteAddress | The address of the candidate (IPv4, IPv6, FQDN)
-remotePort | The remotely used port to communicate with the remote peer
-remoteProtocol | The protocol used by the remote endpoint for the corresponded transport
-remoteCandidateType | The type of the ICE candidate used at the remote endpoint on the corresponded transport
-remoteCandidateICEServerUrl | The url of the ICE server used by the remote endpoint on the corresponded transport
-remoteCandidateRelayProtocol | The relay protocol of the ICE candidate used by the remote endpoint on the corresponded transport
-candidatePairState | The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport
-candidatePairPacketsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
-candidatePairPacketsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
-candidatePairBytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
-candidatePairBytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
-candidatePairLastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairLastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairFirstRequestTimestamp | Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastRequestTimestamp | Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastResponseTimestamp | Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairTotalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
-candidatePairCurrentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
-candidatePairAvailableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
-candidatePairAvailableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
-candidatePairCircuitBreakerTriggerCount | The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
-candidatePairRequestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
-candidatePairRequestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
-candidatePairResponsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
-candidatePairResponsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionReceived | Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionSent | Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
-candidatePairConsentExpiredTimestamp | Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
-candidatePairBytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairPacketsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairRequestBytesSent | Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestBytesSent | Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
-candidatePairResponseBytesSent | Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
-sctpSmoothedRoundTripTime | The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. 
-sctpCongestionWindow | The latest congestion window, corresponding to spinfo_cwnd.
-sctpReceiverWindow | The latest receiver window, corresponding to sstat_rwnd.
-sctpMtu | The latest maximum transmission unit, corresponding to spinfo_mtu.
-sctpUnackData | The number of unacknowledged DATA chunks, corresponding to sstat_unackdata.
+state | The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
+packetsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
+packetsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
+bytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
+bytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
+lastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+firstRequestTimestamp | Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+lastRequestTimestamp | Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+lastResponseTimestamp | Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+totalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
+currentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
+availableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
+availableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
+circuitBreakerTriggerCount | The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
+requestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
+requestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
+responsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
+responsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
+retransmissionReceived | Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
+retransmissionSent | Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
+consentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
+consentExpiredTimestamp | Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
+bytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+packetsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+requestBytesSent | Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
+consentRequestBytesSent | Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
+responseBytesSent | Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
 
 
 ## InboundAudioTrackReport
@@ -259,42 +232,40 @@ remotePeerConnectionId | The observer matched remote Peer Connection Id
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-voiceActivityFlag | Indicate if the last RTP packet received contained voice activity based on the presence of the V bit in the extension header
 lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
-averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
 headerBytesReceived | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
 fecPacketsReceived | Total number of FEC packets received over the corresponding synchronization source (ssrc)
 fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
 bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsFailedDecryption | Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsDuplicated | Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-perDscpPacketsReceived | The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
 totalProcessingDelay | The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
 estimatedPlayoutTimestamp | The estimated playout time of the corresponded synchronization source
 jitterBufferDelay | The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
 jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
+jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
+totalSamplesReceived | The total number of audio samples received on the corresponded RTP stream
+concealedSamples | The total number of samples decoded by the media decoder from the corresponded RTP stream
+silentConcealedSamples | The total number of samples concealed from the corresponded RTP stream
+concealmentEvents | The total number of concealed event emitted to the media codec by the corresponded jitterbuffer
+insertedSamplesForDeceleration | The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay)
+removedSamplesForAcceleration | The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
+audioLevel | The current audio level
+totalAudioEnergy | Represents the energy level reported by the media source
+totalSamplesDuration | Represents the total duration of the audio samples the media source actually transconverted in seconds
 decoderImplementation | Indicate the name of the decoder implementation library
 packetsSent | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
 bytesSent | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
 remoteTimestamp | The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
 reportsSent | The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
-ended | Flag represents if the receiver ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-channels | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
+roundTripTime | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+totalRoundTripTime |  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+roundTripTimeMeasurements | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
+synthesizedSamplesDuration | This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
+synthesizedSamplesEvents | The number of synthesized samples events.
+totalPlayoutDelay |  The playout delay includes the delay from being emitted to the actual time of playout on the device
+totalSamplesCount | When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
 
 
 ## InboundVideoTrackReport
@@ -327,57 +298,40 @@ remotePeerConnectionId | The observer matched remote Peer Connection Id
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-framesDropped | The total number of frames dropped at decoding process on the corresponding synchronization source
-partialFramesLost | The total number of partial frames lost at decoding process on the corresponding synchronization source
-fullFramesLost | The total number of full frames lost at decoding process on the corresponding synchronization source
-framesDecoded | Indicate the number of frames completly and without error decoded on the corresponded synchronization source (ssrc)
-keyFramesDecoded | Indicate the number of keyframes received on the corresponded synchronization source (ssrc)
-frameWidth | Indicate the width of the frame received on the corresponded synchronization source (ssrc)
-frameHeight | Indicate the height of the frame received on the corresponded synchronization source (ssrc)
-frameBitDepth | Indicate the bit depth per pixel of the last decoded frame received on the corresponded synchronization source (ssrc)
-framesPerSecond | Indicate the number of decoded frames in the last second received on the corresponded synchronization source (ssrc)
-qpSum | sum of QP values of frames decoded on the corresponded synchronization source (ssrc)
-totalDecodeTime | The total number of seconds spent on decoding frames on the corresponded synchronization source (ssrc)
-totalInterFrameDelay | The total number of inter frame delay on the corresponded synchronization source (ssrc)
-totalSquaredInterFrameDelay | The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
+framesDropped | The number of frames dropped prior to decode or missing chunks
 lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
-averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
 headerBytesReceived | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
 fecPacketsReceived | Total number of FEC packets received over the corresponding synchronization source (ssrc)
 fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
 bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsFailedDecryption | Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsDuplicated | Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-perDscpPacketsReceived | The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
-firCount | Count the total number of Full Intra Request sent by this receiver and belongs to the corresponded synchronization source (ssrc)
-pliCount | Count the total number of Picture Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
-sliCount | Count the total number of Slice Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
 totalProcessingDelay | The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
 estimatedPlayoutTimestamp | The estimated playout time of the corresponded synchronization source
 jitterBufferDelay | The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
 jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
-framesReceived | Represents the total number of complete frames received on the corresponded synchronization source (ssrc)
+jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
 decoderImplementation | Indicate the name of the decoder implementation library
+framesDecoded | The total number of frames decoded on the corresponded RTP stream
+keyFramesDecoded | The total number of keyframes decoded on the corresponded RTP stream
+frameWidth | The width of the frame of the video sent by the remote source on the corresponded RTP stream
+frameHeight | The height of the frame of the video sent by the remote source on the corresponded RTP stream
+framesPerSecond | The frame per seconds of the video sent by the remote source on the corresponded RTP stream
+qpSum | The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
+totalDecodeTime | The total tiem spent on decoding video on the corresponded RTP stream
+totalInterFrameDelay | The total interframe delay
+totalSquaredInterFrameDelay | The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
+firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
+framesReceived | The total number of frames received on the corresponded RTP stream.
 packetsSent | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
 bytesSent | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
 remoteTimestamp | The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
 reportsSent | The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
-ended | Flag represents if the receiver ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
+roundTripTime | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+totalRoundTripTime |  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+roundTripTimeMeasurements | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 
 
 ## ObserverEventReport
@@ -430,41 +384,22 @@ sfuStreamId | The id of the Sfu stream corresponds to the outbound track
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
 rid |  The rid encoding parameter of the corresponded synchronization source
-lastPacketSentTimestamp |  the timestamp the last packet was sent. (UTC epoch in ms)
 headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-packetsDiscardedOnSend | Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
-bytesDiscardedOnSend | Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
-fecPacketsSent | Total number of FEC packets sent over the corresponding synchronization source (ssrc)
 retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
 retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
 targetBitrate | Reflects the current encoder target in bits per second.
 totalEncodedBytesTarget | The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
-totalSamplesSent | The total number of samples sent over the corresponding synchronization source
-samplesEncodedWithSilk | The total number of samples encoded by SILK portion in opus sent over the corresponding synchronization source
-samplesEncodedWithCelt | The total number of samples encoded by CELT portion in opus sent over the corresponding synchronization source
-voiceActivityFlag | Indicate if the last RTP packet sent contained voice activity based on the presence of the V bit in the extension header
 totalPacketSendDelay | The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
 averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-perDscpPacketsSent | The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
 encoderImplementation | Indicate the name of the encoder implementation library
+active | Indicates whether this RTP stream is configured to be sent or disabled
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 roundTripTime | RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
 totalRoundTripTime | The sum of RTT measurements belongs to the corresponded synchronization source
 fractionLost | The receiver reported fractional lost belongs to the corresponded synchronization source
-reportsReceived | The total number of RR reports received, which is the base of the remote inbound calculation on this source
 roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
 relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
 audioLevel | Represents the audio level reported by the media source
@@ -472,12 +407,10 @@ totalAudioEnergy | Represents the energy level reported by the media source
 totalSamplesDuration | Represents the total duration of the audio samples the media source actually transconverted in seconds
 echoReturnLoss | Represents the echo cancellation in decibels corresponded to the media source.
 echoReturnLossEnhancement | Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is catched from the emdia source.
-ended | Flag represents if the sender ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-channels | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
+droppedSamplesDuration | . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+droppedSamplesEvents | A counter increases every time a sample is dropped after a non-dropped sample
+totalCaptureDelay | Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
+totalSamplesCaptured | The total number of captured samples reaching the audio source
 
 
 ## OutboundVideoTrackReport
@@ -505,72 +438,82 @@ sfuStreamId | The id of the Sfu stream corresponds to the outbound track
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
 rid |  The rid encoding parameter of the corresponded synchronization source
-lastPacketSentTimestamp |  the timestamp the last packet was sent. (UTC epoch in ms)
 headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-packetsDiscardedOnSend | Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
-bytesDiscardedOnSend | Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
-fecPacketsSent | Total number of FEC packets sent over the corresponding synchronization source (ssrc)
 retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
-retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponded synchronization source (ssrc).
+retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
 targetBitrate | Reflects the current encoder target in bits per second.
 totalEncodedBytesTarget | The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
-frameWidth | Represents the height of the last encoded frame sent over the corresponded synchronization source
-frameHeight | Represents the width of the last encoded frame sent over the corresponded synchronization source
-frameBitDepth | Represents the bit depth per pixel of the last encoded frame sent over the corresponded synchronization source
-framesPerSecond | The number of encoded frames over the last second sent over the corresponded synchronization source
-framesSent | The number of frames sent over the corresponded synchronization source
-hugeFramesSent | The number of huge frames (2.5x greater than the average size of frame) sent over the corresponded synchronization source
-framesEncoded | The number of frames encoded over the corresponded synchronization source
-keyFramesEncoded | The number of keyframes sent over the corresponded synchronization source
-framesDiscardedOnSend | The number of frames discarded before sending over the corresponded synchronization source
-qpSum | The sum of QP values encoded by the encoder corresponded to the synchronization source
-totalEncodeTime | The sum of encoding time spent by the encoder corresponded to the synchronization source
 totalPacketSendDelay | The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
 averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-qualityLimitationDurationCPU | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state due to CPU
-qualityLimitationDurationNone | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was not in a limited state
-qualityLimitationDurationBandwidth | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state becasue of bandwidth
-qualityLimitationDurationOther | Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state becaue of other factor
-qualityLimitationReason | Indicate a reason for the corresponding synchronization source (ssrc) quality is limited
-qualityLimitationResolutionChanges | The number of quality limiatation changes happened for the corresponding synchronization source (ssrc)
-perDscpPacketsSent | The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
-firCount | The number of full inter requests happened over the corresponding synchronization source (ssrc)
-pliCount | The number of picture loss indication happened received over the corresponding synchronization source (ssrc)
-sliCount | The number of slice loss indication happened over the corresponding synchronization source (ssrc)
 encoderImplementation | Indicate the name of the encoder implementation library
+active | Indicates whether this RTP stream is configured to be sent or disabled
+frameWidth | The frame width in pixels of the frames targeted by the media encoder
+frameHeight | The frame width the media encoder targeted
+framesPerSecond | The encoded number of frames in the last second on the corresponded media source
+framesSent | TThe total number of frames sent on the corresponded RTP stream
+hugeFramesSent | The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream
+framesEncoded | The total number of frames encoded by the media source
+keyFramesEncoded | The total number of keyframes encoded on the corresponded RTP stream
+qpSum | The sum of the QP the media encoder provided on the corresponded RTP stream.
+totalEncodeTime | The total time in seconds spent in encoding media frames for the corresponded RTP stream.
+qualityLimitationDurationNone | Time elapsed in seconds when the RTC connection has not limited the quality
+qualityLimitationDurationCPU | Time elapsed in seconds the RTC connection had a limitation because of CPU
+qualityLimitationDurationBandwidth | Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
+qualityLimitationDurationOther | Time elapsed in seconds the RTC connection had a limitation because of Other factor
+qualityLimitationReason | Indicate a reason for the quality limitation of the corresponded synchronization source
+qualityLimitationResolutionChanges | The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
+firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-framesDropped | The number of frames dropped over the corresponded synchronization source
-partialFramesLost | The number of partial frames lost over the corresponded synchronization source
-fullFramesLost | The number of full frames lost over the corresponded synchronization source
 roundTripTime | RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
 totalRoundTripTime | The sum of RTT measurements belongs to the corresponded synchronization source
 fractionLost | The receiver reported fractional lost belongs to the corresponded synchronization source
-reportsReceived | The total number of RR reports received, which is the base of the remote inbound calculation on this source
 roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
+framesDropped | The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
 relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
-encodedFrameWidth | Indicate the encoded width of the frame received on the corresponded synchronization source (ssrc)
-encodedFrameHeight | Indicate the encoded height of the frame received on the corresponded synchronization source (ssrc)
-encodedFrameBitDepth | Indicate the encoded bit depth per pixel of the last decoded frame received on the corresponded synchronization source (ssrc)
-encodedFramesPerSecond | Indicate the encoded number of decoded frames in the last second received on the corresponded synchronization source (ssrc)
-ended | Flag represents if the sender ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-channels | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
+width | The width, in pixels, of the last frame originating from the media source
+height | The height, in pixels, of the last frame originating from the media source
+frames | The total number of frames originated from the media source
+
+
+## PeerConnectionTransportReport
+
+
+A Report created for Client PeerConnection Transport.
+
+
+Field | Description 
+--- | ---
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
+marker | The marker the originated sample is reported with
+roomId | webrtc app provided room id
+userId | webrtc app provided user identifier
+label | The webrtc app provided label the peer connection is marked with
+packetsSent | Represents the total number of packets sent on the corresponded transport
+packetsReceived | Represents the total number of packets received on the corresponded transport
+bytesSent | Represents the total amount of bytes sent on the corresponded transport
+bytesReceived | Represents the total amount of bytes received on the corresponded transport
+iceRole | Represent the current role of ICE under DTLS Transport
+iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
+dtlsState | Represents the current state of DTLS for the peer connection transport layer
+selectedCandidatePairId | The identifier of the candidate pair the transport currently uses
+iceState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
+localCertificateId | If DTLS negotiated it gives the id of the local certificate
+remoteCertificateId | If DTLS negotiated it gives the id of the remote certificate
+tlsVersion | Represents the version number of the TLS used in the corresponded transport
+dtlsCipher | Represents the name of the DTLS cipher used in the corresponded transport
+srtpCipher | Represents the name of the SRTP cipher used in the corresponded transport
+tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
+selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
 
 
 ## Report
@@ -897,17 +840,28 @@ Field | Description
 type (**Mandatory**) | The type of the extension stats the custom app provides
 payload (**Mandatory**) | The payload of the extension stats the custom app provides
 
+## DataChannelStats
+
+
+Field | Description 
+--- | ---
+peerConnectionId (**Mandatory**) | The id of the peer connection the data channel is assigned to
+dataChannelIdentifier | The id of the data channel assigned by the peer connection when it is opened
+label | The label of the data channel
+protocol | The protocol the data channel utilizes
+state | The state of the data channel
+messageSent | The total number of message sent on the data channel
+bytesSent | The total number of bytes sent on the data channel
+messageReceived | The total number of message received on the data channel
+bytesReceived | The total number of bytes received on the data channel
+
 ## PeerConnectionTransport
 
 
 Field | Description 
 --- | ---
+transportId (**Mandatory**) | The identifier of the transport the ice candidate pair is negotiated on
 peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
-label | The webrtc app provided label the peer connection is marked with
-dataChannelsOpened | Represents the number of unique RTCDataChannels that have entered the "open" state during their lifetime.
-dataChannelsClosed | Represents the number of unique RTCDataChannels that had the "open" state, but now they are "closed"
-dataChannelsRequested | Represents the number of unique RTCDataChannels successfully requested from RTCPeerConnection.
-dataChannelsAccepted | Represents the number of unique RTCDataChannels signaled in a ondatachannel event on the RTCPeerConnection.
 packetsSent | Represents the total number of packets sent on the corresponded transport
 packetsReceived | Represents the total number of packets received on the corresponded transport
 bytesSent | Represents the total amount of bytes sent on the corresponded transport
@@ -915,57 +869,46 @@ bytesReceived | Represents the total amount of bytes received on the corresponde
 iceRole | Represent the current role of ICE under DTLS Transport
 iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
 dtlsState | Represents the current state of DTLS for the peer connection transport layer
+selectedCandidatePairId | The identifier of the candidate pair the transport currently uses
 iceState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
+localCertificateId | If DTLS negotiated it gives the id of the local certificate
+remoteCertificateId | If DTLS negotiated it gives the id of the remote certificate
 tlsVersion | Represents the version number of the TLS used in the corresponded transport
 dtlsCipher | Represents the name of the DTLS cipher used in the corresponded transport
+dtlsRole | The role this host plays in DTLS negotiations (Possible values are: client,<br />server,<br />unknown)
 srtpCipher | Represents the name of the SRTP cipher used in the corresponded transport
 tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
 selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
-localAddress | The address of the candidate (IPv4, IPv6, FQDN)
-localPort | The locally used port to communicate with the remote peer
-localProtocol | The protocol used by the local endpoint for the corresponded transport
-localCandidateType | The type of the ICE candidate used at the local endpoint on the corresponded transport
-localCandidateICEServerUrl | The url of the ICE server used by the local endpoint on the corresponded transport
-localCandidateRelayProtocol | The relay protocol of the ICE candidate used by the local endpoint on the corresponded transport
-remoteAddress | The address of the candidate (IPv4, IPv6, FQDN)
-remotePort | The remotely used port to communicate with the remote peer
-remoteProtocol | The protocol used by the remote endpoint for the corresponded transport
-remoteCandidateType | The type of the ICE candidate used at the remote endpoint on the corresponded transport
-remoteCandidateICEServerUrl | The url of the ICE server used by the remote endpoint on the corresponded transport
-remoteCandidateRelayProtocol | The relay protocol of the ICE candidate used by the remote endpoint on the corresponded transport
-candidatePairState | The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport
-candidatePairPacketsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
-candidatePairPacketsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
-candidatePairBytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
-candidatePairBytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
-candidatePairLastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairLastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairFirstRequestTimestamp | Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastRequestTimestamp | Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastResponseTimestamp | Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairTotalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
-candidatePairCurrentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
-candidatePairAvailableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
-candidatePairAvailableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
-candidatePairCircuitBreakerTriggerCount | The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
-candidatePairRequestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
-candidatePairRequestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
-candidatePairResponsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
-candidatePairResponsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionReceived | Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionSent | Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
-candidatePairConsentExpiredTimestamp | Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
-candidatePairBytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairPacketsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairRequestBytesSent | Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestBytesSent | Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
-candidatePairResponseBytesSent | Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
-sctpSmoothedRoundTripTime | The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. 
-sctpCongestionWindow | The latest congestion window, corresponding to spinfo_cwnd.
-sctpReceiverWindow | The latest receiver window, corresponding to sstat_rwnd.
-sctpMtu | The latest maximum transmission unit, corresponding to spinfo_mtu.
-sctpUnackData | The number of unacknowledged DATA chunks, corresponding to sstat_unackdata.
+
+## IceCandidatePairStats
+
+
+Field | Description 
+--- | ---
+candidatePairId (**Mandatory**) | The unique identifier of the peer connection
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+transportId | The identifier of the transport the ice candidate pair is negotiated on
+localCandidateId | The unique identifier of the candidate the negotiated pair is selected at local side
+remoteCandidateId | The unique identifier of the candidate the negotiated pair is selected at remote side
+state | The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
+nominated | indicate if the ice candidate pair is nominated or not
+packetsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
+packetsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
+bytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
+bytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
+lastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+totalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
+currentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
+availableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
+availableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
+requestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
+requestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
+responsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
+responsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
+consentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
+packetsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+bytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
 
 ## MediaSourceStat
 
@@ -980,9 +923,12 @@ totalAudioEnergy | The audio energy of the media source. For calculation see www
 totalSamplesDuration | The duration of the audio type media source
 echoReturnLoss | if echo cancellation is applied on the media source, then this number represents the loss calculation defined in www.itu.int/rec/T-REC-G.168-201504-I/en
 echoReturnLossEnhancement | www.itu.int/rec/T-REC-G.168-201504-I/en
+droppedSamplesDuration | . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+droppedSamplesEvents | A counter increases every time a sample is dropped after a non-dropped sample
+totalCaptureDelay | Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
+totalSamplesCaptured | The total number of captured samples reaching the audio source
 width | The width, in pixels, of the last frame originating from the media source
 height | The height, in pixels, of the last frame originating from the media source
-bitDepth | The bitDepth, in pixels, of the last frame originating from the media source
 frames | The total number of frames originated from the media source
 framesPerSecond |  The number of frames origianted from the media source in the last second
 
@@ -1022,41 +968,29 @@ sfuSinkId | The id of the sink this track belongs to in the SFU
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
-averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
 headerBytesReceived | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
 fecPacketsReceived | Total number of FEC packets received over the corresponding synchronization source (ssrc)
 fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
 bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsFailedDecryption | Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsDuplicated | Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-perDscpPacketsReceived | The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
 totalProcessingDelay | The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
 estimatedPlayoutTimestamp | The estimated playout time of the corresponded synchronization source
 jitterBufferDelay | The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
 jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
-decoderImplementation | Indicate the name of the decoder implementation library
-voiceActivityFlag | Indicate if the last RTP packet received contained voice activity based on the presence of the V bit in the extension header
+jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
 totalSamplesReceived | The total number of audio samples received on the corresponded RTP stream
-totalSamplesDecoded | The total number of samples decoded on the corresponded RTP stream
-samplesDecodedWithSilk | The total number of samples decoded with SILK on the corresponded RTP stream
-samplesDecodedWithCelt | The total number of samples decodedd with CELT on the corresponded RTP stream
 concealedSamples | The total number of samples decoded by the media decoder from the corresponded RTP stream
 silentConcealedSamples | The total number of samples concealed from the corresponded RTP stream
 concealmentEvents | The total number of concealed event emitted to the media codec by the corresponded jitterbuffer
 insertedSamplesForDeceleration | The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay)
 removedSamplesForAcceleration | The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
+audioLevel | The current audio level
+totalAudioEnergy | Represents the energy level reported by the media source
+totalSamplesDuration | Represents the total duration of the audio samples the media source actually transconverted in seconds
+decoderImplementation | Indicate the name of the decoder implementation library
 packetsSent | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
 bytesSent | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
 remoteTimestamp | The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
@@ -1064,12 +998,10 @@ reportsSent | The number of SR reports the remote endpoint sent corresponded to 
 roundTripTime | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
 totalRoundTripTime |  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
 roundTripTimeMeasurements | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
-ended | Flag represents if the receiver ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-channels | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
+synthesizedSamplesDuration | This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
+synthesizedSamplesEvents | The number of synthesized samples events.
+totalPlayoutDelay |  The playout delay includes the delay from being emitted to the actual time of playout on the device
+totalSamplesCount | When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
 
 ## InboundVideoTrack
 
@@ -1085,39 +1017,25 @@ sfuSinkId | The id of the sink this track belongs to in the SFU
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
+framesDropped | The number of frames dropped prior to decode or missing chunks
 lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
-averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
 headerBytesReceived | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
 fecPacketsReceived | Total number of FEC packets received over the corresponding synchronization source (ssrc)
 fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
 bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsFailedDecryption | Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-packetsDuplicated | Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-perDscpPacketsReceived | The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
 totalProcessingDelay | The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
 estimatedPlayoutTimestamp | The estimated playout time of the corresponded synchronization source
 jitterBufferDelay | The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
 jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
+jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
 decoderImplementation | Indicate the name of the decoder implementation library
-framesDropped | The total number of frames dropped on the corresponded RTP stream
 framesDecoded | The total number of frames decoded on the corresponded RTP stream
-partialFramesLost | The total number of frames partially lost on the corresponded RTP stream
-fullFramesLost | The total number of frames fully lost on the corresponded RTP stream
 keyFramesDecoded | The total number of keyframes decoded on the corresponded RTP stream
 frameWidth | The width of the frame of the video sent by the remote source on the corresponded RTP stream
 frameHeight | The height of the frame of the video sent by the remote source on the corresponded RTP stream
-frameBitDepth | The bit depth in pixels of the frame of the video sent by the remote source on the corresponded RTP stream
 framesPerSecond | The frame per seconds of the video sent by the remote source on the corresponded RTP stream
 qpSum | The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
 totalDecodeTime | The total tiem spent on decoding video on the corresponded RTP stream
@@ -1125,7 +1043,6 @@ totalInterFrameDelay | The total interframe delay
 totalSquaredInterFrameDelay | The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
 firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
 pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
-sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
 framesReceived | The total number of frames received on the corresponded RTP stream.
 packetsSent | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
 bytesSent | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
@@ -1134,12 +1051,6 @@ reportsSent | The number of SR reports the remote endpoint sent corresponded to 
 roundTripTime | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
 totalRoundTripTime |  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
 roundTripTimeMeasurements | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
-ended | Flag represents if the receiver ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-channels | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
 
 ## OutboundAudioTrack
 
@@ -1152,43 +1063,23 @@ peerConnectionId |  The unique generated identifier of the peer connection the i
 sfuStreamId | The id of the SFU stream this track is related to
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
-rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
 rid |  The rid encoding parameter of the corresponded synchronization source
-lastPacketSentTimestamp |  the timestamp the last packet was sent. (UTC epoch in ms)
 headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-packetsDiscardedOnSend | Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
-bytesDiscardedOnSend | Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
-fecPacketsSent | Total number of FEC packets sent over the corresponding synchronization source (ssrc)
 retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
 retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
 targetBitrate | Reflects the current encoder target in bits per second.
 totalEncodedBytesTarget | The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
 totalPacketSendDelay | The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
 averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-perDscpPacketsSent | The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
 encoderImplementation | Indicate the name of the encoder implementation library
-totalSamplesSent | The total number of samples sent over the corresponding synchronization source
-samplesEncodedWithSilk | The total number of samples encoded by SILK portion in opus sent over the corresponding synchronization source
-samplesEncodedWithCelt | The total number of samples encoded by CELT portion in opus sent over the corresponding synchronization source
-voiceActivityFlag | Indicate if the last RTP packet sent contained voice activity based on the presence of the V bit in the extension header
+active | Indicates whether this RTP stream is configured to be sent or disabled
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 roundTripTime | RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
 totalRoundTripTime | The sum of RTT measurements belongs to the corresponded synchronization source
 fractionLost | The receiver reported fractional lost belongs to the corresponded synchronization source
-reportsReceived | The total number of RR reports received, which is the base of the remote inbound calculation on this source
 roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
 relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
 audioLevel | Represents the audio level reported by the media source
@@ -1196,12 +1087,10 @@ totalAudioEnergy | Represents the energy level reported by the media source
 totalSamplesDuration | Represents the total duration of the audio samples the media source actually transconverted in seconds
 echoReturnLoss | Represents the echo cancellation in decibels corresponded to the media source.
 echoReturnLossEnhancement | Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is catched from the emdia source.
-ended | Flag represents if the sender ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-channels | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
+droppedSamplesDuration | . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+droppedSamplesEvents | A counter increases every time a sample is dropped after a non-dropped sample
+totalCaptureDelay | Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
+totalSamplesCaptured | The total number of captured samples reaching the audio source
 
 ## OutboundVideoTrack
 
@@ -1214,34 +1103,24 @@ peerConnectionId |  The unique generated identifier of the peer connection the i
 sfuStreamId | The id of the SFU stream this track is related to
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
-rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
 rid |  The rid encoding parameter of the corresponded synchronization source
-lastPacketSentTimestamp |  the timestamp the last packet was sent. (UTC epoch in ms)
 headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-packetsDiscardedOnSend | Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
-bytesDiscardedOnSend | Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
-fecPacketsSent | Total number of FEC packets sent over the corresponding synchronization source (ssrc)
 retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
 retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
 targetBitrate | Reflects the current encoder target in bits per second.
 totalEncodedBytesTarget | The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
 totalPacketSendDelay | The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
 averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-perDscpPacketsSent | The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
 nackCount | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
-firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
-pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
-sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
 encoderImplementation | Indicate the name of the encoder implementation library
+active | Indicates whether this RTP stream is configured to be sent or disabled
 frameWidth | The frame width in pixels of the frames targeted by the media encoder
 frameHeight | The frame width the media encoder targeted
-frameBitDepth | The frame depth in pixles on the corresponded RTP stream
 framesPerSecond | The encoded number of frames in the last second on the corresponded media source
 framesSent | TThe total number of frames sent on the corresponded RTP stream
 hugeFramesSent | The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream
 framesEncoded | The total number of frames encoded by the media source
 keyFramesEncoded | The total number of keyframes encoded on the corresponded RTP stream
-framesDiscardedOnSend | The total number of frames discarded on the corresponded RTP stream.
 qpSum | The sum of the QP the media encoder provided on the corresponded RTP stream.
 totalEncodeTime | The total time in seconds spent in encoding media frames for the corresponded RTP stream.
 qualityLimitationDurationNone | Time elapsed in seconds when the RTC connection has not limited the quality
@@ -1250,38 +1129,20 @@ qualityLimitationDurationBandwidth | Time elapsed in seconds the RTC connection 
 qualityLimitationDurationOther | Time elapsed in seconds the RTC connection had a limitation because of Other factor
 qualityLimitationReason | Indicate a reason for the quality limitation of the corresponded synchronization source
 qualityLimitationResolutionChanges | The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
+firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
 packetsReceived | The total number of packets received on the corresponded synchronization source
 packetsLost | The total number of bytes received on the corresponded synchronization source
 jitter | The corresponded synchronization source reported jitter
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-packetsRepaired | The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-burstPacketsLost | The total number of packets lost in burst (RFC6958)
-burstPacketsDiscarded | The total number of packets discarded in burst (RFC6958)
-burstLossCount | The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-burstDiscardCount | The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-burstLossRate | The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-burstDiscardRate | The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapLossRate | The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-gapDiscardRate | The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
 roundTripTime | RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
 totalRoundTripTime | The sum of RTT measurements belongs to the corresponded synchronization source
 fractionLost | The receiver reported fractional lost belongs to the corresponded synchronization source
-reportsReceived | The total number of RR reports received, which is the base of the remote inbound calculation on this source
 roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
 framesDropped | The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
-partialFramesLost | The total number of partial frames reported to be lost by the remote endpoint on the corresponded RTP stream.
-fullFramesLost | The total number of full frames lost at the remote endpoint on the corresponded RTP stream.
 relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
 width | The width, in pixels, of the last frame originating from the media source
 height | The height, in pixels, of the last frame originating from the media source
-bitDepth | The bitDepth, in pixels, of the last frame originating from the media source
 frames | The total number of frames originated from the media source
-ended | Flag represents if the sender ended the media stream track or not.
-payloadType | The type of the payload the RTP packet SSRC belongs to
-mimeType | the MIME type of the codec (e.g.: video/vp8)
-clockRate | The negotiated clock rate the RTP timestamp is generated of
-channels | The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
 
 ## IceLocalCandidate
 
@@ -1311,25 +1172,7 @@ protocol | The protocol for the ICE (Possible values are: tcp,<br />udp)
 candidateType | The type of the local candidate
 priority | The priority of the local candidate
 url | The url of the ICE server
-relayProtocol | The relay protocol the local candidate uses (Possible values are: tcp,<br />udp,<br />tls)
-
-## DataChannel
-
-
-Field | Description 
---- | ---
-peerConnectionId | Refers to the peer connection the local candidate belongs to
-id | Unique identifier of the data channel
-label | The label the data channel provided at the creation
-address | The address of the local endpoint (Ipv4, Ipv6, FQDN)
-port | The port number of the local endpoint the ICE uses
-protocol |  The protocol the data channel use to transfer data
-dataChannelIdentifier | The unique identifier of the data channel
-state | The state of the data channel
-messagesSent | The total number of messages sent on this data channel. this is not equal to the number of packets sent, as messages are chunked to packets
-bytesSent | The amount of bytes sent on the corresponded data channel
-messagesReceived | The number of messages received on the corresponded data channel
-bytesReceived | The amount of bytes received on the corresponded data channel## ClientSample
+relayProtocol | The relay protocol the local candidate uses (Possible values are: tcp,<br />udp,<br />tls)## ClientSample
 
 
 docs
@@ -1353,7 +1196,9 @@ userMediaErrors | The WebRTC app provided List of user media errors the client h
 extensionStats | The WebRTC app provided custom stats payload
 iceServers | The WebRTC app provided List of ICE server the client used.
 localSDPs | The local part of the Signal Description Protocol to establish connections
-pcTransports | Compound object related to Peer Connection Transport Stats
+dataChannels | Measurements about the data channels currently avaialble on peer connections
+pcTransports | Transport stats of Peer Connection
+iceCandidatePairs | Candidate pair stats
 mediaSources | WebRTC App provided information related to the operation system the client uses.
 codecs | List of codec the client has
 certificates | List of certificates the client provided
@@ -1363,7 +1208,6 @@ outboundAudioTracks | List of compound measurements related to outbound audio tr
 outboundVideoTracks | List of compound measurements related to outbound video tracks
 iceLocalCandidates | List of local ICE candidates
 iceRemoteCandidates | List of remote ICE candidates
-dataChannels | List of Data channels
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples
 
@@ -1603,6 +1447,74 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 2.1.0
+
+### Added
+ * ice candidate pair stats in samples extracted from client transport
+ * ice candidate pair report
+ * peer connection transport report
+ * `mid` field to ClientSamples inbound rtp related stats
+ * `jitterBufferMinimumDelay` field to ClientSamples inbound rtp related stats
+ * `playoutId` field to ClientSamples inbound rtp related stats
+ * `packetsDiscarded` field to ClientSamples inbound rtp related stats
+ * `jitterBufferTargetDelay` field to ClientSamples inbound rtp related stats
+ * `active` field to ClientSample outbound rtp related stats
+ * `droppedSamplesDuration` field to ClientSample audio source related stats
+ * `droppedSamplesEvents` field to ClientSample audio source related stats
+ * `totalCaptureDelay` field to ClientSample audio source related stats
+ * `totalSamplesCaptured` field to ClientSample audio source related stats
+ * `dtlsRole` to transport stats
+ * `RTCAudioPlayoutStats` to inbound-rtp related stats
+
+
+### Modified
+ * pcTransports is changed to contain only peer connection transport fields
+
+### Removed
+ * client-transport-report
+ 
+ * `packetsDiscarded` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `packetsRepaired` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `burstPacketsLost` field from InboundAudioTrack,  InboundVideoTrack samples and reports
+ * `burstPacketsDiscarded` field from InboundAudioTrack,  InboundVideoTrack samples and reports
+ * `burstLossCount` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `burstDiscardCount` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `burstLossRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `burstDiscardRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `gapLossRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `gapDiscardRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `partialFramesLost` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `fullFramesLost` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `averageRtcpInterval` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `voiceActivityFlag` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `frameBitDepth` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `packetsFailedDecryption` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `packetsDuplicated` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `perDscpPacketsReceived` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `sliCount` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `fullFramesLost` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `totalSamplesDecoded` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `samplesDecodedWithSilk` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `samplesDecodedWithCelt` field from InboundAudioTrack, InboundVideoTrack samples and reports
+ * `samplesreportsReceived` field from InboundAudioTrack, InboundVideoTrack samples and reports
+
+ * `rtxSsrc` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `senderId` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `lastPacketSentTimestamp` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `packetsDiscardedOnSend` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `bytesDiscardedOnSend` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `fecPacketsSent` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `framesDiscardedOnSend` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `totalSamplesSent` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `samplesEncodedWithSilk` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `samplesEncodedWithCelt` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `voiceActivityFlag` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `sliCount` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `frameBitDepth` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `perDscpPacketsSent` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+ * `bitDepth` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
+
+
 ## 2.0.4
 
 ### Added

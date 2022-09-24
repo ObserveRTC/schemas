@@ -1,9 +1,11 @@
-create table  IF NOT EXISTS SfuExtensionReport (
-	serviceId	VARCHAR(255)	not null,
+create table  IF NOT EXISTS sfu_extension_report (
+	serviceid	VARCHAR(255)	not null,
 	timestamp	BIGINT	not null,
-	extensionType	VARCHAR(65535)	not null,
+	extensiontype	VARCHAR(65535)	not null,
 	marker	VARCHAR(65535),
-	mediaUnitId	VARCHAR(255),
+	mediaunitid	VARCHAR(255),
 	payload	VARCHAR(65535),
-	sfuId	CHAR(36),
-)
+	sfuid	CHAR(36)
+) diststyle even;
+ALTER TABLE sfu_extension_report ALTER diststyle KEY DISTKEY serviceid;
+ALTER TABLE sfu_extension_report ALTER COMPOUND SORTKEY (sfuid);

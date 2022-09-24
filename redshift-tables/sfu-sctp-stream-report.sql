@@ -1,23 +1,25 @@
-create table  IF NOT EXISTS SfuSctpStreamReport (
-	serviceId	VARCHAR(255)	not null,
-	mediaUnitId	VARCHAR(255)	not null,
-	sfuId	CHAR(36)	not null,
+create table  IF NOT EXISTS sfu_sctp_stream_report (
+	serviceid	VARCHAR(255)	not null,
+	mediaunitid	VARCHAR(255)	not null,
+	sfuid	CHAR(36)	not null,
 	timestamp	BIGINT	not null,
-	transportId	CHAR(36)	not null,
-	streamId	CHAR(36)	not null,
-	bytesReceived	BIGINT,
-	bytesSent	BIGINT,
-	callId	CHAR(36),
+	transportid	CHAR(36)	not null,
+	streamid	CHAR(36)	not null,
+	bytesreceived	BIGINT,
+	bytessent	BIGINT,
+	callid	CHAR(36),
 	internal	BOOLEAN,
 	label	VARCHAR(65535),
 	marker	VARCHAR(65535),
-	messageReceived	INTEGER,
-	messageSent	INTEGER,
+	messagereceived	INTEGER,
+	messagesent	INTEGER,
 	protocol	VARCHAR(255),
-	roomId	VARCHAR(255),
-	sctpCongestionWindow	REAL,
-	sctpMtu	INTEGER,
-	sctpReceiverWindow	REAL,
-	sctpSmoothedRoundTripTime	REAL,
-	sctpUnackData	INTEGER,
-)
+	roomid	VARCHAR(255),
+	sctpcongestionwindow	REAL,
+	sctpmtu	INTEGER,
+	sctpreceiverwindow	REAL,
+	sctpsmoothedroundtriptime	REAL,
+	sctpunackdata	INTEGER
+) diststyle even;
+ALTER TABLE sfu_sctp_stream_report ALTER diststyle KEY DISTKEY serviceid;
+ALTER TABLE sfu_sctp_stream_report ALTER COMPOUND SORTKEY (sfuid, transportid, streamid, callid);

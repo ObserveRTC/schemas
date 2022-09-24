@@ -113,119 +113,9 @@ export type InboundVideoTrackReport = {
 	jitter?: number;
 
 	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets lost in burst (RFC6958)
-	*/
-	burstPacketsLost?: number;
-
-	/**
-	* The total number of packets discarded in burst (RFC6958)
-	*/
-	burstPacketsDiscarded?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-	*/
-	burstLossCount?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-	*/
-	burstDiscardCount?: number;
-
-	/**
-	* The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstDiscardRate?: number;
-
-	/**
-	* The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapDiscardRate?: number;
-
-	/**
-	* The total number of frames dropped at decoding process on the corresponding synchronization source
+	* The number of frames dropped prior to decode or missing chunks
 	*/
 	framesDropped?: number;
-
-	/**
-	* The total number of partial frames lost at decoding process on the corresponding synchronization source
-	*/
-	partialFramesLost?: number;
-
-	/**
-	* The total number of full frames lost at decoding process on the corresponding synchronization source
-	*/
-	fullFramesLost?: number;
-
-	/**
-	* Indicate the number of frames completly and without error decoded on the corresponded synchronization source (ssrc)
-	*/
-	framesDecoded?: number;
-
-	/**
-	* Indicate the number of keyframes received on the corresponded synchronization source (ssrc)
-	*/
-	keyFramesDecoded?: number;
-
-	/**
-	* Indicate the width of the frame received on the corresponded synchronization source (ssrc)
-	*/
-	frameWidth?: number;
-
-	/**
-	* Indicate the height of the frame received on the corresponded synchronization source (ssrc)
-	*/
-	frameHeight?: number;
-
-	/**
-	* Indicate the bit depth per pixel of the last decoded frame received on the corresponded synchronization source (ssrc)
-	*/
-	frameBitDepth?: number;
-
-	/**
-	* Indicate the number of decoded frames in the last second received on the corresponded synchronization source (ssrc)
-	*/
-	framesPerSecond?: number;
-
-	/**
-	* sum of QP values of frames decoded on the corresponded synchronization source (ssrc)
-	*/
-	qpSum?: number;
-
-	/**
-	* The total number of seconds spent on decoding frames on the corresponded synchronization source (ssrc)
-	*/
-	totalDecodeTime?: number;
-
-	/**
-	* The total number of inter frame delay on the corresponded synchronization source (ssrc)
-	*/
-	totalInterFrameDelay?: number;
-
-	/**
-	* The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
-	*/
-	totalSquaredInterFrameDelay?: number;
 
 	/**
 	* Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
@@ -233,14 +123,14 @@ export type InboundVideoTrackReport = {
 	lastPacketReceivedTimestamp?: number;
 
 	/**
-	* The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-	*/
-	averageRtcpInterval?: number;
-
-	/**
 	* Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
 	*/
 	headerBytesReceived?: number;
+
+	/**
+	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
+	*/
+	packetsDiscarded?: number;
 
 	/**
 	* Total number of FEC packets received over the corresponding synchronization source (ssrc)
@@ -258,39 +148,9 @@ export type InboundVideoTrackReport = {
 	bytesReceived?: number;
 
 	/**
-	* Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-	*/
-	packetsFailedDecryption?: number;
-
-	/**
-	* Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-	*/
-	packetsDuplicated?: number;
-
-	/**
-	* The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
-	*/
-	perDscpPacketsReceived?: number;
-
-	/**
-	* Count the total number of Full Intra Request sent by this receiver and belongs to the corresponded synchronization source (ssrc)
-	*/
-	firCount?: number;
-
-	/**
-	* Count the total number of Picture Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
-	*/
-	pliCount?: number;
-
-	/**
 	* Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
 	*/
 	nackCount?: number;
-
-	/**
-	* Count the total number of Slice Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
-	*/
-	sliCount?: number;
 
 	/**
 	* The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
@@ -308,19 +168,84 @@ export type InboundVideoTrackReport = {
 	jitterBufferDelay?: number;
 
 	/**
+	* This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
+	*/
+	jitterBufferTargetDelay?: number;
+
+	/**
 	* The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
 	*/
 	jitterBufferEmittedCount?: number;
 
 	/**
-	* Represents the total number of complete frames received on the corresponded synchronization source (ssrc)
+	* This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
 	*/
-	framesReceived?: number;
+	jitterBufferMinimumDelay?: number;
 
 	/**
 	* Indicate the name of the decoder implementation library
 	*/
 	decoderImplementation?: string;
+
+	/**
+	* The total number of frames decoded on the corresponded RTP stream
+	*/
+	framesDecoded?: number;
+
+	/**
+	* The total number of keyframes decoded on the corresponded RTP stream
+	*/
+	keyFramesDecoded?: number;
+
+	/**
+	* The width of the frame of the video sent by the remote source on the corresponded RTP stream
+	*/
+	frameWidth?: number;
+
+	/**
+	* The height of the frame of the video sent by the remote source on the corresponded RTP stream
+	*/
+	frameHeight?: number;
+
+	/**
+	* The frame per seconds of the video sent by the remote source on the corresponded RTP stream
+	*/
+	framesPerSecond?: number;
+
+	/**
+	* The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
+	*/
+	qpSum?: number;
+
+	/**
+	* The total tiem spent on decoding video on the corresponded RTP stream
+	*/
+	totalDecodeTime?: number;
+
+	/**
+	* The total interframe delay
+	*/
+	totalInterFrameDelay?: number;
+
+	/**
+	* The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
+	*/
+	totalSquaredInterFrameDelay?: number;
+
+	/**
+	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+	*/
+	firCount?: number;
+
+	/**
+	* The total number of Picture Loss Indication sent on the corresponded RTP stream
+	*/
+	pliCount?: number;
+
+	/**
+	* The total number of frames received on the corresponded RTP stream.
+	*/
+	framesReceived?: number;
 
 	/**
 	* Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
@@ -343,28 +268,18 @@ export type InboundVideoTrackReport = {
 	reportsSent?: number;
 
 	/**
-	* Flag represents if the receiver ended the media stream track or not.
+	* Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
 	*/
-	ended?: boolean;
+	roundTripTime?: number;
 
 	/**
-	* The type of the payload the RTP packet SSRC belongs to
+	*  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
 	*/
-	payloadType?: number;
+	totalRoundTripTime?: number;
 
 	/**
-	* the MIME type of the codec (e.g.: video/vp8)
+	* Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 	*/
-	mimeType?: string;
-
-	/**
-	* The negotiated clock rate the RTP timestamp is generated of
-	*/
-	clockRate?: number;
-
-	/**
-	* The a=fmtp line in the SDP corresponding to the codec
-	*/
-	sdpFmtpLine?: string;
+	roundTripTimeMeasurements?: number;
 
 }

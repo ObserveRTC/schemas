@@ -88,29 +88,9 @@ export type OutboundAudioTrackReport = {
 	rid?: string;
 
 	/**
-	*  the timestamp the last packet was sent. (UTC epoch in ms)
-	*/
-	lastPacketSentTimestamp?: number;
-
-	/**
 	* Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
 	*/
 	headerBytesSent?: number;
-
-	/**
-	* Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
-	*/
-	packetsDiscardedOnSend?: number;
-
-	/**
-	* Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
-	*/
-	bytesDiscardedOnSend?: number;
-
-	/**
-	* Total number of FEC packets sent over the corresponding synchronization source (ssrc)
-	*/
-	fecPacketsSent?: number;
 
 	/**
 	* Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
@@ -133,26 +113,6 @@ export type OutboundAudioTrackReport = {
 	totalEncodedBytesTarget?: number;
 
 	/**
-	* The total number of samples sent over the corresponding synchronization source
-	*/
-	totalSamplesSent?: number;
-
-	/**
-	* The total number of samples encoded by SILK portion in opus sent over the corresponding synchronization source
-	*/
-	samplesEncodedWithSilk?: number;
-
-	/**
-	* The total number of samples encoded by CELT portion in opus sent over the corresponding synchronization source
-	*/
-	samplesEncodedWithCelt?: number;
-
-	/**
-	* Indicate if the last RTP packet sent contained voice activity based on the presence of the V bit in the extension header
-	*/
-	voiceActivityFlag?: boolean;
-
-	/**
 	* The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
 	*/
 	totalPacketSendDelay?: number;
@@ -163,11 +123,6 @@ export type OutboundAudioTrackReport = {
 	averageRtcpInterval?: number;
 
 	/**
-	* The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
-	*/
-	perDscpPacketsSent?: number;
-
-	/**
 	* Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
 	*/
 	nackCount?: number;
@@ -176,6 +131,11 @@ export type OutboundAudioTrackReport = {
 	* Indicate the name of the encoder implementation library
 	*/
 	encoderImplementation?: string;
+
+	/**
+	* Indicates whether this RTP stream is configured to be sent or disabled
+	*/
+	active?: boolean;
 
 	/**
 	* The total number of packets received on the corresponded synchronization source
@@ -193,56 +153,6 @@ export type OutboundAudioTrackReport = {
 	jitter?: number;
 
 	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets lost in burst (RFC6958)
-	*/
-	burstPacketsLost?: number;
-
-	/**
-	* The total number of packets discarded in burst (RFC6958)
-	*/
-	burstPacketsDiscarded?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-	*/
-	burstLossCount?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-	*/
-	burstDiscardCount?: number;
-
-	/**
-	* The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstDiscardRate?: number;
-
-	/**
-	* The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapDiscardRate?: number;
-
-	/**
 	* RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
 	*/
 	roundTripTime?: number;
@@ -256,11 +166,6 @@ export type OutboundAudioTrackReport = {
 	* The receiver reported fractional lost belongs to the corresponded synchronization source
 	*/
 	fractionLost?: number;
-
-	/**
-	* The total number of RR reports received, which is the base of the remote inbound calculation on this source
-	*/
-	reportsReceived?: number;
 
 	/**
 	* The total number of calculated RR measurements received on this source
@@ -298,33 +203,23 @@ export type OutboundAudioTrackReport = {
 	echoReturnLossEnhancement?: number;
 
 	/**
-	* Flag represents if the sender ended the media stream track or not.
+	* . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
 	*/
-	ended?: boolean;
+	droppedSamplesDuration?: number;
 
 	/**
-	* The type of the payload the RTP packet SSRC belongs to
+	* A counter increases every time a sample is dropped after a non-dropped sample
 	*/
-	payloadType?: number;
+	droppedSamplesEvents?: number;
 
 	/**
-	* the MIME type of the codec (e.g.: video/vp8)
+	* Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
 	*/
-	mimeType?: string;
+	totalCaptureDelay?: number;
 
 	/**
-	* The negotiated clock rate the RTP timestamp is generated of
+	* The total number of captured samples reaching the audio source
 	*/
-	clockRate?: number;
-
-	/**
-	* The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-	*/
-	channels?: number;
-
-	/**
-	* The a=fmtp line in the SDP corresponding to the codec
-	*/
-	sdpFmtpLine?: string;
+	totalSamplesCaptured?: number;
 
 }

@@ -1,17 +1,19 @@
-create table  IF NOT EXISTS SfuEventReport (
-	serviceId	VARCHAR(255)	not null,
+create table  IF NOT EXISTS sfu_event_report (
+	serviceid	VARCHAR(255)	not null,
 	timestamp	BIGINT	not null,
 	name	VARCHAR(65535)	not null,
 	attachments	VARCHAR(65535),
-	callId	CHAR(36),
+	callid	CHAR(36),
 	marker	VARCHAR(65535),
-	mediaSinkId	VARCHAR(255),
-	mediaStreamId	VARCHAR(255),
-	mediaUnitId	VARCHAR(255),
+	mediasinkid	VARCHAR(255),
+	mediastreamid	VARCHAR(255),
+	mediaunitid	VARCHAR(255),
 	message	VARCHAR(65535),
-	rtpPadId	VARCHAR(255),
-	sctpStreamId	VARCHAR(255),
-	sfuId	CHAR(36),
-	transportId	CHAR(36),
-	value	VARCHAR(65535),
-)
+	rtppadid	VARCHAR(255),
+	sctpstreamid	VARCHAR(255),
+	sfuid	CHAR(36),
+	transportid	CHAR(36),
+	value	VARCHAR(65535)
+) diststyle even;
+ALTER TABLE sfu_event_report ALTER diststyle KEY DISTKEY serviceid;
+ALTER TABLE sfu_event_report ALTER COMPOUND SORTKEY (callid, sfuid, transportid);

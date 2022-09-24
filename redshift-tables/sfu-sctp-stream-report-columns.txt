@@ -1,0 +1,1 @@
+serviceid, mediaunitid, sfuid, timestamp, transportid, streamid, bytesreceived, bytessent, callid, internal, label, marker, messagereceived, messagesent, protocol, roomid, sctpcongestionwindow, sctpmtu, sctpreceiverwindow, sctpsmoothedroundtriptime, sctpunackdata

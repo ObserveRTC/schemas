@@ -113,74 +113,19 @@ export type InboundAudioTrackReport = {
 	jitter?: number;
 
 	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets lost in burst (RFC6958)
-	*/
-	burstPacketsLost?: number;
-
-	/**
-	* The total number of packets discarded in burst (RFC6958)
-	*/
-	burstPacketsDiscarded?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-	*/
-	burstLossCount?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-	*/
-	burstDiscardCount?: number;
-
-	/**
-	* The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstDiscardRate?: number;
-
-	/**
-	* The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapDiscardRate?: number;
-
-	/**
-	* Indicate if the last RTP packet received contained voice activity based on the presence of the V bit in the extension header
-	*/
-	voiceActivityFlag?: boolean;
-
-	/**
 	* Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
 	*/
 	lastPacketReceivedTimestamp?: number;
 
 	/**
-	* The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-	*/
-	averageRtcpInterval?: number;
-
-	/**
 	* Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
 	*/
 	headerBytesReceived?: number;
+
+	/**
+	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
+	*/
+	packetsDiscarded?: number;
 
 	/**
 	* Total number of FEC packets received over the corresponding synchronization source (ssrc)
@@ -196,21 +141,6 @@ export type InboundAudioTrackReport = {
 	* Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
 	*/
 	bytesReceived?: number;
-
-	/**
-	* Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-	*/
-	packetsFailedDecryption?: number;
-
-	/**
-	* Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-	*/
-	packetsDuplicated?: number;
-
-	/**
-	* The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
-	*/
-	perDscpPacketsReceived?: number;
 
 	/**
 	* Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
@@ -233,9 +163,64 @@ export type InboundAudioTrackReport = {
 	jitterBufferDelay?: number;
 
 	/**
+	* This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
+	*/
+	jitterBufferTargetDelay?: number;
+
+	/**
 	* The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
 	*/
 	jitterBufferEmittedCount?: number;
+
+	/**
+	* This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
+	*/
+	jitterBufferMinimumDelay?: number;
+
+	/**
+	* The total number of audio samples received on the corresponded RTP stream
+	*/
+	totalSamplesReceived?: number;
+
+	/**
+	* The total number of samples decoded by the media decoder from the corresponded RTP stream
+	*/
+	concealedSamples?: number;
+
+	/**
+	* The total number of samples concealed from the corresponded RTP stream
+	*/
+	silentConcealedSamples?: number;
+
+	/**
+	* The total number of concealed event emitted to the media codec by the corresponded jitterbuffer
+	*/
+	concealmentEvents?: number;
+
+	/**
+	* The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay)
+	*/
+	insertedSamplesForDeceleration?: number;
+
+	/**
+	* The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
+	*/
+	removedSamplesForAcceleration?: number;
+
+	/**
+	* The current audio level
+	*/
+	audioLevel?: number;
+
+	/**
+	* Represents the energy level reported by the media source
+	*/
+	totalAudioEnergy?: number;
+
+	/**
+	* Represents the total duration of the audio samples the media source actually transconverted in seconds
+	*/
+	totalSamplesDuration?: number;
 
 	/**
 	* Indicate the name of the decoder implementation library
@@ -263,33 +248,38 @@ export type InboundAudioTrackReport = {
 	reportsSent?: number;
 
 	/**
-	* Flag represents if the receiver ended the media stream track or not.
+	* Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
 	*/
-	ended?: boolean;
+	roundTripTime?: number;
 
 	/**
-	* The type of the payload the RTP packet SSRC belongs to
+	*  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
 	*/
-	payloadType?: number;
+	totalRoundTripTime?: number;
 
 	/**
-	* the MIME type of the codec (e.g.: video/vp8)
+	* Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 	*/
-	mimeType?: string;
+	roundTripTimeMeasurements?: number;
 
 	/**
-	* The negotiated clock rate the RTP timestamp is generated of
+	* This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
 	*/
-	clockRate?: number;
+	synthesizedSamplesDuration?: number;
 
 	/**
-	* The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
+	* The number of synthesized samples events.
 	*/
-	channels?: number;
+	synthesizedSamplesEvents?: number;
 
 	/**
-	* The a=fmtp line in the SDP corresponding to the codec
+	*  The playout delay includes the delay from being emitted to the actual time of playout on the device
 	*/
-	sdpFmtpLine?: string;
+	totalPlayoutDelay?: number;
+
+	/**
+	* When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
+	*/
+	totalSamplesCount?: number;
 
 }
