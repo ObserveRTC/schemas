@@ -888,72 +888,6 @@ export type SfuSample = {
 }
 
 /**
-* List of Data channels
-*/
-export type DataChannel = {
-	/**
-	* Refers to the peer connection the local candidate belongs to
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* Unique identifier of the data channel
-	*/
-	id?: string;
-
-	/**
-	* The label the data channel provided at the creation
-	*/
-	label?: string;
-
-	/**
-	* The address of the local endpoint (Ipv4, Ipv6, FQDN)
-	*/
-	address?: string;
-
-	/**
-	* The port number of the local endpoint the ICE uses
-	*/
-	port?: number;
-
-	/**
-	*  The protocol the data channel use to transfer data
-	*/
-	protocol?: string;
-
-	/**
-	* The unique identifier of the data channel
-	*/
-	dataChannelIdentifier?: number;
-
-	/**
-	* The state of the data channel
-	*/
-	state?: string;
-
-	/**
-	* The total number of messages sent on this data channel. this is not equal to the number of packets sent, as messages are chunked to packets
-	*/
-	messagesSent?: number;
-
-	/**
-	* The amount of bytes sent on the corresponded data channel
-	*/
-	bytesSent?: number;
-
-	/**
-	* The number of messages received on the corresponded data channel
-	*/
-	messagesReceived?: number;
-
-	/**
-	* The amount of bytes received on the corresponded data channel
-	*/
-	bytesReceived?: number;
-
-}
-
-/**
 * List of remote ICE candidates
 */
 export type IceRemoteCandidate = {
@@ -2468,38 +2402,189 @@ export type MediaSourceStat = {
 }
 
 /**
-* Compound object related to Peer Connection Transport Stats
+* Candidate pair stats
 */
-export type PeerConnectionTransport = {
+export type IceCandidatePairStats = {
+	/**
+	* The unique identifier of the peer connection
+	*/
+	candidatePairId: string;
+
 	/**
 	* The unique identifier of the peer connection
 	*/
 	peerConnectionId: string;
 
 	/**
-	* The webrtc app provided label the peer connection is marked with
+	* The identifier of the transport the ice candidate pair is negotiated on
 	*/
-	label?: string;
+	transportId?: string;
 
 	/**
-	* Represents the number of unique RTCDataChannels that have entered the "open" state during their lifetime.
+	* The unique identifier of the candidate the negotiated pair is selected at local side
 	*/
-	dataChannelsOpened?: number;
+	localCandidateId?: string;
 
 	/**
-	* Represents the number of unique RTCDataChannels that had the "open" state, but now they are "closed"
+	* The unique identifier of the candidate the negotiated pair is selected at remote side
 	*/
-	dataChannelsClosed?: number;
+	remoteCandidateId?: string;
 
 	/**
-	* Represents the number of unique RTCDataChannels successfully requested from RTCPeerConnection.
+	* The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
 	*/
-	dataChannelsRequested?: number;
+	state?: string;
 
 	/**
-	* Represents the number of unique RTCDataChannels signaled in a ondatachannel event on the RTCPeerConnection.
+	* The total number of packets sent using the last selected candidate pair over the corresponded transport
 	*/
-	dataChannelsAccepted?: number;
+	packetsSent?: number;
+
+	/**
+	* The total number of packets received using the last selected candidate pair over the corresponded transport
+	*/
+	packetsReceived?: number;
+
+	/**
+	* The total number of bytes sent using the last selected candidate pair over the corresponded transport
+	*/
+	bytesSent?: number;
+
+	/**
+	* The total number of bytes received using the last selected candidate pair over the corresponded transport
+	*/
+	bytesReceived?: number;
+
+	/**
+	* Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+	*/
+	lastPacketSentTimestamp?: number;
+
+	/**
+	* Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+	*/
+	lastPacketReceivedTimestamp?: number;
+
+	/**
+	* Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+	*/
+	firstRequestTimestamp?: number;
+
+	/**
+	* Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+	*/
+	lastRequestTimestamp?: number;
+
+	/**
+	* Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+	*/
+	lastResponseTimestamp?: number;
+
+	/**
+	* Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
+	*/
+	totalRoundTripTime?: number;
+
+	/**
+	* Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
+	*/
+	currentRoundTripTime?: number;
+
+	/**
+	* The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
+	*/
+	availableOutgoingBitrate?: number;
+
+	/**
+	* The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
+	*/
+	availableIncomingBitrate?: number;
+
+	/**
+	* The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
+	*/
+	circuitBreakerTriggerCount?: number;
+
+	/**
+	* Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
+	*/
+	requestsReceived?: number;
+
+	/**
+	* Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
+	*/
+	requestsSent?: number;
+
+	/**
+	* Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
+	*/
+	responsesReceived?: number;
+
+	/**
+	* Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
+	*/
+	responsesSent?: number;
+
+	/**
+	* Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
+	*/
+	retransmissionReceived?: number;
+
+	/**
+	* Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
+	*/
+	retransmissionSent?: number;
+
+	/**
+	* Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
+	*/
+	consentRequestsSent?: number;
+
+	/**
+	* Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
+	*/
+	consentExpiredTimestamp?: number;
+
+	/**
+	* Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+	*/
+	bytesDiscardedOnSend?: number;
+
+	/**
+	* Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+	*/
+	packetsDiscardedOnSend?: number;
+
+	/**
+	* Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
+	*/
+	requestBytesSent?: number;
+
+	/**
+	* Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
+	*/
+	consentRequestBytesSent?: number;
+
+	/**
+	* Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
+	*/
+	responseBytesSent?: number;
+
+}
+
+/**
+* Transport stats of Peer Connection
+*/
+export type PeerConnectionTransport = {
+	/**
+	* The identifier of the transport the ice candidate pair is negotiated on
+	*/
+	transportId: string;
+
+	/**
+	* The unique identifier of the peer connection
+	*/
+	peerConnectionId: string;
 
 	/**
 	* Represents the total number of packets sent on the corresponded transport
@@ -2537,9 +2622,24 @@ export type PeerConnectionTransport = {
 	dtlsState?: string;
 
 	/**
+	* The identifier of the candidate pair the transport currently uses
+	*/
+	selectedCandidatePairId?: string;
+
+	/**
 	* Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
 	*/
 	iceState?: string;
+
+	/**
+	* If DTLS negotiated it gives the id of the local certificate
+	*/
+	localCertificateId?: string;
+
+	/**
+	* If DTLS negotiated it gives the id of the remote certificate
+	*/
+	remoteCertificateId?: string;
 
 	/**
 	* Represents the version number of the TLS used in the corresponded transport
@@ -2566,230 +2666,56 @@ export type PeerConnectionTransport = {
 	*/
 	selectedCandidatePairChanges?: number;
 
+}
+
+/**
+* Measurements about the data channels currently avaialble on peer connections
+*/
+export type DataChannelStats = {
 	/**
-	* The address of the candidate (IPv4, IPv6, FQDN)
+	* The id of the peer connection the data channel is assigned to
 	*/
-	localAddress?: string;
+	peerConnectionId: string;
 
 	/**
-	* The locally used port to communicate with the remote peer
+	* The id of the data channel assigned by the peer connection when it is opened
 	*/
-	localPort?: number;
+	dataChannelIdentifier?: number;
 
 	/**
-	* The protocol used by the local endpoint for the corresponded transport
+	* The label of the data channel
 	*/
-	localProtocol?: string;
+	label?: string;
 
 	/**
-	* The type of the ICE candidate used at the local endpoint on the corresponded transport
+	* The protocol the data channel utilizes
 	*/
-	localCandidateType?: string;
+	protocol?: string;
 
 	/**
-	* The url of the ICE server used by the local endpoint on the corresponded transport
+	* The state of the data channel
 	*/
-	localCandidateICEServerUrl?: string;
+	state?: string;
 
 	/**
-	* The relay protocol of the ICE candidate used by the local endpoint on the corresponded transport
+	* The total number of message sent on the data channel
 	*/
-	localCandidateRelayProtocol?: string;
+	messageSent?: number;
 
 	/**
-	* The address of the candidate (IPv4, IPv6, FQDN)
+	* The total number of bytes sent on the data channel
 	*/
-	remoteAddress?: string;
+	bytesSent?: number;
 
 	/**
-	* The remotely used port to communicate with the remote peer
+	* The total number of message received on the data channel
 	*/
-	remotePort?: number;
+	messageReceived?: number;
 
 	/**
-	* The protocol used by the remote endpoint for the corresponded transport
+	* The total number of bytes received on the data channel
 	*/
-	remoteProtocol?: string;
-
-	/**
-	* The type of the ICE candidate used at the remote endpoint on the corresponded transport
-	*/
-	remoteCandidateType?: string;
-
-	/**
-	* The url of the ICE server used by the remote endpoint on the corresponded transport
-	*/
-	remoteCandidateICEServerUrl?: string;
-
-	/**
-	* The relay protocol of the ICE candidate used by the remote endpoint on the corresponded transport
-	*/
-	remoteCandidateRelayProtocol?: string;
-
-	/**
-	* The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport
-	*/
-	candidatePairState?: string;
-
-	/**
-	* The total number of packets sent using the last selected candidate pair over the corresponded transport
-	*/
-	candidatePairPacketsSent?: number;
-
-	/**
-	* The total number of packets received using the last selected candidate pair over the corresponded transport
-	*/
-	candidatePairPacketsReceived?: number;
-
-	/**
-	* The total number of bytes sent using the last selected candidate pair over the corresponded transport
-	*/
-	candidatePairBytesSent?: number;
-
-	/**
-	* The total number of bytes received using the last selected candidate pair over the corresponded transport
-	*/
-	candidatePairBytesReceived?: number;
-
-	/**
-	* Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-	*/
-	candidatePairLastPacketSentTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-	*/
-	candidatePairLastPacketReceivedTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	candidatePairFirstRequestTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	candidatePairLastRequestTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	candidatePairLastResponseTimestamp?: number;
-
-	/**
-	* Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
-	*/
-	candidatePairTotalRoundTripTime?: number;
-
-	/**
-	* Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
-	*/
-	candidatePairCurrentRoundTripTime?: number;
-
-	/**
-	* The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
-	*/
-	candidatePairAvailableOutgoingBitrate?: number;
-
-	/**
-	* The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
-	*/
-	candidatePairAvailableIncomingBitrate?: number;
-
-	/**
-	* The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
-	*/
-	candidatePairCircuitBreakerTriggerCount?: number;
-
-	/**
-	* Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairRequestsReceived?: number;
-
-	/**
-	* Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairRequestsSent?: number;
-
-	/**
-	* Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairResponsesReceived?: number;
-
-	/**
-	* Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairResponsesSent?: number;
-
-	/**
-	* Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairRetransmissionReceived?: number;
-
-	/**
-	* Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairRetransmissionSent?: number;
-
-	/**
-	* Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairConsentRequestsSent?: number;
-
-	/**
-	* Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairConsentExpiredTimestamp?: number;
-
-	/**
-	* Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairBytesDiscardedOnSend?: number;
-
-	/**
-	* Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairPacketsDiscardedOnSend?: number;
-
-	/**
-	* Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairRequestBytesSent?: number;
-
-	/**
-	* Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairConsentRequestBytesSent?: number;
-
-	/**
-	* Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
-	*/
-	candidatePairResponseBytesSent?: number;
-
-	/**
-	* The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. 
-	*/
-	sctpSmoothedRoundTripTime?: number;
-
-	/**
-	* The latest congestion window, corresponding to spinfo_cwnd.
-	*/
-	sctpCongestionWindow?: number;
-
-	/**
-	* The latest receiver window, corresponding to sstat_rwnd.
-	*/
-	sctpReceiverWindow?: number;
-
-	/**
-	* The latest maximum transmission unit, corresponding to spinfo_mtu.
-	*/
-	sctpMtu?: number;
-
-	/**
-	* The number of unacknowledged DATA chunks, corresponding to sstat_unackdata.
-	*/
-	sctpUnackData?: number;
+	bytesReceived?: number;
 
 }
 
@@ -2989,9 +2915,19 @@ export type ClientSample = {
 	localSDPs?: string[];
 
 	/**
-	* Compound object related to Peer Connection Transport Stats
+	* Measurements about the data channels currently avaialble on peer connections
+	*/
+	dataChannels?: DataChannelStats[];
+
+	/**
+	* Transport stats of Peer Connection
 	*/
 	pcTransports?: PeerConnectionTransport[];
+
+	/**
+	* Candidate pair stats
+	*/
+	iceCandidatePairs?: IceCandidatePairStats[];
 
 	/**
 	* WebRTC App provided information related to the operation system the client uses.
@@ -3037,11 +2973,6 @@ export type ClientSample = {
 	* List of remote ICE candidates
 	*/
 	iceRemoteCandidates?: IceRemoteCandidate[];
-
-	/**
-	* List of Data channels
-	*/
-	dataChannels?: DataChannel[];
 
 	/**
 	* The offset from GMT in hours

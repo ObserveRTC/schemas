@@ -363,8 +363,102 @@ export const schema = {
                 "default": null
               },
               {
+                "name": "dataChannels",
+                "doc": "Measurements about the data channels currently avaialble on peer connections",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "DataChannelStats",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "peerConnectionId",
+                          "type": "string",
+                          "doc": "The id of the peer connection the data channel is assigned to"
+                        },
+                        {
+                          "name": "dataChannelIdentifier",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "doc": "The id of the data channel assigned by the peer connection when it is opened",
+                          "default": null
+                        },
+                        {
+                          "name": "label",
+                          "doc": "The label of the data channel",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "protocol",
+                          "doc": "The protocol the data channel utilizes",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "state",
+                          "doc": "The state of the data channel",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "messageSent",
+                          "doc": "The total number of message sent on the data channel",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "bytesSent",
+                          "doc": "The total number of bytes sent on the data channel",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "messageReceived",
+                          "doc": "The total number of message received on the data channel",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "bytesReceived",
+                          "doc": "The total number of bytes received on the data channel",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
                 "name": "pcTransports",
-                "doc": "Compound object related to Peer Connection Transport Stats",
+                "doc": "Transport stats of Peer Connection",
                 "type": [
                   "null",
                   {
@@ -374,54 +468,14 @@ export const schema = {
                       "type": "record",
                       "fields": [
                         {
-                          "name": "peerConnectionId",
-                          "doc": "The unique identifier of the peer connection",
+                          "name": "transportId",
+                          "doc": "The identifier of the transport the ice candidate pair is negotiated on",
                           "type": "string"
                         },
                         {
-                          "name": "label",
-                          "doc": "The webrtc app provided label the peer connection is marked with",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "dataChannelsOpened",
-                          "doc": "Represents the number of unique RTCDataChannels that have entered the \"open\" state during their lifetime.",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "dataChannelsClosed",
-                          "doc": "Represents the number of unique RTCDataChannels that had the \"open\" state, but now they are \"closed\"",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "dataChannelsRequested",
-                          "doc": "Represents the number of unique RTCDataChannels successfully requested from RTCPeerConnection.",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "dataChannelsAccepted",
-                          "doc": "Represents the number of unique RTCDataChannels signaled in a ondatachannel event on the RTCPeerConnection.",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
+                          "name": "peerConnectionId",
+                          "doc": "The unique identifier of the peer connection",
+                          "type": "string"
                         },
                         {
                           "name": "packetsSent",
@@ -487,8 +541,35 @@ export const schema = {
                           "default": null
                         },
                         {
+                          "name": "selectedCandidatePairId",
+                          "doc": "The identifier of the candidate pair the transport currently uses",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "iceState",
                           "doc": "Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "localCertificateId",
+                          "doc": "If DTLS negotiated it gives the id of the local certificate",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "remoteCertificateId",
+                          "doc": "If DTLS negotiated it gives the id of the remote certificate",
                           "type": [
                             "null",
                             "string"
@@ -539,10 +620,37 @@ export const schema = {
                             "int"
                           ],
                           "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
+                "name": "iceCandidatePairs",
+                "doc": "Candidate pair stats",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "IceCandidatePairStats",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "candidatePairId",
+                          "doc": "The unique identifier of the peer connection",
+                          "type": "string"
                         },
                         {
-                          "name": "localAddress",
-                          "doc": "The address of the candidate (IPv4, IPv6, FQDN)",
+                          "name": "peerConnectionId",
+                          "doc": "The unique identifier of the peer connection",
+                          "type": "string"
+                        },
+                        {
+                          "name": "transportId",
+                          "doc": "The identifier of the transport the ice candidate pair is negotiated on",
                           "type": [
                             "null",
                             "string"
@@ -550,17 +658,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "localPort",
-                          "doc": "The locally used port to communicate with the remote peer",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "localProtocol",
-                          "doc": "The protocol used by the local endpoint for the corresponded transport",
+                          "name": "localCandidateId",
+                          "doc": "The unique identifier of the candidate the negotiated pair is selected at local side",
                           "type": [
                             "null",
                             "string"
@@ -568,8 +667,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "localCandidateType",
-                          "doc": "The type of the ICE candidate used at the local endpoint on the corresponded transport",
+                          "name": "remoteCandidateId",
+                          "doc": "The unique identifier of the candidate the negotiated pair is selected at remote side",
                           "type": [
                             "null",
                             "string"
@@ -577,8 +676,8 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "localCandidateICEServerUrl",
-                          "doc": "The url of the ICE server used by the local endpoint on the corresponded transport",
+                          "name": "state",
+                          "doc": "The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport",
                           "type": [
                             "null",
                             "string"
@@ -586,79 +685,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "localCandidateRelayProtocol",
-                          "doc": "The relay protocol of the ICE candidate used by the local endpoint on the corresponded transport",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "remoteAddress",
-                          "doc": "The address of the candidate (IPv4, IPv6, FQDN)",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "remotePort",
-                          "doc": "The remotely used port to communicate with the remote peer",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "remoteProtocol",
-                          "doc": "The protocol used by the remote endpoint for the corresponded transport",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "remoteCandidateType",
-                          "doc": "The type of the ICE candidate used at the remote endpoint on the corresponded transport",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "remoteCandidateICEServerUrl",
-                          "doc": "The url of the ICE server used by the remote endpoint on the corresponded transport",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "remoteCandidateRelayProtocol",
-                          "doc": "The relay protocol of the ICE candidate used by the remote endpoint on the corresponded transport",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "candidatePairState",
-                          "doc": "The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "candidatePairPacketsSent",
+                          "name": "packetsSent",
                           "doc": "The total number of packets sent using the last selected candidate pair over the corresponded transport",
                           "type": [
                             "null",
@@ -667,7 +694,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairPacketsReceived",
+                          "name": "packetsReceived",
                           "doc": "The total number of packets received using the last selected candidate pair over the corresponded transport",
                           "type": [
                             "null",
@@ -676,7 +703,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairBytesSent",
+                          "name": "bytesSent",
                           "doc": "The total number of bytes sent using the last selected candidate pair over the corresponded transport",
                           "type": [
                             "null",
@@ -685,7 +712,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairBytesReceived",
+                          "name": "bytesReceived",
                           "doc": "The total number of bytes received using the last selected candidate pair over the corresponded transport",
                           "type": [
                             "null",
@@ -694,7 +721,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairLastPacketSentTimestamp",
+                          "name": "lastPacketSentTimestamp",
                           "doc": "Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)",
                           "type": [
                             "null",
@@ -703,7 +730,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairLastPacketReceivedTimestamp",
+                          "name": "lastPacketReceivedTimestamp",
                           "doc": "Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)",
                           "type": [
                             "null",
@@ -712,7 +739,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairFirstRequestTimestamp",
+                          "name": "firstRequestTimestamp",
                           "doc": "Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
                           "type": [
                             "null",
@@ -721,7 +748,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairLastRequestTimestamp",
+                          "name": "lastRequestTimestamp",
                           "doc": "Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
                           "type": [
                             "null",
@@ -730,7 +757,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairLastResponseTimestamp",
+                          "name": "lastResponseTimestamp",
                           "doc": "Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
                           "type": [
                             "null",
@@ -739,7 +766,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairTotalRoundTripTime",
+                          "name": "totalRoundTripTime",
                           "doc": "Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport",
                           "type": [
                             "null",
@@ -748,7 +775,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairCurrentRoundTripTime",
+                          "name": "currentRoundTripTime",
                           "doc": "Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport",
                           "type": [
                             "null",
@@ -757,7 +784,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairAvailableOutgoingBitrate",
+                          "name": "availableOutgoingBitrate",
                           "doc": "The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport",
                           "type": [
                             "null",
@@ -766,7 +793,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairAvailableIncomingBitrate",
+                          "name": "availableIncomingBitrate",
                           "doc": "The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport",
                           "type": [
                             "null",
@@ -775,7 +802,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairCircuitBreakerTriggerCount",
+                          "name": "circuitBreakerTriggerCount",
                           "doc": "The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair",
                           "type": [
                             "null",
@@ -784,7 +811,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairRequestsReceived",
+                          "name": "requestsReceived",
                           "doc": "Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -793,7 +820,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairRequestsSent",
+                          "name": "requestsSent",
                           "doc": "Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -802,7 +829,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairResponsesReceived",
+                          "name": "responsesReceived",
                           "doc": "Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -811,7 +838,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairResponsesSent",
+                          "name": "responsesSent",
                           "doc": "Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -820,7 +847,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairRetransmissionReceived",
+                          "name": "retransmissionReceived",
                           "doc": "Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -829,7 +856,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairRetransmissionSent",
+                          "name": "retransmissionSent",
                           "doc": "Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -838,7 +865,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairConsentRequestsSent",
+                          "name": "consentRequestsSent",
                           "doc": "Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -847,7 +874,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairConsentExpiredTimestamp",
+                          "name": "consentExpiredTimestamp",
                           "doc": "Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -856,7 +883,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairBytesDiscardedOnSend",
+                          "name": "bytesDiscardedOnSend",
                           "doc": "Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -865,7 +892,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairPacketsDiscardedOnSend",
+                          "name": "packetsDiscardedOnSend",
                           "doc": "Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -874,7 +901,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairRequestBytesSent",
+                          "name": "requestBytesSent",
                           "doc": "Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -883,7 +910,7 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairConsentRequestBytesSent",
+                          "name": "consentRequestBytesSent",
                           "doc": "Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
@@ -892,56 +919,11 @@ export const schema = {
                           "default": null
                         },
                         {
-                          "name": "candidatePairResponseBytesSent",
+                          "name": "responseBytesSent",
                           "doc": "Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport",
                           "type": [
                             "null",
                             "long"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sctpSmoothedRoundTripTime",
-                          "doc": "The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. ",
-                          "type": [
-                            "null",
-                            "double"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sctpCongestionWindow",
-                          "doc": "The latest congestion window, corresponding to spinfo_cwnd.",
-                          "type": [
-                            "null",
-                            "double"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sctpReceiverWindow",
-                          "doc": "The latest receiver window, corresponding to sstat_rwnd.",
-                          "type": [
-                            "null",
-                            "double"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sctpMtu",
-                          "doc": "The latest maximum transmission unit, corresponding to spinfo_mtu.",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "sctpUnackData",
-                          "doc": "The number of unacknowledged DATA chunks, corresponding to sstat_unackdata.",
-                          "type": [
-                            "null",
-                            "int"
                           ],
                           "default": null
                         }
@@ -3751,131 +3733,6 @@ export const schema = {
                                 "tls"
                               ]
                             }
-                          ],
-                          "default": null
-                        }
-                      ]
-                    }
-                  }
-                ],
-                "default": null
-              },
-              {
-                "name": "dataChannels",
-                "doc": "List of Data channels",
-                "type": [
-                  "null",
-                  {
-                    "type": "array",
-                    "items": {
-                      "name": "DataChannel",
-                      "type": "record",
-                      "fields": [
-                        {
-                          "name": "peerConnectionId",
-                          "doc": "Refers to the peer connection the local candidate belongs to",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "id",
-                          "doc": "Unique identifier of the data channel",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "label",
-                          "doc": "The label the data channel provided at the creation",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "address",
-                          "doc": "The address of the local endpoint (Ipv4, Ipv6, FQDN)",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "port",
-                          "doc": "The port number of the local endpoint the ICE uses",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "protocol",
-                          "doc": " The protocol the data channel use to transfer data",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "dataChannelIdentifier",
-                          "doc": "The unique identifier of the data channel",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "state",
-                          "doc": "The state of the data channel",
-                          "type": [
-                            "null",
-                            "string"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "messagesSent",
-                          "doc": "The total number of messages sent on this data channel. this is not equal to the number of packets sent, as messages are chunked to packets",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "bytesSent",
-                          "doc": "The amount of bytes sent on the corresponded data channel",
-                          "type": [
-                            "null",
-                            "long"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "messagesReceived",
-                          "doc": "The number of messages received on the corresponded data channel",
-                          "type": [
-                            "null",
-                            "int"
-                          ],
-                          "default": null
-                        },
-                        {
-                          "name": "bytesReceived",
-                          "doc": "The amount of bytes received on the corresponded data channel",
-                          "type": [
-                            "null",
-                            "long"
                           ],
                           "default": null
                         }

@@ -6,12 +6,13 @@ Javascript bindings for ObserveRTC schemas
 	* [CallMetaReport](#CallMetaReport)
 	* [ClientDataChannelReport](#ClientDataChannelReport)
 	* [ClientExtensionReport](#ClientExtensionReport)
-	* [ClientTransportReport](#ClientTransportReport)
+	* [IceCandidatePairReport](#IceCandidatePairReport)
 	* [InboundAudioTrackReport](#InboundAudioTrackReport)
 	* [InboundVideoTrackReport](#InboundVideoTrackReport)
 	* [ObserverEventReport](#ObserverEventReport)
 	* [OutboundAudioTrackReport](#OutboundAudioTrackReport)
 	* [OutboundVideoTrackReport](#OutboundVideoTrackReport)
+	* [PeerConnectionTransportReport](#PeerConnectionTransportReport)
 	* [Report](#Report)
 	* [SfuEventReport](#SfuEventReport)
 	* [SfuExtensionReport](#SfuExtensionReport)
@@ -30,7 +31,6 @@ Javascript bindings for ObserveRTC schemas
 	* [SfuInboundRtpPad](#SfuInboundRtpPad)
 	* [SfuTransport](#SfuTransport)
 	* [SfuSample](#SfuSample)
-	* [DataChannel](#DataChannel)
 	* [IceRemoteCandidate](#IceRemoteCandidate)
 	* [IceLocalCandidate](#IceLocalCandidate)
 	* [OutboundVideoTrack](#OutboundVideoTrack)
@@ -40,7 +40,9 @@ Javascript bindings for ObserveRTC schemas
 	* [Certificate](#Certificate)
 	* [MediaCodecStats](#MediaCodecStats)
 	* [MediaSourceStat](#MediaSourceStat)
+	* [IceCandidatePairStats](#IceCandidatePairStats)
 	* [PeerConnectionTransport](#PeerConnectionTransport)
+	* [DataChannelStats](#DataChannelStats)
 	* [ExtensionStat](#ExtensionStat)
 	* [MediaDevice](#MediaDevice)
 	* [OperationSystem](#OperationSystem)
@@ -151,10 +153,10 @@ sampleSeq | The sequence number of the sample the event may related to
 payload | the human readable message of the event
 
 
-## ClientTransportReport
+## IceCandidatePairReport
 
 
-A Report created for Client PeerConnection Transport. It is a combination of Transport report, sender, receiver, local, remote and candidate pair of ICE together with the used certificates
+A Report created for ICE candidate pairs
 
 
 Field | Description 
@@ -169,64 +171,34 @@ marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
 userId | webrtc app provided user identifier
 label | The webrtc app provided label the peer connection is marked with
-packetsSent | Represents the total number of packets sent on the corresponded transport
-packetsReceived | Represents the total number of packets received on the corresponded transport
-bytesSent | Represents the total amount of bytes sent on the corresponded transport
-bytesReceived | Represents the total amount of bytes received on the corresponded transport
-iceRole | Represent the current role of ICE under DTLS Transport
-iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
-dtlsState | Represents the current state of DTLS for the peer connection transport layer
-iceTransportState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
-tlsVersion | Represents the version number of the TLS used in the corresponded transport
-dtlsCipher | Represents the name of the DTLS cipher used in the corresponded transport
-srtpCipher | Represents the name of the SRTP cipher used in the corresponded transport
-tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
-selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
-localAddress | The address of the candidate (IPv4, IPv6, FQDN)
-localPort | The locally used port to communicate with the remote peer
-localProtocol | The protocol used by the local endpoint for the corresponded transport
-localCandidateType | The type of the ICE candidate used at the local endpoint on the corresponded transport
-localCandidateICEServerUrl | The url of the ICE server used by the local endpoint on the corresponded transport
-localCandidateRelayProtocol | The relay protocol of the ICE candidate used by the local endpoint on the corresponded transport
-remoteAddress | The address of the candidate (IPv4, IPv6, FQDN)
-remotePort | The remotely used port to communicate with the remote peer
-remoteProtocol | The protocol used by the remote endpoint for the corresponded transport
-remoteCandidateType | The type of the ICE candidate used at the remote endpoint on the corresponded transport
-remoteCandidateICEServerUrl | The url of the ICE server used by the remote endpoint on the corresponded transport
-remoteCandidateRelayProtocol | The relay protocol of the ICE candidate used by the remote endpoint on the corresponded transport
-candidatePairState | The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport
-candidatePairPacketsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
-candidatePairPacketsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
-candidatePairBytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
-candidatePairBytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
-candidatePairLastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairLastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairFirstRequestTimestamp | Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastRequestTimestamp | Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastResponseTimestamp | Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairTotalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
-candidatePairCurrentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
-candidatePairAvailableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
-candidatePairAvailableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
-candidatePairCircuitBreakerTriggerCount | The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
-candidatePairRequestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
-candidatePairRequestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
-candidatePairResponsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
-candidatePairResponsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionReceived | Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionSent | Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
-candidatePairConsentExpiredTimestamp | Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
-candidatePairBytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairPacketsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairRequestBytesSent | Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestBytesSent | Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
-candidatePairResponseBytesSent | Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
-sctpSmoothedRoundTripTime | The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. 
-sctpCongestionWindow | The latest congestion window, corresponding to spinfo_cwnd.
-sctpReceiverWindow | The latest receiver window, corresponding to sstat_rwnd.
-sctpMtu | The latest maximum transmission unit, corresponding to spinfo_mtu.
-sctpUnackData | The number of unacknowledged DATA chunks, corresponding to sstat_unackdata.
+state | The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
+packetsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
+packetsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
+bytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
+bytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
+lastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+firstRequestTimestamp | Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+lastRequestTimestamp | Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+lastResponseTimestamp | Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+totalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
+currentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
+availableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
+availableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
+circuitBreakerTriggerCount | The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
+requestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
+requestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
+responsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
+responsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
+retransmissionReceived | Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
+retransmissionSent | Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
+consentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
+consentExpiredTimestamp | Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
+bytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+packetsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+requestBytesSent | Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
+consentRequestBytesSent | Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
+responseBytesSent | Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
 
 
 ## InboundAudioTrackReport
@@ -573,6 +545,42 @@ channels | The number of channels for audio is used (in stereo it is 2, otherwis
 sdpFmtpLine | The a=fmtp line in the SDP corresponding to the codec
 
 
+## PeerConnectionTransportReport
+
+
+A Report created for Client PeerConnection Transport.
+
+
+Field | Description 
+--- | ---
+serviceId (**Mandatory**) | The unique identifier of the service
+mediaUnitId (**Mandatory**) | The media unit id the report belongs to
+timestamp (**Mandatory**) | The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
+callId (**Mandatory**) | The generated unique identifier of the call
+clientId (**Mandatory**) | The generated unique identifier of the client
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+marker | The marker the originated sample is reported with
+roomId | webrtc app provided room id
+userId | webrtc app provided user identifier
+label | The webrtc app provided label the peer connection is marked with
+packetsSent | Represents the total number of packets sent on the corresponded transport
+packetsReceived | Represents the total number of packets received on the corresponded transport
+bytesSent | Represents the total amount of bytes sent on the corresponded transport
+bytesReceived | Represents the total amount of bytes received on the corresponded transport
+iceRole | Represent the current role of ICE under DTLS Transport
+iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
+dtlsState | Represents the current state of DTLS for the peer connection transport layer
+selectedCandidatePairId | The identifier of the candidate pair the transport currently uses
+iceState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
+localCertificateId | If DTLS negotiated it gives the id of the local certificate
+remoteCertificateId | If DTLS negotiated it gives the id of the remote certificate
+tlsVersion | Represents the version number of the TLS used in the corresponded transport
+dtlsCipher | Represents the name of the DTLS cipher used in the corresponded transport
+srtpCipher | Represents the name of the SRTP cipher used in the corresponded transport
+tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
+selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
+
+
 ## Report
 
 
@@ -897,17 +905,28 @@ Field | Description
 type (**Mandatory**) | The type of the extension stats the custom app provides
 payload (**Mandatory**) | The payload of the extension stats the custom app provides
 
+## DataChannelStats
+
+
+Field | Description 
+--- | ---
+peerConnectionId (**Mandatory**) | The id of the peer connection the data channel is assigned to
+dataChannelIdentifier | The id of the data channel assigned by the peer connection when it is opened
+label | The label of the data channel
+protocol | The protocol the data channel utilizes
+state | The state of the data channel
+messageSent | The total number of message sent on the data channel
+bytesSent | The total number of bytes sent on the data channel
+messageReceived | The total number of message received on the data channel
+bytesReceived | The total number of bytes received on the data channel
+
 ## PeerConnectionTransport
 
 
 Field | Description 
 --- | ---
+transportId (**Mandatory**) | The identifier of the transport the ice candidate pair is negotiated on
 peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
-label | The webrtc app provided label the peer connection is marked with
-dataChannelsOpened | Represents the number of unique RTCDataChannels that have entered the "open" state during their lifetime.
-dataChannelsClosed | Represents the number of unique RTCDataChannels that had the "open" state, but now they are "closed"
-dataChannelsRequested | Represents the number of unique RTCDataChannels successfully requested from RTCPeerConnection.
-dataChannelsAccepted | Represents the number of unique RTCDataChannels signaled in a ondatachannel event on the RTCPeerConnection.
 packetsSent | Represents the total number of packets sent on the corresponded transport
 packetsReceived | Represents the total number of packets received on the corresponded transport
 bytesSent | Represents the total amount of bytes sent on the corresponded transport
@@ -915,57 +934,54 @@ bytesReceived | Represents the total amount of bytes received on the corresponde
 iceRole | Represent the current role of ICE under DTLS Transport
 iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
 dtlsState | Represents the current state of DTLS for the peer connection transport layer
+selectedCandidatePairId | The identifier of the candidate pair the transport currently uses
 iceState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
+localCertificateId | If DTLS negotiated it gives the id of the local certificate
+remoteCertificateId | If DTLS negotiated it gives the id of the remote certificate
 tlsVersion | Represents the version number of the TLS used in the corresponded transport
 dtlsCipher | Represents the name of the DTLS cipher used in the corresponded transport
 srtpCipher | Represents the name of the SRTP cipher used in the corresponded transport
 tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
 selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
-localAddress | The address of the candidate (IPv4, IPv6, FQDN)
-localPort | The locally used port to communicate with the remote peer
-localProtocol | The protocol used by the local endpoint for the corresponded transport
-localCandidateType | The type of the ICE candidate used at the local endpoint on the corresponded transport
-localCandidateICEServerUrl | The url of the ICE server used by the local endpoint on the corresponded transport
-localCandidateRelayProtocol | The relay protocol of the ICE candidate used by the local endpoint on the corresponded transport
-remoteAddress | The address of the candidate (IPv4, IPv6, FQDN)
-remotePort | The remotely used port to communicate with the remote peer
-remoteProtocol | The protocol used by the remote endpoint for the corresponded transport
-remoteCandidateType | The type of the ICE candidate used at the remote endpoint on the corresponded transport
-remoteCandidateICEServerUrl | The url of the ICE server used by the remote endpoint on the corresponded transport
-remoteCandidateRelayProtocol | The relay protocol of the ICE candidate used by the remote endpoint on the corresponded transport
-candidatePairState | The state of ICE Candidate Pairs (RTCStatsIceCandidatePairState) on the corresponded transport
-candidatePairPacketsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
-candidatePairPacketsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
-candidatePairBytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
-candidatePairBytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
-candidatePairLastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairLastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-candidatePairFirstRequestTimestamp | Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastRequestTimestamp | Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairLastResponseTimestamp | Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-candidatePairTotalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
-candidatePairCurrentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
-candidatePairAvailableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
-candidatePairAvailableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
-candidatePairCircuitBreakerTriggerCount | The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
-candidatePairRequestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
-candidatePairRequestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
-candidatePairResponsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
-candidatePairResponsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionReceived | Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
-candidatePairRetransmissionSent | Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
-candidatePairConsentExpiredTimestamp | Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
-candidatePairBytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairPacketsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-candidatePairRequestBytesSent | Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
-candidatePairConsentRequestBytesSent | Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
-candidatePairResponseBytesSent | Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
-sctpSmoothedRoundTripTime | The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. 
-sctpCongestionWindow | The latest congestion window, corresponding to spinfo_cwnd.
-sctpReceiverWindow | The latest receiver window, corresponding to sstat_rwnd.
-sctpMtu | The latest maximum transmission unit, corresponding to spinfo_mtu.
-sctpUnackData | The number of unacknowledged DATA chunks, corresponding to sstat_unackdata.
+
+## IceCandidatePairStats
+
+
+Field | Description 
+--- | ---
+candidatePairId (**Mandatory**) | The unique identifier of the peer connection
+peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+transportId | The identifier of the transport the ice candidate pair is negotiated on
+localCandidateId | The unique identifier of the candidate the negotiated pair is selected at local side
+remoteCandidateId | The unique identifier of the candidate the negotiated pair is selected at remote side
+state | The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
+packetsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
+packetsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
+bytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
+bytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
+lastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
+firstRequestTimestamp | Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+lastRequestTimestamp | Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+lastResponseTimestamp | Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
+totalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
+currentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
+availableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
+availableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
+circuitBreakerTriggerCount | The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
+requestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
+requestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
+responsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
+responsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
+retransmissionReceived | Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
+retransmissionSent | Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
+consentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
+consentExpiredTimestamp | Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
+bytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+packetsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+requestBytesSent | Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
+consentRequestBytesSent | Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
+responseBytesSent | Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
 
 ## MediaSourceStat
 
@@ -1311,25 +1327,7 @@ protocol | The protocol for the ICE (Possible values are: tcp,<br />udp)
 candidateType | The type of the local candidate
 priority | The priority of the local candidate
 url | The url of the ICE server
-relayProtocol | The relay protocol the local candidate uses (Possible values are: tcp,<br />udp,<br />tls)
-
-## DataChannel
-
-
-Field | Description 
---- | ---
-peerConnectionId | Refers to the peer connection the local candidate belongs to
-id | Unique identifier of the data channel
-label | The label the data channel provided at the creation
-address | The address of the local endpoint (Ipv4, Ipv6, FQDN)
-port | The port number of the local endpoint the ICE uses
-protocol |  The protocol the data channel use to transfer data
-dataChannelIdentifier | The unique identifier of the data channel
-state | The state of the data channel
-messagesSent | The total number of messages sent on this data channel. this is not equal to the number of packets sent, as messages are chunked to packets
-bytesSent | The amount of bytes sent on the corresponded data channel
-messagesReceived | The number of messages received on the corresponded data channel
-bytesReceived | The amount of bytes received on the corresponded data channel## ClientSample
+relayProtocol | The relay protocol the local candidate uses (Possible values are: tcp,<br />udp,<br />tls)## ClientSample
 
 
 docs
@@ -1353,7 +1351,9 @@ userMediaErrors | The WebRTC app provided List of user media errors the client h
 extensionStats | The WebRTC app provided custom stats payload
 iceServers | The WebRTC app provided List of ICE server the client used.
 localSDPs | The local part of the Signal Description Protocol to establish connections
-pcTransports | Compound object related to Peer Connection Transport Stats
+dataChannels | Measurements about the data channels currently avaialble on peer connections
+pcTransports | Transport stats of Peer Connection
+iceCandidatePairs | Candidate pair stats
 mediaSources | WebRTC App provided information related to the operation system the client uses.
 codecs | List of codec the client has
 certificates | List of certificates the client provided
@@ -1363,7 +1363,6 @@ outboundAudioTracks | List of compound measurements related to outbound audio tr
 outboundVideoTracks | List of compound measurements related to outbound video tracks
 iceLocalCandidates | List of local ICE candidates
 iceRemoteCandidates | List of remote ICE candidates
-dataChannels | List of Data channels
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples
 

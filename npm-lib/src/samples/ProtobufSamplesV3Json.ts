@@ -57,7 +57,7 @@ export const jsonDescriptor = {
                             },
                             "dataChannels": {
                               "rule": "repeated",
-                              "type": "DataChannel",
+                              "type": "DataChannelStats",
                               "id": 3
                             },
                             "extensionStats": {
@@ -65,118 +65,123 @@ export const jsonDescriptor = {
                               "type": "ExtensionStat",
                               "id": 4
                             },
+                            "iceCandidatePairs": {
+                              "rule": "repeated",
+                              "type": "IceCandidatePairStats",
+                              "id": 5
+                            },
                             "iceLocalCandidates": {
                               "rule": "repeated",
                               "type": "IceLocalCandidate",
-                              "id": 5
+                              "id": 6
                             },
                             "iceRemoteCandidates": {
                               "rule": "repeated",
                               "type": "IceRemoteCandidate",
-                              "id": 6
+                              "id": 7
                             },
                             "iceServers": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 7
+                              "id": 8
                             },
                             "inboundAudioTracks": {
                               "rule": "repeated",
                               "type": "InboundAudioTrack",
-                              "id": 8
+                              "id": 9
                             },
                             "inboundVideoTracks": {
                               "rule": "repeated",
                               "type": "InboundVideoTrack",
-                              "id": 9
+                              "id": 10
                             },
                             "localSDPs": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 10
+                              "id": 11
                             },
                             "mediaConstraints": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 11
+                              "id": 12
                             },
                             "mediaDevices": {
                               "rule": "repeated",
                               "type": "MediaDevice",
-                              "id": 12
+                              "id": 13
                             },
                             "mediaSources": {
                               "rule": "repeated",
                               "type": "MediaSourceStat",
-                              "id": 13
+                              "id": 14
                             },
                             "outboundAudioTracks": {
                               "rule": "repeated",
                               "type": "OutboundAudioTrack",
-                              "id": 14
+                              "id": 15
                             },
                             "outboundVideoTracks": {
                               "rule": "repeated",
                               "type": "OutboundVideoTrack",
-                              "id": 15
+                              "id": 16
                             },
                             "pcTransports": {
                               "rule": "repeated",
                               "type": "PeerConnectionTransport",
-                              "id": 16
+                              "id": 17
                             },
                             "userMediaErrors": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 17
+                              "id": 18
                             },
                             "clientId": {
                               "type": "string",
-                              "id": 18
+                              "id": 19
                             },
                             "timestamp": {
                               "type": "int64",
-                              "id": 19
+                              "id": 20
                             },
                             "browser": {
                               "type": "Browser",
-                              "id": 20
+                              "id": 21
                             },
                             "callId": {
                               "type": "string",
-                              "id": 21
+                              "id": 22
                             },
                             "engine": {
                               "type": "Engine",
-                              "id": 22
+                              "id": 23
                             },
                             "marker": {
                               "type": "string",
-                              "id": 23
+                              "id": 24
                             },
                             "os": {
                               "type": "OperationSystem",
-                              "id": 24
+                              "id": 25
                             },
                             "platform": {
                               "type": "Platform",
-                              "id": 25
+                              "id": 26
                             },
                             "roomId": {
                               "type": "string",
-                              "id": 26
+                              "id": 27
                             },
                             "sampleSeq": {
                               "type": "int32",
-                              "id": 27
+                              "id": 28
                             },
                             "timeZoneOffsetInHours": {
                               "type": "int32",
-                              "id": 28
+                              "id": 29
                             },
                             "userId": {
                               "type": "string",
-                              "id": 29
+                              "id": 30
                             }
                           },
                           "nested": {
@@ -264,7 +269,7 @@ export const jsonDescriptor = {
                                 }
                               }
                             },
-                            "PeerConnectionTransport": {
+                            "DataChannelStats": {
                               "fields": {
                                 "peerConnectionId": {
                                   "type": "string",
@@ -278,249 +283,241 @@ export const jsonDescriptor = {
                                   "type": "int64",
                                   "id": 3
                                 },
-                                "candidatePairAvailableIncomingBitrate": {
-                                  "type": "double",
+                                "dataChannelIdentifier": {
+                                  "type": "int32",
                                   "id": 4
-                                },
-                                "candidatePairAvailableOutgoingBitrate": {
-                                  "type": "double",
-                                  "id": 5
-                                },
-                                "candidatePairBytesDiscardedOnSend": {
-                                  "type": "int64",
-                                  "id": 6
-                                },
-                                "candidatePairBytesReceived": {
-                                  "type": "int64",
-                                  "id": 7
-                                },
-                                "candidatePairBytesSent": {
-                                  "type": "int64",
-                                  "id": 8
-                                },
-                                "candidatePairCircuitBreakerTriggerCount": {
-                                  "type": "int32",
-                                  "id": 9
-                                },
-                                "candidatePairConsentExpiredTimestamp": {
-                                  "type": "int64",
-                                  "id": 10
-                                },
-                                "candidatePairConsentRequestBytesSent": {
-                                  "type": "int64",
-                                  "id": 11
-                                },
-                                "candidatePairConsentRequestsSent": {
-                                  "type": "int32",
-                                  "id": 12
-                                },
-                                "candidatePairCurrentRoundTripTime": {
-                                  "type": "double",
-                                  "id": 13
-                                },
-                                "candidatePairFirstRequestTimestamp": {
-                                  "type": "int64",
-                                  "id": 14
-                                },
-                                "candidatePairLastPacketReceivedTimestamp": {
-                                  "type": "int64",
-                                  "id": 15
-                                },
-                                "candidatePairLastPacketSentTimestamp": {
-                                  "type": "int64",
-                                  "id": 16
-                                },
-                                "candidatePairLastRequestTimestamp": {
-                                  "type": "int64",
-                                  "id": 17
-                                },
-                                "candidatePairLastResponseTimestamp": {
-                                  "type": "int64",
-                                  "id": 18
-                                },
-                                "candidatePairPacketsDiscardedOnSend": {
-                                  "type": "int32",
-                                  "id": 19
-                                },
-                                "candidatePairPacketsReceived": {
-                                  "type": "int32",
-                                  "id": 20
-                                },
-                                "candidatePairPacketsSent": {
-                                  "type": "int32",
-                                  "id": 21
-                                },
-                                "candidatePairRequestBytesSent": {
-                                  "type": "int64",
-                                  "id": 22
-                                },
-                                "candidatePairRequestsReceived": {
-                                  "type": "int32",
-                                  "id": 23
-                                },
-                                "candidatePairRequestsSent": {
-                                  "type": "int32",
-                                  "id": 24
-                                },
-                                "candidatePairResponseBytesSent": {
-                                  "type": "int64",
-                                  "id": 25
-                                },
-                                "candidatePairResponsesReceived": {
-                                  "type": "int32",
-                                  "id": 26
-                                },
-                                "candidatePairResponsesSent": {
-                                  "type": "int32",
-                                  "id": 27
-                                },
-                                "candidatePairRetransmissionReceived": {
-                                  "type": "int32",
-                                  "id": 28
-                                },
-                                "candidatePairRetransmissionSent": {
-                                  "type": "int32",
-                                  "id": 29
-                                },
-                                "candidatePairState": {
-                                  "type": "string",
-                                  "id": 30
-                                },
-                                "candidatePairTotalRoundTripTime": {
-                                  "type": "double",
-                                  "id": 31
-                                },
-                                "dataChannelsAccepted": {
-                                  "type": "int32",
-                                  "id": 32
-                                },
-                                "dataChannelsClosed": {
-                                  "type": "int32",
-                                  "id": 33
-                                },
-                                "dataChannelsOpened": {
-                                  "type": "int32",
-                                  "id": 34
-                                },
-                                "dataChannelsRequested": {
-                                  "type": "int32",
-                                  "id": 35
-                                },
-                                "dtlsCipher": {
-                                  "type": "string",
-                                  "id": 36
-                                },
-                                "dtlsState": {
-                                  "type": "string",
-                                  "id": 37
-                                },
-                                "iceLocalUsernameFragment": {
-                                  "type": "string",
-                                  "id": 38
-                                },
-                                "iceRole": {
-                                  "type": "string",
-                                  "id": 39
-                                },
-                                "iceState": {
-                                  "type": "string",
-                                  "id": 40
                                 },
                                 "label": {
                                   "type": "string",
-                                  "id": 41
+                                  "id": 5
                                 },
-                                "localAddress": {
-                                  "type": "string",
-                                  "id": 42
-                                },
-                                "localCandidateICEServerUrl": {
-                                  "type": "string",
-                                  "id": 43
-                                },
-                                "localCandidateRelayProtocol": {
-                                  "type": "string",
-                                  "id": 44
-                                },
-                                "localCandidateType": {
-                                  "type": "string",
-                                  "id": 45
-                                },
-                                "localPort": {
+                                "messageReceived": {
                                   "type": "int32",
-                                  "id": 46
+                                  "id": 6
                                 },
-                                "localProtocol": {
+                                "messageSent": {
+                                  "type": "int32",
+                                  "id": 7
+                                },
+                                "protocol": {
                                   "type": "string",
-                                  "id": 47
+                                  "id": 8
+                                },
+                                "state": {
+                                  "type": "string",
+                                  "id": 9
+                                }
+                              }
+                            },
+                            "PeerConnectionTransport": {
+                              "fields": {
+                                "peerConnectionId": {
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "transportId": {
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "bytesReceived": {
+                                  "type": "int64",
+                                  "id": 3
+                                },
+                                "bytesSent": {
+                                  "type": "int64",
+                                  "id": 4
+                                },
+                                "dtlsCipher": {
+                                  "type": "string",
+                                  "id": 5
+                                },
+                                "dtlsState": {
+                                  "type": "string",
+                                  "id": 6
+                                },
+                                "iceLocalUsernameFragment": {
+                                  "type": "string",
+                                  "id": 7
+                                },
+                                "iceRole": {
+                                  "type": "string",
+                                  "id": 8
+                                },
+                                "iceState": {
+                                  "type": "string",
+                                  "id": 9
+                                },
+                                "localCertificateId": {
+                                  "type": "string",
+                                  "id": 10
                                 },
                                 "packetsReceived": {
                                   "type": "int32",
-                                  "id": 48
+                                  "id": 11
                                 },
                                 "packetsSent": {
                                   "type": "int32",
-                                  "id": 49
+                                  "id": 12
                                 },
-                                "remoteAddress": {
+                                "remoteCertificateId": {
                                   "type": "string",
-                                  "id": 50
-                                },
-                                "remoteCandidateICEServerUrl": {
-                                  "type": "string",
-                                  "id": 51
-                                },
-                                "remoteCandidateRelayProtocol": {
-                                  "type": "string",
-                                  "id": 52
-                                },
-                                "remoteCandidateType": {
-                                  "type": "string",
-                                  "id": 53
-                                },
-                                "remotePort": {
-                                  "type": "int32",
-                                  "id": 54
-                                },
-                                "remoteProtocol": {
-                                  "type": "string",
-                                  "id": 55
-                                },
-                                "sctpCongestionWindow": {
-                                  "type": "double",
-                                  "id": 56
-                                },
-                                "sctpMtu": {
-                                  "type": "int32",
-                                  "id": 57
-                                },
-                                "sctpReceiverWindow": {
-                                  "type": "double",
-                                  "id": 58
-                                },
-                                "sctpSmoothedRoundTripTime": {
-                                  "type": "double",
-                                  "id": 59
-                                },
-                                "sctpUnackData": {
-                                  "type": "int32",
-                                  "id": 60
+                                  "id": 13
                                 },
                                 "selectedCandidatePairChanges": {
                                   "type": "int32",
-                                  "id": 61
+                                  "id": 14
+                                },
+                                "selectedCandidatePairId": {
+                                  "type": "string",
+                                  "id": 15
                                 },
                                 "srtpCipher": {
                                   "type": "string",
-                                  "id": 62
+                                  "id": 16
                                 },
                                 "tlsGroup": {
                                   "type": "string",
-                                  "id": 63
+                                  "id": 17
                                 },
                                 "tlsVersion": {
                                   "type": "string",
-                                  "id": 64
+                                  "id": 18
+                                }
+                              }
+                            },
+                            "IceCandidatePairStats": {
+                              "fields": {
+                                "candidatePairId": {
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "peerConnectionId": {
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "availableIncomingBitrate": {
+                                  "type": "double",
+                                  "id": 3
+                                },
+                                "availableOutgoingBitrate": {
+                                  "type": "double",
+                                  "id": 4
+                                },
+                                "bytesDiscardedOnSend": {
+                                  "type": "int64",
+                                  "id": 5
+                                },
+                                "bytesReceived": {
+                                  "type": "int64",
+                                  "id": 6
+                                },
+                                "bytesSent": {
+                                  "type": "int64",
+                                  "id": 7
+                                },
+                                "circuitBreakerTriggerCount": {
+                                  "type": "int32",
+                                  "id": 8
+                                },
+                                "consentExpiredTimestamp": {
+                                  "type": "int64",
+                                  "id": 9
+                                },
+                                "consentRequestBytesSent": {
+                                  "type": "int64",
+                                  "id": 10
+                                },
+                                "consentRequestsSent": {
+                                  "type": "int32",
+                                  "id": 11
+                                },
+                                "currentRoundTripTime": {
+                                  "type": "double",
+                                  "id": 12
+                                },
+                                "firstRequestTimestamp": {
+                                  "type": "int64",
+                                  "id": 13
+                                },
+                                "lastPacketReceivedTimestamp": {
+                                  "type": "int64",
+                                  "id": 14
+                                },
+                                "lastPacketSentTimestamp": {
+                                  "type": "int64",
+                                  "id": 15
+                                },
+                                "lastRequestTimestamp": {
+                                  "type": "int64",
+                                  "id": 16
+                                },
+                                "lastResponseTimestamp": {
+                                  "type": "int64",
+                                  "id": 17
+                                },
+                                "localCandidateId": {
+                                  "type": "string",
+                                  "id": 18
+                                },
+                                "packetsDiscardedOnSend": {
+                                  "type": "int32",
+                                  "id": 19
+                                },
+                                "packetsReceived": {
+                                  "type": "int32",
+                                  "id": 20
+                                },
+                                "packetsSent": {
+                                  "type": "int32",
+                                  "id": 21
+                                },
+                                "remoteCandidateId": {
+                                  "type": "string",
+                                  "id": 22
+                                },
+                                "requestBytesSent": {
+                                  "type": "int64",
+                                  "id": 23
+                                },
+                                "requestsReceived": {
+                                  "type": "int32",
+                                  "id": 24
+                                },
+                                "requestsSent": {
+                                  "type": "int32",
+                                  "id": 25
+                                },
+                                "responseBytesSent": {
+                                  "type": "int64",
+                                  "id": 26
+                                },
+                                "responsesReceived": {
+                                  "type": "int32",
+                                  "id": 27
+                                },
+                                "responsesSent": {
+                                  "type": "int32",
+                                  "id": 28
+                                },
+                                "retransmissionReceived": {
+                                  "type": "int32",
+                                  "id": 29
+                                },
+                                "retransmissionSent": {
+                                  "type": "int32",
+                                  "id": 30
+                                },
+                                "state": {
+                                  "type": "string",
+                                  "id": 31
+                                },
+                                "totalRoundTripTime": {
+                                  "type": "double",
+                                  "id": 32
+                                },
+                                "transportId": {
+                                  "type": "string",
+                                  "id": 33
                                 }
                               }
                             },
@@ -1725,58 +1722,6 @@ export const jsonDescriptor = {
                                 "url": {
                                   "type": "string",
                                   "id": 9
-                                }
-                              }
-                            },
-                            "DataChannel": {
-                              "fields": {
-                                "address": {
-                                  "type": "string",
-                                  "id": 1
-                                },
-                                "bytesReceived": {
-                                  "type": "int64",
-                                  "id": 2
-                                },
-                                "bytesSent": {
-                                  "type": "int64",
-                                  "id": 3
-                                },
-                                "dataChannelIdentifier": {
-                                  "type": "int32",
-                                  "id": 4
-                                },
-                                "id": {
-                                  "type": "string",
-                                  "id": 5
-                                },
-                                "label": {
-                                  "type": "string",
-                                  "id": 6
-                                },
-                                "messagesReceived": {
-                                  "type": "int32",
-                                  "id": 7
-                                },
-                                "messagesSent": {
-                                  "type": "int32",
-                                  "id": 8
-                                },
-                                "peerConnectionId": {
-                                  "type": "string",
-                                  "id": 9
-                                },
-                                "port": {
-                                  "type": "int32",
-                                  "id": 10
-                                },
-                                "protocol": {
-                                  "type": "string",
-                                  "id": 11
-                                },
-                                "state": {
-                                  "type": "string",
-                                  "id": 12
                                 }
                               }
                             }
