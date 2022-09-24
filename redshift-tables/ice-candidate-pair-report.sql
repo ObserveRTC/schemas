@@ -5,6 +5,7 @@ create table  IF NOT EXISTS ice_candidate_pair_report (
 	callid	CHAR(36)	not null,
 	clientid	CHAR(36)	not null,
 	peerconnectionid	CHAR(36)	not null,
+	sampleseq	INTEGER	not null,
 	availableincomingbitrate	REAL,
 	availableoutgoingbitrate	REAL,
 	bytesdiscardedonsend	BIGINT,

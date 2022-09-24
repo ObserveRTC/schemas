@@ -71,6 +71,11 @@ export const schema = {
       "default": null
     },
     {
+      "name": "sampleSeq",
+      "doc": "The sequence number of the sample the report is generated from",
+      "type": "int"
+    },
+    {
       "name": "packetsSent",
       "doc": "Represents the total number of packets sent on the corresponded transport",
       "type": [

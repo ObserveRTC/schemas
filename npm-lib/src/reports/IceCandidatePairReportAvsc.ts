@@ -71,6 +71,11 @@ export const schema = {
       "default": null
     },
     {
+      "name": "sampleSeq",
+      "doc": "The sequence number of the sample the report is generated from",
+      "type": "int"
+    },
+    {
       "name": "state",
       "doc": "The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport",
       "type": [

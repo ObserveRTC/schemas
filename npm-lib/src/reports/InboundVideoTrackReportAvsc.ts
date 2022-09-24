@@ -171,206 +171,8 @@ export const schema = {
       "default": null
     },
     {
-      "name": "packetsDiscarded",
-      "doc": "The total number of packets missed the playout point and therefore discarded by the jitterbuffer",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "packetsRepaired",
-      "doc": "The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "burstPacketsLost",
-      "doc": "The total number of packets lost in burst (RFC6958)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "burstPacketsDiscarded",
-      "doc": "The total number of packets discarded in burst (RFC6958)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "burstLossCount",
-      "doc": "The total number of burst happened causes burstPacketsLost on the corresponding synchronization source",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "burstDiscardCount",
-      "doc": "The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "burstLossRate",
-      "doc": "The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "burstDiscardRate",
-      "doc": "The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "gapLossRate",
-      "doc": "The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "gapDiscardRate",
-      "doc": "The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
       "name": "framesDropped",
-      "doc": "The total number of frames dropped at decoding process on the corresponding synchronization source",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "partialFramesLost",
-      "doc": "The total number of partial frames lost at decoding process on the corresponding synchronization source",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "fullFramesLost",
-      "doc": "The total number of full frames lost at decoding process on the corresponding synchronization source",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "framesDecoded",
-      "doc": "Indicate the number of frames completly and without error decoded on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "keyFramesDecoded",
-      "doc": "Indicate the number of keyframes received on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "frameWidth",
-      "doc": "Indicate the width of the frame received on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "frameHeight",
-      "doc": "Indicate the height of the frame received on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "frameBitDepth",
-      "doc": "Indicate the bit depth per pixel of the last decoded frame received on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "framesPerSecond",
-      "doc": "Indicate the number of decoded frames in the last second received on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "qpSum",
-      "doc": "sum of QP values of frames decoded on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
-      "name": "totalDecodeTime",
-      "doc": "The total number of seconds spent on decoding frames on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "totalInterFrameDelay",
-      "doc": "The total number of inter frame delay on the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "totalSquaredInterFrameDelay",
-      "doc": "The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays",
+      "doc": "The number of frames dropped prior to decode or missing chunks",
       "type": [
         "null",
         "double"
@@ -387,20 +189,20 @@ export const schema = {
       "default": null
     },
     {
-      "name": "averageRtcpInterval",
-      "doc": "The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)",
-      "type": [
-        "null",
-        "double"
-      ],
-      "default": null
-    },
-    {
       "name": "headerBytesReceived",
       "doc": "Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)",
       "type": [
         "null",
         "long"
+      ],
+      "default": null
+    },
+    {
+      "name": "packetsDiscarded",
+      "doc": "The total number of packets missed the playout point and therefore discarded by the jitterbuffer",
+      "type": [
+        "null",
+        "int"
       ],
       "default": null
     },
@@ -432,62 +234,8 @@ export const schema = {
       "default": null
     },
     {
-      "name": "packetsFailedDecryption",
-      "doc": "Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "packetsDuplicated",
-      "doc": "Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "perDscpPacketsReceived",
-      "doc": "The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "firCount",
-      "doc": "Count the total number of Full Intra Request sent by this receiver and belongs to the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "pliCount",
-      "doc": "Count the total number of Picture Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
       "name": "nackCount",
       "doc": "Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "sliCount",
-      "doc": "Count the total number of Slice Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)",
       "type": [
         "null",
         "int"
@@ -522,6 +270,15 @@ export const schema = {
       "default": null
     },
     {
+      "name": "jitterBufferTargetDelay",
+      "doc": "This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. ",
+      "type": [
+        "null",
+        "double"
+      ],
+      "default": null
+    },
+    {
       "name": "jitterBufferEmittedCount",
       "doc": "The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)",
       "type": [
@@ -531,11 +288,11 @@ export const schema = {
       "default": null
     },
     {
-      "name": "framesReceived",
-      "doc": "Represents the total number of complete frames received on the corresponded synchronization source (ssrc)",
+      "name": "jitterBufferMinimumDelay",
+      "doc": "This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it",
       "type": [
         "null",
-        "int"
+        "double"
       ],
       "default": null
     },
@@ -545,6 +302,114 @@ export const schema = {
       "type": [
         "null",
         "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "framesDecoded",
+      "doc": "The total number of frames decoded on the corresponded RTP stream",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
+      "name": "keyFramesDecoded",
+      "doc": "The total number of keyframes decoded on the corresponded RTP stream",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
+      "name": "frameWidth",
+      "doc": "The width of the frame of the video sent by the remote source on the corresponded RTP stream",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
+      "name": "frameHeight",
+      "doc": "The height of the frame of the video sent by the remote source on the corresponded RTP stream",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
+      "name": "framesPerSecond",
+      "doc": "The frame per seconds of the video sent by the remote source on the corresponded RTP stream",
+      "type": [
+        "null",
+        "double"
+      ],
+      "default": null
+    },
+    {
+      "name": "qpSum",
+      "doc": "The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream",
+      "type": [
+        "null",
+        "long"
+      ],
+      "default": null
+    },
+    {
+      "name": "totalDecodeTime",
+      "doc": "The total tiem spent on decoding video on the corresponded RTP stream",
+      "type": [
+        "null",
+        "double"
+      ],
+      "default": null
+    },
+    {
+      "name": "totalInterFrameDelay",
+      "doc": "The total interframe delay",
+      "type": [
+        "null",
+        "double"
+      ],
+      "default": null
+    },
+    {
+      "name": "totalSquaredInterFrameDelay",
+      "doc": "The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays",
+      "type": [
+        "null",
+        "double"
+      ],
+      "default": null
+    },
+    {
+      "name": "firCount",
+      "doc": "The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
+      "name": "pliCount",
+      "doc": "The total number of Picture Loss Indication sent on the corresponded RTP stream",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
+      "name": "framesReceived",
+      "doc": "The total number of frames received on the corresponded RTP stream.",
+      "type": [
+        "null",
+        "int"
       ],
       "default": null
     },
@@ -585,47 +450,29 @@ export const schema = {
       "default": null
     },
     {
-      "name": "ended",
-      "doc": "Flag represents if the receiver ended the media stream track or not.",
+      "name": "roundTripTime",
+      "doc": "Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream",
       "type": [
         "null",
-        "boolean"
+        "double"
       ],
       "default": null
     },
     {
-      "name": "payloadType",
-      "doc": "The type of the payload the RTP packet SSRC belongs to",
+      "name": "totalRoundTripTime",
+      "doc": " Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream",
+      "type": [
+        "null",
+        "double"
+      ],
+      "default": null
+    },
+    {
+      "name": "roundTripTimeMeasurements",
+      "doc": "Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream",
       "type": [
         "null",
         "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "mimeType",
-      "doc": "the MIME type of the codec (e.g.: video/vp8)",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null
-    },
-    {
-      "name": "clockRate",
-      "doc": "The negotiated clock rate the RTP timestamp is generated of",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "sdpFmtpLine",
-      "doc": "The a=fmtp line in the SDP corresponding to the codec",
-      "type": [
-        "null",
-        "string"
       ],
       "default": null
     }

@@ -1024,39 +1024,14 @@ export type OutboundVideoTrack = {
 	bytesSent?: number;
 
 	/**
-	* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
-	*/
-	rtxSsrc?: number;
-
-	/**
 	*  The rid encoding parameter of the corresponded synchronization source
 	*/
 	rid?: string;
 
 	/**
-	*  the timestamp the last packet was sent. (UTC epoch in ms)
-	*/
-	lastPacketSentTimestamp?: number;
-
-	/**
 	* Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
 	*/
 	headerBytesSent?: number;
-
-	/**
-	* Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
-	*/
-	packetsDiscardedOnSend?: number;
-
-	/**
-	* Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
-	*/
-	bytesDiscardedOnSend?: number;
-
-	/**
-	* Total number of FEC packets sent over the corresponding synchronization source (ssrc)
-	*/
-	fecPacketsSent?: number;
 
 	/**
 	* Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
@@ -1089,34 +1064,19 @@ export type OutboundVideoTrack = {
 	averageRtcpInterval?: number;
 
 	/**
-	* The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
-	*/
-	perDscpPacketsSent?: number;
-
-	/**
 	* Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
 	*/
 	nackCount?: number;
 
 	/**
-	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
-	*/
-	firCount?: number;
-
-	/**
-	* The total number of Picture Loss Indication sent on the corresponded RTP stream
-	*/
-	pliCount?: number;
-
-	/**
-	* The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
-	*/
-	sliCount?: number;
-
-	/**
 	* Indicate the name of the encoder implementation library
 	*/
 	encoderImplementation?: string;
+
+	/**
+	* Indicates whether this RTP stream is configured to be sent or disabled
+	*/
+	active?: boolean;
 
 	/**
 	* The frame width in pixels of the frames targeted by the media encoder
@@ -1127,11 +1087,6 @@ export type OutboundVideoTrack = {
 	* The frame width the media encoder targeted
 	*/
 	frameHeight?: number;
-
-	/**
-	* The frame depth in pixles on the corresponded RTP stream
-	*/
-	frameBitDepth?: number;
 
 	/**
 	* The encoded number of frames in the last second on the corresponded media source
@@ -1157,11 +1112,6 @@ export type OutboundVideoTrack = {
 	* The total number of keyframes encoded on the corresponded RTP stream
 	*/
 	keyFramesEncoded?: number;
-
-	/**
-	* The total number of frames discarded on the corresponded RTP stream.
-	*/
-	framesDiscardedOnSend?: number;
 
 	/**
 	* The sum of the QP the media encoder provided on the corresponded RTP stream.
@@ -1204,6 +1154,16 @@ export type OutboundVideoTrack = {
 	qualityLimitationResolutionChanges?: number;
 
 	/**
+	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+	*/
+	firCount?: number;
+
+	/**
+	* The total number of Picture Loss Indication sent on the corresponded RTP stream
+	*/
+	pliCount?: number;
+
+	/**
 	* The total number of packets received on the corresponded synchronization source
 	*/
 	packetsReceived?: number;
@@ -1217,56 +1177,6 @@ export type OutboundVideoTrack = {
 	* The corresponded synchronization source reported jitter
 	*/
 	jitter?: number;
-
-	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets lost in burst (RFC6958)
-	*/
-	burstPacketsLost?: number;
-
-	/**
-	* The total number of packets discarded in burst (RFC6958)
-	*/
-	burstPacketsDiscarded?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-	*/
-	burstLossCount?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-	*/
-	burstDiscardCount?: number;
-
-	/**
-	* The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstDiscardRate?: number;
-
-	/**
-	* The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapDiscardRate?: number;
 
 	/**
 	* RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
@@ -1284,11 +1194,6 @@ export type OutboundVideoTrack = {
 	fractionLost?: number;
 
 	/**
-	* The total number of RR reports received, which is the base of the remote inbound calculation on this source
-	*/
-	reportsReceived?: number;
-
-	/**
 	* The total number of calculated RR measurements received on this source
 	*/
 	roundTripTimeMeasurements?: number;
@@ -1297,16 +1202,6 @@ export type OutboundVideoTrack = {
 	* The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
 	*/
 	framesDropped?: number;
-
-	/**
-	* The total number of partial frames reported to be lost by the remote endpoint on the corresponded RTP stream.
-	*/
-	partialFramesLost?: number;
-
-	/**
-	* The total number of full frames lost at the remote endpoint on the corresponded RTP stream.
-	*/
-	fullFramesLost?: number;
 
 	/**
 	* True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
@@ -1324,44 +1219,9 @@ export type OutboundVideoTrack = {
 	height?: number;
 
 	/**
-	* The bitDepth, in pixels, of the last frame originating from the media source
-	*/
-	bitDepth?: number;
-
-	/**
 	* The total number of frames originated from the media source
 	*/
 	frames?: number;
-
-	/**
-	* Flag represents if the sender ended the media stream track or not.
-	*/
-	ended?: boolean;
-
-	/**
-	* The type of the payload the RTP packet SSRC belongs to
-	*/
-	payloadType?: number;
-
-	/**
-	* the MIME type of the codec (e.g.: video/vp8)
-	*/
-	mimeType?: string;
-
-	/**
-	* The negotiated clock rate the RTP timestamp is generated of
-	*/
-	clockRate?: number;
-
-	/**
-	* The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-	*/
-	channels?: number;
-
-	/**
-	* The a=fmtp line in the SDP corresponding to the codec
-	*/
-	sdpFmtpLine?: string;
 
 }
 
@@ -1400,39 +1260,14 @@ export type OutboundAudioTrack = {
 	bytesSent?: number;
 
 	/**
-	* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
-	*/
-	rtxSsrc?: number;
-
-	/**
 	*  The rid encoding parameter of the corresponded synchronization source
 	*/
 	rid?: string;
 
 	/**
-	*  the timestamp the last packet was sent. (UTC epoch in ms)
-	*/
-	lastPacketSentTimestamp?: number;
-
-	/**
 	* Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
 	*/
 	headerBytesSent?: number;
-
-	/**
-	* Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
-	*/
-	packetsDiscardedOnSend?: number;
-
-	/**
-	* Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
-	*/
-	bytesDiscardedOnSend?: number;
-
-	/**
-	* Total number of FEC packets sent over the corresponding synchronization source (ssrc)
-	*/
-	fecPacketsSent?: number;
 
 	/**
 	* Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
@@ -1465,11 +1300,6 @@ export type OutboundAudioTrack = {
 	averageRtcpInterval?: number;
 
 	/**
-	* The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
-	*/
-	perDscpPacketsSent?: number;
-
-	/**
 	* Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
 	*/
 	nackCount?: number;
@@ -1480,24 +1310,9 @@ export type OutboundAudioTrack = {
 	encoderImplementation?: string;
 
 	/**
-	* The total number of samples sent over the corresponding synchronization source
+	* Indicates whether this RTP stream is configured to be sent or disabled
 	*/
-	totalSamplesSent?: number;
-
-	/**
-	* The total number of samples encoded by SILK portion in opus sent over the corresponding synchronization source
-	*/
-	samplesEncodedWithSilk?: number;
-
-	/**
-	* The total number of samples encoded by CELT portion in opus sent over the corresponding synchronization source
-	*/
-	samplesEncodedWithCelt?: number;
-
-	/**
-	* Indicate if the last RTP packet sent contained voice activity based on the presence of the V bit in the extension header
-	*/
-	voiceActivityFlag?: boolean;
+	active?: boolean;
 
 	/**
 	* The total number of packets received on the corresponded synchronization source
@@ -1515,56 +1330,6 @@ export type OutboundAudioTrack = {
 	jitter?: number;
 
 	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets lost in burst (RFC6958)
-	*/
-	burstPacketsLost?: number;
-
-	/**
-	* The total number of packets discarded in burst (RFC6958)
-	*/
-	burstPacketsDiscarded?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-	*/
-	burstLossCount?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-	*/
-	burstDiscardCount?: number;
-
-	/**
-	* The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstDiscardRate?: number;
-
-	/**
-	* The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapDiscardRate?: number;
-
-	/**
 	* RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
 	*/
 	roundTripTime?: number;
@@ -1578,11 +1343,6 @@ export type OutboundAudioTrack = {
 	* The receiver reported fractional lost belongs to the corresponded synchronization source
 	*/
 	fractionLost?: number;
-
-	/**
-	* The total number of RR reports received, which is the base of the remote inbound calculation on this source
-	*/
-	reportsReceived?: number;
 
 	/**
 	* The total number of calculated RR measurements received on this source
@@ -1620,34 +1380,24 @@ export type OutboundAudioTrack = {
 	echoReturnLossEnhancement?: number;
 
 	/**
-	* Flag represents if the sender ended the media stream track or not.
+	* . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
 	*/
-	ended?: boolean;
+	droppedSamplesDuration?: number;
 
 	/**
-	* The type of the payload the RTP packet SSRC belongs to
+	* A counter increases every time a sample is dropped after a non-dropped sample
 	*/
-	payloadType?: number;
+	droppedSamplesEvents?: number;
 
 	/**
-	* the MIME type of the codec (e.g.: video/vp8)
+	* Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
 	*/
-	mimeType?: string;
+	totalCaptureDelay?: number;
 
 	/**
-	* The negotiated clock rate the RTP timestamp is generated of
+	* The total number of captured samples reaching the audio source
 	*/
-	clockRate?: number;
-
-	/**
-	* The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-	*/
-	channels?: number;
-
-	/**
-	* The a=fmtp line in the SDP corresponding to the codec
-	*/
-	sdpFmtpLine?: string;
+	totalSamplesCaptured?: number;
 
 }
 
@@ -1701,54 +1451,9 @@ export type InboundVideoTrack = {
 	jitter?: number;
 
 	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
+	* The number of frames dropped prior to decode or missing chunks
 	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets lost in burst (RFC6958)
-	*/
-	burstPacketsLost?: number;
-
-	/**
-	* The total number of packets discarded in burst (RFC6958)
-	*/
-	burstPacketsDiscarded?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-	*/
-	burstLossCount?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-	*/
-	burstDiscardCount?: number;
-
-	/**
-	* The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstDiscardRate?: number;
-
-	/**
-	* The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapDiscardRate?: number;
+	framesDropped?: number;
 
 	/**
 	* Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
@@ -1756,14 +1461,14 @@ export type InboundVideoTrack = {
 	lastPacketReceivedTimestamp?: number;
 
 	/**
-	* The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-	*/
-	averageRtcpInterval?: number;
-
-	/**
 	* Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
 	*/
 	headerBytesReceived?: number;
+
+	/**
+	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
+	*/
+	packetsDiscarded?: number;
 
 	/**
 	* Total number of FEC packets received over the corresponding synchronization source (ssrc)
@@ -1779,21 +1484,6 @@ export type InboundVideoTrack = {
 	* Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
 	*/
 	bytesReceived?: number;
-
-	/**
-	* Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-	*/
-	packetsFailedDecryption?: number;
-
-	/**
-	* Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-	*/
-	packetsDuplicated?: number;
-
-	/**
-	* The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
-	*/
-	perDscpPacketsReceived?: number;
 
 	/**
 	* Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
@@ -1816,9 +1506,19 @@ export type InboundVideoTrack = {
 	jitterBufferDelay?: number;
 
 	/**
+	* This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
+	*/
+	jitterBufferTargetDelay?: number;
+
+	/**
 	* The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
 	*/
 	jitterBufferEmittedCount?: number;
+
+	/**
+	* This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
+	*/
+	jitterBufferMinimumDelay?: number;
 
 	/**
 	* Indicate the name of the decoder implementation library
@@ -1826,24 +1526,9 @@ export type InboundVideoTrack = {
 	decoderImplementation?: string;
 
 	/**
-	* The total number of frames dropped on the corresponded RTP stream
-	*/
-	framesDropped?: number;
-
-	/**
 	* The total number of frames decoded on the corresponded RTP stream
 	*/
 	framesDecoded?: number;
-
-	/**
-	* The total number of frames partially lost on the corresponded RTP stream
-	*/
-	partialFramesLost?: number;
-
-	/**
-	* The total number of frames fully lost on the corresponded RTP stream
-	*/
-	fullFramesLost?: number;
 
 	/**
 	* The total number of keyframes decoded on the corresponded RTP stream
@@ -1859,11 +1544,6 @@ export type InboundVideoTrack = {
 	* The height of the frame of the video sent by the remote source on the corresponded RTP stream
 	*/
 	frameHeight?: number;
-
-	/**
-	* The bit depth in pixels of the frame of the video sent by the remote source on the corresponded RTP stream
-	*/
-	frameBitDepth?: number;
 
 	/**
 	* The frame per seconds of the video sent by the remote source on the corresponded RTP stream
@@ -1899,11 +1579,6 @@ export type InboundVideoTrack = {
 	* The total number of Picture Loss Indication sent on the corresponded RTP stream
 	*/
 	pliCount?: number;
-
-	/**
-	* The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
-	*/
-	sliCount?: number;
 
 	/**
 	* The total number of frames received on the corresponded RTP stream.
@@ -1944,36 +1619,6 @@ export type InboundVideoTrack = {
 	* Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 	*/
 	roundTripTimeMeasurements?: number;
-
-	/**
-	* Flag represents if the receiver ended the media stream track or not.
-	*/
-	ended?: boolean;
-
-	/**
-	* The type of the payload the RTP packet SSRC belongs to
-	*/
-	payloadType?: number;
-
-	/**
-	* the MIME type of the codec (e.g.: video/vp8)
-	*/
-	mimeType?: string;
-
-	/**
-	* The negotiated clock rate the RTP timestamp is generated of
-	*/
-	clockRate?: number;
-
-	/**
-	* The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-	*/
-	channels?: number;
-
-	/**
-	* The a=fmtp line in the SDP corresponding to the codec
-	*/
-	sdpFmtpLine?: string;
 
 }
 
@@ -2027,69 +1672,19 @@ export type InboundAudioTrack = {
 	jitter?: number;
 
 	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets lost in burst (RFC6958)
-	*/
-	burstPacketsLost?: number;
-
-	/**
-	* The total number of packets discarded in burst (RFC6958)
-	*/
-	burstPacketsDiscarded?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
-	*/
-	burstLossCount?: number;
-
-	/**
-	* The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
-	*/
-	burstDiscardCount?: number;
-
-	/**
-	* The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	burstDiscardRate?: number;
-
-	/**
-	* The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapLossRate?: number;
-
-	/**
-	* The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
-	*/
-	gapDiscardRate?: number;
-
-	/**
 	* Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
 	*/
 	lastPacketReceivedTimestamp?: number;
 
 	/**
-	* The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-	*/
-	averageRtcpInterval?: number;
-
-	/**
 	* Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
 	*/
 	headerBytesReceived?: number;
+
+	/**
+	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
+	*/
+	packetsDiscarded?: number;
 
 	/**
 	* Total number of FEC packets received over the corresponding synchronization source (ssrc)
@@ -2105,21 +1700,6 @@ export type InboundAudioTrack = {
 	* Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
 	*/
 	bytesReceived?: number;
-
-	/**
-	* Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-	*/
-	packetsFailedDecryption?: number;
-
-	/**
-	* Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
-	*/
-	packetsDuplicated?: number;
-
-	/**
-	* The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
-	*/
-	perDscpPacketsReceived?: number;
 
 	/**
 	* Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
@@ -2142,39 +1722,24 @@ export type InboundAudioTrack = {
 	jitterBufferDelay?: number;
 
 	/**
+	* This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
+	*/
+	jitterBufferTargetDelay?: number;
+
+	/**
 	* The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
 	*/
 	jitterBufferEmittedCount?: number;
 
 	/**
-	* Indicate the name of the decoder implementation library
+	* This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
 	*/
-	decoderImplementation?: string;
-
-	/**
-	* Indicate if the last RTP packet received contained voice activity based on the presence of the V bit in the extension header
-	*/
-	voiceActivityFlag?: boolean;
+	jitterBufferMinimumDelay?: number;
 
 	/**
 	* The total number of audio samples received on the corresponded RTP stream
 	*/
 	totalSamplesReceived?: number;
-
-	/**
-	* The total number of samples decoded on the corresponded RTP stream
-	*/
-	totalSamplesDecoded?: number;
-
-	/**
-	* The total number of samples decoded with SILK on the corresponded RTP stream
-	*/
-	samplesDecodedWithSilk?: number;
-
-	/**
-	* The total number of samples decodedd with CELT on the corresponded RTP stream
-	*/
-	samplesDecodedWithCelt?: number;
 
 	/**
 	* The total number of samples decoded by the media decoder from the corresponded RTP stream
@@ -2200,6 +1765,26 @@ export type InboundAudioTrack = {
 	* The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
 	*/
 	removedSamplesForAcceleration?: number;
+
+	/**
+	* The current audio level
+	*/
+	audioLevel?: number;
+
+	/**
+	* Represents the energy level reported by the media source
+	*/
+	totalAudioEnergy?: number;
+
+	/**
+	* Represents the total duration of the audio samples the media source actually transconverted in seconds
+	*/
+	totalSamplesDuration?: number;
+
+	/**
+	* Indicate the name of the decoder implementation library
+	*/
+	decoderImplementation?: string;
 
 	/**
 	* Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
@@ -2237,34 +1822,24 @@ export type InboundAudioTrack = {
 	roundTripTimeMeasurements?: number;
 
 	/**
-	* Flag represents if the receiver ended the media stream track or not.
+	* This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
 	*/
-	ended?: boolean;
+	synthesizedSamplesDuration?: number;
 
 	/**
-	* The type of the payload the RTP packet SSRC belongs to
+	* The number of synthesized samples events.
 	*/
-	payloadType?: number;
+	synthesizedSamplesEvents?: number;
 
 	/**
-	* the MIME type of the codec (e.g.: video/vp8)
+	*  The playout delay includes the delay from being emitted to the actual time of playout on the device
 	*/
-	mimeType?: string;
+	totalPlayoutDelay?: number;
 
 	/**
-	* The negotiated clock rate the RTP timestamp is generated of
+	* When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
 	*/
-	clockRate?: number;
-
-	/**
-	* The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
-	*/
-	channels?: number;
-
-	/**
-	* The a=fmtp line in the SDP corresponding to the codec
-	*/
-	sdpFmtpLine?: string;
+	totalSamplesCount?: number;
 
 }
 
@@ -2375,6 +1950,26 @@ export type MediaSourceStat = {
 	echoReturnLossEnhancement?: number;
 
 	/**
+	* . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+	*/
+	droppedSamplesDuration?: number;
+
+	/**
+	* A counter increases every time a sample is dropped after a non-dropped sample
+	*/
+	droppedSamplesEvents?: number;
+
+	/**
+	* Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
+	*/
+	totalCaptureDelay?: number;
+
+	/**
+	* The total number of captured samples reaching the audio source
+	*/
+	totalSamplesCaptured?: number;
+
+	/**
 	* The width, in pixels, of the last frame originating from the media source
 	*/
 	width?: number;
@@ -2383,11 +1978,6 @@ export type MediaSourceStat = {
 	* The height, in pixels, of the last frame originating from the media source
 	*/
 	height?: number;
-
-	/**
-	* The bitDepth, in pixels, of the last frame originating from the media source
-	*/
-	bitDepth?: number;
 
 	/**
 	* The total number of frames originated from the media source
@@ -2436,6 +2026,11 @@ export type IceCandidatePairStats = {
 	state?: string;
 
 	/**
+	* indicate if the ice candidate pair is nominated or not
+	*/
+	nominated?: boolean;
+
+	/**
 	* The total number of packets sent using the last selected candidate pair over the corresponded transport
 	*/
 	packetsSent?: number;
@@ -2466,21 +2061,6 @@ export type IceCandidatePairStats = {
 	lastPacketReceivedTimestamp?: number;
 
 	/**
-	* Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	firstRequestTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	lastRequestTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	lastResponseTimestamp?: number;
-
-	/**
 	* Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
 	*/
 	totalRoundTripTime?: number;
@@ -2499,11 +2079,6 @@ export type IceCandidatePairStats = {
 	* The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
 	*/
 	availableIncomingBitrate?: number;
-
-	/**
-	* The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
-	*/
-	circuitBreakerTriggerCount?: number;
 
 	/**
 	* Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
@@ -2526,29 +2101,9 @@ export type IceCandidatePairStats = {
 	responsesSent?: number;
 
 	/**
-	* Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
-	*/
-	retransmissionReceived?: number;
-
-	/**
-	* Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
-	*/
-	retransmissionSent?: number;
-
-	/**
 	* Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
 	*/
 	consentRequestsSent?: number;
-
-	/**
-	* Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
-	*/
-	consentExpiredTimestamp?: number;
-
-	/**
-	* Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-	*/
-	bytesDiscardedOnSend?: number;
 
 	/**
 	* Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
@@ -2556,19 +2111,9 @@ export type IceCandidatePairStats = {
 	packetsDiscardedOnSend?: number;
 
 	/**
-	* Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
+	* Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
 	*/
-	requestBytesSent?: number;
-
-	/**
-	* Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
-	*/
-	consentRequestBytesSent?: number;
-
-	/**
-	* Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
-	*/
-	responseBytesSent?: number;
+	bytesDiscardedOnSend?: number;
 
 }
 
@@ -2650,6 +2195,11 @@ export type PeerConnectionTransport = {
 	* Represents the name of the DTLS cipher used in the corresponded transport
 	*/
 	dtlsCipher?: string;
+
+	/**
+	* The role this host plays in DTLS negotiations
+	*/
+	dtlsRole?: "client" | "server" | "unknown";
 
 	/**
 	* Represents the name of the SRTP cipher used in the corresponded transport

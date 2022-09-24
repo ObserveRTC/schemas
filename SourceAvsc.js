@@ -29,13 +29,4 @@ export class SourceAvsc {
         result = JSON.stringify(json, null, 2);
         return result;
     }
-
-    // getAspects() {
-    //     const ASPECT_STRING = "// @aspect begin"
-    //     const result = [];
-    //     var string = "foo";
-    //     var substring = "oo";
-
-    //     console.log(string.indexOf(substring) !== -1); // true
-    // }
 }

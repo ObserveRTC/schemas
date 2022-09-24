@@ -33,6 +33,11 @@ export type IceCandidatePairReport = {
 	peerConnectionId: string;
 
 	/**
+	* The sequence number of the sample the report is generated from
+	*/
+	sampleSeq: number;
+
+	/**
 	* The marker the originated sample is reported with
 	*/
 	marker?: string;

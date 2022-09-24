@@ -8,6 +8,7 @@ exports.up = function (knex) {
 		table.specificType("callid", "CHAR(36)").notNull();
 		table.specificType("clientid", "CHAR(36)").notNull();
 		table.specificType("peerconnectionid", "CHAR(36)").notNull();
+		table.integer("sampleseq").notNull();
 		table.bigInteger("bytesreceived");
 		table.bigInteger("bytessent");
 		table.text("dtlscipher");

@@ -69,6 +69,7 @@ IceCandidatePairReport
  * **callId**: The generated unique identifier of the call
  * **clientId**: The generated unique identifier of the client
  * **peerConnectionId**: The unique identifier of the peer connection
+ * **sampleSeq**: The sequence number of the sample the report is generated from
  * **marker**: The marker the originated sample is reported with
  * **roomId**: webrtc app provided room id
  * **userId**: webrtc app provided user identifier
@@ -124,42 +125,40 @@ InboundAudioTrackReport
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **voiceActivityFlag**: Indicate if the last RTP packet received contained voice activity based on the presence of the V bit in the extension header
  * **lastPacketReceivedTimestamp**: Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
- * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
  * **headerBytesReceived**: Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+ * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
  * **fecPacketsReceived**: Total number of FEC packets received over the corresponding synchronization source (ssrc)
  * **fecPacketsDiscarded**: Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
  * **bytesReceived**: Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsFailedDecryption**: Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsDuplicated**: Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
- * **perDscpPacketsReceived**: The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
  * **totalProcessingDelay**: The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
  * **estimatedPlayoutTimestamp**: The estimated playout time of the corresponded synchronization source
  * **jitterBufferDelay**: The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+ * **jitterBufferTargetDelay**: This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
  * **jitterBufferEmittedCount**: The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
+ * **jitterBufferMinimumDelay**: This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
+ * **totalSamplesReceived**: The total number of audio samples received on the corresponded RTP stream
+ * **concealedSamples**: The total number of samples decoded by the media decoder from the corresponded RTP stream
+ * **silentConcealedSamples**: The total number of samples concealed from the corresponded RTP stream
+ * **concealmentEvents**: The total number of concealed event emitted to the media codec by the corresponded jitterbuffer
+ * **insertedSamplesForDeceleration**: The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay)
+ * **removedSamplesForAcceleration**: The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
+ * **audioLevel**: The current audio level
+ * **totalAudioEnergy**: Represents the energy level reported by the media source
+ * **totalSamplesDuration**: Represents the total duration of the audio samples the media source actually transconverted in seconds
  * **decoderImplementation**: Indicate the name of the decoder implementation library
  * **packetsSent**: Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
  * **bytesSent**: Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
  * **remoteTimestamp**: The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
  * **reportsSent**: The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
- * **ended**: Flag represents if the receiver ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **channels**: The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
+ * **roundTripTime**: Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+ * **totalRoundTripTime**:  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+ * **roundTripTimeMeasurements**: Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
+ * **synthesizedSamplesDuration**: This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
+ * **synthesizedSamplesEvents**: The number of synthesized samples events.
+ * **totalPlayoutDelay**:  The playout delay includes the delay from being emitted to the actual time of playout on the device
+ * **totalSamplesCount**: When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
 InboundVideoTrackReport
  * **serviceId**: The unique identifier of the service
  * **mediaUnitId**: The media unit id the report belongs to
@@ -183,57 +182,40 @@ InboundVideoTrackReport
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **framesDropped**: The total number of frames dropped at decoding process on the corresponding synchronization source
- * **partialFramesLost**: The total number of partial frames lost at decoding process on the corresponding synchronization source
- * **fullFramesLost**: The total number of full frames lost at decoding process on the corresponding synchronization source
- * **framesDecoded**: Indicate the number of frames completly and without error decoded on the corresponded synchronization source (ssrc)
- * **keyFramesDecoded**: Indicate the number of keyframes received on the corresponded synchronization source (ssrc)
- * **frameWidth**: Indicate the width of the frame received on the corresponded synchronization source (ssrc)
- * **frameHeight**: Indicate the height of the frame received on the corresponded synchronization source (ssrc)
- * **frameBitDepth**: Indicate the bit depth per pixel of the last decoded frame received on the corresponded synchronization source (ssrc)
- * **framesPerSecond**: Indicate the number of decoded frames in the last second received on the corresponded synchronization source (ssrc)
- * **qpSum**: sum of QP values of frames decoded on the corresponded synchronization source (ssrc)
- * **totalDecodeTime**: The total number of seconds spent on decoding frames on the corresponded synchronization source (ssrc)
- * **totalInterFrameDelay**: The total number of inter frame delay on the corresponded synchronization source (ssrc)
- * **totalSquaredInterFrameDelay**: The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
+ * **framesDropped**: The number of frames dropped prior to decode or missing chunks
  * **lastPacketReceivedTimestamp**: Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
- * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
  * **headerBytesReceived**: Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+ * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
  * **fecPacketsReceived**: Total number of FEC packets received over the corresponding synchronization source (ssrc)
  * **fecPacketsDiscarded**: Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
  * **bytesReceived**: Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsFailedDecryption**: Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsDuplicated**: Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
- * **perDscpPacketsReceived**: The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
- * **firCount**: Count the total number of Full Intra Request sent by this receiver and belongs to the corresponded synchronization source (ssrc)
- * **pliCount**: Count the total number of Picture Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
- * **sliCount**: Count the total number of Slice Loss Indication sent by this receiver and belongs to the corresponded synchronization source (ssrc)
  * **totalProcessingDelay**: The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
  * **estimatedPlayoutTimestamp**: The estimated playout time of the corresponded synchronization source
  * **jitterBufferDelay**: The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+ * **jitterBufferTargetDelay**: This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
  * **jitterBufferEmittedCount**: The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
- * **framesReceived**: Represents the total number of complete frames received on the corresponded synchronization source (ssrc)
+ * **jitterBufferMinimumDelay**: This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
  * **decoderImplementation**: Indicate the name of the decoder implementation library
+ * **framesDecoded**: The total number of frames decoded on the corresponded RTP stream
+ * **keyFramesDecoded**: The total number of keyframes decoded on the corresponded RTP stream
+ * **frameWidth**: The width of the frame of the video sent by the remote source on the corresponded RTP stream
+ * **frameHeight**: The height of the frame of the video sent by the remote source on the corresponded RTP stream
+ * **framesPerSecond**: The frame per seconds of the video sent by the remote source on the corresponded RTP stream
+ * **qpSum**: The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
+ * **totalDecodeTime**: The total tiem spent on decoding video on the corresponded RTP stream
+ * **totalInterFrameDelay**: The total interframe delay
+ * **totalSquaredInterFrameDelay**: The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
+ * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+ * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream
+ * **framesReceived**: The total number of frames received on the corresponded RTP stream.
  * **packetsSent**: Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
  * **bytesSent**: Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
  * **remoteTimestamp**: The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
  * **reportsSent**: The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
- * **ended**: Flag represents if the receiver ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
+ * **roundTripTime**: Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
+ * **totalRoundTripTime**:  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+ * **roundTripTimeMeasurements**: Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 ObserverEventReport
  * **serviceId**: The unique identifier of the service
  * **timestamp**: The timestamp when the corresponded data is generated for the report (UTC Epoch in ms)
@@ -268,41 +250,22 @@ OutboundAudioTrackReport
  * **packetsSent**: The total number of packets sent on the corresponded synchronization source
  * **bytesSent**: The total number of bytes sent on the corresponded synchronization source
  * **rid**:  The rid encoding parameter of the corresponded synchronization source
- * **lastPacketSentTimestamp**:  the timestamp the last packet was sent. (UTC epoch in ms)
  * **headerBytesSent**: Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
- * **packetsDiscardedOnSend**: Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
- * **bytesDiscardedOnSend**: Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
- * **fecPacketsSent**: Total number of FEC packets sent over the corresponding synchronization source (ssrc)
  * **retransmittedPacketsSent**: Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
  * **retransmittedBytesSent**: Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
  * **targetBitrate**: Reflects the current encoder target in bits per second.
  * **totalEncodedBytesTarget**: The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
- * **totalSamplesSent**: The total number of samples sent over the corresponding synchronization source
- * **samplesEncodedWithSilk**: The total number of samples encoded by SILK portion in opus sent over the corresponding synchronization source
- * **samplesEncodedWithCelt**: The total number of samples encoded by CELT portion in opus sent over the corresponding synchronization source
- * **voiceActivityFlag**: Indicate if the last RTP packet sent contained voice activity based on the presence of the V bit in the extension header
  * **totalPacketSendDelay**: The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
  * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
- * **perDscpPacketsSent**: The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
  * **encoderImplementation**: Indicate the name of the encoder implementation library
+ * **active**: Indicates whether this RTP stream is configured to be sent or disabled
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
  * **roundTripTime**: RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
  * **totalRoundTripTime**: The sum of RTT measurements belongs to the corresponded synchronization source
  * **fractionLost**: The receiver reported fractional lost belongs to the corresponded synchronization source
- * **reportsReceived**: The total number of RR reports received, which is the base of the remote inbound calculation on this source
  * **roundTripTimeMeasurements**: The total number of calculated RR measurements received on this source
  * **relayedSource**: True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
  * **audioLevel**: Represents the audio level reported by the media source
@@ -310,12 +273,10 @@ OutboundAudioTrackReport
  * **totalSamplesDuration**: Represents the total duration of the audio samples the media source actually transconverted in seconds
  * **echoReturnLoss**: Represents the echo cancellation in decibels corresponded to the media source.
  * **echoReturnLossEnhancement**: Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is catched from the emdia source.
- * **ended**: Flag represents if the sender ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **channels**: The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
+ * **droppedSamplesDuration**: . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+ * **droppedSamplesEvents**: A counter increases every time a sample is dropped after a non-dropped sample
+ * **totalCaptureDelay**: Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
+ * **totalSamplesCaptured**: The total number of captured samples reaching the audio source
 OutboundVideoTrackReport
  * **serviceId**: The unique identifier of the service
  * **mediaUnitId**: The media unit id the report belongs to
@@ -334,72 +295,45 @@ OutboundVideoTrackReport
  * **packetsSent**: The total number of packets sent on the corresponded synchronization source
  * **bytesSent**: The total number of bytes sent on the corresponded synchronization source
  * **rid**:  The rid encoding parameter of the corresponded synchronization source
- * **lastPacketSentTimestamp**:  the timestamp the last packet was sent. (UTC epoch in ms)
  * **headerBytesSent**: Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
- * **packetsDiscardedOnSend**: Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
- * **bytesDiscardedOnSend**: Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
- * **fecPacketsSent**: Total number of FEC packets sent over the corresponding synchronization source (ssrc)
  * **retransmittedPacketsSent**: Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
- * **retransmittedBytesSent**: Total number of retransmitted bytes sent over the corresponded synchronization source (ssrc).
+ * **retransmittedBytesSent**: Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
  * **targetBitrate**: Reflects the current encoder target in bits per second.
  * **totalEncodedBytesTarget**: The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
- * **frameWidth**: Represents the height of the last encoded frame sent over the corresponded synchronization source
- * **frameHeight**: Represents the width of the last encoded frame sent over the corresponded synchronization source
- * **frameBitDepth**: Represents the bit depth per pixel of the last encoded frame sent over the corresponded synchronization source
- * **framesPerSecond**: The number of encoded frames over the last second sent over the corresponded synchronization source
- * **framesSent**: The number of frames sent over the corresponded synchronization source
- * **hugeFramesSent**: The number of huge frames (2.5x greater than the average size of frame) sent over the corresponded synchronization source
- * **framesEncoded**: The number of frames encoded over the corresponded synchronization source
- * **keyFramesEncoded**: The number of keyframes sent over the corresponded synchronization source
- * **framesDiscardedOnSend**: The number of frames discarded before sending over the corresponded synchronization source
- * **qpSum**: The sum of QP values encoded by the encoder corresponded to the synchronization source
- * **totalEncodeTime**: The sum of encoding time spent by the encoder corresponded to the synchronization source
  * **totalPacketSendDelay**: The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
  * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
- * **qualityLimitationDurationCPU**: Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state due to CPU
- * **qualityLimitationDurationNone**: Time elapsed in seconds when the the corresponding synchronization source (ssrc) was not in a limited state
- * **qualityLimitationDurationBandwidth**: Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state becasue of bandwidth
- * **qualityLimitationDurationOther**: Time elapsed in seconds when the the corresponding synchronization source (ssrc) was in a limited state becaue of other factor
- * **qualityLimitationReason**: Indicate a reason for the corresponding synchronization source (ssrc) quality is limited
- * **qualityLimitationResolutionChanges**: The number of quality limiatation changes happened for the corresponding synchronization source (ssrc)
- * **perDscpPacketsSent**: The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
- * **firCount**: The number of full inter requests happened over the corresponding synchronization source (ssrc)
- * **pliCount**: The number of picture loss indication happened received over the corresponding synchronization source (ssrc)
- * **sliCount**: The number of slice loss indication happened over the corresponding synchronization source (ssrc)
  * **encoderImplementation**: Indicate the name of the encoder implementation library
+ * **active**: Indicates whether this RTP stream is configured to be sent or disabled
+ * **frameWidth**: The frame width in pixels of the frames targeted by the media encoder
+ * **frameHeight**: The frame width the media encoder targeted
+ * **framesPerSecond**: The encoded number of frames in the last second on the corresponded media source
+ * **framesSent**: TThe total number of frames sent on the corresponded RTP stream
+ * **hugeFramesSent**: The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream
+ * **framesEncoded**: The total number of frames encoded by the media source
+ * **keyFramesEncoded**: The total number of keyframes encoded on the corresponded RTP stream
+ * **qpSum**: The sum of the QP the media encoder provided on the corresponded RTP stream.
+ * **totalEncodeTime**: The total time in seconds spent in encoding media frames for the corresponded RTP stream.
+ * **qualityLimitationDurationNone**: Time elapsed in seconds when the RTC connection has not limited the quality
+ * **qualityLimitationDurationCPU**: Time elapsed in seconds the RTC connection had a limitation because of CPU
+ * **qualityLimitationDurationBandwidth**: Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
+ * **qualityLimitationDurationOther**: Time elapsed in seconds the RTC connection had a limitation because of Other factor
+ * **qualityLimitationReason**: Indicate a reason for the quality limitation of the corresponded synchronization source
+ * **qualityLimitationResolutionChanges**: The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
+ * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+ * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **framesDropped**: The number of frames dropped over the corresponded synchronization source
- * **partialFramesLost**: The number of partial frames lost over the corresponded synchronization source
- * **fullFramesLost**: The number of full frames lost over the corresponded synchronization source
  * **roundTripTime**: RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
  * **totalRoundTripTime**: The sum of RTT measurements belongs to the corresponded synchronization source
  * **fractionLost**: The receiver reported fractional lost belongs to the corresponded synchronization source
- * **reportsReceived**: The total number of RR reports received, which is the base of the remote inbound calculation on this source
  * **roundTripTimeMeasurements**: The total number of calculated RR measurements received on this source
+ * **framesDropped**: The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
  * **relayedSource**: True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
- * **encodedFrameWidth**: Indicate the encoded width of the frame received on the corresponded synchronization source (ssrc)
- * **encodedFrameHeight**: Indicate the encoded height of the frame received on the corresponded synchronization source (ssrc)
- * **encodedFrameBitDepth**: Indicate the encoded bit depth per pixel of the last decoded frame received on the corresponded synchronization source (ssrc)
- * **encodedFramesPerSecond**: Indicate the encoded number of decoded frames in the last second received on the corresponded synchronization source (ssrc)
- * **ended**: Flag represents if the sender ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **channels**: The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
+ * **width**: The width, in pixels, of the last frame originating from the media source
+ * **height**: The height, in pixels, of the last frame originating from the media source
+ * **frames**: The total number of frames originated from the media source
 PeerConnectionTransportReport
  * **serviceId**: The unique identifier of the service
  * **mediaUnitId**: The media unit id the report belongs to
@@ -407,6 +341,7 @@ PeerConnectionTransportReport
  * **callId**: The generated unique identifier of the call
  * **clientId**: The generated unique identifier of the client
  * **peerConnectionId**: The unique identifier of the peer connection
+ * **sampleSeq**: The sequence number of the sample the report is generated from
  * **marker**: The marker the originated sample is reported with
  * **roomId**: webrtc app provided room id
  * **userId**: webrtc app provided user identifier
@@ -670,6 +605,7 @@ PeerConnectionTransport
  * **remoteCertificateId**: If DTLS negotiated it gives the id of the remote certificate
  * **tlsVersion**: Represents the version number of the TLS used in the corresponded transport
  * **dtlsCipher**: Represents the name of the DTLS cipher used in the corresponded transport
+ * **dtlsRole**: The role this host plays in DTLS negotiations (Possible values are: client,<br />server,<br />unknown)
  * **srtpCipher**: Represents the name of the SRTP cipher used in the corresponded transport
  * **tlsGroup**: Represents the name of the IANA TLS Supported Groups used in the corresponded transport
  * **selectedCandidatePairChanges**: The total number of candidate pair changes over the peer connection
@@ -680,33 +616,24 @@ IceCandidatePairStats
  * **localCandidateId**: The unique identifier of the candidate the negotiated pair is selected at local side
  * **remoteCandidateId**: The unique identifier of the candidate the negotiated pair is selected at remote side
  * **state**: The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
+ * **nominated**: indicate if the ice candidate pair is nominated or not
  * **packetsSent**: The total number of packets sent using the last selected candidate pair over the corresponded transport
  * **packetsReceived**: The total number of packets received using the last selected candidate pair over the corresponded transport
  * **bytesSent**: The total number of bytes sent using the last selected candidate pair over the corresponded transport
  * **bytesReceived**: The total number of bytes received using the last selected candidate pair over the corresponded transport
  * **lastPacketSentTimestamp**: Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
  * **lastPacketReceivedTimestamp**: Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
- * **firstRequestTimestamp**: Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
- * **lastRequestTimestamp**: Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
- * **lastResponseTimestamp**: Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
  * **totalRoundTripTime**: Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
  * **currentRoundTripTime**: Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
  * **availableOutgoingBitrate**: The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
  * **availableIncomingBitrate**: The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
- * **circuitBreakerTriggerCount**: The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
  * **requestsReceived**: Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
  * **requestsSent**: Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
  * **responsesReceived**: Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
  * **responsesSent**: Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
- * **retransmissionReceived**: Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
- * **retransmissionSent**: Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
  * **consentRequestsSent**: Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
- * **consentExpiredTimestamp**: Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
- * **bytesDiscardedOnSend**: Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
  * **packetsDiscardedOnSend**: Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
- * **requestBytesSent**: Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
- * **consentRequestBytesSent**: Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
- * **responseBytesSent**: Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
+ * **bytesDiscardedOnSend**: Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
 MediaSourceStat
  * **trackIdentifier**: The unique identifier of the corresponded media track
  * **kind**: The type of the media the Mediasource produces. (Possible values are: audio,<br />video)
@@ -716,9 +643,12 @@ MediaSourceStat
  * **totalSamplesDuration**: The duration of the audio type media source
  * **echoReturnLoss**: if echo cancellation is applied on the media source, then this number represents the loss calculation defined in www.itu.int/rec/T-REC-G.168-201504-I/en
  * **echoReturnLossEnhancement**: www.itu.int/rec/T-REC-G.168-201504-I/en
+ * **droppedSamplesDuration**: . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+ * **droppedSamplesEvents**: A counter increases every time a sample is dropped after a non-dropped sample
+ * **totalCaptureDelay**: Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
+ * **totalSamplesCaptured**: The total number of captured samples reaching the audio source
  * **width**: The width, in pixels, of the last frame originating from the media source
  * **height**: The height, in pixels, of the last frame originating from the media source
- * **bitDepth**: The bitDepth, in pixels, of the last frame originating from the media source
  * **frames**: The total number of frames originated from the media source
  * **framesPerSecond**:  The number of frames origianted from the media source in the last second
 MediaCodecStats
@@ -743,41 +673,29 @@ InboundAudioTrack
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
  * **lastPacketReceivedTimestamp**: Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
- * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
  * **headerBytesReceived**: Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+ * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
  * **fecPacketsReceived**: Total number of FEC packets received over the corresponding synchronization source (ssrc)
  * **fecPacketsDiscarded**: Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
  * **bytesReceived**: Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsFailedDecryption**: Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsDuplicated**: Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
- * **perDscpPacketsReceived**: The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
  * **totalProcessingDelay**: The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
  * **estimatedPlayoutTimestamp**: The estimated playout time of the corresponded synchronization source
  * **jitterBufferDelay**: The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+ * **jitterBufferTargetDelay**: This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
  * **jitterBufferEmittedCount**: The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
- * **decoderImplementation**: Indicate the name of the decoder implementation library
- * **voiceActivityFlag**: Indicate if the last RTP packet received contained voice activity based on the presence of the V bit in the extension header
+ * **jitterBufferMinimumDelay**: This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
  * **totalSamplesReceived**: The total number of audio samples received on the corresponded RTP stream
- * **totalSamplesDecoded**: The total number of samples decoded on the corresponded RTP stream
- * **samplesDecodedWithSilk**: The total number of samples decoded with SILK on the corresponded RTP stream
- * **samplesDecodedWithCelt**: The total number of samples decodedd with CELT on the corresponded RTP stream
  * **concealedSamples**: The total number of samples decoded by the media decoder from the corresponded RTP stream
  * **silentConcealedSamples**: The total number of samples concealed from the corresponded RTP stream
  * **concealmentEvents**: The total number of concealed event emitted to the media codec by the corresponded jitterbuffer
  * **insertedSamplesForDeceleration**: The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay)
  * **removedSamplesForAcceleration**: The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
+ * **audioLevel**: The current audio level
+ * **totalAudioEnergy**: Represents the energy level reported by the media source
+ * **totalSamplesDuration**: Represents the total duration of the audio samples the media source actually transconverted in seconds
+ * **decoderImplementation**: Indicate the name of the decoder implementation library
  * **packetsSent**: Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
  * **bytesSent**: Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
  * **remoteTimestamp**: The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
@@ -785,12 +703,10 @@ InboundAudioTrack
  * **roundTripTime**: Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
  * **totalRoundTripTime**:  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
  * **roundTripTimeMeasurements**: Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
- * **ended**: Flag represents if the receiver ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **channels**: The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
+ * **synthesizedSamplesDuration**: This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
+ * **synthesizedSamplesEvents**: The number of synthesized samples events.
+ * **totalPlayoutDelay**:  The playout delay includes the delay from being emitted to the actual time of playout on the device
+ * **totalSamplesCount**: When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
 InboundVideoTrack
  * **ssrc**: The RTP SSRC field
  * **trackId**: The id of the track
@@ -801,39 +717,25 @@ InboundVideoTrack
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
+ * **framesDropped**: The number of frames dropped prior to decode or missing chunks
  * **lastPacketReceivedTimestamp**: Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
- * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
  * **headerBytesReceived**: Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
+ * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
  * **fecPacketsReceived**: Total number of FEC packets received over the corresponding synchronization source (ssrc)
  * **fecPacketsDiscarded**: Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
  * **bytesReceived**: Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsFailedDecryption**: Total number of packets received and failed to decrypt over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
- * **packetsDuplicated**: Total number of packets identified as duplicated over the corresponding synchronization source (ssrc).
- * **perDscpPacketsReceived**: The total number of DSCP flagged RTP packets received over the corresponding synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
  * **totalProcessingDelay**: The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
  * **estimatedPlayoutTimestamp**: The estimated playout time of the corresponded synchronization source
  * **jitterBufferDelay**: The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
+ * **jitterBufferTargetDelay**: This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
  * **jitterBufferEmittedCount**: The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
+ * **jitterBufferMinimumDelay**: This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
  * **decoderImplementation**: Indicate the name of the decoder implementation library
- * **framesDropped**: The total number of frames dropped on the corresponded RTP stream
  * **framesDecoded**: The total number of frames decoded on the corresponded RTP stream
- * **partialFramesLost**: The total number of frames partially lost on the corresponded RTP stream
- * **fullFramesLost**: The total number of frames fully lost on the corresponded RTP stream
  * **keyFramesDecoded**: The total number of keyframes decoded on the corresponded RTP stream
  * **frameWidth**: The width of the frame of the video sent by the remote source on the corresponded RTP stream
  * **frameHeight**: The height of the frame of the video sent by the remote source on the corresponded RTP stream
- * **frameBitDepth**: The bit depth in pixels of the frame of the video sent by the remote source on the corresponded RTP stream
  * **framesPerSecond**: The frame per seconds of the video sent by the remote source on the corresponded RTP stream
  * **qpSum**: The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
  * **totalDecodeTime**: The total tiem spent on decoding video on the corresponded RTP stream
@@ -841,7 +743,6 @@ InboundVideoTrack
  * **totalSquaredInterFrameDelay**: The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
  * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
  * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream
- * **sliCount**: The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
  * **framesReceived**: The total number of frames received on the corresponded RTP stream.
  * **packetsSent**: Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
  * **bytesSent**: Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
@@ -850,12 +751,6 @@ InboundVideoTrack
  * **roundTripTime**: Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
  * **totalRoundTripTime**:  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
  * **roundTripTimeMeasurements**: Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
- * **ended**: Flag represents if the receiver ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **channels**: The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
 OutboundAudioTrack
  * **ssrc**: The RTP SSRC field
  * **trackId**: The id of the track
@@ -863,43 +758,23 @@ OutboundAudioTrack
  * **sfuStreamId**: The id of the SFU stream this track is related to
  * **packetsSent**: The total number of packets sent on the corresponded synchronization source
  * **bytesSent**: The total number of bytes sent on the corresponded synchronization source
- * **rtxSsrc**: If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
  * **rid**:  The rid encoding parameter of the corresponded synchronization source
- * **lastPacketSentTimestamp**:  the timestamp the last packet was sent. (UTC epoch in ms)
  * **headerBytesSent**: Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
- * **packetsDiscardedOnSend**: Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
- * **bytesDiscardedOnSend**: Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
- * **fecPacketsSent**: Total number of FEC packets sent over the corresponding synchronization source (ssrc)
  * **retransmittedPacketsSent**: Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
  * **retransmittedBytesSent**: Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
  * **targetBitrate**: Reflects the current encoder target in bits per second.
  * **totalEncodedBytesTarget**: The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
  * **totalPacketSendDelay**: The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
  * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
- * **perDscpPacketsSent**: The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
  * **encoderImplementation**: Indicate the name of the encoder implementation library
- * **totalSamplesSent**: The total number of samples sent over the corresponding synchronization source
- * **samplesEncodedWithSilk**: The total number of samples encoded by SILK portion in opus sent over the corresponding synchronization source
- * **samplesEncodedWithCelt**: The total number of samples encoded by CELT portion in opus sent over the corresponding synchronization source
- * **voiceActivityFlag**: Indicate if the last RTP packet sent contained voice activity based on the presence of the V bit in the extension header
+ * **active**: Indicates whether this RTP stream is configured to be sent or disabled
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
  * **roundTripTime**: RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
  * **totalRoundTripTime**: The sum of RTT measurements belongs to the corresponded synchronization source
  * **fractionLost**: The receiver reported fractional lost belongs to the corresponded synchronization source
- * **reportsReceived**: The total number of RR reports received, which is the base of the remote inbound calculation on this source
  * **roundTripTimeMeasurements**: The total number of calculated RR measurements received on this source
  * **relayedSource**: True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
  * **audioLevel**: Represents the audio level reported by the media source
@@ -907,12 +782,10 @@ OutboundAudioTrack
  * **totalSamplesDuration**: Represents the total duration of the audio samples the media source actually transconverted in seconds
  * **echoReturnLoss**: Represents the echo cancellation in decibels corresponded to the media source.
  * **echoReturnLossEnhancement**: Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is catched from the emdia source.
- * **ended**: Flag represents if the sender ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **channels**: The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
+ * **droppedSamplesDuration**: . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+ * **droppedSamplesEvents**: A counter increases every time a sample is dropped after a non-dropped sample
+ * **totalCaptureDelay**: Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
+ * **totalSamplesCaptured**: The total number of captured samples reaching the audio source
 OutboundVideoTrack
  * **ssrc**: The RTP SSRC field
  * **trackId**: The id of the track
@@ -920,34 +793,24 @@ OutboundVideoTrack
  * **sfuStreamId**: The id of the SFU stream this track is related to
  * **packetsSent**: The total number of packets sent on the corresponded synchronization source
  * **bytesSent**: The total number of bytes sent on the corresponded synchronization source
- * **rtxSsrc**: If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
  * **rid**:  The rid encoding parameter of the corresponded synchronization source
- * **lastPacketSentTimestamp**:  the timestamp the last packet was sent. (UTC epoch in ms)
  * **headerBytesSent**: Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
- * **packetsDiscardedOnSend**: Total number of RTP packets discarded at sender side over the corresponding synchronization source (ssrc)
- * **bytesDiscardedOnSend**: Total number of RTP bytes discarded at sender side over the corresponding synchronization source (ssrc)
- * **fecPacketsSent**: Total number of FEC packets sent over the corresponding synchronization source (ssrc)
  * **retransmittedPacketsSent**: Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
  * **retransmittedBytesSent**: Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
  * **targetBitrate**: Reflects the current encoder target in bits per second.
  * **totalEncodedBytesTarget**: The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
  * **totalPacketSendDelay**: The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
  * **averageRtcpInterval**: The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
- * **perDscpPacketsSent**: The total number of DSCP flagged RTP packets sent over the corresponding synchronization source (ssrc)
  * **nackCount**: Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
- * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
- * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream
- * **sliCount**: The total number of SLI indicator sent from the endpoint on the corresponded RTP stream
  * **encoderImplementation**: Indicate the name of the encoder implementation library
+ * **active**: Indicates whether this RTP stream is configured to be sent or disabled
  * **frameWidth**: The frame width in pixels of the frames targeted by the media encoder
  * **frameHeight**: The frame width the media encoder targeted
- * **frameBitDepth**: The frame depth in pixles on the corresponded RTP stream
  * **framesPerSecond**: The encoded number of frames in the last second on the corresponded media source
  * **framesSent**: TThe total number of frames sent on the corresponded RTP stream
  * **hugeFramesSent**: The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream
  * **framesEncoded**: The total number of frames encoded by the media source
  * **keyFramesEncoded**: The total number of keyframes encoded on the corresponded RTP stream
- * **framesDiscardedOnSend**: The total number of frames discarded on the corresponded RTP stream.
  * **qpSum**: The sum of the QP the media encoder provided on the corresponded RTP stream.
  * **totalEncodeTime**: The total time in seconds spent in encoding media frames for the corresponded RTP stream.
  * **qualityLimitationDurationNone**: Time elapsed in seconds when the RTC connection has not limited the quality
@@ -956,38 +819,20 @@ OutboundVideoTrack
  * **qualityLimitationDurationOther**: Time elapsed in seconds the RTC connection had a limitation because of Other factor
  * **qualityLimitationReason**: Indicate a reason for the quality limitation of the corresponded synchronization source
  * **qualityLimitationResolutionChanges**: The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
+ * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
+ * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream
  * **packetsReceived**: The total number of packets received on the corresponded synchronization source
  * **packetsLost**: The total number of bytes received on the corresponded synchronization source
  * **jitter**: The corresponded synchronization source reported jitter
- * **packetsDiscarded**: The total number of packets missed the playout point and therefore discarded by the jitterbuffer
- * **packetsRepaired**: The total number of packets repaired by either FEC or due to retransmission on the corresponded synchronization source
- * **burstPacketsLost**: The total number of packets lost in burst (RFC6958)
- * **burstPacketsDiscarded**: The total number of packets discarded in burst (RFC6958)
- * **burstLossCount**: The total number of burst happened causes burstPacketsLost on the corresponding synchronization source
- * **burstDiscardCount**: The total number of burst happened causes burstPacketsDiscarded on the corresponding synchronization source
- * **burstLossRate**: The fraction of RTP packets lost during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **burstDiscardRate**: The fraction of RTP packets discarded during bursts proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapLossRate**: The fraction of RTP packets lost during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
- * **gapDiscardRate**: The fraction of RTP packets discarded during gap proportionally to the total number of RTP packets expected in the bursts on the corresponding synchronization source
  * **roundTripTime**: RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
  * **totalRoundTripTime**: The sum of RTT measurements belongs to the corresponded synchronization source
  * **fractionLost**: The receiver reported fractional lost belongs to the corresponded synchronization source
- * **reportsReceived**: The total number of RR reports received, which is the base of the remote inbound calculation on this source
  * **roundTripTimeMeasurements**: The total number of calculated RR measurements received on this source
  * **framesDropped**: The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
- * **partialFramesLost**: The total number of partial frames reported to be lost by the remote endpoint on the corresponded RTP stream.
- * **fullFramesLost**: The total number of full frames lost at the remote endpoint on the corresponded RTP stream.
  * **relayedSource**: True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
  * **width**: The width, in pixels, of the last frame originating from the media source
  * **height**: The height, in pixels, of the last frame originating from the media source
- * **bitDepth**: The bitDepth, in pixels, of the last frame originating from the media source
  * **frames**: The total number of frames originated from the media source
- * **ended**: Flag represents if the sender ended the media stream track or not.
- * **payloadType**: The type of the payload the RTP packet SSRC belongs to
- * **mimeType**: the MIME type of the codec (e.g.: video/vp8)
- * **clockRate**: The negotiated clock rate the RTP timestamp is generated of
- * **channels**: The number of channels for audio is used (in stereo it is 2, otherwise it is most likely null)
- * **sdpFmtpLine**: The a=fmtp line in the SDP corresponding to the codec
 IceLocalCandidate
  * **peerConnectionId**: Refers to the peer connection the local candidate belongs to
  * **id**: The unique identifier of the local candidate

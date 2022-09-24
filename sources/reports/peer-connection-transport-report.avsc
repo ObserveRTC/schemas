@@ -53,6 +53,12 @@
     "type" : [ "null", "string" ],
     "default" : null
   }, 
+  /* Sample Based Report Fields */
+  {
+    "name" : "sampleSeq",
+    "doc": "The sequence number of the sample the report is generated from",
+    "type" : "int"
+  },
   /* Transport stats */
   {
     "name" : "packetsSent",

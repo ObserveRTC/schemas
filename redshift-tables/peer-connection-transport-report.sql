@@ -5,6 +5,7 @@ create table  IF NOT EXISTS peer_connection_transport_report (
 	callid	CHAR(36)	not null,
 	clientid	CHAR(36)	not null,
 	peerconnectionid	CHAR(36)	not null,
+	sampleseq	INTEGER	not null,
 	bytesreceived	BIGINT,
 	bytessent	BIGINT,
 	dtlscipher	VARCHAR(65535),
