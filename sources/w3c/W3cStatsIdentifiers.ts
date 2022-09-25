@@ -229,10 +229,13 @@ export interface RtcOutboundRTPStreamStats extends RtcSentRtpStreamStats {
     encoderImplementation?: string;
     active?: boolean;
 
+    // Deprecated, but due to backward compatibility it is kept here
+    senderId?: string;
+
     // Deprecated since 2022-09-21
     // ---------------------------
     // rtxSsrc?: number;
-    // senderId?: string;
+    // 
     // lastPacketSentTimestamp;
     // packetsDiscardedOnSend?: number;
     // bytesDiscardedOnSend?: number;
@@ -408,9 +411,11 @@ export interface RtcTransportStats extends RtcStats {
     srtpCipher?: string;
     selectedCandidatePairChanges?: number;
 
+    // Deprecated but due to bacward compatibility it is kept here for now
+    rtcpTransportStatsId?: string;
+
     // Deprecated 2022-09-21
     // ---------------------
-    // rtcpTransportStatsId?: string;
     // tlsGroup?: string;
 }
 
