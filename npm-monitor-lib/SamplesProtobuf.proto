@@ -35,7 +35,7 @@ message Samples {
 			required string payload = 1;
 			required string type = 2;
 		}
-		message DataChannelStats {
+		message DataChannel {
 			required string peerConnectionId = 1;
 			optional int64 bytesReceived = 2;
 			optional int64 bytesSent = 3;
@@ -67,7 +67,7 @@ message Samples {
 			optional string tlsGroup = 18;
 			optional string tlsVersion = 19;
 		}
-		message IceCandidatePairStats {
+		message IceCandidatePair {
 			required string candidatePairId = 1;
 			required string peerConnectionId = 2;
 			optional double availableIncomingBitrate = 3;
@@ -323,9 +323,9 @@ message Samples {
 		}
 		repeated Certificate certificates = 1;
 		repeated MediaCodecStats codecs = 2;
-		repeated DataChannelStats dataChannels = 3;
+		repeated DataChannel dataChannels = 3;
 		repeated ExtensionStat extensionStats = 4;
-		repeated IceCandidatePairStats iceCandidatePairs = 5;
+		repeated IceCandidatePair iceCandidatePairs = 5;
 		repeated IceLocalCandidate iceLocalCandidates = 6;
 		repeated IceRemoteCandidate iceRemoteCandidates = 7;
 		repeated string iceServers = 8;

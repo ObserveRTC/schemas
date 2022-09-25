@@ -579,7 +579,7 @@ MediaDevice
 ExtensionStat
  * **type**: The type of the extension stats the custom app provides
  * **payload**: The payload of the extension stats the custom app provides
-DataChannelStats
+DataChannel
  * **peerConnectionId**: The id of the peer connection the data channel is assigned to
  * **dataChannelIdentifier**: The id of the data channel assigned by the peer connection when it is opened
  * **label**: The label of the data channel
@@ -609,7 +609,7 @@ PeerConnectionTransport
  * **srtpCipher**: Represents the name of the SRTP cipher used in the corresponded transport
  * **tlsGroup**: Represents the name of the IANA TLS Supported Groups used in the corresponded transport
  * **selectedCandidatePairChanges**: The total number of candidate pair changes over the peer connection
-IceCandidatePairStats
+IceCandidatePair
  * **candidatePairId**: The unique identifier of the peer connection
  * **peerConnectionId**: The unique identifier of the peer connection
  * **transportId**: The identifier of the transport the ice candidate pair is negotiated on

@@ -57,7 +57,7 @@ export const jsonDescriptor = {
                             },
                             "dataChannels": {
                               "rule": "repeated",
-                              "type": "DataChannelStats",
+                              "type": "DataChannel",
                               "id": 3
                             },
                             "extensionStats": {
@@ -67,7 +67,7 @@ export const jsonDescriptor = {
                             },
                             "iceCandidatePairs": {
                               "rule": "repeated",
-                              "type": "IceCandidatePairStats",
+                              "type": "IceCandidatePair",
                               "id": 5
                             },
                             "iceLocalCandidates": {
@@ -269,7 +269,7 @@ export const jsonDescriptor = {
                                 }
                               }
                             },
-                            "DataChannelStats": {
+                            "DataChannel": {
                               "fields": {
                                 "peerConnectionId": {
                                   "type": "string",
@@ -389,7 +389,7 @@ export const jsonDescriptor = {
                                 }
                               }
                             },
-                            "IceCandidatePairStats": {
+                            "IceCandidatePair": {
                               "fields": {
                                 "candidatePairId": {
                                   "type": "string",

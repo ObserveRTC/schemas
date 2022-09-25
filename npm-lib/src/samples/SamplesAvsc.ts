@@ -370,7 +370,7 @@ export const schema = {
                   {
                     "type": "array",
                     "items": {
-                      "name": "DataChannelStats",
+                      "name": "DataChannel",
                       "type": "record",
                       "fields": [
                         {
@@ -652,7 +652,7 @@ export const schema = {
                   {
                     "type": "array",
                     "items": {
-                      "name": "IceCandidatePairStats",
+                      "name": "IceCandidatePair",
                       "type": "record",
                       "fields": [
                         {

@@ -40,9 +40,9 @@ Javascript bindings for ObserveRTC schemas
 	* [Certificate](#Certificate)
 	* [MediaCodecStats](#MediaCodecStats)
 	* [MediaSourceStat](#MediaSourceStat)
-	* [IceCandidatePairStats](#IceCandidatePairStats)
+	* [IceCandidatePair](#IceCandidatePair)
 	* [PeerConnectionTransport](#PeerConnectionTransport)
-	* [DataChannelStats](#DataChannelStats)
+	* [DataChannel](#DataChannel)
 	* [ExtensionStat](#ExtensionStat)
 	* [MediaDevice](#MediaDevice)
 	* [OperationSystem](#OperationSystem)
@@ -840,7 +840,7 @@ Field | Description
 type (**Mandatory**) | The type of the extension stats the custom app provides
 payload (**Mandatory**) | The payload of the extension stats the custom app provides
 
-## DataChannelStats
+## DataChannel
 
 
 Field | Description 
@@ -880,7 +880,7 @@ srtpCipher | Represents the name of the SRTP cipher used in the corresponded tra
 tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
 selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
 
-## IceCandidatePairStats
+## IceCandidatePair
 
 
 Field | Description 
@@ -1447,11 +1447,18 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 2.1.2
+
+### Renamed
+ * `DataChannelStats` record to `DataChannel` in ClientSample
+ * `IceCandidatePairStats` record to `IceCandidatePair` in ClientSample
+
 ## 2.1.1
 
 ### Restored
  * `senderId` field in W3CStats for backward compatibility in client-monitor
  * `rtcpTransportStatsId` field in W3CStats for backward compatibility in client-monitor
+
 
 ## 2.1.0
 

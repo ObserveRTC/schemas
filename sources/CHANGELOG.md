@@ -1,8 +1,15 @@
+## 2.1.2
+
+### Renamed
+ * `DataChannelStats` record to `DataChannel` in ClientSample
+ * `IceCandidatePairStats` record to `IceCandidatePair` in ClientSample
+
 ## 2.1.1
 
 ### Restored
  * `senderId` field in W3CStats for backward compatibility in client-monitor
  * `rtcpTransportStatsId` field in W3CStats for backward compatibility in client-monitor
+
 
 ## 2.1.0
 

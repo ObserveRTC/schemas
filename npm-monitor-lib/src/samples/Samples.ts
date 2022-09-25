@@ -1994,7 +1994,7 @@ export type MediaSourceStat = {
 /**
 * Candidate pair stats
 */
-export type IceCandidatePairStats = {
+export type IceCandidatePair = {
 	/**
 	* The unique identifier of the peer connection
 	*/
@@ -2221,7 +2221,7 @@ export type PeerConnectionTransport = {
 /**
 * Measurements about the data channels currently avaialble on peer connections
 */
-export type DataChannelStats = {
+export type DataChannel = {
 	/**
 	* The id of the peer connection the data channel is assigned to
 	*/
@@ -2467,7 +2467,7 @@ export type ClientSample = {
 	/**
 	* Measurements about the data channels currently avaialble on peer connections
 	*/
-	dataChannels?: DataChannelStats[];
+	dataChannels?: DataChannel[];
 
 	/**
 	* Transport stats of Peer Connection
@@ -2477,7 +2477,7 @@ export type ClientSample = {
 	/**
 	* Candidate pair stats
 	*/
-	iceCandidatePairs?: IceCandidatePairStats[];
+	iceCandidatePairs?: IceCandidatePair[];
 
 	/**
 	* WebRTC App provided information related to the operation system the client uses.
