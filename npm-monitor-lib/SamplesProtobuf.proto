@@ -182,7 +182,7 @@ message Samples {
 			optional int32 frameHeight = 9;
 			optional int32 frameWidth = 10;
 			optional int32 framesDecoded = 11;
-			optional double framesDropped = 12;
+			optional int32 framesDropped = 12;
 			optional double framesPerSecond = 13;
 			optional int32 framesReceived = 14;
 			optional int64 headerBytesReceived = 15;

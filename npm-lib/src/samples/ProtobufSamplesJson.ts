@@ -839,7 +839,7 @@ export const jsonDescriptor = {
                                   "id": 11
                                 },
                                 "framesDropped": {
-                                  "type": "double",
+                                  "type": "int32",
                                   "id": 12
                                 },
                                 "framesPerSecond": {

@@ -1,3 +1,6 @@
+## 2.1.3
+ * change type of `framesDropped` in InboundVideoTrack from `double` to `int`
+
 ## 2.1.2
 
 ### Renamed
