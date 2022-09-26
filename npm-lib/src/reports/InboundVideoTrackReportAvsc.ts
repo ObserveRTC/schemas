@@ -175,7 +175,7 @@ export const schema = {
       "doc": "The number of frames dropped prior to decode or missing chunks",
       "type": [
         "null",
-        "double"
+        "int"
       ],
       "default": null
     },

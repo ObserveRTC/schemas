@@ -1448,6 +1448,9 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 2.1.6
+ * change type of `framesDropped` in InboundVideoTrack report from `double` to `int`
+
 ## 2.1.5
  * Make `label` field in PeerConnectionTransport optional
 
@@ -1456,7 +1459,6 @@ turnSamples | Samples taken from the TURN server
 
 ## 2.1.3
  * change type of `framesDropped` in InboundVideoTrack from `double` to `int`
-
 ## 2.1.2
 
 ### Renamed

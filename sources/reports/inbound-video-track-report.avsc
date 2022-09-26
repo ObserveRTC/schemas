@@ -121,7 +121,7 @@
   {
     "name" : "framesDropped",
     "doc" : "The number of frames dropped prior to decode or missing chunks",
-    "type" : ["null", "double"],
+    "type" : ["null", "int"],
     "default" : null
   }, 
   {

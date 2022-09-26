@@ -16,7 +16,7 @@ create table  IF NOT EXISTS inbound_video_track_report (
 	fircount	INTEGER,
 	frameheight	INTEGER,
 	framesdecoded	INTEGER,
-	framesdropped	REAL,
+	framesdropped	INTEGER,
 	framespersecond	REAL,
 	framesreceived	INTEGER,
 	framewidth	INTEGER,

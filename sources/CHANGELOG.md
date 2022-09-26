@@ -1,3 +1,6 @@
+## 2.1.6
+ * change type of `framesDropped` in InboundVideoTrack report from `double` to `int`
+
 ## 2.1.5
  * Make `label` field in PeerConnectionTransport optional
 
@@ -6,7 +9,6 @@
 
 ## 2.1.3
  * change type of `framesDropped` in InboundVideoTrack from `double` to `int`
-
 ## 2.1.2
 
 ### Renamed

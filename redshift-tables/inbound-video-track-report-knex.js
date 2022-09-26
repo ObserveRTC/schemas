@@ -19,7 +19,7 @@ exports.up = function (knex) {
 		table.integer("fircount");
 		table.integer("frameheight");
 		table.integer("framesdecoded");
-		table.text("framesdropped");
+		table.integer("framesdropped");
 		table.text("framespersecond");
 		table.integer("framesreceived");
 		table.integer("framewidth");
