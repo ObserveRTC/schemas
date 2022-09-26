@@ -1,3 +1,6 @@
+## 2.1.7
+ * change csv header lowercase to snake case
+
 ## 2.1.6
  * change type of `framesDropped` in InboundVideoTrack report from `double` to `int`
 

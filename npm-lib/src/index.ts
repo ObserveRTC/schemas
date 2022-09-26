@@ -61,4 +61,4 @@ export { jsonDescriptor as ProtobufSamplesJson } from "./samples/ProtobufSamples
 export { schema as ProtobufSamplesV3 } from "./samples/ProtobufSamplesV3";
 export { jsonDescriptor as ProtobufSamplesV3Json } from "./samples/ProtobufSamplesV3Json";
 export * as W3CStats from "./w3c/W3cStatsIdentifiers";
-export const version = "2.1.6";
+export const version = "2.1.7";

@@ -67,7 +67,8 @@ class RedshiftSql {
         const sortKeys = [];
         const fieldsLength = this._fields.length;
         for (let i = 0; i < fieldsLength; ++i) {
-            const { name, type, required } = this._fields[i];
+            const { type, required } = this._fields[i];
+            const name = this._fields[i].name.toLowerCase();
             const properties = [
                 name,
                 type,
@@ -101,7 +102,8 @@ class RedshiftSql {
         ];
         const fieldsLength = this._fields.length;
         for (let i = 0; i < fieldsLength; ++i) {
-            const { name, type, required } = this._fields[i];
+            const { type, required } = this._fields[i];
+            const name = this._fields[i].name.toLowerCase();
             const jsCommands = [];
             if (name === "timestamp") {
                 jsCommands.push(`table.timestamp("timestamp", { useTz: false })`);
@@ -137,7 +139,9 @@ class RedshiftSql {
     _makeColumnCsvList() {
         if (this._fields.length < 1) return "";
         // return `"` + this._fields.map(field => field.name.toLowerCase()).join(`",\n"`) + `"`;
-        return this._fields.map(field => field.name.toLowerCase()).join(`, `);
+        // return this._fields.map(field => field.name.toLowerCase()).join(`, `);
+        // console.log(this._fields);
+        return this._fields.map(field => field.name).join(`, `);
     }
 
 }
@@ -187,7 +191,8 @@ export function makeRedshiftSql(avroSchema) {
         const type = getRedshiftType(name, avroFieldType);
 
         result.addField({
-            name: name.toLowerCase(),
+            // name: name.toLowerCase(),
+            name: name,
             doc: field.doc,
             required,
             type,
