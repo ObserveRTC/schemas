@@ -278,7 +278,8 @@
                     }, {
                         "name" : "label",
                         "doc": "The label associated with the peer connection",
-                        "type" :  ["null", "string"]
+                        "type" :  ["null", "string"],
+                        "default": null
                     }, 
                     /** 
                     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

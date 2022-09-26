@@ -483,7 +483,8 @@ export const schema = {
                           "type": [
                             "null",
                             "string"
-                          ]
+                          ],
+                          "default": null
                         },
                         {
                           "name": "packetsSent",

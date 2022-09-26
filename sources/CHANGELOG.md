@@ -1,3 +1,6 @@
+## 2.1.5
+ * Make `label` field in PeerConnectionTransport optional
+
 ## 2.1.4
  * Add `label` field to PeerConnectionTransport
 

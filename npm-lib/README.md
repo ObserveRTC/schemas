@@ -862,7 +862,7 @@ Field | Description
 --- | ---
 transportId (**Mandatory**) | The identifier of the transport the ice candidate pair is negotiated on
 peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
-label (**Mandatory**) | The label associated with the peer connection
+label | The label associated with the peer connection
 packetsSent | Represents the total number of packets sent on the corresponded transport
 packetsReceived | Represents the total number of packets received on the corresponded transport
 bytesSent | Represents the total amount of bytes sent on the corresponded transport
@@ -1448,6 +1448,9 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 2.1.5
+ * Make `label` field in PeerConnectionTransport optional
+
 ## 2.1.4
  * Add `label` field to PeerConnectionTransport
 

@@ -2134,7 +2134,7 @@ export type PeerConnectionTransport = {
 	/**
 	* The label associated with the peer connection
 	*/
-	label: string;
+	label?: string;
 
 	/**
 	* Represents the total number of packets sent on the corresponded transport
