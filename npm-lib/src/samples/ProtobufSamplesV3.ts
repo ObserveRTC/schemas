@@ -58,15 +58,16 @@ message Samples {
 			string iceLocalUsernameFragment = 8;
 			string iceRole = 9;
 			string iceState = 10;
-			string localCertificateId = 11;
-			int32 packetsReceived = 12;
-			int32 packetsSent = 13;
-			string remoteCertificateId = 14;
-			int32 selectedCandidatePairChanges = 15;
-			string selectedCandidatePairId = 16;
-			string srtpCipher = 17;
-			string tlsGroup = 18;
-			string tlsVersion = 19;
+			string label = 11;
+			string localCertificateId = 12;
+			int32 packetsReceived = 13;
+			int32 packetsSent = 14;
+			string remoteCertificateId = 15;
+			int32 selectedCandidatePairChanges = 16;
+			string selectedCandidatePairId = 17;
+			string srtpCipher = 18;
+			string tlsGroup = 19;
+			string tlsVersion = 20;
 		}
 		message IceCandidatePair {
 			string candidatePairId = 1;

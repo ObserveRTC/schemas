@@ -478,6 +478,14 @@ export const schema = {
                           "type": "string"
                         },
                         {
+                          "name": "label",
+                          "doc": "The label associated with the peer connection",
+                          "type": [
+                            "null",
+                            "string"
+                          ]
+                        },
+                        {
                           "name": "packetsSent",
                           "doc": "Represents the total number of packets sent on the corresponded transport",
                           "type": [

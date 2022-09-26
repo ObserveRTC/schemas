@@ -358,41 +358,45 @@ export const jsonDescriptor = {
                                   "type": "string",
                                   "id": 10
                                 },
-                                "localCertificateId": {
+                                "label": {
                                   "type": "string",
                                   "id": 11
                                 },
-                                "packetsReceived": {
-                                  "type": "int32",
+                                "localCertificateId": {
+                                  "type": "string",
                                   "id": 12
                                 },
-                                "packetsSent": {
+                                "packetsReceived": {
                                   "type": "int32",
                                   "id": 13
                                 },
+                                "packetsSent": {
+                                  "type": "int32",
+                                  "id": 14
+                                },
                                 "remoteCertificateId": {
                                   "type": "string",
-                                  "id": 14
+                                  "id": 15
                                 },
                                 "selectedCandidatePairChanges": {
                                   "type": "int32",
-                                  "id": 15
+                                  "id": 16
                                 },
                                 "selectedCandidatePairId": {
                                   "type": "string",
-                                  "id": 16
+                                  "id": 17
                                 },
                                 "srtpCipher": {
                                   "type": "string",
-                                  "id": 17
+                                  "id": 18
                                 },
                                 "tlsGroup": {
                                   "type": "string",
-                                  "id": 18
+                                  "id": 19
                                 },
                                 "tlsVersion": {
                                   "type": "string",
-                                  "id": 19
+                                  "id": 20
                                 }
                               }
                             },

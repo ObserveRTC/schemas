@@ -592,6 +592,7 @@ DataChannel
 PeerConnectionTransport
  * **transportId**: The identifier of the transport the ice candidate pair is negotiated on
  * **peerConnectionId**: The unique identifier of the peer connection
+ * **label**: The label associated with the peer connection
  * **packetsSent**: Represents the total number of packets sent on the corresponded transport
  * **packetsReceived**: Represents the total number of packets received on the corresponded transport
  * **bytesSent**: Represents the total amount of bytes sent on the corresponded transport
