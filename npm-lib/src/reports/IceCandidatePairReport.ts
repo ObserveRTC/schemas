@@ -58,9 +58,29 @@ export type IceCandidatePairReport = {
 	label?: string;
 
 	/**
+	* The identifier of the transport the ice candidate pair is negotiated on
+	*/
+	transportId?: string;
+
+	/**
+	* The unique identifier of the candidate the negotiated pair is selected at local side
+	*/
+	localCandidateId?: string;
+
+	/**
+	* The unique identifier of the candidate the negotiated pair is selected at remote side
+	*/
+	remoteCandidateId?: string;
+
+	/**
 	* The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
 	*/
 	state?: string;
+
+	/**
+	* indicate if the ice candidate pair is nominated or not
+	*/
+	nominated?: boolean;
 
 	/**
 	* The total number of packets sent using the last selected candidate pair over the corresponded transport
@@ -93,21 +113,6 @@ export type IceCandidatePairReport = {
 	lastPacketReceivedTimestamp?: number;
 
 	/**
-	* Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	firstRequestTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	lastRequestTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)
-	*/
-	lastResponseTimestamp?: number;
-
-	/**
 	* Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
 	*/
 	totalRoundTripTime?: number;
@@ -126,11 +131,6 @@ export type IceCandidatePairReport = {
 	* The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
 	*/
 	availableIncomingBitrate?: number;
-
-	/**
-	* The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair
-	*/
-	circuitBreakerTriggerCount?: number;
 
 	/**
 	* Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
@@ -153,29 +153,9 @@ export type IceCandidatePairReport = {
 	responsesSent?: number;
 
 	/**
-	* Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport
-	*/
-	retransmissionReceived?: number;
-
-	/**
-	* Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport
-	*/
-	retransmissionSent?: number;
-
-	/**
 	* Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
 	*/
 	consentRequestsSent?: number;
-
-	/**
-	* Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport
-	*/
-	consentExpiredTimestamp?: number;
-
-	/**
-	* Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-	*/
-	bytesDiscardedOnSend?: number;
 
 	/**
 	* Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
@@ -183,18 +163,8 @@ export type IceCandidatePairReport = {
 	packetsDiscardedOnSend?: number;
 
 	/**
-	* Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport
+	* Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
 	*/
-	requestBytesSent?: number;
-
-	/**
-	* Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport
-	*/
-	consentRequestBytesSent?: number;
-
-	/**
-	* Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport
-	*/
-	responseBytesSent?: number;
+	bytesDiscardedOnSend?: number;
 
 }

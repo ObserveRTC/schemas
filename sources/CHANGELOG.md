@@ -1,3 +1,6 @@
+## 2.1.8
+ * change IceCandidatePair Report accordingly to IceCandidatePair sample
+
 ## 2.1.7
  * change csv header lowercase to snake case
 

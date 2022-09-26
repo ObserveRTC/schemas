@@ -396,6 +396,11 @@
                         "name" : "peerConnectionId",
                         "doc": "The unique identifier of the peer connection",
                         "type" :  "string"
+                    }, {
+                        "name" : "label",
+                        "doc": "The label associated to the peer connection",
+                        "type" :  ["null", "string"],
+                        "default": null
                     },
                     /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                          * RTCIceCandidatePairStats

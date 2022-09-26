@@ -76,11 +76,47 @@ export const schema = {
       "type": "int"
     },
     {
+      "name": "transportId",
+      "doc": "The identifier of the transport the ice candidate pair is negotiated on",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "localCandidateId",
+      "doc": "The unique identifier of the candidate the negotiated pair is selected at local side",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "remoteCandidateId",
+      "doc": "The unique identifier of the candidate the negotiated pair is selected at remote side",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
       "name": "state",
       "doc": "The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport",
       "type": [
         "null",
         "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "nominated",
+      "doc": "indicate if the ice candidate pair is nominated or not",
+      "type": [
+        "null",
+        "boolean"
       ],
       "default": null
     },
@@ -139,33 +175,6 @@ export const schema = {
       "default": null
     },
     {
-      "name": "firstRequestTimestamp",
-      "doc": "Represents the timestamp at which the first STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
-      "name": "lastRequestTimestamp",
-      "doc": "Represents the timestamp at which the last STUN request was sent on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
-      "name": "lastResponseTimestamp",
-      "doc": "Represents the timestamp at which the last STUN response was received on this particular candidate pair over the corresponded transport (UTC Epoch in ms)",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
       "name": "totalRoundTripTime",
       "doc": "Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport",
       "type": [
@@ -198,15 +207,6 @@ export const schema = {
       "type": [
         "null",
         "double"
-      ],
-      "default": null
-    },
-    {
-      "name": "circuitBreakerTriggerCount",
-      "doc": "The total number of circuit breaker triggered over the corresponded transport using the selected candidate pair",
-      "type": [
-        "null",
-        "int"
       ],
       "default": null
     },
@@ -247,47 +247,11 @@ export const schema = {
       "default": null
     },
     {
-      "name": "retransmissionReceived",
-      "doc": "Represents the total number of connectivity check retransmission received on the selected candidate pair using the corresponded transport",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "retransmissionSent",
-      "doc": "Represents the total number of connectivity check retransmission sent on the selected candidate pair using the corresponded transport",
-      "type": [
-        "null",
-        "int"
-      ],
-      "default": null
-    },
-    {
       "name": "consentRequestsSent",
       "doc": "Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport",
       "type": [
         "null",
         "int"
-      ],
-      "default": null
-    },
-    {
-      "name": "consentExpiredTimestamp",
-      "doc": "Represents the timestamp at which the latest valid STUN binding response expired on the selected candidate pair using the corresponded transport",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
-      "name": "bytesDiscardedOnSend",
-      "doc": "Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
-      "type": [
-        "null",
-        "long"
       ],
       "default": null
     },
@@ -301,26 +265,8 @@ export const schema = {
       "default": null
     },
     {
-      "name": "requestBytesSent",
-      "doc": "Total number of bytes sent for connectivity checks on the selected candidate pair using the corresponded transport",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
-      "name": "consentRequestBytesSent",
-      "doc": "Total number of bytes sent for consent requests on the selected candidate pair using the corresponded transport",
-      "type": [
-        "null",
-        "long"
-      ],
-      "default": null
-    },
-    {
-      "name": "responseBytesSent",
-      "doc": "Total number of bytes sent for connectivity check responses on the selected candidate pair using the corresponded transport",
+      "name": "bytesDiscardedOnSend",
+      "doc": "Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport",
       "type": [
         "null",
         "long"

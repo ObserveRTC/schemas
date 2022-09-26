@@ -78,21 +78,22 @@ message Samples {
 			optional int64 bytesSent = 7;
 			optional int32 consentRequestsSent = 8;
 			optional double currentRoundTripTime = 9;
-			optional int64 lastPacketReceivedTimestamp = 10;
-			optional int64 lastPacketSentTimestamp = 11;
-			optional string localCandidateId = 12;
-			optional bool nominated = 13;
-			optional int32 packetsDiscardedOnSend = 14;
-			optional int32 packetsReceived = 15;
-			optional int32 packetsSent = 16;
-			optional string remoteCandidateId = 17;
-			optional int32 requestsReceived = 18;
-			optional int32 requestsSent = 19;
-			optional int32 responsesReceived = 20;
-			optional int32 responsesSent = 21;
-			optional string state = 22;
-			optional double totalRoundTripTime = 23;
-			optional string transportId = 24;
+			optional string label = 10;
+			optional int64 lastPacketReceivedTimestamp = 11;
+			optional int64 lastPacketSentTimestamp = 12;
+			optional string localCandidateId = 13;
+			optional bool nominated = 14;
+			optional int32 packetsDiscardedOnSend = 15;
+			optional int32 packetsReceived = 16;
+			optional int32 packetsSent = 17;
+			optional string remoteCandidateId = 18;
+			optional int32 requestsReceived = 19;
+			optional int32 requestsSent = 20;
+			optional int32 responsesReceived = 21;
+			optional int32 responsesSent = 22;
+			optional string state = 23;
+			optional double totalRoundTripTime = 24;
+			optional string transportId = 25;
 		}
 		message MediaSourceStat {
 			optional double audioLevel = 1;

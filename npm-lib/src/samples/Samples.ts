@@ -2006,6 +2006,11 @@ export type IceCandidatePair = {
 	peerConnectionId: string;
 
 	/**
+	* The label associated to the peer connection
+	*/
+	label?: string;
+
+	/**
 	* The identifier of the transport the ice candidate pair is negotiated on
 	*/
 	transportId?: string;

@@ -675,6 +675,15 @@ export const schema = {
                           "type": "string"
                         },
                         {
+                          "name": "label",
+                          "doc": "The label associated to the peer connection",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "transportId",
                           "doc": "The identifier of the transport the ice candidate pair is negotiated on",
                           "type": [

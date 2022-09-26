@@ -79,21 +79,22 @@ message Samples {
 			int64 bytesSent = 7;
 			int32 consentRequestsSent = 8;
 			double currentRoundTripTime = 9;
-			int64 lastPacketReceivedTimestamp = 10;
-			int64 lastPacketSentTimestamp = 11;
-			string localCandidateId = 12;
-			bool nominated = 13;
-			int32 packetsDiscardedOnSend = 14;
-			int32 packetsReceived = 15;
-			int32 packetsSent = 16;
-			string remoteCandidateId = 17;
-			int32 requestsReceived = 18;
-			int32 requestsSent = 19;
-			int32 responsesReceived = 20;
-			int32 responsesSent = 21;
-			string state = 22;
-			double totalRoundTripTime = 23;
-			string transportId = 24;
+			string label = 10;
+			int64 lastPacketReceivedTimestamp = 11;
+			int64 lastPacketSentTimestamp = 12;
+			string localCandidateId = 13;
+			bool nominated = 14;
+			int32 packetsDiscardedOnSend = 15;
+			int32 packetsReceived = 16;
+			int32 packetsSent = 17;
+			string remoteCandidateId = 18;
+			int32 requestsReceived = 19;
+			int32 requestsSent = 20;
+			int32 responsesReceived = 21;
+			int32 responsesSent = 22;
+			string state = 23;
+			double totalRoundTripTime = 24;
+			string transportId = 25;
 		}
 		message MediaSourceStat {
 			double audioLevel = 1;

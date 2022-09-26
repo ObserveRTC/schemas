@@ -431,65 +431,69 @@ export const jsonDescriptor = {
                                   "type": "double",
                                   "id": 9
                                 },
-                                "lastPacketReceivedTimestamp": {
-                                  "type": "int64",
+                                "label": {
+                                  "type": "string",
                                   "id": 10
                                 },
-                                "lastPacketSentTimestamp": {
+                                "lastPacketReceivedTimestamp": {
                                   "type": "int64",
                                   "id": 11
                                 },
+                                "lastPacketSentTimestamp": {
+                                  "type": "int64",
+                                  "id": 12
+                                },
                                 "localCandidateId": {
                                   "type": "string",
-                                  "id": 12
+                                  "id": 13
                                 },
                                 "nominated": {
                                   "type": "bool",
-                                  "id": 13
+                                  "id": 14
                                 },
                                 "packetsDiscardedOnSend": {
                                   "type": "int32",
-                                  "id": 14
+                                  "id": 15
                                 },
                                 "packetsReceived": {
                                   "type": "int32",
-                                  "id": 15
+                                  "id": 16
                                 },
                                 "packetsSent": {
                                   "type": "int32",
-                                  "id": 16
+                                  "id": 17
                                 },
                                 "remoteCandidateId": {
                                   "type": "string",
-                                  "id": 17
+                                  "id": 18
                                 },
                                 "requestsReceived": {
                                   "type": "int32",
-                                  "id": 18
+                                  "id": 19
                                 },
                                 "requestsSent": {
                                   "type": "int32",
-                                  "id": 19
+                                  "id": 20
                                 },
                                 "responsesReceived": {
                                   "type": "int32",
-                                  "id": 20
+                                  "id": 21
                                 },
                                 "responsesSent": {
                                   "type": "int32",
-                                  "id": 21
+                                  "id": 22
                                 },
                                 "state": {
                                   "type": "string",
-                                  "id": 22
+                                  "id": 23
                                 },
                                 "totalRoundTripTime": {
                                   "type": "double",
-                                  "id": 23
+                                  "id": 24
                                 },
                                 "transportId": {
                                   "type": "string",
-                                  "id": 24
+                                  "id": 25
                                 }
                               }
                             },
