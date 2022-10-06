@@ -363,7 +363,7 @@ export interface RtcAudioReceiverStats extends RtcAudioHandlerStats {
 
 }
 
-export interface RTCAudioPlayoutStats extends RTCStats {
+export interface RTCAudioPlayoutStats extends RtcStats {
     synthesizedSamplesDuration?: number;
     synthesizedSamplesEvents?: number;
     totalSamplesDuration?: number;
