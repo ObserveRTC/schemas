@@ -20,11 +20,6 @@ jobs:
         run: yarn
         working-directory: ${{env.working-directory}}
 
-      # - name: publish
-      #   run: npm publish --access public
-      #   working-directory: ${{env.working-directory}}
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Publish
         working-directory: ${{env.working-directory}}
         run: |

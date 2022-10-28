@@ -36,6 +36,12 @@ message Samples {
 			string payload = 1;
 			string type = 2;
 		}
+		message CustomCallEvent {
+			string name = 1;
+			string attachments = 2;
+			string mediaTrackId = 3;
+			string message = 4;
+		}
 		message DataChannel {
 			string peerConnectionId = 1;
 			int64 bytesReceived = 2;
@@ -326,34 +332,35 @@ message Samples {
 		}
 		repeated Certificate certificates = 1;
 		repeated MediaCodecStats codecs = 2;
-		repeated DataChannel dataChannels = 3;
-		repeated ExtensionStat extensionStats = 4;
-		repeated IceCandidatePair iceCandidatePairs = 5;
-		repeated IceLocalCandidate iceLocalCandidates = 6;
-		repeated IceRemoteCandidate iceRemoteCandidates = 7;
-		repeated string iceServers = 8;
-		repeated InboundAudioTrack inboundAudioTracks = 9;
-		repeated InboundVideoTrack inboundVideoTracks = 10;
-		repeated string localSDPs = 11;
-		repeated string mediaConstraints = 12;
-		repeated MediaDevice mediaDevices = 13;
-		repeated MediaSourceStat mediaSources = 14;
-		repeated OutboundAudioTrack outboundAudioTracks = 15;
-		repeated OutboundVideoTrack outboundVideoTracks = 16;
-		repeated PeerConnectionTransport pcTransports = 17;
-		repeated string userMediaErrors = 18;
-		string clientId = 19;
-		int64 timestamp = 20;
-		Browser browser = 21;
-		string callId = 22;
-		Engine engine = 23;
-		string marker = 24;
-		OperationSystem os = 25;
-		Platform platform = 26;
-		string roomId = 27;
-		int32 sampleSeq = 28;
-		int32 timeZoneOffsetInHours = 29;
-		string userId = 30;
+		repeated CustomCallEvent customCallEvents = 3;
+		repeated DataChannel dataChannels = 4;
+		repeated ExtensionStat extensionStats = 5;
+		repeated IceCandidatePair iceCandidatePairs = 6;
+		repeated IceLocalCandidate iceLocalCandidates = 7;
+		repeated IceRemoteCandidate iceRemoteCandidates = 8;
+		repeated string iceServers = 9;
+		repeated InboundAudioTrack inboundAudioTracks = 10;
+		repeated InboundVideoTrack inboundVideoTracks = 11;
+		repeated string localSDPs = 12;
+		repeated string mediaConstraints = 13;
+		repeated MediaDevice mediaDevices = 14;
+		repeated MediaSourceStat mediaSources = 15;
+		repeated OutboundAudioTrack outboundAudioTracks = 16;
+		repeated OutboundVideoTrack outboundVideoTracks = 17;
+		repeated PeerConnectionTransport pcTransports = 18;
+		repeated string userMediaErrors = 19;
+		string clientId = 20;
+		int64 timestamp = 21;
+		Browser browser = 22;
+		string callId = 23;
+		Engine engine = 24;
+		string marker = 25;
+		OperationSystem os = 26;
+		Platform platform = 27;
+		string roomId = 28;
+		int32 sampleSeq = 29;
+		int32 timeZoneOffsetInHours = 30;
+		string userId = 31;
 	}
 	message SfuSample {
 		message SfuTransport {

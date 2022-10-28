@@ -181,6 +181,37 @@
             }],
             "default": null
         }, {
+            "name" : "customCallEvents",
+            "doc": "User provided custom call events",
+            "type" : ["null", {
+                "type": "array",
+                "items": {
+                    "name": "CustomCallEvent",
+                    "type": "record",
+                    "fields": [{
+                        "name" : "name",
+                        "doc": "the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)",
+                        "type" : "string"
+                      }, {
+                        "name" : "mediaTrackId",
+                        "doc": "The identifier of the media track the event is related to",
+                        "type" : [ "null", "string" ],
+                        "default" : null
+                      }, {
+                        "name" : "message",
+                        "doc": "the human readable message of the event",
+                        "type" : [ "null", "string" ],
+                        "default" : null
+                      }, {
+                        "name" : "attachments",
+                        "doc": "Additional attachment relevant for the event",
+                        "type" : [ "null", "string" ],
+                        "default" : null
+                      }
+                ]}
+            }],
+            "default": null
+        }, {
             "name" : "iceServers",
             "doc": "The WebRTC app provided List of ICE server the client used.",
             "type" : ["null", {

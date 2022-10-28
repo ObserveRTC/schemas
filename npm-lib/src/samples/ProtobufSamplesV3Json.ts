@@ -55,133 +55,138 @@ export const jsonDescriptor = {
                               "type": "MediaCodecStats",
                               "id": 2
                             },
+                            "customCallEvents": {
+                              "rule": "repeated",
+                              "type": "CustomCallEvent",
+                              "id": 3
+                            },
                             "dataChannels": {
                               "rule": "repeated",
                               "type": "DataChannel",
-                              "id": 3
+                              "id": 4
                             },
                             "extensionStats": {
                               "rule": "repeated",
                               "type": "ExtensionStat",
-                              "id": 4
+                              "id": 5
                             },
                             "iceCandidatePairs": {
                               "rule": "repeated",
                               "type": "IceCandidatePair",
-                              "id": 5
+                              "id": 6
                             },
                             "iceLocalCandidates": {
                               "rule": "repeated",
                               "type": "IceLocalCandidate",
-                              "id": 6
+                              "id": 7
                             },
                             "iceRemoteCandidates": {
                               "rule": "repeated",
                               "type": "IceRemoteCandidate",
-                              "id": 7
+                              "id": 8
                             },
                             "iceServers": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 8
+                              "id": 9
                             },
                             "inboundAudioTracks": {
                               "rule": "repeated",
                               "type": "InboundAudioTrack",
-                              "id": 9
+                              "id": 10
                             },
                             "inboundVideoTracks": {
                               "rule": "repeated",
                               "type": "InboundVideoTrack",
-                              "id": 10
+                              "id": 11
                             },
                             "localSDPs": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 11
+                              "id": 12
                             },
                             "mediaConstraints": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 12
+                              "id": 13
                             },
                             "mediaDevices": {
                               "rule": "repeated",
                               "type": "MediaDevice",
-                              "id": 13
+                              "id": 14
                             },
                             "mediaSources": {
                               "rule": "repeated",
                               "type": "MediaSourceStat",
-                              "id": 14
+                              "id": 15
                             },
                             "outboundAudioTracks": {
                               "rule": "repeated",
                               "type": "OutboundAudioTrack",
-                              "id": 15
+                              "id": 16
                             },
                             "outboundVideoTracks": {
                               "rule": "repeated",
                               "type": "OutboundVideoTrack",
-                              "id": 16
+                              "id": 17
                             },
                             "pcTransports": {
                               "rule": "repeated",
                               "type": "PeerConnectionTransport",
-                              "id": 17
+                              "id": 18
                             },
                             "userMediaErrors": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 18
+                              "id": 19
                             },
                             "clientId": {
                               "type": "string",
-                              "id": 19
+                              "id": 20
                             },
                             "timestamp": {
                               "type": "int64",
-                              "id": 20
+                              "id": 21
                             },
                             "browser": {
                               "type": "Browser",
-                              "id": 21
+                              "id": 22
                             },
                             "callId": {
                               "type": "string",
-                              "id": 22
+                              "id": 23
                             },
                             "engine": {
                               "type": "Engine",
-                              "id": 23
+                              "id": 24
                             },
                             "marker": {
                               "type": "string",
-                              "id": 24
+                              "id": 25
                             },
                             "os": {
                               "type": "OperationSystem",
-                              "id": 25
+                              "id": 26
                             },
                             "platform": {
                               "type": "Platform",
-                              "id": 26
+                              "id": 27
                             },
                             "roomId": {
                               "type": "string",
-                              "id": 27
+                              "id": 28
                             },
                             "sampleSeq": {
                               "type": "int32",
-                              "id": 28
+                              "id": 29
                             },
                             "timeZoneOffsetInHours": {
                               "type": "int32",
-                              "id": 29
+                              "id": 30
                             },
                             "userId": {
                               "type": "string",
-                              "id": 30
+                              "id": 31
                             }
                           },
                           "nested": {
@@ -266,6 +271,26 @@ export const jsonDescriptor = {
                                 "type": {
                                   "type": "string",
                                   "id": 2
+                                }
+                              }
+                            },
+                            "CustomCallEvent": {
+                              "fields": {
+                                "name": {
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "attachments": {
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "mediaTrackId": {
+                                  "type": "string",
+                                  "id": 3
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "id": 4
                                 }
                               }
                             },

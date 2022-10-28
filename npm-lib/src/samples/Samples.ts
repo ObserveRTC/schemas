@@ -2280,6 +2280,32 @@ export type DataChannel = {
 }
 
 /**
+* User provided custom call events
+*/
+export type CustomCallEvent = {
+	/**
+	* the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+	*/
+	name: string;
+
+	/**
+	* The identifier of the media track the event is related to
+	*/
+	mediaTrackId?: string;
+
+	/**
+	* the human readable message of the event
+	*/
+	message?: string;
+
+	/**
+	* Additional attachment relevant for the event
+	*/
+	attachments?: string;
+
+}
+
+/**
 * The WebRTC app provided custom stats payload
 */
 export type ExtensionStat = {
@@ -2463,6 +2489,11 @@ export type ClientSample = {
 	* The WebRTC app provided custom stats payload
 	*/
 	extensionStats?: ExtensionStat[];
+
+	/**
+	* User provided custom call events
+	*/
+	customCallEvents?: CustomCallEvent[];
 
 	/**
 	* The WebRTC app provided List of ICE server the client used.

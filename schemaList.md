@@ -573,6 +573,11 @@ MediaDevice
 ExtensionStat
  * **type**: The type of the extension stats the custom app provides
  * **payload**: The payload of the extension stats the custom app provides
+CustomCallEvent
+ * **name**: the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+ * **mediaTrackId**: The identifier of the media track the event is related to
+ * **message**: the human readable message of the event
+ * **attachments**: Additional attachment relevant for the event
 DataChannel
  * **peerConnectionId**: The id of the peer connection the data channel is assigned to
  * **dataChannelIdentifier**: The id of the data channel assigned by the peer connection when it is opened
@@ -864,6 +869,7 @@ ClientSample
  * **mediaDevices**: The WebRTC app provided List of the media devices the client has.
  * **userMediaErrors**: The WebRTC app provided List of user media errors the client has.
  * **extensionStats**: The WebRTC app provided custom stats payload
+ * **customCallEvents**: User provided custom call events
  * **iceServers**: The WebRTC app provided List of ICE server the client used.
  * **localSDPs**: The local part of the Signal Description Protocol to establish connections
  * **dataChannels**: Measurements about the data channels currently avaialble on peer connections
