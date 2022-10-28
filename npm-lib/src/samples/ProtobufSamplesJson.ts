@@ -60,135 +60,140 @@ export const jsonDescriptor = {
                               "type": "CustomCallEvent",
                               "id": 3
                             },
+                            "customObserverEvents": {
+                              "rule": "repeated",
+                              "type": "CustomObserverEvent",
+                              "id": 4
+                            },
                             "dataChannels": {
                               "rule": "repeated",
                               "type": "DataChannel",
-                              "id": 4
+                              "id": 5
                             },
                             "extensionStats": {
                               "rule": "repeated",
                               "type": "ExtensionStat",
-                              "id": 5
+                              "id": 6
                             },
                             "iceCandidatePairs": {
                               "rule": "repeated",
                               "type": "IceCandidatePair",
-                              "id": 6
+                              "id": 7
                             },
                             "iceLocalCandidates": {
                               "rule": "repeated",
                               "type": "IceLocalCandidate",
-                              "id": 7
+                              "id": 8
                             },
                             "iceRemoteCandidates": {
                               "rule": "repeated",
                               "type": "IceRemoteCandidate",
-                              "id": 8
+                              "id": 9
                             },
                             "iceServers": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 9
+                              "id": 10
                             },
                             "inboundAudioTracks": {
                               "rule": "repeated",
                               "type": "InboundAudioTrack",
-                              "id": 10
+                              "id": 11
                             },
                             "inboundVideoTracks": {
                               "rule": "repeated",
                               "type": "InboundVideoTrack",
-                              "id": 11
+                              "id": 12
                             },
                             "localSDPs": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 12
+                              "id": 13
                             },
                             "mediaConstraints": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 13
+                              "id": 14
                             },
                             "mediaDevices": {
                               "rule": "repeated",
                               "type": "MediaDevice",
-                              "id": 14
+                              "id": 15
                             },
                             "mediaSources": {
                               "rule": "repeated",
                               "type": "MediaSourceStat",
-                              "id": 15
+                              "id": 16
                             },
                             "outboundAudioTracks": {
                               "rule": "repeated",
                               "type": "OutboundAudioTrack",
-                              "id": 16
+                              "id": 17
                             },
                             "outboundVideoTracks": {
                               "rule": "repeated",
                               "type": "OutboundVideoTrack",
-                              "id": 17
+                              "id": 18
                             },
                             "pcTransports": {
                               "rule": "repeated",
                               "type": "PeerConnectionTransport",
-                              "id": 18
+                              "id": 19
                             },
                             "userMediaErrors": {
                               "rule": "repeated",
                               "type": "string",
-                              "id": 19
+                              "id": 20
                             },
                             "clientId": {
                               "rule": "required",
                               "type": "string",
-                              "id": 20
+                              "id": 21
                             },
                             "timestamp": {
                               "rule": "required",
                               "type": "int64",
-                              "id": 21
+                              "id": 22
                             },
                             "browser": {
                               "type": "Browser",
-                              "id": 22
+                              "id": 23
                             },
                             "callId": {
                               "type": "string",
-                              "id": 23
+                              "id": 24
                             },
                             "engine": {
                               "type": "Engine",
-                              "id": 24
+                              "id": 25
                             },
                             "marker": {
                               "type": "string",
-                              "id": 25
+                              "id": 26
                             },
                             "os": {
                               "type": "OperationSystem",
-                              "id": 26
+                              "id": 27
                             },
                             "platform": {
                               "type": "Platform",
-                              "id": 27
+                              "id": 28
                             },
                             "roomId": {
                               "type": "string",
-                              "id": 28
+                              "id": 29
                             },
                             "sampleSeq": {
                               "type": "int32",
-                              "id": 29
+                              "id": 30
                             },
                             "timeZoneOffsetInHours": {
                               "type": "int32",
-                              "id": 30
+                              "id": 31
                             },
                             "userId": {
                               "type": "string",
-                              "id": 31
+                              "id": 32
                             }
                           },
                           "nested": {
@@ -279,6 +284,31 @@ export const jsonDescriptor = {
                               }
                             },
                             "CustomCallEvent": {
+                              "fields": {
+                                "name": {
+                                  "rule": "required",
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "attachments": {
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "mediaTrackId": {
+                                  "type": "string",
+                                  "id": 3
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "id": 4
+                                },
+                                "timestamp": {
+                                  "type": "int64",
+                                  "id": 5
+                                }
+                              }
+                            },
+                            "CustomObserverEvent": {
                               "fields": {
                                 "name": {
                                   "rule": "required",
