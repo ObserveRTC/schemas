@@ -25,14 +25,16 @@ jobs:
 
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+        run: | 
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+          echo "##[set-output name=version;]$(cat ./package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')"
         id: extract_branch
 
       - name: Make snapshot version
         if: steps.extract_branch.outputs.branch != 'main'
         working-directory: ${{env.working-directory}}
         run: |
-          npm version 0.0.1-SNAPSHOT.${{ github.sha }}
+          npm version ${{ steps.extract_branch.outputs.version }}-SNAPSHOT.${{ github.sha }}
 
       - name: Publish
         working-directory: ${{env.working-directory}}
