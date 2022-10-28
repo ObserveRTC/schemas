@@ -28,8 +28,13 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
         id: extract_branch
 
+      - name: Make snapshot version
+        if: steps.extract_branch.outputs.branch != 'main'
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm version 0.0.1-SNAPSHOT.${{ github.sha }}
+
       - name: Publish
-        if: steps.extract_branch.outputs.branch == 'main'
         working-directory: ${{env.working-directory}}
         run: |
           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
@@ -37,11 +42,4 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish Snapshot
-        if: steps.extract_branch.outputs.branch != 'main'
-        working-directory: ${{env.working-directory}}
-        run: |
-          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          npm publish --ignore-scripts --access public --tag SNAPSHOT-${{ github.sha }}
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
