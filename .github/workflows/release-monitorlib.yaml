@@ -32,7 +32,7 @@ jobs:
         if: steps.extract_branch.outputs.branch != 'main'
         working-directory: ${{env.working-directory}}
         run: |
-          npm version SNAPSHOT-${{ github.sha }}
+          npm version 0.0.1-SNAPSHOT.${{ github.sha }}
 
       - name: Publish
         working-directory: ${{env.working-directory}}
