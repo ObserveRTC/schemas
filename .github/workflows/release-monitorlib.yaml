@@ -20,6 +20,17 @@ jobs:
         run: yarn
         working-directory: ${{env.working-directory}}
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+        id: extract_branch
+
+      - name: Make snapshot version
+        if: steps.extract_branch.outputs.branch != 'main'
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm version SNAPSHOT-${{ github.sha }}
+
       - name: Publish
         working-directory: ${{env.working-directory}}
         run: |
