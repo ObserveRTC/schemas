@@ -9,8 +9,7 @@
   },
   "scripts": {
     "prepare": "npm run build",
-    "build": "tsc",
-    "postversion": "git push && git push --tags"
+    "build": "tsc"
   },
   "keywords": [
     "webrtc",
