@@ -380,6 +380,15 @@ export const schema = {
                             "string"
                           ],
                           "default": null
+                        },
+                        {
+                          "name": "timestamp",
+                          "doc": "The EPOCH timestamp the event is generated",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
                         }
                       ]
                     }

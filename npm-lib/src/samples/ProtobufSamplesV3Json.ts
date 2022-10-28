@@ -291,6 +291,10 @@ export const jsonDescriptor = {
                                 "message": {
                                   "type": "string",
                                   "id": 4
+                                },
+                                "timestamp": {
+                                  "type": "int64",
+                                  "id": 5
                                 }
                               }
                             },

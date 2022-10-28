@@ -578,6 +578,7 @@ CustomCallEvent
  * **mediaTrackId**: The identifier of the media track the event is related to
  * **message**: the human readable message of the event
  * **attachments**: Additional attachment relevant for the event
+ * **timestamp**: The EPOCH timestamp the event is generated
 DataChannel
  * **peerConnectionId**: The id of the peer connection the data channel is assigned to
  * **dataChannelIdentifier**: The id of the data channel assigned by the peer connection when it is opened

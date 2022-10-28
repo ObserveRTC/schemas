@@ -207,6 +207,11 @@
                         "doc": "Additional attachment relevant for the event",
                         "type" : [ "null", "string" ],
                         "default" : null
+                      }, {
+                        "name" : "timestamp",
+                        "doc": "The EPOCH timestamp the event is generated",
+                        "type" : [ "null", "long" ],
+                        "default" : null
                       }
                 ]}
             }],

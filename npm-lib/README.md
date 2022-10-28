@@ -844,6 +844,7 @@ name (**Mandatory**) | the name of the event used as identifier. (e.g.: MEDIA_TR
 mediaTrackId | The identifier of the media track the event is related to
 message | the human readable message of the event
 attachments | Additional attachment relevant for the event
+timestamp | The EPOCH timestamp the event is generated
 
 ## DataChannel
 

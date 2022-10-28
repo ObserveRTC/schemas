@@ -2303,6 +2303,11 @@ export type CustomCallEvent = {
 	*/
 	attachments?: string;
 
+	/**
+	* The EPOCH timestamp the event is generated
+	*/
+	timestamp?: number;
+
 }
 
 /**
