@@ -23,16 +23,19 @@ jobs:
         run: yarn
         working-directory: ${{env.working-directory}}
 
-      - name: Extract branch name
+      - name: Setup Custom Contexts
+        working-directory: ${{env.working-directory}}
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-        id: extract_branch
+        run: | 
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+          echo "##[set-output name=version;]$(cat ./package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')"
+        id: job_context
 
       - name: Make snapshot version
-        if: steps.extract_branch.outputs.branch != 'main'
+        if: steps.job_context.outputs.branch != 'main'
         working-directory: ${{env.working-directory}}
         run: |
-          npm version 0.0.1-SNAPSHOT.${{ github.sha }}
+          npm version ${{ steps.job_context.outputs.version }}-SNAPSHOT.${{ github.sha }}
 
       - name: Publish
         working-directory: ${{env.working-directory}}
