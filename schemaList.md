@@ -575,14 +575,14 @@ ExtensionStat
  * **payload**: The payload of the extension stats the custom app provides
 CustomCallEvent
  * **name**: the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+ * **value**: the value of the event
+ * **peerConnectionId**: The unique identifier of the peer connection
  * **mediaTrackId**: The identifier of the media track the event is related to
  * **message**: the human readable message of the event
  * **attachments**: Additional attachment relevant for the event
  * **timestamp**: The EPOCH timestamp the event is generated
 CustomObserverEvent
  * **name**: the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
- * **value**: the value of the event
- * **peerConnectionId**: The unique identifier of the peer connection
  * **mediaTrackId**: The identifier of the media track the event is related to
  * **message**: the human readable message of the event
  * **attachments**: Additional attachment relevant for the event
