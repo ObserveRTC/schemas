@@ -853,6 +853,8 @@ timestamp | The EPOCH timestamp the event is generated
 Field | Description 
 --- | ---
 name (**Mandatory**) | the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+value | the value of the event
+peerConnectionId | The unique identifier of the peer connection
 mediaTrackId | The identifier of the media track the event is related to
 message | the human readable message of the event
 attachments | Additional attachment relevant for the event

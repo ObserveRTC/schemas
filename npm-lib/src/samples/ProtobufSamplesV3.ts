@@ -48,7 +48,9 @@ message Samples {
 			string attachments = 2;
 			string mediaTrackId = 3;
 			string message = 4;
-			int64 timestamp = 5;
+			string peerConnectionId = 5;
+			int64 timestamp = 6;
+			string value = 7;
 		}
 		message DataChannel {
 			string peerConnectionId = 1;

@@ -413,6 +413,24 @@ export const schema = {
                           "type": "string"
                         },
                         {
+                          "name": "value",
+                          "doc": "the value of the event",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "peerConnectionId",
+                          "doc": "The unique identifier of the peer connection",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
                           "name": "mediaTrackId",
                           "doc": "The identifier of the media track the event is related to",
                           "type": [

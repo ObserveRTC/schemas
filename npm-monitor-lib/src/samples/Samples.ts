@@ -2289,6 +2289,16 @@ export type CustomObserverEvent = {
 	name: string;
 
 	/**
+	* the value of the event
+	*/
+	value?: string;
+
+	/**
+	* The unique identifier of the peer connection
+	*/
+	peerConnectionId?: string;
+
+	/**
 	* The identifier of the media track the event is related to
 	*/
 	mediaTrackId?: string;

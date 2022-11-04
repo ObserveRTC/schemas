@@ -321,9 +321,17 @@ export const jsonDescriptor = {
                                   "type": "string",
                                   "id": 4
                                 },
+                                "peerConnectionId": {
+                                  "type": "string",
+                                  "id": 5
+                                },
                                 "timestamp": {
                                   "type": "int64",
-                                  "id": 5
+                                  "id": 6
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "id": 7
                                 }
                               }
                             },
