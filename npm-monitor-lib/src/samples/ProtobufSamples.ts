@@ -374,6 +374,16 @@ message Samples {
 		optional string userId = 32;
 	}
 	message SfuSample {
+		message CustomSfuEvent {
+			required string name = 1;
+			optional string attachments = 2;
+			optional string message = 3;
+			optional string sfuSinkId = 4;
+			optional string sfuStreamId = 5;
+			optional int64 timestamp = 6;
+			optional string transportId = 7;
+			optional string value = 8;
+		}
 		message SfuTransport {
 			required string transportId = 1;
 			optional string dtlsState = 2;
@@ -509,15 +519,16 @@ message Samples {
 			required string payload = 1;
 			required string type = 2;
 		}
-		repeated SfuExtensionStats extensionStats = 1;
-		repeated SfuInboundRtpPad inboundRtpPads = 2;
-		repeated SfuOutboundRtpPad outboundRtpPads = 3;
-		repeated SfuSctpChannel sctpChannels = 4;
-		repeated SfuTransport transports = 5;
-		required string sfuId = 6;
-		required int64 timestamp = 7;
-		optional string marker = 8;
-		optional int32 timeZoneOffsetInHours = 9;
+		repeated CustomSfuEvent customSfuEvents = 1;
+		repeated SfuExtensionStats extensionStats = 2;
+		repeated SfuInboundRtpPad inboundRtpPads = 3;
+		repeated SfuOutboundRtpPad outboundRtpPads = 4;
+		repeated SfuSctpChannel sctpChannels = 5;
+		repeated SfuTransport transports = 6;
+		required string sfuId = 7;
+		required int64 timestamp = 8;
+		optional string marker = 9;
+		optional int32 timeZoneOffsetInHours = 10;
 	}
 	message TurnSample {
 		message TurnPeerAllocation {

@@ -1443,49 +1443,90 @@ export const jsonDescriptor = {
                         },
                         "SfuSample": {
                           "fields": {
+                            "customSfuEvents": {
+                              "rule": "repeated",
+                              "type": "CustomSfuEvent",
+                              "id": 1
+                            },
                             "extensionStats": {
                               "rule": "repeated",
                               "type": "SfuExtensionStats",
-                              "id": 1
+                              "id": 2
                             },
                             "inboundRtpPads": {
                               "rule": "repeated",
                               "type": "SfuInboundRtpPad",
-                              "id": 2
+                              "id": 3
                             },
                             "outboundRtpPads": {
                               "rule": "repeated",
                               "type": "SfuOutboundRtpPad",
-                              "id": 3
+                              "id": 4
                             },
                             "sctpChannels": {
                               "rule": "repeated",
                               "type": "SfuSctpChannel",
-                              "id": 4
+                              "id": 5
                             },
                             "transports": {
                               "rule": "repeated",
                               "type": "SfuTransport",
-                              "id": 5
+                              "id": 6
                             },
                             "sfuId": {
                               "type": "string",
-                              "id": 6
+                              "id": 7
                             },
                             "timestamp": {
                               "type": "int64",
-                              "id": 7
+                              "id": 8
                             },
                             "marker": {
                               "type": "string",
-                              "id": 8
+                              "id": 9
                             },
                             "timeZoneOffsetInHours": {
                               "type": "int32",
-                              "id": 9
+                              "id": 10
                             }
                           },
                           "nested": {
+                            "CustomSfuEvent": {
+                              "fields": {
+                                "name": {
+                                  "type": "string",
+                                  "id": 1
+                                },
+                                "attachments": {
+                                  "type": "string",
+                                  "id": 2
+                                },
+                                "message": {
+                                  "type": "string",
+                                  "id": 3
+                                },
+                                "sfuSinkId": {
+                                  "type": "string",
+                                  "id": 4
+                                },
+                                "sfuStreamId": {
+                                  "type": "string",
+                                  "id": 5
+                                },
+                                "timestamp": {
+                                  "type": "int64",
+                                  "id": 6
+                                },
+                                "transportId": {
+                                  "type": "string",
+                                  "id": 7
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "id": 8
+                                }
+                              }
+                            },
                             "SfuTransport": {
                               "fields": {
                                 "transportId": {

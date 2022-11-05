@@ -30,6 +30,7 @@ Javascript bindings for ObserveRTC schemas
 	* [SfuOutboundRtpPad](#SfuOutboundRtpPad)
 	* [SfuInboundRtpPad](#SfuInboundRtpPad)
 	* [SfuTransport](#SfuTransport)
+	* [CustomSfuEvent](#CustomSfuEvent)
 	* [SfuSample](#SfuSample)
 	* [IceRemoteCandidate](#IceRemoteCandidate)
 	* [IceLocalCandidate](#IceLocalCandidate)
@@ -1235,6 +1236,20 @@ iceRemoteCandidates | List of remote ICE candidates
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples
 
+## CustomSfuEvent
+
+
+Field | Description 
+--- | ---
+name (**Mandatory**) | the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..)
+value | the value of the event
+transportId | The unique identifier of the sfu transport the event is related to
+sfuStreamId | The identifier of the sfu stream the event is related to
+sfuSinkId | The identifier of the sfu sink the event is related to
+message | the human readable message of the event
+attachments | Additional attachment relevant for the event
+timestamp | The EPOCH timestamp the event is generated
+
 ## SfuTransport
 
 
@@ -1400,6 +1415,7 @@ sfuId (**Mandatory**) | Unique generated id for the sfu samples are originated f
 timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples
+customSfuEvents | User provided custom call events
 transports | The Sfu Transports obtained measurements
 inboundRtpPads | The Sfu Inbound Rtp Pad obtained measurements
 outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements

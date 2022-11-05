@@ -3162,6 +3162,91 @@ export const schema = {
                 "default": null
               },
               {
+                "name": "customSfuEvents",
+                "doc": "User provided custom call events",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": {
+                      "name": "CustomSfuEvent",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "name",
+                          "doc": "the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..)",
+                          "type": "string"
+                        },
+                        {
+                          "name": "value",
+                          "doc": "the value of the event",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "transportId",
+                          "doc": "The unique identifier of the sfu transport the event is related to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sfuStreamId",
+                          "doc": "The identifier of the sfu stream the event is related to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "sfuSinkId",
+                          "doc": "The identifier of the sfu sink the event is related to",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "message",
+                          "doc": "the human readable message of the event",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "attachments",
+                          "doc": "Additional attachment relevant for the event",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "timestamp",
+                          "doc": "The EPOCH timestamp the event is generated",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "default": null
+              },
+              {
                 "name": "transports",
                 "doc": "The Sfu Transports obtained measurements",
                 "type": [
