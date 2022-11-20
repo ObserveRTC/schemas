@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   publish-npm:
@@ -20,11 +23,20 @@ jobs:
         run: yarn
         working-directory: ${{env.working-directory}}
 
-      # - name: publish
-      #   run: npm publish --access public
-      #   working-directory: ${{env.working-directory}}
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Setup Custom Contexts
+        working-directory: ${{env.working-directory}}
+        shell: bash
+        run: | 
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+          echo "##[set-output name=version;]$(cat ./package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')"
+        id: job_context
+
+      - name: Make snapshot version
+        if: steps.job_context.outputs.branch != 'main'
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm version ${{ steps.job_context.outputs.version }}-SNAPSHOT.${{ github.sha }}
+
       - name: Publish
         working-directory: ${{env.working-directory}}
         run: |

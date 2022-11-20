@@ -573,6 +573,20 @@ MediaDevice
 ExtensionStat
  * **type**: The type of the extension stats the custom app provides
  * **payload**: The payload of the extension stats the custom app provides
+CustomCallEvent
+ * **name**: the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+ * **value**: the value of the event
+ * **peerConnectionId**: The unique identifier of the peer connection
+ * **mediaTrackId**: The identifier of the media track the event is related to
+ * **message**: the human readable message of the event
+ * **attachments**: Additional attachment relevant for the event
+ * **timestamp**: The EPOCH timestamp the event is generated
+CustomObserverEvent
+ * **name**: the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+ * **mediaTrackId**: The identifier of the media track the event is related to
+ * **message**: the human readable message of the event
+ * **attachments**: Additional attachment relevant for the event
+ * **timestamp**: The EPOCH timestamp the event is generated
 DataChannel
  * **peerConnectionId**: The id of the peer connection the data channel is assigned to
  * **dataChannelIdentifier**: The id of the data channel assigned by the peer connection when it is opened
@@ -864,6 +878,8 @@ ClientSample
  * **mediaDevices**: The WebRTC app provided List of the media devices the client has.
  * **userMediaErrors**: The WebRTC app provided List of user media errors the client has.
  * **extensionStats**: The WebRTC app provided custom stats payload
+ * **customCallEvents**: User provided custom call events
+ * **customObserverEvents**: User provided custom call events
  * **iceServers**: The WebRTC app provided List of ICE server the client used.
  * **localSDPs**: The local part of the Signal Description Protocol to establish connections
  * **dataChannels**: Measurements about the data channels currently avaialble on peer connections
@@ -880,6 +896,15 @@ ClientSample
  * **iceRemoteCandidates**: List of remote ICE candidates
  * **timeZoneOffsetInHours**: The offset from GMT in hours
  * **marker**: Special marker for the samples
+CustomSfuEvent
+ * **name**: the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..)
+ * **value**: the value of the event
+ * **transportId**: The unique identifier of the sfu transport the event is related to
+ * **sfuStreamId**: The identifier of the sfu stream the event is related to
+ * **sfuSinkId**: The identifier of the sfu sink the event is related to
+ * **message**: the human readable message of the event
+ * **attachments**: Additional attachment relevant for the event
+ * **timestamp**: The EPOCH timestamp the event is generated
 SfuTransport
  * **transportId**: The generated unique identifier of the transport
  * **noReport**: Flag indicate to not generate report from this sample
@@ -1015,6 +1040,7 @@ SfuSample
  * **timestamp**: The timestamp the sample is created in GMT
  * **timeZoneOffsetInHours**: The offset from GMT in hours
  * **marker**: Special marker for the samples
+ * **customSfuEvents**: User provided custom call events
  * **transports**: The Sfu Transports obtained measurements
  * **inboundRtpPads**: The Sfu Inbound Rtp Pad obtained measurements
  * **outboundRtpPads**: The Sfu Outbound Rtp Pad obtained measurements

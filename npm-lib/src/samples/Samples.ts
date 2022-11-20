@@ -837,6 +837,52 @@ export type SfuTransport = {
 }
 
 /**
+* User provided custom call events
+*/
+export type CustomSfuEvent = {
+	/**
+	* the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..)
+	*/
+	name: string;
+
+	/**
+	* the value of the event
+	*/
+	value?: string;
+
+	/**
+	* The unique identifier of the sfu transport the event is related to
+	*/
+	transportId?: string;
+
+	/**
+	* The identifier of the sfu stream the event is related to
+	*/
+	sfuStreamId?: string;
+
+	/**
+	* The identifier of the sfu sink the event is related to
+	*/
+	sfuSinkId?: string;
+
+	/**
+	* the human readable message of the event
+	*/
+	message?: string;
+
+	/**
+	* Additional attachment relevant for the event
+	*/
+	attachments?: string;
+
+	/**
+	* The EPOCH timestamp the event is generated
+	*/
+	timestamp?: number;
+
+}
+
+/**
 * docs
 */
 export type SfuSample = {
@@ -859,6 +905,11 @@ export type SfuSample = {
 	* Special marker for the samples
 	*/
 	marker?: string;
+
+	/**
+	* User provided custom call events
+	*/
+	customSfuEvents?: CustomSfuEvent[];
 
 	/**
 	* The Sfu Transports obtained measurements
@@ -2280,6 +2331,78 @@ export type DataChannel = {
 }
 
 /**
+* User provided custom call events
+*/
+export type CustomObserverEvent = {
+	/**
+	* the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+	*/
+	name: string;
+
+	/**
+	* The identifier of the media track the event is related to
+	*/
+	mediaTrackId?: string;
+
+	/**
+	* the human readable message of the event
+	*/
+	message?: string;
+
+	/**
+	* Additional attachment relevant for the event
+	*/
+	attachments?: string;
+
+	/**
+	* The EPOCH timestamp the event is generated
+	*/
+	timestamp?: number;
+
+}
+
+/**
+* User provided custom call events
+*/
+export type CustomCallEvent = {
+	/**
+	* the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+	*/
+	name: string;
+
+	/**
+	* the value of the event
+	*/
+	value?: string;
+
+	/**
+	* The unique identifier of the peer connection
+	*/
+	peerConnectionId?: string;
+
+	/**
+	* The identifier of the media track the event is related to
+	*/
+	mediaTrackId?: string;
+
+	/**
+	* the human readable message of the event
+	*/
+	message?: string;
+
+	/**
+	* Additional attachment relevant for the event
+	*/
+	attachments?: string;
+
+	/**
+	* The EPOCH timestamp the event is generated
+	*/
+	timestamp?: number;
+
+}
+
+/**
 * The WebRTC app provided custom stats payload
 */
 export type ExtensionStat = {
@@ -2463,6 +2586,16 @@ export type ClientSample = {
 	* The WebRTC app provided custom stats payload
 	*/
 	extensionStats?: ExtensionStat[];
+
+	/**
+	* User provided custom call events
+	*/
+	customCallEvents?: CustomCallEvent[];
+
+	/**
+	* User provided custom call events
+	*/
+	customObserverEvents?: CustomObserverEvent[];
 
 	/**
 	* The WebRTC app provided List of ICE server the client used.

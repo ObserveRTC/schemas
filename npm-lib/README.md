@@ -30,6 +30,7 @@ Javascript bindings for ObserveRTC schemas
 	* [SfuOutboundRtpPad](#SfuOutboundRtpPad)
 	* [SfuInboundRtpPad](#SfuInboundRtpPad)
 	* [SfuTransport](#SfuTransport)
+	* [CustomSfuEvent](#CustomSfuEvent)
 	* [SfuSample](#SfuSample)
 	* [IceRemoteCandidate](#IceRemoteCandidate)
 	* [IceLocalCandidate](#IceLocalCandidate)
@@ -43,6 +44,8 @@ Javascript bindings for ObserveRTC schemas
 	* [IceCandidatePair](#IceCandidatePair)
 	* [PeerConnectionTransport](#PeerConnectionTransport)
 	* [DataChannel](#DataChannel)
+	* [CustomObserverEvent](#CustomObserverEvent)
+	* [CustomCallEvent](#CustomCallEvent)
 	* [ExtensionStat](#ExtensionStat)
 	* [MediaDevice](#MediaDevice)
 	* [OperationSystem](#OperationSystem)
@@ -834,6 +837,30 @@ Field | Description
 type (**Mandatory**) | The type of the extension stats the custom app provides
 payload (**Mandatory**) | The payload of the extension stats the custom app provides
 
+## CustomCallEvent
+
+
+Field | Description 
+--- | ---
+name (**Mandatory**) | the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+value | the value of the event
+peerConnectionId | The unique identifier of the peer connection
+mediaTrackId | The identifier of the media track the event is related to
+message | the human readable message of the event
+attachments | Additional attachment relevant for the event
+timestamp | The EPOCH timestamp the event is generated
+
+## CustomObserverEvent
+
+
+Field | Description 
+--- | ---
+name (**Mandatory**) | the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
+mediaTrackId | The identifier of the media track the event is related to
+message | the human readable message of the event
+attachments | Additional attachment relevant for the event
+timestamp | The EPOCH timestamp the event is generated
+
 ## DataChannel
 
 
@@ -1190,6 +1217,8 @@ mediaConstraints | The WebRTC app provided List of the media constraints the cli
 mediaDevices | The WebRTC app provided List of the media devices the client has.
 userMediaErrors | The WebRTC app provided List of user media errors the client has.
 extensionStats | The WebRTC app provided custom stats payload
+customCallEvents | User provided custom call events
+customObserverEvents | User provided custom call events
 iceServers | The WebRTC app provided List of ICE server the client used.
 localSDPs | The local part of the Signal Description Protocol to establish connections
 dataChannels | Measurements about the data channels currently avaialble on peer connections
@@ -1206,6 +1235,20 @@ iceLocalCandidates | List of local ICE candidates
 iceRemoteCandidates | List of remote ICE candidates
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples
+
+## CustomSfuEvent
+
+
+Field | Description 
+--- | ---
+name (**Mandatory**) | the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..)
+value | the value of the event
+transportId | The unique identifier of the sfu transport the event is related to
+sfuStreamId | The identifier of the sfu stream the event is related to
+sfuSinkId | The identifier of the sfu sink the event is related to
+message | the human readable message of the event
+attachments | Additional attachment relevant for the event
+timestamp | The EPOCH timestamp the event is generated
 
 ## SfuTransport
 
@@ -1372,6 +1415,7 @@ sfuId (**Mandatory**) | Unique generated id for the sfu samples are originated f
 timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 timeZoneOffsetInHours | The offset from GMT in hours
 marker | Special marker for the samples
+customSfuEvents | User provided custom call events
 transports | The Sfu Transports obtained measurements
 inboundRtpPads | The Sfu Inbound Rtp Pad obtained measurements
 outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements

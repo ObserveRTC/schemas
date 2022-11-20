@@ -36,6 +36,22 @@ message Samples {
 			string payload = 1;
 			string type = 2;
 		}
+		message CustomCallEvent {
+			string name = 1;
+			string attachments = 2;
+			string mediaTrackId = 3;
+			string message = 4;
+			string peerConnectionId = 5;
+			int64 timestamp = 6;
+			string value = 7;
+		}
+		message CustomObserverEvent {
+			string name = 1;
+			string attachments = 2;
+			string mediaTrackId = 3;
+			string message = 4;
+			int64 timestamp = 5;
+		}
 		message DataChannel {
 			string peerConnectionId = 1;
 			int64 bytesReceived = 2;
@@ -326,36 +342,48 @@ message Samples {
 		}
 		repeated Certificate certificates = 1;
 		repeated MediaCodecStats codecs = 2;
-		repeated DataChannel dataChannels = 3;
-		repeated ExtensionStat extensionStats = 4;
-		repeated IceCandidatePair iceCandidatePairs = 5;
-		repeated IceLocalCandidate iceLocalCandidates = 6;
-		repeated IceRemoteCandidate iceRemoteCandidates = 7;
-		repeated string iceServers = 8;
-		repeated InboundAudioTrack inboundAudioTracks = 9;
-		repeated InboundVideoTrack inboundVideoTracks = 10;
-		repeated string localSDPs = 11;
-		repeated string mediaConstraints = 12;
-		repeated MediaDevice mediaDevices = 13;
-		repeated MediaSourceStat mediaSources = 14;
-		repeated OutboundAudioTrack outboundAudioTracks = 15;
-		repeated OutboundVideoTrack outboundVideoTracks = 16;
-		repeated PeerConnectionTransport pcTransports = 17;
-		repeated string userMediaErrors = 18;
-		string clientId = 19;
-		int64 timestamp = 20;
-		Browser browser = 21;
-		string callId = 22;
-		Engine engine = 23;
-		string marker = 24;
-		OperationSystem os = 25;
-		Platform platform = 26;
-		string roomId = 27;
-		int32 sampleSeq = 28;
-		int32 timeZoneOffsetInHours = 29;
-		string userId = 30;
+		repeated CustomCallEvent customCallEvents = 3;
+		repeated CustomObserverEvent customObserverEvents = 4;
+		repeated DataChannel dataChannels = 5;
+		repeated ExtensionStat extensionStats = 6;
+		repeated IceCandidatePair iceCandidatePairs = 7;
+		repeated IceLocalCandidate iceLocalCandidates = 8;
+		repeated IceRemoteCandidate iceRemoteCandidates = 9;
+		repeated string iceServers = 10;
+		repeated InboundAudioTrack inboundAudioTracks = 11;
+		repeated InboundVideoTrack inboundVideoTracks = 12;
+		repeated string localSDPs = 13;
+		repeated string mediaConstraints = 14;
+		repeated MediaDevice mediaDevices = 15;
+		repeated MediaSourceStat mediaSources = 16;
+		repeated OutboundAudioTrack outboundAudioTracks = 17;
+		repeated OutboundVideoTrack outboundVideoTracks = 18;
+		repeated PeerConnectionTransport pcTransports = 19;
+		repeated string userMediaErrors = 20;
+		string clientId = 21;
+		int64 timestamp = 22;
+		Browser browser = 23;
+		string callId = 24;
+		Engine engine = 25;
+		string marker = 26;
+		OperationSystem os = 27;
+		Platform platform = 28;
+		string roomId = 29;
+		int32 sampleSeq = 30;
+		int32 timeZoneOffsetInHours = 31;
+		string userId = 32;
 	}
 	message SfuSample {
+		message CustomSfuEvent {
+			string name = 1;
+			string attachments = 2;
+			string message = 3;
+			string sfuSinkId = 4;
+			string sfuStreamId = 5;
+			int64 timestamp = 6;
+			string transportId = 7;
+			string value = 8;
+		}
 		message SfuTransport {
 			string transportId = 1;
 			string dtlsState = 2;
@@ -491,15 +519,16 @@ message Samples {
 			string payload = 1;
 			string type = 2;
 		}
-		repeated SfuExtensionStats extensionStats = 1;
-		repeated SfuInboundRtpPad inboundRtpPads = 2;
-		repeated SfuOutboundRtpPad outboundRtpPads = 3;
-		repeated SfuSctpChannel sctpChannels = 4;
-		repeated SfuTransport transports = 5;
-		string sfuId = 6;
-		int64 timestamp = 7;
-		string marker = 8;
-		int32 timeZoneOffsetInHours = 9;
+		repeated CustomSfuEvent customSfuEvents = 1;
+		repeated SfuExtensionStats extensionStats = 2;
+		repeated SfuInboundRtpPad inboundRtpPads = 3;
+		repeated SfuOutboundRtpPad outboundRtpPads = 4;
+		repeated SfuSctpChannel sctpChannels = 5;
+		repeated SfuTransport transports = 6;
+		string sfuId = 7;
+		int64 timestamp = 8;
+		string marker = 9;
+		int32 timeZoneOffsetInHours = 10;
 	}
 	message TurnSample {
 		message TurnPeerAllocation {

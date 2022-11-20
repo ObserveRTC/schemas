@@ -36,6 +36,22 @@ message Samples {
 			required string payload = 1;
 			required string type = 2;
 		}
+		message CustomCallEvent {
+			required string name = 1;
+			optional string attachments = 2;
+			optional string mediaTrackId = 3;
+			optional string message = 4;
+			optional string peerConnectionId = 5;
+			optional int64 timestamp = 6;
+			optional string value = 7;
+		}
+		message CustomObserverEvent {
+			required string name = 1;
+			optional string attachments = 2;
+			optional string mediaTrackId = 3;
+			optional string message = 4;
+			optional int64 timestamp = 5;
+		}
 		message DataChannel {
 			required string peerConnectionId = 1;
 			optional int64 bytesReceived = 2;
@@ -326,36 +342,48 @@ message Samples {
 		}
 		repeated Certificate certificates = 1;
 		repeated MediaCodecStats codecs = 2;
-		repeated DataChannel dataChannels = 3;
-		repeated ExtensionStat extensionStats = 4;
-		repeated IceCandidatePair iceCandidatePairs = 5;
-		repeated IceLocalCandidate iceLocalCandidates = 6;
-		repeated IceRemoteCandidate iceRemoteCandidates = 7;
-		repeated string iceServers = 8;
-		repeated InboundAudioTrack inboundAudioTracks = 9;
-		repeated InboundVideoTrack inboundVideoTracks = 10;
-		repeated string localSDPs = 11;
-		repeated string mediaConstraints = 12;
-		repeated MediaDevice mediaDevices = 13;
-		repeated MediaSourceStat mediaSources = 14;
-		repeated OutboundAudioTrack outboundAudioTracks = 15;
-		repeated OutboundVideoTrack outboundVideoTracks = 16;
-		repeated PeerConnectionTransport pcTransports = 17;
-		repeated string userMediaErrors = 18;
-		required string clientId = 19;
-		required int64 timestamp = 20;
-		optional Browser browser = 21;
-		optional string callId = 22;
-		optional Engine engine = 23;
-		optional string marker = 24;
-		optional OperationSystem os = 25;
-		optional Platform platform = 26;
-		optional string roomId = 27;
-		optional int32 sampleSeq = 28;
-		optional int32 timeZoneOffsetInHours = 29;
-		optional string userId = 30;
+		repeated CustomCallEvent customCallEvents = 3;
+		repeated CustomObserverEvent customObserverEvents = 4;
+		repeated DataChannel dataChannels = 5;
+		repeated ExtensionStat extensionStats = 6;
+		repeated IceCandidatePair iceCandidatePairs = 7;
+		repeated IceLocalCandidate iceLocalCandidates = 8;
+		repeated IceRemoteCandidate iceRemoteCandidates = 9;
+		repeated string iceServers = 10;
+		repeated InboundAudioTrack inboundAudioTracks = 11;
+		repeated InboundVideoTrack inboundVideoTracks = 12;
+		repeated string localSDPs = 13;
+		repeated string mediaConstraints = 14;
+		repeated MediaDevice mediaDevices = 15;
+		repeated MediaSourceStat mediaSources = 16;
+		repeated OutboundAudioTrack outboundAudioTracks = 17;
+		repeated OutboundVideoTrack outboundVideoTracks = 18;
+		repeated PeerConnectionTransport pcTransports = 19;
+		repeated string userMediaErrors = 20;
+		required string clientId = 21;
+		required int64 timestamp = 22;
+		optional Browser browser = 23;
+		optional string callId = 24;
+		optional Engine engine = 25;
+		optional string marker = 26;
+		optional OperationSystem os = 27;
+		optional Platform platform = 28;
+		optional string roomId = 29;
+		optional int32 sampleSeq = 30;
+		optional int32 timeZoneOffsetInHours = 31;
+		optional string userId = 32;
 	}
 	message SfuSample {
+		message CustomSfuEvent {
+			required string name = 1;
+			optional string attachments = 2;
+			optional string message = 3;
+			optional string sfuSinkId = 4;
+			optional string sfuStreamId = 5;
+			optional int64 timestamp = 6;
+			optional string transportId = 7;
+			optional string value = 8;
+		}
 		message SfuTransport {
 			required string transportId = 1;
 			optional string dtlsState = 2;
@@ -491,15 +519,16 @@ message Samples {
 			required string payload = 1;
 			required string type = 2;
 		}
-		repeated SfuExtensionStats extensionStats = 1;
-		repeated SfuInboundRtpPad inboundRtpPads = 2;
-		repeated SfuOutboundRtpPad outboundRtpPads = 3;
-		repeated SfuSctpChannel sctpChannels = 4;
-		repeated SfuTransport transports = 5;
-		required string sfuId = 6;
-		required int64 timestamp = 7;
-		optional string marker = 8;
-		optional int32 timeZoneOffsetInHours = 9;
+		repeated CustomSfuEvent customSfuEvents = 1;
+		repeated SfuExtensionStats extensionStats = 2;
+		repeated SfuInboundRtpPad inboundRtpPads = 3;
+		repeated SfuOutboundRtpPad outboundRtpPads = 4;
+		repeated SfuSctpChannel sctpChannels = 5;
+		repeated SfuTransport transports = 6;
+		required string sfuId = 7;
+		required int64 timestamp = 8;
+		optional string marker = 9;
+		optional int32 timeZoneOffsetInHours = 10;
 	}
 	message TurnSample {
 		message TurnPeerAllocation {
