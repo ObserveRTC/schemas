@@ -1,3 +1,6 @@
+## 2.3.0
+ * Change protobuf generation method to use buildbuf and make the generated Samples file the default Samples typescript
+
 ## 2.2.0
 
 ### Added

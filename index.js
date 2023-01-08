@@ -59,7 +59,7 @@ const main = async () => {
     const sources = fetchSources();
     const npmLib = new NpmLib(NPM_LIB_PATH);
     const w3cStatsIdentifiers = fs.readFileSync(W3C_STATS_IDENTIFIERS, 'utf-8');
-    npmLib.addW3cStatsIdentifiers(w3cStatsIdentifiers);
+    // npmLib.addW3cStatsIdentifiers(w3cStatsIdentifiers);
     const markdownLists = [];
     const csvColumnLists = new Map();
     const redshiftTables = new Map();
@@ -113,48 +113,55 @@ const main = async () => {
     // generate protobuf schema if we can
     const samplesSource = sources.get("samples");
     const samplesProtoPath = "./ProtobufSamples.proto";
-    if (samplesSource) {
-        const schema = JSON.parse(samplesSource.getAvsc());
-        const protobufSchema = protobufUtils.convertToProtobufSchema(schema);
-        fs.writeFileSync(samplesProtoPath, protobufSchema);
+    const schema = JSON.parse(samplesSource.getAvsc());
+    const protobufSchema = protobufUtils.convertToProtobufSchema(schema);
+    fs.writeFileSync(samplesProtoPath, protobufSchema);
+    await protobufUtils.createTypescriptModels(samplesProtoPath, "./");
+    const samplesProtoTsPath = "./ProtobufSamples_pb.ts";
+    const tsFile = fs.readFileSync(samplesProtoTsPath, "utf-8");
+    fs.rmSync(samplesProtoTsPath);
 
+    // if (samplesSource) {
+        
+    //     const protobufJson = await protobufUtils.makeProtobufJson(samplesProtoPath);
+    //     npmLib.addProtobufSchema({
+    //         fileName: "ProtobufSamples",
+    //         protobufSchema,
+    //         protobufJson,
+    //     });
 
-
-        const protobufJson = await protobufUtils.makeProtobufJson(samplesProtoPath);
-        npmLib.addProtobufSchema({
-            fileName: "ProtobufSamples",
-            protobufSchema,
-            protobufJson,
-        });
-
-        const protobufSchemaV3 = protobufUtils.convertToProtobufSchemaV3(schema);
-        const samplesProtoPathV3 = "./ProtobufSamplesV3.proto";
-        fs.writeFileSync(samplesProtoPathV3, protobufSchemaV3);
-        const protobufJsonV3 = await protobufUtils.makeProtobufJson(samplesProtoPathV3);
-        fs.rmSync(samplesProtoPathV3);
-        npmLib.addProtobufSchema({
-            fileName: "ProtobufSamplesV3",
-            protobufSchema: protobufSchemaV3,
-            protobufJson: protobufJsonV3,
-        });
-    } else {
-        console.warn(`There was no Samples avro schema to generate the protobuf schema`);
-    }
+    //     const protobufSchemaV3 = protobufUtils.convertToProtobufSchemaV3(schema);
+    //     const samplesProtoPathV3 = "./ProtobufSamplesV3.proto";
+    //     fs.writeFileSync(samplesProtoPathV3, protobufSchemaV3);
+    //     const protobufJsonV3 = await protobufUtils.makeProtobufJson(samplesProtoPathV3);
+    //     fs.rmSync(samplesProtoPathV3);
+    //     npmLib.addProtobufSchema({
+    //         fileName: "ProtobufSamplesV3",
+    //         protobufSchema: protobufSchemaV3,
+    //         protobufJson: protobufJsonV3,
+    //     });
+    // } else {
+    //     console.warn(`There was no Samples avro schema to generate the protobuf schema`);
+    // }
     const version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
+    npmLib.add({
+        samplesTs: tsFile,
+        w3cStatsIdentifiers
+    })
     npmLib.changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
-    npmLib.version = version
-    npmLib.clear();
+    npmLib.version = version;
+    await npmLib.clear();
     npmLib.make();
 
     const npmMonitorLib = new NpmMonitorLib(NPM_MONITOR_BASE_PATH);
     npmMonitorLib.add({ 
         samplesTs: fs.readFileSync(path.join(NPM_LIB_PATH, "src", "samples", "Samples.ts")), 
-        protobufSamples: fs.readFileSync(path.join(NPM_LIB_PATH, "src", "samples", "ProtobufSamples.ts")), 
+        // protobufSamples: fs.readFileSync(path.join(NPM_LIB_PATH, "src", "samples", "ProtobufSamples.ts")), 
         w3cStatsIdentifiers,
     });
     npmMonitorLib.version = version;
     npmMonitorLib.make();
-    fs.copyFileSync(samplesProtoPath, path.join(NPM_MONITOR_BASE_PATH, "SamplesProtobuf.proto"));
+    // fs.copyFileSync(samplesProtoPath, path.join(NPM_MONITOR_BASE_PATH, "SamplesProtobuf.proto"));
     // createTypescriptModels(samplesProtoPath, "./")
     fs.rmSync(samplesProtoPath);
 

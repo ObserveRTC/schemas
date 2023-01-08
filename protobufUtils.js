@@ -49,7 +49,7 @@ export function convertToProtobufSchemaV3(avroSchema) {
 }
 
 
-async function createTypescriptModels(protoPath, genOutput) {
+export async function createTypescriptModels(protoPath, genOutput) {
     await new Promise((resolve, reject) => {
         const command = [
             `PATH=$PATH:$(pwd)/node_modules/.bin`,

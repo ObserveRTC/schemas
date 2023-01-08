@@ -10,7 +10,6 @@ export class NpmMonitorLib {
         this._basePath = basePath;
         this._srcPath = path.join(basePath, "src");
         this._samplesTs = undefined;
-        this._protobufSamples = undefined;
         this._w3cStatsIdentifiers = undefined;
         this._version = null;
     }
@@ -19,8 +18,7 @@ export class NpmMonitorLib {
         this._version = value;
     }
 
-    add({ samplesTs, protobufSamples, w3cStatsIdentifiers }) {
-        this._protobufSamples = protobufSamples;
+    add({ samplesTs, w3cStatsIdentifiers }) {
         this._samplesTs = samplesTs;
         this._w3cStatsIdentifiers = w3cStatsIdentifiers;
     }
@@ -28,8 +26,6 @@ export class NpmMonitorLib {
     make() {
         const samplesOutputPath = path.join(this._srcPath, "samples", "Samples.ts");
         fs.writeFileSync(samplesOutputPath, this._samplesTs);
-        const protobufSamplesOutputPath = path.join(this._srcPath, "samples", "ProtobufSamples.ts");
-        fs.writeFileSync(protobufSamplesOutputPath, this._protobufSamples);
         const w3cOutputPath = path.join(this._srcPath, "w3c", "W3cStatsIdentifiers.ts");
         fs.writeFileSync(w3cOutputPath, this._w3cStatsIdentifiers);
         const indexTsPath = path.join(this._srcPath, INDEX_TS_FILENAME);

@@ -12,6 +12,7 @@ export class NpmLib {
         this._srcPath = path.join(basePath, "src");
         this._entries = [];
         this._w3cStatsIdentifiers = null;
+        this._samplesTs = undefined;
         this._version = null;
         this._changelog = null;
         this._protobufEntries = [];
@@ -30,15 +31,8 @@ export class NpmLib {
         });
     }
 
-    addProtobufSchema({ fileName, protobufSchema, protobufJson }) {
-        this._protobufEntries.push({
-            fileName,
-            protobufSchema,
-            protobufJson,
-        })
-    }
-
-    addW3cStatsIdentifiers(w3cStatsIdentifiers) {
+    add({ samplesTs, w3cStatsIdentifiers }) {
+        this._samplesTs = samplesTs;
         this._w3cStatsIdentifiers = w3cStatsIdentifiers;
     }
 
@@ -88,21 +82,9 @@ export class NpmLib {
                 }
             }
         }
-        for (const protobufEntry of this._protobufEntries) {
-            const { fileName, protobufSchema, protobufJson } = protobufEntry;
-            const file = fileName + ".ts";
-            const protobufFileName = path.join(this._srcPath, "samples", file);
-            const module = `export const schema = \`\n${protobufSchema}\n\`;`;
-            fs.writeFileSync(protobufFileName, module);
-            exports.push(`export { schema as ${fileName} } from "./samples/${fileName}";`);
+        const samplesOutputPath = path.join(this._srcPath, "samples", "Samples.ts");
+        fs.writeFileSync(samplesOutputPath, this._samplesTs);
 
-            const jsonFileName = fileName + "Json";
-            const jsonFile = jsonFileName + ".ts";
-            const jsonProtobufFileName = path.join(this._srcPath, "samples", jsonFile);
-            const jsonModule = `export const jsonDescriptor = ${protobufJson};`;
-            fs.writeFileSync(jsonProtobufFileName, jsonModule);
-            exports.push(`export { jsonDescriptor as ${jsonFileName} } from "./samples/${jsonFileName}";`);
-        }
         if (this._w3cStatsIdentifiers) {
             const w3cStatsIdentifiersPath = path.join(this._srcPath, "w3c", "W3cStatsIdentifiers.ts");
             fs.writeFileSync(w3cStatsIdentifiersPath, this._w3cStatsIdentifiers);
@@ -163,21 +145,30 @@ export class NpmLib {
     // }
 
     clear() {
+        const promises = [];
         for (const schemaTypes of ["reports", "samples"]) {
             const schemasPath = path.join(this._srcPath, schemaTypes);
             for (const file of fs.readdirSync(schemasPath)) {
                 const filePath = path.join(this._srcPath, schemaTypes, file);
                 // console.log("Remove", filePath);
-                fs.unlink(filePath, err => {
-                    if (err) throw err;
-                });
+                promises.push(new Promise(resolve => {
+                    fs.unlink(filePath, err => {
+                        if (err) throw err;
+                        resolve();
+                    });
+                }));
+                
             }
         }
         const readmePath = path.join(this._srcPath, README_MD_FILENAME);
         if (fs.existsSync(readmePath)) {
-            fs.unlink(readmePath, err => {
-                if (err) throw err;
-            });
+            promises.push(new Promise(resolve => {
+                fs.unlink(readmePath, err => {
+                    if (err) throw err;
+                    resolve();
+                });
+            }));
         }
+        return Promise.all(promises);
     }
 }
