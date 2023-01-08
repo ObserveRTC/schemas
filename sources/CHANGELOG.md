@@ -1,3 +1,10 @@
+## 2.2.0
+
+### Added
+ * CustomCallEvent to ClientSample resembles a CallEventReport, but possible to report from the client side.
+ * CustomSfuEvent to SfuSample resembles an SfuEventReport, but possible to report from the SFU side.
+
+
 ## 2.1.8
  * change IceCandidatePair Report accordingly to IceCandidatePair sample
 

@@ -18,6 +18,7 @@
     "assets:": "./avro"
   },
   "dependencies": {
+    "@bufbuild/protoc-gen-es": "^1.0.0",
     "argparse": "^2.0.1",
     "avro-js": "^1.10.2",
     "json-schema-to-markdown": "^1.1.1",

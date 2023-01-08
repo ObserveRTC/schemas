@@ -1,18 +1,18 @@
 create table  IF NOT EXISTS sfu_event_report (
-	serviceid	VARCHAR(255)	not null,
+	serviceid	VARCHAR(1024)	not null,
 	timestamp	BIGINT	not null,
 	name	VARCHAR(65535)	not null,
 	attachments	VARCHAR(65535),
-	callid	CHAR(36),
+	callid	VARCHAR(254),
 	marker	VARCHAR(65535),
-	mediasinkid	VARCHAR(255),
-	mediastreamid	VARCHAR(255),
-	mediaunitid	VARCHAR(255),
+	mediasinkid	VARCHAR(1024),
+	mediastreamid	VARCHAR(1024),
+	mediaunitid	VARCHAR(1024),
 	message	VARCHAR(65535),
-	rtppadid	VARCHAR(255),
-	sctpstreamid	VARCHAR(255),
-	sfuid	CHAR(36),
-	transportid	CHAR(36),
+	rtppadid	VARCHAR(1024),
+	sctpstreamid	VARCHAR(1024),
+	sfuid	VARCHAR(254),
+	transportid	VARCHAR(254),
 	value	VARCHAR(65535)
 ) diststyle even;
 ALTER TABLE sfu_event_report ALTER diststyle KEY DISTKEY serviceid;

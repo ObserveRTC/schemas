@@ -2,18 +2,18 @@ const schemaName = "schema";
 const tableName = "sfu_outbound_rtp_pad_report";
 exports.up = function (knex) {
 	return knex.schema.withSchema(schemaName).createTable(tableName, (table) => {
-		table.string("serviceid", 255).notNull();
-		table.string("mediaunitid", 255).notNull();
-		table.specificType("sfuid", "CHAR(36)").notNull();
+		table.string("serviceid", 1024).notNull();
+		table.string("mediaunitid", 1024).notNull();
+		table.specificType("sfuid", "VARCHAR(254)").notNull();
 		table.timestamp("timestamp", { useTz: false }).notNull();
-		table.specificType("transportid", "CHAR(36)").notNull();
-		table.specificType("sfustreamid", "CHAR(36)").notNull();
-		table.specificType("sfusinkid", "CHAR(36)").notNull();
-		table.string("rtppadid", 255).notNull();
+		table.specificType("transportid", "VARCHAR(254)").notNull();
+		table.specificType("sfustreamid", "VARCHAR(254)").notNull();
+		table.specificType("sfusinkid", "VARCHAR(254)").notNull();
+		table.string("rtppadid", 1024).notNull();
 		table.bigInteger("ssrc").notNull();
 		table.bigInteger("bytessent");
-		table.specificType("callid", "CHAR(36)");
-		table.specificType("clientid", "CHAR(36)");
+		table.specificType("callid", "VARCHAR(254)");
+		table.specificType("clientid", "VARCHAR(254)");
 		table.integer("clockrate");
 		table.integer("fecpacketsdiscarded");
 		table.integer("fecpacketssent");
@@ -44,7 +44,7 @@ exports.up = function (knex) {
 		table.text("sdpfmtpline");
 		table.integer("slicount");
 		table.integer("targetbitrate");
-		table.specificType("trackid", "CHAR(36)");
+		table.specificType("trackid", "VARCHAR(254)");
 		table.boolean("voiceactivityflag");
 	});
 };

@@ -1,16 +1,16 @@
 create table  IF NOT EXISTS sfu_meta_report (
-	serviceid	VARCHAR(255)	not null,
+	serviceid	VARCHAR(1024)	not null,
 	timestamp	BIGINT	not null,
-	callid	CHAR(36),
+	callid	VARCHAR(254),
 	marker	VARCHAR(65535),
-	mediasinkid	VARCHAR(255),
-	mediastreamid	VARCHAR(255),
-	mediaunitid	VARCHAR(255),
+	mediasinkid	VARCHAR(1024),
+	mediastreamid	VARCHAR(1024),
+	mediaunitid	VARCHAR(1024),
 	payload	VARCHAR(65535),
-	rtppadid	VARCHAR(255),
-	sctpstreamid	VARCHAR(255),
-	sfuid	CHAR(36),
-	transportid	CHAR(36),
+	rtppadid	VARCHAR(1024),
+	sctpstreamid	VARCHAR(1024),
+	sfuid	VARCHAR(254),
+	transportid	VARCHAR(254),
 	type	VARCHAR(65535)
 ) diststyle even;
 ALTER TABLE sfu_meta_report ALTER diststyle KEY DISTKEY serviceid;

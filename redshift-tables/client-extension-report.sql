@@ -1,16 +1,16 @@
 create table  IF NOT EXISTS client_extension_report (
-	serviceid	VARCHAR(255)	not null,
+	serviceid	VARCHAR(1024)	not null,
 	timestamp	BIGINT	not null,
 	extensiontype	VARCHAR(65535)	not null,
-	callid	CHAR(36),
-	clientid	CHAR(36),
+	callid	VARCHAR(254),
+	clientid	VARCHAR(254),
 	marker	VARCHAR(65535),
-	mediaunitid	VARCHAR(255),
+	mediaunitid	VARCHAR(1024),
 	payload	VARCHAR(65535),
-	peerconnectionid	CHAR(36),
-	roomid	VARCHAR(255),
+	peerconnectionid	VARCHAR(254),
+	roomid	VARCHAR(1024),
 	sampleseq	INTEGER,
-	userid	VARCHAR(255)
+	userid	VARCHAR(1024)
 ) diststyle even;
 ALTER TABLE client_extension_report ALTER diststyle KEY DISTKEY serviceid;
 ALTER TABLE client_extension_report ALTER COMPOUND SORTKEY (callid, clientid, peerconnectionid);

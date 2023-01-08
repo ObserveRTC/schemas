@@ -1,21 +1,21 @@
 create table  IF NOT EXISTS sfu_transport_report (
-	serviceid	VARCHAR(255)	not null,
-	mediaunitid	VARCHAR(255)	not null,
-	sfuid	CHAR(36)	not null,
+	serviceid	VARCHAR(1024)	not null,
+	mediaunitid	VARCHAR(1024)	not null,
+	sfuid	VARCHAR(254)	not null,
 	timestamp	BIGINT	not null,
-	transportid	CHAR(36)	not null,
-	callid	CHAR(36),
-	dtlsstate	VARCHAR(255),
+	transportid	VARCHAR(254)	not null,
+	callid	VARCHAR(254),
+	dtlsstate	VARCHAR(1024),
 	icerole	VARCHAR(65535),
-	icestate	VARCHAR(255),
+	icestate	VARCHAR(1024),
 	internal	BOOLEAN,
 	localaddress	VARCHAR(65535),
 	localport	INTEGER,
 	marker	VARCHAR(65535),
-	protocol	VARCHAR(255),
+	protocol	VARCHAR(1024),
 	remoteaddress	VARCHAR(65535),
 	remoteport	INTEGER,
-	roomid	VARCHAR(255),
+	roomid	VARCHAR(1024),
 	rtpbytesreceived	BIGINT,
 	rtpbytessent	BIGINT,
 	rtppacketslost	INTEGER,
@@ -31,7 +31,7 @@ create table  IF NOT EXISTS sfu_transport_report (
 	sctpbytessent	BIGINT,
 	sctppacketsreceived	INTEGER,
 	sctppacketssent	INTEGER,
-	sctpstate	VARCHAR(255)
+	sctpstate	VARCHAR(1024)
 ) diststyle even;
 ALTER TABLE sfu_transport_report ALTER diststyle KEY DISTKEY serviceid;
 ALTER TABLE sfu_transport_report ALTER COMPOUND SORTKEY (sfuid, transportid, callid);

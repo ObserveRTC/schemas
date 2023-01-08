@@ -1,10 +1,10 @@
 create table  IF NOT EXISTS outbound_audio_track_report (
-	serviceid	VARCHAR(255)	not null,
-	mediaunitid	VARCHAR(255)	not null,
+	serviceid	VARCHAR(1024)	not null,
+	mediaunitid	VARCHAR(1024)	not null,
 	timestamp	BIGINT	not null,
-	callid	CHAR(36)	not null,
-	clientid	CHAR(36)	not null,
-	peerconnectionid	CHAR(36)	not null,
+	callid	VARCHAR(254)	not null,
+	clientid	VARCHAR(254)	not null,
+	peerconnectionid	VARCHAR(254)	not null,
 	sampleseq	INTEGER	not null,
 	ssrc	BIGINT	not null,
 	active	BOOLEAN,
@@ -29,10 +29,10 @@ create table  IF NOT EXISTS outbound_audio_track_report (
 	retransmittedbytessent	BIGINT,
 	retransmittedpacketssent	INTEGER,
 	rid	VARCHAR(65535),
-	roomid	VARCHAR(255),
+	roomid	VARCHAR(1024),
 	roundtriptime	REAL,
 	roundtriptimemeasurements	INTEGER,
-	sfustreamid	CHAR(36),
+	sfustreamid	VARCHAR(254),
 	targetbitrate	INTEGER,
 	totalaudioenergy	REAL,
 	totalcapturedelay	REAL,
@@ -41,8 +41,8 @@ create table  IF NOT EXISTS outbound_audio_track_report (
 	totalroundtriptime	REAL,
 	totalsamplescaptured	REAL,
 	totalsamplesduration	REAL,
-	trackid	CHAR(36),
-	userid	VARCHAR(255)
+	trackid	VARCHAR(254),
+	userid	VARCHAR(1024)
 ) diststyle even;
 ALTER TABLE outbound_audio_track_report ALTER diststyle KEY DISTKEY serviceid;
 ALTER TABLE outbound_audio_track_report ALTER COMPOUND SORTKEY (callid, clientid, peerconnectionid, sfustreamid, trackid);

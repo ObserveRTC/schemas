@@ -2,6 +2,7 @@
 import { ProtobufConverter } from "./ProtobufConverter.js";
 import { ProtobufConverterV3 } from "./ProtobufConverterV3.js";
 import * as pbjs from "protobufjs/cli/pbjs.js";
+import { exec } from 'child_process';
 
 export const makeProtobufJson = path => new Promise(resolve => {
     pbjs.main([ path ], function(err, output) {
@@ -45,4 +46,23 @@ export function convertToProtobufSchemaV3(avroSchema) {
     ].join("\n");
     return samplesModule;
     // fs.writeFileSync(outputPath, samplesModule);
+}
+
+
+async function createTypescriptModels(protoPath, genOutput) {
+    await new Promise((resolve, reject) => {
+        const command = [
+            `PATH=$PATH:$(pwd)/node_modules/.bin`,
+            `protoc`,
+            // `./node_modules/.bin/protoc-gen-es`,
+            `-I . `,
+            `--es_out ${genOutput}`,
+            `--es_opt target=ts`,
+            protoPath
+        ].join(" ");
+        exec(command, (error, stdout, stderr) => {
+            if (error) reject(error);
+            else resolve();
+        });
+    });
 }

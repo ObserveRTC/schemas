@@ -2,12 +2,12 @@ const schemaName = "schema";
 const tableName = "outbound_audio_track_report";
 exports.up = function (knex) {
 	return knex.schema.withSchema(schemaName).createTable(tableName, (table) => {
-		table.string("serviceid", 255).notNull();
-		table.string("mediaunitid", 255).notNull();
+		table.string("serviceid", 1024).notNull();
+		table.string("mediaunitid", 1024).notNull();
 		table.timestamp("timestamp", { useTz: false }).notNull();
-		table.specificType("callid", "CHAR(36)").notNull();
-		table.specificType("clientid", "CHAR(36)").notNull();
-		table.specificType("peerconnectionid", "CHAR(36)").notNull();
+		table.specificType("callid", "VARCHAR(254)").notNull();
+		table.specificType("clientid", "VARCHAR(254)").notNull();
+		table.specificType("peerconnectionid", "VARCHAR(254)").notNull();
 		table.integer("sampleseq").notNull();
 		table.bigInteger("ssrc").notNull();
 		table.boolean("active");
@@ -32,10 +32,10 @@ exports.up = function (knex) {
 		table.bigInteger("retransmittedbytessent");
 		table.integer("retransmittedpacketssent");
 		table.text("rid");
-		table.string("roomid", 255);
+		table.string("roomid", 1024);
 		table.text("roundtriptime");
 		table.integer("roundtriptimemeasurements");
-		table.specificType("sfustreamid", "CHAR(36)");
+		table.specificType("sfustreamid", "VARCHAR(254)");
 		table.integer("targetbitrate");
 		table.text("totalaudioenergy");
 		table.text("totalcapturedelay");
@@ -44,7 +44,7 @@ exports.up = function (knex) {
 		table.text("totalroundtriptime");
 		table.text("totalsamplescaptured");
 		table.text("totalsamplesduration");
-		table.specificType("trackid", "CHAR(36)");
-		table.string("userid", 255);
+		table.specificType("trackid", "VARCHAR(254)");
+		table.string("userid", 1024);
 	});
 };

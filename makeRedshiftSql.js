@@ -19,6 +19,9 @@ function nameConverter(fieldName) {
     return fieldName.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 }
 
+
+const UUID_FIELDS_TYPE = "VARCHAR(254)";
+
 const uuidFields = new Set([
     "callId",
     "clientId",
@@ -109,10 +112,10 @@ class RedshiftSql {
                 jsCommands.push(`table.timestamp("timestamp", { useTz: false })`);
             } else if (name === "payload"){
                 jsCommands.push(`unstructuredDataColumn(table, "payload")`);
-            } else if (type === "CHAR(36)") {
+            } else if (type === UUID_FIELDS_TYPE) {
                 jsCommands.push(`table.specificType("${name}", "${type}")`);
-            } else if (type === "VARCHAR(255)") {
-                jsCommands.push(`table.string("${name}", 255)`);
+            } else if (type === "VARCHAR(1024)") {
+                jsCommands.push(`table.string("${name}", 1024)`);
             } else if (type === "VARCHAR(65535)") {
                 jsCommands.push(`table.text("${name}")`);
             } else if (type === "REAL") {
@@ -150,14 +153,14 @@ class RedshiftSql {
 function getRedshiftType(fieldName, avroFieldType) {
     if (avroFieldType === "string") {
         if (uuidFields.has(fieldName)) {
-            return "CHAR(36)";
+            return UUID_FIELDS_TYPE;
         }
         if (fieldName.endsWith("Id")) {
-            return "VARCHAR(255)";
+            return "VARCHAR(1024)";
         }
         const lowerCase = fieldName.toLowerCase();
         if (lowerCase.endsWith("state") || lowerCase.endsWith("protocol")) {
-            return "VARCHAR(255)";
+            return "VARCHAR(1024)";
         }
         return "VARCHAR(65535)";
     }

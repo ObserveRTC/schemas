@@ -52,7 +52,6 @@ function fetchSources() {
 }
 
 
-
 const main = async () => {
     fetchChunks();
     // console.log(chunks.chunkIds());
@@ -118,6 +117,9 @@ const main = async () => {
         const schema = JSON.parse(samplesSource.getAvsc());
         const protobufSchema = protobufUtils.convertToProtobufSchema(schema);
         fs.writeFileSync(samplesProtoPath, protobufSchema);
+
+
+
         const protobufJson = await protobufUtils.makeProtobufJson(samplesProtoPath);
         npmLib.addProtobufSchema({
             fileName: "ProtobufSamples",
@@ -153,6 +155,7 @@ const main = async () => {
     npmMonitorLib.version = version;
     npmMonitorLib.make();
     fs.copyFileSync(samplesProtoPath, path.join(NPM_MONITOR_BASE_PATH, "SamplesProtobuf.proto"));
+    // createTypescriptModels(samplesProtoPath, "./")
     fs.rmSync(samplesProtoPath);
 
     // csv support
