@@ -40,7 +40,7 @@ export class NpmMonitorLib {
 
         const indexLines = [
             `export * from "./samples/Samples";`,
-            `export { schema as ProtobufSamples } from "./samples/ProtobufSamples";`,
+            // `export { schema as ProtobufSamples } from "./samples/ProtobufSamples";`,
             `export * as W3CStats from "./w3c/W3cStatsIdentifiers";`,
             `export const version = "${this._version}";`,
         ]
