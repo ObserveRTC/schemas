@@ -11,21 +11,29 @@ import { Message, proto2 } from "@bufbuild/protobuf";
  */
 export class Samples extends Message<Samples> {
   /**
+   * Samples taken from the client 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample clientSamples = 1;
    */
   clientSamples: Samples_ClientSample[] = [];
 
   /**
+   * Samples taken from an Sfu 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.SfuSample sfuSamples = 2;
    */
   sfuSamples: Samples_SfuSample[] = [];
 
   /**
+   * Samples taken from the TURN server 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.TurnSample turnSamples = 3;
    */
   turnSamples: Samples_TurnSample[] = [];
 
   /**
+   * Additional control flags indicate various operation has to be performed 
+   *
    * @generated from field: optional org.observertc.schemas.protobuf.Samples.Controls controls = 4;
    */
   controls?: Samples_Controls;
@@ -66,11 +74,15 @@ export class Samples extends Message<Samples> {
  */
 export class Samples_Controls extends Message<Samples_Controls> {
   /**
+   * Holds a new claim to process 
+   *
    * @generated from field: optional string accessClaim = 1;
    */
   accessClaim?: string;
 
   /**
+   * Indicate that the server should close the connection 
+   *
    * @generated from field: optional bool close = 2;
    */
   close?: boolean;
@@ -109,161 +121,225 @@ export class Samples_Controls extends Message<Samples_Controls> {
  */
 export class Samples_ClientSample extends Message<Samples_ClientSample> {
   /**
+   * List of certificates the client provided 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.Certificate certificates = 1;
    */
   certificates: Samples_ClientSample_Certificate[] = [];
 
   /**
+   * List of codec the client has 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.MediaCodecStats codecs = 2;
    */
   codecs: Samples_ClientSample_MediaCodecStats[] = [];
 
   /**
+   * User provided custom call events 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.CustomCallEvent customCallEvents = 3;
    */
   customCallEvents: Samples_ClientSample_CustomCallEvent[] = [];
 
   /**
+   * User provided custom call events 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.CustomObserverEvent customObserverEvents = 4;
    */
   customObserverEvents: Samples_ClientSample_CustomObserverEvent[] = [];
 
   /**
+   * Measurements about the data channels currently avaialble on peer connections 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.DataChannel dataChannels = 5;
    */
   dataChannels: Samples_ClientSample_DataChannel[] = [];
 
   /**
+   * The WebRTC app provided custom stats payload 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.ExtensionStat extensionStats = 6;
    */
   extensionStats: Samples_ClientSample_ExtensionStat[] = [];
 
   /**
+   * Candidate pair stats 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.IceCandidatePair iceCandidatePairs = 7;
    */
   iceCandidatePairs: Samples_ClientSample_IceCandidatePair[] = [];
 
   /**
+   * List of local ICE candidates 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.IceLocalCandidate iceLocalCandidates = 8;
    */
   iceLocalCandidates: Samples_ClientSample_IceLocalCandidate[] = [];
 
   /**
+   * List of remote ICE candidates 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.IceRemoteCandidate iceRemoteCandidates = 9;
    */
   iceRemoteCandidates: Samples_ClientSample_IceRemoteCandidate[] = [];
 
   /**
+   * The WebRTC app provided List of ICE server the client used. 
+   *
    * @generated from field: repeated string iceServers = 10;
    */
   iceServers: string[] = [];
 
   /**
+   * List of compound measurements related to inbound audio tracks 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.InboundAudioTrack inboundAudioTracks = 11;
    */
   inboundAudioTracks: Samples_ClientSample_InboundAudioTrack[] = [];
 
   /**
+   * List of compound measurements related to inbound video tracks 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.InboundVideoTrack inboundVideoTracks = 12;
    */
   inboundVideoTracks: Samples_ClientSample_InboundVideoTrack[] = [];
 
   /**
+   * The local part of the Signal Description Protocol to establish connections 
+   *
    * @generated from field: repeated string localSDPs = 13;
    */
   localSDPs: string[] = [];
 
   /**
+   * The WebRTC app provided List of the media constraints the client has. 
+   *
    * @generated from field: repeated string mediaConstraints = 14;
    */
   mediaConstraints: string[] = [];
 
   /**
+   * The WebRTC app provided List of the media devices the client has. 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.MediaDevice mediaDevices = 15;
    */
   mediaDevices: Samples_ClientSample_MediaDevice[] = [];
 
   /**
+   * WebRTC App provided information related to the operation system the client uses. 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.MediaSourceStat mediaSources = 16;
    */
   mediaSources: Samples_ClientSample_MediaSourceStat[] = [];
 
   /**
+   * List of compound measurements related to outbound audio tracks 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.OutboundAudioTrack outboundAudioTracks = 17;
    */
   outboundAudioTracks: Samples_ClientSample_OutboundAudioTrack[] = [];
 
   /**
+   * List of compound measurements related to outbound video tracks 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.OutboundVideoTrack outboundVideoTracks = 18;
    */
   outboundVideoTracks: Samples_ClientSample_OutboundVideoTrack[] = [];
 
   /**
+   * Transport stats of Peer Connection 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.ClientSample.PeerConnectionTransport pcTransports = 19;
    */
   pcTransports: Samples_ClientSample_PeerConnectionTransport[] = [];
 
   /**
+   * The WebRTC app provided List of user media errors the client has. 
+   *
    * @generated from field: repeated string userMediaErrors = 20;
    */
   userMediaErrors: string[] = [];
 
   /**
+   * Unique id of the client providing samples. Must be a valid UUID 
+   *
    * @generated from field: required string clientId = 21;
    */
   clientId?: string;
 
   /**
-   * @generated from field: required int64 timestamp = 22;
+   * The timestamp the sample is created in GMT 
+   *
+   * @generated from field: required uint32 timestamp = 22;
    */
-  timestamp?: bigint;
+  timestamp?: number;
 
   /**
+   * WebRTC App provided information related to the browser the client uses. 
+   *
    * @generated from field: optional org.observertc.schemas.protobuf.Samples.ClientSample.Browser browser = 23;
    */
   browser?: Samples_ClientSample_Browser;
 
   /**
+   * If it is provided the server uses the given id to match clients in the same call. Must be a valid UUID.  
+   *
    * @generated from field: optional string callId = 24;
    */
   callId?: string;
 
   /**
+   * WebRTC App provided information related to the engine the client uses. 
+   *
    * @generated from field: optional org.observertc.schemas.protobuf.Samples.ClientSample.Engine engine = 25;
    */
   engine?: Samples_ClientSample_Engine;
 
   /**
+   * Special marker for the samples 
+   *
    * @generated from field: optional string marker = 26;
    */
   marker?: string;
 
   /**
+   * WebRTC App provided information related to the operation system the client uses. 
+   *
    * @generated from field: optional org.observertc.schemas.protobuf.Samples.ClientSample.OperationSystem os = 27;
    */
   os?: Samples_ClientSample_OperationSystem;
 
   /**
+   * WebRTC App provided information related to the platform the client uses. 
+   *
    * @generated from field: optional org.observertc.schemas.protobuf.Samples.ClientSample.Platform platform = 28;
    */
   platform?: Samples_ClientSample_Platform;
 
   /**
+   * The WebRTC app configured room id the client joined for the call. 
+   *
    * @generated from field: optional string roomId = 29;
    */
   roomId?: string;
 
   /**
+   * The sequence number a source assigns to the sample. Every time the source make a sample at a client this number should be monothonically incremented. 
+   *
    * @generated from field: optional int32 sampleSeq = 30;
    */
   sampleSeq?: number;
 
   /**
+   * The offset from GMT in hours 
+   *
    * @generated from field: optional int32 timeZoneOffsetInHours = 31;
    */
   timeZoneOffsetInHours?: number;
 
   /**
+   * The WebRTC app configured human readable user id the client is joined. 
+   *
    * @generated from field: optional string userId = 32;
    */
   userId?: string;
@@ -297,7 +373,7 @@ export class Samples_ClientSample extends Message<Samples_ClientSample> {
     { no: 19, name: "pcTransports", kind: "message", T: Samples_ClientSample_PeerConnectionTransport, repeated: true },
     { no: 20, name: "userMediaErrors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 21, name: "clientId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 22, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 22, name: "timestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 23, name: "browser", kind: "message", T: Samples_ClientSample_Browser, opt: true },
     { no: 24, name: "callId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 25, name: "engine", kind: "message", T: Samples_ClientSample_Engine, opt: true },
@@ -332,11 +408,15 @@ export class Samples_ClientSample extends Message<Samples_ClientSample> {
  */
 export class Samples_ClientSample_Engine extends Message<Samples_ClientSample_Engine> {
   /**
+   * The name of the Engine 
+   *
    * @generated from field: optional string name = 1;
    */
   name?: string;
 
   /**
+   * The version of the engine 
+   *
    * @generated from field: optional string version = 2;
    */
   version?: string;
@@ -375,16 +455,22 @@ export class Samples_ClientSample_Engine extends Message<Samples_ClientSample_En
  */
 export class Samples_ClientSample_Platform extends Message<Samples_ClientSample_Platform> {
   /**
+   * The name of the model 
+   *
    * @generated from field: optional string model = 1;
    */
   model?: string;
 
   /**
+   * The name of the platform 
+   *
    * @generated from field: optional string type = 2;
    */
   type?: string;
 
   /**
+   * The name of the vendor 
+   *
    * @generated from field: optional string vendor = 3;
    */
   vendor?: string;
@@ -424,11 +510,15 @@ export class Samples_ClientSample_Platform extends Message<Samples_ClientSample_
  */
 export class Samples_ClientSample_Browser extends Message<Samples_ClientSample_Browser> {
   /**
+   * The name of the operation system (e.g.: linux) the webrtc app uses 
+   *
    * @generated from field: optional string name = 1;
    */
   name?: string;
 
   /**
+   * The version of the operation system 
+   *
    * @generated from field: optional string version = 2;
    */
   version?: string;
@@ -467,16 +557,22 @@ export class Samples_ClientSample_Browser extends Message<Samples_ClientSample_B
  */
 export class Samples_ClientSample_OperationSystem extends Message<Samples_ClientSample_OperationSystem> {
   /**
+   * The name of the operation system (e.g.: linux) the webrtc app uses 
+   *
    * @generated from field: optional string name = 1;
    */
   name?: string;
 
   /**
+   * The version of the operation system 
+   *
    * @generated from field: optional string version = 2;
    */
   version?: string;
 
   /**
+   * The name of the version of the operation system 
+   *
    * @generated from field: optional string versionName = 3;
    */
   versionName?: string;
@@ -516,16 +612,22 @@ export class Samples_ClientSample_OperationSystem extends Message<Samples_Client
  */
 export class Samples_ClientSample_MediaDevice extends Message<Samples_ClientSample_MediaDevice> {
   /**
+   * the provided id of the media input / output 
+   *
    * @generated from field: optional string id = 1;
    */
   id?: string;
 
   /**
+   * The media kind of the media device 
+   *
    * @generated from field: optional string kind = 2;
    */
   kind?: string;
 
   /**
+   * The name of the device 
+   *
    * @generated from field: optional string label = 3;
    */
   label?: string;
@@ -565,11 +667,15 @@ export class Samples_ClientSample_MediaDevice extends Message<Samples_ClientSamp
  */
 export class Samples_ClientSample_ExtensionStat extends Message<Samples_ClientSample_ExtensionStat> {
   /**
+   * The payload of the extension stats the custom app provides 
+   *
    * @generated from field: required string payload = 1;
    */
   payload?: string;
 
   /**
+   * The type of the extension stats the custom app provides 
+   *
    * @generated from field: required string type = 2;
    */
   type?: string;
@@ -608,36 +714,50 @@ export class Samples_ClientSample_ExtensionStat extends Message<Samples_ClientSa
  */
 export class Samples_ClientSample_CustomCallEvent extends Message<Samples_ClientSample_CustomCallEvent> {
   /**
+   * the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..) 
+   *
    * @generated from field: required string name = 1;
    */
   name?: string;
 
   /**
+   * Additional attachment relevant for the event 
+   *
    * @generated from field: optional string attachments = 2;
    */
   attachments?: string;
 
   /**
+   * The identifier of the media track the event is related to 
+   *
    * @generated from field: optional string mediaTrackId = 3;
    */
   mediaTrackId?: string;
 
   /**
+   * the human readable message of the event 
+   *
    * @generated from field: optional string message = 4;
    */
   message?: string;
 
   /**
+   * The unique identifier of the peer connection 
+   *
    * @generated from field: optional string peerConnectionId = 5;
    */
   peerConnectionId?: string;
 
   /**
-   * @generated from field: optional int64 timestamp = 6;
+   * The EPOCH timestamp the event is generated 
+   *
+   * @generated from field: optional uint32 timestamp = 6;
    */
-  timestamp?: bigint;
+  timestamp?: number;
 
   /**
+   * the value of the event 
+   *
    * @generated from field: optional string value = 7;
    */
   value?: string;
@@ -655,7 +775,7 @@ export class Samples_ClientSample_CustomCallEvent extends Message<Samples_Client
     { no: 3, name: "mediaTrackId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 6, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 6, name: "timestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 7, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
@@ -681,29 +801,39 @@ export class Samples_ClientSample_CustomCallEvent extends Message<Samples_Client
  */
 export class Samples_ClientSample_CustomObserverEvent extends Message<Samples_ClientSample_CustomObserverEvent> {
   /**
+   * the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..) 
+   *
    * @generated from field: required string name = 1;
    */
   name?: string;
 
   /**
+   * Additional attachment relevant for the event 
+   *
    * @generated from field: optional string attachments = 2;
    */
   attachments?: string;
 
   /**
+   * The identifier of the media track the event is related to 
+   *
    * @generated from field: optional string mediaTrackId = 3;
    */
   mediaTrackId?: string;
 
   /**
+   * the human readable message of the event 
+   *
    * @generated from field: optional string message = 4;
    */
   message?: string;
 
   /**
-   * @generated from field: optional int64 timestamp = 5;
+   * The EPOCH timestamp the event is generated 
+   *
+   * @generated from field: optional uint32 timestamp = 5;
    */
-  timestamp?: bigint;
+  timestamp?: number;
 
   constructor(data?: PartialMessage<Samples_ClientSample_CustomObserverEvent>) {
     super();
@@ -717,7 +847,7 @@ export class Samples_ClientSample_CustomObserverEvent extends Message<Samples_Cl
     { no: 2, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "mediaTrackId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 5, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "timestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Samples_ClientSample_CustomObserverEvent {
@@ -742,46 +872,64 @@ export class Samples_ClientSample_CustomObserverEvent extends Message<Samples_Cl
  */
 export class Samples_ClientSample_DataChannel extends Message<Samples_ClientSample_DataChannel> {
   /**
+   * The id of the peer connection the data channel is assigned to 
+   *
    * @generated from field: required string peerConnectionId = 1;
    */
   peerConnectionId?: string;
 
   /**
-   * @generated from field: optional int64 bytesReceived = 2;
+   * The total number of bytes received on the data channel 
+   *
+   * @generated from field: optional uint32 bytesReceived = 2;
    */
-  bytesReceived?: bigint;
+  bytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 3;
+   * The total number of bytes sent on the data channel 
+   *
+   * @generated from field: optional uint32 bytesSent = 3;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * The id of the data channel assigned by the peer connection when it is opened 
+   *
    * @generated from field: optional int32 dataChannelIdentifier = 4;
    */
   dataChannelIdentifier?: number;
 
   /**
+   * The label of the data channel 
+   *
    * @generated from field: optional string label = 5;
    */
   label?: string;
 
   /**
+   * The total number of message received on the data channel 
+   *
    * @generated from field: optional int32 messageReceived = 6;
    */
   messageReceived?: number;
 
   /**
+   * The total number of message sent on the data channel 
+   *
    * @generated from field: optional int32 messageSent = 7;
    */
   messageSent?: number;
 
   /**
+   * The protocol the data channel utilizes 
+   *
    * @generated from field: optional string protocol = 8;
    */
   protocol?: string;
 
   /**
+   * The state of the data channel 
+   *
    * @generated from field: optional string state = 9;
    */
   state?: string;
@@ -795,8 +943,8 @@ export class Samples_ClientSample_DataChannel extends Message<Samples_ClientSamp
   static readonly typeName = "org.observertc.schemas.protobuf.Samples.ClientSample.DataChannel";
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
     { no: 1, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 3, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 2, name: "bytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 3, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 4, name: "dataChannelIdentifier", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 5, name: "label", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 6, name: "messageReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -827,101 +975,141 @@ export class Samples_ClientSample_DataChannel extends Message<Samples_ClientSamp
  */
 export class Samples_ClientSample_PeerConnectionTransport extends Message<Samples_ClientSample_PeerConnectionTransport> {
   /**
+   * The unique identifier of the peer connection 
+   *
    * @generated from field: required string peerConnectionId = 1;
    */
   peerConnectionId?: string;
 
   /**
+   * The identifier of the transport the ice candidate pair is negotiated on 
+   *
    * @generated from field: required string transportId = 2;
    */
   transportId?: string;
 
   /**
-   * @generated from field: optional int64 bytesReceived = 3;
+   * Represents the total amount of bytes received on the corresponded transport 
+   *
+   * @generated from field: optional uint32 bytesReceived = 3;
    */
-  bytesReceived?: bigint;
+  bytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 4;
+   * Represents the total amount of bytes sent on the corresponded transport 
+   *
+   * @generated from field: optional uint32 bytesSent = 4;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * Represents the name of the DTLS cipher used in the corresponded transport 
+   *
    * @generated from field: optional string dtlsCipher = 5;
    */
   dtlsCipher?: string;
 
   /**
+   * The role this host plays in DTLS negotiations 
+   *
    * @generated from field: optional string dtlsRole = 6;
    */
   dtlsRole?: string;
 
   /**
+   * Represents the current state of DTLS for the peer connection transport layer 
+   *
    * @generated from field: optional string dtlsState = 7;
    */
   dtlsState?: string;
 
   /**
+   * Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport 
+   *
    * @generated from field: optional string iceLocalUsernameFragment = 8;
    */
   iceLocalUsernameFragment?: string;
 
   /**
+   * Represent the current role of ICE under DTLS Transport 
+   *
    * @generated from field: optional string iceRole = 9;
    */
   iceRole?: string;
 
   /**
+   * Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer 
+   *
    * @generated from field: optional string iceState = 10;
    */
   iceState?: string;
 
   /**
+   * The label associated with the peer connection 
+   *
    * @generated from field: optional string label = 11;
    */
   label?: string;
 
   /**
+   * If DTLS negotiated it gives the id of the local certificate 
+   *
    * @generated from field: optional string localCertificateId = 12;
    */
   localCertificateId?: string;
 
   /**
+   * Represents the total number of packets received on the corresponded transport 
+   *
    * @generated from field: optional int32 packetsReceived = 13;
    */
   packetsReceived?: number;
 
   /**
+   * Represents the total number of packets sent on the corresponded transport 
+   *
    * @generated from field: optional int32 packetsSent = 14;
    */
   packetsSent?: number;
 
   /**
+   * If DTLS negotiated it gives the id of the remote certificate 
+   *
    * @generated from field: optional string remoteCertificateId = 15;
    */
   remoteCertificateId?: string;
 
   /**
+   * The total number of candidate pair changes over the peer connection 
+   *
    * @generated from field: optional int32 selectedCandidatePairChanges = 16;
    */
   selectedCandidatePairChanges?: number;
 
   /**
+   * The identifier of the candidate pair the transport currently uses 
+   *
    * @generated from field: optional string selectedCandidatePairId = 17;
    */
   selectedCandidatePairId?: string;
 
   /**
+   * Represents the name of the SRTP cipher used in the corresponded transport 
+   *
    * @generated from field: optional string srtpCipher = 18;
    */
   srtpCipher?: string;
 
   /**
+   * Represents the name of the IANA TLS Supported Groups used in the corresponded transport 
+   *
    * @generated from field: optional string tlsGroup = 19;
    */
   tlsGroup?: string;
 
   /**
+   * Represents the version number of the TLS used in the corresponded transport 
+   *
    * @generated from field: optional string tlsVersion = 20;
    */
   tlsVersion?: string;
@@ -936,8 +1124,8 @@ export class Samples_ClientSample_PeerConnectionTransport extends Message<Sample
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
     { no: 1, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "bytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 4, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 5, name: "dtlsCipher", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 6, name: "dtlsRole", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 7, name: "dtlsState", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -978,126 +1166,176 @@ export class Samples_ClientSample_PeerConnectionTransport extends Message<Sample
  */
 export class Samples_ClientSample_IceCandidatePair extends Message<Samples_ClientSample_IceCandidatePair> {
   /**
+   * The unique identifier of the peer connection 
+   *
    * @generated from field: required string candidatePairId = 1;
    */
   candidatePairId?: string;
 
   /**
+   * The unique identifier of the peer connection 
+   *
    * @generated from field: required string peerConnectionId = 2;
    */
   peerConnectionId?: string;
 
   /**
+   * The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport 
+   *
    * @generated from field: optional double availableIncomingBitrate = 3;
    */
   availableIncomingBitrate?: number;
 
   /**
+   * The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport 
+   *
    * @generated from field: optional double availableOutgoingBitrate = 4;
    */
   availableOutgoingBitrate?: number;
 
   /**
-   * @generated from field: optional int64 bytesDiscardedOnSend = 5;
+   * Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport 
+   *
+   * @generated from field: optional uint32 bytesDiscardedOnSend = 5;
    */
-  bytesDiscardedOnSend?: bigint;
+  bytesDiscardedOnSend?: number;
 
   /**
-   * @generated from field: optional int64 bytesReceived = 6;
+   * The total number of bytes received using the last selected candidate pair over the corresponded transport 
+   *
+   * @generated from field: optional uint32 bytesReceived = 6;
    */
-  bytesReceived?: bigint;
+  bytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 7;
+   * The total number of bytes sent using the last selected candidate pair over the corresponded transport 
+   *
+   * @generated from field: optional uint32 bytesSent = 7;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport 
+   *
    * @generated from field: optional int32 consentRequestsSent = 8;
    */
   consentRequestsSent?: number;
 
   /**
+   * Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport 
+   *
    * @generated from field: optional double currentRoundTripTime = 9;
    */
   currentRoundTripTime?: number;
 
   /**
+   * The label associated to the peer connection 
+   *
    * @generated from field: optional string label = 10;
    */
   label?: string;
 
   /**
-   * @generated from field: optional int64 lastPacketReceivedTimestamp = 11;
+   * Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms) 
+   *
+   * @generated from field: optional uint32 lastPacketReceivedTimestamp = 11;
    */
-  lastPacketReceivedTimestamp?: bigint;
+  lastPacketReceivedTimestamp?: number;
 
   /**
-   * @generated from field: optional int64 lastPacketSentTimestamp = 12;
+   * Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms) 
+   *
+   * @generated from field: optional uint32 lastPacketSentTimestamp = 12;
    */
-  lastPacketSentTimestamp?: bigint;
+  lastPacketSentTimestamp?: number;
 
   /**
+   * The unique identifier of the candidate the negotiated pair is selected at local side 
+   *
    * @generated from field: optional string localCandidateId = 13;
    */
   localCandidateId?: string;
 
   /**
+   * indicate if the ice candidate pair is nominated or not 
+   *
    * @generated from field: optional bool nominated = 14;
    */
   nominated?: boolean;
 
   /**
+   * Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport 
+   *
    * @generated from field: optional int32 packetsDiscardedOnSend = 15;
    */
   packetsDiscardedOnSend?: number;
 
   /**
+   * The total number of packets received using the last selected candidate pair over the corresponded transport 
+   *
    * @generated from field: optional int32 packetsReceived = 16;
    */
   packetsReceived?: number;
 
   /**
+   * The total number of packets sent using the last selected candidate pair over the corresponded transport 
+   *
    * @generated from field: optional int32 packetsSent = 17;
    */
   packetsSent?: number;
 
   /**
+   * The unique identifier of the candidate the negotiated pair is selected at remote side 
+   *
    * @generated from field: optional string remoteCandidateId = 18;
    */
   remoteCandidateId?: string;
 
   /**
+   * Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport 
+   *
    * @generated from field: optional int32 requestsReceived = 19;
    */
   requestsReceived?: number;
 
   /**
+   * Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport 
+   *
    * @generated from field: optional int32 requestsSent = 20;
    */
   requestsSent?: number;
 
   /**
+   * Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport 
+   *
    * @generated from field: optional int32 responsesReceived = 21;
    */
   responsesReceived?: number;
 
   /**
+   * Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport 
+   *
    * @generated from field: optional int32 responsesSent = 22;
    */
   responsesSent?: number;
 
   /**
+   * The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport 
+   *
    * @generated from field: optional string state = 23;
    */
   state?: string;
 
   /**
+   * Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport 
+   *
    * @generated from field: optional double totalRoundTripTime = 24;
    */
   totalRoundTripTime?: number;
 
   /**
+   * The identifier of the transport the ice candidate pair is negotiated on 
+   *
    * @generated from field: optional string transportId = 25;
    */
   transportId?: string;
@@ -1114,14 +1352,14 @@ export class Samples_ClientSample_IceCandidatePair extends Message<Samples_Clien
     { no: 2, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "availableIncomingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "availableOutgoingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 5, name: "bytesDiscardedOnSend", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 6, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 7, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "bytesDiscardedOnSend", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 6, name: "bytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 7, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 8, name: "consentRequestsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 9, name: "currentRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 10, name: "label", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 11, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 12, name: "lastPacketSentTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 11, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 12, name: "lastPacketSentTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 13, name: "localCandidateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 14, name: "nominated", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
     { no: 15, name: "packetsDiscardedOnSend", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1159,81 +1397,113 @@ export class Samples_ClientSample_IceCandidatePair extends Message<Samples_Clien
  */
 export class Samples_ClientSample_MediaSourceStat extends Message<Samples_ClientSample_MediaSourceStat> {
   /**
+   * The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure level from 0 dBov. 
+   *
    * @generated from field: optional double audioLevel = 1;
    */
   audioLevel?: number;
 
   /**
+   * . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source 
+   *
    * @generated from field: optional double droppedSamplesDuration = 2;
    */
   droppedSamplesDuration?: number;
 
   /**
+   * A counter increases every time a sample is dropped after a non-dropped sample 
+   *
    * @generated from field: optional int32 droppedSamplesEvents = 3;
    */
   droppedSamplesEvents?: number;
 
   /**
+   * if echo cancellation is applied on the media source, then this number represents the loss calculation defined in www.itu.int/rec/T-REC-G.168-201504-I/en 
+   *
    * @generated from field: optional double echoReturnLoss = 4;
    */
   echoReturnLoss?: number;
 
   /**
+   * www.itu.int/rec/T-REC-G.168-201504-I/en 
+   *
    * @generated from field: optional double echoReturnLossEnhancement = 5;
    */
   echoReturnLossEnhancement?: number;
 
   /**
+   * The total number of frames originated from the media source 
+   *
    * @generated from field: optional int32 frames = 6;
    */
   frames?: number;
 
   /**
+   *  The number of frames origianted from the media source in the last second 
+   *
    * @generated from field: optional double framesPerSecond = 7;
    */
   framesPerSecond?: number;
 
   /**
+   * The height, in pixels, of the last frame originating from the media source 
+   *
    * @generated from field: optional int32 height = 8;
    */
   height?: number;
 
   /**
+   * The type of the media the Mediasource produces. 
+   *
    * @generated from field: optional string kind = 9;
    */
   kind?: string;
 
   /**
+   * Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media. 
+   *
    * @generated from field: optional bool relayedSource = 10;
    */
   relayedSource?: boolean;
 
   /**
+   * The audio energy of the media source. For calculation see www.w3.org/TR/webrtc-stats/#dom-rtcaudiosourcestats-totalaudioenergy 
+   *
    * @generated from field: optional double totalAudioEnergy = 11;
    */
   totalAudioEnergy?: number;
 
   /**
+   * Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source 
+   *
    * @generated from field: optional double totalCaptureDelay = 12;
    */
   totalCaptureDelay?: number;
 
   /**
+   * The total number of captured samples reaching the audio source 
+   *
    * @generated from field: optional double totalSamplesCaptured = 13;
    */
   totalSamplesCaptured?: number;
 
   /**
+   * The duration of the audio type media source 
+   *
    * @generated from field: optional double totalSamplesDuration = 14;
    */
   totalSamplesDuration?: number;
 
   /**
+   * The unique identifier of the corresponded media track 
+   *
    * @generated from field: optional string trackIdentifier = 15;
    */
   trackIdentifier?: string;
 
   /**
+   * The width, in pixels, of the last frame originating from the media source 
+   *
    * @generated from field: optional int32 width = 16;
    */
   width?: number;
@@ -1286,31 +1556,43 @@ export class Samples_ClientSample_MediaSourceStat extends Message<Samples_Client
  */
 export class Samples_ClientSample_MediaCodecStats extends Message<Samples_ClientSample_MediaCodecStats> {
   /**
+   * Audio Only. Represnts the number of chanels an audio media source have. Only interesting if stereo is presented 
+   *
    * @generated from field: optional int32 channels = 1;
    */
   channels?: number;
 
   /**
+   * the clock rate used in RTP transport to generate the timestamp for the carried frames 
+   *
    * @generated from field: optional int32 clockRate = 2;
    */
   clockRate?: number;
 
   /**
+   * Indicates the role of the codec (encode or decode) 
+   *
    * @generated from field: optional string codecType = 3;
    */
   codecType?: string;
 
   /**
+   * The MIME type of the media. eg.: audio/opus. 
+   *
    * @generated from field: optional string mimeType = 4;
    */
   mimeType?: string;
 
   /**
+   * Payload type used in RTP encoding / decoding process. 
+   *
    * @generated from field: optional string payloadType = 5;
    */
   payloadType?: string;
 
   /**
+   * The SDP line determines the codec 
+   *
    * @generated from field: optional string sdpFmtpLine = 6;
    */
   sdpFmtpLine?: string;
@@ -1353,21 +1635,29 @@ export class Samples_ClientSample_MediaCodecStats extends Message<Samples_Client
  */
 export class Samples_ClientSample_Certificate extends Message<Samples_ClientSample_Certificate> {
   /**
+   * The DER encoded base-64 representation of the certificate. 
+   *
    * @generated from field: optional string base64Certificate = 1;
    */
   base64Certificate?: string;
 
   /**
+   *  The fingerprint of the certificate. 
+   *
    * @generated from field: optional string fingerprint = 2;
    */
   fingerprint?: string;
 
   /**
+   * The hash function used to generate the fingerprint. 
+   *
    * @generated from field: optional string fingerprintAlgorithm = 3;
    */
   fingerprintAlgorithm?: string;
 
   /**
+   * The id of the next certificate in the certificate chain 
+   *
    * @generated from field: optional string issuerCertificateId = 4;
    */
   issuerCertificateId?: string;
@@ -1408,216 +1698,302 @@ export class Samples_ClientSample_Certificate extends Message<Samples_ClientSamp
  */
 export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_ClientSample_InboundAudioTrack> {
   /**
-   * @generated from field: required int64 ssrc = 1;
+   * The RTP SSRC field 
+   *
+   * @generated from field: required uint32 ssrc = 1;
    */
-  ssrc?: bigint;
+  ssrc?: number;
 
   /**
+   * The current audio level 
+   *
    * @generated from field: optional int32 audioLevel = 2;
    */
   audioLevel?: number;
 
   /**
-   * @generated from field: optional int64 bytesReceived = 3;
+   * Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired. 
+   *
+   * @generated from field: optional uint32 bytesReceived = 3;
    */
-  bytesReceived?: bigint;
+  bytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 4;
+   * Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source 
+   *
+   * @generated from field: optional uint32 bytesSent = 4;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * The total number of samples decoded by the media decoder from the corresponded RTP stream 
+   *
    * @generated from field: optional int32 concealedSamples = 5;
    */
   concealedSamples?: number;
 
   /**
+   * The total number of concealed event emitted to the media codec by the corresponded jitterbuffer 
+   *
    * @generated from field: optional int32 concealmentEvents = 6;
    */
   concealmentEvents?: number;
 
   /**
+   * Indicate the name of the decoder implementation library 
+   *
    * @generated from field: optional string decoderImplementation = 7;
    */
   decoderImplementation?: string;
 
   /**
-   * @generated from field: optional int64 estimatedPlayoutTimestamp = 8;
+   * The estimated playout time of the corresponded synchronization source 
+   *
+   * @generated from field: optional uint32 estimatedPlayoutTimestamp = 8;
    */
-  estimatedPlayoutTimestamp?: bigint;
+  estimatedPlayoutTimestamp?: number;
 
   /**
+   * Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired. 
+   *
    * @generated from field: optional int32 fecPacketsDiscarded = 9;
    */
   fecPacketsDiscarded?: number;
 
   /**
+   * Total number of FEC packets received over the corresponding synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 fecPacketsReceived = 10;
    */
   fecPacketsReceived?: number;
 
   /**
-   * @generated from field: optional int64 headerBytesReceived = 11;
+   * Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 headerBytesReceived = 11;
    */
-  headerBytesReceived?: bigint;
+  headerBytesReceived?: number;
 
   /**
+   * The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay) 
+   *
    * @generated from field: optional int32 insertedSamplesForDeceleration = 12;
    */
   insertedSamplesForDeceleration?: number;
 
   /**
+   * The corresponded synchronization source reported jitter 
+   *
    * @generated from field: optional double jitter = 13;
    */
   jitter?: number;
 
   /**
+   * The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity. 
+   *
    * @generated from field: optional double jitterBufferDelay = 14;
    */
   jitterBufferDelay?: number;
 
   /**
+   * The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 jitterBufferEmittedCount = 15;
    */
   jitterBufferEmittedCount?: number;
 
   /**
+   * This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it 
+   *
    * @generated from field: optional double jitterBufferMinimumDelay = 16;
    */
   jitterBufferMinimumDelay?: number;
 
   /**
+   * This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer.  
+   *
    * @generated from field: optional double jitterBufferTargetDelay = 17;
    */
   jitterBufferTargetDelay?: number;
 
   /**
-   * @generated from field: optional int64 lastPacketReceivedTimestamp = 18;
+   * Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 lastPacketReceivedTimestamp = 18;
    */
-  lastPacketReceivedTimestamp?: bigint;
+  lastPacketReceivedTimestamp?: number;
 
   /**
+   * Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 nackCount = 19;
    */
   nackCount?: number;
 
   /**
+   * The total number of packets missed the playout point and therefore discarded by the jitterbuffer 
+   *
    * @generated from field: optional int32 packetsDiscarded = 20;
    */
   packetsDiscarded?: number;
 
   /**
+   * The total number of bytes received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsLost = 21;
    */
   packetsLost?: number;
 
   /**
+   * The total number of packets received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsReceived = 22;
    */
   packetsReceived?: number;
 
   /**
+   * Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source 
+   *
    * @generated from field: optional int32 packetsSent = 23;
    */
   packetsSent?: number;
 
   /**
+   *  The unique generated identifier of the peer connection the inbound audio track belongs to 
+   *
    * @generated from field: optional string peerConnectionId = 24;
    */
   peerConnectionId?: string;
 
   /**
+   * The remote clientId the source outbound track belongs to 
+   *
    * @generated from field: optional string remoteClientId = 25;
    */
   remoteClientId?: string;
 
   /**
-   * @generated from field: optional int64 remoteTimestamp = 26;
+   * The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 remoteTimestamp = 26;
    */
-  remoteTimestamp?: bigint;
+  remoteTimestamp?: number;
 
   /**
+   * The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay) 
+   *
    * @generated from field: optional int32 removedSamplesForAcceleration = 27;
    */
   removedSamplesForAcceleration?: number;
 
   /**
+   * The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to 
+   *
    * @generated from field: optional int32 reportsSent = 28;
    */
   reportsSent?: number;
 
   /**
+   * Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream 
+   *
    * @generated from field: optional double roundTripTime = 29;
    */
   roundTripTime?: number;
 
   /**
+   * Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 roundTripTimeMeasurements = 30;
    */
   roundTripTimeMeasurements?: number;
 
   /**
+   * The id of the sink this track belongs to in the SFU 
+   *
    * @generated from field: optional string sfuSinkId = 31;
    */
   sfuSinkId?: string;
 
   /**
+   * The id of the SFU stream this track is sinked from 
+   *
    * @generated from field: optional string sfuStreamId = 32;
    */
   sfuStreamId?: string;
 
   /**
+   * The total number of samples concealed from the corresponded RTP stream 
+   *
    * @generated from field: optional int32 silentConcealedSamples = 33;
    */
   silentConcealedSamples?: number;
 
   /**
+   * This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized 
+   *
    * @generated from field: optional int32 synthesizedSamplesDuration = 34;
    */
   synthesizedSamplesDuration?: number;
 
   /**
+   * The number of synthesized samples events. 
+   *
    * @generated from field: optional int32 synthesizedSamplesEvents = 35;
    */
   synthesizedSamplesEvents?: number;
 
   /**
+   * Represents the energy level reported by the media source 
+   *
    * @generated from field: optional int32 totalAudioEnergy = 36;
    */
   totalAudioEnergy?: number;
 
   /**
+   *  The playout delay includes the delay from being emitted to the actual time of playout on the device 
+   *
    * @generated from field: optional double totalPlayoutDelay = 37;
    */
   totalPlayoutDelay?: number;
 
   /**
+   * The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded 
+   *
    * @generated from field: optional double totalProcessingDelay = 38;
    */
   totalProcessingDelay?: number;
 
   /**
+   *  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream 
+   *
    * @generated from field: optional double totalRoundTripTime = 39;
    */
   totalRoundTripTime?: number;
 
   /**
+   * When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout 
+   *
    * @generated from field: optional int32 totalSamplesCount = 40;
    */
   totalSamplesCount?: number;
 
   /**
+   * Represents the total duration of the audio samples the media source actually transconverted in seconds 
+   *
    * @generated from field: optional int32 totalSamplesDuration = 41;
    */
   totalSamplesDuration?: number;
 
   /**
+   * The total number of audio samples received on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 totalSamplesReceived = 42;
    */
   totalSamplesReceived?: number;
 
   /**
+   * The id of the track 
+   *
    * @generated from field: optional string trackId = 43;
    */
   trackId?: string;
@@ -1630,24 +2006,24 @@ export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_Clie
   static readonly runtime = proto2;
   static readonly typeName = "org.observertc.schemas.protobuf.Samples.ClientSample.InboundAudioTrack";
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
-    { no: 1, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 1, name: "ssrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 2, name: "audioLevel", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 3, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "bytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 4, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 5, name: "concealedSamples", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 6, name: "concealmentEvents", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 7, name: "decoderImplementation", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 8, name: "estimatedPlayoutTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 8, name: "estimatedPlayoutTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 9, name: "fecPacketsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 10, name: "fecPacketsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 11, name: "headerBytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 11, name: "headerBytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 12, name: "insertedSamplesForDeceleration", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 13, name: "jitter", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 14, name: "jitterBufferDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 15, name: "jitterBufferEmittedCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 16, name: "jitterBufferMinimumDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 17, name: "jitterBufferTargetDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 18, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 18, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 19, name: "nackCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 20, name: "packetsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 21, name: "packetsLost", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1655,7 +2031,7 @@ export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_Clie
     { no: 23, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 24, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 25, name: "remoteClientId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 26, name: "remoteTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 26, name: "remoteTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 27, name: "removedSamplesForAcceleration", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 28, name: "reportsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 29, name: "roundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -1697,216 +2073,302 @@ export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_Clie
  */
 export class Samples_ClientSample_InboundVideoTrack extends Message<Samples_ClientSample_InboundVideoTrack> {
   /**
-   * @generated from field: required int64 ssrc = 1;
+   * The RTP SSRC field 
+   *
+   * @generated from field: required uint32 ssrc = 1;
    */
-  ssrc?: bigint;
+  ssrc?: number;
 
   /**
-   * @generated from field: optional int64 bytesReceived = 2;
+   * Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired. 
+   *
+   * @generated from field: optional uint32 bytesReceived = 2;
    */
-  bytesReceived?: bigint;
+  bytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 3;
+   * Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source 
+   *
+   * @generated from field: optional uint32 bytesSent = 3;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * Indicate the name of the decoder implementation library 
+   *
    * @generated from field: optional string decoderImplementation = 4;
    */
   decoderImplementation?: string;
 
   /**
-   * @generated from field: optional int64 estimatedPlayoutTimestamp = 5;
+   * The estimated playout time of the corresponded synchronization source 
+   *
+   * @generated from field: optional uint32 estimatedPlayoutTimestamp = 5;
    */
-  estimatedPlayoutTimestamp?: bigint;
+  estimatedPlayoutTimestamp?: number;
 
   /**
+   * Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired. 
+   *
    * @generated from field: optional int32 fecPacketsDiscarded = 6;
    */
   fecPacketsDiscarded?: number;
 
   /**
+   * Total number of FEC packets received over the corresponding synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 fecPacketsReceived = 7;
    */
   fecPacketsReceived?: number;
 
   /**
+   * The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 firCount = 8;
    */
   firCount?: number;
 
   /**
+   * The height of the frame of the video sent by the remote source on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 frameHeight = 9;
    */
   frameHeight?: number;
 
   /**
+   * The width of the frame of the video sent by the remote source on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 frameWidth = 10;
    */
   frameWidth?: number;
 
   /**
+   * The total number of frames decoded on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 framesDecoded = 11;
    */
   framesDecoded?: number;
 
   /**
+   * The number of frames dropped prior to decode or missing chunks 
+   *
    * @generated from field: optional int32 framesDropped = 12;
    */
   framesDropped?: number;
 
   /**
+   * The frame per seconds of the video sent by the remote source on the corresponded RTP stream 
+   *
    * @generated from field: optional double framesPerSecond = 13;
    */
   framesPerSecond?: number;
 
   /**
+   * The total number of frames received on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 framesReceived = 14;
    */
   framesReceived?: number;
 
   /**
-   * @generated from field: optional int64 headerBytesReceived = 15;
+   * Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 headerBytesReceived = 15;
    */
-  headerBytesReceived?: bigint;
+  headerBytesReceived?: number;
 
   /**
+   * The corresponded synchronization source reported jitter 
+   *
    * @generated from field: optional double jitter = 16;
    */
   jitter?: number;
 
   /**
+   * The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity. 
+   *
    * @generated from field: optional double jitterBufferDelay = 17;
    */
   jitterBufferDelay?: number;
 
   /**
+   * The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 jitterBufferEmittedCount = 18;
    */
   jitterBufferEmittedCount?: number;
 
   /**
+   * This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it 
+   *
    * @generated from field: optional double jitterBufferMinimumDelay = 19;
    */
   jitterBufferMinimumDelay?: number;
 
   /**
+   * This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer.  
+   *
    * @generated from field: optional double jitterBufferTargetDelay = 20;
    */
   jitterBufferTargetDelay?: number;
 
   /**
+   * The total number of keyframes decoded on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 keyFramesDecoded = 21;
    */
   keyFramesDecoded?: number;
 
   /**
-   * @generated from field: optional int64 lastPacketReceivedTimestamp = 22;
+   * Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 lastPacketReceivedTimestamp = 22;
    */
-  lastPacketReceivedTimestamp?: bigint;
+  lastPacketReceivedTimestamp?: number;
 
   /**
+   * Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 nackCount = 23;
    */
   nackCount?: number;
 
   /**
+   * The total number of packets missed the playout point and therefore discarded by the jitterbuffer 
+   *
    * @generated from field: optional int32 packetsDiscarded = 24;
    */
   packetsDiscarded?: number;
 
   /**
+   * The total number of bytes received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsLost = 25;
    */
   packetsLost?: number;
 
   /**
+   * The total number of packets received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsReceived = 26;
    */
   packetsReceived?: number;
 
   /**
+   * Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source 
+   *
    * @generated from field: optional int32 packetsSent = 27;
    */
   packetsSent?: number;
 
   /**
+   *  The unique generated identifier of the peer connection the inbound audio track belongs to 
+   *
    * @generated from field: optional string peerConnectionId = 28;
    */
   peerConnectionId?: string;
 
   /**
+   * The total number of Picture Loss Indication sent on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 pliCount = 29;
    */
   pliCount?: number;
 
   /**
-   * @generated from field: optional int64 qpSum = 30;
+   * The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream 
+   *
+   * @generated from field: optional uint32 qpSum = 30;
    */
-  qpSum?: bigint;
+  qpSum?: number;
 
   /**
+   * The remote clientId the source outbound track belongs to 
+   *
    * @generated from field: optional string remoteClientId = 31;
    */
   remoteClientId?: string;
 
   /**
-   * @generated from field: optional int64 remoteTimestamp = 32;
+   * The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 remoteTimestamp = 32;
    */
-  remoteTimestamp?: bigint;
+  remoteTimestamp?: number;
 
   /**
+   * The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to 
+   *
    * @generated from field: optional int32 reportsSent = 33;
    */
   reportsSent?: number;
 
   /**
+   * Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream 
+   *
    * @generated from field: optional double roundTripTime = 34;
    */
   roundTripTime?: number;
 
   /**
+   * Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 roundTripTimeMeasurements = 35;
    */
   roundTripTimeMeasurements?: number;
 
   /**
+   * The id of the sink this track belongs to in the SFU 
+   *
    * @generated from field: optional string sfuSinkId = 36;
    */
   sfuSinkId?: string;
 
   /**
+   * The id of the SFU stream this track is sinked from 
+   *
    * @generated from field: optional string sfuStreamId = 37;
    */
   sfuStreamId?: string;
 
   /**
+   * The total tiem spent on decoding video on the corresponded RTP stream 
+   *
    * @generated from field: optional double totalDecodeTime = 38;
    */
   totalDecodeTime?: number;
 
   /**
+   * The total interframe delay 
+   *
    * @generated from field: optional double totalInterFrameDelay = 39;
    */
   totalInterFrameDelay?: number;
 
   /**
+   * The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded 
+   *
    * @generated from field: optional double totalProcessingDelay = 40;
    */
   totalProcessingDelay?: number;
 
   /**
+   *  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream 
+   *
    * @generated from field: optional double totalRoundTripTime = 41;
    */
   totalRoundTripTime?: number;
 
   /**
+   * The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays 
+   *
    * @generated from field: optional double totalSquaredInterFrameDelay = 42;
    */
   totalSquaredInterFrameDelay?: number;
 
   /**
+   * The id of the track 
+   *
    * @generated from field: optional string trackId = 43;
    */
   trackId?: string;
@@ -1919,11 +2381,11 @@ export class Samples_ClientSample_InboundVideoTrack extends Message<Samples_Clie
   static readonly runtime = proto2;
   static readonly typeName = "org.observertc.schemas.protobuf.Samples.ClientSample.InboundVideoTrack";
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
-    { no: 1, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
-    { no: 2, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 3, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 1, name: "ssrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 2, name: "bytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 3, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 4, name: "decoderImplementation", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 5, name: "estimatedPlayoutTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "estimatedPlayoutTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 6, name: "fecPacketsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 7, name: "fecPacketsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 8, name: "firCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1933,14 +2395,14 @@ export class Samples_ClientSample_InboundVideoTrack extends Message<Samples_Clie
     { no: 12, name: "framesDropped", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 13, name: "framesPerSecond", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 14, name: "framesReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 15, name: "headerBytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 15, name: "headerBytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 16, name: "jitter", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 17, name: "jitterBufferDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 18, name: "jitterBufferEmittedCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 19, name: "jitterBufferMinimumDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 20, name: "jitterBufferTargetDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 21, name: "keyFramesDecoded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 22, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 22, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 23, name: "nackCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 24, name: "packetsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 25, name: "packetsLost", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1948,9 +2410,9 @@ export class Samples_ClientSample_InboundVideoTrack extends Message<Samples_Clie
     { no: 27, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 28, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 29, name: "pliCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 30, name: "qpSum", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 30, name: "qpSum", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 31, name: "remoteClientId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 32, name: "remoteTimestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 32, name: "remoteTimestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 33, name: "reportsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 34, name: "roundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 35, name: "roundTripTimeMeasurements", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1986,171 +2448,239 @@ export class Samples_ClientSample_InboundVideoTrack extends Message<Samples_Clie
  */
 export class Samples_ClientSample_OutboundAudioTrack extends Message<Samples_ClientSample_OutboundAudioTrack> {
   /**
-   * @generated from field: required int64 ssrc = 1;
+   * The RTP SSRC field 
+   *
+   * @generated from field: required uint32 ssrc = 1;
    */
-  ssrc?: bigint;
+  ssrc?: number;
 
   /**
+   * Indicates whether this RTP stream is configured to be sent or disabled 
+   *
    * @generated from field: optional bool active = 2;
    */
   active?: boolean;
 
   /**
+   * Represents the audio level reported by the media source 
+   *
    * @generated from field: optional double audioLevel = 3;
    */
   audioLevel?: number;
 
   /**
+   * The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc) 
+   *
    * @generated from field: optional double averageRtcpInterval = 4;
    */
   averageRtcpInterval?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 5;
+   * The total number of bytes sent on the corresponded synchronization source 
+   *
+   * @generated from field: optional uint32 bytesSent = 5;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source 
+   *
    * @generated from field: optional double droppedSamplesDuration = 6;
    */
   droppedSamplesDuration?: number;
 
   /**
+   * A counter increases every time a sample is dropped after a non-dropped sample 
+   *
    * @generated from field: optional int32 droppedSamplesEvents = 7;
    */
   droppedSamplesEvents?: number;
 
   /**
+   * Represents the echo cancellation in decibels corresponded to the media source. 
+   *
    * @generated from field: optional double echoReturnLoss = 8;
    */
   echoReturnLoss?: number;
 
   /**
+   * Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is catched from the emdia source. 
+   *
    * @generated from field: optional double echoReturnLossEnhancement = 9;
    */
   echoReturnLossEnhancement?: number;
 
   /**
+   * Indicate the name of the encoder implementation library 
+   *
    * @generated from field: optional string encoderImplementation = 10;
    */
   encoderImplementation?: string;
 
   /**
+   * The receiver reported fractional lost belongs to the corresponded synchronization source 
+   *
    * @generated from field: optional double fractionLost = 11;
    */
   fractionLost?: number;
 
   /**
-   * @generated from field: optional int64 headerBytesSent = 12;
+   * Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 headerBytesSent = 12;
    */
-  headerBytesSent?: bigint;
+  headerBytesSent?: number;
 
   /**
+   * The corresponded synchronization source reported jitter 
+   *
    * @generated from field: optional double jitter = 13;
    */
   jitter?: number;
 
   /**
+   * Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 nackCount = 14;
    */
   nackCount?: number;
 
   /**
+   * The total number of bytes received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsLost = 15;
    */
   packetsLost?: number;
 
   /**
+   * The total number of packets received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsReceived = 16;
    */
   packetsReceived?: number;
 
   /**
+   * The total number of packets sent on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsSent = 17;
    */
   packetsSent?: number;
 
   /**
+   *  The unique generated identifier of the peer connection the inbound audio track belongs to 
+   *
    * @generated from field: optional string peerConnectionId = 18;
    */
   peerConnectionId?: string;
 
   /**
+   * True if the corresponded media source is remote, false otherwise (or null depending on browser and version) 
+   *
    * @generated from field: optional bool relayedSource = 19;
    */
   relayedSource?: boolean;
 
   /**
-   * @generated from field: optional int64 retransmittedBytesSent = 20;
+   * Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc). 
+   *
+   * @generated from field: optional uint32 retransmittedBytesSent = 20;
    */
-  retransmittedBytesSent?: bigint;
+  retransmittedBytesSent?: number;
 
   /**
+   * Total number of retransmitted packets sent over the corresponding synchronization source (ssrc). 
+   *
    * @generated from field: optional int32 retransmittedPacketsSent = 21;
    */
   retransmittedPacketsSent?: number;
 
   /**
+   *  The rid encoding parameter of the corresponded synchronization source 
+   *
    * @generated from field: optional string rid = 22;
    */
   rid?: string;
 
   /**
+   * RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source 
+   *
    * @generated from field: optional double roundTripTime = 23;
    */
   roundTripTime?: number;
 
   /**
+   * The total number of calculated RR measurements received on this source 
+   *
    * @generated from field: optional int32 roundTripTimeMeasurements = 24;
    */
   roundTripTimeMeasurements?: number;
 
   /**
+   * The id of the SFU stream this track is related to 
+   *
    * @generated from field: optional string sfuStreamId = 25;
    */
   sfuStreamId?: string;
 
   /**
+   * Reflects the current encoder target in bits per second. 
+   *
    * @generated from field: optional int32 targetBitrate = 26;
    */
   targetBitrate?: number;
 
   /**
+   * Represents the energy level reported by the media source 
+   *
    * @generated from field: optional double totalAudioEnergy = 27;
    */
   totalAudioEnergy?: number;
 
   /**
+   * Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source 
+   *
    * @generated from field: optional double totalCaptureDelay = 28;
    */
   totalCaptureDelay?: number;
 
   /**
-   * @generated from field: optional int64 totalEncodedBytesTarget = 29;
+   * The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets 
+   *
+   * @generated from field: optional uint32 totalEncodedBytesTarget = 29;
    */
-  totalEncodedBytesTarget?: bigint;
+  totalEncodedBytesTarget?: number;
 
   /**
+   * The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source 
+   *
    * @generated from field: optional double totalPacketSendDelay = 30;
    */
   totalPacketSendDelay?: number;
 
   /**
+   * The sum of RTT measurements belongs to the corresponded synchronization source 
+   *
    * @generated from field: optional double totalRoundTripTime = 31;
    */
   totalRoundTripTime?: number;
 
   /**
+   * The total number of captured samples reaching the audio source 
+   *
    * @generated from field: optional double totalSamplesCaptured = 32;
    */
   totalSamplesCaptured?: number;
 
   /**
+   * Represents the total duration of the audio samples the media source actually transconverted in seconds 
+   *
    * @generated from field: optional double totalSamplesDuration = 33;
    */
   totalSamplesDuration?: number;
 
   /**
+   * The id of the track 
+   *
    * @generated from field: optional string trackId = 34;
    */
   trackId?: string;
@@ -2163,18 +2693,18 @@ export class Samples_ClientSample_OutboundAudioTrack extends Message<Samples_Cli
   static readonly runtime = proto2;
   static readonly typeName = "org.observertc.schemas.protobuf.Samples.ClientSample.OutboundAudioTrack";
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
-    { no: 1, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 1, name: "ssrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 2, name: "active", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
     { no: 3, name: "audioLevel", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "averageRtcpInterval", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 5, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 6, name: "droppedSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 7, name: "droppedSamplesEvents", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 8, name: "echoReturnLoss", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 9, name: "echoReturnLossEnhancement", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 10, name: "encoderImplementation", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 11, name: "fractionLost", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 12, name: "headerBytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 12, name: "headerBytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 13, name: "jitter", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 14, name: "nackCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 15, name: "packetsLost", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -2182,7 +2712,7 @@ export class Samples_ClientSample_OutboundAudioTrack extends Message<Samples_Cli
     { no: 17, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 18, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 19, name: "relayedSource", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
-    { no: 20, name: "retransmittedBytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 20, name: "retransmittedBytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 21, name: "retransmittedPacketsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 22, name: "rid", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 23, name: "roundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -2191,7 +2721,7 @@ export class Samples_ClientSample_OutboundAudioTrack extends Message<Samples_Cli
     { no: 26, name: "targetBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 27, name: "totalAudioEnergy", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 28, name: "totalCaptureDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 29, name: "totalEncodedBytesTarget", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 29, name: "totalEncodedBytesTarget", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 30, name: "totalPacketSendDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 31, name: "totalRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 32, name: "totalSamplesCaptured", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -2221,231 +2751,323 @@ export class Samples_ClientSample_OutboundAudioTrack extends Message<Samples_Cli
  */
 export class Samples_ClientSample_OutboundVideoTrack extends Message<Samples_ClientSample_OutboundVideoTrack> {
   /**
-   * @generated from field: required int64 ssrc = 1;
+   * The RTP SSRC field 
+   *
+   * @generated from field: required uint32 ssrc = 1;
    */
-  ssrc?: bigint;
+  ssrc?: number;
 
   /**
+   * Indicates whether this RTP stream is configured to be sent or disabled 
+   *
    * @generated from field: optional bool active = 2;
    */
   active?: boolean;
 
   /**
+   * The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc) 
+   *
    * @generated from field: optional double averageRtcpInterval = 3;
    */
   averageRtcpInterval?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 4;
+   * The total number of bytes sent on the corresponded synchronization source 
+   *
+   * @generated from field: optional uint32 bytesSent = 4;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * Indicate the name of the encoder implementation library 
+   *
    * @generated from field: optional string encoderImplementation = 5;
    */
   encoderImplementation?: string;
 
   /**
+   * The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 firCount = 6;
    */
   firCount?: number;
 
   /**
+   * The receiver reported fractional lost belongs to the corresponded synchronization source 
+   *
    * @generated from field: optional double fractionLost = 7;
    */
   fractionLost?: number;
 
   /**
+   * The frame width the media encoder targeted 
+   *
    * @generated from field: optional int32 frameHeight = 8;
    */
   frameHeight?: number;
 
   /**
+   * The frame width in pixels of the frames targeted by the media encoder 
+   *
    * @generated from field: optional int32 frameWidth = 9;
    */
   frameWidth?: number;
 
   /**
+   * The total number of frames originated from the media source 
+   *
    * @generated from field: optional int32 frames = 10;
    */
   frames?: number;
 
   /**
+   * The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 framesDropped = 11;
    */
   framesDropped?: number;
 
   /**
+   * The total number of frames encoded by the media source 
+   *
    * @generated from field: optional int32 framesEncoded = 12;
    */
   framesEncoded?: number;
 
   /**
+   * The encoded number of frames in the last second on the corresponded media source 
+   *
    * @generated from field: optional double framesPerSecond = 13;
    */
   framesPerSecond?: number;
 
   /**
+   * TThe total number of frames sent on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 framesSent = 14;
    */
   framesSent?: number;
 
   /**
-   * @generated from field: optional int64 headerBytesSent = 15;
+   * Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc) 
+   *
+   * @generated from field: optional uint32 headerBytesSent = 15;
    */
-  headerBytesSent?: bigint;
+  headerBytesSent?: number;
 
   /**
+   * The height, in pixels, of the last frame originating from the media source 
+   *
    * @generated from field: optional int32 height = 16;
    */
   height?: number;
 
   /**
+   * The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 hugeFramesSent = 17;
    */
   hugeFramesSent?: number;
 
   /**
+   * The corresponded synchronization source reported jitter 
+   *
    * @generated from field: optional double jitter = 18;
    */
   jitter?: number;
 
   /**
+   * The total number of keyframes encoded on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 keyFramesEncoded = 19;
    */
   keyFramesEncoded?: number;
 
   /**
+   * Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc) 
+   *
    * @generated from field: optional int32 nackCount = 20;
    */
   nackCount?: number;
 
   /**
+   * The total number of bytes received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsLost = 21;
    */
   packetsLost?: number;
 
   /**
+   * The total number of packets received on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsReceived = 22;
    */
   packetsReceived?: number;
 
   /**
+   * The total number of packets sent on the corresponded synchronization source 
+   *
    * @generated from field: optional int32 packetsSent = 23;
    */
   packetsSent?: number;
 
   /**
+   *  The unique generated identifier of the peer connection the inbound audio track belongs to 
+   *
    * @generated from field: optional string peerConnectionId = 24;
    */
   peerConnectionId?: string;
 
   /**
+   * The total number of Picture Loss Indication sent on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 pliCount = 25;
    */
   pliCount?: number;
 
   /**
-   * @generated from field: optional int64 qpSum = 26;
+   * The sum of the QP the media encoder provided on the corresponded RTP stream. 
+   *
+   * @generated from field: optional uint32 qpSum = 26;
    */
-  qpSum?: bigint;
+  qpSum?: number;
 
   /**
+   * Time elapsed in seconds the RTC connection had a limitation because of Bandwidth 
+   *
    * @generated from field: optional double qualityLimitationDurationBandwidth = 27;
    */
   qualityLimitationDurationBandwidth?: number;
 
   /**
+   * Time elapsed in seconds the RTC connection had a limitation because of CPU 
+   *
    * @generated from field: optional double qualityLimitationDurationCPU = 28;
    */
   qualityLimitationDurationCPU?: number;
 
   /**
+   * Time elapsed in seconds when the RTC connection has not limited the quality 
+   *
    * @generated from field: optional double qualityLimitationDurationNone = 29;
    */
   qualityLimitationDurationNone?: number;
 
   /**
+   * Time elapsed in seconds the RTC connection had a limitation because of Other factor 
+   *
    * @generated from field: optional double qualityLimitationDurationOther = 30;
    */
   qualityLimitationDurationOther?: number;
 
   /**
+   * Indicate a reason for the quality limitation of the corresponded synchronization source 
+   *
    * @generated from field: optional string qualityLimitationReason = 31;
    */
   qualityLimitationReason?: string;
 
   /**
+   * The total number of resolution changes occured ont he corresponded RTP stream due to quality changes 
+   *
    * @generated from field: optional int32 qualityLimitationResolutionChanges = 32;
    */
   qualityLimitationResolutionChanges?: number;
 
   /**
+   * True if the corresponded media source is remote, false otherwise (or null depending on browser and version) 
+   *
    * @generated from field: optional bool relayedSource = 33;
    */
   relayedSource?: boolean;
 
   /**
-   * @generated from field: optional int64 retransmittedBytesSent = 34;
+   * Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc). 
+   *
+   * @generated from field: optional uint32 retransmittedBytesSent = 34;
    */
-  retransmittedBytesSent?: bigint;
+  retransmittedBytesSent?: number;
 
   /**
+   * Total number of retransmitted packets sent over the corresponding synchronization source (ssrc). 
+   *
    * @generated from field: optional int32 retransmittedPacketsSent = 35;
    */
   retransmittedPacketsSent?: number;
 
   /**
+   *  The rid encoding parameter of the corresponded synchronization source 
+   *
    * @generated from field: optional string rid = 36;
    */
   rid?: string;
 
   /**
+   * RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source 
+   *
    * @generated from field: optional double roundTripTime = 37;
    */
   roundTripTime?: number;
 
   /**
+   * The total number of calculated RR measurements received on this source 
+   *
    * @generated from field: optional int32 roundTripTimeMeasurements = 38;
    */
   roundTripTimeMeasurements?: number;
 
   /**
+   * The id of the SFU stream this track is related to 
+   *
    * @generated from field: optional string sfuStreamId = 39;
    */
   sfuStreamId?: string;
 
   /**
+   * Reflects the current encoder target in bits per second. 
+   *
    * @generated from field: optional int32 targetBitrate = 40;
    */
   targetBitrate?: number;
 
   /**
+   * The total time in seconds spent in encoding media frames for the corresponded RTP stream. 
+   *
    * @generated from field: optional double totalEncodeTime = 41;
    */
   totalEncodeTime?: number;
 
   /**
-   * @generated from field: optional int64 totalEncodedBytesTarget = 42;
+   * The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets 
+   *
+   * @generated from field: optional uint32 totalEncodedBytesTarget = 42;
    */
-  totalEncodedBytesTarget?: bigint;
+  totalEncodedBytesTarget?: number;
 
   /**
+   * The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source 
+   *
    * @generated from field: optional double totalPacketSendDelay = 43;
    */
   totalPacketSendDelay?: number;
 
   /**
+   * The sum of RTT measurements belongs to the corresponded synchronization source 
+   *
    * @generated from field: optional double totalRoundTripTime = 44;
    */
   totalRoundTripTime?: number;
 
   /**
+   * The id of the track 
+   *
    * @generated from field: optional string trackId = 45;
    */
   trackId?: string;
 
   /**
+   * The width, in pixels, of the last frame originating from the media source 
+   *
    * @generated from field: optional int32 width = 46;
    */
   width?: number;
@@ -2458,10 +3080,10 @@ export class Samples_ClientSample_OutboundVideoTrack extends Message<Samples_Cli
   static readonly runtime = proto2;
   static readonly typeName = "org.observertc.schemas.protobuf.Samples.ClientSample.OutboundVideoTrack";
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
-    { no: 1, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 1, name: "ssrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 2, name: "active", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
     { no: 3, name: "averageRtcpInterval", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 4, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 4, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 5, name: "encoderImplementation", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 6, name: "firCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 7, name: "fractionLost", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -2472,7 +3094,7 @@ export class Samples_ClientSample_OutboundVideoTrack extends Message<Samples_Cli
     { no: 12, name: "framesEncoded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 13, name: "framesPerSecond", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 14, name: "framesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 15, name: "headerBytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 15, name: "headerBytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 16, name: "height", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 17, name: "hugeFramesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 18, name: "jitter", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -2483,7 +3105,7 @@ export class Samples_ClientSample_OutboundVideoTrack extends Message<Samples_Cli
     { no: 23, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 24, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 25, name: "pliCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 26, name: "qpSum", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 26, name: "qpSum", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 27, name: "qualityLimitationDurationBandwidth", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 28, name: "qualityLimitationDurationCPU", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 29, name: "qualityLimitationDurationNone", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -2491,7 +3113,7 @@ export class Samples_ClientSample_OutboundVideoTrack extends Message<Samples_Cli
     { no: 31, name: "qualityLimitationReason", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 32, name: "qualityLimitationResolutionChanges", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 33, name: "relayedSource", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
-    { no: 34, name: "retransmittedBytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 34, name: "retransmittedBytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 35, name: "retransmittedPacketsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 36, name: "rid", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 37, name: "roundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -2499,7 +3121,7 @@ export class Samples_ClientSample_OutboundVideoTrack extends Message<Samples_Cli
     { no: 39, name: "sfuStreamId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 40, name: "targetBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 41, name: "totalEncodeTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 42, name: "totalEncodedBytesTarget", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 42, name: "totalEncodedBytesTarget", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 43, name: "totalPacketSendDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 44, name: "totalRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 45, name: "trackId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -2528,46 +3150,64 @@ export class Samples_ClientSample_OutboundVideoTrack extends Message<Samples_Cli
  */
 export class Samples_ClientSample_IceLocalCandidate extends Message<Samples_ClientSample_IceLocalCandidate> {
   /**
+   * The address of the local endpoint (Ipv4, Ipv6, FQDN) 
+   *
    * @generated from field: optional string address = 1;
    */
   address?: string;
 
   /**
+   * The type of the local candidate 
+   *
    * @generated from field: optional string candidateType = 2;
    */
   candidateType?: string;
 
   /**
+   * The unique identifier of the local candidate 
+   *
    * @generated from field: optional string id = 3;
    */
   id?: string;
 
   /**
+   * Refers to the peer connection the local candidate belongs to 
+   *
    * @generated from field: optional string peerConnectionId = 4;
    */
   peerConnectionId?: string;
 
   /**
+   * The port number of the local endpoint the ICE uses 
+   *
    * @generated from field: optional int32 port = 5;
    */
   port?: number;
 
   /**
-   * @generated from field: optional int64 priority = 6;
+   * The priority of the local candidate 
+   *
+   * @generated from field: optional uint32 priority = 6;
    */
-  priority?: bigint;
+  priority?: number;
 
   /**
+   * The protocol for the ICE 
+   *
    * @generated from field: optional string protocol = 7;
    */
   protocol?: string;
 
   /**
+   * The relay protocol the local candidate uses 
+   *
    * @generated from field: optional string relayProtocol = 8;
    */
   relayProtocol?: string;
 
   /**
+   * The url of the ICE server 
+   *
    * @generated from field: optional string url = 9;
    */
   url?: string;
@@ -2585,7 +3225,7 @@ export class Samples_ClientSample_IceLocalCandidate extends Message<Samples_Clie
     { no: 3, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "port", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 6, name: "priority", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 6, name: "priority", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 7, name: "protocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 8, name: "relayProtocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 9, name: "url", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -2613,46 +3253,64 @@ export class Samples_ClientSample_IceLocalCandidate extends Message<Samples_Clie
  */
 export class Samples_ClientSample_IceRemoteCandidate extends Message<Samples_ClientSample_IceRemoteCandidate> {
   /**
+   * The address of the local endpoint (Ipv4, Ipv6, FQDN) 
+   *
    * @generated from field: optional string address = 1;
    */
   address?: string;
 
   /**
+   * The type of the local candidate 
+   *
    * @generated from field: optional string candidateType = 2;
    */
   candidateType?: string;
 
   /**
+   * The unique identifier of the local candidate 
+   *
    * @generated from field: optional string id = 3;
    */
   id?: string;
 
   /**
+   * Refers to the peer connection the local candidate belongs to 
+   *
    * @generated from field: optional string peerConnectionId = 4;
    */
   peerConnectionId?: string;
 
   /**
+   * The port number of the local endpoint the ICE uses 
+   *
    * @generated from field: optional int32 port = 5;
    */
   port?: number;
 
   /**
-   * @generated from field: optional int64 priority = 6;
+   * The priority of the local candidate 
+   *
+   * @generated from field: optional uint32 priority = 6;
    */
-  priority?: bigint;
+  priority?: number;
 
   /**
+   * The protocol for the ICE 
+   *
    * @generated from field: optional string protocol = 7;
    */
   protocol?: string;
 
   /**
+   * The relay protocol the local candidate uses 
+   *
    * @generated from field: optional string relayProtocol = 8;
    */
   relayProtocol?: string;
 
   /**
+   * The url of the ICE server 
+   *
    * @generated from field: optional string url = 9;
    */
   url?: string;
@@ -2670,7 +3328,7 @@ export class Samples_ClientSample_IceRemoteCandidate extends Message<Samples_Cli
     { no: 3, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "peerConnectionId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "port", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 6, name: "priority", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 6, name: "priority", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 7, name: "protocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 8, name: "relayProtocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 9, name: "url", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -2698,51 +3356,71 @@ export class Samples_ClientSample_IceRemoteCandidate extends Message<Samples_Cli
  */
 export class Samples_SfuSample extends Message<Samples_SfuSample> {
   /**
+   * User provided custom call events 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.SfuSample.CustomSfuEvent customSfuEvents = 1;
    */
   customSfuEvents: Samples_SfuSample_CustomSfuEvent[] = [];
 
   /**
+   * The Sfu provided custom stats payload 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.SfuSample.SfuExtensionStats extensionStats = 2;
    */
   extensionStats: Samples_SfuSample_SfuExtensionStats[] = [];
 
   /**
+   * The Sfu Inbound Rtp Pad obtained measurements 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.SfuSample.SfuInboundRtpPad inboundRtpPads = 3;
    */
   inboundRtpPads: Samples_SfuSample_SfuInboundRtpPad[] = [];
 
   /**
+   * The Sfu Outbound Rtp Pad obtained measurements 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.SfuSample.SfuOutboundRtpPad outboundRtpPads = 4;
    */
   outboundRtpPads: Samples_SfuSample_SfuOutboundRtpPad[] = [];
 
   /**
+   * The Sfu Outbound Rtp Pad obtained measurements 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.SfuSample.SfuSctpChannel sctpChannels = 5;
    */
   sctpChannels: Samples_SfuSample_SfuSctpChannel[] = [];
 
   /**
+   * The Sfu Transports obtained measurements 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.SfuSample.SfuTransport transports = 6;
    */
   transports: Samples_SfuSample_SfuTransport[] = [];
 
   /**
+   * Unique generated id for the sfu samples are originated from 
+   *
    * @generated from field: required string sfuId = 7;
    */
   sfuId?: string;
 
   /**
-   * @generated from field: required int64 timestamp = 8;
+   * The timestamp the sample is created in GMT 
+   *
+   * @generated from field: required uint32 timestamp = 8;
    */
-  timestamp?: bigint;
+  timestamp?: number;
 
   /**
+   * Special marker for the samples 
+   *
    * @generated from field: optional string marker = 9;
    */
   marker?: string;
 
   /**
+   * The offset from GMT in hours 
+   *
    * @generated from field: optional int32 timeZoneOffsetInHours = 10;
    */
   timeZoneOffsetInHours?: number;
@@ -2762,7 +3440,7 @@ export class Samples_SfuSample extends Message<Samples_SfuSample> {
     { no: 5, name: "sctpChannels", kind: "message", T: Samples_SfuSample_SfuSctpChannel, repeated: true },
     { no: 6, name: "transports", kind: "message", T: Samples_SfuSample_SfuTransport, repeated: true },
     { no: 7, name: "sfuId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 8, name: "timestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 9, name: "marker", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 10, name: "timeZoneOffsetInHours", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
   ]);
@@ -2789,41 +3467,57 @@ export class Samples_SfuSample extends Message<Samples_SfuSample> {
  */
 export class Samples_SfuSample_CustomSfuEvent extends Message<Samples_SfuSample_CustomSfuEvent> {
   /**
+   * the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..) 
+   *
    * @generated from field: required string name = 1;
    */
   name?: string;
 
   /**
+   * Additional attachment relevant for the event 
+   *
    * @generated from field: optional string attachments = 2;
    */
   attachments?: string;
 
   /**
+   * the human readable message of the event 
+   *
    * @generated from field: optional string message = 3;
    */
   message?: string;
 
   /**
+   * The identifier of the sfu sink the event is related to 
+   *
    * @generated from field: optional string sfuSinkId = 4;
    */
   sfuSinkId?: string;
 
   /**
+   * The identifier of the sfu stream the event is related to 
+   *
    * @generated from field: optional string sfuStreamId = 5;
    */
   sfuStreamId?: string;
 
   /**
-   * @generated from field: optional int64 timestamp = 6;
+   * The EPOCH timestamp the event is generated 
+   *
+   * @generated from field: optional uint32 timestamp = 6;
    */
-  timestamp?: bigint;
+  timestamp?: number;
 
   /**
+   * The unique identifier of the sfu transport the event is related to 
+   *
    * @generated from field: optional string transportId = 7;
    */
   transportId?: string;
 
   /**
+   * the value of the event 
+   *
    * @generated from field: optional string value = 8;
    */
   value?: string;
@@ -2841,7 +3535,7 @@ export class Samples_SfuSample_CustomSfuEvent extends Message<Samples_SfuSample_
     { no: 3, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "sfuSinkId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "sfuStreamId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 6, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 6, name: "timestamp", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 7, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 8, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
@@ -2868,136 +3562,190 @@ export class Samples_SfuSample_CustomSfuEvent extends Message<Samples_SfuSample_
  */
 export class Samples_SfuSample_SfuTransport extends Message<Samples_SfuSample_SfuTransport> {
   /**
+   * The generated unique identifier of the transport 
+   *
    * @generated from field: required string transportId = 1;
    */
   transportId?: string;
 
   /**
+   * Represent the current value of the state attribute of the underlying RTCDtlsTransport. 
+   *
    * @generated from field: optional string dtlsState = 2;
    */
   dtlsState?: string;
 
   /**
+   * Represent the current value of the role SFU takes place in ICE 
+   *
    * @generated from field: optional string iceRole = 3;
    */
   iceRole?: string;
 
   /**
+   * Represent the current value of the state attribute of the underlying RTCIceTransport 
+   *
    * @generated from field: optional string iceState = 4;
    */
   iceState?: string;
 
   /**
+   * Flag to indicate that the transport is used as an internal transport between SFU instances 
+   *
    * @generated from field: optional bool internal = 5;
    */
   internal?: boolean;
 
   /**
+   * The local address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN) 
+   *
    * @generated from field: optional string localAddress = 6;
    */
   localAddress?: string;
 
   /**
+   * The local port number 
+   *
    * @generated from field: optional int32 localPort = 7;
    */
   localPort?: number;
 
   /**
+   * Flag indicate to not generate report from this sample 
+   *
    * @generated from field: optional bool noReport = 8;
    */
   noReport?: boolean;
 
   /**
+   * The protocol used by the transport 
+   *
    * @generated from field: optional string protocol = 9;
    */
   protocol?: string;
 
   /**
+   * The remote address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN) 
+   *
    * @generated from field: optional string remoteAddress = 10;
    */
   remoteAddress?: string;
 
   /**
+   * The remote port number 
+   *
    * @generated from field: optional int32 remotePort = 11;
    */
   remotePort?: number;
 
   /**
-   * @generated from field: optional int64 rtpBytesReceived = 12;
+   * The total amount of RTP bytes received on this transport 
+   *
+   * @generated from field: optional uint32 rtpBytesReceived = 12;
    */
-  rtpBytesReceived?: bigint;
+  rtpBytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 rtpBytesSent = 13;
+   * The total amount of RTP bytes sent on this transport 
+   *
+   * @generated from field: optional uint32 rtpBytesSent = 13;
    */
-  rtpBytesSent?: bigint;
+  rtpBytesSent?: number;
 
   /**
+   * The total amount of RTP packets lost on this transport 
+   *
    * @generated from field: optional int32 rtpPacketsLost = 14;
    */
   rtpPacketsLost?: number;
 
   /**
+   * The total amount of RTP packets received on this transport 
+   *
    * @generated from field: optional int32 rtpPacketsReceived = 15;
    */
   rtpPacketsReceived?: number;
 
   /**
+   * The total amount of RTP packets sent on this transport 
+   *
    * @generated from field: optional int32 rtpPacketsSent = 16;
    */
   rtpPacketsSent?: number;
 
   /**
-   * @generated from field: optional int64 rtxBytesReceived = 17;
+   * The total amount of RTX bytes received on this transport 
+   *
+   * @generated from field: optional uint32 rtxBytesReceived = 17;
    */
-  rtxBytesReceived?: bigint;
+  rtxBytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 rtxBytesSent = 18;
+   * The total amount of RTX bytes sent on this transport 
+   *
+   * @generated from field: optional uint32 rtxBytesSent = 18;
    */
-  rtxBytesSent?: bigint;
+  rtxBytesSent?: number;
 
   /**
+   * The total amount of RTX packets discarded on this transport 
+   *
    * @generated from field: optional int32 rtxPacketsDiscarded = 19;
    */
   rtxPacketsDiscarded?: number;
 
   /**
+   * The total amount of RTX packets lost on this transport 
+   *
    * @generated from field: optional int32 rtxPacketsLost = 20;
    */
   rtxPacketsLost?: number;
 
   /**
+   * The total amount of RTX packets received on this transport 
+   *
    * @generated from field: optional int32 rtxPacketsReceived = 21;
    */
   rtxPacketsReceived?: number;
 
   /**
+   * The total amount of RTX packets sent on this transport 
+   *
    * @generated from field: optional int32 rtxPacketsSent = 22;
    */
   rtxPacketsSent?: number;
 
   /**
-   * @generated from field: optional int64 sctpBytesReceived = 23;
+   * The total amount of SCTP bytes received on this transport 
+   *
+   * @generated from field: optional uint32 sctpBytesReceived = 23;
    */
-  sctpBytesReceived?: bigint;
+  sctpBytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 sctpBytesSent = 24;
+   * The total amount of SCTP bytes sent on this transport 
+   *
+   * @generated from field: optional uint32 sctpBytesSent = 24;
    */
-  sctpBytesSent?: bigint;
+  sctpBytesSent?: number;
 
   /**
+   * The total amount of SCTP packets received on this transport 
+   *
    * @generated from field: optional int32 sctpPacketsReceived = 25;
    */
   sctpPacketsReceived?: number;
 
   /**
+   * The total amount of SCTP packets sent on this transport 
+   *
    * @generated from field: optional int32 sctpPacketsSent = 26;
    */
   sctpPacketsSent?: number;
 
   /**
+   * Represents the the current value of the SCTP state of the transport of the SFU 
+   *
    * @generated from field: optional string sctpState = 27;
    */
   sctpState?: string;
@@ -3021,19 +3769,19 @@ export class Samples_SfuSample_SfuTransport extends Message<Samples_SfuSample_Sf
     { no: 9, name: "protocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 10, name: "remoteAddress", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 11, name: "remotePort", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 12, name: "rtpBytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 13, name: "rtpBytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 12, name: "rtpBytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 13, name: "rtpBytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 14, name: "rtpPacketsLost", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 15, name: "rtpPacketsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 16, name: "rtpPacketsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 17, name: "rtxBytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 18, name: "rtxBytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 17, name: "rtxBytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 18, name: "rtxBytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 19, name: "rtxPacketsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 20, name: "rtxPacketsLost", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 21, name: "rtxPacketsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 22, name: "rtxPacketsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 23, name: "sctpBytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 24, name: "sctpBytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 23, name: "sctpBytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 24, name: "sctpBytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 25, name: "sctpPacketsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 26, name: "sctpPacketsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 27, name: "sctpState", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -3061,191 +3809,267 @@ export class Samples_SfuSample_SfuTransport extends Message<Samples_SfuSample_Sf
  */
 export class Samples_SfuSample_SfuInboundRtpPad extends Message<Samples_SfuSample_SfuInboundRtpPad> {
   /**
+   * The id of Sfu pad. 
+   *
    * @generated from field: required string padId = 1;
    */
   padId?: string;
 
   /**
-   * @generated from field: required int64 ssrc = 2;
+   * The synchronization source id of the RTP stream 
+   *
+   * @generated from field: required uint32 ssrc = 2;
    */
-  ssrc?: bigint;
+  ssrc?: number;
 
   /**
+   * The id of the media stream the RTP pad belongs to. This id is to group rtp pads (e.g.: simulcast) carrying payloads to the same media.  
+   *
    * @generated from field: required string streamId = 3;
    */
   streamId?: string;
 
   /**
+   * The id of the transport the RTP Pad uses. 
+   *
    * @generated from field: required string transportId = 4;
    */
   transportId?: string;
 
   /**
-   * @generated from field: optional int64 bytesReceived = 5;
+   * The total amount of payload bytes received on the corresponded RTP stream. 
+   *
+   * @generated from field: optional uint32 bytesReceived = 5;
    */
-  bytesReceived?: bigint;
+  bytesReceived?: number;
 
   /**
+   * The clock rate of the media source the RTP header carries 
+   *
    * @generated from field: optional int32 clockRate = 6;
    */
   clockRate?: number;
 
   /**
+   * The total number of FEC packets discarded on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 fecPacketsDiscarded = 7;
    */
   fecPacketsDiscarded?: number;
 
   /**
+   * The total number of FEC packets received on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 fecPacketsReceived = 8;
    */
   fecPacketsReceived?: number;
 
   /**
+   * The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams 
+   *
    * @generated from field: optional int32 firCount = 9;
    */
   firCount?: number;
 
   /**
+   * The calculated fractionLost of the stream 
+   *
    * @generated from field: optional double fractionLost = 10;
    */
   fractionLost?: number;
 
   /**
+   * Indicate the number of frames the Sfu has been decoded 
+   *
    * @generated from field: optional int32 framesDecoded = 11;
    */
   framesDecoded?: number;
 
   /**
+   * The number of frames received on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 framesReceived = 12;
    */
   framesReceived?: number;
 
   /**
+   * Flag to indicate that the rtp pad is used as an internal communication between SFU instances 
+   *
    * @generated from field: optional bool internal = 13;
    */
   internal?: boolean;
 
   /**
+   * The calculated jitter of the stream 
+   *
    * @generated from field: optional double jitter = 14;
    */
   jitter?: number;
 
   /**
+   * Indicate the number of keyframes the Sfu has been decoded 
+   *
    * @generated from field: optional int32 keyFramesDecoded = 15;
    */
   keyFramesDecoded?: number;
 
   /**
+   * the type of the media the stream carries ("audio" or "video") 
+   *
    * @generated from field: optional string mediaType = 16;
    */
   mediaType?: string;
 
   /**
+   * The negotiated mimeType in the SDP 
+   *
    * @generated from field: optional string mimeType = 17;
    */
   mimeType?: string;
 
   /**
+   * The total number of negative acknowledgement received on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 nackCount = 18;
    */
   nackCount?: number;
 
   /**
+   * Flag indicate to not generate report from this sample 
+   *
    * @generated from field: optional bool noReport = 19;
    */
   noReport?: boolean;
 
   /**
+   * The total number of discarded packets on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsDiscarded = 20;
    */
   packetsDiscarded?: number;
 
   /**
+   * The total number of duplicated packets appeared on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsDuplicated = 21;
    */
   packetsDuplicated?: number;
 
   /**
+   * The total number of packets failed to be decrypted on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsFailedDecryption = 22;
    */
   packetsFailedDecryption?: number;
 
   /**
+   * The total number of packets lost on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsLost = 23;
    */
   packetsLost?: number;
 
   /**
+   * The total number of packets received on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsReceived = 24;
    */
   packetsReceived?: number;
 
   /**
+   * The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsRepaired = 25;
    */
   packetsRepaired?: number;
 
   /**
+   * The payload type field of the RTP header 
+   *
    * @generated from field: optional int32 payloadType = 26;
    */
   payloadType?: number;
 
   /**
+   * The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams 
+   *
    * @generated from field: optional int32 pliCount = 27;
    */
   pliCount?: number;
 
   /**
+   *  The rid parameter of the corresponded RTP stream 
+   *
    * @generated from field: optional string rid = 28;
    */
   rid?: string;
 
   /**
+   * The calculated RTT of the stream 
+   *
    * @generated from field: optional double roundTripTime = 29;
    */
   roundTripTime?: number;
 
   /**
+   * The total number of RR reports sent on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 rtcpRrSent = 30;
    */
   rtcpRrSent?: number;
 
   /**
+   * The total number of SR reports received by the corresponded RTP stream 
+   *
    * @generated from field: optional int32 rtcpSrReceived = 31;
    */
   rtcpSrReceived?: number;
 
   /**
+   * If rtx packets are received on the same stream then this number indicates how may has been discarded 
+   *
    * @generated from field: optional int32 rtxPacketsDiscarded = 32;
    */
   rtxPacketsDiscarded?: number;
 
   /**
+   * If rtx packets are sent or received on the same stream then this number indicates how may has been sent 
+   *
    * @generated from field: optional int32 rtxPacketsReceived = 33;
    */
   rtxPacketsReceived?: number;
 
   /**
-   * @generated from field: optional int64 rtxSsrc = 34;
+   * If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.  
+   *
+   * @generated from field: optional uint32 rtxSsrc = 34;
    */
-  rtxSsrc?: bigint;
+  rtxSsrc?: number;
 
   /**
+   * The actual SDP line from the negotiation related to this RTP stream 
+   *
    * @generated from field: optional string sdpFmtpLine = 35;
    */
   sdpFmtpLine?: string;
 
   /**
+   * The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream 
+   *
    * @generated from field: optional int32 sliCount = 36;
    */
   sliCount?: number;
 
   /**
+   * he bitrate the corresponded stream targets. 
+   *
    * @generated from field: optional int32 targetBitrate = 37;
    */
   targetBitrate?: number;
 
   /**
+   * The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through 
+   *
    * @generated from field: optional bool voiceActivityFlag = 38;
    */
   voiceActivityFlag?: boolean;
@@ -3259,10 +4083,10 @@ export class Samples_SfuSample_SfuInboundRtpPad extends Message<Samples_SfuSampl
   static readonly typeName = "org.observertc.schemas.protobuf.Samples.SfuSample.SfuInboundRtpPad";
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
     { no: 1, name: "padId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 2, name: "ssrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 3, name: "streamId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "bytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 6, name: "clockRate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 7, name: "fecPacketsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 8, name: "fecPacketsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -3291,7 +4115,7 @@ export class Samples_SfuSample_SfuInboundRtpPad extends Message<Samples_SfuSampl
     { no: 31, name: "rtcpSrReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 32, name: "rtxPacketsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 33, name: "rtxPacketsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 34, name: "rtxSsrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 34, name: "rtxSsrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 35, name: "sdpFmtpLine", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 36, name: "sliCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 37, name: "targetBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -3320,211 +4144,295 @@ export class Samples_SfuSample_SfuInboundRtpPad extends Message<Samples_SfuSampl
  */
 export class Samples_SfuSample_SfuOutboundRtpPad extends Message<Samples_SfuSample_SfuOutboundRtpPad> {
   /**
+   * The id of Sfu pad. 
+   *
    * @generated from field: required string padId = 1;
    */
   padId?: string;
 
   /**
+   * The id of a group of RTP pad sinks the media stream out from the SFU. 
+   *
    * @generated from field: required string sinkId = 2;
    */
   sinkId?: string;
 
   /**
-   * @generated from field: required int64 ssrc = 3;
+   * The synchronization source id of the RTP stream 
+   *
+   * @generated from field: required uint32 ssrc = 3;
    */
-  ssrc?: bigint;
+  ssrc?: number;
 
   /**
+   * The id of the stream this outbound RTP pad sinks the media from 
+   *
    * @generated from field: required string streamId = 4;
    */
   streamId?: string;
 
   /**
+   * The id of the transport the RTP stream uses. 
+   *
    * @generated from field: required string transportId = 5;
    */
   transportId?: string;
 
   /**
-   * @generated from field: optional int64 bytesSent = 6;
+   * The total amount of payload bytes sent on the corresponded RTP stream. 
+   *
+   * @generated from field: optional uint32 bytesSent = 6;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * The callId the event belongs to 
+   *
    * @generated from field: optional string callId = 7;
    */
   callId?: string;
 
   /**
+   * If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to 
+   *
    * @generated from field: optional string clientId = 8;
    */
   clientId?: string;
 
   /**
+   * The clock rate of the media source the RTP header carries 
+   *
    * @generated from field: optional int32 clockRate = 9;
    */
   clockRate?: number;
 
   /**
+   * The total number of FEC packets discarded on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 fecPacketsDiscarded = 10;
    */
   fecPacketsDiscarded?: number;
 
   /**
+   * The total number of FEC packets sent on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 fecPacketsSent = 11;
    */
   fecPacketsSent?: number;
 
   /**
+   * The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams 
+   *
    * @generated from field: optional int32 firCount = 12;
    */
   firCount?: number;
 
   /**
+   * The calculated fractionLost of the stream 
+   *
    * @generated from field: optional double fractionLost = 13;
    */
   fractionLost?: number;
 
   /**
+   * Indicate the number of frames the Sfu has been encoded 
+   *
    * @generated from field: optional int32 framesEncoded = 14;
    */
   framesEncoded?: number;
 
   /**
+   * The number of frames sent on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 framesSent = 15;
    */
   framesSent?: number;
 
   /**
+   * Flag to indicate that the rtp pad is used as an internal communication between SFU instances 
+   *
    * @generated from field: optional bool internal = 16;
    */
   internal?: boolean;
 
   /**
+   * The calculated jitter of the stream 
+   *
    * @generated from field: optional double jitter = 17;
    */
   jitter?: number;
 
   /**
+   * Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 keyFramesEncoded = 18;
    */
   keyFramesEncoded?: number;
 
   /**
+   * the type of the media the stream carries ("audio" or "video") 
+   *
    * @generated from field: optional string mediaType = 19;
    */
   mediaType?: string;
 
   /**
+   * The negotiated mimeType in the SDP 
+   *
    * @generated from field: optional string mimeType = 20;
    */
   mimeType?: string;
 
   /**
+   * The total number of negative acknowledgement received on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 nackCount = 21;
    */
   nackCount?: number;
 
   /**
+   * Flag indicate to not generate report from this sample 
+   *
    * @generated from field: optional bool noReport = 22;
    */
   noReport?: boolean;
 
   /**
+   * The total number of discarded packets on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsDiscarded = 23;
    */
   packetsDiscarded?: number;
 
   /**
+   * The total number of duplicated packets appeared on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsDuplicated = 24;
    */
   packetsDuplicated?: number;
 
   /**
+   * The total number of packets failed to be encrypted on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsFailedEncryption = 25;
    */
   packetsFailedEncryption?: number;
 
   /**
+   * The total number of packets lost on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsLost = 26;
    */
   packetsLost?: number;
 
   /**
+   * The total number of packets retransmitted on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsRetransmitted = 27;
    */
   packetsRetransmitted?: number;
 
   /**
+   * The total number of packets sent on the corresponded RTP stream. 
+   *
    * @generated from field: optional int32 packetsSent = 28;
    */
   packetsSent?: number;
 
   /**
+   * The payload type field of the RTP header 
+   *
    * @generated from field: optional int32 payloadType = 29;
    */
   payloadType?: number;
 
   /**
+   * The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams 
+   *
    * @generated from field: optional int32 pliCount = 30;
    */
   pliCount?: number;
 
   /**
+   *  The rid parameter of the corresponded RTP stream 
+   *
    * @generated from field: optional string rid = 31;
    */
   rid?: string;
 
   /**
+   * The calculated RTT of the stream 
+   *
    * @generated from field: optional double roundTripTime = 32;
    */
   roundTripTime?: number;
 
   /**
+   * The total number of RR reports received on the corresponded RTP stream 
+   *
    * @generated from field: optional int32 rtcpRrReceived = 33;
    */
   rtcpRrReceived?: number;
 
   /**
+   * The total number of SR reports sent by the corresponded RTP stream 
+   *
    * @generated from field: optional int32 rtcpSrSent = 34;
    */
   rtcpSrSent?: number;
 
   /**
+   * If rtx packets are received on the same stream then this number indicates how may has been discarded 
+   *
    * @generated from field: optional int32 rtxPacketsDiscarded = 35;
    */
   rtxPacketsDiscarded?: number;
 
   /**
+   * If rtx packets sent on the same stream then this number indicates how may has been sent 
+   *
    * @generated from field: optional int32 rtxPacketsSent = 36;
    */
   rtxPacketsSent?: number;
 
   /**
-   * @generated from field: optional int64 rtxSsrc = 37;
+   * If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc.  
+   *
+   * @generated from field: optional uint32 rtxSsrc = 37;
    */
-  rtxSsrc?: bigint;
+  rtxSsrc?: number;
 
   /**
+   * The actual SDP line from the negotiation related to this RTP stream 
+   *
    * @generated from field: optional string sdpFmtpLine = 38;
    */
   sdpFmtpLine?: string;
 
   /**
+   * The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream 
+   *
    * @generated from field: optional int32 sliCount = 39;
    */
   sliCount?: number;
 
   /**
+   * he bitrate the corresponded stream targets. 
+   *
    * @generated from field: optional int32 targetBitrate = 40;
    */
   targetBitrate?: number;
 
   /**
+   * The id of the track the RTP stream related to at the client side 
+   *
    * @generated from field: optional string trackId = 41;
    */
   trackId?: string;
 
   /**
+   * The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through 
+   *
    * @generated from field: optional bool voiceActivityFlag = 42;
    */
   voiceActivityFlag?: boolean;
@@ -3539,10 +4447,10 @@ export class Samples_SfuSample_SfuOutboundRtpPad extends Message<Samples_SfuSamp
   static readonly fields: FieldList = proto2.util.newFieldList(() => [
     { no: 1, name: "padId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "sinkId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 3, name: "ssrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 4, name: "streamId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 6, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 7, name: "callId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 8, name: "clientId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 9, name: "clockRate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -3573,7 +4481,7 @@ export class Samples_SfuSample_SfuOutboundRtpPad extends Message<Samples_SfuSamp
     { no: 34, name: "rtcpSrSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 35, name: "rtxPacketsDiscarded", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 36, name: "rtxPacketsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 37, name: "rtxSsrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 37, name: "rtxSsrc", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 38, name: "sdpFmtpLine", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 39, name: "sliCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 40, name: "targetBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -3603,81 +4511,113 @@ export class Samples_SfuSample_SfuOutboundRtpPad extends Message<Samples_SfuSamp
  */
 export class Samples_SfuSample_SfuSctpChannel extends Message<Samples_SfuSample_SfuSctpChannel> {
   /**
+   * The id of the sctp stream 
+   *
    * @generated from field: required string channelId = 1;
    */
   channelId?: string;
 
   /**
+   * The id of the sctp stream 
+   *
    * @generated from field: required string streamId = 2;
    */
   streamId?: string;
 
   /**
+   * The id of the transport the RTP stream uses. 
+   *
    * @generated from field: required string transportId = 3;
    */
   transportId?: string;
 
   /**
-   * @generated from field: optional int64 bytesReceived = 4;
+   * The number of bytes received on the corresponded SCTP stream. 
+   *
+   * @generated from field: optional uint32 bytesReceived = 4;
    */
-  bytesReceived?: bigint;
+  bytesReceived?: number;
 
   /**
-   * @generated from field: optional int64 bytesSent = 5;
+   * The number of bytes sent on the corresponded SCTP stream. 
+   *
+   * @generated from field: optional uint32 bytesSent = 5;
    */
-  bytesSent?: bigint;
+  bytesSent?: number;
 
   /**
+   * Flag to indicate that the SCTP channel is used as an internally between SFU instances 
+   *
    * @generated from field: optional bool internal = 6;
    */
   internal?: boolean;
 
   /**
+   * The label of the sctp stream 
+   *
    * @generated from field: optional string label = 7;
    */
   label?: string;
 
   /**
+   * The number of message received on the corresponded SCTP stream. 
+   *
    * @generated from field: optional int32 messageReceived = 8;
    */
   messageReceived?: number;
 
   /**
+   * The number of message sent on the corresponded SCTP stream. 
+   *
    * @generated from field: optional int32 messageSent = 9;
    */
   messageSent?: number;
 
   /**
+   * Flag indicate to not generate report from this sample 
+   *
    * @generated from field: optional bool noReport = 10;
    */
   noReport?: boolean;
 
   /**
+   * The protocol used to establish an sctp stream 
+   *
    * @generated from field: optional string protocol = 11;
    */
   protocol?: string;
 
   /**
+   * The latest congestion window, corresponding to spinfo_cwnd defined in [RFC6458]. 
+   *
    * @generated from field: optional double sctpCongestionWindow = 12;
    */
   sctpCongestionWindow?: number;
 
   /**
+   * The latest maximum transmission unit, corresponding to spinfo_mtu defined in [RFC6458]. 
+   *
    * @generated from field: optional int32 sctpMtu = 13;
    */
   sctpMtu?: number;
 
   /**
+   * The latest receiver window, corresponding to sstat_rwnd defined in [RFC6458]. 
+   *
    * @generated from field: optional double sctpReceiverWindow = 14;
    */
   sctpReceiverWindow?: number;
 
   /**
+   * The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined. 
+   *
    * @generated from field: optional double sctpSmoothedRoundTripTime = 15;
    */
   sctpSmoothedRoundTripTime?: number;
 
   /**
+   * The number of unacknowledged DATA chunks, corresponding to sstat_unackdata defined in [RFC6458]. 
+   *
    * @generated from field: optional int32 sctpUnackData = 16;
    */
   sctpUnackData?: number;
@@ -3693,8 +4633,8 @@ export class Samples_SfuSample_SfuSctpChannel extends Message<Samples_SfuSample_
     { no: 1, name: "channelId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "streamId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 5, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 4, name: "bytesReceived", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+    { no: 5, name: "bytesSent", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 6, name: "internal", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
     { no: 7, name: "label", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 8, name: "messageReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -3730,11 +4670,15 @@ export class Samples_SfuSample_SfuSctpChannel extends Message<Samples_SfuSample_
  */
 export class Samples_SfuSample_SfuExtensionStats extends Message<Samples_SfuSample_SfuExtensionStats> {
   /**
+   * The payload of the extension stats the custom app provides 
+   *
    * @generated from field: required string payload = 1;
    */
   payload?: string;
 
   /**
+   * The type of the extension stats the custom app provides 
+   *
    * @generated from field: required string type = 2;
    */
   type?: string;
@@ -3773,16 +4717,22 @@ export class Samples_SfuSample_SfuExtensionStats extends Message<Samples_SfuSamp
  */
 export class Samples_TurnSample extends Message<Samples_TurnSample> {
   /**
+   * Peer Alloocation data 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.TurnSample.TurnPeerAllocation allocations = 1;
    */
   allocations: Samples_TurnSample_TurnPeerAllocation[] = [];
 
   /**
+   * Session data 
+   *
    * @generated from field: repeated org.observertc.schemas.protobuf.Samples.TurnSample.TurnSession sessions = 2;
    */
   sessions: Samples_TurnSample_TurnSession[] = [];
 
   /**
+   * A unique id of the turn server 
+   *
    * @generated from field: required string serverId = 3;
    */
   serverId?: string;
@@ -3822,66 +4772,92 @@ export class Samples_TurnSample extends Message<Samples_TurnSample> {
  */
 export class Samples_TurnSample_TurnPeerAllocation extends Message<Samples_TurnSample_TurnPeerAllocation> {
   /**
+   * a unique id for the allocation 
+   *
    * @generated from field: required string peerId = 1;
    */
   peerId?: string;
 
   /**
+   * The allocated address 
+   *
    * @generated from field: required string relayedAddress = 2;
    */
   relayedAddress?: string;
 
   /**
+   * The allocated port 
+   *
    * @generated from field: required int32 relayedPort = 3;
    */
   relayedPort?: number;
 
   /**
+   * The corresponded session the allocation belongs to 
+   *
    * @generated from field: required string sessionId = 4;
    */
   sessionId?: string;
 
   /**
+   * protocol (TCP, UDP) 
+   *
    * @generated from field: required string transportProtocol = 5;
    */
   transportProtocol?: string;
 
   /**
+   * The address of the address the serever connect to 
+   *
    * @generated from field: optional string peerAddress = 6;
    */
   peerAddress?: string;
 
   /**
+   * The portnumber the server connects to 
+   *
    * @generated from field: optional int32 peerPort = 7;
    */
   peerPort?: number;
 
   /**
-   * @generated from field: optional int64 receivedBytes = 8;
+   * the amount of bytes received from the peer 
+   *
+   * @generated from field: optional uint32 receivedBytes = 8;
    */
-  receivedBytes?: bigint;
+  receivedBytes?: number;
 
   /**
+   * the amount of packets received from the peer 
+   *
    * @generated from field: optional int32 receivedPackets = 9;
    */
   receivedPackets?: number;
 
   /**
+   * the bitrate the TURN server receiving from the peer 
+   *
    * @generated from field: optional int32 receivingBitrate = 10;
    */
   receivingBitrate?: number;
 
   /**
+   * the bitrate the TURN server sending to the peer 
+   *
    * @generated from field: optional int32 sendingBitrate = 11;
    */
   sendingBitrate?: number;
 
   /**
-   * @generated from field: optional int64 sentBytes = 12;
+   * the amount of bytes sent to the peer 
+   *
+   * @generated from field: optional uint32 sentBytes = 12;
    */
-  sentBytes?: bigint;
+  sentBytes?: number;
 
   /**
+   * the amount of packets sent to the peer 
+   *
    * @generated from field: optional int32 sentPackets = 13;
    */
   sentPackets?: number;
@@ -3901,11 +4877,11 @@ export class Samples_TurnSample_TurnPeerAllocation extends Message<Samples_TurnS
     { no: 5, name: "transportProtocol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "peerAddress", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 7, name: "peerPort", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 8, name: "receivedBytes", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 8, name: "receivedBytes", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 9, name: "receivedPackets", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 10, name: "receivingBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 11, name: "sendingBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 12, name: "sentBytes", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 12, name: "sentBytes", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 13, name: "sentPackets", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
   ]);
 
@@ -3931,86 +4907,120 @@ export class Samples_TurnSample_TurnPeerAllocation extends Message<Samples_TurnS
  */
 export class Samples_TurnSample_TurnSession extends Message<Samples_TurnSample_TurnSession> {
   /**
+   * Flag indicate to not generate report from this sample 
+   *
    * @generated from field: required string sessionId = 1;
    */
   sessionId?: string;
 
   /**
+   * The address of the client connected from 
+   *
    * @generated from field: optional string clientAddress = 2;
    */
   clientAddress?: string;
 
   /**
+   * The id of the client the TURN session belongs to (ClientSample) 
+   *
    * @generated from field: optional string clientId = 3;
    */
   clientId?: string;
 
   /**
+   * The portnumber the client requested from 
+   *
    * @generated from field: optional int32 clientPort = 4;
    */
   clientPort?: number;
 
   /**
-   * @generated from field: optional int64 nonceExpirationTime = 5;
+   * For each Allocate request, the server SHOULD generate a new random nonce when the allocation is first attempted following the randomness recommendations in [RFC4086] and SHOULD expire the nonce at least once every hour during the lifetime of the allocation.  Epoch in millis GMT 
+   *
+   * @generated from field: optional uint32 nonceExpirationTime = 5;
    */
-  nonceExpirationTime?: bigint;
+  nonceExpirationTime?: number;
 
   /**
+   * The Authentication Realm (RFC 8656) 
+   *
    * @generated from field: optional string realm = 6;
    */
   realm?: string;
 
   /**
-   * @generated from field: optional int64 receivedBytes = 7;
+   * the amount of bytes received from the client 
+   *
+   * @generated from field: optional uint32 receivedBytes = 7;
    */
-  receivedBytes?: bigint;
+  receivedBytes?: number;
 
   /**
+   * the amount of packets received from the client 
+   *
    * @generated from field: optional int32 receivedPackets = 8;
    */
   receivedPackets?: number;
 
   /**
+   * the bitrate the TURN server receiving from the client 
+   *
    * @generated from field: optional int32 receivingBitrate = 9;
    */
   receivingBitrate?: number;
 
   /**
+   * the bitrate the TURN server sending to the client 
+   *
    * @generated from field: optional int32 sendingBitrate = 10;
    */
   sendingBitrate?: number;
 
   /**
-   * @generated from field: optional int64 sentBytes = 11;
+   * the amount of bytes sent to the client 
+   *
+   * @generated from field: optional uint32 sentBytes = 11;
    */
-  sentBytes?: bigint;
+  sentBytes?: number;
 
   /**
+   * the amount of packets sent to the client 
+   *
    * @generated from field: optional int32 sentPackets = 12;
    */
   sentPackets?: number;
 
   /**
+   * The address of the server the client connected to 
+   *
    * @generated from field: optional string serverAddress = 13;
    */
   serverAddress?: string;
 
   /**
+   * The portnumber the server listens the client requests 
+   *
    * @generated from field: optional int32 serverPort = 14;
    */
   serverPort?: number;
 
   /**
-   * @generated from field: optional int64 started = 15;
+   * The timestamp when the session has been started. Epoch in milliseconds, GMT 
+   *
+   * @generated from field: optional uint32 started = 15;
    */
-  started?: bigint;
+  started?: number;
 
   /**
+   * the transport protocol betwwen the client and the server (TCP, UDP, TCPTLS, UDPTLS, SCTP, SCTPTLS) 
+   *
    * @generated from field: optional string transportProtocol = 16;
    */
   transportProtocol?: string;
 
   /**
+   * The username of the used in authentication 
+   *
    * @generated from field: optional string username = 17;
    */
   username?: string;
@@ -4027,17 +5037,17 @@ export class Samples_TurnSample_TurnSession extends Message<Samples_TurnSample_T
     { no: 2, name: "clientAddress", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "clientId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "clientPort", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 5, name: "nonceExpirationTime", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "nonceExpirationTime", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 6, name: "realm", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 7, name: "receivedBytes", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 7, name: "receivedBytes", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 8, name: "receivedPackets", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 9, name: "receivingBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 10, name: "sendingBitrate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 11, name: "sentBytes", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 11, name: "sentBytes", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 12, name: "sentPackets", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 13, name: "serverAddress", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 14, name: "serverPort", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 15, name: "started", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 15, name: "started", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
     { no: 16, name: "transportProtocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 17, name: "username", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);

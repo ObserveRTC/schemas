@@ -97,7 +97,8 @@ export class ProtobufConverter {
             case "double":
                 return "double";
             case "long":
-                return "int64";
+                // return "int64";
+                return "uint32";
             case "boolean":
                 return "bool";
             case "int":
@@ -117,7 +118,7 @@ export class ProtobufConverter {
         });
     }
 
-    _getMessageField({ fieldNum, name, type, isArray, required }) {
+    _getMessageField({ fieldNum, name, type, doc, isArray, required }) {
         let result = [];
 
         if (isArray) result.push(`repeated`)
@@ -129,7 +130,8 @@ export class ProtobufConverter {
 
         // if (isArray) result.push(`[packed = true]`);
 
-        const line = result.join(` `) + ";"
+        let line = doc ? `/* ${doc} */` : "";
+        line += result.join(` `) + ";"
         return line;
     }
 
@@ -156,11 +158,12 @@ export class ProtobufConverter {
         const messageFields = [];
         let fieldNum = 1;
         [arrayFields, requiredFields, optionalFields].forEach(fields => {
-            fields.forEach(({name, type, isArray, required}) => {
+            fields.forEach(({doc, name, type, isArray, required}) => {
                 const messageField = this._getMessageField({
                     fieldNum,
                     name,
                     type,
+                    doc,
                     isArray,
                     required
                 });
