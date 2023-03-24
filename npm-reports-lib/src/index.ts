@@ -17,4 +17,4 @@ export * from "./reports/SfuMetaReport";
 export * from "./reports/SfuOutboundRtpPadReport";
 export * from "./reports/SfuSctpStreamReport";
 export * from "./reports/SFUTransportReport";
-export const version = "2.2.1";
+export const version = "2.2.0";
