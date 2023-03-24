@@ -1,4 +1,4 @@
-name: Release full schemas library
+name: Release Sample Schemas Library
 on:
   push:
     branches:
@@ -11,7 +11,7 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./npm-lib
+      working-directory: ./npm-samples-lib
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
