@@ -1,7 +1,7 @@
 {
   "name": "@observertc/report-schemas-js",
-  "version": "2.3.0",
-  "description": "ObserveRTC Library for Schemas",
+  "version": "2.2.1",
+  "description": "ObserveRTC Generated Library for Report Schemas",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "engines": {
