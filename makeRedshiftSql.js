@@ -57,7 +57,6 @@ class RedshiftSql {
         return {
             createTable: this._makeCreateTableString(),
             csvColumnList: this._makeColumnCsvList(),
-            knexSchema: this._makeKnexSchema(),
         }
     }
 
@@ -91,51 +90,6 @@ class RedshiftSql {
         if (0 < sortKeys.length) {
             result.push(`ALTER TABLE ${tableName} ALTER COMPOUND SORTKEY (${sortKeys.join(", ")});`)
         }
-        return result.join(`\n`);
-    }
-
-    _makeKnexSchema() {
-        const tableName = this._name;
-        const result = [
-            `const schemaName = "schema";`,
-            `const tableName = "${tableName}";`,
-            
-            `exports.up = function (knex) {`,
-            `\treturn knex.schema.withSchema(schemaName).createTable(tableName, (table) => {`,
-        ];
-        const fieldsLength = this._fields.length;
-        for (let i = 0; i < fieldsLength; ++i) {
-            const { type, required } = this._fields[i];
-            const name = this._fields[i].name.toLowerCase();
-            const jsCommands = [];
-            if (name === "timestamp") {
-                jsCommands.push(`table.timestamp("timestamp", { useTz: false })`);
-            } else if (name === "payload"){
-                jsCommands.push(`unstructuredDataColumn(table, "payload")`);
-            } else if (type === UUID_FIELDS_TYPE) {
-                jsCommands.push(`table.specificType("${name}", "${type}")`);
-            } else if (type === "VARCHAR(1024)") {
-                jsCommands.push(`table.string("${name}", 1024)`);
-            } else if (type === "VARCHAR(65535)") {
-                jsCommands.push(`table.text("${name}")`);
-            } else if (type === "REAL") {
-                jsCommands.push(`table.text("${name}")`);
-            } else if (type === "INTEGER") {
-                jsCommands.push(`table.integer("${name}")`);
-            } else if (type === "BIGINT") {
-                jsCommands.push(`table.bigInteger("${name}")`);
-            } else if (type === "BOOLEAN") {
-                jsCommands.push(`table.boolean("${name}")`);
-            } else {
-                jsCommands.push(`table.specificType("${name}", "${type}")`);
-            }
-            if (required) {
-                jsCommands.push("notNull()");
-            }
-            result.push(`\t\t${jsCommands.join(".")};`);
-        }
-        result.push(`\t});`);
-        result.push(`};`);
         return result.join(`\n`);
     }
 

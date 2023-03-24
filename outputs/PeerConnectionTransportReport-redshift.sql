@@ -1,0 +1,31 @@
+create table  IF NOT EXISTS peer_connection_transport_report (
+	serviceid	VARCHAR(1024)	not null,
+	mediaunitid	VARCHAR(1024)	not null,
+	timestamp	BIGINT	not null,
+	callid	VARCHAR(254)	not null,
+	clientid	VARCHAR(254)	not null,
+	peerconnectionid	VARCHAR(254)	not null,
+	sampleseq	INTEGER	not null,
+	bytesreceived	BIGINT,
+	bytessent	BIGINT,
+	dtlscipher	VARCHAR(65535),
+	dtlsstate	VARCHAR(1024),
+	icelocalusernamefragment	VARCHAR(65535),
+	icerole	VARCHAR(65535),
+	icestate	VARCHAR(1024),
+	label	VARCHAR(65535),
+	localcertificateid	VARCHAR(1024),
+	marker	VARCHAR(65535),
+	packetsreceived	INTEGER,
+	packetssent	INTEGER,
+	remotecertificateid	VARCHAR(1024),
+	roomid	VARCHAR(1024),
+	selectedcandidatepairchanges	INTEGER,
+	selectedcandidatepairid	VARCHAR(1024),
+	srtpcipher	VARCHAR(65535),
+	tlsgroup	VARCHAR(65535),
+	tlsversion	VARCHAR(65535),
+	userid	VARCHAR(1024)
+) diststyle even;
+ALTER TABLE peer_connection_transport_report ALTER diststyle KEY DISTKEY serviceid;
+ALTER TABLE peer_connection_transport_report ALTER COMPOUND SORTKEY (callid, clientid, peerconnectionid);

@@ -1,0 +1,1 @@
+serviceId, mediaUnitId, timestamp, callId, clientId, peerConnectionId, sampleSeq, bytesReceived, bytesSent, dtlsCipher, dtlsState, iceLocalUsernameFragment, iceRole, iceState, label, localCertificateId, marker, packetsReceived, packetsSent, remoteCertificateId, roomId, selectedCandidatePairChanges, selectedCandidatePairId, srtpCipher, tlsGroup, tlsVersion, userId

@@ -1,1 +1,0 @@
-export const header = ["serviceId", " mediaUnitId", " sfuId", " timestamp", " transportId", " streamId", " bytesReceived", " bytesSent", " callId", " internal", " label", " marker", " messageReceived", " messageSent", " protocol", " roomId", " sctpCongestionWindow", " sctpMtu", " sctpReceiverWindow", " sctpSmoothedRoundTripTime", " sctpUnackData"];
