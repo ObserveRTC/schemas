@@ -127,18 +127,19 @@ const main = async () => {
     }
     fs.writeFileSync(`schemaList.md`, markdownLists.join(`\n`))
     // generate protobuf schema if we can
+    const version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
     const samplesSource = sources.get("samples");
     if (samplesSource) {
         const schema = JSON.parse(samplesSource.getAvsc());
-        const protobufSchema = protobufUtils.convertToProtobufSchema(schema);
+        const protobufSchema = protobufUtils.convertToProtobufSchema(schema, version);
         fs.writeFileSync(path.join(OUTPUTS_PATH, "ProtobufSamples.proto"), protobufSchema);
 
-        const protobufSchemaV3 = protobufUtils.convertToProtobufSchemaV3(schema);
+        const protobufSchemaV3 = protobufUtils.convertToProtobufSchemaV3(schema, version);
         fs.writeFileSync(path.join(OUTPUTS_PATH, "ProtobufSamplesV3.proto"), protobufSchemaV3);
     } else {
         console.warn(`There was no Samples avro schema to generate the protobuf schema`);
     }
-    const version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
+    
     const changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
     npmSamplesLib.version = version;
     npmReportsLib.version = version;

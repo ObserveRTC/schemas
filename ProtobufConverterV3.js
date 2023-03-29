@@ -1,7 +1,8 @@
 
 export class ProtobufConverterV3 {
-    static from(schema) {
-        const result = new ProtobufConverterV3();
+
+    static from(schema, version) {
+        const result = new ProtobufConverterV3(0, version);
         result._name = schema.name;
         for (const field of schema.fields) {
             try {
@@ -12,8 +13,9 @@ export class ProtobufConverterV3 {
         }
         return result;
     }
-    constructor(level = 0) {
+    constructor(level = 0, version) {
         this._name = undefined;
+        this._version = version;
         this._level = level;
         this._fields = [];
         this._nestedClasses = [];
@@ -168,9 +170,15 @@ export class ProtobufConverterV3 {
                 ++fieldNum;
             })
         });
-        const result = [
-            `message ${this.name} {`,
-        ]
+        const result = []
+        if (this._level === 0) {
+            result.push(
+                `/**`,
+                `* Schema Version: ${this._version}`,
+                `*/`
+            );
+        }
+        result.push(`message ${this.name} {`);
         for (const nestedClass of this._nestedClasses) {
             for (const nestedLine of nestedClass.toLines()) {
                 result.push(`\t${nestedLine}`);

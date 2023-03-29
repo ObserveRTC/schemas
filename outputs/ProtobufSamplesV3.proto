@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package org.observertc.schemas.protobuf;
 
+/**
+* Schema Version: 2.2.0
+*/
 message Samples {
 	message Controls {
 		string accessClaim = 1;

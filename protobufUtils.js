@@ -12,8 +12,8 @@ export const makeProtobufJson = path => new Promise(resolve => {
     });
 })
 
-export function convertToProtobufSchema(avroSchema) {
-    const samplesProto = ProtobufConverter.from(avroSchema);
+export function convertToProtobufSchema(avroSchema, version) {
+    const samplesProto = ProtobufConverter.from(avroSchema, version);
     const samplesProtoStr = samplesProto.toLines().join("\n");
 
     const samplesModule = [
@@ -30,8 +30,8 @@ export function convertToProtobufSchema(avroSchema) {
     // fs.writeFileSync(outputPath, samplesModule);
 }
 
-export function convertToProtobufSchemaV3(avroSchema) {
-    const samplesProto = ProtobufConverterV3.from(avroSchema);
+export function convertToProtobufSchemaV3(avroSchema, version) {
+    const samplesProto = ProtobufConverterV3.from(avroSchema, version);
     const samplesProtoStr = samplesProto.toLines().join("\n");
 
     const samplesModule = [
