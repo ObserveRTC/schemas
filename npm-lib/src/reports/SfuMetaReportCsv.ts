@@ -1,1 +1,0 @@
-export const header = ["serviceId", " timestamp", " callId", " marker", " mediaSinkId", " mediaStreamId", " mediaUnitId", " payload", " rtpPadId", " sctpStreamId", " sfuId", " transportId", " type"];

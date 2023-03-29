@@ -14,28 +14,17 @@ export class NpmLib {
         this._w3cStatsIdentifiers = null;
         this._version = null;
         this._changelog = null;
-        this._protobufEntries = [];
     }
 
-    addEntry({ schemaName, exports, fileName, schemaType, avsc, typescript, markdown, csvHeader }) {
+    addEntry({ schemaName, exports, fileName, schemaType, typescript, markdown }) {
         this._entries.push({
             fileName,
             exports,
             schemaName,
             schemaType,
-            avsc,
             typescript,
             markdown,
-            csvHeader,
         });
-    }
-
-    addProtobufSchema({ fileName, protobufSchema, protobufJson }) {
-        this._protobufEntries.push({
-            fileName,
-            protobufSchema,
-            protobufJson,
-        })
     }
 
     addW3cStatsIdentifiers(w3cStatsIdentifiers) {
@@ -59,25 +48,13 @@ export class NpmLib {
                 schemaName,
                 exports: moduleExports,
                 schemaType,
-                avsc,
                 typescript,
                 markdown,
-                csvHeader,
             } = entry;
-            const avscOutputFileName = path.join(schemaType, schemaName) + "Avsc";
-            const avscOutputFilePath = path.join(this._srcPath, avscOutputFileName);
             const tsOutputFileName = path.join(schemaType, schemaName);
             const tsOutputFilePath = path.join(this._srcPath, tsOutputFileName);
-            fs.writeFileSync(avscOutputFilePath + ".ts", "export const schema = " + avsc);
             fs.writeFileSync(tsOutputFilePath + ".ts", typescript);
-            if (csvHeader) {
-                const csvOutputFileName = path.join(schemaType, schemaName) + "Csv";
-                const csvOutputFilePath = path.join(this._srcPath, csvOutputFileName);
-                fs.writeFileSync(csvOutputFilePath + ".ts", "export const header = [\"" + csvHeader.join("\", \"") + "\"];");
-                exports.push(`export { header as CsvHeader${schemaName} } from "./${csvOutputFileName}";`);
-            }
             schemaMarkdowns.push(markdown, "\n");
-            exports.push(`export { schema as Avro${schemaName} } from "./${avscOutputFileName}";`);
             exports.push(`export * from "./${tsOutputFileName}";`);
             if (!toc[schemaType]) {
                 toc[schemaType] = [];
@@ -87,21 +64,6 @@ export class NpmLib {
                     toc[schemaType].push(moduleExport);
                 }
             }
-        }
-        for (const protobufEntry of this._protobufEntries) {
-            const { fileName, protobufSchema, protobufJson } = protobufEntry;
-            const file = fileName + ".ts";
-            const protobufFileName = path.join(this._srcPath, "samples", file);
-            const module = `export const schema = \`\n${protobufSchema}\n\`;`;
-            fs.writeFileSync(protobufFileName, module);
-            exports.push(`export { schema as ${fileName} } from "./samples/${fileName}";`);
-
-            const jsonFileName = fileName + "Json";
-            const jsonFile = jsonFileName + ".ts";
-            const jsonProtobufFileName = path.join(this._srcPath, "samples", jsonFile);
-            const jsonModule = `export const jsonDescriptor = ${protobufJson};`;
-            fs.writeFileSync(jsonProtobufFileName, jsonModule);
-            exports.push(`export { jsonDescriptor as ${jsonFileName} } from "./samples/${jsonFileName}";`);
         }
         if (this._w3cStatsIdentifiers) {
             const w3cStatsIdentifiersPath = path.join(this._srcPath, "w3c", "W3cStatsIdentifiers.ts");
@@ -165,6 +127,9 @@ export class NpmLib {
     clear() {
         for (const schemaTypes of ["reports", "samples"]) {
             const schemasPath = path.join(this._srcPath, schemaTypes);
+            if (!fs.existsSync(schemasPath)) {
+                continue;
+            }
             for (const file of fs.readdirSync(schemasPath)) {
                 const filePath = path.join(this._srcPath, schemaTypes, file);
                 // console.log("Remove", filePath);

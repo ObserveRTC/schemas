@@ -1,0 +1,58 @@
+name: Release Sample Schemas Library
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./npm-samples-lib
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      
+      - run: npm install -g yarn
+      - name: install packages
+        run: yarn
+        working-directory: ${{env.working-directory}}
+
+      - name: Setup Custom Contexts
+        shell: bash
+        run: | 
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+          echo "##[set-output name=version;]$(cat ./package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')"
+          echo "##[set-output name=short_sha;]$(git rev-parse --short HEAD)"
+        id: job_context
+        working-directory: ${{env.working-directory}}
+
+      - name: Make snapshot version
+        if: steps.job_context.outputs.branch != 'main'
+        run: |
+          npm version prerelease --preid=${{ steps.job_context.outputs.short_sha }} --git-tag-version false
+        working-directory: ${{env.working-directory}}
+
+      - name: Publish package to latest
+        if: steps.job_context.outputs.branch == 'main'
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --ignore-scripts --access public
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish package to branch-tag
+        if: steps.job_context.outputs.branch != 'main'
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --ignore-scripts --access public  --tag $(echo "develop-${{ steps.job_context.outputs.version }}-rc" | sed 's/[.]//g')
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
