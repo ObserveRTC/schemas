@@ -71,19 +71,19 @@ export class NpmLib {
             exports.push(`export * as W3CStats from "./w3c/W3cStatsIdentifiers";`);
         }
         const readmeMd = ["ObserveRTC Schemas", "---", "Javascript bindings for ObserveRTC schemas"];
-        for (const [schemaType, schemaNames] of Object.entries(toc)) {
-            readmeMd.push(`- [${schemaType}](#${schemaType})`);
-            for (const schemaName of schemaNames) {
-                readmeMd.push(`\t* [${schemaName}](#${schemaName})`);
-            }
-        }
+        // for (const [schemaType, schemaNames] of Object.entries(toc)) {
+        //     readmeMd.push(`- [${schemaType}](#${schemaType})`);
+        //     for (const schemaName of schemaNames) {
+        //         readmeMd.push(`\t* [${schemaName}](#${schemaName})`);
+        //     }
+        // }
         if (this._changelog) {
-            readmeMd.push(`- [Changelog](#Changelog)`);
+            // readmeMd.push(`- [Changelog](#Changelog)`);
         }
-        readmeMd.push(...schemaMarkdowns);
+        // readmeMd.push(...schemaMarkdowns);
         if (this._changelog) {
-            readmeMd.push("## Changelog");
-            readmeMd.push(this._changelog);
+            // readmeMd.push("## Changelog");
+            // readmeMd.push(this._changelog);
         }
         const readmePath = path.join(this._basePath, README_MD_FILENAME);
         fs.writeFileSync(readmePath, readmeMd.join("\n"));
