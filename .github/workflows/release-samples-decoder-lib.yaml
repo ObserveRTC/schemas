@@ -1,4 +1,4 @@
-name: Release Samples Encoder Library
+name: Release Samples Decoder Library
 on:
   push:
     branches:
