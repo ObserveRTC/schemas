@@ -13,7 +13,7 @@ export class SamplesDecoder {
 	private _clientSampleDecoders = new Map<string, ClientSampleDecoder>();
 	private _sfuSampleDecoders = new Map<string, SfuSampleDecoder>();
 
-	public decodeFromUint8Array(input: Uint8Array): OutputSamples {
+	public decodeFromBytes(input: Uint8Array): OutputSamples {
 		const inputSamples = InputSamples.fromBinary(input);
 		return this.decodeToProtobufSamples(inputSamples);
 	}

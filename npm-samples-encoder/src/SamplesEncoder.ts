@@ -11,7 +11,7 @@ export class SamplesEncoder {
 	private _clientSampleEncoders = new Map<string, ClientSampleEncoder>();
 	private _sfuSampleEncoders = new Map<string, SfuSampleEncoder>();
 	
-	public encodeToUint8Array(input: InputSamples): Uint8Array {
+	public encodeToBytes(input: InputSamples): Uint8Array {
 		const output = this.encodeToProtobufSamples(input);
 		return output.toBinary();
 	}

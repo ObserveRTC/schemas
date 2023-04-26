@@ -70,7 +70,7 @@ export class ClientSampleEncoder {
 		return result;
 	}
 
-	public encodeToUint8Array(clientSample: ClientSample): Uint8Array {
+	public encodeToBytes(clientSample: ClientSample): Uint8Array {
 		return this.encodeToProtobufSamples(clientSample).toBinary()
 	}
 

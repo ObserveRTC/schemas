@@ -15,7 +15,7 @@
     "webrtc",
     "schemas",
     "observertc",
-    "encoder"
+    "decoder"
   ],
   "author": "Balazs Kreith",
   "license": "Apache-2.0",

@@ -30,7 +30,7 @@ export class SfuSampleEncoder {
 		return result;
 	}
 
-	public encodeToUint8Array(sfuSample: SfuSample): Uint8Array {
+	public encodeToBytes(sfuSample: SfuSample): Uint8Array {
 		return this.encodeToProtobufSamples(sfuSample).toBinary()
 	}
 

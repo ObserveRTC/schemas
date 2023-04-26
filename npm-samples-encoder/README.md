@@ -17,7 +17,7 @@ import { SamplesEncoder } from "@observertc/samples-encoder";
 const encoder = new SamplesEncoder();
 const encodedSample = encoder.encodeToBase64(samples);
 // or if you want to Uint8Array
-const encodedSampleArray = encoder.encodeToUint8Array(samples);
+const encodedSampleArray = encoder.encodeToBytes(samples);
 
 // send the encoded sample
 ```
@@ -31,7 +31,7 @@ const encoder = new ClientSampleEncoder();
 clientMonitor.on("sample-created", ({ clientSample }) => {
 	const encodedSample = encoder.encodeToBase64(clientSample);
 	// or if you want to Uint8Array
-	const encodedSampleArray = encoder.encodeToUint8Array(clientSample);
+	const encodedSampleArray = encoder.encodeToBytes(clientSample);
 
 	// send the encoded sample
 });
