@@ -1,5 +1,5 @@
 {
-  "name": "@observertc/samples-encoder",
+  "name": "@observertc/samples-decoder",
   "version": "2.2.0",
   "description": "ObserveRTC Library for Encoding Samples",
   "main": "dist/index.js",

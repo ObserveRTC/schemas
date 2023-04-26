@@ -2,13 +2,11 @@ import fs from "fs";
 import path from "path";
 // import * as typedoc from "typedoc";
 
-const README_MD_FILENAME = "README.md";
-const INDEX_TS_FILENAME = "index.ts";
 const PACKAGE_JSON_FILE = "package.json";
 
 export class NpmSampleEncoderLib {
     constructor() {
-        this._basePath = './npm-sample-encoder';
+        this._basePath = './npm-samples-encoder';
         this._srcPath = path.join(this._basePath, "src");
         this._inputSamplesPath = path.join(this._srcPath, "InputSamples.ts");
         this._outputSamplesPath = path.join(this._srcPath, "OutputSamples.ts");
@@ -31,6 +29,15 @@ export class NpmSampleEncoderLib {
     make() {
         fs.writeFileSync(this._inputSamplesPath, this._samplesTsCode);
         fs.writeFileSync(this._outputSamplesPath, this._protobufSamplesTsCode);
+
+        if (this._version) {
+            const packagePath = path.join(this._basePath, PACKAGE_JSON_FILE);
+            let packageText = fs.readFileSync(packagePath);
+            const packageJson = JSON.parse(packageText);
+            packageJson["version"] = this._version;
+            packageText = JSON.stringify(packageJson, null, 2);
+            fs.writeFileSync(packagePath, packageText);
+        }
     }
 
     clear() {

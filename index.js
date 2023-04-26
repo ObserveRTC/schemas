@@ -8,8 +8,8 @@ import path from "path";
 import * as chunks from "./chunks.js"
 import * as protobufUtils from "./protobufUtils.js";
 import { makeRedshiftSql } from "./makeRedshiftSql.js"
-import { NpmMonitorLib } from './NpmMonitorLib.js';
-import { NpmSampleEncoderLib } from './NpmSampleEncoderLib.js';
+import { NpmSampleEncoderLib } from './NpmSamplesEncoderLib.js';
+import { NpmSamplesDecoderLib } from './NpmSamplesDecoderLib.js';
 
 const SOURCE_PATH = "./sources";
 // const NPM_LIB_PATH = "./npm-lib";
@@ -95,6 +95,7 @@ const main = async () => {
     const npmSamplesLib = new NpmLib(NPM_SAMPLES_LIB_PATH);
     const npmReportsLib = new NpmLib(NPM_REPORTS_LIB_PATH);
     const npmEncoderLib = new NpmSampleEncoderLib();
+    const npmDecoderLib = new NpmSamplesDecoderLib();
     const version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
     npmSamplesLib.addW3cStatsIdentifiers(w3cStatsIdentifiers);
 
@@ -150,6 +151,7 @@ const main = async () => {
                 markdown: markdownDoc,
             });
         } else {
+            npmDecoderLib.addSamplesTsCode(module);
             npmEncoderLib.addSamplesTsCode(module);
             npmSamplesLib.addEntry({
                 fileName,
@@ -180,6 +182,7 @@ const main = async () => {
         await protobufUtils.createTypescriptModels(v3schemaOptionalPath, path.join(TEMP_PATH));
         const protobufSchemaV3OptionalTs = fs.readFileSync(path.join(TEMP_PATH, "outputs", "proto", "ProtobufSamplesV3Optional_pb.ts"), 'utf-8');
         npmEncoderLib.addSamplesProtobufTsCode(protobufSchemaV3OptionalTs);
+        npmDecoderLib.addSamplesProtobufTsCode(protobufSchemaV3OptionalTs);
         // console.log(protobufSchemaV3OptionalTs);
     } else {
         console.warn(`There was no Samples avro schema to generate the protobuf schema`);
@@ -188,14 +191,21 @@ const main = async () => {
     const changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
     npmSamplesLib.version = version;
     npmReportsLib.version = version;
+    npmEncoderLib.version = version;
+    npmDecoderLib.version = version;
+    
     npmSamplesLib.changelog = changelog;
     npmReportsLib.changelog = changelog;
+
     npmSamplesLib.clear();
     npmReportsLib.clear();
     npmEncoderLib.clear();
+    npmDecoderLib.clear();
+
     npmSamplesLib.make();
     npmReportsLib.make();
     npmEncoderLib.make();
+    npmDecoderLib.make();
 
     fs.writeFileSync(`${OUTPUTS_PATH}/generated.txt`, `Generated from schema version ${version} at ${new Date().toGMTString()}`);
 };
