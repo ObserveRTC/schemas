@@ -180,14 +180,14 @@ message Samples {
 			optional string sfuSinkId = 31;
 			optional string sfuStreamId = 32;
 			optional int32 silentConcealedSamples = 33;
-			optional int32 synthesizedSamplesDuration = 34;
+			optional double synthesizedSamplesDuration = 34;
 			optional int32 synthesizedSamplesEvents = 35;
 			optional int32 totalAudioEnergy = 36;
 			optional double totalPlayoutDelay = 37;
 			optional double totalProcessingDelay = 38;
 			optional double totalRoundTripTime = 39;
 			optional int32 totalSamplesCount = 40;
-			optional int32 totalSamplesDuration = 41;
+			optional double totalSamplesDuration = 41;
 			optional int32 totalSamplesReceived = 42;
 			optional string trackId = 43;
 		}

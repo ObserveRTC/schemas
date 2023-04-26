@@ -66,17 +66,17 @@ model | The name of the model
 
 Field | Description 
 --- | ---
-name | The name of the operation system (e.g.: linux) the webrtc app uses
-version | The version of the operation system
+name | The name of the operating system (e.g., Linux) the WebRTC app uses
+version | The version of the operating system
 
 ## OperationSystem
 
 
 Field | Description 
 --- | ---
-name | The name of the operation system (e.g.: linux) the webrtc app uses
-version | The version of the operation system
-versionName | The name of the version of the operation system
+name | The name of the operating system (e.g., Linux) the WebRTC app uses
+version | The version of the operating system
+versionName | The name of the version of the operating system
 
 ## MediaDevice
 
@@ -129,9 +129,9 @@ dataChannelIdentifier | The id of the data channel assigned by the peer connecti
 label | The label of the data channel
 protocol | The protocol the data channel utilizes
 state | The state of the data channel
-messageSent | The total number of message sent on the data channel
+messageSent | The total number of messages sent on the data channel
 bytesSent | The total number of bytes sent on the data channel
-messageReceived | The total number of message received on the data channel
+messageReceived | The total number of messages received on the data channel
 bytesReceived | The total number of bytes received on the data channel
 
 ## PeerConnectionTransport
@@ -139,25 +139,25 @@ bytesReceived | The total number of bytes received on the data channel
 
 Field | Description 
 --- | ---
-transportId (**Mandatory**) | The identifier of the transport the ice candidate pair is negotiated on
+transportId (**Mandatory**) | The identifier of the transport the ICE candidate pair is negotiated on
 peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
 label | The label associated with the peer connection
-packetsSent | Represents the total number of packets sent on the corresponded transport
-packetsReceived | Represents the total number of packets received on the corresponded transport
-bytesSent | Represents the total amount of bytes sent on the corresponded transport
-bytesReceived | Represents the total amount of bytes received on the corresponded transport
-iceRole | Represent the current role of ICE under DTLS Transport
-iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
+packetsSent | Represents the total number of packets sent on the corresponding transport
+packetsReceived | Represents the total number of packets received on the corresponding transport
+bytesSent | Represents the total amount of bytes sent on the corresponding transport
+bytesReceived | Represents the total amount of bytes received on the corresponding transport
+iceRole | Represents the current role of ICE under DTLS Transport
+iceLocalUsernameFragment | Represents the current local username fragment used in message validation procedures for ICE under DTLS Transport
 dtlsState | Represents the current state of DTLS for the peer connection transport layer
 selectedCandidatePairId | The identifier of the candidate pair the transport currently uses
 iceState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
-localCertificateId | If DTLS negotiated it gives the id of the local certificate
-remoteCertificateId | If DTLS negotiated it gives the id of the remote certificate
-tlsVersion | Represents the version number of the TLS used in the corresponded transport
-dtlsCipher | Represents the name of the DTLS cipher used in the corresponded transport
+localCertificateId | If DTLS negotiated, it gives the ID of the local certificate
+remoteCertificateId | If DTLS negotiated, it gives the ID of the remote certificate
+tlsVersion | Represents the version number of the TLS used in the corresponding transport
+dtlsCipher | Represents the name of the DTLS cipher used in the corresponding transport
 dtlsRole | The role this host plays in DTLS negotiations (Possible values are: client,<br />server,<br />unknown)
-srtpCipher | Represents the name of the SRTP cipher used in the corresponded transport
-tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponded transport
+srtpCipher | Represents the name of the SRTP cipher used in the corresponding transport
+tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponding transport
 selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
 
 ## IceCandidatePair
@@ -167,62 +167,62 @@ Field | Description
 --- | ---
 candidatePairId (**Mandatory**) | The unique identifier of the peer connection
 peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
-label | The label associated to the peer connection
+label | The label associated with the peer connection
 transportId | The identifier of the transport the ice candidate pair is negotiated on
-localCandidateId | The unique identifier of the candidate the negotiated pair is selected at local side
-remoteCandidateId | The unique identifier of the candidate the negotiated pair is selected at remote side
-state | The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponded transport
-nominated | indicate if the ice candidate pair is nominated or not
-packetsSent | The total number of packets sent using the last selected candidate pair over the corresponded transport
-packetsReceived | The total number of packets received using the last selected candidate pair over the corresponded transport
-bytesSent | The total number of bytes sent using the last selected candidate pair over the corresponded transport
-bytesReceived | The total number of bytes received using the last selected candidate pair over the corresponded transport
-lastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponded transport (UTC Epoch in ms)
-totalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponded transport
-currentRoundTripTime | Represents the last round trip time measurements in seconds based on STUN connectivity check over the corresponded transport
-availableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponded transport
-availableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponded transport
-requestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponded transport
-requestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponded transport
-responsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponded transport
-responsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponded transport
-consentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponded transport
-packetsDiscardedOnSend | Total amount of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
-bytesDiscardedOnSend | Total amount of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponded transport
+localCandidateId | The unique identifier of the candidate the negotiated pair is selected on the local side
+remoteCandidateId | The unique identifier of the candidate the negotiated pair is selected on the remote side
+state | The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponding transport
+nominated | Indicates if the ice candidate pair is nominated or not
+packetsSent | The total number of packets sent using the last selected candidate pair over the corresponding transport
+packetsReceived | The total number of packets received using the last selected candidate pair over the corresponding transport
+bytesSent | The total number of bytes sent using the last selected candidate pair over the corresponding transport
+bytesReceived | The total number of bytes received using the last selected candidate pair over the corresponding transport
+lastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponding transport (UTC Epoch in ms)
+lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponding transport (UTC Epoch in ms)
+totalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponding transport
+currentRoundTripTime | Represents the last round trip time measurement in seconds based on STUN connectivity check over the corresponding transport
+availableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponding transport
+availableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponding transport
+requestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponding transport
+requestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponding transport
+responsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponding transport
+responsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponding transport
+consentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponding transport
+packetsDiscardedOnSend | Total number of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponding transport
+bytesDiscardedOnSend | Total number of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponding transport
 
 ## MediaSourceStat
 
 
 Field | Description 
 --- | ---
-trackIdentifier | The unique identifier of the corresponded media track
-kind | The type of the media the Mediasource produces. (Possible values are: audio,<br />video)
+trackIdentifier | The unique identifier of the corresponding media track
+kind | The type of the media the MediaSource produces. (Possible values are: audio,<br />video)
 relayedSource | Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.
 audioLevel | The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure level from 0 dBov.
 totalAudioEnergy | The audio energy of the media source. For calculation see www.w3.org/TR/webrtc-stats/#dom-rtcaudiosourcestats-totalaudioenergy
 totalSamplesDuration | The duration of the audio type media source
 echoReturnLoss | if echo cancellation is applied on the media source, then this number represents the loss calculation defined in www.itu.int/rec/T-REC-G.168-201504-I/en
 echoReturnLossEnhancement | www.itu.int/rec/T-REC-G.168-201504-I/en
-droppedSamplesDuration | . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+droppedSamplesDuration | The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
 droppedSamplesEvents | A counter increases every time a sample is dropped after a non-dropped sample
 totalCaptureDelay | Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
 totalSamplesCaptured | The total number of captured samples reaching the audio source
 width | The width, in pixels, of the last frame originating from the media source
 height | The height, in pixels, of the last frame originating from the media source
-frames | The total number of frames originated from the media source
-framesPerSecond |  The number of frames origianted from the media source in the last second
+frames | The total number of frames originating from the media source
+framesPerSecond | The number of frames originating from the media source in the last second
 
 ## MediaCodecStats
 
 
 Field | Description 
 --- | ---
-payloadType | Payload type used in RTP encoding / decoding process.
+payloadType | Payload type used in the RTP encoding/decoding process.
 codecType | Indicates the role of the codec (encode or decode) (Possible values are: encode,<br />decode)
-mimeType | The MIME type of the media. eg.: audio/opus.
-clockRate | the clock rate used in RTP transport to generate the timestamp for the carried frames
-channels | Audio Only. Represnts the number of chanels an audio media source have. Only interesting if stereo is presented
+mimeType | The MIME type of the media, e.g., audio/opus.
+clockRate | The clock rate used in RTP transport to generate the timestamp for the carried frames
+channels | Audio Only. Represents the number of channels an audio media source has. Only interesting if stereo is presented
 sdpFmtpLine | The SDP line determines the codec
 
 ## Certificate
@@ -230,10 +230,10 @@ sdpFmtpLine | The SDP line determines the codec
 
 Field | Description 
 --- | ---
-fingerprint |  The fingerprint of the certificate.
+fingerprint | The fingerprint of the certificate.
 fingerprintAlgorithm | The hash function used to generate the fingerprint.
 base64Certificate | The DER encoded base-64 representation of the certificate.
-issuerCertificateId | The id of the next certificate in the certificate chain
+issuerCertificateId | The ID of the next certificate in the certificate chain
 
 ## InboundAudioTrack
 
@@ -241,26 +241,26 @@ issuerCertificateId | The id of the next certificate in the certificate chain
 Field | Description 
 --- | ---
 ssrc (**Mandatory**) | The RTP SSRC field
-trackId | The id of the track
-peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
-remoteClientId | The remote clientId the source outbound track belongs to
-sfuStreamId | The id of the SFU stream this track is sinked from
-sfuSinkId | The id of the sink this track belongs to in the SFU
-packetsReceived | The total number of packets received on the corresponded synchronization source
-packetsLost | The total number of bytes received on the corresponded synchronization source
-jitter | The corresponded synchronization source reported jitter
-lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
+trackId | The ID of the track
+peerConnectionId | The unique generated identifier of the peer connection the inbound audio track belongs to
+remoteClientId | The remote client ID the source outbound track belongs to
+sfuStreamId | The ID of the SFU stream this track is synced from
+sfuSinkId | The ID of the sink this track belongs to in the SFU
+packetsReceived | The total number of packets received on the corresponding synchronization source
+packetsLost | The total number of bytes received on the corresponding synchronization source
+jitter | The corresponding synchronization source reported jitter
+lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponding synchronization source (ssrc)
 headerBytesReceived | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
+packetsDiscarded | The total number of packets that missed the playout point and were therefore discarded by the jitter buffer
 fecPacketsReceived | Total number of FEC packets received over the corresponding synchronization source (ssrc)
-fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
-totalProcessingDelay | The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
-estimatedPlayoutTimestamp | The estimated playout time of the corresponded synchronization source
-jitterBufferDelay | The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
-jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
-jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
+fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrival; 2) the target RTP packet has already been repaired.
+bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrival; 2) the target RTP packet has already been repaired.
+nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponding synchronization source (ssrc)
+totalProcessingDelay | The total processing delay in seconds spent on buffering RTP packets from receipt until packets are decoded
+estimatedPlayoutTimestamp | The estimated playout time of the corresponding synchronization source
+jitterBufferDelay | The total time of RTP packets spent in the jitter buffer waiting for frame completion due to network uncertainty.
+jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer.
+jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponding synchronization source (ssrc)
 jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
 totalSamplesReceived | The total number of audio samples received on the corresponded RTP stream
 concealedSamples | The total number of samples decoded by the media decoder from the corresponded RTP stream
@@ -291,7 +291,7 @@ Field | Description
 --- | ---
 ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
-peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
+peerConnectionId | The unique generated identifier of the peer connection the inbound audio track belongs to
 remoteClientId | The remote clientId the source outbound track belongs to
 sfuStreamId | The id of the SFU stream this track is sinked from
 sfuSinkId | The id of the sink this track belongs to in the SFU
@@ -314,23 +314,23 @@ jitterBufferEmittedCount | The total number of audio samples or video frames tha
 jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
 decoderImplementation | Indicate the name of the decoder implementation library
 framesDecoded | The total number of frames decoded on the corresponded RTP stream
-keyFramesDecoded | The total number of keyframes decoded on the corresponded RTP stream
-frameWidth | The width of the frame of the video sent by the remote source on the corresponded RTP stream
-frameHeight | The height of the frame of the video sent by the remote source on the corresponded RTP stream
-framesPerSecond | The frame per seconds of the video sent by the remote source on the corresponded RTP stream
-qpSum | The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponded RTP stream
-totalDecodeTime | The total tiem spent on decoding video on the corresponded RTP stream
-totalInterFrameDelay | The total interframe delay
-totalSquaredInterFrameDelay | The total number of inter frame delay squere on the corresponded synchronization source (ssrc) Useful for variance calculation for interframe delays
-firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
-pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
-framesReceived | The total number of frames received on the corresponded RTP stream.
+keyFramesDecoded | The total number of keyframes decoded on the corresponding RTP stream
+frameWidth | The width of the frame of the video sent by the remote source on the corresponding RTP stream
+frameHeight | The height of the frame of the video sent by the remote source on the corresponding RTP stream
+framesPerSecond | The frame rate of the video sent by the remote source on the corresponding RTP stream
+qpSum | The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponding RTP stream
+totalDecodeTime | The total time spent on decoding video on the corresponding RTP stream
+totalInterFrameDelay | The total interframe delay on the corresponding RTP stream
+totalSquaredInterFrameDelay | The total squared interframe delay on the corresponding synchronization source (ssrc). Useful for variance calculation for interframe delays
+firCount | The total number of Full Intra Request (FIR) packets sent from this endpoint to the source on the corresponding RTP stream
+pliCount | The total number of Picture Loss Indication (PLI) packets sent on the corresponding RTP stream
+framesReceived | The total number of frames received on the corresponding RTP stream
 packetsSent | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
 bytesSent | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
-remoteTimestamp | The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
+remoteTimestamp | The timestamp corresponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
 reportsSent | The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
 roundTripTime | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
-totalRoundTripTime |  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
+totalRoundTripTime | Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
 roundTripTimeMeasurements | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
 
 ## OutboundAudioTrack
@@ -344,7 +344,7 @@ peerConnectionId |  The unique generated identifier of the peer connection the i
 sfuStreamId | The id of the SFU stream this track is related to
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
-rid |  The rid encoding parameter of the corresponded synchronization source
+rid | The rid encoding parameter of the corresponded synchronization source
 headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
 retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
 retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
@@ -367,8 +367,8 @@ audioLevel | Represents the audio level reported by the media source
 totalAudioEnergy | Represents the energy level reported by the media source
 totalSamplesDuration | Represents the total duration of the audio samples the media source actually transconverted in seconds
 echoReturnLoss | Represents the echo cancellation in decibels corresponded to the media source.
-echoReturnLossEnhancement | Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is catched from the emdia source.
-droppedSamplesDuration | . The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
+echoReturnLossEnhancement | Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is caught from the media source.
+droppedSamplesDuration | The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
 droppedSamplesEvents | A counter increases every time a sample is dropped after a non-dropped sample
 totalCaptureDelay | Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
 totalSamplesCaptured | The total number of captured samples reaching the audio source
@@ -380,11 +380,11 @@ Field | Description
 --- | ---
 ssrc (**Mandatory**) | The RTP SSRC field
 trackId | The id of the track
-peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
+peerConnectionId | The unique generated identifier of the peer connection the inbound audio track belongs to
 sfuStreamId | The id of the SFU stream this track is related to
 packetsSent | The total number of packets sent on the corresponded synchronization source
 bytesSent | The total number of bytes sent on the corresponded synchronization source
-rid |  The rid encoding parameter of the corresponded synchronization source
+rid | The rid encoding parameter of the corresponded synchronization source
 headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
 retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
 retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
@@ -396,20 +396,20 @@ nackCount | Count the total number of Negative ACKnowledgement (NACK) packets re
 encoderImplementation | Indicate the name of the encoder implementation library
 active | Indicates whether this RTP stream is configured to be sent or disabled
 frameWidth | The frame width in pixels of the frames targeted by the media encoder
-frameHeight | The frame width the media encoder targeted
-framesPerSecond | The encoded number of frames in the last second on the corresponded media source
-framesSent | TThe total number of frames sent on the corresponded RTP stream
-hugeFramesSent | The total number of huge frames (avgFrameSize * 2.5) on the corresponded RTP stream
+frameHeight | The frame height in pixels of the frames targeted by the media encoder
+framesPerSecond | The encoded number of frames in the last second on the corresponding media source
+framesSent | The total number of frames sent on the corresponding RTP stream
+hugeFramesSent | The total number of huge frames (avgFrameSize * 2.5) on the corresponding RTP stream
 framesEncoded | The total number of frames encoded by the media source
-keyFramesEncoded | The total number of keyframes encoded on the corresponded RTP stream
-qpSum | The sum of the QP the media encoder provided on the corresponded RTP stream.
-totalEncodeTime | The total time in seconds spent in encoding media frames for the corresponded RTP stream.
+keyFramesEncoded | The total number of keyframes encoded on the corresponding RTP stream
+qpSum | The sum of the QP the media encoder provided on the corresponding RTP stream.
+totalEncodeTime | The total time in seconds spent in encoding media frames for the corresponding RTP stream.
 qualityLimitationDurationNone | Time elapsed in seconds when the RTC connection has not limited the quality
 qualityLimitationDurationCPU | Time elapsed in seconds the RTC connection had a limitation because of CPU
 qualityLimitationDurationBandwidth | Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
 qualityLimitationDurationOther | Time elapsed in seconds the RTC connection had a limitation because of Other factor
 qualityLimitationReason | Indicate a reason for the quality limitation of the corresponded synchronization source
-qualityLimitationResolutionChanges | The total number of resolution changes occured ont he corresponded RTP stream due to quality changes
+qualityLimitationResolutionChanges | The total number of resolution changes occurred on the corresponded RTP stream due to quality changes
 firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
 pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
 packetsReceived | The total number of packets received on the corresponded synchronization source
@@ -419,7 +419,7 @@ roundTripTime | RTT measurement in seconds based on (most likely) SR, and RR bel
 totalRoundTripTime | The sum of RTT measurements belongs to the corresponded synchronization source
 fractionLost | The receiver reported fractional lost belongs to the corresponded synchronization source
 roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
-framesDropped | The total number of frames reported to be lost by the remote endpoit on the corresponded RTP stream
+framesDropped | The total number of frames reported to be lost by the remote endpoint on the corresponded RTP stream
 relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
 width | The width, in pixels, of the last frame originating from the media source
 height | The height, in pixels, of the last frame originating from the media source
@@ -461,25 +461,25 @@ docs
 
 Field | Description 
 --- | ---
-clientId (**Mandatory**) | Unique id of the client providing samples. Must be a valid UUID
+clientId (**Mandatory**) | Unique id of the client providing samples. Must be a valid UUID.
 timestamp (**Mandatory**) | The timestamp the sample is created in GMT
-callId | If it is provided the server uses the given id to match clients in the same call. Must be a valid UUID. 
-sampleSeq | The sequence number a source assigns to the sample. Every time the source make a sample at a client this number should be monothonically incremented.
+callId | If provided, the server uses the given id to match clients in the same call. Must be a valid UUID.
+sampleSeq | The sequence number a source assigns to the sample. Each time the source takes a sample at a client, this number should be monotonically incremented.
 roomId | The WebRTC app configured room id the client joined for the call.
-userId | The WebRTC app configured human readable user id the client is joined.
+userId | The WebRTC app configured human-readable user id the client is joined.
 engine | WebRTC App provided information related to the engine the client uses.
 platform | WebRTC App provided information related to the platform the client uses.
 browser | WebRTC App provided information related to the browser the client uses.
-os | WebRTC App provided information related to the operation system the client uses.
-mediaConstraints | The WebRTC app provided List of the media constraints the client has.
-mediaDevices | The WebRTC app provided List of the media devices the client has.
-userMediaErrors | The WebRTC app provided List of user media errors the client has.
+os | WebRTC App provided information related to the operating system the client uses.
+mediaConstraints | The WebRTC app provided list of the media constraints the client has.
+mediaDevices | The WebRTC app provided list of the media devices the client has.
+userMediaErrors | The WebRTC app provided list of user media errors the client has.
 extensionStats | The WebRTC app provided custom stats payload
 customCallEvents | User provided custom call events
-customObserverEvents | User provided custom call events
-iceServers | The WebRTC app provided List of ICE server the client used.
+customObserverEvents | User provided custom observer events
+iceServers | The WebRTC app provided list of ICE servers the client used.
 localSDPs | The local part of the Signal Description Protocol to establish connections
-dataChannels | Measurements about the data channels currently avaialble on peer connections
+dataChannels | Measurements about the data channels currently available on peer connections
 pcTransports | Transport stats of Peer Connection
 iceCandidatePairs | Candidate pair stats
 mediaSources | WebRTC App provided information related to the operation system the client uses.
