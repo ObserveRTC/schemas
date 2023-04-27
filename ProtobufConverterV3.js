@@ -1,9 +1,13 @@
 
 export class ProtobufConverterV3 {
 
-    static from(schema, version) {
+    static from(schema, version, uuidFields, allOptional = false) {
         const result = new ProtobufConverterV3(0, version);
         result._name = schema.name;
+        result._allOptional = allOptional;
+        if (uuidFields) {
+            result._uuidFields = uuidFields;
+        }
         for (const field of schema.fields) {
             try {
                 result.add(field);
@@ -13,14 +17,33 @@ export class ProtobufConverterV3 {
         }
         return result;
     }
+
+    static convertEnum(name, symbols) {
+        const enumName = name.toUpperCase();
+        const lines = [
+            `enum ${enumName} {`
+        ];
+        for (let fieldNum = 0; fieldNum < symbols.length; ++fieldNum) {
+            lines.push(`\t${symbols[fieldNum].toUpperCase()} = ${fieldNum};`)
+        }
+        lines.push(`}`);
+        return {
+            name: enumName,
+            toLines:() => lines
+        }
+    }
+
     constructor(level = 0, version) {
         this._name = undefined;
         this._version = version;
         this._level = level;
+        this._classEnum = undefined;
+        this._symbols = new Map();
         this._fields = [];
         this._nestedClasses = [];
         this._builderFields = null;
         this._uuidFields = new Set();
+        this._allOptional = false;
     }
 
     get name() {
@@ -52,16 +75,28 @@ export class ProtobufConverterV3 {
         }
         isObject = typeof type === "object";
         if (isObject && type.type === "enum") {
+            this._symbols.set(field.name, type.symbols);
+            if (!this._classEnum) {
+                this._classEnum = `${this._name}Enum`;
+            }
             this._addField({
-                doc: field.doc ? field.doc : "" + "Possible values: " + type.symbols.join(", "),
                 name: field.name,
-                type: "string",
-                required,
+                type: this._classEnum,
             });
+
+            // const nestedClass = ProtobufConverterV3.convertEnum(field.name, type.symbols);
+            // // console.log(type.symbols);
+            // this._nestedClasses.push(nestedClass);
+            // this._addField({
+            //     doc: field.doc ? field.doc : "" + "Possible values: " + type.symbols.join(", "),
+            //     name: field.name,
+            //     type: nestedClass.name,
+            //     required,
+            // });
             return;
         }
         if (isObject) {
-            const nestedClass = ProtobufConverterV3.from(type, !!this._builderFields, this._uuidFields);
+            const nestedClass = ProtobufConverterV3.from(type, !!this._builderFields, this._uuidFields, this._allOptional);
             nestedClass.level = this._level + 1;
             // console.log("nestedBuilder", this._builderFields, !!this._builderFields);
             this._nestedClasses.push(nestedClass);
@@ -76,7 +111,7 @@ export class ProtobufConverterV3 {
         }
         let protoType = undefined;
         if (this._uuidFields.has(field.name)) {
-            protoType = "UUID";
+            protoType = "bytes";
         } else {
             protoType = this._mapPrimitive(type);
         }
@@ -123,9 +158,10 @@ export class ProtobufConverterV3 {
         let result = [];
 
         if (isArray) result.push(`repeated`)
+        else if (this._allOptional) result.push(`optional`);
         // else if (required) result.push(`required`);
         // else result.push(`optional`);
-
+        
         result.push(type);
         result.push(`${name} = ${fieldNum}`);
 
@@ -179,6 +215,9 @@ export class ProtobufConverterV3 {
             );
         }
         result.push(`message ${this.name} {`);
+        if (this._classEnum) {
+            this._nestedClasses.push(this._renderEnum());
+        }
         for (const nestedClass of this._nestedClasses) {
             for (const nestedLine of nestedClass.toLines()) {
                 result.push(`\t${nestedLine}`);
@@ -187,5 +226,30 @@ export class ProtobufConverterV3 {
         result.push(...messageFields.map(line => `\t${line}`));
         result.push(`}`);
         return result;
+    }
+
+    _renderEnum() {
+        const lines = [
+            `enum ${this._classEnum} {`
+        ];
+        let fieldNum = 0;
+        const values = new Set();
+        for (const [fieldName, symbols] of this._symbols.entries()) {
+            lines.push(`\t/* For ${fieldName} */`);
+            for (let i = 0; i < symbols.length; ++i, fieldNum) {
+                const symbol = symbols[i].toUpperCase();
+                if (values.has(symbol)) {
+                    continue;
+                }
+                values.add(symbol);
+                lines.push(`\t${symbol} = ${fieldNum++};`)
+            }    
+        }
+        
+        lines.push(`}`);
+        return {
+            name: this._classEnum,
+            toLines:() => lines
+        }
     }
 }

@@ -30,8 +30,14 @@ message Samples {
 			string versionName = 3;
 		}
 		message MediaDevice {
+			enum MediaDeviceEnum {
+				/* For kind */
+				VIDEOINPUT = 0;
+				AUDIOINPUT = 1;
+				AUDIOOUTPUT = 2;
+			}
 			string id = 1;
-			string kind = 2;
+			MediaDeviceEnum kind = 2;
 			string label = 3;
 		}
 		message ExtensionStat {
@@ -43,7 +49,7 @@ message Samples {
 			string attachments = 2;
 			string mediaTrackId = 3;
 			string message = 4;
-			string peerConnectionId = 5;
+			bytes peerConnectionId = 5;
 			int64 timestamp = 6;
 			string value = 7;
 		}
@@ -55,7 +61,7 @@ message Samples {
 			int64 timestamp = 5;
 		}
 		message DataChannel {
-			string peerConnectionId = 1;
+			bytes peerConnectionId = 1;
 			int64 bytesReceived = 2;
 			int64 bytesSent = 3;
 			int32 dataChannelIdentifier = 4;
@@ -66,12 +72,18 @@ message Samples {
 			string state = 9;
 		}
 		message PeerConnectionTransport {
-			string peerConnectionId = 1;
+			enum PeerConnectionTransportEnum {
+				/* For dtlsRole */
+				CLIENT = 0;
+				SERVER = 1;
+				UNKNOWN = 2;
+			}
+			bytes peerConnectionId = 1;
 			string transportId = 2;
 			int64 bytesReceived = 3;
 			int64 bytesSent = 4;
 			string dtlsCipher = 5;
-			string dtlsRole = 6;
+			PeerConnectionTransportEnum dtlsRole = 6;
 			string dtlsState = 7;
 			string iceLocalUsernameFragment = 8;
 			string iceRole = 9;
@@ -89,7 +101,7 @@ message Samples {
 		}
 		message IceCandidatePair {
 			string candidatePairId = 1;
-			string peerConnectionId = 2;
+			bytes peerConnectionId = 2;
 			double availableIncomingBitrate = 3;
 			double availableOutgoingBitrate = 4;
 			int64 bytesDiscardedOnSend = 5;
@@ -115,6 +127,11 @@ message Samples {
 			string transportId = 25;
 		}
 		message MediaSourceStat {
+			enum MediaSourceStatEnum {
+				/* For kind */
+				AUDIO = 0;
+				VIDEO = 1;
+			}
 			double audioLevel = 1;
 			double droppedSamplesDuration = 2;
 			int32 droppedSamplesEvents = 3;
@@ -123,19 +140,24 @@ message Samples {
 			int32 frames = 6;
 			double framesPerSecond = 7;
 			int32 height = 8;
-			string kind = 9;
+			MediaSourceStatEnum kind = 9;
 			bool relayedSource = 10;
 			double totalAudioEnergy = 11;
 			double totalCaptureDelay = 12;
 			double totalSamplesCaptured = 13;
 			double totalSamplesDuration = 14;
-			string trackIdentifier = 15;
+			bytes trackIdentifier = 15;
 			int32 width = 16;
 		}
 		message MediaCodecStats {
+			enum MediaCodecStatsEnum {
+				/* For codecType */
+				ENCODE = 0;
+				DECODE = 1;
+			}
 			int32 channels = 1;
 			int32 clockRate = 2;
-			string codecType = 3;
+			MediaCodecStatsEnum codecType = 3;
 			string mimeType = 4;
 			string payloadType = 5;
 			string sdpFmtpLine = 6;
@@ -170,26 +192,26 @@ message Samples {
 			int32 packetsLost = 21;
 			int32 packetsReceived = 22;
 			int32 packetsSent = 23;
-			string peerConnectionId = 24;
-			string remoteClientId = 25;
+			bytes peerConnectionId = 24;
+			bytes remoteClientId = 25;
 			int64 remoteTimestamp = 26;
 			int32 removedSamplesForAcceleration = 27;
 			int32 reportsSent = 28;
 			double roundTripTime = 29;
 			int32 roundTripTimeMeasurements = 30;
-			string sfuSinkId = 31;
-			string sfuStreamId = 32;
+			bytes sfuSinkId = 31;
+			bytes sfuStreamId = 32;
 			int32 silentConcealedSamples = 33;
-			int32 synthesizedSamplesDuration = 34;
+			double synthesizedSamplesDuration = 34;
 			int32 synthesizedSamplesEvents = 35;
 			int32 totalAudioEnergy = 36;
 			double totalPlayoutDelay = 37;
 			double totalProcessingDelay = 38;
 			double totalRoundTripTime = 39;
 			int32 totalSamplesCount = 40;
-			int32 totalSamplesDuration = 41;
+			double totalSamplesDuration = 41;
 			int32 totalSamplesReceived = 42;
-			string trackId = 43;
+			bytes trackId = 43;
 		}
 		message InboundVideoTrack {
 			int64 ssrc = 1;
@@ -219,22 +241,22 @@ message Samples {
 			int32 packetsLost = 25;
 			int32 packetsReceived = 26;
 			int32 packetsSent = 27;
-			string peerConnectionId = 28;
+			bytes peerConnectionId = 28;
 			int32 pliCount = 29;
 			int64 qpSum = 30;
-			string remoteClientId = 31;
+			bytes remoteClientId = 31;
 			int64 remoteTimestamp = 32;
 			int32 reportsSent = 33;
 			double roundTripTime = 34;
 			int32 roundTripTimeMeasurements = 35;
-			string sfuSinkId = 36;
-			string sfuStreamId = 37;
+			bytes sfuSinkId = 36;
+			bytes sfuStreamId = 37;
 			double totalDecodeTime = 38;
 			double totalInterFrameDelay = 39;
 			double totalProcessingDelay = 40;
 			double totalRoundTripTime = 41;
 			double totalSquaredInterFrameDelay = 42;
-			string trackId = 43;
+			bytes trackId = 43;
 		}
 		message OutboundAudioTrack {
 			int64 ssrc = 1;
@@ -254,14 +276,14 @@ message Samples {
 			int32 packetsLost = 15;
 			int32 packetsReceived = 16;
 			int32 packetsSent = 17;
-			string peerConnectionId = 18;
+			bytes peerConnectionId = 18;
 			bool relayedSource = 19;
 			int64 retransmittedBytesSent = 20;
 			int32 retransmittedPacketsSent = 21;
 			string rid = 22;
 			double roundTripTime = 23;
 			int32 roundTripTimeMeasurements = 24;
-			string sfuStreamId = 25;
+			bytes sfuStreamId = 25;
 			int32 targetBitrate = 26;
 			double totalAudioEnergy = 27;
 			double totalCaptureDelay = 28;
@@ -270,7 +292,7 @@ message Samples {
 			double totalRoundTripTime = 31;
 			double totalSamplesCaptured = 32;
 			double totalSamplesDuration = 33;
-			string trackId = 34;
+			bytes trackId = 34;
 		}
 		message OutboundVideoTrack {
 			int64 ssrc = 1;
@@ -296,7 +318,7 @@ message Samples {
 			int32 packetsLost = 21;
 			int32 packetsReceived = 22;
 			int32 packetsSent = 23;
-			string peerConnectionId = 24;
+			bytes peerConnectionId = 24;
 			int32 pliCount = 25;
 			int64 qpSum = 26;
 			double qualityLimitationDurationBandwidth = 27;
@@ -311,35 +333,49 @@ message Samples {
 			string rid = 36;
 			double roundTripTime = 37;
 			int32 roundTripTimeMeasurements = 38;
-			string sfuStreamId = 39;
+			bytes sfuStreamId = 39;
 			int32 targetBitrate = 40;
 			double totalEncodeTime = 41;
 			int64 totalEncodedBytesTarget = 42;
 			double totalPacketSendDelay = 43;
 			double totalRoundTripTime = 44;
-			string trackId = 45;
+			bytes trackId = 45;
 			int32 width = 46;
 		}
 		message IceLocalCandidate {
+			enum IceLocalCandidateEnum {
+				/* For protocol */
+				TCP = 0;
+				UDP = 1;
+				/* For relayProtocol */
+				TLS = 2;
+			}
 			string address = 1;
 			string candidateType = 2;
 			string id = 3;
-			string peerConnectionId = 4;
+			bytes peerConnectionId = 4;
 			int32 port = 5;
 			int64 priority = 6;
-			string protocol = 7;
-			string relayProtocol = 8;
+			IceLocalCandidateEnum protocol = 7;
+			IceLocalCandidateEnum relayProtocol = 8;
 			string url = 9;
 		}
 		message IceRemoteCandidate {
+			enum IceRemoteCandidateEnum {
+				/* For protocol */
+				TCP = 0;
+				UDP = 1;
+				/* For relayProtocol */
+				TLS = 2;
+			}
 			string address = 1;
 			string candidateType = 2;
 			string id = 3;
-			string peerConnectionId = 4;
+			bytes peerConnectionId = 4;
 			int32 port = 5;
 			int64 priority = 6;
-			string protocol = 7;
-			string relayProtocol = 8;
+			IceRemoteCandidateEnum protocol = 7;
+			IceRemoteCandidateEnum relayProtocol = 8;
 			string url = 9;
 		}
 		repeated Certificate certificates = 1;
@@ -362,10 +398,10 @@ message Samples {
 		repeated OutboundVideoTrack outboundVideoTracks = 18;
 		repeated PeerConnectionTransport pcTransports = 19;
 		repeated string userMediaErrors = 20;
-		string clientId = 21;
+		bytes clientId = 21;
 		int64 timestamp = 22;
 		Browser browser = 23;
-		string callId = 24;
+		bytes callId = 24;
 		Engine engine = 25;
 		string marker = 26;
 		OperationSystem os = 27;
@@ -380,8 +416,8 @@ message Samples {
 			string name = 1;
 			string attachments = 2;
 			string message = 3;
-			string sfuSinkId = 4;
-			string sfuStreamId = 5;
+			bytes sfuSinkId = 4;
+			bytes sfuStreamId = 5;
 			int64 timestamp = 6;
 			string transportId = 7;
 			string value = 8;
@@ -416,9 +452,14 @@ message Samples {
 			string sctpState = 27;
 		}
 		message SfuInboundRtpPad {
-			string padId = 1;
+			enum SfuInboundRtpPadEnum {
+				/* For mediaType */
+				AUDIO = 0;
+				VIDEO = 1;
+			}
+			bytes padId = 1;
 			int64 ssrc = 2;
-			string streamId = 3;
+			bytes streamId = 3;
 			string transportId = 4;
 			int64 bytesReceived = 5;
 			int32 clockRate = 6;
@@ -431,7 +472,7 @@ message Samples {
 			bool internal = 13;
 			double jitter = 14;
 			int32 keyFramesDecoded = 15;
-			string mediaType = 16;
+			SfuInboundRtpPadEnum mediaType = 16;
 			string mimeType = 17;
 			int32 nackCount = 18;
 			bool noReport = 19;
@@ -456,14 +497,19 @@ message Samples {
 			bool voiceActivityFlag = 38;
 		}
 		message SfuOutboundRtpPad {
-			string padId = 1;
-			string sinkId = 2;
+			enum SfuOutboundRtpPadEnum {
+				/* For mediaType */
+				AUDIO = 0;
+				VIDEO = 1;
+			}
+			bytes padId = 1;
+			bytes sinkId = 2;
 			int64 ssrc = 3;
-			string streamId = 4;
+			bytes streamId = 4;
 			string transportId = 5;
 			int64 bytesSent = 6;
-			string callId = 7;
-			string clientId = 8;
+			bytes callId = 7;
+			bytes clientId = 8;
 			int32 clockRate = 9;
 			int32 fecPacketsDiscarded = 10;
 			int32 fecPacketsSent = 11;
@@ -474,7 +520,7 @@ message Samples {
 			bool internal = 16;
 			double jitter = 17;
 			int32 keyFramesEncoded = 18;
-			string mediaType = 19;
+			SfuOutboundRtpPadEnum mediaType = 19;
 			string mimeType = 20;
 			int32 nackCount = 21;
 			bool noReport = 22;
@@ -496,12 +542,12 @@ message Samples {
 			string sdpFmtpLine = 38;
 			int32 sliCount = 39;
 			int32 targetBitrate = 40;
-			string trackId = 41;
+			bytes trackId = 41;
 			bool voiceActivityFlag = 42;
 		}
 		message SfuSctpChannel {
-			string channelId = 1;
-			string streamId = 2;
+			bytes channelId = 1;
+			bytes streamId = 2;
 			string transportId = 3;
 			int64 bytesReceived = 4;
 			int64 bytesSent = 5;
@@ -527,7 +573,7 @@ message Samples {
 		repeated SfuOutboundRtpPad outboundRtpPads = 4;
 		repeated SfuSctpChannel sctpChannels = 5;
 		repeated SfuTransport transports = 6;
-		string sfuId = 7;
+		bytes sfuId = 7;
 		int64 timestamp = 8;
 		string marker = 9;
 		int32 timeZoneOffsetInHours = 10;
@@ -551,7 +597,7 @@ message Samples {
 		message TurnSession {
 			string sessionId = 1;
 			string clientAddress = 2;
-			string clientId = 3;
+			bytes clientId = 3;
 			int32 clientPort = 4;
 			int64 nonceExpirationTime = 5;
 			string realm = 6;

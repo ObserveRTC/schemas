@@ -1,0 +1,32 @@
+{
+  "name": "@observertc/samples-encoder",
+  "version": "2.2.0",
+  "description": "ObserveRTC Library for Encoding Samples",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc"
+  },
+  "keywords": [
+    "webrtc",
+    "schemas",
+    "observertc",
+    "encoder"
+  ],
+  "author": "Balazs Kreith",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/observertc/schemas"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^1.2.0"
+  }
+}

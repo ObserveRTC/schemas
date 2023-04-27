@@ -20,12 +20,15 @@ class TsObj {
     }
 
     toString() {
-        const result = [
-            "/**",
-            "* " + this._description,
-            "*/",
-            "export type " + this._name + " = {",
-        ];
+        const result = [];
+        if (this._description) {
+            result.push(
+                "/**",
+                "* " + this._description,
+                "*/",
+            );
+        }
+        result.push("export type " + this._name + " = {")
         this._fields.sort((a, b) => {
             const priorityA = a.required ? 10 : 0;
             const priorityB = b.required ? 10 : 0;
@@ -51,7 +54,7 @@ class TsObj {
     }
 }
 
-function getTsType(avroType) {
+function getTsType(avroType, addDoc = true) {
     let tsType;
     let tsObj;
     let tsDependencies;
@@ -59,7 +62,7 @@ function getTsType(avroType) {
     if (typeof avroType !== 'string') { 
         const { type: subType, symbols, items, name } = avroType;
         if (subType === "array") {
-            const { tsType: subTsType, tsObj: subTsObj, tsDependencies: subTsDependencies } = getTsType(items);
+            const { tsType: subTsType, tsObj: subTsObj, tsDependencies: subTsDependencies } = getTsType(items, addDoc);
             tsType = subTsType + "[]";
             tsObj = subTsObj;
             tsDependencies = subTsDependencies;
@@ -67,7 +70,7 @@ function getTsType(avroType) {
             tsType = `"` + symbols.join(`" | "`) + `"`;
         } else if (subType === "record") {
             tsType = name;
-            const { mainTsObj, dependencies } = makeTsObj(avroType);
+            const { mainTsObj, dependencies } = makeTsObj(avroType, addDoc);
             tsObj = mainTsObj;
             if (dependencies && 0 < dependencies.length) {
                 tsDependencies = dependencies;
@@ -87,20 +90,20 @@ function getTsType(avroType) {
     }
 }
 
-function makeTsObj(avroSchema) {
+function makeTsObj(avroSchema, addDoc = true) {
     const dependencies = [];
     const mainTsObj = new TsObj({
         name: avroSchema.name,
-        desc: avroSchema.doc,
+        desc: addDoc ? avroSchema.doc : undefined,
     });
     for (const field of avroSchema.fields) {
         const required = field.default === undefined;
-        const fieldDoc = field.doc;
+        const fieldDoc = addDoc ? field.doc : undefined;
         const avroTypes = Array.isArray(field.type) ? field.type : [field.type];
         const tsTypes = [];
         for (const avroType of avroTypes) {
             if (avroType === "null") continue;
-            const { tsType, tsObj, tsDependencies } = getTsType(avroType);
+            const { tsType, tsObj, tsDependencies } = getTsType(avroType, addDoc);
             if (tsObj) {
                 dependencies.push(tsObj);
                 if (tsDependencies) {
@@ -115,7 +118,7 @@ function makeTsObj(avroSchema) {
         mainTsObj.addField({
             name: field.name,
             type: tsType,
-            desc: field.doc,
+            desc: addDoc ? field.doc : undefined,
             required,
         });
     }
@@ -125,13 +128,13 @@ function makeTsObj(avroSchema) {
     }
 }
 
-export function makeTsModule(avroSchema) {
+export function makeTsModule(avroSchema, schemaVersion, addDoc = true) {
     const {
         mainTsObj,
         dependencies,
-    } = makeTsObj(avroSchema);
+    } = makeTsObj(avroSchema, addDoc);
     const exports = [];
-    const modules = [];
+    const modules = [`\nexport const schemaVersion = "${schemaVersion}";\n`];
     if (dependencies && 0 < dependencies.length) {
         while (0 < dependencies.length) {
             const dependency = dependencies.pop();

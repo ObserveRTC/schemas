@@ -4,12 +4,12 @@
 	{
 		"lib": [ "es2018", "dom" ],
 		"target": "es2018",
-		"module": "es6",
-		// "moduleResolution": "node",
+		"module": "commonjs",
+		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"isolatedModules": true,
 		"strict": true,
-		"outDir": "lib",
+		"outDir": "./dist",
 		"declaration": true,
 		"declarationMap": true
 	},

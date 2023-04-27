@@ -4,6 +4,25 @@ import { ProtobufConverterV3 } from "./ProtobufConverterV3.js";
 import * as pbjs from "protobufjs/cli/pbjs.js";
 import { exec } from 'child_process';
 
+const uuidFields = new Set(
+        [
+        "trackIdentifier",
+        "remoteClientId",
+        "callId",
+        "clientId",
+        "peerConnectionId",
+        "trackId",
+        "streamId",
+        "sinkId",
+        "sfuStreamId",
+        "sfuSinkId",
+        "sfuId",
+        // "transportId",
+        "padId",
+        "channelId",
+    ]
+);
+
 export const makeProtobufJson = path => new Promise(resolve => {
     pbjs.main([ path ], function(err, output) {
         if (err)
@@ -30,8 +49,8 @@ export function convertToProtobufSchema(avroSchema, version) {
     // fs.writeFileSync(outputPath, samplesModule);
 }
 
-export function convertToProtobufSchemaV3(avroSchema, version) {
-    const samplesProto = ProtobufConverterV3.from(avroSchema, version);
+export function convertToProtobufSchemaV3(avroSchema, version, allOptional = false) {
+    const samplesProto = ProtobufConverterV3.from(avroSchema, version, uuidFields, allOptional);
     const samplesProtoStr = samplesProto.toLines().join("\n");
 
     const samplesModule = [
@@ -49,7 +68,7 @@ export function convertToProtobufSchemaV3(avroSchema, version) {
 }
 
 
-async function createTypescriptModels(protoPath, genOutput) {
+export async function createTypescriptModels(protoPath, genOutput) {
     await new Promise((resolve, reject) => {
         const command = [
             `PATH=$PATH:$(pwd)/node_modules/.bin`,
