@@ -1,5 +1,5 @@
 
-export const schemaVersion = "2.2.0";
+export const schemaVersion = "2.2.1";
 
 /**
 * A multiplexed Report object wraps an encoded report in bytes format

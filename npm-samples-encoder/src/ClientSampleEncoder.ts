@@ -116,8 +116,8 @@ export class ClientSampleEncoder {
 			extensionStats: this._encodeExtensionStats(clientSample.extensionStats),
 			customCallEvents: this._encodeCustomCallEvents(clientSample.customCallEvents),
 
-			iceLocalCandidates: this._encodeIceLocalCandidates(),
-			iceRemoteCandidates: this._encodeIceRemoteCandidates(),
+            iceLocalCandidates: this._encodeIceLocalCandidates(clientSample.iceLocalCandidates),
+            iceRemoteCandidates: this._encodeIceRemoteCandidates(clientSample.iceRemoteCandidates),
 			timeZoneOffsetInHours: this._encodeTimeZoneOffsetInHours(clientSample.timeZoneOffsetInHours),
 
 		});

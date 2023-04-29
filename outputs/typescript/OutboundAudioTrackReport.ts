@@ -1,5 +1,5 @@
 
-export const schemaVersion = "2.2.0";
+export const schemaVersion = "2.2.1";
 
 /**
 * A Report created for Outbound Audio Tracks. A combination of Audio source, Codec metadata carrying outbound and remote inbound RTP stat measurements
