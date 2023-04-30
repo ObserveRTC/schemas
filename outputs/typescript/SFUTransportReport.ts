@@ -1,6 +1,3 @@
-
-export const schemaVersion = "2.2.1";
-
 /**
 * A Report created for SFU Transport layer typically created to transfer RTP/SCTP/RTX streams to another client, SFU, MCU, or processing module.
 */

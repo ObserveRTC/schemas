@@ -745,6 +745,14 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 2.2.2
+ * Bugfix for Decoder library decoding IceCandidatePairs
+ * remove `schemaVersion` from Reports
+
+## 2.2.1
+ * Encoder and Decoder libraries are added
+ * added `schemaVersion` to each generated Samples anre Reports
+
 ## 2.2.0
 
 ### Added

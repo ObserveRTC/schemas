@@ -1,6 +1,3 @@
-
-export const schemaVersion = "2.2.1";
-
 /**
 * Events happened in calls.
 */

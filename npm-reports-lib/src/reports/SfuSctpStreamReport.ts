@@ -1,6 +1,3 @@
-
-export const schemaVersion = "2.2.1";
-
 /**
 * A Report created for SCTP streams going through the SFU
 */

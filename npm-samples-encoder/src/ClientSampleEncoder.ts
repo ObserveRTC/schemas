@@ -75,6 +75,7 @@ export class ClientSampleEncoder {
 	}
 
 	public encodeToBase64(clientSample: ClientSample): string {
+		console.log("dkfjghdfkfghsdkjhdfk");
 		const bytes = this.encodeToProtobufSamples(clientSample).toBinary();
 		return convertUint8ToBase64(bytes);
 	}
@@ -121,7 +122,6 @@ export class ClientSampleEncoder {
 			timeZoneOffsetInHours: this._encodeTimeZoneOffsetInHours(clientSample.timeZoneOffsetInHours),
 
 		});
-		
 		return result;
 	}
 

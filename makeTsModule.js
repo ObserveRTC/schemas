@@ -134,7 +134,10 @@ export function makeTsModule(avroSchema, schemaVersion, addDoc = true) {
         dependencies,
     } = makeTsObj(avroSchema, addDoc);
     const exports = [];
-    const modules = [`\nexport const schemaVersion = "${schemaVersion}";\n`];
+    const modules = [];
+    if (!avroSchema.name.includes("Report")) {
+        modules.push(`\nexport const schemaVersion = "${schemaVersion}";\n`);
+    }
     if (dependencies && 0 < dependencies.length) {
         while (0 < dependencies.length) {
             const dependency = dependencies.pop();

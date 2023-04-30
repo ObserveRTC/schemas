@@ -424,13 +424,13 @@ export class ClientSampleDecoder {
 	private _decodeIceCandidatePairs(samples: Samples_ClientSample_IceCandidatePair[]): IceCandidatePair[] {
 		const result: IceCandidatePair[] = [];
 		for (const sample of samples) {
-			if (!sample.peerConnectionId || !sample.candidatePairId) continue;
-			const peerConnectionId = byteArrayToUuid(sample.peerConnectionId);
-			const key = `${peerConnectionId}:${sample.candidatePairId}`;
-			let decoder = this._iceCandidatePairs.get(key);
+			if (!sample.candidatePairId) continue;
+			let decoder = this._iceCandidatePairs.get(sample.candidatePairId);
 			if (!decoder) {
+				if (!sample.peerConnectionId) continue;
+				const peerConnectionId = byteArrayToUuid(sample.peerConnectionId);
 				decoder = new IceCandidatePairDecoder(sample.candidatePairId, peerConnectionId);
-				this._iceCandidatePairs.set(key, decoder);
+				this._iceCandidatePairs.set(sample.candidatePairId, decoder);
 			}
 			const decodedItem = decoder.decode(sample);
 			result.push(decodedItem);

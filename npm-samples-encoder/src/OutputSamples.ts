@@ -8,7 +8,7 @@ import { Message, proto3 } from "@bufbuild/protobuf";
 
 /**
  * *
- * Schema Version: 2.2.1
+ * Schema Version: 2.2.2
  *
  * @generated from message org.observertc.schemas.protobuf.Samples
  */
