@@ -124,6 +124,37 @@ export class ClientSampleEncoder {
 		return result;
 	}
 
+	public reset() {
+		this._callId = undefined;
+		this._roomId = undefined;
+		this._userId = undefined;
+		this._visited = false;
+		this._mediaConstraints.clear();
+		this._iceServers.clear();
+		this._localSDPs.clear();
+		this._userMediaErrors.clear();
+		this._mediaDevices = [];
+		this._engine = undefined;
+		this._platform = undefined;
+		this._browser = undefined;
+		this._os = undefined;
+		this._codecs = [];
+		this._certificates = [];
+		this._timeZoneOffsetInHours = undefined;
+	  
+		this._mediaSources.clear();
+		this._inboundAudioTracks.clear();
+		this._inboundVideoTracks.clear();
+		this._outboundAudioTracks.clear();
+		this._outboundVideoTracks.clear();
+		this._dataChannels.clear();
+		this._iceCandidatePairs.clear();
+		this._peerConnectionTransports.clear();
+		this._iceLocalCandidates.clear();
+		this._iceRemoteCandidates.clear();
+	  }
+	  
+
 	private _encodeCallId(
 		callId?: string,
 	): Uint8Array | undefined {

@@ -22,6 +22,11 @@ export class SamplesEncoder {
 		return convertUint8ToBase64(bytes);
 	}
 
+	public reset() {
+		this._clientSampleEncoders.clear();
+		this._sfuSampleEncoders.clear();
+	}
+
 	public encodeToProtobufSamples(input: InputSamples): OutputSamples {
 		const clientSamples: Samples_ClientSample[] = [];
 		try {

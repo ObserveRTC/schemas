@@ -20,6 +20,7 @@ const encodedSample = encoder.encodeToBase64(samples);
 const encodedSampleArray = encoder.encodeToBytes(samples);
 
 // send the encoded sample
+
 ```
 
 ### ClientSampleEncoder

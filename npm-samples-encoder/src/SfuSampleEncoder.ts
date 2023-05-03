@@ -61,6 +61,14 @@ export class SfuSampleEncoder {
 		return result;
 	}
 
+	public reset() {
+		this._timeZoneOffsetInHours = undefined;
+		this._inboundRtpPads.clear();
+		this._outboundRtpPads.clear();
+		this._sctpChannels.clear();
+		this._visited = false;
+	}
+
 
 	private _encodeTimeZoneOffsetInHours(
 		timeZoneOffsetInHours?: number,
