@@ -3,7 +3,7 @@ syntax = "proto2";
 package org.observertc.schemas.protobuf;
 
 /**
-* Schema Version: 2.2.4
+* Schema Version: 2.2.5
 */
 message Samples {
 	message Controls {
@@ -148,7 +148,7 @@ message Samples {
 		}
 		message InboundAudioTrack {
 			required int64 ssrc = 1;
-			optional int32 audioLevel = 2;
+			optional double audioLevel = 2;
 			optional int64 bytesReceived = 3;
 			optional int64 bytesSent = 4;
 			optional int32 concealedSamples = 5;
@@ -182,7 +182,7 @@ message Samples {
 			optional int32 silentConcealedSamples = 33;
 			optional double synthesizedSamplesDuration = 34;
 			optional int32 synthesizedSamplesEvents = 35;
-			optional int32 totalAudioEnergy = 36;
+			optional double totalAudioEnergy = 36;
 			optional double totalPlayoutDelay = 37;
 			optional double totalProcessingDelay = 38;
 			optional double totalRoundTripTime = 39;

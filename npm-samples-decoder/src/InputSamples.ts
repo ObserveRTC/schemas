@@ -8,7 +8,7 @@ import { Message, proto3 } from "@bufbuild/protobuf";
 
 /**
  * *
- * Schema Version: 2.2.4
+ * Schema Version: 2.2.5
  *
  * @generated from message org.observertc.schemas.protobuf.Samples
  */
@@ -1516,7 +1516,7 @@ export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_Clie
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional int32 audioLevel = 2;
+   * @generated from field: optional double audioLevel = 2;
    */
   audioLevel?: number;
 
@@ -1686,7 +1686,7 @@ export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_Clie
   synthesizedSamplesEvents?: number;
 
   /**
-   * @generated from field: optional int32 totalAudioEnergy = 36;
+   * @generated from field: optional double totalAudioEnergy = 36;
    */
   totalAudioEnergy?: number;
 
@@ -1734,7 +1734,7 @@ export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_Clie
   static readonly typeName = "org.observertc.schemas.protobuf.Samples.ClientSample.InboundAudioTrack";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 2, name: "audioLevel", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 2, name: "audioLevel", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 3, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 4, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 5, name: "concealedSamples", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1768,7 +1768,7 @@ export class Samples_ClientSample_InboundAudioTrack extends Message<Samples_Clie
     { no: 33, name: "silentConcealedSamples", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 34, name: "synthesizedSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 35, name: "synthesizedSamplesEvents", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 36, name: "totalAudioEnergy", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 36, name: "totalAudioEnergy", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 37, name: "totalPlayoutDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 38, name: "totalProcessingDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 39, name: "totalRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },

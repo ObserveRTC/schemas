@@ -1584,7 +1584,7 @@
                           "doc": "The current audio level",
                           "type": [
                             "null",
-                            "int"
+                            "double"
                           ],
                           "default": null
                         },
@@ -1593,7 +1593,7 @@
                           "doc": "Represents the energy level reported by the media source",
                           "type": [
                             "null",
-                            "int"
+                            "double"
                           ],
                           "default": null
                         },
