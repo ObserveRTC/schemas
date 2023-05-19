@@ -10,6 +10,7 @@ import * as protobufUtils from "./protobufUtils.js";
 import { makeRedshiftSql } from "./makeRedshiftSql.js"
 import { NpmSampleEncoderLib } from './NpmSamplesEncoderLib.js';
 import { NpmSamplesDecoderLib } from './NpmSamplesDecoderLib.js';
+import { makeBigQuerySql } from './makeBigQuerySql.js';
 
 const SOURCE_PATH = "./sources";
 // const NPM_LIB_PATH = "./npm-lib";
@@ -129,6 +130,7 @@ const main = async () => {
 
         if (isReport) {
             const { csvColumnList, createTable } = makeRedshiftSql(schema);
+            const { createTable: createBigqueryTable } = makeBigQuerySql(schema);
             if (csvColumnList) {
                 fs.writeFileSync(path.join(CSV_OUTPUTS_PATH, `${schemaName}-csv-header.txt`), csvColumnList);
             } else {
@@ -140,7 +142,11 @@ const main = async () => {
             } else {
                 console.warn(`No redshift sql is generated for ${schemaName}`);
             }
-            
+            if (createBigqueryTable) {
+                fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `${schemaName}-bigquery.sql`), createBigqueryTable);
+            } else {
+                console.warn(`No bigquery sql is generated for ${schemaName}`);
+            }
             
             npmReportsLib.addEntry({
                 fileName,

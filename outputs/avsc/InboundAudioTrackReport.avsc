@@ -364,7 +364,7 @@
       "doc": "Represents the total duration of the audio samples the media source actually transconverted in seconds",
       "type": [
         "null",
-        "int"
+        "double"
       ],
       "default": null
     },
@@ -445,7 +445,7 @@
       "doc": "This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized",
       "type": [
         "null",
-        "int"
+        "double"
       ],
       "default": null
     },

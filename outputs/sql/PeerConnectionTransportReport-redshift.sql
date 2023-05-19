@@ -5,10 +5,12 @@ create table  IF NOT EXISTS peer_connection_transport_report (
 	callid	VARCHAR(254)	not null,
 	clientid	VARCHAR(254)	not null,
 	peerconnectionid	VARCHAR(254)	not null,
+	transportid	VARCHAR(254)	not null,
 	sampleseq	INTEGER	not null,
 	bytesreceived	BIGINT,
 	bytessent	BIGINT,
 	dtlscipher	VARCHAR(65535),
+	dtlsrole	VARCHAR(65535),
 	dtlsstate	VARCHAR(1024),
 	icelocalusernamefragment	VARCHAR(65535),
 	icerole	VARCHAR(65535),
@@ -28,4 +30,4 @@ create table  IF NOT EXISTS peer_connection_transport_report (
 	userid	VARCHAR(1024)
 ) diststyle even;
 ALTER TABLE peer_connection_transport_report ALTER diststyle KEY DISTKEY serviceid;
-ALTER TABLE peer_connection_transport_report ALTER COMPOUND SORTKEY (callid, clientid, peerconnectionid);
+ALTER TABLE peer_connection_transport_report ALTER COMPOUND SORTKEY (callid, clientid, peerconnectionid, transportid);

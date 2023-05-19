@@ -456,6 +456,7 @@ timestamp (**Mandatory**) | The timestamp when the corresponded data is generate
 callId (**Mandatory**) | The generated unique identifier of the call
 clientId (**Mandatory**) | The generated unique identifier of the client
 peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
+transportId (**Mandatory**) | The identifier of the transport the ICE candidate pair is negotiated on
 sampleSeq (**Mandatory**) | The sequence number of the sample the report is generated from
 marker | The marker the originated sample is reported with
 roomId | webrtc app provided room id
@@ -468,6 +469,7 @@ bytesReceived | Represents the total amount of bytes received on the corresponde
 iceRole | Represent the current role of ICE under DTLS Transport
 iceLocalUsernameFragment | Represent the current local username fragment used in message validation procedures for ICE under DTLS Transport
 dtlsState | Represents the current state of DTLS for the peer connection transport layer
+dtlsRole | The role this host plays in DTLS negotiations
 selectedCandidatePairId | The identifier of the candidate pair the transport currently uses
 iceState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
 localCertificateId | If DTLS negotiated it gives the id of the local certificate

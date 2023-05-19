@@ -33,6 +33,11 @@ export type PeerConnectionTransportReport = {
 	peerConnectionId: string;
 
 	/**
+	* The identifier of the transport the ICE candidate pair is negotiated on
+	*/
+	transportId: string;
+
+	/**
 	* The sequence number of the sample the report is generated from
 	*/
 	sampleSeq: number;
@@ -91,6 +96,11 @@ export type PeerConnectionTransportReport = {
 	* Represents the current state of DTLS for the peer connection transport layer
 	*/
 	dtlsState?: string;
+
+	/**
+	* The role this host plays in DTLS negotiations
+	*/
+	dtlsRole?: string;
 
 	/**
 	* The identifier of the candidate pair the transport currently uses

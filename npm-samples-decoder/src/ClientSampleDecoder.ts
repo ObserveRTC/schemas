@@ -49,17 +49,17 @@ export class ClientSampleDecoder {
 	private _callId?: string;
 	private _roomId?: string;
 	private _userId?: string;
-	private _engine?: ClientSample['engine'];
-	private _platform?: ClientSample['platform'];
-	private _browser?: ClientSample['browser'];
-	private _os?: ClientSample['os'];
+	// private _engine?: ClientSample['engine'];
+	// private _platform?: ClientSample['platform'];
+	// private _browser?: ClientSample['browser'];
+	// private _os?: ClientSample['os'];
 	private _mediaDevices: ClientSample['mediaDevices'] = [];
 	private _dataChannels = new Map<number, DataChannelDecoder>();
 	private _pcTransports = new Map<string, PeerConnectionTransportDecoder>();
 	private _iceCandidatePairs = new Map<string, IceCandidatePairDecoder>();
 	private _mediaSources = new Map<string, MediaSourceStatsDecoder>();
-	private _codecs: ClientSample['codecs'] = [];
-	private _certificates: ClientSample['certificates'] = [];
+	// private _codecs: ClientSample['codecs'] = [];
+	// private _certificates: ClientSample['certificates'] = [];
 	private _inboundAudioTracks = new Map<string, InboundAudioTrackDecoder>();
 	private _inboundVideoTracks = new Map<string, InboundVideoTrackDecoder>();
 	private _outboundAudioTracks = new Map<string, OutboundAudioTrackDecoder>();
@@ -156,19 +156,13 @@ export class ClientSampleDecoder {
 	}
 
 	private _decodeBrowser(browser?: Samples_ClientSample_Browser): ClientSample['browser'] | undefined {
-		if (!browser) return this._browser;
-		this._browser = {
-			...browser
-		};
-		return this._browser;
+		// colliding with the ClientSample
+		return browser;
 	}
 	
 	private _decodeEngine(engine?: Samples_ClientSample_Engine): ClientSample['engine'] | undefined {
-		if (!engine) return this._engine;
-		this._engine = {
-			...engine
-		};
-		return this._engine;
+		// colliding with the ClientSample
+		return engine;
 	}
 
 	private _decodeMediaDevices(mediaDevices?: Samples_ClientSample_MediaDevice[]): ClientSample['mediaDevices'] | undefined {
@@ -188,25 +182,19 @@ export class ClientSampleDecoder {
 	}
 
 	private _decodePlatform(platform?: Samples_ClientSample_Platform): ClientSample['platform'] | undefined {
-		if (!platform) return this._platform;
-		this._platform = {
-			...platform
-		};
-		return this._platform;
+		// colliding with the ClientSample
+		return platform;
 	}
 
 	private _decodeOs(os?: Samples_ClientSample_OperationSystem): ClientSample['os'] | undefined {
-		if (!os) return this._os;
-		this._os = {
-			...os
-		};
-		return this._os;
+		// colliding with the ClientSample
+		return os;
 	}
 
 
 	private _decodeCodecs(codecs?: Samples_ClientSample['codecs']): ClientSample['codecs'] | undefined {
-		if (!codecs || codecs.length < 1) return this._codecs;
-		this._codecs = codecs.map(codec => {
+		if (!codecs || codecs.length < 1) return undefined;
+		return codecs.map(codec => {
 			const result = {
 				channels: codec.channels,
 				clockRate: codec.clockRate,
@@ -219,7 +207,6 @@ export class ClientSampleDecoder {
 			}
 			return result;
 		});
-		return this._codecs;
 	}
 
 	private _decodeIceLocalCandidates(iceLocalCandidates?: Samples_ClientSample['iceLocalCandidates']): ClientSample['iceLocalCandidates'] | undefined {
@@ -271,13 +258,12 @@ export class ClientSampleDecoder {
 	}
 
 	private _decodeCertificates(certificates?: Samples_ClientSample_Certificate[]): ClientSample['certificates'] | undefined {
-		if (!certificates) return this._certificates;
-		this._certificates = certificates.map(c => {
+		if (!certificates) return undefined
+		return certificates.map(c => {
 			return {
 				...c
 			}
 		});
-		return this._certificates;
 	}
 
 	private _decodeExtensionStats(extensionStats?: Samples_ClientSample_ExtensionStat[]): ExtensionStat[] | undefined {

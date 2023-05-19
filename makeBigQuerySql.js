@@ -1,7 +1,5 @@
 import { fieldComparator, nameConverter } from './common.js';
 
-const UUID_FIELDS_TYPE = "VARCHAR(254)";
-
 const uuidFields = new Set([
     "callId",
     "clientId",
@@ -17,15 +15,16 @@ const uuidFields = new Set([
     "channelId",
 ]);
 
-class RedshiftSql {
-    constructor({ name, desc}) {
-        this._name = nameConverter(name);
+class BigQuerySql {
+    constructor({ datasetId, tableId, desc}) {
+        this._datasetId = datasetId;
+        this._tableId = tableId;
         this._description = desc;
         this._fields = [];
     }
 
     get name() {
-        return this._name;
+        return this._tableId;
     }
 
     addField({ name, type, desc, required }) {
@@ -36,21 +35,22 @@ class RedshiftSql {
         this._fields.sort(fieldComparator);
         return {
             createTable: this._makeCreateTableString(),
-            csvColumnList: this._makeColumnCsvList(),
         }
     }
 
     _makeCreateTableString() {
-        const tableName = this._name;
+        const datasetId = this._datasetId;
+        const tableName = this._tableId;
         const result = [
-            `create table  IF NOT EXISTS ${tableName} (`
+            `CREATE TABLE ${datasetId}.${tableName} (`
         ]
         const sortIds = new Set(Array.from(uuidFields).map(s => s.toLowerCase()));
         const sortKeys = [];
         const fieldsLength = this._fields.length;
         for (let i = 0; i < fieldsLength; ++i) {
             const { type, required } = this._fields[i];
-            const name = this._fields[i].name.toLowerCase();
+            // const name = this._fields[i].name.toLowerCase();
+            const name = this._fields[i].name;
             const properties = [
                 name,
                 type,
@@ -65,67 +65,60 @@ class RedshiftSql {
             result.push(`\t${column}${i != fieldsLength - 1 ? ",":""}`);
             // result.push(`\t${column},`);
         }
-        result.push(`) diststyle even;`);
-        result.push(`ALTER TABLE ${tableName} ALTER diststyle KEY DISTKEY serviceid;`);
-        if (0 < sortKeys.length) {
-            result.push(`ALTER TABLE ${tableName} ALTER COMPOUND SORTKEY (${sortKeys.join(", ")});`)
-        }
+        result.push(`)`);
+        // result.push(`) PARTITION BY serviceId;`);
+        // result.push(`ALTER TABLE ${tableName} ALTER diststyle KEY DISTKEY serviceid;`);
+        // if (0 < sortKeys.length) {
+        //     result.push(`ALTER TABLE ${tableName} ALTER COMPOUND SORTKEY (${sortKeys.join(", ")});`)
+        // }
         return result.join(`\n`);
     }
-
-    _makeColumnCsvList() {
-        if (this._fields.length < 1) return "";
-        // return `"` + this._fields.map(field => field.name.toLowerCase()).join(`",\n"`) + `"`;
-        // return this._fields.map(field => field.name.toLowerCase()).join(`, `);
-        // console.log(this._fields);
-        return this._fields.map(field => field.name).join(`, `);
-    }
-
 }
 
 
-function getRedshiftType(fieldName, avroFieldType) {
+function getBigQueryType(fieldName, avroFieldType) {
     if (avroFieldType === "string") {
         if (uuidFields.has(fieldName)) {
-            return UUID_FIELDS_TYPE;
+            return "STRING";
         }
         if (fieldName.endsWith("Id")) {
-            return "VARCHAR(1024)";
+            return "STRING";
         }
         const lowerCase = fieldName.toLowerCase();
         if (lowerCase.endsWith("state") || lowerCase.endsWith("protocol")) {
-            return "VARCHAR(1024)";
+            return "STRING";
         }
-        return "VARCHAR(65535)";
+        return "STRING";
     }
     switch (avroFieldType) {
         case "float":
-            return "REAL";
+            return "FLOAT64";
         case "double":
-            return "REAL";
+            return "FLOAT64";
         case "long":
-            return "BIGINT";
+            return "INT64";
         case "boolean":
-            return "BOOLEAN";
+            return "BOOL";
         case "int":
-            return "INTEGER";
+            return "INT64";
         case "bytes":
-            return "VARCHAR(4096)";
+            return "BYTES";
         default:
             throw new Error(`Unsoppurted type ${avroFieldType} to convert it to redshift sql type`)
     }
 }
 
-export function makeRedshiftSql(avroSchema) {
-    const result = new RedshiftSql({ 
-        name: avroSchema.name,
+export function makeBigQuerySql(avroSchema) {
+    const result = new BigQuerySql({
+        datasetId: 'observer',
+        tableId: avroSchema.name,
         desc: avroSchema.doc,
     });
     for (const field of avroSchema.fields) {
         const required = field.default === undefined;
         const name = field.name;
         const avroFieldType = required ? field.type : field.type[1];
-        const type = getRedshiftType(name, avroFieldType);
+        const type = getBigQueryType(name, avroFieldType);
 
         result.addField({
             // name: name.toLowerCase(),
@@ -135,12 +128,10 @@ export function makeRedshiftSql(avroSchema) {
             type,
         });
     }
-    const { createTable, csvColumnList, knexSchema } = result.make();
+    const { createTable } = result.make();
     return {
-        createTable,
-        csvColumnList,
-        knexSchema
-    }
+        createTable
+    };
 }
 
 

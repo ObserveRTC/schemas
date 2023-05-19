@@ -1,6 +1,6 @@
 {
   "name": "@observertc/samples-decoder",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "ObserveRTC Library for Decoding Samples",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

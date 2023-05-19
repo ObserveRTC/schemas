@@ -1,0 +1,20 @@
+CREATE TABLE observer.ClientDataChannelReport (
+	serviceId	STRING	not null,
+	mediaUnitId	STRING	not null,
+	timestamp	INT64	not null,
+	callId	STRING	not null,
+	clientId	STRING	not null,
+	peerConnectionId	STRING	not null,
+	sampleSeq	INT64	not null,
+	bytesReceived	INT64,
+	bytesSent	INT64,
+	label	STRING,
+	marker	STRING,
+	messagesReceived	INT64,
+	messagesSent	INT64,
+	peerConnectionLabel	STRING,
+	protocol	STRING,
+	roomId	STRING,
+	state	STRING,
+	userId	STRING
+)

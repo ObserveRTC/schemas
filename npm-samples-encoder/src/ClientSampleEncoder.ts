@@ -1,4 +1,4 @@
-import { ClientSample, IceLocalCandidate, IceRemoteCandidate } from "./InputSamples";
+import { ClientSample, IceLocalCandidate, IceRemoteCandidate, MediaDevice } from "./InputSamples";
 import { DataChannelEncoder } from "./DataChannelEncoder";
 import { convertUint8ToBase64, uuidToByteArray } from "./encodingTools";
 import { IceCandidatePairEncoder } from "./IceCandidatePairEncoder";
@@ -44,13 +44,13 @@ export class ClientSampleEncoder {
 	private _iceServers = new Set<string>();
 	private _localSDPs = new Set<string>();
 	private _userMediaErrors = new Set<string>();
-	private _mediaDevices: ClientSample['mediaDevices'] = [];
+	private _mediaDevices = new Map<string, MediaDevice>();
 	private _engine: ClientSample['engine'];
 	private _platform: ClientSample['platform'];
 	private _browser: ClientSample['browser'];
 	private _os: ClientSample['os'];
 	private _codecs: ClientSample['codecs'] = [];
-	private _certificates: ClientSample['certificates'] = [];
+	private _certificates: ClientSample['certificates'] = []
 	private _timeZoneOffsetInHours?: number;
 
 	private _mediaSources = new Map<string, MediaSourceStatsEncoder>();
@@ -133,7 +133,7 @@ export class ClientSampleEncoder {
 		this._iceServers.clear();
 		this._localSDPs.clear();
 		this._userMediaErrors.clear();
-		this._mediaDevices = [];
+		this._mediaDevices.clear();
 		this._engine = undefined;
 		this._platform = undefined;
 		this._browser = undefined;
@@ -247,19 +247,28 @@ export class ClientSampleEncoder {
 		mediaDevices?: ClientSample['mediaDevices']
 	): Samples_ClientSample_MediaDevice[] {
 		if (!mediaDevices) return [];
-		if (this._mediaDevices?.length === mediaDevices.length) {
-			if (mediaDevices.every(item => this._mediaDevices?.find(s => s.id === item.id))) {
-				return [];
+		const sampledIds = new Set<string>();
+		const result: Samples_ClientSample_MediaDevice[] = [];
+		for (const mediaDevice of mediaDevices) {
+			if (!mediaDevice.id) continue;
+			if (this._mediaDevices.has(mediaDevice.id)) continue;
+			
+			sampledIds.add(mediaDevice.id);
+			result.push(new Samples_ClientSample_MediaDevice({
+				...mediaDevice,
+				kind: 	mediaDevice.kind === 'audioinput' ? Samples_ClientSample_MediaDevice_MediaDeviceEnum.AUDIOINPUT :
+						mediaDevice.kind === 'audiooutput' ? Samples_ClientSample_MediaDevice_MediaDeviceEnum.AUDIOOUTPUT :
+						mediaDevice.kind === 'videoinput' ? Samples_ClientSample_MediaDevice_MediaDeviceEnum.VIDEOINPUT :
+						undefined
+			}))
+			this._mediaDevices.set(mediaDevice.id, mediaDevice);
+		}
+		for (const savedMediaDevice of Array.from(this._mediaDevices.values())) {
+			if (savedMediaDevice.id && !sampledIds.has(savedMediaDevice.id)) {
+				this._mediaDevices.delete(savedMediaDevice.id);
 			}
 		}
-		this._mediaDevices = mediaDevices;
-		return mediaDevices.map(mediaDevice => new Samples_ClientSample_MediaDevice({
-			...mediaDevice,
-			kind: 	mediaDevice.kind === 'audioinput' ? Samples_ClientSample_MediaDevice_MediaDeviceEnum.AUDIOINPUT :
-					mediaDevice.kind === 'audiooutput' ? Samples_ClientSample_MediaDevice_MediaDeviceEnum.AUDIOOUTPUT :
-					mediaDevice.kind === 'videoinput' ? Samples_ClientSample_MediaDevice_MediaDeviceEnum.VIDEOINPUT :
-					undefined
-		}));
+		return result;
 	}
 
 	private _encodeIceLocalCandidates(
@@ -317,21 +326,34 @@ export class ClientSampleEncoder {
 	}
 
 	private _encodeCodecs(
-		codecs?: ClientSample['codecs'], 
-	): Samples_ClientSample_MediaCodecStats[] {
+		codecs?: ClientSample['codecs']
+	  ): Samples_ClientSample_MediaCodecStats[] {
 		if (!codecs) return [];
-		if (this._codecs?.length === codecs.length) {
-			if (codecs.every(item => this._codecs?.find(s => s.mimeType === item.mimeType))) {
-				return [];
-			}
-		}
-		this._codecs = codecs;
-		return codecs.map(codec => new Samples_ClientSample_MediaCodecStats({
+	  
+		const sampledMimeTypes = new Set<string>();
+		const result: Samples_ClientSample_MediaCodecStats[] = [];
+	  
+		for (const codec of codecs) {
+		  if (!codec.mimeType) continue;
+		  if (this._codecs?.some((c) => c.mimeType === codec.mimeType)) continue;
+	  
+		  sampledMimeTypes.add(codec.mimeType);
+		  result.push(new Samples_ClientSample_MediaCodecStats({
 			...codec,
-			codecType: codec.codecType === 'encode' ? Samples_ClientSample_MediaCodecStats_MediaCodecStatsEnum.ENCODE :
-				codec.codecType === 'decode' ? Samples_ClientSample_MediaCodecStats_MediaCodecStatsEnum.DECODE : 
-				undefined
-		}));
+			codecType:
+			  codec.codecType === 'encode'
+				? Samples_ClientSample_MediaCodecStats_MediaCodecStatsEnum.ENCODE
+				: codec.codecType === 'decode'
+				? Samples_ClientSample_MediaCodecStats_MediaCodecStatsEnum.DECODE
+				: undefined
+		  }));
+		}
+		
+		this._codecs = [...(this._codecs || []), ...codecs];
+	  
+		this._codecs = this._codecs.filter((codec) => sampledMimeTypes.has(codec.mimeType ?? "no"));
+	  
+		return result;
 	}
 
 	private _encodeExtensionStats(
@@ -355,20 +377,29 @@ export class ClientSampleEncoder {
 	}
 
 	private _encodeCertificates(
-		certificates?: ClientSample['certificates'], 
-	): Samples_ClientSample_Certificate[] {
+		certificates?: ClientSample['certificates']
+	  ): Samples_ClientSample_Certificate[] {
 		if (!certificates) return [];
-		if (this._certificates?.length === certificates.length) {
-			if (certificates.every(item => this._certificates?.find(s => s.fingerprint === item.fingerprint))) {
-				return [];
-			}
-		}
-		this._certificates = certificates;
-		return certificates.map(certificate => new Samples_ClientSample_Certificate({
+	  
+		const sampledFingerprints = new Set<string>();
+		const result: Samples_ClientSample_Certificate[] = [];
+	  
+		for (const certificate of certificates) {
+		  if (!certificate.fingerprint) continue;
+		  if (this._certificates?.some((c) => c.fingerprint === certificate.fingerprint)) continue;
+	  
+		  sampledFingerprints.add(certificate.fingerprint);
+		  result.push(new Samples_ClientSample_Certificate({
 			...certificate
-		}));
+		  }));
+		}
+	  
+		this._certificates = [...(this._certificates || []), ...certificates];
+	  
+		this._certificates = this._certificates.filter((certificate) => sampledFingerprints.has(certificate.fingerprint ?? "nope"));
+	  
+		return result;
 	}
-
 
 	private _encodeBrowser(
 		browser?: ClientSample['browser'], 
@@ -609,7 +640,6 @@ export class ClientSampleEncoder {
 		
 		return result;
 	}
-
 
 	private _encodeDataChannels(
 		dataChannels?: ClientSample['dataChannels']

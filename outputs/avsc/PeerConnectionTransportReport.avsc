@@ -62,6 +62,11 @@
       "type": "string"
     },
     {
+      "name": "transportId",
+      "doc": "The identifier of the transport the ICE candidate pair is negotiated on",
+      "type": "string"
+    },
+    {
       "name": "label",
       "doc": "The webrtc app provided label the peer connection is marked with",
       "type": [
@@ -132,6 +137,15 @@
     {
       "name": "dtlsState",
       "doc": "Represents the current state of DTLS for the peer connection transport layer",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "dtlsRole",
+      "doc": "The role this host plays in DTLS negotiations",
       "type": [
         "null",
         "string"
