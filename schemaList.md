@@ -74,6 +74,7 @@ IceCandidatePairReport
  * **roomId**: webrtc app provided room id
  * **userId**: webrtc app provided user identifier
  * **label**: The webrtc app provided label the peer connection is marked with
+ * **candidatePairId**: The unique identifier of the peer connection
  * **transportId**: The identifier of the transport the ice candidate pair is negotiated on
  * **localCandidateId**: The unique identifier of the candidate the negotiated pair is selected at local side
  * **remoteCandidateId**: The unique identifier of the candidate the negotiated pair is selected at remote side

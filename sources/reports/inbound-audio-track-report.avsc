@@ -220,12 +220,12 @@
   }, {
     "name" : "audioLevel",
     "doc" : "The current audio level",
-    "type" : ["null", "int"],
+    "type" : ["null", "double"],
     "default" : null
   },{
     "name" : "totalAudioEnergy",
     "doc" : "Represents the energy level reported by the media source",
-    "type" : ["null", "int"],
+    "type" : ["null", "double"],
     "default" : null
   }, {
     "name" : "totalSamplesDuration",

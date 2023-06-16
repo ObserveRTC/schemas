@@ -58,6 +58,11 @@ export type IceCandidatePairReport = {
 	label?: string;
 
 	/**
+	* The unique identifier of the peer connection
+	*/
+	candidatePairId?: string;
+
+	/**
 	* The identifier of the transport the ice candidate pair is negotiated on
 	*/
 	transportId?: string;

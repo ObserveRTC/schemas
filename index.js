@@ -101,6 +101,8 @@ const main = async () => {
     npmSamplesLib.addW3cStatsIdentifiers(w3cStatsIdentifiers);
 
     const markdownLists = [];
+    const bigQueryTables = [];
+    const redshiftTables = [];
     for (const [fileName, source] of sources) {
         const avsc = source.getAvsc();
         const schemaType = source.getSchemaType();
@@ -138,12 +140,14 @@ const main = async () => {
             }
 
             if (createTable) {
-                fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `${schemaName}-redshift.sql`), createTable);
+                redshiftTables.push(createTable);
+                // fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `${schemaName}-redshift.sql`), createTable);
             } else {
                 console.warn(`No redshift sql is generated for ${schemaName}`);
             }
             if (createBigqueryTable) {
-                fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `${schemaName}-bigquery.sql`), createBigqueryTable);
+                bigQueryTables.push(createBigqueryTable);
+                // fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `${schemaName}-bigquery.sql`), createBigqueryTable);
             } else {
                 console.warn(`No bigquery sql is generated for ${schemaName}`);
             }
@@ -171,6 +175,8 @@ const main = async () => {
         fs.writeFileSync(path.join(AVSC_OUTPUTS_PATH, `${schemaName}.avsc`), avsc);
     }
     fs.writeFileSync(`schemaList.md`, markdownLists.join(`\n`))
+    fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `bigquery.sql`), bigQueryTables.join("\n\n"));
+    fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `redshift.sql`), redshiftTables.join("\n\n"));
     // generate protobuf schema if we can
     
     const samplesSource = sources.get("samples");

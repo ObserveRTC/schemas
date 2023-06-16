@@ -90,6 +90,7 @@ function getBigQueryType(fieldName, avroFieldType) {
         }
         return "STRING";
     }
+    // console.log(fieldName, avroFieldType);
     switch (avroFieldType) {
         case "float":
             return "FLOAT64";
