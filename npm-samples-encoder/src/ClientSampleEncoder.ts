@@ -335,7 +335,8 @@ export class ClientSampleEncoder {
 	  
 		for (const codec of codecs) {
 		  if (!codec.mimeType) continue;
-		  if (this._codecs?.some((c) => c.mimeType === codec.mimeType)) continue;
+		  if (!this._codecs) continue;
+		  if (this._codecs.some((c) => c.mimeType === codec.mimeType)) continue;
 	  
 		  sampledMimeTypes.add(codec.mimeType);
 		  result.push(new Samples_ClientSample_MediaCodecStats({
@@ -386,7 +387,8 @@ export class ClientSampleEncoder {
 	  
 		for (const certificate of certificates) {
 		  if (!certificate.fingerprint) continue;
-		  if (this._certificates?.some((c) => c.fingerprint === certificate.fingerprint)) continue;
+		  if (!this._certificates) continue;
+		  if (this._certificates.some((c) => c.fingerprint === certificate.fingerprint)) continue;
 	  
 		  sampledFingerprints.add(certificate.fingerprint);
 		  result.push(new Samples_ClientSample_Certificate({
@@ -407,7 +409,7 @@ export class ClientSampleEncoder {
 		if (!browser) {
 			return;
 		}
-		const [source, actual] = [this._browser, browser].map(item => `${item?.name}:${item?.version}`);
+		const [source, actual] = [this._browser, browser].map(item => `${item? item.name : undefined}:${item? item.version : undefined}`);
 		if (source === actual) {
 			return;
 		}
@@ -425,7 +427,7 @@ export class ClientSampleEncoder {
 		if (!engine) {
 			return;
 		}
-		const [source, actual] = [this._engine, engine].map(item => `${item?.name}:${item?.version}`);
+		const [source, actual] = [this._engine, engine].map(item => `${item? item.name : undefined}:${item? item.version : undefined}`);
 		if (source === actual) {
 			return;
 		}
@@ -443,7 +445,7 @@ export class ClientSampleEncoder {
 			return;
 		}
 		const [source, actual] = [this._platform, platform]
-			.map(item => `${item?.model}:${item?.type}:${item?.vendor}`);
+			.map(item => `${item ? item.model : undefined}:${item? item.type : undefined}:${item? item.vendor : undefined}`);
 		if (source === actual) {
 			return;
 		}
@@ -461,7 +463,7 @@ export class ClientSampleEncoder {
 			return;
 		}
 		const [source, actual] = [this._os, os]
-			.map(item => `${item?.versionName}:${item?.version}:${item?.name}`);
+			.map(item => `${item? item.versionName : undefined}:${item? item.version : undefined}:${item? item.name : undefined}`);
 		if (source === actual) {
 			return;
 		}
