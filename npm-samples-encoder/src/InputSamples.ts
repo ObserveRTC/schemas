@@ -1,5 +1,5 @@
 
-export const schemaVersion = "2.2.7";
+export const schemaVersion = "2.2.8";
 
 /**
 * Session data
