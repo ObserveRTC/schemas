@@ -105,7 +105,7 @@ export class SfuSampleEncoder {
 		inboundRtpPads?: SfuSample['inboundRtpPads']
 	): Samples_SfuSample_SfuInboundRtpPad[] {
 		const result: Samples_SfuSample_SfuInboundRtpPad[] = [];
-		for (const sample of (inboundRtpPads ?? [])) {
+		for (const sample of (inboundRtpPads ? inboundRtpPads : [])) {
 			if (!sample.padId || !sample.transportId || !sample.streamId || !sample.ssrc) continue;
 			let encoder = this._inboundRtpPads.get(sample.padId);
 			if (!encoder) {
@@ -134,7 +134,7 @@ export class SfuSampleEncoder {
 		outboundRtpPads?: SfuSample['outboundRtpPads']
 	): Samples_SfuSample_SfuOutboundRtpPad[] {
 		const result: Samples_SfuSample_SfuOutboundRtpPad[] = [];
-		for (const sample of (outboundRtpPads ?? [])) {
+		for (const sample of (outboundRtpPads ? outboundRtpPads : [])) {
 			if (!sample.padId || !sample.transportId || !sample.streamId || !sample.ssrc || !sample.sinkId) continue;
 			let encoder = this._outboundRtpPads.get(sample.padId);
 			if (!encoder) {
@@ -164,7 +164,7 @@ export class SfuSampleEncoder {
 		transports?: SfuSample['transports']
 	): Samples_SfuSample_SfuTransport[] {
 		const result: Samples_SfuSample_SfuTransport[] = [];
-		for (const sample of (transports ?? [])) {
+		for (const sample of (transports ? transports : [])) {
 			if (!sample.transportId) continue;
 			let encoder = this._transports.get(sample.transportId);
 			if (!encoder) {
@@ -190,7 +190,7 @@ export class SfuSampleEncoder {
 		sctpChannels?: SfuSample['sctpChannels']
 	): Samples_SfuSample_SfuSctpChannel[] {
 		const result: Samples_SfuSample_SfuSctpChannel[] = [];
-		for (const sample of (sctpChannels ?? [])) {
+		for (const sample of (sctpChannels ? sctpChannels : [])) {
 			if (!sample.transportId || !sample.channelId) continue;
 			let encoder = this._sctpChannels.get(sample.channelId);
 			if (!encoder) {

@@ -276,17 +276,17 @@ export class ClientSampleEncoder {
 	): Samples_ClientSample_IceLocalCandidate[] {
 		if (!iceLocalCandidates) return [];
 		if (this._iceLocalCandidates.size === iceLocalCandidates.length) {
-			if (iceLocalCandidates.every(item => this._iceLocalCandidates.has(item.id ?? 'id'))) {
+			if (iceLocalCandidates.every(item => this._iceLocalCandidates.has(item.id ? item.id : 'id'))) {
 				return [];
 			}
 		}
 		this._iceLocalCandidates.clear();
-		iceLocalCandidates.forEach(item => this._iceLocalCandidates.set(item.id ?? 'id', item));
+		iceLocalCandidates.forEach(item => this._iceLocalCandidates.set(item.id ? item.id : 'id', item));
 		return Array.from(this._iceLocalCandidates.values()).filter(item => !!item.peerConnectionId).map(item => {
 			return new Samples_ClientSample_IceLocalCandidate({
 				...item,
 				peerConnectionId: uuidToByteArray(item.peerConnectionId!),
-				priority: BigInt(item.priority ?? -1),
+				priority: BigInt(item.priority ? item.priority : -1),
 				protocol: item.protocol === 'tcp' ? Samples_ClientSample_IceLocalCandidate_IceLocalCandidateEnum.TCP :
 					item.protocol === 'udp' ? Samples_ClientSample_IceLocalCandidate_IceLocalCandidateEnum.UDP :
 					undefined,
@@ -303,17 +303,17 @@ export class ClientSampleEncoder {
 	): Samples_ClientSample_IceRemoteCandidate[] {
 		if (!iceRemoteCandidates) return [];
 		if (this._iceRemoteCandidates.size === iceRemoteCandidates.length) {
-			if (iceRemoteCandidates.every(item => this._iceRemoteCandidates.has(item.id ?? 'id'))) {
+			if (iceRemoteCandidates.every(item => this._iceRemoteCandidates.has(item.id ? item.id : 'id'))) {
 				return [];
 			}
 		}
 		this._iceRemoteCandidates.clear();
-		iceRemoteCandidates.forEach(item => this._iceRemoteCandidates.set(item.id ?? 'id', item));
+		iceRemoteCandidates.forEach(item => this._iceRemoteCandidates.set(item.id ? item.id : 'id', item));
 		return Array.from(this._iceRemoteCandidates.values()).filter(item => !!item.peerConnectionId).map(item => {
 			return new Samples_ClientSample_IceRemoteCandidate({
 				...item,
 				peerConnectionId: uuidToByteArray(item.peerConnectionId!),
-				priority: BigInt(item.priority ?? -1),
+				priority: BigInt(item.priority ? item.priority : -1),
 				protocol: item.protocol === 'tcp' ? Samples_ClientSample_IceRemoteCandidate_IceRemoteCandidateEnum.TCP :
 					item.protocol === 'udp' ? Samples_ClientSample_IceRemoteCandidate_IceRemoteCandidateEnum.UDP :
 					undefined,
@@ -351,7 +351,7 @@ export class ClientSampleEncoder {
 		
 		this._codecs = [...(this._codecs || []), ...codecs];
 	  
-		this._codecs = this._codecs.filter((codec) => sampledMimeTypes.has(codec.mimeType ?? "no"));
+		this._codecs = this._codecs.filter((codec) => sampledMimeTypes.has(codec.mimeType ? codec.mimeType : "no"));
 	  
 		return result;
 	}
@@ -396,7 +396,7 @@ export class ClientSampleEncoder {
 	  
 		this._certificates = [...(this._certificates || []), ...certificates];
 	  
-		this._certificates = this._certificates.filter((certificate) => sampledFingerprints.has(certificate.fingerprint ?? "nope"));
+		this._certificates = this._certificates.filter((certificate) => sampledFingerprints.has(certificate.fingerprint ? certificate.fingerprint : "nope"));
 	  
 		return result;
 	}
@@ -476,7 +476,7 @@ export class ClientSampleEncoder {
 		inboundAudioTracks?: ClientSample['inboundAudioTracks'], 
 	): Samples_ClientSample_InboundAudioTrack[] {
 		const result: Samples_ClientSample_InboundAudioTrack[] = [];
-		for (const sample of (inboundAudioTracks ?? [])) {
+		for (const sample of (inboundAudioTracks ? inboundAudioTracks : [])) {
 			if (!sample.trackId) continue;
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._inboundAudioTracks.get(key);
@@ -500,7 +500,7 @@ export class ClientSampleEncoder {
 		inboundVideoTracks?: ClientSample['inboundVideoTracks'], 
 	): Samples_ClientSample_InboundVideoTrack[] {
 		const result: Samples_ClientSample_InboundVideoTrack[] = [];
-		for (const sample of (inboundVideoTracks ?? [])) {
+		for (const sample of (inboundVideoTracks ? inboundVideoTracks : [])) {
 			if (!sample.trackId) continue;
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._inboundVideoTracks.get(key);
@@ -525,7 +525,7 @@ export class ClientSampleEncoder {
 		outboundAudioTracks?: ClientSample['outboundAudioTracks'], 
 	): Samples_ClientSample_OutboundAudioTrack[] {
 		const result: Samples_ClientSample_OutboundAudioTrack[] = [];
-		for (const sample of (outboundAudioTracks ?? [])) {
+		for (const sample of (outboundAudioTracks ? outboundAudioTracks : [])) {
 			if (!sample.trackId) continue;
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._outboundAudioTracks.get(key);
@@ -549,7 +549,7 @@ export class ClientSampleEncoder {
 		outboundVideoTracks?: ClientSample['outboundVideoTracks'], 
 	): Samples_ClientSample_OutboundVideoTrack[] {
 		const result: Samples_ClientSample_OutboundVideoTrack[] = [];
-		for (const sample of (outboundVideoTracks ?? [])) {
+		for (const sample of (outboundVideoTracks ? outboundVideoTracks : [])) {
 			if (!sample.trackId) continue;
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._outboundVideoTracks.get(key);
@@ -573,7 +573,7 @@ export class ClientSampleEncoder {
 		mediaSources?: ClientSample['mediaSources'], 
 	): Samples_ClientSample_MediaSourceStat[] {
 		const result: Samples_ClientSample_MediaSourceStat[] = [];
-		for (const sample of (mediaSources ?? [])) {
+		for (const sample of (mediaSources ? mediaSources : [])) {
 			if (!sample.trackIdentifier) continue;
 			let encoder = this._mediaSources.get(sample.trackIdentifier);
 			if (!encoder) {
@@ -597,7 +597,7 @@ export class ClientSampleEncoder {
 		candidatePairs: ClientSample['iceCandidatePairs'],
 	): Samples_ClientSample_IceCandidatePair[] {
 		const result: Samples_ClientSample_IceCandidatePair[] = [];
-		for (const sample of (candidatePairs ?? [])) {
+		for (const sample of (candidatePairs ? candidatePairs : [])) {
 			if (!sample.candidatePairId) continue;
 			let encoder = this._iceCandidatePairs.get(sample.candidatePairId);
 			if (!encoder) {
@@ -621,7 +621,7 @@ export class ClientSampleEncoder {
 		pcTransports?: ClientSample['pcTransports'], 
 	): Samples_ClientSample_PeerConnectionTransport[] {
 		const result: Samples_ClientSample_PeerConnectionTransport[] = [];
-		for (const sample of (pcTransports ?? [])) {
+		for (const sample of (pcTransports ? pcTransports : [])) {
 			if (!sample.peerConnectionId) continue;
 			let encoder = this._peerConnectionTransports.get(sample.peerConnectionId);
 			if (!encoder) {
@@ -645,7 +645,7 @@ export class ClientSampleEncoder {
 		dataChannels?: ClientSample['dataChannels']
 	): Samples_ClientSample_DataChannel[] {
 		const result: Samples_ClientSample_DataChannel[] = [];
-		for (const sample of (dataChannels ?? [])) {
+		for (const sample of (dataChannels ? dataChannels : [])) {
 			if (!sample.dataChannelIdentifier) continue;
 			let encoder = this._dataChannels.get(sample.dataChannelIdentifier);
 			if (!encoder) {

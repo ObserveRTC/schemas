@@ -30,7 +30,7 @@ export class SamplesEncoder {
 	public encodeToProtobufSamples(input: InputSamples): OutputSamples {
 		const clientSamples: Samples_ClientSample[] = [];
 		try {
-			for (const clientSample of (input.clientSamples ?? [])) {
+			for (const clientSample of (input.clientSamples ? input.clientSamples : [])) {
 				
 				let encoder = this._clientSampleEncoders.get(clientSample.clientId);
 				if (!encoder) {
@@ -52,7 +52,7 @@ export class SamplesEncoder {
 
 		const sfuSamples: Samples_SfuSample[] = [];
 		try {
-			for (const sfuSample of (input.sfuSamples ?? [])) {
+			for (const sfuSample of (input.sfuSamples ? input.sfuSamples : [])) {
 				
 				let encoder = this._sfuSampleEncoders.get(sfuSample.sfuId);
 				if (!encoder) {

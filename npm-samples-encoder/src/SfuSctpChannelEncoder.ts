@@ -1,6 +1,6 @@
-import { InboundAudioTrack, InboundVideoTrack, SfuInboundRtpPad, SfuSctpChannel } from "./InputSamples";
+import { SfuSctpChannel } from "./InputSamples";
 import { uuidToByteArray } from "./encodingTools";
-import { Samples_ClientSample_InboundVideoTrack, Samples_SfuSample_SfuInboundRtpPad, Samples_SfuSample_SfuInboundRtpPad_SfuInboundRtpPadEnum, Samples_SfuSample_SfuSctpChannel } from './OutputSamples';
+import {  Samples_SfuSample_SfuSctpChannel } from './OutputSamples';
 
 export class SfuSctpChannelEncoder {
 	private _streamId: Uint8Array;

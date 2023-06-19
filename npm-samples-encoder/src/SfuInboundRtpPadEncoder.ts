@@ -1,6 +1,6 @@
-import { InboundAudioTrack, InboundVideoTrack, SfuInboundRtpPad } from "./InputSamples";
+import { SfuInboundRtpPad } from "./InputSamples";
 import { uuidToByteArray } from "./encodingTools";
-import { Samples_ClientSample_InboundVideoTrack, Samples_SfuSample_SfuInboundRtpPad, Samples_SfuSample_SfuInboundRtpPad_SfuInboundRtpPadEnum } from './OutputSamples';
+import { Samples_SfuSample_SfuInboundRtpPad, Samples_SfuSample_SfuInboundRtpPad_SfuInboundRtpPadEnum } from './OutputSamples';
 
 export class SfuInboundRtpPadEncoder {
 	private _streamId: Uint8Array

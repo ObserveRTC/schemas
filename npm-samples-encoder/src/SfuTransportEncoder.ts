@@ -1,6 +1,5 @@
-import { InboundAudioTrack, InboundVideoTrack, SfuInboundRtpPad, SfuOutboundRtpPad, SfuTransport } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
-import { Samples_ClientSample_InboundVideoTrack, Samples_SfuSample_SfuInboundRtpPad, Samples_SfuSample_SfuInboundRtpPad_SfuInboundRtpPadEnum, Samples_SfuSample_SfuOutboundRtpPad, Samples_SfuSample_SfuOutboundRtpPad_SfuOutboundRtpPadEnum, Samples_SfuSample_SfuTransport } from './OutputSamples';
+import { SfuTransport } from "./InputSamples";
+import { Samples_SfuSample_SfuTransport } from './OutputSamples';
 
 export class SfuTransportEncoder {
 	private _noReport?: boolean;
