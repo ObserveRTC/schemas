@@ -210,7 +210,7 @@ export class ClientSampleDecoder {
 	}
 
 	private _decodeIceLocalCandidates(iceLocalCandidates?: Samples_ClientSample['iceLocalCandidates']): ClientSample['iceLocalCandidates'] | undefined {
-		if (!iceLocalCandidates || iceLocalCandidates.length < 1) return this._iceLocalCandidates;
+		if (!iceLocalCandidates || iceLocalCandidates.length < 1) return undefined;
 		this._iceLocalCandidates = iceLocalCandidates.map(iceLocalCandidate => {
 			const result = {
 				peerConnectionId: iceLocalCandidate.peerConnectionId ? byteArrayToUuid(iceLocalCandidate.peerConnectionId) : undefined,
@@ -234,7 +234,7 @@ export class ClientSampleDecoder {
 	}
 
 	private _decodeIceRemoteCandidates(iceRemoteCandidates?: Samples_ClientSample['iceRemoteCandidates']): ClientSample['iceRemoteCandidates'] | undefined {
-		if (!iceRemoteCandidates || iceRemoteCandidates.length < 1) return this._iceLocalCandidates;
+		if (!iceRemoteCandidates || iceRemoteCandidates.length < 1) return undefined;
 		this._iceRemoteCandidates = iceRemoteCandidates.map(iceRemoteCandidate => {
 			const result = {
 				peerConnectionId: iceRemoteCandidate.peerConnectionId ? byteArrayToUuid(iceRemoteCandidate.peerConnectionId) : undefined,

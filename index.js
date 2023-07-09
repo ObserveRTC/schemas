@@ -103,6 +103,9 @@ const main = async () => {
     const markdownLists = [];
     const bigQueryTables = [];
     const redshiftTables = [];
+    const reportTypes = [
+        `/**\n * Schema Version: ${version} \n */`
+    ];
     for (const [fileName, source] of sources) {
         const avsc = source.getAvsc();
         const schemaType = source.getSchemaType();
@@ -151,7 +154,7 @@ const main = async () => {
             } else {
                 console.warn(`No bigquery sql is generated for ${schemaName}`);
             }
-            
+            reportTypes.push(module);
             npmReportsLib.addEntry({
                 fileName,
                 schemaName,
@@ -177,6 +180,8 @@ const main = async () => {
     fs.writeFileSync(`schemaList.md`, markdownLists.join(`\n`))
     fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `bigquery.sql`), bigQueryTables.join("\n\n"));
     fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `redshift.sql`), redshiftTables.join("\n\n"));
+    fs.writeFileSync(path.join(TYPESCRIPT_OUTPUTS_PATH, `ReportTypes.ts`), reportTypes.join("\n"));
+    
     // generate protobuf schema if we can
     
     const samplesSource = sources.get("samples");
