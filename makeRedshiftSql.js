@@ -47,6 +47,7 @@ class RedshiftSql {
         ]
         const sortIds = new Set(Array.from(uuidFields).map(s => s.toLowerCase()));
         const sortKeys = [];
+        const fields = new Set();
         const fieldsLength = this._fields.length;
         for (let i = 0; i < fieldsLength; ++i) {
             const { type, required } = this._fields[i];
@@ -64,9 +65,13 @@ class RedshiftSql {
             const column = properties.join(`\t`);
             result.push(`\t${column}${i != fieldsLength - 1 ? ",":""}`);
             // result.push(`\t${column},`);
+
+            fields.add(name);
         }
         result.push(`) diststyle even;`);
-        result.push(`ALTER TABLE ${tableName} ALTER diststyle KEY DISTKEY serviceid;`);
+        if (fields.has('serviceid')) {
+            result.push(`ALTER TABLE ${tableName} ALTER diststyle KEY DISTKEY serviceid;`);
+        }
         if (0 < sortKeys.length) {
             result.push(`ALTER TABLE ${tableName} ALTER COMPOUND SORTKEY (${sortKeys.join(", ")});`)
         }

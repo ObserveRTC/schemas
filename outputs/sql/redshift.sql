@@ -408,7 +408,6 @@ create table  IF NOT EXISTS report (
 	payload	VARCHAR(4096)	not null,
 	schemaversion	VARCHAR(65535)
 ) diststyle even;
-ALTER TABLE report ALTER diststyle KEY DISTKEY serviceid;
 
 create table  IF NOT EXISTS sfu_event_report (
 	serviceid	VARCHAR(1024)	not null,
