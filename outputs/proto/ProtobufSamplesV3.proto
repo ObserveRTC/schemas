@@ -3,7 +3,7 @@ syntax = "proto3";
 package org.observertc.schemas.protobuf;
 
 /**
-* Schema Version: 2.2.9
+* Schema Version: 2.2.10
 */
 message Samples {
 	message Controls {

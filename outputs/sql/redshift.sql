@@ -429,7 +429,7 @@ create table  IF NOT EXISTS sfu_event_report (
 ALTER TABLE sfu_event_report ALTER diststyle KEY DISTKEY serviceid;
 ALTER TABLE sfu_event_report ALTER COMPOUND SORTKEY (callid, sfuid, transportid);
 
-create table IF NOT EXISTS sfu_extension_report (
+create table  IF NOT EXISTS sfu_extension_report (
 	serviceid	VARCHAR(1024)	not null,
 	timestamp	BIGINT	not null,
 	extensiontype	VARCHAR(65535)	not null,
@@ -441,7 +441,7 @@ create table IF NOT EXISTS sfu_extension_report (
 ALTER TABLE sfu_extension_report ALTER diststyle KEY DISTKEY serviceid;
 ALTER TABLE sfu_extension_report ALTER COMPOUND SORTKEY (sfuid);
 
-create table IF NOT EXISTS sfu_inbound_rtp_pad_report (
+create table  IF NOT EXISTS sfu_inbound_rtp_pad_report (
 	serviceid	VARCHAR(1024)	not null,
 	mediaunitid	VARCHAR(1024)	not null,
 	sfuid	VARCHAR(254)	not null,
