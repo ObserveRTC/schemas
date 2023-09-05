@@ -1,6 +1,7 @@
 import { OutboundVideoTrack } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
+import { stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { Samples_ClientSample_OutboundVideoTrack } from './OutputSamples';
+import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
 export class OutboundVideoTrackEncoder {
 	private readonly _ssrc?: bigint;
@@ -53,7 +54,8 @@ export class OutboundVideoTrackEncoder {
 
 	public constructor(
 		public readonly trackId: string,
-		public readonly ssrc: number
+		public readonly ssrc: number,
+		private readonly _encodingOptions: ClientSampleEncodingOptions,
 	) {
 		this._trackId = uuidToByteArray(trackId);
 		this._ssrc = BigInt(ssrc);
@@ -250,7 +252,10 @@ export class OutboundVideoTrackEncoder {
 		if (!sfuStreamId) return;
 		if (sfuStreamId === this._sfuStreamId) return;
 		this._sfuStreamId = sfuStreamId;
-		return uuidToByteArray(this._sfuStreamId);
+		return this._encodingOptions.sfuStreamIdIsUuid
+			? uuidToByteArray(this._sfuStreamId) 
+			: stringToBytesArray(this._sfuStreamId)
+		;
 	}
 
 	private _encodeTargetBitrate(targetBitrate?: number): number | undefined {

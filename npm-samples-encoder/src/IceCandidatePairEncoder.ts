@@ -1,6 +1,7 @@
 import { IceCandidatePair } from "./InputSamples";
 import { uuidToByteArray } from "./encodingTools";
 import { Samples_ClientSample_IceCandidatePair } from './OutputSamples';
+import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
 export class IceCandidatePairEncoder {
 	private _peerConnectionId?: string;
@@ -31,7 +32,7 @@ export class IceCandidatePairEncoder {
 	private _visited = false;
 
 	public constructor(
-		public readonly candidatePairId: string
+		public readonly candidatePairId: string,
 	) {
 		// empty
 	}

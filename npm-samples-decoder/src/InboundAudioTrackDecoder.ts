@@ -1,6 +1,7 @@
 import { InboundAudioTrack } from './OutputSamples';
-import { byteArrayToUuid } from "./decodingTools";
+import { byteArrayToUuid, bytesArrayToString } from "./decodingTools";
 import { Samples_ClientSample_InboundAudioTrack } from './InputSamples';
+import { ClientSampleDecodingOptions } from './DecodingOptions';
 
 export class InboundAudioTrackDecoder {
 	private _peerConnectionId?: string;
@@ -50,6 +51,7 @@ export class InboundAudioTrackDecoder {
 	public constructor(
 		public readonly trackId: string,
 		public readonly ssrc: number,
+		private readonly _options: ClientSampleDecodingOptions,
 	) {
 		// empty
 	}
@@ -293,14 +295,18 @@ export class InboundAudioTrackDecoder {
 	
 	private _decodeSfuSinkId(sfuSinkId?: Uint8Array): string | undefined {
 		if (!sfuSinkId) return this._sfuSinkId;
-		this._sfuSinkId = byteArrayToUuid(sfuSinkId);
-		return this._sfuSinkId;
+		this._sfuSinkId = this._options.sfuSinkIdIsUuid
+			? byteArrayToUuid(sfuSinkId)
+			: bytesArrayToString(sfuSinkId)
+		;
 	}
 	
 	private _decodeSfuStreamId(sfuStreamId?: Uint8Array): string | undefined {
 		if (!sfuStreamId) return this._sfuStreamId;
-		this._sfuStreamId = byteArrayToUuid(sfuStreamId);
-		return this._sfuStreamId;
+		 this._sfuStreamId = this._options.sfuStreamIdIsUuid
+			? byteArrayToUuid(sfuStreamId)
+			: bytesArrayToString(sfuStreamId)
+		;
 	}
 	
 	private _decodeSilentConcealedSamples(silentConcealedSamples?: number): number | undefined {

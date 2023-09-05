@@ -1,3 +1,8 @@
+const decoder = new TextDecoder();
+
+export function bytesArrayToString(bytes: Uint8Array): string {
+	return decoder.decode(bytes);
+}
 
 export function byteArrayToUuid(byteArray: Uint8Array): string {
 	if (byteArray.length !== 16) {

@@ -1,6 +1,7 @@
-import { InboundAudioTrack, InboundVideoTrack } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
+import { InboundVideoTrack } from "./InputSamples";
+import { stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { Samples_ClientSample_InboundVideoTrack } from './OutputSamples';
+import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
 export class InboundVideoTrackEncoder {
 	private readonly _ssrc?: bigint;
@@ -50,7 +51,8 @@ export class InboundVideoTrackEncoder {
 
 	public constructor(
 		public readonly trackId: string,
-		public readonly ssrc: number
+		public readonly ssrc: number,
+		private readonly _encodingOptions: ClientSampleEncodingOptions,
 	) {
 		this._trackId = uuidToByteArray(trackId);
 		this._ssrc = BigInt(ssrc);
@@ -159,14 +161,20 @@ export class InboundVideoTrackEncoder {
 		if (!sfuStreamId) return;
 		if (sfuStreamId === this._sfuStreamId) return;
 		this._sfuStreamId = sfuStreamId;
-		return uuidToByteArray(this._sfuStreamId);
+		return this._encodingOptions.sfuStreamIdIsUuid
+			? uuidToByteArray(this._sfuStreamId) 
+			: stringToBytesArray(this._sfuStreamId)
+		;
 	}
 	
 	private _encodeSfuSinkId(sfuSinkId?: string): Uint8Array | undefined {
 		if (!sfuSinkId) return;
 		if (sfuSinkId === this._sfuSinkId) return;
 		this._sfuSinkId = sfuSinkId;
-		return uuidToByteArray(this._sfuSinkId);
+		return this._encodingOptions.sfuSinkIdIsUuid
+			? uuidToByteArray(this._sfuSinkId) 
+			: stringToBytesArray(this._sfuSinkId)
+		;
 	}
 	
 	private _encodePacketsReceived(packetsReceived?: number): number | undefined {

@@ -42,8 +42,13 @@ import { Samples_ClientSample_MediaDevice,
 	Samples_ClientSample_IceLocalCandidate_IceLocalCandidateEnum,
 	Samples_ClientSample_IceRemoteCandidate_IceRemoteCandidateEnum
 } from "./InputSamples";
+import { ClientSampleDecodingOptions } from './DecodingOptions';
 
 export class ClientSampleDecoder {
+	public readonly options: ClientSampleDecodingOptions = {
+		sfuStreamIdIsUuid: false,
+		sfuSinkIdIsUuid: false,
+	}
 	// last item pushed as a result of decoding
 	private _timestamp?: number;
 	private _callId?: string;
@@ -307,7 +312,7 @@ export class ClientSampleDecoder {
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._inboundAudioTracks.get(key);
 			if (!decoder) {
-				decoder = new InboundAudioTrackDecoder(trackId, ssrc);
+				decoder = new InboundAudioTrackDecoder(trackId, ssrc, this.options);
 				this._inboundAudioTracks.set(key, decoder);
 			}
 			const decodedItem = decoder.decode(sample);
@@ -329,7 +334,7 @@ export class ClientSampleDecoder {
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._inboundVideoTracks.get(key);
 			if (!decoder) {
-				decoder = new InboundVideoTrackDecoder(trackId, ssrc);
+				decoder = new InboundVideoTrackDecoder(trackId, ssrc, this.options);
 				this._inboundVideoTracks.set(key, decoder);
 			}
 			const decodedItem = decoder.decode(sample);
@@ -351,7 +356,7 @@ export class ClientSampleDecoder {
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._outboundAudioTracks.get(key);
 			if (!decoder) {
-				decoder = new OutboundAudioTrackDecoder(trackId, ssrc);
+				decoder = new OutboundAudioTrackDecoder(trackId, ssrc, this.options);
 				this._outboundAudioTracks.set(key, decoder);
 			}
 			const decodedItem = decoder.decode(sample);
@@ -373,7 +378,7 @@ export class ClientSampleDecoder {
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._outboundVideoTracks.get(key);
 			if (!decoder) {
-				decoder = new OutboundVideoTrackDecoder(trackId, ssrc);
+				decoder = new OutboundVideoTrackDecoder(trackId, ssrc, this.options);
 				this._outboundVideoTracks.set(key, decoder);
 			}
 			const decodedItem = decoder.decode(sample);

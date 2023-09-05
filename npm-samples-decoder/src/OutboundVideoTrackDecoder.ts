@@ -1,6 +1,7 @@
 import { OutboundVideoTrack } from './OutputSamples';
-import { byteArrayToUuid } from './decodingTools';
+import { byteArrayToUuid, bytesArrayToString } from './decodingTools';
 import { Samples_ClientSample_OutboundVideoTrack } from './InputSamples';
+import { ClientSampleDecodingOptions } from './DecodingOptions';
 
 export class OutboundVideoTrackDecoder {
 	private _peerConnectionId?: string;
@@ -53,6 +54,7 @@ export class OutboundVideoTrackDecoder {
 	public constructor(
 		public readonly trackId: string,
 		public readonly ssrc: number,
+		private readonly _options: ClientSampleDecodingOptions,
 	) {
 		// empty
 	}
@@ -174,8 +176,10 @@ export class OutboundVideoTrackDecoder {
 	
 	private _decodeSfuStreamId(sfuStreamId?: Uint8Array): string | undefined {
 		if (!sfuStreamId) return this._sfuStreamId;
-		this._sfuStreamId = byteArrayToUuid(sfuStreamId);
-		return this._sfuStreamId;
+		 this._sfuStreamId = this._options.sfuStreamIdIsUuid
+			? byteArrayToUuid(sfuStreamId)
+			: bytesArrayToString(sfuStreamId)
+		;
 	}
 	
 	private _decodeTotalRoundTripTime(totalRoundTripTime?: number): number | undefined {

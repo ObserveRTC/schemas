@@ -34,8 +34,14 @@ import {
 	Samples_ClientSample_PeerConnectionTransport, 
 	Samples_ClientSample_Platform 
 } from './OutputSamples';
+import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
 export class ClientSampleEncoder {
+	public readonly options: ClientSampleEncodingOptions = {
+		sfuSinkIdIsUuid: false,
+		sfuStreamIdIsUuid: false,
+	};
+
 	private _callId?: string;
 	private _roomId?: string;
 	private _userId?: string;
@@ -483,7 +489,7 @@ export class ClientSampleEncoder {
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._inboundAudioTracks.get(key);
 			if (!encoder) {
-				encoder = new InboundAudioTrackEncoder(sample.trackId, sample.ssrc);
+				encoder = new InboundAudioTrackEncoder(sample.trackId, sample.ssrc, this.options);
 				this._inboundAudioTracks.set(key, encoder);
 			}
 			const encodedSample = encoder.encode(sample);
@@ -507,7 +513,7 @@ export class ClientSampleEncoder {
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._inboundVideoTracks.get(key);
 			if (!encoder) {
-				encoder = new InboundVideoTrackEncoder(sample.trackId, sample.ssrc);
+				encoder = new InboundVideoTrackEncoder(sample.trackId, sample.ssrc, this.options);
 				this._inboundVideoTracks.set(key, encoder);
 			}
 			const encodedSample = encoder.encode(sample);
@@ -532,7 +538,7 @@ export class ClientSampleEncoder {
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._outboundAudioTracks.get(key);
 			if (!encoder) {
-				encoder = new OutboundAudioTrackEncoder(sample.trackId, sample.ssrc);
+				encoder = new OutboundAudioTrackEncoder(sample.trackId, sample.ssrc, this.options);
 				this._outboundAudioTracks.set(key, encoder);
 			}
 			const encodedSample = encoder.encode(sample);
@@ -556,7 +562,7 @@ export class ClientSampleEncoder {
 			const key = `${sample.trackId}:${sample.ssrc}`;
 			let encoder = this._outboundVideoTracks.get(key);
 			if (!encoder) {
-				encoder = new OutboundVideoTrackEncoder(sample.trackId, sample.ssrc);
+				encoder = new OutboundVideoTrackEncoder(sample.trackId, sample.ssrc, this.options);
 				this._outboundVideoTracks.set(key, encoder);
 			}
 			const encodedSample = encoder.encode(sample);

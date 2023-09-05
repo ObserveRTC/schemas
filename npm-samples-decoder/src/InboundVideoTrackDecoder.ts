@@ -1,6 +1,7 @@
 import { InboundVideoTrack } from "./OutputSamples";
-import { byteArrayToUuid } from "./decodingTools";
+import { byteArrayToUuid, bytesArrayToString } from "./decodingTools";
 import { Samples_ClientSample_InboundVideoTrack } from './InputSamples';
+import { ClientSampleDecodingOptions } from "./DecodingOptions";
 
 export class InboundVideoTrackDecoder {
 	private _peerConnectionId?: string;
@@ -50,6 +51,7 @@ export class InboundVideoTrackDecoder {
 	public constructor(
 		public readonly trackId: string,
 		public readonly ssrc: number,
+		private readonly _options: ClientSampleDecodingOptions,
 	) {
 		// empty
 	}
@@ -260,19 +262,23 @@ export class InboundVideoTrackDecoder {
 		this._roundTripTimeMeasurements = roundTripTimeMeasurements;
 		return this._roundTripTimeMeasurements;
 	}
-	
+
 	private _decodeSfuSinkId(sfuSinkId?: Uint8Array): string | undefined {
 		if (!sfuSinkId) return this._sfuSinkId;
-		this._sfuSinkId = byteArrayToUuid(sfuSinkId);
-		return this._sfuSinkId;
+		this._sfuSinkId = this._options.sfuSinkIdIsUuid
+			? byteArrayToUuid(sfuSinkId)
+			: bytesArrayToString(sfuSinkId)
+		;
 	}
 	
 	private _decodeSfuStreamId(sfuStreamId?: Uint8Array): string | undefined {
 		if (!sfuStreamId) return this._sfuStreamId;
-		this._sfuStreamId = byteArrayToUuid(sfuStreamId);
-		return this._sfuStreamId;
+		 this._sfuStreamId = this._options.sfuStreamIdIsUuid
+			? byteArrayToUuid(sfuStreamId)
+			: bytesArrayToString(sfuStreamId)
+		;
 	}
-	
+
 	private _decodeTotalRoundTripTime(totalRoundTripTime?: number): number | undefined {
 		if (totalRoundTripTime === undefined) return this._totalRoundTripTime;
 		this._totalRoundTripTime = totalRoundTripTime;

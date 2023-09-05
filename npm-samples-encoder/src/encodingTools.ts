@@ -1,3 +1,9 @@
+const encoder = new TextEncoder();
+
+export function stringToBytesArray(str: string): Uint8Array {
+	return encoder.encode(str);
+}
+
 export function uuidToByteArray(uuid: string): Uint8Array {
 	const hex = uuid.replace(/[-]/g, '');
 	const byteArray = new Uint8Array(16);
@@ -8,6 +14,8 @@ export function uuidToByteArray(uuid: string): Uint8Array {
 
 	return byteArray;
 }
+
+
 
 /* Base64 string to array encoding */
 function uint6ToB64(nUint6: number) {
