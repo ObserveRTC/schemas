@@ -252,9 +252,6 @@ export class OutboundVideoTrackEncoder {
 		if (!sfuStreamId) return;
 		if (sfuStreamId === this._sfuStreamId) return;
 		this._sfuStreamId = sfuStreamId;
-		console.warn("3894728947238492",  this._encodingOptions.sfuStreamIdIsUuid
-		? uuidToByteArray(this._sfuStreamId) 
-		: stringToBytesArray(this._sfuStreamId))
 		return this._encodingOptions.sfuStreamIdIsUuid
 			? uuidToByteArray(this._sfuStreamId) 
 			: stringToBytesArray(this._sfuStreamId)
