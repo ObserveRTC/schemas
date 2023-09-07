@@ -27,6 +27,7 @@
     "url": "https://github.com/observertc/schemas"
   },
   "dependencies": {
-    "@bufbuild/protobuf": "^1.2.0"
+    "@bufbuild/protobuf": "^1.2.0",
+    "@types/node": "^20.5.9"
   }
 }
