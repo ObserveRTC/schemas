@@ -250,7 +250,6 @@ export class OutboundVideoTrackEncoder {
 	
 	private _encodeSfuStreamId(sfuStreamId?: string): Uint8Array | undefined {
 		if (!sfuStreamId) return;
-		if (sfuStreamId === this._sfuStreamId) return;
 		this._sfuStreamId = sfuStreamId;
 		return this._encodingOptions.sfuStreamIdIsUuid
 			? uuidToByteArray(this._sfuStreamId) 
