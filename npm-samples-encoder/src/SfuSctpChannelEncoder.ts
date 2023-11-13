@@ -1,6 +1,7 @@
 import { SfuSctpChannel } from "./InputSamples";
 import { uuidToByteArray } from "./encodingTools";
 import {  Samples_SfuSample_SfuSctpChannel } from './OutputSamples';
+import { SfuSampleEncodingOptions } from "./EncodingOptions";
 
 export class SfuSctpChannelEncoder {
 	private _streamId: Uint8Array;
@@ -22,9 +23,10 @@ export class SfuSctpChannelEncoder {
 		public readonly transportId: string,
 		public readonly streamId: string,
 		public readonly channelId: string,
+		private readonly _options: SfuSampleEncodingOptions,
 	) {
-		this._streamId = uuidToByteArray(streamId);
-		this._channelId = uuidToByteArray(channelId);
+		this._streamId = this._options.dataStreamIdIsUuid ? uuidToByteArray(streamId) : uuidToByteArray(streamId);
+		this._channelId = this._options.dataChannelIdIsUuid ? uuidToByteArray(channelId) : uuidToByteArray(channelId);
 	}
 
 	public get visited(): boolean {

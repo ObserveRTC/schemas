@@ -1,8 +1,9 @@
 import { MediaSourceStat } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
+import { stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { Samples_ClientSample_MediaSourceStat, 
 	Samples_ClientSample_MediaSourceStat_MediaSourceStatEnum 
 } from './OutputSamples';
+import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
 export class MediaSourceStatsEncoder {
 	private _audioLevel?: number;
@@ -24,9 +25,10 @@ export class MediaSourceStatsEncoder {
 	private _visited = false;
 
 	public constructor(
-		public readonly trackIdentifier: string
+		public readonly trackIdentifier: string,
+		private readonly _options: ClientSampleEncodingOptions,
 	) {
-		this._trackIdentifier = uuidToByteArray(trackIdentifier);
+		this._trackIdentifier = this._options.trackIdIsUuid ? uuidToByteArray(trackIdentifier) : stringToBytesArray(trackIdentifier);
 	}
 
 	public get visited(): boolean {

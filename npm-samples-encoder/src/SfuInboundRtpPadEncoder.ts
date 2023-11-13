@@ -1,6 +1,7 @@
 import { SfuInboundRtpPad } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
+import { stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { Samples_SfuSample_SfuInboundRtpPad, Samples_SfuSample_SfuInboundRtpPad_SfuInboundRtpPadEnum } from './OutputSamples';
+import { ClientSampleEncodingOptions, SfuSampleEncodingOptions } from "./EncodingOptions";
 
 export class SfuInboundRtpPadEncoder {
 	private _streamId: Uint8Array
@@ -47,10 +48,11 @@ export class SfuInboundRtpPadEncoder {
 		public readonly streamId: string,
 		public readonly padId: string,
 		public readonly ssrc: number,
+		private readonly _options: SfuSampleEncodingOptions,
 	) {
 		this._ssrc = BigInt(ssrc);
-		this._streamId = uuidToByteArray(streamId);
-		this._padId = uuidToByteArray(padId);
+		this._streamId = this._options.sfuStreamIdIsUuid ? uuidToByteArray(streamId) : stringToBytesArray(streamId);
+		this._padId = this._options.sfuPadIdIsUuid ? uuidToByteArray(padId) : stringToBytesArray(padId);
 	}
 
 	public get visited(): boolean {

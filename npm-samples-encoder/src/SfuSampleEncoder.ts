@@ -1,5 +1,5 @@
 import { SfuSample } from "./InputSamples";
-import { convertUint8ToBase64, uuidToByteArray } from "./encodingTools";
+import { convertUint8ToBase64, stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { 
 	Samples_SfuSample_CustomSfuEvent, 
 	Samples_SfuSample_SfuExtensionStats,
@@ -13,16 +13,32 @@ import { SfuTransportEncoder } from "./SfuTransportEncoder";
 import { SfuInboundRtpPadEncoder } from "./SfuInboundRtpPadEncoder";
 import { SfuOutboundRtpPadEncoder } from "./SfuOutboundRtpPadEncoder";
 import { SfuSctpChannelEncoder } from "./SfuSctpChannelEncoder";
+import { SfuSampleEncodingOptions } from "./EncodingOptions";
 
 export class SfuSampleEncoder {
 
 	private _timeZoneOffsetInHours?: number;
-
+	public readonly options: SfuSampleEncodingOptions;
 	private _transports = new Map<string, SfuTransportEncoder>();
 	private _inboundRtpPads = new Map<string, SfuInboundRtpPadEncoder>();
 	private _outboundRtpPads = new Map<string, SfuOutboundRtpPadEncoder>();
 	private _sctpChannels = new Map<string, SfuSctpChannelEncoder>();
 	private _visited = false;
+
+	public constructor(options?: Partial<SfuSampleEncodingOptions>) {
+		this.options = Object.assign({
+			sfuIdIsUuid: false,
+			callIdIsUuid: false,
+			sfuStreamIdIsUuid: false,
+			sfuSinkIdIsUuid: false,
+			clientIdIsUuid: false,
+			peerConnectionIdIsUuid: false,
+			sfuPadIdIsUuid: false,
+			trackIdIsUuid: false,
+			dataChannelIdIsUuid: false,
+			dataStreamIdIsUuid: false,
+		}, options ?? {});
+	}
 
 	public get visited(): boolean {
 		const result = this._visited;
@@ -94,8 +110,8 @@ export class SfuSampleEncoder {
 		if (!customSfuEvents) return [];
 		return customSfuEvents.map(customSfuEvent => new Samples_SfuSample_CustomSfuEvent({
 			...customSfuEvent,
-			sfuSinkId: customSfuEvent.sfuSinkId ? uuidToByteArray(customSfuEvent.sfuSinkId) : undefined,
-			sfuStreamId: customSfuEvent.sfuStreamId ? uuidToByteArray(customSfuEvent.sfuStreamId) : undefined,
+			sfuSinkId: customSfuEvent.sfuSinkId ? this.options.sfuSinkIdIsUuid ? uuidToByteArray(customSfuEvent.sfuSinkId) : stringToBytesArray(customSfuEvent.sfuSinkId) : undefined,
+			sfuStreamId: customSfuEvent.sfuStreamId ? this.options.sfuStreamIdIsUuid ? uuidToByteArray(customSfuEvent.sfuStreamId) : stringToBytesArray(customSfuEvent.sfuStreamId): undefined,
 			timestamp: customSfuEvent.timestamp ? BigInt(customSfuEvent.timestamp) : undefined,
 		}));
 	}
@@ -113,7 +129,8 @@ export class SfuSampleEncoder {
 					sample.transportId,
 					sample.streamId,
 					sample.padId,
-					sample.ssrc
+					sample.ssrc,
+					this.options,
 				);
 				this._inboundRtpPads.set(sample.padId, encoder);
 			}
@@ -143,7 +160,8 @@ export class SfuSampleEncoder {
 					sample.streamId,
 					sample.sinkId,
 					sample.padId,
-					sample.ssrc
+					sample.ssrc,
+					this.options,
 				);
 				this._outboundRtpPads.set(sample.padId, encoder);
 			}
@@ -198,6 +216,7 @@ export class SfuSampleEncoder {
 					sample.transportId,
 					sample.streamId,
 					sample.channelId,
+					this.options,
 				);
 				this._sctpChannels.set(sample.channelId, encoder);
 			}

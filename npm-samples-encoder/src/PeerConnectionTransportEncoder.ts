@@ -1,8 +1,9 @@
 import { PeerConnectionTransport } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
+import { stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { 
 	Samples_ClientSample_PeerConnectionTransport, 
 	Samples_ClientSample_PeerConnectionTransport_PeerConnectionTransportEnum } from './OutputSamples';
+import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
 export class PeerConnectionTransportEncoder {
 	private readonly _peerConnectionId?: Uint8Array;
@@ -29,9 +30,10 @@ export class PeerConnectionTransportEncoder {
 	private _visited = false;
 
 	public constructor(
-		public readonly peerConnectionId: string
+		public readonly peerConnectionId: string,
+		private readonly _options: ClientSampleEncodingOptions,
 	) {
-		this._peerConnectionId = uuidToByteArray(peerConnectionId);
+		this._peerConnectionId = this._options.peerConnectionIdIsUuid ? uuidToByteArray(peerConnectionId) : stringToBytesArray(peerConnectionId);
 	}
 
 	public get visited(): boolean {

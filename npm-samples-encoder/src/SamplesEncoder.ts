@@ -6,11 +6,28 @@ import { ClientSampleEncoder } from "./ClientSampleEncoder";
 import { Samples as OutputSamples, Samples_ClientSample, Samples_SfuSample } from './OutputSamples';
 import { convertUint8ToBase64 } from './encodingTools';
 import { SfuSampleEncoder } from './SfuSampleEncoder';
+import { SampleEncodingOptions } from './EncodingOptions';
 
 export class SamplesEncoder {
 	private _clientSampleEncoders = new Map<string, ClientSampleEncoder>();
 	private _sfuSampleEncoders = new Map<string, SfuSampleEncoder>();
 	
+	public readonly options: SampleEncodingOptions;
+	public constructor(options?: Partial<SampleEncodingOptions>) {
+		this.options = Object.assign({
+			sfuIdIsUuid: false,
+			callIdIsUuid: false,
+			sfuStreamIdIsUuid: false,
+			sfuSinkIdIsUuid: false,
+			clientIdIsUuid: false,
+			peerConnectionIdIsUuid: false,
+			sfuPadIdIsUuid: false,
+			trackIdIsUuid: true,
+			dataChannelIdIsUuid: false,
+			dataStreamIdIsUuid: false,
+		}, options ?? {});
+	}
+
 	public encodeToBytes(input: InputSamples): Uint8Array {
 		const output = this.encodeToProtobufSamples(input);
 		return output.toBinary();

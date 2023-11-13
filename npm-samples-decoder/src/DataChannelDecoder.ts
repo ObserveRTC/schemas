@@ -1,5 +1,4 @@
 import { DataChannel } from './OutputSamples';
-import { byteArrayToUuid } from "./decodingTools";
 import { Samples_ClientSample_DataChannel } from './InputSamples';
 
 export class DataChannelDecoder {

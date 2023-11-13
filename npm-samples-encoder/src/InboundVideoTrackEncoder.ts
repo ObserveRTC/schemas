@@ -52,9 +52,9 @@ export class InboundVideoTrackEncoder {
 	public constructor(
 		public readonly trackId: string,
 		public readonly ssrc: number,
-		private readonly _encodingOptions: ClientSampleEncodingOptions,
+		private readonly _options: ClientSampleEncodingOptions,
 	) {
-		this._trackId = uuidToByteArray(trackId);
+		this._trackId = this._options.trackIdIsUuid ? uuidToByteArray(trackId) : stringToBytesArray(trackId);
 		this._ssrc = BigInt(ssrc);
 	}
 
@@ -119,14 +119,14 @@ export class InboundVideoTrackEncoder {
 		if (!peerConnectionId) return;
 		if (peerConnectionId === this._peerConnectionId) return;
 		this._peerConnectionId = peerConnectionId;
-		return uuidToByteArray(this._peerConnectionId);
+		return this._options.peerConnectionIdIsUuid ? uuidToByteArray(this._peerConnectionId) : stringToBytesArray(this._peerConnectionId);
 	}
 
 	private _encodeRemoteClientId(remoteClientId?: string): Uint8Array | undefined {
 		if (!remoteClientId) return;
 		if (remoteClientId === this._remoteClientId) return;
 		this._remoteClientId = remoteClientId;
-		return uuidToByteArray(this._remoteClientId);
+		return this._options.clientIdIsUuid ? uuidToByteArray(this._remoteClientId) : stringToBytesArray(this._remoteClientId);
 	}
 	
 	private _encodeJitterBufferTargetDelay(jitterBufferTargetDelay?: number): number | undefined{
@@ -161,7 +161,7 @@ export class InboundVideoTrackEncoder {
 		if (!sfuStreamId) return;
 		if (sfuStreamId === this._sfuStreamId) return;
 		this._sfuStreamId = sfuStreamId;
-		return this._encodingOptions.sfuStreamIdIsUuid
+		return this._options.sfuStreamIdIsUuid
 			? uuidToByteArray(this._sfuStreamId) 
 			: stringToBytesArray(this._sfuStreamId)
 		;
@@ -171,7 +171,7 @@ export class InboundVideoTrackEncoder {
 		if (!sfuSinkId) return;
 		if (sfuSinkId === this._sfuSinkId) return;
 		this._sfuSinkId = sfuSinkId;
-		return this._encodingOptions.sfuSinkIdIsUuid
+		return this._options.sfuSinkIdIsUuid
 			? uuidToByteArray(this._sfuSinkId) 
 			: stringToBytesArray(this._sfuSinkId)
 		;

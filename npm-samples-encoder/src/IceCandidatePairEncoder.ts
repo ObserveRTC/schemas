@@ -1,5 +1,5 @@
 import { IceCandidatePair } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
+import { stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { Samples_ClientSample_IceCandidatePair } from './OutputSamples';
 import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
@@ -33,6 +33,7 @@ export class IceCandidatePairEncoder {
 
 	public constructor(
 		public readonly candidatePairId: string,
+		private readonly _options: ClientSampleEncodingOptions,
 	) {
 		// empty
 	}
@@ -80,7 +81,10 @@ export class IceCandidatePairEncoder {
 		if (!peerConnectionId) return;
 		if (peerConnectionId === this._peerConnectionId) return;
 		this._peerConnectionId = peerConnectionId;
-		return uuidToByteArray(this._peerConnectionId);
+		return this._options.peerConnectionIdIsUuid 
+			? uuidToByteArray(this._peerConnectionId)
+			: stringToBytesArray(this._peerConnectionId)
+		;
 	}
 
 	private _encodeAvailableIncomingBitrate(availableIncomingBitrate?: number): number | undefined {

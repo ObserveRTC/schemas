@@ -1,6 +1,6 @@
 import { ClientSample, IceLocalCandidate, IceRemoteCandidate, MediaDevice } from "./InputSamples";
 import { DataChannelEncoder } from "./DataChannelEncoder";
-import { convertUint8ToBase64, uuidToByteArray } from "./encodingTools";
+import { convertUint8ToBase64, stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { IceCandidatePairEncoder } from "./IceCandidatePairEncoder";
 import { InboundAudioTrackEncoder } from "./InboundAudioTrackEncoder";
 import { InboundVideoTrackEncoder } from "./InboundVideoTrackEncoder";
@@ -37,10 +37,7 @@ import {
 import { ClientSampleEncodingOptions } from "./EncodingOptions";
 
 export class ClientSampleEncoder {
-	public readonly options: ClientSampleEncodingOptions = {
-		sfuSinkIdIsUuid: false,
-		sfuStreamIdIsUuid: false,
-	};
+	public readonly options: ClientSampleEncodingOptions;
 
 	private _callId?: string;
 	private _roomId?: string;
@@ -70,6 +67,18 @@ export class ClientSampleEncoder {
 	private _iceLocalCandidates = new Map<string, IceLocalCandidate>();
 	private _iceRemoteCandidates = new Map<string, IceRemoteCandidate>();
 
+
+	public constructor(options?: Partial<ClientSampleEncodingOptions>) {
+		this.options = Object.assign({
+			callIdIsUuid: false,
+			sfuStreamIdIsUuid: false,
+			sfuSinkIdIsUuid: false,
+			clientIdIsUuid: false,
+			peerConnectionIdIsUuid: false,
+			trackIdIsUuid: false,
+		}, options ?? {});
+	}
+
 	public get visited(): boolean {
 		const result = this._visited;
 		this._visited = false;
@@ -90,7 +99,7 @@ export class ClientSampleEncoder {
 		this._visited = true;
 
 		const result = new Samples_ClientSample({
-			clientId: clientSample.clientId ? uuidToByteArray(clientSample.clientId) : undefined,
+			clientId: clientSample.clientId ? this.options.clientIdIsUuid ? uuidToByteArray(clientSample.clientId) : stringToBytesArray(clientSample.clientId) : undefined,
 			timestamp: BigInt(clientSample.timestamp),
 			sampleSeq: clientSample.sampleSeq,
 			marker: clientSample.marker,
@@ -167,7 +176,10 @@ export class ClientSampleEncoder {
 		if (!callId) return;
 		if (this._callId === callId) return;
 		this._callId = callId;
-		return uuidToByteArray(callId);
+
+		return this.options.callIdIsUuid 
+			? uuidToByteArray(callId)
+			: stringToBytesArray(callId);
 	}
 
 	private _encodeRoomId(
@@ -289,9 +301,10 @@ export class ClientSampleEncoder {
 		this._iceLocalCandidates.clear();
 		iceLocalCandidates.forEach(item => this._iceLocalCandidates.set(item.id ? item.id : 'id', item));
 		return Array.from(this._iceLocalCandidates.values()).filter(item => !!item.peerConnectionId).map(item => {
+			const peerConnectionId = this.options.peerConnectionIdIsUuid ? uuidToByteArray(item.peerConnectionId!) : stringToBytesArray(item.peerConnectionId!);
 			return new Samples_ClientSample_IceLocalCandidate({
 				...item,
-				peerConnectionId: uuidToByteArray(item.peerConnectionId!),
+				peerConnectionId,
 				priority: BigInt(item.priority ? item.priority : -1),
 				protocol: item.protocol === 'tcp' ? Samples_ClientSample_IceLocalCandidate_IceLocalCandidateEnum.TCP :
 					item.protocol === 'udp' ? Samples_ClientSample_IceLocalCandidate_IceLocalCandidateEnum.UDP :
@@ -316,9 +329,10 @@ export class ClientSampleEncoder {
 		this._iceRemoteCandidates.clear();
 		iceRemoteCandidates.forEach(item => this._iceRemoteCandidates.set(item.id ? item.id : 'id', item));
 		return Array.from(this._iceRemoteCandidates.values()).filter(item => !!item.peerConnectionId).map(item => {
+			const peerConnectionId = this.options.peerConnectionIdIsUuid ? uuidToByteArray(item.peerConnectionId!) : stringToBytesArray(item.peerConnectionId!);
 			return new Samples_ClientSample_IceRemoteCandidate({
 				...item,
-				peerConnectionId: uuidToByteArray(item.peerConnectionId!),
+				peerConnectionId,
 				priority: BigInt(item.priority ? item.priority : -1),
 				protocol: item.protocol === 'tcp' ? Samples_ClientSample_IceRemoteCandidate_IceRemoteCandidateEnum.TCP :
 					item.protocol === 'udp' ? Samples_ClientSample_IceRemoteCandidate_IceRemoteCandidateEnum.UDP :
@@ -376,10 +390,10 @@ export class ClientSampleEncoder {
 		customCallEvents?: ClientSample['customCallEvents'], 
 	): Samples_ClientSample_CustomCallEvent[] {
 		if (!customCallEvents) return [];
-		return customCallEvents.map(customCallEvents => new Samples_ClientSample_CustomCallEvent({
-			...customCallEvents,
-			peerConnectionId: customCallEvents.peerConnectionId ? uuidToByteArray(customCallEvents.peerConnectionId) : undefined,
-			timestamp: customCallEvents.timestamp ? BigInt(customCallEvents.timestamp) : undefined,
+		return customCallEvents.map(customCallEvent => new Samples_ClientSample_CustomCallEvent({
+			...customCallEvent,
+			peerConnectionId: customCallEvent.peerConnectionId ? this.options.peerConnectionIdIsUuid ? uuidToByteArray(customCallEvent.peerConnectionId!) : stringToBytesArray(customCallEvent.peerConnectionId!) : undefined,
+			timestamp: customCallEvent.timestamp ? BigInt(customCallEvent.timestamp) : undefined,
 		}));
 	}
 
@@ -585,7 +599,7 @@ export class ClientSampleEncoder {
 			if (!sample.trackIdentifier) continue;
 			let encoder = this._mediaSources.get(sample.trackIdentifier);
 			if (!encoder) {
-				encoder = new MediaSourceStatsEncoder(sample.trackIdentifier);
+				encoder = new MediaSourceStatsEncoder(sample.trackIdentifier, this.options);
 				this._mediaSources.set(sample.trackIdentifier, encoder);
 			}
 			const encodedSample = encoder.encode(sample);
@@ -609,7 +623,7 @@ export class ClientSampleEncoder {
 			if (!sample.candidatePairId) continue;
 			let encoder = this._iceCandidatePairs.get(sample.candidatePairId);
 			if (!encoder) {
-				encoder = new IceCandidatePairEncoder(sample.candidatePairId);
+				encoder = new IceCandidatePairEncoder(sample.candidatePairId, this.options);
 				this._iceCandidatePairs.set(sample.candidatePairId, encoder);
 			}
 			const encodedSample = encoder.encode(sample);
@@ -633,7 +647,7 @@ export class ClientSampleEncoder {
 			if (!sample.peerConnectionId) continue;
 			let encoder = this._peerConnectionTransports.get(sample.peerConnectionId);
 			if (!encoder) {
-				encoder = new PeerConnectionTransportEncoder(sample.peerConnectionId);
+				encoder = new PeerConnectionTransportEncoder(sample.peerConnectionId, this.options);
 				this._peerConnectionTransports.set(sample.peerConnectionId, encoder);
 			}
 			const encodedSample = encoder.encode(sample);

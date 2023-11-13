@@ -1,5 +1,4 @@
 import { MediaSourceStat } from "./OutputSamples"
-import { byteArrayToUuid } from "./decodingTools";
 import { Samples_ClientSample_MediaSourceStat, 
 	Samples_ClientSample_MediaSourceStat_MediaSourceStatEnum 
 } from './InputSamples';

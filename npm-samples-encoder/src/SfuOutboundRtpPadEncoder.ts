@@ -1,6 +1,7 @@
 import { SfuOutboundRtpPad } from "./InputSamples";
-import { uuidToByteArray } from "./encodingTools";
+import { stringToBytesArray, uuidToByteArray } from "./encodingTools";
 import { Samples_SfuSample_SfuOutboundRtpPad, Samples_SfuSample_SfuOutboundRtpPad_SfuOutboundRtpPadEnum } from './OutputSamples';
+import { SfuSampleEncodingOptions } from "./EncodingOptions";
 
 export class SfuOutboundRtpPadEncoder {
 	private _streamId: Uint8Array;
@@ -52,11 +53,12 @@ export class SfuOutboundRtpPadEncoder {
 		public readonly sinkId: string,
 		public readonly padId: string,
 		public readonly ssrc: number,
+		private readonly _options: SfuSampleEncodingOptions,
 	) {
 		this._ssrc = BigInt(ssrc);
-		this._streamId = uuidToByteArray(streamId);
-		this._sinkId = uuidToByteArray(sinkId);
-		this._padId = uuidToByteArray(padId);
+		this._streamId = this._options.sfuStreamIdIsUuid ? uuidToByteArray(streamId) : stringToBytesArray(streamId);
+		this._sinkId = this._options.sfuSinkIdIsUuid ? uuidToByteArray(sinkId) : stringToBytesArray(sinkId);
+		this._padId = this._options.sfuPadIdIsUuid ? uuidToByteArray(padId) : stringToBytesArray(padId);
 	}
 
 	public get visited(): boolean {
@@ -285,21 +287,21 @@ export class SfuOutboundRtpPadEncoder {
 		if (!callId) return;
 		if (callId === this._callId) return;
 		this._callId = callId;
-		return uuidToByteArray(this._callId);
+		return this._options.callIdIsUuid ? uuidToByteArray(this._callId) : stringToBytesArray(this._callId);
 	}
 	
 	private _encodeClientId(clientId?: string): Uint8Array | undefined {
 		if (!clientId) return;
 		if (clientId === this._clientId) return;
 		this._clientId = clientId;
-		return uuidToByteArray(this._clientId);
+		return this._options.clientIdIsUuid ? uuidToByteArray(this._clientId) : stringToBytesArray(this._clientId);
 	}
 	
 	private _encodeTrackId(trackId?: string): Uint8Array | undefined {
 		if (!trackId) return;
 		if (trackId === this._trackId) return;
 		this._trackId = trackId;
-		return uuidToByteArray(this._trackId);
+		return this._options.trackIdIsUuid ? uuidToByteArray(this._trackId) : stringToBytesArray(this._trackId);
 	}
 	
 	private _encodePacketsSent(packetsSent?: number): number | undefined {

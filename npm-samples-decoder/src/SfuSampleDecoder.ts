@@ -12,10 +12,11 @@ import { SfuTransportDecoder } from "./SfuTransportDecoder";
 import { SfuInboundRtpPadDecoder } from "./SfuInboundRtpPadDecoder";
 import { SfuOutboundRtpPadDecoder } from "./SfuOutboundRtpPadDecoder";
 import { SfuSctpChannelDecoder } from "./SfuSctpChannelDecoder";
-import { byteArrayToUuid } from "./decodingTools";
+import { byteArrayToUuid, bytesArrayToString } from "./decodingTools";
+import { SfuSampleDecodingOptions } from "./DecodingOptions";
 
 export class SfuSampleDecoder {
-
+	public readonly options: SfuSampleDecodingOptions;
 	private _timeZoneOffsetInHours?: number;
 
 	private _transports = new Map<string, SfuTransportDecoder>();
@@ -23,6 +24,20 @@ export class SfuSampleDecoder {
 	private _outboundRtpPads = new Map<string, SfuOutboundRtpPadDecoder>();
 	private _sctpChannels = new Map<string, SfuSctpChannelDecoder>();
 	private _visited = false;
+
+	public constructor(options?: Partial<SfuSampleDecodingOptions>) {
+		this.options = Object.assign({
+			callIdIsUuid: false,
+			clientIdIsUuid: false,
+			trackIdIsUuid: false,
+			sfuIdIsUuid: false,
+			sfuStreamIdIsUuid: false,
+			sfuSinkIdIsUuid: false,
+			sfuPadIdIsUuid: false,
+			dataChannelIdIsUuid: false,
+			dataStreamIdIsUuid: false,
+		}, options ?? {});
+	}
 
 	public get visited(): boolean {
 		const result = this._visited;
@@ -44,9 +59,9 @@ export class SfuSampleDecoder {
 	public decodeProtobufSample(sfuSample: Samples_SfuSample): SfuSample {
 		
 		this._visited = true;
-
+		const sfuId = sfuSample.sfuId ? this.options.sfuIdIsUuid ?  byteArrayToUuid(sfuSample.sfuId) : bytesArrayToString(sfuSample.sfuId) : 'no-id';
 		const result: SfuSample = {
-			sfuId: sfuSample.sfuId ? byteArrayToUuid(sfuSample.sfuId) : 'no-id',
+			sfuId,
 			timestamp: Number(sfuSample.timestamp),
 			marker: sfuSample.marker,
 
@@ -92,8 +107,8 @@ export class SfuSampleDecoder {
 			result.push({
 				name: stats.name,
 				value: stats.value,
-				sfuStreamId: stats.sfuStreamId !== undefined ? byteArrayToUuid(stats.sfuStreamId) : undefined,
-				sfuSinkId:  stats.sfuSinkId !== undefined ? byteArrayToUuid(stats.sfuSinkId) : undefined,
+				sfuStreamId: stats.sfuStreamId !== undefined ? this.options.sfuStreamIdIsUuid ? byteArrayToUuid(stats.sfuStreamId) : bytesArrayToString(stats.sfuStreamId): undefined,
+				sfuSinkId:  stats.sfuSinkId !== undefined ? this.options.sfuSinkIdIsUuid ? byteArrayToUuid(stats.sfuSinkId) : bytesArrayToString(stats.sfuSinkId) : undefined,
 				message: stats.message,
 				attachments: stats.attachments,
 				timestamp: stats.timestamp !== undefined ? Number(stats.timestamp) : undefined,
@@ -109,8 +124,8 @@ export class SfuSampleDecoder {
 		const result: SfuSample['inboundRtpPads'] = [];
 		for (const sample of (inboundRtpPads ?? [])) {
 			if (!sample.padId || !sample.transportId || !sample.streamId || !sample.ssrc) continue;
-			const streamId = byteArrayToUuid(sample.streamId);
-			const padId = byteArrayToUuid(sample.padId);
+			const streamId = this.options.sfuStreamIdIsUuid ? byteArrayToUuid(sample.streamId) : bytesArrayToString(sample.streamId);
+			const padId = this.options.sfuPadIdIsUuid ?  byteArrayToUuid(sample.padId) : bytesArrayToString(sample.padId);
 			let decoder = this._inboundRtpPads.get(padId);
 			if (!decoder) {
 				decoder = new SfuInboundRtpPadDecoder(
@@ -141,9 +156,9 @@ export class SfuSampleDecoder {
 		const result: SfuSample['outboundRtpPads'] = [];
 		for (const sample of (outboundRtpPads ?? [])) {
 			if (!sample.padId || !sample.transportId || !sample.streamId || !sample.sinkId || !sample.ssrc) continue;
-			const streamId = byteArrayToUuid(sample.streamId);
-			const sinkId = byteArrayToUuid(sample.sinkId);
-			const padId = byteArrayToUuid(sample.padId);
+			const sinkId = this.options.sfuSinkIdIsUuid ? byteArrayToUuid(sample.sinkId) : bytesArrayToString(sample.sinkId);
+			const streamId = this.options.sfuStreamIdIsUuid ? byteArrayToUuid(sample.streamId) : bytesArrayToString(sample.streamId);
+			const padId = this.options.sfuPadIdIsUuid ?  byteArrayToUuid(sample.padId) : bytesArrayToString(sample.padId);
 			let decoder = this._outboundRtpPads.get(padId);
 			if (!decoder) {
 				decoder = new SfuOutboundRtpPadDecoder(
@@ -151,7 +166,8 @@ export class SfuSampleDecoder {
 					streamId,
 					sinkId,
 					padId,
-					Number(sample.ssrc)
+					Number(sample.ssrc),
+					this.options,
 				);
 				this._outboundRtpPads.set(padId, decoder);
 			}
@@ -202,8 +218,8 @@ export class SfuSampleDecoder {
 		const result: SfuSample['sctpChannels'] = [];
 		for (const sample of (sctpChannels ?? [])) {
 			if (!sample.channelId || !sample.transportId || !sample.streamId) continue;
-			const channelId = byteArrayToUuid(sample.channelId);
-			const streamId =  byteArrayToUuid(sample.streamId);
+			const channelId = this.options.dataChannelIdIsUuid ? byteArrayToUuid(sample.channelId) : bytesArrayToString(sample.channelId);
+			const streamId =  this.options.dataStreamIdIsUuid ? byteArrayToUuid(sample.streamId) : bytesArrayToString(sample.streamId);
 			let decoder = this._sctpChannels.get(channelId);
 			if (!decoder) {
 				decoder = new SfuSctpChannelDecoder(

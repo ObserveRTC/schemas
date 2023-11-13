@@ -1,5 +1,4 @@
 import { IceCandidatePair } from './OutputSamples';
-import { byteArrayToUuid } from './decodingTools';
 import { Samples_ClientSample_IceCandidatePair } from './InputSamples';
 
 export class IceCandidatePairDecoder {

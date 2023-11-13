@@ -133,7 +133,10 @@ export class OutboundAudioTrackDecoder {
 	
 	private _decodePeerConnectionId(peerConnectionId?: Uint8Array): string | undefined {
 		if (!peerConnectionId) return this._peerConnectionId;
-		this._peerConnectionId = byteArrayToUuid(peerConnectionId);
+		this._peerConnectionId = this._options.peerConnectionIdIsUuid 
+			? byteArrayToUuid(peerConnectionId) 
+			: bytesArrayToString(peerConnectionId)
+		;
 		return this._peerConnectionId;
 	}
 	

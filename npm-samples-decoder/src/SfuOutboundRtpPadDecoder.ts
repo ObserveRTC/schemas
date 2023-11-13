@@ -3,7 +3,8 @@ import {
 	Samples_SfuSample_SfuOutboundRtpPad, 
 	Samples_SfuSample_SfuOutboundRtpPad_SfuOutboundRtpPadEnum 
 } from './InputSamples';
-import { byteArrayToUuid } from "./decodingTools";
+import { byteArrayToUuid, bytesArrayToString } from "./decodingTools";
+import { SfuSampleDecodingOptions } from "./DecodingOptions";
 
 export class SfuOutboundRtpPadDecoder {
 	private _noReport?: boolean;
@@ -51,6 +52,7 @@ export class SfuOutboundRtpPadDecoder {
 		public readonly sinkId: string,
 		public readonly padId: string,
 		public readonly ssrc: number,
+		private readonly _options: SfuSampleDecodingOptions,
 	) {
 	}
 
@@ -299,19 +301,19 @@ export class SfuOutboundRtpPadDecoder {
 	
 	private _decodeCallId(callId?: Uint8Array): string | undefined {
 		if (callId === undefined) return this._callId;
-		this._callId = byteArrayToUuid(callId);
+		this._callId = this._options.callIdIsUuid ? byteArrayToUuid(callId) : bytesArrayToString(callId);
 		return this._callId;
 	}
 	  
 	private _decodeClientId(clientId?: Uint8Array): string | undefined {
 		if (clientId === undefined) return this._clientId;
-		this._clientId = byteArrayToUuid(clientId);
+		this._clientId = this._options.clientIdIsUuid ? byteArrayToUuid(clientId) : bytesArrayToString(clientId);
 		return this._clientId;
 	}
 	  
 	private _decodeTrackId(trackId?: Uint8Array): string | undefined {
 		if (trackId === undefined) return this._trackId;
-		this._trackId = byteArrayToUuid(trackId);
+		this._trackId = this._options.trackIdIsUuid ? byteArrayToUuid(trackId) : bytesArrayToString(trackId);
 		return this._trackId;
 	}
 	  

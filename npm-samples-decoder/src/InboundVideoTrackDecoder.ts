@@ -229,13 +229,19 @@ export class InboundVideoTrackDecoder {
 	
 	private _decodePeerConnectionId(peerConnectionId?: Uint8Array): string | undefined {
 		if (!peerConnectionId) return this._peerConnectionId;
-		this._peerConnectionId = byteArrayToUuid(peerConnectionId);
+		this._peerConnectionId = this._options.peerConnectionIdIsUuid 
+			? byteArrayToUuid(peerConnectionId) 
+			: bytesArrayToString(peerConnectionId)
+		;
 		return this._peerConnectionId;
 	}
 	
 	private _decodeRemoteClientId(remoteClientId?: Uint8Array): string | undefined {
 		if (!remoteClientId) return this._remoteClientId;
-		this._remoteClientId = byteArrayToUuid(remoteClientId);
+		this._remoteClientId = this._options.clientIdIsUuid 
+			? byteArrayToUuid(remoteClientId)
+			: bytesArrayToString(remoteClientId)
+		;
 		return this._remoteClientId;
 	}
 	

@@ -12,7 +12,7 @@ import {
 	PeerConnectionTransport 
 } from './OutputSamples';
 import { DataChannelDecoder } from "./DataChannelDecoder";
-import { byteArrayToUuid } from "./decodingTools";
+import { byteArrayToUuid, bytesArrayToString } from "./decodingTools";
 import { IceCandidatePairDecoder } from "./IceCandidatePairDecoder";
 import { InboundAudioTrackDecoder } from "./InboundAudioTrackDecoder";
 import { InboundVideoTrackDecoder } from "./InboundVideoTrackDecoder";
@@ -45,10 +45,7 @@ import { Samples_ClientSample_MediaDevice,
 import { ClientSampleDecodingOptions } from './DecodingOptions';
 
 export class ClientSampleDecoder {
-	public readonly options: ClientSampleDecodingOptions = {
-		sfuStreamIdIsUuid: false,
-		sfuSinkIdIsUuid: false,
-	}
+	public readonly options: ClientSampleDecodingOptions;
 	// last item pushed as a result of decoding
 	private _timestamp?: number;
 	private _callId?: string;
@@ -74,6 +71,17 @@ export class ClientSampleDecoder {
 	private _timeZoneOffsetInHours?: number;
 	private _visited = false;
 
+	public constructor(options?: Partial<ClientSampleDecodingOptions>) {
+		this.options = Object.assign({
+			callIdIsUuid: false,
+			sfuStreamIdIsUuid: false,
+			sfuSinkIdIsUuid: false,
+			clientIdIsUuid: false,
+			peerConnectionIdIsUuid: false,
+			trackIdIsUuid: false,
+		}, options ?? {});
+	}
+
 	public get visited() {
 		return this._visited;
 	}
@@ -96,8 +104,9 @@ export class ClientSampleDecoder {
 		if (sample.timestamp) {
 			this._timestamp = Number(sample.timestamp)
 		}
+		const clientId = sample.clientId ? this.options.clientIdIsUuid ? byteArrayToUuid(sample.clientId) : bytesArrayToString(sample.clientId) : 'undefined';
 		const result: ClientSample = {
-			clientId: sample.clientId ? byteArrayToUuid(sample.clientId) : 'undefined',
+			clientId,
 			timestamp: this._timestamp ?? -1,
 			sampleSeq: sample.sampleSeq,
 			marker: sample.marker,
@@ -138,7 +147,10 @@ export class ClientSampleDecoder {
 
 	private _decodeCallId(callId?: Uint8Array): string | undefined {
 		if (!callId) return this._callId;
-		this._callId = byteArrayToUuid(callId);
+		this._callId = this.options.callIdIsUuid 
+			? byteArrayToUuid(callId)
+			: bytesArrayToString(callId)
+		;
 		return this._callId;
 	}
 	
@@ -217,8 +229,12 @@ export class ClientSampleDecoder {
 	private _decodeIceLocalCandidates(iceLocalCandidates?: Samples_ClientSample['iceLocalCandidates']): ClientSample['iceLocalCandidates'] | undefined {
 		if (!iceLocalCandidates || iceLocalCandidates.length < 1) return undefined;
 		this._iceLocalCandidates = iceLocalCandidates.map(iceLocalCandidate => {
+			const peerConnectionId =  iceLocalCandidate.peerConnectionId 
+				? this.options.peerConnectionIdIsUuid ? byteArrayToUuid(iceLocalCandidate.peerConnectionId) : bytesArrayToString(iceLocalCandidate.peerConnectionId)
+				: undefined
+			;
 			const result = {
-				peerConnectionId: iceLocalCandidate.peerConnectionId ? byteArrayToUuid(iceLocalCandidate.peerConnectionId) : undefined,
+				peerConnectionId,
 				id: iceLocalCandidate.id,
 				address: iceLocalCandidate.address,
 				port: iceLocalCandidate.port,
@@ -240,9 +256,13 @@ export class ClientSampleDecoder {
 
 	private _decodeIceRemoteCandidates(iceRemoteCandidates?: Samples_ClientSample['iceRemoteCandidates']): ClientSample['iceRemoteCandidates'] | undefined {
 		if (!iceRemoteCandidates || iceRemoteCandidates.length < 1) return undefined;
-		this._iceRemoteCandidates = iceRemoteCandidates.map(iceRemoteCandidate => {
+			this._iceRemoteCandidates = iceRemoteCandidates.map(iceRemoteCandidate => {
+				const peerConnectionId =  iceRemoteCandidate.peerConnectionId 
+				? this.options.peerConnectionIdIsUuid ? byteArrayToUuid(iceRemoteCandidate.peerConnectionId) : bytesArrayToString(iceRemoteCandidate.peerConnectionId)
+				: undefined
+			;
 			const result = {
-				peerConnectionId: iceRemoteCandidate.peerConnectionId ? byteArrayToUuid(iceRemoteCandidate.peerConnectionId) : undefined,
+				peerConnectionId,
 				id: iceRemoteCandidate.id,
 				address: iceRemoteCandidate.address,
 				port: iceRemoteCandidate.port,
@@ -289,10 +309,14 @@ export class ClientSampleDecoder {
 		const result: CustomCallEvent[] = [];
 		for (const stats of customCallEvents) {
 			if (!stats.name) continue;
+			const peerConnectionId =  stats.peerConnectionId 
+				? this.options.peerConnectionIdIsUuid ? byteArrayToUuid(stats.peerConnectionId) : bytesArrayToString(stats.peerConnectionId)
+				: undefined
+			;
 			result.push({
 				name: stats.name,
 				value: stats.value,
-				peerConnectionId: stats.peerConnectionId !== undefined ? byteArrayToUuid(stats.peerConnectionId) : undefined,
+				peerConnectionId,
 				mediaTrackId: stats.mediaTrackId,
 				message: stats.message,
 				attachments: stats.attachments,
@@ -307,7 +331,10 @@ export class ClientSampleDecoder {
 		const result: InboundAudioTrack[] = [];
 		for (const sample of samples) {
 			if (!sample.trackId || !sample.ssrc) continue;
-			const trackId = byteArrayToUuid(sample.trackId);
+			const trackId = this.options.trackIdIsUuid 
+				? byteArrayToUuid(sample.trackId)
+				: bytesArrayToString(sample.trackId)
+			;
 			const ssrc = Number(sample.ssrc);
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._inboundAudioTracks.get(key);
@@ -329,7 +356,10 @@ export class ClientSampleDecoder {
 		const result: InboundAudioTrack[] = [];
 		for (const sample of samples) {
 			if (!sample.trackId || !sample.ssrc) continue;
-			const trackId = byteArrayToUuid(sample.trackId);
+			const trackId = this.options.trackIdIsUuid 
+				? byteArrayToUuid(sample.trackId)
+				: bytesArrayToString(sample.trackId)
+			;
 			const ssrc = Number(sample.ssrc);
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._inboundVideoTracks.get(key);
@@ -351,7 +381,10 @@ export class ClientSampleDecoder {
 		const result: OutboundAudioTrack[] = [];
 		for (const sample of samples) {
 			if (!sample.trackId || !sample.ssrc) continue;
-			const trackId = byteArrayToUuid(sample.trackId);
+			const trackId = this.options.trackIdIsUuid 
+				? byteArrayToUuid(sample.trackId)
+				: bytesArrayToString(sample.trackId)
+			;
 			const ssrc = Number(sample.ssrc);
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._outboundAudioTracks.get(key);
@@ -373,7 +406,10 @@ export class ClientSampleDecoder {
 		const result: OutboundAudioTrack[] = [];
 		for (const sample of samples) {
 			if (!sample.trackId || !sample.ssrc) continue;
-			const trackId = byteArrayToUuid(sample.trackId);
+			const trackId = this.options.trackIdIsUuid 
+				? byteArrayToUuid(sample.trackId)
+				: bytesArrayToString(sample.trackId)
+			;
 			const ssrc = Number(sample.ssrc);
 			const key = `${trackId}:${ssrc}`;
 			let decoder = this._outboundVideoTracks.get(key);
@@ -395,7 +431,10 @@ export class ClientSampleDecoder {
 		const result: PeerConnectionTransport[] = [];
 		for (const sample of samples) {
 			if (!sample.peerConnectionId || !sample.transportId) continue;
-			const peerConnectionId = byteArrayToUuid(sample.peerConnectionId);
+			const peerConnectionId = this.options.peerConnectionIdIsUuid 
+				? byteArrayToUuid(sample.peerConnectionId) 
+				: bytesArrayToString(sample.peerConnectionId)
+			;
 			const key = `${peerConnectionId}:${sample.transportId}`;
 			let decoder = this._pcTransports.get(key);
 			if (!decoder) {
@@ -419,7 +458,10 @@ export class ClientSampleDecoder {
 			let decoder = this._iceCandidatePairs.get(sample.candidatePairId);
 			if (!decoder) {
 				if (!sample.peerConnectionId) continue;
-				const peerConnectionId = byteArrayToUuid(sample.peerConnectionId);
+				const peerConnectionId = this.options.peerConnectionIdIsUuid 
+					? byteArrayToUuid(sample.peerConnectionId) 
+					: bytesArrayToString(sample.peerConnectionId)
+				;
 				decoder = new IceCandidatePairDecoder(sample.candidatePairId, peerConnectionId);
 				this._iceCandidatePairs.set(sample.candidatePairId, decoder);
 			}
@@ -437,7 +479,10 @@ export class ClientSampleDecoder {
 		const result: MediaSourceStat[] = [];
 		for (const sample of samples) {
 			if (!sample.trackIdentifier) continue;
-			const trackIdentifier = byteArrayToUuid(sample.trackIdentifier);
+			const trackIdentifier = this.options.trackIdIsUuid 
+				? byteArrayToUuid(sample.trackIdentifier)
+				: bytesArrayToString(sample.trackIdentifier)
+			;
 			let decoder = this._mediaSources.get(trackIdentifier);
 			if (!decoder) {
 				decoder = new MediaSourceStatsDecoder(trackIdentifier);
@@ -457,7 +502,10 @@ export class ClientSampleDecoder {
 		const result: DataChannel[] = [];
 		for (const sample of samples) {
 			if (sample.dataChannelIdentifier === undefined || !sample.peerConnectionId) continue;
-			const peerConnectionId = byteArrayToUuid(sample.peerConnectionId);
+			const peerConnectionId = this.options.peerConnectionIdIsUuid 
+				? byteArrayToUuid(sample.peerConnectionId) 
+				: bytesArrayToString(sample.peerConnectionId)
+			;
 			let decoder = this._dataChannels.get(sample.dataChannelIdentifier);
 			if (!decoder) {
 				decoder = new DataChannelDecoder(peerConnectionId, sample.dataChannelIdentifier);

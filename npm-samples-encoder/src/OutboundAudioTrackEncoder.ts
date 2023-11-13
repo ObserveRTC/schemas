@@ -43,9 +43,9 @@ export class OutboundAudioTrackEncoder {
 	public constructor(
 		public readonly trackId: string,
 		public readonly ssrc: number,
-		private readonly _encodingOptions: ClientSampleEncodingOptions,
+		private readonly _options: ClientSampleEncodingOptions,
 	) {
-		this._trackId = uuidToByteArray(trackId);
+		this._trackId = this._options.trackIdIsUuid ? uuidToByteArray(trackId) : stringToBytesArray(trackId);
 		this._ssrc = BigInt(ssrc);
 	}
 
@@ -213,7 +213,7 @@ export class OutboundAudioTrackEncoder {
 		if (!peerConnectionId) return;
 		if (peerConnectionId === this._peerConnectionId) return;
 		this._peerConnectionId = peerConnectionId;
-		return uuidToByteArray(this._peerConnectionId);
+		return this._options.peerConnectionIdIsUuid ? uuidToByteArray(this._peerConnectionId) : stringToBytesArray(this._peerConnectionId);
 	}
 	
 	private _encodeRelayedSource(relayedSource?: boolean): boolean | undefined {
@@ -262,7 +262,7 @@ export class OutboundAudioTrackEncoder {
 		if (!sfuStreamId) return;
 		if (sfuStreamId === this._sfuStreamId) return;
 		this._sfuStreamId = sfuStreamId;
-		return this._encodingOptions.sfuStreamIdIsUuid
+		return this._options.sfuStreamIdIsUuid
 			? uuidToByteArray(this._sfuStreamId) 
 			: stringToBytesArray(this._sfuStreamId)
 		;

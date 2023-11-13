@@ -6,12 +6,29 @@ import {
 import { ClientSampleDecoder } from "./ClientSampleDecoder";
 
 import { Samples as InputSamples } from './InputSamples';
-import { byteArrayToUuid } from "./decodingTools";
+import { byteArrayToUuid, bytesArrayToString } from "./decodingTools";
 import { SfuSampleDecoder } from "./SfuSampleDecoder";
+import { SampleDecodingOptions } from "./DecodingOptions";
 
 export class SamplesDecoder {
+	public readonly options: SampleDecodingOptions;
 	private _clientSampleDecoders = new Map<string, ClientSampleDecoder>();
 	private _sfuSampleDecoders = new Map<string, SfuSampleDecoder>();
+
+	public constructor(options?: Partial<SampleDecodingOptions>) {
+		this.options = Object.assign({
+			sfuIdIsUuid: false,
+			callIdIsUuid: false,
+			sfuStreamIdIsUuid: false,
+			sfuSinkIdIsUuid: false,
+			clientIdIsUuid: false,
+			peerConnectionIdIsUuid: false,
+			sfuPadIdIsUuid: false,
+			trackIdIsUuid: true,
+			dataChannelIdIsUuid: false,
+			dataStreamIdIsUuid: false,
+		}, options ?? {});
+	}
 
 	public decodeFromBytes(input: Uint8Array): OutputSamples {
 		const inputSamples = InputSamples.fromBinary(input);
@@ -31,10 +48,13 @@ export class SamplesDecoder {
 				if (!encodedClientSample.clientId) {
 					continue;
 				}
-				const clientId = byteArrayToUuid(encodedClientSample.clientId);
+				const clientId = this.options.clientIdIsUuid 
+					? byteArrayToUuid(encodedClientSample.clientId)
+					: bytesArrayToString(encodedClientSample.clientId);
+
 				let decoder = this._clientSampleDecoders.get(clientId);
 				if (!decoder) {
-					decoder = new ClientSampleDecoder();
+					decoder = new ClientSampleDecoder(this.options);
 					this._clientSampleDecoders.set(clientId, decoder);
 				}
 				const clientSample = decoder.decodeProtobufSample(encodedClientSample);
@@ -56,10 +76,10 @@ export class SamplesDecoder {
 				if (!encodedSfuSample.sfuId) {
 					continue;
 				}
-				const sfuId = byteArrayToUuid(encodedSfuSample.sfuId);
+				const sfuId = this.options.sfuIdIsUuid ? byteArrayToUuid(encodedSfuSample.sfuId) : bytesArrayToString(encodedSfuSample.sfuId);
 				let decoder = this._sfuSampleDecoders.get(sfuId);
 				if (!decoder) {
-					decoder = new SfuSampleDecoder();
+					decoder = new SfuSampleDecoder(this.options);
 					this._sfuSampleDecoders.set(sfuId, decoder);
 				}
 				const sfuSample = decoder.decodeProtobufSample(encodedSfuSample);
