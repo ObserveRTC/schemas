@@ -27,15 +27,6 @@
             "default": null
         },
         {
-            "name": "clientSamples",
-            "doc": "Samples taken from the client",
-            "type": ["null", {
-                "type": "array",
-                "items": "@include-chunk ClientSample"
-            }],
-            "default": null
-        },
-        {
             "name" : "sfuSamples",
             "doc": "Samples taken from an Sfu",
             "type" : ["null", {

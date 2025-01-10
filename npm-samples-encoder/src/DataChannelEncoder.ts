@@ -1,92 +1,73 @@
-import { DataChannel } from "./InputSamples";
-import { Samples_ClientSample_DataChannel } from './OutputSamples';
+import { Encoder, NumberToBigIntEncoder } from "./utils";
+import { DataChannelStats as InputDataChannelStats } from "./InputSamples"; // Assuming this is the input sample type
+import {
+  NumberToNumberEncoder,
+  StringToStringEncoder,
+  AppDataEncoder
+} from "./utils"; // Assuming these are utility encoders for the various types
+import { ClientSample_PeerConnectionSample_DataChannelStats } from "./OutputSamples"; // Assuming this is the output sample type
 
-export class DataChannelEncoder {
-	private _peerConnectionId?: Uint8Array;
-	private _bytesReceived?: number;
-	private _bytesSent?: number;
-	private _label?: string;
-	private _messageReceived?: number;
-	private _messageSent?: number;
-	private _protocol?: string;
-	private _state?: string;
+export class DataChannelEncoder implements Encoder<InputDataChannelStats, ClientSample_PeerConnectionSample_DataChannelStats> {
+  private _visited = false;
+  private readonly _timestampEncoder: NumberToNumberEncoder;
+  private readonly _labelEncoder: StringToStringEncoder;
+  private readonly _protocolEncoder: StringToStringEncoder;
+  private readonly _dataChannelIdentifierEncoder: NumberToNumberEncoder;
+  private readonly _stateEncoder: StringToStringEncoder;
+  private readonly _messagesSentEncoder: NumberToNumberEncoder;
+  private readonly _bytesSentEncoder: NumberToBigIntEncoder;
+  private readonly _messagesReceivedEncoder: NumberToNumberEncoder;
+  private readonly _bytesReceivedEncoder: NumberToBigIntEncoder;
 
-	private _visited = false;
-
-	public constructor(
-		public readonly dataChannelIdentifier: number
+  constructor(
+		private readonly _appDataEncoder: AppDataEncoder
 	) {
+    // Initialize encoders for each field based on their type
+    this._timestampEncoder = new NumberToNumberEncoder();
+    this._labelEncoder = new StringToStringEncoder();
+    this._protocolEncoder = new StringToStringEncoder();
+    this._dataChannelIdentifierEncoder = new NumberToNumberEncoder();
+    this._stateEncoder = new StringToStringEncoder();
+    this._messagesSentEncoder = new NumberToNumberEncoder();
+    this._bytesSentEncoder = new NumberToBigIntEncoder();
+    this._messagesReceivedEncoder = new NumberToNumberEncoder();
+    this._bytesReceivedEncoder = new NumberToBigIntEncoder();
+  }
 
-	}
+  public get visited(): boolean {
+    const result = this._visited;
+    this._visited = false;
+    return result;
+  }
 
-	public get visited(): boolean {
-		const result = this._visited;
-		this._visited = false;
-		return result;
-	}
+  public reset(): void {
+    // Reset all encoders
+    this._timestampEncoder.reset();
+    this._labelEncoder.reset();
+    this._protocolEncoder.reset();
+    this._dataChannelIdentifierEncoder.reset();
+    this._stateEncoder.reset();
+    this._messagesSentEncoder.reset();
+    this._bytesSentEncoder.reset();
+    this._messagesReceivedEncoder.reset();
+    this._bytesReceivedEncoder.reset();
+  }
 
-	public encode(sample: DataChannel): Samples_ClientSample_DataChannel {
-		this._visited = true;
-
-		const result = new Samples_ClientSample_DataChannel({
-			dataChannelIdentifier: this.dataChannelIdentifier,
-			bytesReceived: this._encodeBytesReceived(sample.bytesReceived),
-			bytesSent: this._encodeBytesSent(sample.bytesSent),
-			label: this._encodeLabel(sample.label),
-			messageReceived: this._encodeMessageReceived(sample.messageReceived),
-			messageSent: this._encodeMessageSent(sample.messageSent),
-			protocol: this._encodeProtocol(sample.protocol),
-			state: this._encodeState(sample.state),
-		});
-		return result;
-	}
-
-	private _encodeBytesReceived(bytesReceived?: number): bigint | undefined {
-		if (!bytesReceived) return;
-		if (bytesReceived === this._bytesReceived) return;
-		this._bytesReceived = bytesReceived;
-		return BigInt(this._bytesReceived);
-	}
-	
-	private _encodeBytesSent(bytesSent?: number): bigint | undefined {
-		if (!bytesSent) return;
-		if (bytesSent === this._bytesSent) return;
-		this._bytesSent = bytesSent;
-		return BigInt(this._bytesSent);
-	}
-	
-	private _encodeLabel(label?: string): string | undefined {
-		if (!label) return;
-		if (label === this._label) return;
-		this._label = label;
-		return this._label;
-	}
-	
-	private _encodeMessageReceived(messageReceived?: number): number | undefined {
-		if (!messageReceived) return;
-		if (messageReceived === this._messageReceived) return;
-		this._messageReceived = messageReceived;
-		return this._messageReceived;
-	}
-	
-	private _encodeMessageSent(messageSent?: number): number | undefined {
-		if (!messageSent) return;
-		if (messageSent === this._messageSent) return;
-		this._messageSent = messageSent;
-		return this._messageSent;
-	}
-	
-	private _encodeProtocol(protocol?: string): string | undefined {
-		if (!protocol) return;
-		if (protocol === this._protocol) return;
-		this._protocol = protocol;
-		return this._protocol;
-	}
-	
-	private _encodeState(state?: string): string | undefined {
-		if (!state) return;
-		if (state === this._state) return;
-		this._state = state;
-		return this._state;
-	}
+  public encode(sample: InputDataChannelStats): ClientSample_PeerConnectionSample_DataChannelStats {
+    this._visited = true;
+    
+    return new ClientSample_PeerConnectionSample_DataChannelStats({
+      timestamp: this._timestampEncoder.encode(sample.timestamp),
+      id: sample.id,
+      label: this._labelEncoder.encode(sample.label),
+      protocol: this._protocolEncoder.encode(sample.protocol),
+      dataChannelIdentifier: this._dataChannelIdentifierEncoder.encode(sample.dataChannelIdentifier),
+      state: this._stateEncoder.encode(sample.state),
+      messagesSent: this._messagesSentEncoder.encode(sample.messagesSent),
+      bytesSent: this._bytesSentEncoder.encode(sample.bytesSent),
+      messagesReceived: this._messagesReceivedEncoder.encode(sample.messagesReceived),
+      bytesReceived: this._bytesReceivedEncoder.encode(sample.bytesReceived),
+      appData: this._appDataEncoder.encode(sample.appData),
+    });
+  }
 }

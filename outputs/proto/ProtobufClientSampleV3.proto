@@ -1,0 +1,352 @@
+syntax = "proto3";
+
+package org.observertc.schemas.protobuf;
+
+/**
+* Schema Version: 3.0.0
+*/
+message ClientSample {
+	message PeerConnectionSample {
+		message CodecStats {
+			string id = 1;
+			string mimeType = 2;
+			int32 payloadType = 3;
+			double timestamp = 4;
+			string transportId = 5;
+			string type = 6;
+			bytes appData = 7;
+			int32 channels = 8;
+			int32 clockRate = 9;
+			string sdpFmtpLine = 10;
+		}
+		message InboundRtpStats {
+			string id = 1;
+			string kind = 2;
+			int64 ssrc = 3;
+			int64 timestamp = 4;
+			bytes trackIdentifier = 5;
+			bytes appData = 6;
+			double audioLevel = 7;
+			int64 bytesReceived = 8;
+			string codecId = 9;
+			int32 concealedSamples = 10;
+			int32 concealmentEvents = 11;
+			int32 corruptionMeasurements = 12;
+			string decoderImplementation = 13;
+			double estimatedPlayoutTimestamp = 14;
+			int64 fecBytesReceived = 15;
+			int32 fecPacketsDiscarded = 16;
+			int32 fecPacketsReceived = 17;
+			int64 fecSsrc = 18;
+			int32 firCount = 19;
+			int32 frameHeight = 20;
+			int32 frameWidth = 21;
+			int32 framesAssembledFromMultiplePackets = 22;
+			int32 framesDecoded = 23;
+			int32 framesDropped = 24;
+			double framesPerSecond = 25;
+			int32 framesReceived = 26;
+			int32 framesRendered = 27;
+			int32 freezeCount = 28;
+			int64 headerBytesReceived = 29;
+			int32 insertedSamplesForDeceleration = 30;
+			double jitter = 31;
+			double jitterBufferDelay = 32;
+			int32 jitterBufferEmittedCount = 33;
+			double jitterBufferMinimumDelay = 34;
+			double jitterBufferTargetDelay = 35;
+			int32 keyFramesDecoded = 36;
+			double lastPacketReceivedTimestamp = 37;
+			string mid = 38;
+			int32 nackCount = 39;
+			int32 packetsDiscarded = 40;
+			int32 packetsLost = 41;
+			int32 packetsReceived = 42;
+			int32 pauseCount = 43;
+			string playoutId = 44;
+			int32 pliCount = 45;
+			bool powerEfficientDecoder = 46;
+			double qpSum = 47;
+			string remoteId = 48;
+			int32 removedSamplesForAcceleration = 49;
+			int64 retransmittedBytesReceived = 50;
+			int32 retransmittedPacketsReceived = 51;
+			int64 rtxSsrc = 52;
+			int32 silentConcealedSamples = 53;
+			double totalAssemblyTime = 54;
+			double totalAudioEnergy = 55;
+			double totalCorruptionProbability = 56;
+			double totalDecodeTime = 57;
+			double totalFreezesDuration = 58;
+			double totalInterFrameDelay = 59;
+			double totalPausesDuration = 60;
+			double totalProcessingDelay = 61;
+			double totalSamplesDuration = 62;
+			int32 totalSamplesReceived = 63;
+			double totalSquaredCorruptionProbability = 64;
+			double totalSquaredInterFrameDelay = 65;
+			string transportId = 66;
+		}
+		message RemoteInboundRtpStats {
+			string id = 1;
+			string kind = 2;
+			int64 ssrc = 3;
+			double timestamp = 4;
+			bytes appData = 5;
+			string codecId = 6;
+			double fractionLost = 7;
+			double jitter = 8;
+			string localId = 9;
+			int32 packetsLost = 10;
+			int32 packetsReceived = 11;
+			double roundTripTime = 12;
+			int32 roundTripTimeMeasurements = 13;
+			double totalRoundTripTime = 14;
+			string transportId = 15;
+		}
+		message OutboundRtpStats {
+			message QualityLimitationDurations {
+				double bandwidth = 1;
+				double cpu = 2;
+				double none = 3;
+				double other = 4;
+			}
+			string id = 1;
+			string kind = 2;
+			int64 ssrc = 3;
+			double timestamp = 4;
+			bool active = 5;
+			bytes appData = 6;
+			int32 bytesSent = 7;
+			string codecId = 8;
+			string encoderImplementation = 9;
+			int32 firCount = 10;
+			int32 frameHeight = 11;
+			int32 frameWidth = 12;
+			int32 framesEncoded = 13;
+			double framesPerSecond = 14;
+			int32 framesSent = 15;
+			int32 headerBytesSent = 16;
+			int32 hugeFramesSent = 17;
+			int32 keyFramesEncoded = 18;
+			string mediaSourceId = 19;
+			string mid = 20;
+			int32 nackCount = 21;
+			int32 packetsSent = 22;
+			int32 pliCount = 23;
+			bool powerEfficientEncoder = 24;
+			double qpSum = 25;
+			QualityLimitationDurations qualityLimitationDurations = 26;
+			string qualityLimitationReason = 27;
+			int32 qualityLimitationResolutionChanges = 28;
+			string remoteId = 29;
+			int32 retransmittedBytesSent = 30;
+			int32 retransmittedPacketsSent = 31;
+			string rid = 32;
+			int32 rtxSsrc = 33;
+			string scalabilityMode = 34;
+			double targetBitrate = 35;
+			double totalEncodeTime = 36;
+			int32 totalEncodedBytesTarget = 37;
+			double totalPacketSendDelay = 38;
+			string transportId = 39;
+		}
+		message RemoteOutboundRtpStats {
+			string id = 1;
+			string kind = 2;
+			int64 ssrc = 3;
+			double timestamp = 4;
+			bytes appData = 5;
+			int64 bytesSent = 6;
+			string codecId = 7;
+			string localId = 8;
+			int32 packetsSent = 9;
+			double remoteTimestamp = 10;
+			int32 reportsSent = 11;
+			double roundTripTime = 12;
+			int32 roundTripTimeMeasurements = 13;
+			double totalRoundTripTime = 14;
+			string transportId = 15;
+		}
+		message AudioSourceStats {
+			string id = 1;
+			string kind = 2;
+			double timestamp = 3;
+			bytes trackIdentifier = 4;
+			bytes appData = 5;
+			double audioLevel = 6;
+			double echoReturnLoss = 7;
+			double echoReturnLossEnhancement = 8;
+			double totalAudioEnergy = 9;
+			double totalSamplesDuration = 10;
+		}
+		message VideoSourceStats {
+			int32 frames = 1;
+			double framesPerSecond = 2;
+			int32 height = 3;
+			string id = 4;
+			string kind = 5;
+			double timestamp = 6;
+			bytes trackIdentifier = 7;
+			int32 width = 8;
+			bytes appData = 9;
+		}
+		message AudioPlayoutStats {
+			string id = 1;
+			string kind = 2;
+			double synthesizedSamplesDuration = 3;
+			int32 synthesizedSamplesEvents = 4;
+			double timestamp = 5;
+			double totalPlayoutDelay = 6;
+			int32 totalSamplesCount = 7;
+			double totalSamplesDuration = 8;
+			bytes appData = 9;
+		}
+		message PeerConnectionTransportStats {
+			int32 dataChannelsClosed = 1;
+			int32 dataChannelsOpened = 2;
+			string id = 3;
+			double timestamp = 4;
+			bytes appData = 5;
+		}
+		message DataChannelStats {
+			int64 bytesReceived = 1;
+			int64 bytesSent = 2;
+			int32 dataChannelIdentifier = 3;
+			string id = 4;
+			string label = 5;
+			int32 messagesReceived = 6;
+			int32 messagesSent = 7;
+			string protocol = 8;
+			string state = 9;
+			double timestamp = 10;
+			bytes appData = 11;
+		}
+		message IceTransportStats {
+			int64 bytesReceived = 1;
+			int64 bytesSent = 2;
+			string dtlsCipher = 3;
+			string dtlsRole = 4;
+			string dtlsState = 5;
+			string iceLocalUsernameFragment = 6;
+			string iceRole = 7;
+			string iceState = 8;
+			string id = 9;
+			string localCertificateId = 10;
+			int32 packetsReceived = 11;
+			int32 packetsSent = 12;
+			string remoteCertificateId = 13;
+			int32 selectedCandidatePairChanges = 14;
+			string selectedCandidatePairId = 15;
+			string srtpCipher = 16;
+			double timestamp = 17;
+			string tlsVersion = 18;
+			bytes appData = 19;
+		}
+		message IceCandidateStats {
+			string candidateType = 1;
+			string foundation = 2;
+			string id = 3;
+			int32 port = 4;
+			int64 priority = 5;
+			string protocol = 6;
+			string relatedAddress = 7;
+			int32 relatedPort = 8;
+			string relayProtocol = 9;
+			string tcpType = 10;
+			double timestamp = 11;
+			string transportId = 12;
+			string url = 13;
+			string usernameFragment = 14;
+			string address = 15;
+			bytes appData = 16;
+		}
+		message IceCandidatePairStats {
+			enum IceCandidatePairStatsEnum {
+				/* For state */
+				NEW = 0;
+				INPROGRESS = 1;
+				FAILED = 2;
+				SUCCEEDED = 3;
+			}
+			double availableIncomingBitrate = 1;
+			double availableOutgoingBitrate = 2;
+			int64 bytesDiscardedOnSend = 3;
+			int64 bytesReceived = 4;
+			int64 bytesSent = 5;
+			int32 consentRequestsSent = 6;
+			double currentRoundTripTime = 7;
+			string id = 8;
+			double lastPacketReceivedTimestamp = 9;
+			double lastPacketSentTimestamp = 10;
+			string localCandidateId = 11;
+			bool nominated = 12;
+			int32 packetsDiscardedOnSend = 13;
+			int32 packetsReceived = 14;
+			int32 packetsSent = 15;
+			string remoteCandidateId = 16;
+			int32 requestsReceived = 17;
+			int32 requestsSent = 18;
+			int32 responsesReceived = 19;
+			int32 responsesSent = 20;
+			double timestamp = 21;
+			double totalRoundTripTime = 22;
+			string transportId = 23;
+			bytes appData = 24;
+			IceCandidatePairStatsEnum state = 25;
+		}
+		message CertificateStats {
+			string base64Certificate = 1;
+			string fingerprint = 2;
+			string fingerprintAlgorithm = 3;
+			string id = 4;
+			double timestamp = 5;
+			bytes appData = 6;
+			string issuerCertificateId = 7;
+		}
+		repeated AudioPlayoutStats audioPlayouts = 1;
+		repeated AudioSourceStats audioSources = 2;
+		repeated CertificateStats certificates = 3;
+		repeated CodecStats codecs = 4;
+		repeated DataChannelStats dataChannels = 5;
+		repeated IceCandidatePairStats iceCandidatePairs = 6;
+		repeated IceCandidateStats iceCandidates = 7;
+		repeated IceTransportStats iceTransports = 8;
+		repeated InboundRtpStats inboundRtps = 9;
+		repeated OutboundRtpStats outboundRtps = 10;
+		repeated PeerConnectionTransportStats peerConnectionTransports = 11;
+		repeated RemoteInboundRtpStats remoteInboundRtps = 12;
+		repeated RemoteOutboundRtpStats remoteOutboundRtps = 13;
+		repeated VideoSourceStats videoSources = 14;
+		bytes peerConnectionId = 15;
+		bytes appData = 16;
+	}
+	message ClientEvent {
+		string type = 1;
+		string payload = 2;
+		bytes peerConnectionId = 3;
+		int64 ssrc = 4;
+		int64 timestamp = 5;
+		bytes trackId = 6;
+	}
+	message ClientMetaData {
+		string type = 1;
+		string payload = 2;
+		bytes peerConnectionId = 3;
+		int64 ssrc = 4;
+		int64 timestamp = 5;
+		bytes trackId = 6;
+	}
+	message ExtensionStat {
+		string payload = 1;
+		string type = 2;
+	}
+	repeated ClientEvent clientEvents = 1;
+	repeated ClientMetaData clientMetaItems = 2;
+	repeated ExtensionStat extensionStats = 3;
+	repeated PeerConnectionSample peerConnections = 4;
+	bytes clientId = 5;
+	int64 timestamp = 6;
+	bytes appData = 7;
+	bytes callId = 8;
+}

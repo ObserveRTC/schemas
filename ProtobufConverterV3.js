@@ -110,7 +110,7 @@ export class ProtobufConverterV3 {
             return;
         }
         let protoType = undefined;
-        if (this._uuidFields.has(field.name)) {
+        if (this._uuidFields.has(field.name) || field.name === "appData") {
             protoType = "bytes";
         } else {
             protoType = this._mapPrimitive(type);

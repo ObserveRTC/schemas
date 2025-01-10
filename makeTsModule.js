@@ -88,6 +88,15 @@ function getTsType(avroType, addDoc = true) {
         tsObj,
         tsDependencies,
     }
+    
+}
+
+function getAppDataTsType() {
+    return {
+        tsType: "Record<string, unknown>",
+        tsObj: undefined,
+        tsDependencies: undefined,
+    }
 }
 
 function makeTsObj(avroSchema, addDoc = true) {
@@ -103,7 +112,7 @@ function makeTsObj(avroSchema, addDoc = true) {
         const tsTypes = [];
         for (const avroType of avroTypes) {
             if (avroType === "null") continue;
-            const { tsType, tsObj, tsDependencies } = getTsType(avroType, addDoc);
+            const { tsType, tsObj, tsDependencies } = field.name === 'appData' ? getAppDataTsType() : getTsType(avroType, addDoc);
             if (tsObj) {
                 dependencies.push(tsObj);
                 if (tsDependencies) {

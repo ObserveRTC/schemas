@@ -1,0 +1,345 @@
+syntax = "proto2";
+
+package org.observertc.schemas.protobuf;
+
+/**
+* Schema Version: 3.0.0
+*/
+message ClientSample {
+	message PeerConnectionSample {
+		message CodecStats {
+			required string id = 1;
+			required string mimeType = 2;
+			required int32 payloadType = 3;
+			required double timestamp = 4;
+			required string transportId = 5;
+			required string type = 6;
+			optional string appData = 7;
+			optional int32 channels = 8;
+			optional int32 clockRate = 9;
+			optional string sdpFmtpLine = 10;
+		}
+		message InboundRtpStats {
+			required string id = 1;
+			required string kind = 2;
+			required int64 ssrc = 3;
+			required int64 timestamp = 4;
+			required string trackIdentifier = 5;
+			optional string appData = 6;
+			optional double audioLevel = 7;
+			optional int64 bytesReceived = 8;
+			optional string codecId = 9;
+			optional int32 concealedSamples = 10;
+			optional int32 concealmentEvents = 11;
+			optional int32 corruptionMeasurements = 12;
+			optional string decoderImplementation = 13;
+			optional double estimatedPlayoutTimestamp = 14;
+			optional int64 fecBytesReceived = 15;
+			optional int32 fecPacketsDiscarded = 16;
+			optional int32 fecPacketsReceived = 17;
+			optional int64 fecSsrc = 18;
+			optional int32 firCount = 19;
+			optional int32 frameHeight = 20;
+			optional int32 frameWidth = 21;
+			optional int32 framesAssembledFromMultiplePackets = 22;
+			optional int32 framesDecoded = 23;
+			optional int32 framesDropped = 24;
+			optional double framesPerSecond = 25;
+			optional int32 framesReceived = 26;
+			optional int32 framesRendered = 27;
+			optional int32 freezeCount = 28;
+			optional int64 headerBytesReceived = 29;
+			optional int32 insertedSamplesForDeceleration = 30;
+			optional double jitter = 31;
+			optional double jitterBufferDelay = 32;
+			optional int32 jitterBufferEmittedCount = 33;
+			optional double jitterBufferMinimumDelay = 34;
+			optional double jitterBufferTargetDelay = 35;
+			optional int32 keyFramesDecoded = 36;
+			optional double lastPacketReceivedTimestamp = 37;
+			optional string mid = 38;
+			optional int32 nackCount = 39;
+			optional int32 packetsDiscarded = 40;
+			optional int32 packetsLost = 41;
+			optional int32 packetsReceived = 42;
+			optional int32 pauseCount = 43;
+			optional string playoutId = 44;
+			optional int32 pliCount = 45;
+			optional bool powerEfficientDecoder = 46;
+			optional double qpSum = 47;
+			optional string remoteId = 48;
+			optional int32 removedSamplesForAcceleration = 49;
+			optional int64 retransmittedBytesReceived = 50;
+			optional int32 retransmittedPacketsReceived = 51;
+			optional int64 rtxSsrc = 52;
+			optional int32 silentConcealedSamples = 53;
+			optional double totalAssemblyTime = 54;
+			optional double totalAudioEnergy = 55;
+			optional double totalCorruptionProbability = 56;
+			optional double totalDecodeTime = 57;
+			optional double totalFreezesDuration = 58;
+			optional double totalInterFrameDelay = 59;
+			optional double totalPausesDuration = 60;
+			optional double totalProcessingDelay = 61;
+			optional double totalSamplesDuration = 62;
+			optional int32 totalSamplesReceived = 63;
+			optional double totalSquaredCorruptionProbability = 64;
+			optional double totalSquaredInterFrameDelay = 65;
+			optional string transportId = 66;
+		}
+		message RemoteInboundRtpStats {
+			required string id = 1;
+			required string kind = 2;
+			required int64 ssrc = 3;
+			required double timestamp = 4;
+			optional string appData = 5;
+			optional string codecId = 6;
+			optional double fractionLost = 7;
+			optional double jitter = 8;
+			optional string localId = 9;
+			optional int32 packetsLost = 10;
+			optional int32 packetsReceived = 11;
+			optional double roundTripTime = 12;
+			optional int32 roundTripTimeMeasurements = 13;
+			optional double totalRoundTripTime = 14;
+			optional string transportId = 15;
+		}
+		message OutboundRtpStats {
+			message QualityLimitationDurations {
+				required double bandwidth = 1;
+				required double cpu = 2;
+				required double none = 3;
+				required double other = 4;
+			}
+			required string id = 1;
+			required string kind = 2;
+			required int64 ssrc = 3;
+			required double timestamp = 4;
+			optional bool active = 5;
+			optional string appData = 6;
+			optional int32 bytesSent = 7;
+			optional string codecId = 8;
+			optional string encoderImplementation = 9;
+			optional int32 firCount = 10;
+			optional int32 frameHeight = 11;
+			optional int32 frameWidth = 12;
+			optional int32 framesEncoded = 13;
+			optional double framesPerSecond = 14;
+			optional int32 framesSent = 15;
+			optional int32 headerBytesSent = 16;
+			optional int32 hugeFramesSent = 17;
+			optional int32 keyFramesEncoded = 18;
+			optional string mediaSourceId = 19;
+			optional string mid = 20;
+			optional int32 nackCount = 21;
+			optional int32 packetsSent = 22;
+			optional int32 pliCount = 23;
+			optional bool powerEfficientEncoder = 24;
+			optional double qpSum = 25;
+			optional QualityLimitationDurations qualityLimitationDurations = 26;
+			optional string qualityLimitationReason = 27;
+			optional int32 qualityLimitationResolutionChanges = 28;
+			optional string remoteId = 29;
+			optional int32 retransmittedBytesSent = 30;
+			optional int32 retransmittedPacketsSent = 31;
+			optional string rid = 32;
+			optional int32 rtxSsrc = 33;
+			optional string scalabilityMode = 34;
+			optional double targetBitrate = 35;
+			optional double totalEncodeTime = 36;
+			optional int32 totalEncodedBytesTarget = 37;
+			optional double totalPacketSendDelay = 38;
+			optional string transportId = 39;
+		}
+		message RemoteOutboundRtpStats {
+			required string id = 1;
+			required string kind = 2;
+			required int64 ssrc = 3;
+			required double timestamp = 4;
+			optional string appData = 5;
+			optional int64 bytesSent = 6;
+			optional string codecId = 7;
+			optional string localId = 8;
+			optional int32 packetsSent = 9;
+			optional double remoteTimestamp = 10;
+			optional int32 reportsSent = 11;
+			optional double roundTripTime = 12;
+			optional int32 roundTripTimeMeasurements = 13;
+			optional double totalRoundTripTime = 14;
+			optional string transportId = 15;
+		}
+		message AudioSourceStats {
+			required string id = 1;
+			required string kind = 2;
+			required double timestamp = 3;
+			required string trackIdentifier = 4;
+			optional string appData = 5;
+			optional double audioLevel = 6;
+			optional double echoReturnLoss = 7;
+			optional double echoReturnLossEnhancement = 8;
+			optional double totalAudioEnergy = 9;
+			optional double totalSamplesDuration = 10;
+		}
+		message VideoSourceStats {
+			required int32 frames = 1;
+			required double framesPerSecond = 2;
+			required int32 height = 3;
+			required string id = 4;
+			required string kind = 5;
+			required double timestamp = 6;
+			required string trackIdentifier = 7;
+			required int32 width = 8;
+			optional string appData = 9;
+		}
+		message AudioPlayoutStats {
+			required string id = 1;
+			required string kind = 2;
+			required double synthesizedSamplesDuration = 3;
+			required int32 synthesizedSamplesEvents = 4;
+			required double timestamp = 5;
+			required double totalPlayoutDelay = 6;
+			required int32 totalSamplesCount = 7;
+			required double totalSamplesDuration = 8;
+			optional string appData = 9;
+		}
+		message PeerConnectionTransportStats {
+			required int32 dataChannelsClosed = 1;
+			required int32 dataChannelsOpened = 2;
+			required string id = 3;
+			required double timestamp = 4;
+			optional string appData = 5;
+		}
+		message DataChannelStats {
+			required int64 bytesReceived = 1;
+			required int64 bytesSent = 2;
+			required int32 dataChannelIdentifier = 3;
+			required string id = 4;
+			required string label = 5;
+			required int32 messagesReceived = 6;
+			required int32 messagesSent = 7;
+			required string protocol = 8;
+			required string state = 9;
+			required double timestamp = 10;
+			optional string appData = 11;
+		}
+		message IceTransportStats {
+			required int64 bytesReceived = 1;
+			required int64 bytesSent = 2;
+			required string dtlsCipher = 3;
+			required string dtlsRole = 4;
+			required string dtlsState = 5;
+			required string iceLocalUsernameFragment = 6;
+			required string iceRole = 7;
+			required string iceState = 8;
+			required string id = 9;
+			required string localCertificateId = 10;
+			required int32 packetsReceived = 11;
+			required int32 packetsSent = 12;
+			required string remoteCertificateId = 13;
+			required int32 selectedCandidatePairChanges = 14;
+			required string selectedCandidatePairId = 15;
+			required string srtpCipher = 16;
+			required double timestamp = 17;
+			required string tlsVersion = 18;
+			optional string appData = 19;
+		}
+		message IceCandidateStats {
+			required string candidateType = 1;
+			required string foundation = 2;
+			required string id = 3;
+			required int32 port = 4;
+			required int64 priority = 5;
+			required string protocol = 6;
+			required string relatedAddress = 7;
+			required int32 relatedPort = 8;
+			required string relayProtocol = 9;
+			required string tcpType = 10;
+			required double timestamp = 11;
+			required string transportId = 12;
+			required string url = 13;
+			required string usernameFragment = 14;
+			optional string address = 15;
+			optional string appData = 16;
+		}
+		message IceCandidatePairStats {
+			required double availableIncomingBitrate = 1;
+			required double availableOutgoingBitrate = 2;
+			required int64 bytesDiscardedOnSend = 3;
+			required int64 bytesReceived = 4;
+			required int64 bytesSent = 5;
+			required int32 consentRequestsSent = 6;
+			required double currentRoundTripTime = 7;
+			required string id = 8;
+			required double lastPacketReceivedTimestamp = 9;
+			required double lastPacketSentTimestamp = 10;
+			required string localCandidateId = 11;
+			required bool nominated = 12;
+			required int32 packetsDiscardedOnSend = 13;
+			required int32 packetsReceived = 14;
+			required int32 packetsSent = 15;
+			required string remoteCandidateId = 16;
+			required int32 requestsReceived = 17;
+			required int32 requestsSent = 18;
+			required int32 responsesReceived = 19;
+			required int32 responsesSent = 20;
+			required double timestamp = 21;
+			required double totalRoundTripTime = 22;
+			required string transportId = 23;
+			optional string appData = 24;
+			optional string state = 25;
+		}
+		message CertificateStats {
+			required string base64Certificate = 1;
+			required string fingerprint = 2;
+			required string fingerprintAlgorithm = 3;
+			required string id = 4;
+			required double timestamp = 5;
+			optional string appData = 6;
+			optional string issuerCertificateId = 7;
+		}
+		repeated AudioPlayoutStats audioPlayouts = 1;
+		repeated AudioSourceStats audioSources = 2;
+		repeated CertificateStats certificates = 3;
+		repeated CodecStats codecs = 4;
+		repeated DataChannelStats dataChannels = 5;
+		repeated IceCandidatePairStats iceCandidatePairs = 6;
+		repeated IceCandidateStats iceCandidates = 7;
+		repeated IceTransportStats iceTransports = 8;
+		repeated InboundRtpStats inboundRtps = 9;
+		repeated OutboundRtpStats outboundRtps = 10;
+		repeated PeerConnectionTransportStats peerConnectionTransports = 11;
+		repeated RemoteInboundRtpStats remoteInboundRtps = 12;
+		repeated RemoteOutboundRtpStats remoteOutboundRtps = 13;
+		repeated VideoSourceStats videoSources = 14;
+		required string peerConnectionId = 15;
+		optional string appData = 16;
+	}
+	message ClientEvent {
+		required string type = 1;
+		optional string payload = 2;
+		optional string peerConnectionId = 3;
+		optional int64 ssrc = 4;
+		optional int64 timestamp = 5;
+		optional string trackId = 6;
+	}
+	message ClientMetaData {
+		required string type = 1;
+		optional string payload = 2;
+		optional string peerConnectionId = 3;
+		optional int64 ssrc = 4;
+		optional int64 timestamp = 5;
+		optional string trackId = 6;
+	}
+	message ExtensionStat {
+		required string payload = 1;
+		required string type = 2;
+	}
+	repeated ClientEvent clientEvents = 1;
+	repeated ClientMetaData clientMetaItems = 2;
+	repeated ExtensionStat extensionStats = 3;
+	repeated PeerConnectionSample peerConnections = 4;
+	required string clientId = 5;
+	required int64 timestamp = 6;
+	optional string appData = 7;
+	optional string callId = 8;
+}

@@ -3,9 +3,8 @@ type RtcStatsVersion = {
 }
 
 export const version: RtcStatsVersion = {
-    date: new Date("2022-09-21"),
+    date: new Date("2024-11-07"),
 }
-
 export enum StatsType {
     codec = "codec",
     inboundRtp = "inbound-rtp",
@@ -35,7 +34,7 @@ export enum StatsType {
     receiver = "receiver", 
     sctpTransport = "sctp-transport", 
     iceServer = "ice-server",
-};
+}
 
 // https://www.w3.org/TR/webrtc-stats/#summary
 // export type CodecStats = RtcCodecStats;
@@ -92,7 +91,9 @@ export interface RtcReceivedRtpStreamStats extends RtcRtpStreamStats {
     packetsReceived?: number;
     packetsLost?: number;
     jitter?: number;
-    framesDropped?: number; // only video
+    
+    // Deprecated somewhere 2023
+    // framesDropped?: number; // only video
 
     // Deprecated 2022-09-21
     // ---------------------
@@ -152,6 +153,24 @@ export interface RtcInboundRtpStreamStats extends RtcReceivedRtpStreamStats {
     framesReceived?: number; // only video
     decoderImplementation?: string;
     playoutId?: string;
+
+    framesRendered?: number; // only video 
+    framesDropped?: number; // only video 
+    pauseCount?: number; // only video 
+    totalPausesDuration?: number; // only video 
+    freezeCount?: number; // only video 
+    totalFreezesDuration?: number; // only video 
+    fecBytesReceived?: number; 
+    powerEfficientDecoder?: boolean; // only video 
+    framesAssembledFromMultiplePackets?: number; // only video 
+    totalAssemblyTime?: number; // only video 
+    retransmittedPacketsReceived?: number; 
+    retransmittedBytesReceived?: number; 
+    rtxSsrc?: number; // only video
+    fecSsrc?: number; // only video 
+    totalCorruptionProbability?: number; // only video 
+    totalSquaredCorruptionProbability?: number; // only video 
+    corruptionMeasurements?: number; // only video 
     
     // Deprecated 2022-09-21, but kept for backward compatibility
     receiverId?: string;
@@ -171,16 +190,17 @@ export interface RtcInboundRtpStreamStats extends RtcReceivedRtpStreamStats {
 
 }
 
+
 // RTCRemoteInboundRtpStreamStats (https://www.w3.org/TR/webrtc-stats/#remoteinboundrtpstats-dict*)
 export interface RtcRemoteInboundRtpStreamStats extends RtcReceivedRtpStreamStats {
-    localId?: string;
-    roundTripTime?: number;
-    totalRoundTripTime?: number;
-    fractionLost?: number;
-    roundTripTimeMeasurements?: number;
+    localId?: string; // 20241107
+    roundTripTime?: number; // 20241107
+    totalRoundTripTime?: number; // 20241107
+    fractionLost?: number; // 20241107
+    roundTripTimeMeasurements?: number; // 20241107
 
     // Deprecated 2022-09-21
-    // reportsReceived?: number;
+    // reportsReceived?: number; // Commented out as per structure above
 }
 
 // RTCSentRtpStreamStats (https://www.w3.org/TR/webrtc-stats/#sentrtpstats-dict*)
@@ -229,6 +249,11 @@ export interface RtcOutboundRTPStreamStats extends RtcSentRtpStreamStats {
     encoderImplementation?: string;
     active?: boolean;
 
+    // added 20241107
+    rtxSsrc: number;
+    powerEfficientEncoder: boolean;
+    scalabilityMode: string;
+
     // Deprecated, but due to backward compatibility it is kept here
     senderId?: string;
 
@@ -265,7 +290,8 @@ export interface RtcMediaSourceStats extends RtcStats {
     trackIdentifier: string;
     kind: RtcMediaKind;
 
-    relayedSource?: boolean;
+    // Deprecated 2024-11-07
+    // relayedSource?: boolean;
 }
 
 // RTCAudioSourceStats (https://www.w3.org/TR/webrtc-stats/#audiosourcestats-dict*)
@@ -276,9 +302,24 @@ export interface RtcAudioSourceStats extends RtcMediaHandlerStats {
     echoReturnLoss?: number; // audio only
     echoReturnLossEnhancement?: number; // audio only
 
+    /**
+     * @deprecated 2024-11-07
+     */
     droppedSamplesDuration?: number;
+
+    /**
+     * @deprecated 2024-11-07
+     */
     droppedSamplesEvents?: number;
+    
+    /**
+     * @deprecated 2024-11-07
+     */
     totalCaptureDelay?: number;
+
+    /**
+     * @deprecated 2024-11-07
+     */
     totalSamplesCaptured?: number;
 }
 
@@ -364,6 +405,7 @@ export interface RtcAudioReceiverStats extends RtcAudioHandlerStats {
 }
 
 export interface RTCAudioPlayoutStats extends RtcStats {
+    kind?: RtcMediaKind;
     synthesizedSamplesDuration?: number;
     synthesizedSamplesEvents?: number;
     totalSamplesDuration?: number;
@@ -446,6 +488,12 @@ export interface RtcIceCandidateStats extends RtcStats {
     priority?: number;
     url?: string;
     relayProtocol?: RtcRelayProtocol;
+
+    foundation?: string;
+    relatedAddress?: string;
+    relatedPort?: number;
+    usernameFragment?: string;
+    tcpType?: RTCIceTcpCandidateType;
 }
 
 export type RtcStatsIceCandidatePairState = "failed" | "cancelled" | "frozen" | "inprogress" | "succeeded" | "waiting";

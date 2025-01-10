@@ -1,0 +1,103 @@
+{
+    "name": "ClientSample",
+    "type": "record",
+    "doc": "docs",
+    "fields": [
+        {
+            "name": "callId",
+            "doc": "the unique identifier of the call or session",
+            "type": ["null", "string"],
+            "default": null
+        },
+        {
+            "name": "clientId",
+            "doc": "Unique id of the client providing samples.",
+            "type": "string"
+        },
+        {
+            "name": "appData",
+            "doc": "Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)",
+            "type": ["null", "string"],
+            "default": null
+        },
+        {
+            "name": "timestamp",
+            "doc": "The timestamp the sample is created in GMT",
+            "type": "long"
+        }, 
+        {
+            "name" : "peerConnections",
+            "doc": "Samples taken PeerConnections",
+            "type" : ["null", {
+                "type": "array",
+                "items": "@include-chunk PeerConnectionSample"
+            }],
+            "default": null
+        },
+        {
+            "name": "clientEvents",
+            "doc": "A list of additional client events.",
+            "type": ["null", {
+              "type": "array",
+              "items": {
+                "name": "ClientEvent",
+                "type": "record",
+                "fields": [
+                  {"name": "type", "doc": "The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).", "type": "string"},
+                  {"name": "payload", "doc": "The value associated with the event, if applicable.", "type": ["null", "string"], "default": null},
+                  {"name": "peerConnectionId", "doc": "The unique identifier of the peer connection for which the event was generated.", "type": ["null", "string"], "default": null},
+                  {"name": "trackId", "doc": "The identifier of the media track related to the event, if applicable.", "type": ["null", "string"], "default": null},
+                  {"name": "ssrc", "doc": "The SSRC (Synchronization Source) identifier associated with the event, if applicable.", "type": ["null", "long"], "default": null},
+                  {"name": "timestamp", "doc": "The timestamp in epoch format when the event was generated.", "type": ["null", "long"], "default": null}
+                ]
+              }
+            }],
+            "default": null
+        },
+
+        {
+            "name": "clientMetaItems",
+            "doc": "A list of additional client events.",
+            "type": ["null", {
+              "type": "array",
+              "items": {
+                "name": "ClientMetaData",
+                "type": "record",
+                "fields": [
+                  {"name": "type", "doc": "The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).", "type": "string"},
+                  {"name": "payload", "doc": "The value associated with the event, if applicable.", "type": ["null", "string"], "default": null},
+                  {"name": "peerConnectionId", "doc": "The unique identifier of the peer connection for which the event was generated.", "type": ["null", "string"], "default": null},
+                  {"name": "trackId", "doc": "The identifier of the media track related to the event, if applicable.", "type": ["null", "string"], "default": null},
+                  {"name": "ssrc", "doc": "The SSRC (Synchronization Source) identifier associated with the event, if applicable.", "type": ["null", "long"], "default": null},
+                  {"name": "timestamp", "doc": "The timestamp in epoch format when the event was generated.", "type": ["null", "long"], "default": null}
+                ]
+              }
+            }],
+            "default": null
+        },
+        {
+            "name": "extensionStats",
+            "doc": "The WebRTC app provided custom stats payload",
+            "type": ["null", {
+                "type": "array",
+                "items": {
+                    "name": "ExtensionStat",
+                    "type": "record",
+                    "fields": [
+                        {
+                            "name": "type",
+                            "type": "string",
+                            "doc": "The type of the extension stats the custom app provides"
+                        },
+                        {
+                            "name": "payload",
+                            "type": "string",
+                            "doc": "The payload of the extension stats the custom app provides"
+                        }
+                    ]
+                }
+            }],
+            "default": null
+        }
+    ]
+}
