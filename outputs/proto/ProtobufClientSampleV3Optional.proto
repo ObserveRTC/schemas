@@ -6,18 +6,22 @@ package org.observertc.schemas.protobuf;
 * Schema Version: 3.0.0
 */
 message ClientSample {
+	message ClientScore {
+		optional string remarks = 1;
+		optional int64 timestamp = 2;
+		optional int32 value = 3;
+	}
 	message PeerConnectionSample {
 		message CodecStats {
 			optional string id = 1;
 			optional string mimeType = 2;
-			optional int32 payloadType = 3;
-			optional double timestamp = 4;
-			optional string transportId = 5;
-			optional string type = 6;
-			optional bytes appData = 7;
-			optional int32 channels = 8;
-			optional int32 clockRate = 9;
-			optional string sdpFmtpLine = 10;
+			optional int64 timestamp = 3;
+			optional bytes appData = 4;
+			optional int32 channels = 5;
+			optional int32 clockRate = 6;
+			optional int32 payloadType = 7;
+			optional string sdpFmtpLine = 8;
+			optional string transportId = 9;
 		}
 		message InboundRtpStats {
 			optional string id = 1;
@@ -91,7 +95,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 ssrc = 3;
-			optional double timestamp = 4;
+			optional int64 timestamp = 4;
 			optional bytes appData = 5;
 			optional string codecId = 6;
 			optional double fractionLost = 7;
@@ -114,7 +118,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 ssrc = 3;
-			optional double timestamp = 4;
+			optional int64 timestamp = 4;
 			optional bool active = 5;
 			optional bytes appData = 6;
 			optional int32 bytesSent = 7;
@@ -155,7 +159,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 ssrc = 3;
-			optional double timestamp = 4;
+			optional int64 timestamp = 4;
 			optional bytes appData = 5;
 			optional int64 bytesSent = 6;
 			optional string codecId = 7;
@@ -168,98 +172,91 @@ message ClientSample {
 			optional double totalRoundTripTime = 14;
 			optional string transportId = 15;
 		}
-		message AudioSourceStats {
+		message MediaSourceStats {
 			optional string id = 1;
 			optional string kind = 2;
-			optional double timestamp = 3;
-			optional bytes trackIdentifier = 4;
-			optional bytes appData = 5;
-			optional double audioLevel = 6;
-			optional double echoReturnLoss = 7;
-			optional double echoReturnLossEnhancement = 8;
-			optional double totalAudioEnergy = 9;
-			optional double totalSamplesDuration = 10;
+			optional int64 timestamp = 3;
+			optional bytes appData = 4;
+			optional double audioLevel = 5;
+			optional double echoReturnLoss = 6;
+			optional double echoReturnLossEnhancement = 7;
+			optional int32 frames = 8;
+			optional double framesPerSecond = 9;
+			optional int32 height = 10;
+			optional double totalAudioEnergy = 11;
+			optional double totalSamplesDuration = 12;
+			optional bytes trackIdentifier = 13;
+			optional int32 width = 14;
 		}
-		message VideoSourceStats {
-			optional int32 frames = 1;
-			optional double framesPerSecond = 2;
-			optional int32 height = 3;
-			optional string id = 4;
-			optional string kind = 5;
-			optional double timestamp = 6;
-			optional bytes trackIdentifier = 7;
-			optional int32 width = 8;
-			optional bytes appData = 9;
-		}
-		message AudioPlayoutStats {
+		message MediaPlayoutStats {
 			optional string id = 1;
 			optional string kind = 2;
-			optional double synthesizedSamplesDuration = 3;
-			optional int32 synthesizedSamplesEvents = 4;
-			optional double timestamp = 5;
-			optional double totalPlayoutDelay = 6;
-			optional int32 totalSamplesCount = 7;
-			optional double totalSamplesDuration = 8;
-			optional bytes appData = 9;
+			optional int64 timestamp = 3;
+			optional bytes appData = 4;
+			optional double synthesizedSamplesDuration = 5;
+			optional int32 synthesizedSamplesEvents = 6;
+			optional double totalPlayoutDelay = 7;
+			optional int32 totalSamplesCount = 8;
+			optional double totalSamplesDuration = 9;
 		}
 		message PeerConnectionTransportStats {
-			optional int32 dataChannelsClosed = 1;
-			optional int32 dataChannelsOpened = 2;
-			optional string id = 3;
-			optional double timestamp = 4;
-			optional bytes appData = 5;
+			optional string id = 1;
+			optional int64 timestamp = 2;
+			optional bytes appData = 3;
+			optional int32 dataChannelsClosed = 4;
+			optional int32 dataChannelsOpened = 5;
 		}
 		message DataChannelStats {
-			optional int64 bytesReceived = 1;
-			optional int64 bytesSent = 2;
-			optional int32 dataChannelIdentifier = 3;
-			optional string id = 4;
-			optional string label = 5;
-			optional int32 messagesReceived = 6;
-			optional int32 messagesSent = 7;
-			optional string protocol = 8;
-			optional string state = 9;
-			optional double timestamp = 10;
-			optional bytes appData = 11;
+			optional string id = 1;
+			optional int64 timestamp = 2;
+			optional bytes appData = 3;
+			optional int64 bytesReceived = 4;
+			optional int64 bytesSent = 5;
+			optional int32 dataChannelIdentifier = 6;
+			optional string label = 7;
+			optional int32 messagesReceived = 8;
+			optional int32 messagesSent = 9;
+			optional string protocol = 10;
+			optional string state = 11;
 		}
 		message IceTransportStats {
-			optional int64 bytesReceived = 1;
-			optional int64 bytesSent = 2;
-			optional string dtlsCipher = 3;
-			optional string dtlsRole = 4;
-			optional string dtlsState = 5;
-			optional string iceLocalUsernameFragment = 6;
-			optional string iceRole = 7;
-			optional string iceState = 8;
-			optional string id = 9;
-			optional string localCertificateId = 10;
-			optional int32 packetsReceived = 11;
-			optional int32 packetsSent = 12;
-			optional string remoteCertificateId = 13;
-			optional int32 selectedCandidatePairChanges = 14;
-			optional string selectedCandidatePairId = 15;
-			optional string srtpCipher = 16;
-			optional double timestamp = 17;
-			optional string tlsVersion = 18;
-			optional bytes appData = 19;
+			optional string id = 1;
+			optional int64 timestamp = 2;
+			optional bytes appData = 3;
+			optional int64 bytesReceived = 4;
+			optional int64 bytesSent = 5;
+			optional string dtlsCipher = 6;
+			optional string dtlsRole = 7;
+			optional string dtlsState = 8;
+			optional string iceLocalUsernameFragment = 9;
+			optional string iceRole = 10;
+			optional string iceState = 11;
+			optional string localCertificateId = 12;
+			optional int32 packetsReceived = 13;
+			optional int32 packetsSent = 14;
+			optional string remoteCertificateId = 15;
+			optional int32 selectedCandidatePairChanges = 16;
+			optional string selectedCandidatePairId = 17;
+			optional string srtpCipher = 18;
+			optional string tlsVersion = 19;
 		}
 		message IceCandidateStats {
-			optional string candidateType = 1;
-			optional string foundation = 2;
-			optional string id = 3;
-			optional int32 port = 4;
-			optional int64 priority = 5;
-			optional string protocol = 6;
-			optional string relatedAddress = 7;
-			optional int32 relatedPort = 8;
-			optional string relayProtocol = 9;
-			optional string tcpType = 10;
-			optional double timestamp = 11;
-			optional string transportId = 12;
-			optional string url = 13;
-			optional string usernameFragment = 14;
-			optional string address = 15;
-			optional bytes appData = 16;
+			optional string id = 1;
+			optional int64 timestamp = 2;
+			optional string address = 3;
+			optional bytes appData = 4;
+			optional string candidateType = 5;
+			optional string foundation = 6;
+			optional int32 port = 7;
+			optional int64 priority = 8;
+			optional string protocol = 9;
+			optional string relatedAddress = 10;
+			optional int32 relatedPort = 11;
+			optional string relayProtocol = 12;
+			optional string tcpType = 13;
+			optional string transportId = 14;
+			optional string url = 15;
+			optional string usernameFragment = 16;
 		}
 		message IceCandidatePairStats {
 			enum IceCandidatePairStatsEnum {
@@ -269,65 +266,66 @@ message ClientSample {
 				FAILED = 2;
 				SUCCEEDED = 3;
 			}
-			optional double availableIncomingBitrate = 1;
-			optional double availableOutgoingBitrate = 2;
-			optional int64 bytesDiscardedOnSend = 3;
-			optional int64 bytesReceived = 4;
-			optional int64 bytesSent = 5;
-			optional int32 consentRequestsSent = 6;
-			optional double currentRoundTripTime = 7;
-			optional string id = 8;
-			optional double lastPacketReceivedTimestamp = 9;
-			optional double lastPacketSentTimestamp = 10;
-			optional string localCandidateId = 11;
-			optional bool nominated = 12;
-			optional int32 packetsDiscardedOnSend = 13;
-			optional int32 packetsReceived = 14;
-			optional int32 packetsSent = 15;
-			optional string remoteCandidateId = 16;
-			optional int32 requestsReceived = 17;
-			optional int32 requestsSent = 18;
-			optional int32 responsesReceived = 19;
-			optional int32 responsesSent = 20;
-			optional double timestamp = 21;
-			optional double totalRoundTripTime = 22;
-			optional string transportId = 23;
-			optional bytes appData = 24;
-			optional IceCandidatePairStatsEnum state = 25;
+			optional string id = 1;
+			optional int64 timestamp = 2;
+			optional bytes appData = 3;
+			optional double availableIncomingBitrate = 4;
+			optional double availableOutgoingBitrate = 5;
+			optional int64 bytesDiscardedOnSend = 6;
+			optional int64 bytesReceived = 7;
+			optional int64 bytesSent = 8;
+			optional int32 consentRequestsSent = 9;
+			optional double currentRoundTripTime = 10;
+			optional double lastPacketReceivedTimestamp = 11;
+			optional double lastPacketSentTimestamp = 12;
+			optional string localCandidateId = 13;
+			optional bool nominated = 14;
+			optional int32 packetsDiscardedOnSend = 15;
+			optional int32 packetsReceived = 16;
+			optional int32 packetsSent = 17;
+			optional string remoteCandidateId = 18;
+			optional int32 requestsReceived = 19;
+			optional int32 requestsSent = 20;
+			optional int32 responsesReceived = 21;
+			optional int32 responsesSent = 22;
+			optional IceCandidatePairStatsEnum state = 23;
+			optional double totalRoundTripTime = 24;
+			optional string transportId = 25;
 		}
 		message CertificateStats {
-			optional string base64Certificate = 1;
-			optional string fingerprint = 2;
-			optional string fingerprintAlgorithm = 3;
-			optional string id = 4;
-			optional double timestamp = 5;
-			optional bytes appData = 6;
+			optional string id = 1;
+			optional int64 timestamp = 2;
+			optional bytes appData = 3;
+			optional string base64Certificate = 4;
+			optional string fingerprint = 5;
+			optional string fingerprintAlgorithm = 6;
 			optional string issuerCertificateId = 7;
 		}
-		repeated AudioPlayoutStats audioPlayouts = 1;
-		repeated AudioSourceStats audioSources = 2;
-		repeated CertificateStats certificates = 3;
-		repeated CodecStats codecs = 4;
-		repeated DataChannelStats dataChannels = 5;
-		repeated IceCandidatePairStats iceCandidatePairs = 6;
-		repeated IceCandidateStats iceCandidates = 7;
-		repeated IceTransportStats iceTransports = 8;
-		repeated InboundRtpStats inboundRtps = 9;
+		repeated CertificateStats certificates = 1;
+		repeated CodecStats codecs = 2;
+		repeated DataChannelStats dataChannels = 3;
+		repeated IceCandidatePairStats iceCandidatePairs = 4;
+		repeated IceCandidateStats iceCandidates = 5;
+		repeated IceTransportStats iceTransports = 6;
+		repeated InboundRtpStats inboundRtps = 7;
+		repeated MediaPlayoutStats mediaPlayouts = 8;
+		repeated MediaSourceStats mediaSources = 9;
 		repeated OutboundRtpStats outboundRtps = 10;
 		repeated PeerConnectionTransportStats peerConnectionTransports = 11;
 		repeated RemoteInboundRtpStats remoteInboundRtps = 12;
 		repeated RemoteOutboundRtpStats remoteOutboundRtps = 13;
-		repeated VideoSourceStats videoSources = 14;
-		optional bytes peerConnectionId = 15;
-		optional bytes appData = 16;
+		optional bytes peerConnectionId = 14;
+		optional bytes appData = 15;
 	}
 	message ClientEvent {
 		optional string type = 1;
 		optional string payload = 2;
-		optional bytes peerConnectionId = 3;
-		optional int64 ssrc = 4;
-		optional int64 timestamp = 5;
-		optional bytes trackId = 6;
+		optional int64 timestamp = 3;
+	}
+	message ClientIssue {
+		optional string type = 1;
+		optional string payload = 2;
+		optional int64 timestamp = 3;
 	}
 	message ClientMetaData {
 		optional string type = 1;
@@ -338,15 +336,17 @@ message ClientSample {
 		optional bytes trackId = 6;
 	}
 	message ExtensionStat {
-		optional string payload = 1;
-		optional string type = 2;
+		optional string type = 1;
+		optional string payload = 2;
 	}
 	repeated ClientEvent clientEvents = 1;
-	repeated ClientMetaData clientMetaItems = 2;
-	repeated ExtensionStat extensionStats = 3;
-	repeated PeerConnectionSample peerConnections = 4;
-	optional bytes clientId = 5;
-	optional int64 timestamp = 6;
-	optional bytes appData = 7;
-	optional bytes callId = 8;
+	repeated ClientIssue clientIssues = 2;
+	repeated ClientMetaData clientMetaItems = 3;
+	repeated ExtensionStat extensionStats = 4;
+	repeated PeerConnectionSample peerConnections = 5;
+	repeated ClientScore scores = 6;
+	optional int64 timestamp = 7;
+	optional bytes appData = 8;
+	optional bytes callId = 9;
+	optional bytes clientId = 10;
 }

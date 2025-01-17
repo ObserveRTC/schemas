@@ -19,39 +19,49 @@ export class ClientSample extends Message<ClientSample> {
   clientEvents: ClientSample_ClientEvent[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.ClientMetaData clientMetaItems = 2;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.ClientIssue clientIssues = 2;
+   */
+  clientIssues: ClientSample_ClientIssue[] = [];
+
+  /**
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.ClientMetaData clientMetaItems = 3;
    */
   clientMetaItems: ClientSample_ClientMetaData[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.ExtensionStat extensionStats = 3;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.ExtensionStat extensionStats = 4;
    */
   extensionStats: ClientSample_ExtensionStat[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample peerConnections = 4;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample peerConnections = 5;
    */
   peerConnections: ClientSample_PeerConnectionSample[] = [];
 
   /**
-   * @generated from field: optional bytes clientId = 5;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.ClientScore scores = 6;
    */
-  clientId?: Uint8Array;
+  scores: ClientSample_ClientScore[] = [];
 
   /**
-   * @generated from field: optional int64 timestamp = 6;
+   * @generated from field: optional int64 timestamp = 7;
    */
   timestamp?: bigint;
 
   /**
-   * @generated from field: optional bytes appData = 7;
+   * @generated from field: optional bytes appData = 8;
    */
   appData?: Uint8Array;
 
   /**
-   * @generated from field: optional bytes callId = 8;
+   * @generated from field: optional bytes callId = 9;
    */
   callId?: Uint8Array;
+
+  /**
+   * @generated from field: optional bytes clientId = 10;
+   */
+  clientId?: Uint8Array;
 
   constructor(data?: PartialMessage<ClientSample>) {
     super();
@@ -62,13 +72,15 @@ export class ClientSample extends Message<ClientSample> {
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "clientEvents", kind: "message", T: ClientSample_ClientEvent, repeated: true },
-    { no: 2, name: "clientMetaItems", kind: "message", T: ClientSample_ClientMetaData, repeated: true },
-    { no: 3, name: "extensionStats", kind: "message", T: ClientSample_ExtensionStat, repeated: true },
-    { no: 4, name: "peerConnections", kind: "message", T: ClientSample_PeerConnectionSample, repeated: true },
-    { no: 5, name: "clientId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 6, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 7, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 8, name: "callId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 2, name: "clientIssues", kind: "message", T: ClientSample_ClientIssue, repeated: true },
+    { no: 3, name: "clientMetaItems", kind: "message", T: ClientSample_ClientMetaData, repeated: true },
+    { no: 4, name: "extensionStats", kind: "message", T: ClientSample_ExtensionStat, repeated: true },
+    { no: 5, name: "peerConnections", kind: "message", T: ClientSample_PeerConnectionSample, repeated: true },
+    { no: 6, name: "scores", kind: "message", T: ClientSample_ClientScore, repeated: true },
+    { no: 7, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 8, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 9, name: "callId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 10, name: "clientId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample {
@@ -89,53 +101,102 @@ export class ClientSample extends Message<ClientSample> {
 }
 
 /**
+ * @generated from message org.observertc.schemas.protobuf.ClientSample.ClientScore
+ */
+export class ClientSample_ClientScore extends Message<ClientSample_ClientScore> {
+  /**
+   * @generated from field: optional string remarks = 1;
+   */
+  remarks?: string;
+
+  /**
+   * @generated from field: optional int64 timestamp = 2;
+   */
+  timestamp?: bigint;
+
+  /**
+   * @generated from field: optional int32 value = 3;
+   */
+  value?: number;
+
+  constructor(data?: PartialMessage<ClientSample_ClientScore>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.ClientScore";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "remarks", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "value", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_ClientScore {
+    return new ClientSample_ClientScore().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClientSample_ClientScore {
+    return new ClientSample_ClientScore().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClientSample_ClientScore {
+    return new ClientSample_ClientScore().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ClientSample_ClientScore | PlainMessage<ClientSample_ClientScore> | undefined, b: ClientSample_ClientScore | PlainMessage<ClientSample_ClientScore> | undefined): boolean {
+    return proto3.util.equals(ClientSample_ClientScore, a, b);
+  }
+}
+
+/**
  * @generated from message org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample
  */
 export class ClientSample_PeerConnectionSample extends Message<ClientSample_PeerConnectionSample> {
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.AudioPlayoutStats audioPlayouts = 1;
-   */
-  audioPlayouts: ClientSample_PeerConnectionSample_AudioPlayoutStats[] = [];
-
-  /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.AudioSourceStats audioSources = 2;
-   */
-  audioSources: ClientSample_PeerConnectionSample_AudioSourceStats[] = [];
-
-  /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.CertificateStats certificates = 3;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.CertificateStats certificates = 1;
    */
   certificates: ClientSample_PeerConnectionSample_CertificateStats[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.CodecStats codecs = 4;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.CodecStats codecs = 2;
    */
   codecs: ClientSample_PeerConnectionSample_CodecStats[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.DataChannelStats dataChannels = 5;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.DataChannelStats dataChannels = 3;
    */
   dataChannels: ClientSample_PeerConnectionSample_DataChannelStats[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidatePairStats iceCandidatePairs = 6;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidatePairStats iceCandidatePairs = 4;
    */
   iceCandidatePairs: ClientSample_PeerConnectionSample_IceCandidatePairStats[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidateStats iceCandidates = 7;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidateStats iceCandidates = 5;
    */
   iceCandidates: ClientSample_PeerConnectionSample_IceCandidateStats[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceTransportStats iceTransports = 8;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceTransportStats iceTransports = 6;
    */
   iceTransports: ClientSample_PeerConnectionSample_IceTransportStats[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.InboundRtpStats inboundRtps = 9;
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.InboundRtpStats inboundRtps = 7;
    */
   inboundRtps: ClientSample_PeerConnectionSample_InboundRtpStats[] = [];
+
+  /**
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.MediaPlayoutStats mediaPlayouts = 8;
+   */
+  mediaPlayouts: ClientSample_PeerConnectionSample_MediaPlayoutStats[] = [];
+
+  /**
+   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.MediaSourceStats mediaSources = 9;
+   */
+  mediaSources: ClientSample_PeerConnectionSample_MediaSourceStats[] = [];
 
   /**
    * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.OutboundRtpStats outboundRtps = 10;
@@ -158,17 +219,12 @@ export class ClientSample_PeerConnectionSample extends Message<ClientSample_Peer
   remoteOutboundRtps: ClientSample_PeerConnectionSample_RemoteOutboundRtpStats[] = [];
 
   /**
-   * @generated from field: repeated org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.VideoSourceStats videoSources = 14;
-   */
-  videoSources: ClientSample_PeerConnectionSample_VideoSourceStats[] = [];
-
-  /**
-   * @generated from field: optional bytes peerConnectionId = 15;
+   * @generated from field: optional bytes peerConnectionId = 14;
    */
   peerConnectionId?: Uint8Array;
 
   /**
-   * @generated from field: optional bytes appData = 16;
+   * @generated from field: optional bytes appData = 15;
    */
   appData?: Uint8Array;
 
@@ -180,22 +236,21 @@ export class ClientSample_PeerConnectionSample extends Message<ClientSample_Peer
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "audioPlayouts", kind: "message", T: ClientSample_PeerConnectionSample_AudioPlayoutStats, repeated: true },
-    { no: 2, name: "audioSources", kind: "message", T: ClientSample_PeerConnectionSample_AudioSourceStats, repeated: true },
-    { no: 3, name: "certificates", kind: "message", T: ClientSample_PeerConnectionSample_CertificateStats, repeated: true },
-    { no: 4, name: "codecs", kind: "message", T: ClientSample_PeerConnectionSample_CodecStats, repeated: true },
-    { no: 5, name: "dataChannels", kind: "message", T: ClientSample_PeerConnectionSample_DataChannelStats, repeated: true },
-    { no: 6, name: "iceCandidatePairs", kind: "message", T: ClientSample_PeerConnectionSample_IceCandidatePairStats, repeated: true },
-    { no: 7, name: "iceCandidates", kind: "message", T: ClientSample_PeerConnectionSample_IceCandidateStats, repeated: true },
-    { no: 8, name: "iceTransports", kind: "message", T: ClientSample_PeerConnectionSample_IceTransportStats, repeated: true },
-    { no: 9, name: "inboundRtps", kind: "message", T: ClientSample_PeerConnectionSample_InboundRtpStats, repeated: true },
+    { no: 1, name: "certificates", kind: "message", T: ClientSample_PeerConnectionSample_CertificateStats, repeated: true },
+    { no: 2, name: "codecs", kind: "message", T: ClientSample_PeerConnectionSample_CodecStats, repeated: true },
+    { no: 3, name: "dataChannels", kind: "message", T: ClientSample_PeerConnectionSample_DataChannelStats, repeated: true },
+    { no: 4, name: "iceCandidatePairs", kind: "message", T: ClientSample_PeerConnectionSample_IceCandidatePairStats, repeated: true },
+    { no: 5, name: "iceCandidates", kind: "message", T: ClientSample_PeerConnectionSample_IceCandidateStats, repeated: true },
+    { no: 6, name: "iceTransports", kind: "message", T: ClientSample_PeerConnectionSample_IceTransportStats, repeated: true },
+    { no: 7, name: "inboundRtps", kind: "message", T: ClientSample_PeerConnectionSample_InboundRtpStats, repeated: true },
+    { no: 8, name: "mediaPlayouts", kind: "message", T: ClientSample_PeerConnectionSample_MediaPlayoutStats, repeated: true },
+    { no: 9, name: "mediaSources", kind: "message", T: ClientSample_PeerConnectionSample_MediaSourceStats, repeated: true },
     { no: 10, name: "outboundRtps", kind: "message", T: ClientSample_PeerConnectionSample_OutboundRtpStats, repeated: true },
     { no: 11, name: "peerConnectionTransports", kind: "message", T: ClientSample_PeerConnectionSample_PeerConnectionTransportStats, repeated: true },
     { no: 12, name: "remoteInboundRtps", kind: "message", T: ClientSample_PeerConnectionSample_RemoteInboundRtpStats, repeated: true },
     { no: 13, name: "remoteOutboundRtps", kind: "message", T: ClientSample_PeerConnectionSample_RemoteOutboundRtpStats, repeated: true },
-    { no: 14, name: "videoSources", kind: "message", T: ClientSample_PeerConnectionSample_VideoSourceStats, repeated: true },
-    { no: 15, name: "peerConnectionId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 16, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 14, name: "peerConnectionId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 15, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample {
@@ -230,44 +285,39 @@ export class ClientSample_PeerConnectionSample_CodecStats extends Message<Client
   mimeType?: string;
 
   /**
-   * @generated from field: optional int32 payloadType = 3;
+   * @generated from field: optional int64 timestamp = 3;
    */
-  payloadType?: number;
+  timestamp?: bigint;
 
   /**
-   * @generated from field: optional double timestamp = 4;
-   */
-  timestamp?: number;
-
-  /**
-   * @generated from field: optional string transportId = 5;
-   */
-  transportId?: string;
-
-  /**
-   * @generated from field: optional string type = 6;
-   */
-  type?: string;
-
-  /**
-   * @generated from field: optional bytes appData = 7;
+   * @generated from field: optional bytes appData = 4;
    */
   appData?: Uint8Array;
 
   /**
-   * @generated from field: optional int32 channels = 8;
+   * @generated from field: optional int32 channels = 5;
    */
   channels?: number;
 
   /**
-   * @generated from field: optional int32 clockRate = 9;
+   * @generated from field: optional int32 clockRate = 6;
    */
   clockRate?: number;
 
   /**
-   * @generated from field: optional string sdpFmtpLine = 10;
+   * @generated from field: optional int32 payloadType = 7;
+   */
+  payloadType?: number;
+
+  /**
+   * @generated from field: optional string sdpFmtpLine = 8;
    */
   sdpFmtpLine?: string;
+
+  /**
+   * @generated from field: optional string transportId = 9;
+   */
+  transportId?: string;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_CodecStats>) {
     super();
@@ -279,14 +329,13 @@ export class ClientSample_PeerConnectionSample_CodecStats extends Message<Client
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "mimeType", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "payloadType", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 5, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 6, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 7, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 8, name: "channels", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 9, name: "clockRate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 10, name: "sdpFmtpLine", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 4, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 5, name: "channels", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 6, name: "clockRate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 7, name: "payloadType", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 8, name: "sdpFmtpLine", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 9, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_CodecStats {
@@ -753,9 +802,9 @@ export class ClientSample_PeerConnectionSample_RemoteInboundRtpStats extends Mes
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional double timestamp = 4;
+   * @generated from field: optional int64 timestamp = 4;
    */
-  timestamp?: number;
+  timestamp?: bigint;
 
   /**
    * @generated from field: optional bytes appData = 5;
@@ -823,7 +872,7 @@ export class ClientSample_PeerConnectionSample_RemoteInboundRtpStats extends Mes
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 4, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 5, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 6, name: "codecId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 7, name: "fractionLost", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -874,9 +923,9 @@ export class ClientSample_PeerConnectionSample_OutboundRtpStats extends Message<
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional double timestamp = 4;
+   * @generated from field: optional int64 timestamp = 4;
    */
-  timestamp?: number;
+  timestamp?: bigint;
 
   /**
    * @generated from field: optional bool active = 5;
@@ -1064,7 +1113,7 @@ export class ClientSample_PeerConnectionSample_OutboundRtpStats extends Message<
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 4, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 5, name: "active", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
     { no: 6, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 7, name: "bytesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1194,9 +1243,9 @@ export class ClientSample_PeerConnectionSample_RemoteOutboundRtpStats extends Me
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional double timestamp = 4;
+   * @generated from field: optional int64 timestamp = 4;
    */
-  timestamp?: number;
+  timestamp?: bigint;
 
   /**
    * @generated from field: optional bytes appData = 5;
@@ -1264,7 +1313,7 @@ export class ClientSample_PeerConnectionSample_RemoteOutboundRtpStats extends Me
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 4, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 5, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 6, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 7, name: "codecId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -1296,9 +1345,9 @@ export class ClientSample_PeerConnectionSample_RemoteOutboundRtpStats extends Me
 }
 
 /**
- * @generated from message org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.AudioSourceStats
+ * @generated from message org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.MediaSourceStats
  */
-export class ClientSample_PeerConnectionSample_AudioSourceStats extends Message<ClientSample_PeerConnectionSample_AudioSourceStats> {
+export class ClientSample_PeerConnectionSample_MediaSourceStats extends Message<ClientSample_PeerConnectionSample_MediaSourceStats> {
   /**
    * @generated from field: optional string id = 1;
    */
@@ -1310,171 +1359,110 @@ export class ClientSample_PeerConnectionSample_AudioSourceStats extends Message<
   kind?: string;
 
   /**
-   * @generated from field: optional double timestamp = 3;
+   * @generated from field: optional int64 timestamp = 3;
    */
-  timestamp?: number;
+  timestamp?: bigint;
 
   /**
-   * @generated from field: optional bytes trackIdentifier = 4;
-   */
-  trackIdentifier?: Uint8Array;
-
-  /**
-   * @generated from field: optional bytes appData = 5;
+   * @generated from field: optional bytes appData = 4;
    */
   appData?: Uint8Array;
 
   /**
-   * @generated from field: optional double audioLevel = 6;
+   * @generated from field: optional double audioLevel = 5;
    */
   audioLevel?: number;
 
   /**
-   * @generated from field: optional double echoReturnLoss = 7;
+   * @generated from field: optional double echoReturnLoss = 6;
    */
   echoReturnLoss?: number;
 
   /**
-   * @generated from field: optional double echoReturnLossEnhancement = 8;
+   * @generated from field: optional double echoReturnLossEnhancement = 7;
    */
   echoReturnLossEnhancement?: number;
 
   /**
-   * @generated from field: optional double totalAudioEnergy = 9;
-   */
-  totalAudioEnergy?: number;
-
-  /**
-   * @generated from field: optional double totalSamplesDuration = 10;
-   */
-  totalSamplesDuration?: number;
-
-  constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_AudioSourceStats>) {
-    super();
-    proto3.util.initPartial(data, this);
-  }
-
-  static readonly runtime = proto3;
-  static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.AudioSourceStats";
-  static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 4, name: "trackIdentifier", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 5, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 6, name: "audioLevel", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 7, name: "echoReturnLoss", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 8, name: "echoReturnLossEnhancement", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 9, name: "totalAudioEnergy", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 10, name: "totalSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-  ]);
-
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_AudioSourceStats {
-    return new ClientSample_PeerConnectionSample_AudioSourceStats().fromBinary(bytes, options);
-  }
-
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_AudioSourceStats {
-    return new ClientSample_PeerConnectionSample_AudioSourceStats().fromJson(jsonValue, options);
-  }
-
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_AudioSourceStats {
-    return new ClientSample_PeerConnectionSample_AudioSourceStats().fromJsonString(jsonString, options);
-  }
-
-  static equals(a: ClientSample_PeerConnectionSample_AudioSourceStats | PlainMessage<ClientSample_PeerConnectionSample_AudioSourceStats> | undefined, b: ClientSample_PeerConnectionSample_AudioSourceStats | PlainMessage<ClientSample_PeerConnectionSample_AudioSourceStats> | undefined): boolean {
-    return proto3.util.equals(ClientSample_PeerConnectionSample_AudioSourceStats, a, b);
-  }
-}
-
-/**
- * @generated from message org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.VideoSourceStats
- */
-export class ClientSample_PeerConnectionSample_VideoSourceStats extends Message<ClientSample_PeerConnectionSample_VideoSourceStats> {
-  /**
-   * @generated from field: optional int32 frames = 1;
+   * @generated from field: optional int32 frames = 8;
    */
   frames?: number;
 
   /**
-   * @generated from field: optional double framesPerSecond = 2;
+   * @generated from field: optional double framesPerSecond = 9;
    */
   framesPerSecond?: number;
 
   /**
-   * @generated from field: optional int32 height = 3;
+   * @generated from field: optional int32 height = 10;
    */
   height?: number;
 
   /**
-   * @generated from field: optional string id = 4;
+   * @generated from field: optional double totalAudioEnergy = 11;
    */
-  id?: string;
+  totalAudioEnergy?: number;
 
   /**
-   * @generated from field: optional string kind = 5;
+   * @generated from field: optional double totalSamplesDuration = 12;
    */
-  kind?: string;
+  totalSamplesDuration?: number;
 
   /**
-   * @generated from field: optional double timestamp = 6;
-   */
-  timestamp?: number;
-
-  /**
-   * @generated from field: optional bytes trackIdentifier = 7;
+   * @generated from field: optional bytes trackIdentifier = 13;
    */
   trackIdentifier?: Uint8Array;
 
   /**
-   * @generated from field: optional int32 width = 8;
+   * @generated from field: optional int32 width = 14;
    */
   width?: number;
 
-  /**
-   * @generated from field: optional bytes appData = 9;
-   */
-  appData?: Uint8Array;
-
-  constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_VideoSourceStats>) {
+  constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_MediaSourceStats>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime = proto3;
-  static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.VideoSourceStats";
+  static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.MediaSourceStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "frames", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 2, name: "framesPerSecond", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 3, name: "height", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 4, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 5, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 6, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 7, name: "trackIdentifier", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 8, name: "width", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 9, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 4, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 5, name: "audioLevel", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 6, name: "echoReturnLoss", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 7, name: "echoReturnLossEnhancement", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 8, name: "frames", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 9, name: "framesPerSecond", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 10, name: "height", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 11, name: "totalAudioEnergy", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 12, name: "totalSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 13, name: "trackIdentifier", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 14, name: "width", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_VideoSourceStats {
-    return new ClientSample_PeerConnectionSample_VideoSourceStats().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_MediaSourceStats {
+    return new ClientSample_PeerConnectionSample_MediaSourceStats().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_VideoSourceStats {
-    return new ClientSample_PeerConnectionSample_VideoSourceStats().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_MediaSourceStats {
+    return new ClientSample_PeerConnectionSample_MediaSourceStats().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_VideoSourceStats {
-    return new ClientSample_PeerConnectionSample_VideoSourceStats().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_MediaSourceStats {
+    return new ClientSample_PeerConnectionSample_MediaSourceStats().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ClientSample_PeerConnectionSample_VideoSourceStats | PlainMessage<ClientSample_PeerConnectionSample_VideoSourceStats> | undefined, b: ClientSample_PeerConnectionSample_VideoSourceStats | PlainMessage<ClientSample_PeerConnectionSample_VideoSourceStats> | undefined): boolean {
-    return proto3.util.equals(ClientSample_PeerConnectionSample_VideoSourceStats, a, b);
+  static equals(a: ClientSample_PeerConnectionSample_MediaSourceStats | PlainMessage<ClientSample_PeerConnectionSample_MediaSourceStats> | undefined, b: ClientSample_PeerConnectionSample_MediaSourceStats | PlainMessage<ClientSample_PeerConnectionSample_MediaSourceStats> | undefined): boolean {
+    return proto3.util.equals(ClientSample_PeerConnectionSample_MediaSourceStats, a, b);
   }
 }
 
 /**
- * @generated from message org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.AudioPlayoutStats
+ * @generated from message org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.MediaPlayoutStats
  */
-export class ClientSample_PeerConnectionSample_AudioPlayoutStats extends Message<ClientSample_PeerConnectionSample_AudioPlayoutStats> {
+export class ClientSample_PeerConnectionSample_MediaPlayoutStats extends Message<ClientSample_PeerConnectionSample_MediaPlayoutStats> {
   /**
    * @generated from field: optional string id = 1;
    */
@@ -1486,73 +1474,73 @@ export class ClientSample_PeerConnectionSample_AudioPlayoutStats extends Message
   kind?: string;
 
   /**
-   * @generated from field: optional double synthesizedSamplesDuration = 3;
+   * @generated from field: optional int64 timestamp = 3;
+   */
+  timestamp?: bigint;
+
+  /**
+   * @generated from field: optional bytes appData = 4;
+   */
+  appData?: Uint8Array;
+
+  /**
+   * @generated from field: optional double synthesizedSamplesDuration = 5;
    */
   synthesizedSamplesDuration?: number;
 
   /**
-   * @generated from field: optional int32 synthesizedSamplesEvents = 4;
+   * @generated from field: optional int32 synthesizedSamplesEvents = 6;
    */
   synthesizedSamplesEvents?: number;
 
   /**
-   * @generated from field: optional double timestamp = 5;
-   */
-  timestamp?: number;
-
-  /**
-   * @generated from field: optional double totalPlayoutDelay = 6;
+   * @generated from field: optional double totalPlayoutDelay = 7;
    */
   totalPlayoutDelay?: number;
 
   /**
-   * @generated from field: optional int32 totalSamplesCount = 7;
+   * @generated from field: optional int32 totalSamplesCount = 8;
    */
   totalSamplesCount?: number;
 
   /**
-   * @generated from field: optional double totalSamplesDuration = 8;
+   * @generated from field: optional double totalSamplesDuration = 9;
    */
   totalSamplesDuration?: number;
 
-  /**
-   * @generated from field: optional bytes appData = 9;
-   */
-  appData?: Uint8Array;
-
-  constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_AudioPlayoutStats>) {
+  constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_MediaPlayoutStats>) {
     super();
     proto3.util.initPartial(data, this);
   }
 
   static readonly runtime = proto3;
-  static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.AudioPlayoutStats";
+  static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.MediaPlayoutStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "synthesizedSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 4, name: "synthesizedSamplesEvents", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 5, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 6, name: "totalPlayoutDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 7, name: "totalSamplesCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 8, name: "totalSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 9, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 4, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 5, name: "synthesizedSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 6, name: "synthesizedSamplesEvents", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 7, name: "totalPlayoutDelay", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 8, name: "totalSamplesCount", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 9, name: "totalSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
   ]);
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_AudioPlayoutStats {
-    return new ClientSample_PeerConnectionSample_AudioPlayoutStats().fromBinary(bytes, options);
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_MediaPlayoutStats {
+    return new ClientSample_PeerConnectionSample_MediaPlayoutStats().fromBinary(bytes, options);
   }
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_AudioPlayoutStats {
-    return new ClientSample_PeerConnectionSample_AudioPlayoutStats().fromJson(jsonValue, options);
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_MediaPlayoutStats {
+    return new ClientSample_PeerConnectionSample_MediaPlayoutStats().fromJson(jsonValue, options);
   }
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_AudioPlayoutStats {
-    return new ClientSample_PeerConnectionSample_AudioPlayoutStats().fromJsonString(jsonString, options);
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClientSample_PeerConnectionSample_MediaPlayoutStats {
+    return new ClientSample_PeerConnectionSample_MediaPlayoutStats().fromJsonString(jsonString, options);
   }
 
-  static equals(a: ClientSample_PeerConnectionSample_AudioPlayoutStats | PlainMessage<ClientSample_PeerConnectionSample_AudioPlayoutStats> | undefined, b: ClientSample_PeerConnectionSample_AudioPlayoutStats | PlainMessage<ClientSample_PeerConnectionSample_AudioPlayoutStats> | undefined): boolean {
-    return proto3.util.equals(ClientSample_PeerConnectionSample_AudioPlayoutStats, a, b);
+  static equals(a: ClientSample_PeerConnectionSample_MediaPlayoutStats | PlainMessage<ClientSample_PeerConnectionSample_MediaPlayoutStats> | undefined, b: ClientSample_PeerConnectionSample_MediaPlayoutStats | PlainMessage<ClientSample_PeerConnectionSample_MediaPlayoutStats> | undefined): boolean {
+    return proto3.util.equals(ClientSample_PeerConnectionSample_MediaPlayoutStats, a, b);
   }
 }
 
@@ -1561,29 +1549,29 @@ export class ClientSample_PeerConnectionSample_AudioPlayoutStats extends Message
  */
 export class ClientSample_PeerConnectionSample_PeerConnectionTransportStats extends Message<ClientSample_PeerConnectionSample_PeerConnectionTransportStats> {
   /**
-   * @generated from field: optional int32 dataChannelsClosed = 1;
-   */
-  dataChannelsClosed?: number;
-
-  /**
-   * @generated from field: optional int32 dataChannelsOpened = 2;
-   */
-  dataChannelsOpened?: number;
-
-  /**
-   * @generated from field: optional string id = 3;
+   * @generated from field: optional string id = 1;
    */
   id?: string;
 
   /**
-   * @generated from field: optional double timestamp = 4;
+   * @generated from field: optional int64 timestamp = 2;
    */
-  timestamp?: number;
+  timestamp?: bigint;
 
   /**
-   * @generated from field: optional bytes appData = 5;
+   * @generated from field: optional bytes appData = 3;
    */
   appData?: Uint8Array;
+
+  /**
+   * @generated from field: optional int32 dataChannelsClosed = 4;
+   */
+  dataChannelsClosed?: number;
+
+  /**
+   * @generated from field: optional int32 dataChannelsOpened = 5;
+   */
+  dataChannelsOpened?: number;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_PeerConnectionTransportStats>) {
     super();
@@ -1593,11 +1581,11 @@ export class ClientSample_PeerConnectionSample_PeerConnectionTransportStats exte
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.PeerConnectionTransportStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "dataChannelsClosed", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 2, name: "dataChannelsOpened", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 3, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 5, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 4, name: "dataChannelsClosed", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 5, name: "dataChannelsOpened", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_PeerConnectionTransportStats {
@@ -1622,59 +1610,59 @@ export class ClientSample_PeerConnectionSample_PeerConnectionTransportStats exte
  */
 export class ClientSample_PeerConnectionSample_DataChannelStats extends Message<ClientSample_PeerConnectionSample_DataChannelStats> {
   /**
-   * @generated from field: optional int64 bytesReceived = 1;
-   */
-  bytesReceived?: bigint;
-
-  /**
-   * @generated from field: optional int64 bytesSent = 2;
-   */
-  bytesSent?: bigint;
-
-  /**
-   * @generated from field: optional int32 dataChannelIdentifier = 3;
-   */
-  dataChannelIdentifier?: number;
-
-  /**
-   * @generated from field: optional string id = 4;
+   * @generated from field: optional string id = 1;
    */
   id?: string;
 
   /**
-   * @generated from field: optional string label = 5;
+   * @generated from field: optional int64 timestamp = 2;
+   */
+  timestamp?: bigint;
+
+  /**
+   * @generated from field: optional bytes appData = 3;
+   */
+  appData?: Uint8Array;
+
+  /**
+   * @generated from field: optional int64 bytesReceived = 4;
+   */
+  bytesReceived?: bigint;
+
+  /**
+   * @generated from field: optional int64 bytesSent = 5;
+   */
+  bytesSent?: bigint;
+
+  /**
+   * @generated from field: optional int32 dataChannelIdentifier = 6;
+   */
+  dataChannelIdentifier?: number;
+
+  /**
+   * @generated from field: optional string label = 7;
    */
   label?: string;
 
   /**
-   * @generated from field: optional int32 messagesReceived = 6;
+   * @generated from field: optional int32 messagesReceived = 8;
    */
   messagesReceived?: number;
 
   /**
-   * @generated from field: optional int32 messagesSent = 7;
+   * @generated from field: optional int32 messagesSent = 9;
    */
   messagesSent?: number;
 
   /**
-   * @generated from field: optional string protocol = 8;
+   * @generated from field: optional string protocol = 10;
    */
   protocol?: string;
 
   /**
-   * @generated from field: optional string state = 9;
+   * @generated from field: optional string state = 11;
    */
   state?: string;
-
-  /**
-   * @generated from field: optional double timestamp = 10;
-   */
-  timestamp?: number;
-
-  /**
-   * @generated from field: optional bytes appData = 11;
-   */
-  appData?: Uint8Array;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_DataChannelStats>) {
     super();
@@ -1684,17 +1672,17 @@ export class ClientSample_PeerConnectionSample_DataChannelStats extends Message<
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.DataChannelStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 2, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 3, name: "dataChannelIdentifier", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 4, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 5, name: "label", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 6, name: "messagesReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 7, name: "messagesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 8, name: "protocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 9, name: "state", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 10, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 11, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 4, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 6, name: "dataChannelIdentifier", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 7, name: "label", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 8, name: "messagesReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 9, name: "messagesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 10, name: "protocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 11, name: "state", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_DataChannelStats {
@@ -1719,99 +1707,99 @@ export class ClientSample_PeerConnectionSample_DataChannelStats extends Message<
  */
 export class ClientSample_PeerConnectionSample_IceTransportStats extends Message<ClientSample_PeerConnectionSample_IceTransportStats> {
   /**
-   * @generated from field: optional int64 bytesReceived = 1;
-   */
-  bytesReceived?: bigint;
-
-  /**
-   * @generated from field: optional int64 bytesSent = 2;
-   */
-  bytesSent?: bigint;
-
-  /**
-   * @generated from field: optional string dtlsCipher = 3;
-   */
-  dtlsCipher?: string;
-
-  /**
-   * @generated from field: optional string dtlsRole = 4;
-   */
-  dtlsRole?: string;
-
-  /**
-   * @generated from field: optional string dtlsState = 5;
-   */
-  dtlsState?: string;
-
-  /**
-   * @generated from field: optional string iceLocalUsernameFragment = 6;
-   */
-  iceLocalUsernameFragment?: string;
-
-  /**
-   * @generated from field: optional string iceRole = 7;
-   */
-  iceRole?: string;
-
-  /**
-   * @generated from field: optional string iceState = 8;
-   */
-  iceState?: string;
-
-  /**
-   * @generated from field: optional string id = 9;
+   * @generated from field: optional string id = 1;
    */
   id?: string;
 
   /**
-   * @generated from field: optional string localCertificateId = 10;
+   * @generated from field: optional int64 timestamp = 2;
+   */
+  timestamp?: bigint;
+
+  /**
+   * @generated from field: optional bytes appData = 3;
+   */
+  appData?: Uint8Array;
+
+  /**
+   * @generated from field: optional int64 bytesReceived = 4;
+   */
+  bytesReceived?: bigint;
+
+  /**
+   * @generated from field: optional int64 bytesSent = 5;
+   */
+  bytesSent?: bigint;
+
+  /**
+   * @generated from field: optional string dtlsCipher = 6;
+   */
+  dtlsCipher?: string;
+
+  /**
+   * @generated from field: optional string dtlsRole = 7;
+   */
+  dtlsRole?: string;
+
+  /**
+   * @generated from field: optional string dtlsState = 8;
+   */
+  dtlsState?: string;
+
+  /**
+   * @generated from field: optional string iceLocalUsernameFragment = 9;
+   */
+  iceLocalUsernameFragment?: string;
+
+  /**
+   * @generated from field: optional string iceRole = 10;
+   */
+  iceRole?: string;
+
+  /**
+   * @generated from field: optional string iceState = 11;
+   */
+  iceState?: string;
+
+  /**
+   * @generated from field: optional string localCertificateId = 12;
    */
   localCertificateId?: string;
 
   /**
-   * @generated from field: optional int32 packetsReceived = 11;
+   * @generated from field: optional int32 packetsReceived = 13;
    */
   packetsReceived?: number;
 
   /**
-   * @generated from field: optional int32 packetsSent = 12;
+   * @generated from field: optional int32 packetsSent = 14;
    */
   packetsSent?: number;
 
   /**
-   * @generated from field: optional string remoteCertificateId = 13;
+   * @generated from field: optional string remoteCertificateId = 15;
    */
   remoteCertificateId?: string;
 
   /**
-   * @generated from field: optional int32 selectedCandidatePairChanges = 14;
+   * @generated from field: optional int32 selectedCandidatePairChanges = 16;
    */
   selectedCandidatePairChanges?: number;
 
   /**
-   * @generated from field: optional string selectedCandidatePairId = 15;
+   * @generated from field: optional string selectedCandidatePairId = 17;
    */
   selectedCandidatePairId?: string;
 
   /**
-   * @generated from field: optional string srtpCipher = 16;
+   * @generated from field: optional string srtpCipher = 18;
    */
   srtpCipher?: string;
 
   /**
-   * @generated from field: optional double timestamp = 17;
-   */
-  timestamp?: number;
-
-  /**
-   * @generated from field: optional string tlsVersion = 18;
+   * @generated from field: optional string tlsVersion = 19;
    */
   tlsVersion?: string;
-
-  /**
-   * @generated from field: optional bytes appData = 19;
-   */
-  appData?: Uint8Array;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_IceTransportStats>) {
     super();
@@ -1821,25 +1809,25 @@ export class ClientSample_PeerConnectionSample_IceTransportStats extends Message
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceTransportStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 2, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 3, name: "dtlsCipher", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 4, name: "dtlsRole", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 5, name: "dtlsState", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 6, name: "iceLocalUsernameFragment", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 7, name: "iceRole", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 8, name: "iceState", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 9, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 10, name: "localCertificateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 11, name: "packetsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 12, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 13, name: "remoteCertificateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 14, name: "selectedCandidatePairChanges", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 15, name: "selectedCandidatePairId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 16, name: "srtpCipher", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 17, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 18, name: "tlsVersion", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 19, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 4, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 5, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 6, name: "dtlsCipher", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 7, name: "dtlsRole", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 8, name: "dtlsState", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 9, name: "iceLocalUsernameFragment", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 10, name: "iceRole", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 11, name: "iceState", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 12, name: "localCertificateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 13, name: "packetsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 14, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 15, name: "remoteCertificateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 16, name: "selectedCandidatePairChanges", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 17, name: "selectedCandidatePairId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 18, name: "srtpCipher", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 19, name: "tlsVersion", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_IceTransportStats {
@@ -1864,84 +1852,84 @@ export class ClientSample_PeerConnectionSample_IceTransportStats extends Message
  */
 export class ClientSample_PeerConnectionSample_IceCandidateStats extends Message<ClientSample_PeerConnectionSample_IceCandidateStats> {
   /**
-   * @generated from field: optional string candidateType = 1;
-   */
-  candidateType?: string;
-
-  /**
-   * @generated from field: optional string foundation = 2;
-   */
-  foundation?: string;
-
-  /**
-   * @generated from field: optional string id = 3;
+   * @generated from field: optional string id = 1;
    */
   id?: string;
 
   /**
-   * @generated from field: optional int32 port = 4;
+   * @generated from field: optional int64 timestamp = 2;
    */
-  port?: number;
+  timestamp?: bigint;
 
   /**
-   * @generated from field: optional int64 priority = 5;
-   */
-  priority?: bigint;
-
-  /**
-   * @generated from field: optional string protocol = 6;
-   */
-  protocol?: string;
-
-  /**
-   * @generated from field: optional string relatedAddress = 7;
-   */
-  relatedAddress?: string;
-
-  /**
-   * @generated from field: optional int32 relatedPort = 8;
-   */
-  relatedPort?: number;
-
-  /**
-   * @generated from field: optional string relayProtocol = 9;
-   */
-  relayProtocol?: string;
-
-  /**
-   * @generated from field: optional string tcpType = 10;
-   */
-  tcpType?: string;
-
-  /**
-   * @generated from field: optional double timestamp = 11;
-   */
-  timestamp?: number;
-
-  /**
-   * @generated from field: optional string transportId = 12;
-   */
-  transportId?: string;
-
-  /**
-   * @generated from field: optional string url = 13;
-   */
-  url?: string;
-
-  /**
-   * @generated from field: optional string usernameFragment = 14;
-   */
-  usernameFragment?: string;
-
-  /**
-   * @generated from field: optional string address = 15;
+   * @generated from field: optional string address = 3;
    */
   address?: string;
 
   /**
-   * @generated from field: optional bytes appData = 16;
+   * @generated from field: optional bytes appData = 4;
    */
   appData?: Uint8Array;
+
+  /**
+   * @generated from field: optional string candidateType = 5;
+   */
+  candidateType?: string;
+
+  /**
+   * @generated from field: optional string foundation = 6;
+   */
+  foundation?: string;
+
+  /**
+   * @generated from field: optional int32 port = 7;
+   */
+  port?: number;
+
+  /**
+   * @generated from field: optional int64 priority = 8;
+   */
+  priority?: bigint;
+
+  /**
+   * @generated from field: optional string protocol = 9;
+   */
+  protocol?: string;
+
+  /**
+   * @generated from field: optional string relatedAddress = 10;
+   */
+  relatedAddress?: string;
+
+  /**
+   * @generated from field: optional int32 relatedPort = 11;
+   */
+  relatedPort?: number;
+
+  /**
+   * @generated from field: optional string relayProtocol = 12;
+   */
+  relayProtocol?: string;
+
+  /**
+   * @generated from field: optional string tcpType = 13;
+   */
+  tcpType?: string;
+
+  /**
+   * @generated from field: optional string transportId = 14;
+   */
+  transportId?: string;
+
+  /**
+   * @generated from field: optional string url = 15;
+   */
+  url?: string;
+
+  /**
+   * @generated from field: optional string usernameFragment = 16;
+   */
+  usernameFragment?: string;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_IceCandidateStats>) {
     super();
@@ -1951,22 +1939,22 @@ export class ClientSample_PeerConnectionSample_IceCandidateStats extends Message
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidateStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "candidateType", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "foundation", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 4, name: "port", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 5, name: "priority", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 6, name: "protocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 7, name: "relatedAddress", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 8, name: "relatedPort", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 9, name: "relayProtocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 10, name: "tcpType", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 11, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 12, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 13, name: "url", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 14, name: "usernameFragment", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 15, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 16, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 4, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 5, name: "candidateType", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 6, name: "foundation", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 7, name: "port", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 8, name: "priority", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 9, name: "protocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 10, name: "relatedAddress", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 11, name: "relatedPort", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 12, name: "relayProtocol", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 13, name: "tcpType", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 14, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 15, name: "url", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 16, name: "usernameFragment", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_IceCandidateStats {
@@ -1991,129 +1979,129 @@ export class ClientSample_PeerConnectionSample_IceCandidateStats extends Message
  */
 export class ClientSample_PeerConnectionSample_IceCandidatePairStats extends Message<ClientSample_PeerConnectionSample_IceCandidatePairStats> {
   /**
-   * @generated from field: optional double availableIncomingBitrate = 1;
-   */
-  availableIncomingBitrate?: number;
-
-  /**
-   * @generated from field: optional double availableOutgoingBitrate = 2;
-   */
-  availableOutgoingBitrate?: number;
-
-  /**
-   * @generated from field: optional int64 bytesDiscardedOnSend = 3;
-   */
-  bytesDiscardedOnSend?: bigint;
-
-  /**
-   * @generated from field: optional int64 bytesReceived = 4;
-   */
-  bytesReceived?: bigint;
-
-  /**
-   * @generated from field: optional int64 bytesSent = 5;
-   */
-  bytesSent?: bigint;
-
-  /**
-   * @generated from field: optional int32 consentRequestsSent = 6;
-   */
-  consentRequestsSent?: number;
-
-  /**
-   * @generated from field: optional double currentRoundTripTime = 7;
-   */
-  currentRoundTripTime?: number;
-
-  /**
-   * @generated from field: optional string id = 8;
+   * @generated from field: optional string id = 1;
    */
   id?: string;
 
   /**
-   * @generated from field: optional double lastPacketReceivedTimestamp = 9;
+   * @generated from field: optional int64 timestamp = 2;
    */
-  lastPacketReceivedTimestamp?: number;
+  timestamp?: bigint;
 
   /**
-   * @generated from field: optional double lastPacketSentTimestamp = 10;
-   */
-  lastPacketSentTimestamp?: number;
-
-  /**
-   * @generated from field: optional string localCandidateId = 11;
-   */
-  localCandidateId?: string;
-
-  /**
-   * @generated from field: optional bool nominated = 12;
-   */
-  nominated?: boolean;
-
-  /**
-   * @generated from field: optional int32 packetsDiscardedOnSend = 13;
-   */
-  packetsDiscardedOnSend?: number;
-
-  /**
-   * @generated from field: optional int32 packetsReceived = 14;
-   */
-  packetsReceived?: number;
-
-  /**
-   * @generated from field: optional int32 packetsSent = 15;
-   */
-  packetsSent?: number;
-
-  /**
-   * @generated from field: optional string remoteCandidateId = 16;
-   */
-  remoteCandidateId?: string;
-
-  /**
-   * @generated from field: optional int32 requestsReceived = 17;
-   */
-  requestsReceived?: number;
-
-  /**
-   * @generated from field: optional int32 requestsSent = 18;
-   */
-  requestsSent?: number;
-
-  /**
-   * @generated from field: optional int32 responsesReceived = 19;
-   */
-  responsesReceived?: number;
-
-  /**
-   * @generated from field: optional int32 responsesSent = 20;
-   */
-  responsesSent?: number;
-
-  /**
-   * @generated from field: optional double timestamp = 21;
-   */
-  timestamp?: number;
-
-  /**
-   * @generated from field: optional double totalRoundTripTime = 22;
-   */
-  totalRoundTripTime?: number;
-
-  /**
-   * @generated from field: optional string transportId = 23;
-   */
-  transportId?: string;
-
-  /**
-   * @generated from field: optional bytes appData = 24;
+   * @generated from field: optional bytes appData = 3;
    */
   appData?: Uint8Array;
 
   /**
-   * @generated from field: optional org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidatePairStats.IceCandidatePairStatsEnum state = 25;
+   * @generated from field: optional double availableIncomingBitrate = 4;
+   */
+  availableIncomingBitrate?: number;
+
+  /**
+   * @generated from field: optional double availableOutgoingBitrate = 5;
+   */
+  availableOutgoingBitrate?: number;
+
+  /**
+   * @generated from field: optional int64 bytesDiscardedOnSend = 6;
+   */
+  bytesDiscardedOnSend?: bigint;
+
+  /**
+   * @generated from field: optional int64 bytesReceived = 7;
+   */
+  bytesReceived?: bigint;
+
+  /**
+   * @generated from field: optional int64 bytesSent = 8;
+   */
+  bytesSent?: bigint;
+
+  /**
+   * @generated from field: optional int32 consentRequestsSent = 9;
+   */
+  consentRequestsSent?: number;
+
+  /**
+   * @generated from field: optional double currentRoundTripTime = 10;
+   */
+  currentRoundTripTime?: number;
+
+  /**
+   * @generated from field: optional double lastPacketReceivedTimestamp = 11;
+   */
+  lastPacketReceivedTimestamp?: number;
+
+  /**
+   * @generated from field: optional double lastPacketSentTimestamp = 12;
+   */
+  lastPacketSentTimestamp?: number;
+
+  /**
+   * @generated from field: optional string localCandidateId = 13;
+   */
+  localCandidateId?: string;
+
+  /**
+   * @generated from field: optional bool nominated = 14;
+   */
+  nominated?: boolean;
+
+  /**
+   * @generated from field: optional int32 packetsDiscardedOnSend = 15;
+   */
+  packetsDiscardedOnSend?: number;
+
+  /**
+   * @generated from field: optional int32 packetsReceived = 16;
+   */
+  packetsReceived?: number;
+
+  /**
+   * @generated from field: optional int32 packetsSent = 17;
+   */
+  packetsSent?: number;
+
+  /**
+   * @generated from field: optional string remoteCandidateId = 18;
+   */
+  remoteCandidateId?: string;
+
+  /**
+   * @generated from field: optional int32 requestsReceived = 19;
+   */
+  requestsReceived?: number;
+
+  /**
+   * @generated from field: optional int32 requestsSent = 20;
+   */
+  requestsSent?: number;
+
+  /**
+   * @generated from field: optional int32 responsesReceived = 21;
+   */
+  responsesReceived?: number;
+
+  /**
+   * @generated from field: optional int32 responsesSent = 22;
+   */
+  responsesSent?: number;
+
+  /**
+   * @generated from field: optional org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidatePairStats.IceCandidatePairStatsEnum state = 23;
    */
   state?: ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum;
+
+  /**
+   * @generated from field: optional double totalRoundTripTime = 24;
+   */
+  totalRoundTripTime?: number;
+
+  /**
+   * @generated from field: optional string transportId = 25;
+   */
+  transportId?: string;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_IceCandidatePairStats>) {
     super();
@@ -2123,31 +2111,31 @@ export class ClientSample_PeerConnectionSample_IceCandidatePairStats extends Mes
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidatePairStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "availableIncomingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 2, name: "availableOutgoingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 3, name: "bytesDiscardedOnSend", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 5, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 6, name: "consentRequestsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 7, name: "currentRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 8, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 9, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 10, name: "lastPacketSentTimestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 11, name: "localCandidateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 12, name: "nominated", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
-    { no: 13, name: "packetsDiscardedOnSend", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 14, name: "packetsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 15, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 16, name: "remoteCandidateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 17, name: "requestsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 18, name: "requestsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 19, name: "responsesReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 20, name: "responsesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
-    { no: 21, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 22, name: "totalRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 23, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 24, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 25, name: "state", kind: "enum", T: proto3.getEnumType(ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum), opt: true },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 4, name: "availableIncomingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 5, name: "availableOutgoingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 6, name: "bytesDiscardedOnSend", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 7, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 8, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 9, name: "consentRequestsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 10, name: "currentRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 11, name: "lastPacketReceivedTimestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 12, name: "lastPacketSentTimestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 13, name: "localCandidateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 14, name: "nominated", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+    { no: 15, name: "packetsDiscardedOnSend", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 16, name: "packetsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 17, name: "packetsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 18, name: "remoteCandidateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 19, name: "requestsReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 20, name: "requestsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 21, name: "responsesReceived", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 22, name: "responsesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 23, name: "state", kind: "enum", T: proto3.getEnumType(ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum), opt: true },
+    { no: 24, name: "totalRoundTripTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 25, name: "transportId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_IceCandidatePairStats {
@@ -2206,34 +2194,34 @@ proto3.util.setEnumType(ClientSample_PeerConnectionSample_IceCandidatePairStats_
  */
 export class ClientSample_PeerConnectionSample_CertificateStats extends Message<ClientSample_PeerConnectionSample_CertificateStats> {
   /**
-   * @generated from field: optional string base64Certificate = 1;
-   */
-  base64Certificate?: string;
-
-  /**
-   * @generated from field: optional string fingerprint = 2;
-   */
-  fingerprint?: string;
-
-  /**
-   * @generated from field: optional string fingerprintAlgorithm = 3;
-   */
-  fingerprintAlgorithm?: string;
-
-  /**
-   * @generated from field: optional string id = 4;
+   * @generated from field: optional string id = 1;
    */
   id?: string;
 
   /**
-   * @generated from field: optional double timestamp = 5;
+   * @generated from field: optional int64 timestamp = 2;
    */
-  timestamp?: number;
+  timestamp?: bigint;
 
   /**
-   * @generated from field: optional bytes appData = 6;
+   * @generated from field: optional bytes appData = 3;
    */
   appData?: Uint8Array;
+
+  /**
+   * @generated from field: optional string base64Certificate = 4;
+   */
+  base64Certificate?: string;
+
+  /**
+   * @generated from field: optional string fingerprint = 5;
+   */
+  fingerprint?: string;
+
+  /**
+   * @generated from field: optional string fingerprintAlgorithm = 6;
+   */
+  fingerprintAlgorithm?: string;
 
   /**
    * @generated from field: optional string issuerCertificateId = 7;
@@ -2248,12 +2236,12 @@ export class ClientSample_PeerConnectionSample_CertificateStats extends Message<
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.CertificateStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "base64Certificate", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "fingerprint", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "fingerprintAlgorithm", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 4, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 5, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 6, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+    { no: 3, name: "appData", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 4, name: "base64Certificate", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 5, name: "fingerprint", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 6, name: "fingerprintAlgorithm", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 7, name: "issuerCertificateId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
@@ -2289,24 +2277,9 @@ export class ClientSample_ClientEvent extends Message<ClientSample_ClientEvent> 
   payload?: string;
 
   /**
-   * @generated from field: optional bytes peerConnectionId = 3;
-   */
-  peerConnectionId?: Uint8Array;
-
-  /**
-   * @generated from field: optional int64 ssrc = 4;
-   */
-  ssrc?: bigint;
-
-  /**
-   * @generated from field: optional int64 timestamp = 5;
+   * @generated from field: optional int64 timestamp = 3;
    */
   timestamp?: bigint;
-
-  /**
-   * @generated from field: optional bytes trackId = 6;
-   */
-  trackId?: Uint8Array;
 
   constructor(data?: PartialMessage<ClientSample_ClientEvent>) {
     super();
@@ -2318,10 +2291,7 @@ export class ClientSample_ClientEvent extends Message<ClientSample_ClientEvent> 
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "payload", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "peerConnectionId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
-    { no: 4, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 5, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 6, name: "trackId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_ClientEvent {
@@ -2338,6 +2308,55 @@ export class ClientSample_ClientEvent extends Message<ClientSample_ClientEvent> 
 
   static equals(a: ClientSample_ClientEvent | PlainMessage<ClientSample_ClientEvent> | undefined, b: ClientSample_ClientEvent | PlainMessage<ClientSample_ClientEvent> | undefined): boolean {
     return proto3.util.equals(ClientSample_ClientEvent, a, b);
+  }
+}
+
+/**
+ * @generated from message org.observertc.schemas.protobuf.ClientSample.ClientIssue
+ */
+export class ClientSample_ClientIssue extends Message<ClientSample_ClientIssue> {
+  /**
+   * @generated from field: optional string type = 1;
+   */
+  type?: string;
+
+  /**
+   * @generated from field: optional string payload = 2;
+   */
+  payload?: string;
+
+  /**
+   * @generated from field: optional int64 timestamp = 3;
+   */
+  timestamp?: bigint;
+
+  constructor(data?: PartialMessage<ClientSample_ClientIssue>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime = proto3;
+  static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.ClientIssue";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "payload", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_ClientIssue {
+    return new ClientSample_ClientIssue().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ClientSample_ClientIssue {
+    return new ClientSample_ClientIssue().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ClientSample_ClientIssue {
+    return new ClientSample_ClientIssue().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ClientSample_ClientIssue | PlainMessage<ClientSample_ClientIssue> | undefined, b: ClientSample_ClientIssue | PlainMessage<ClientSample_ClientIssue> | undefined): boolean {
+    return proto3.util.equals(ClientSample_ClientIssue, a, b);
   }
 }
 
@@ -2413,14 +2432,14 @@ export class ClientSample_ClientMetaData extends Message<ClientSample_ClientMeta
  */
 export class ClientSample_ExtensionStat extends Message<ClientSample_ExtensionStat> {
   /**
-   * @generated from field: optional string payload = 1;
-   */
-  payload?: string;
-
-  /**
-   * @generated from field: optional string type = 2;
+   * @generated from field: optional string type = 1;
    */
   type?: string;
+
+  /**
+   * @generated from field: optional string payload = 2;
+   */
+  payload?: string;
 
   constructor(data?: PartialMessage<ClientSample_ExtensionStat>) {
     super();
@@ -2430,8 +2449,8 @@ export class ClientSample_ExtensionStat extends Message<ClientSample_ExtensionSt
   static readonly runtime = proto3;
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.ExtensionStat";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "payload", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 2, name: "payload", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_ExtensionStat {

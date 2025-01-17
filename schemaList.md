@@ -1,10 +1,13 @@
+ClientScore
+ * **value**: The calculated score.
+ * **remarks**: Remarks about the score.
+ * **timestamp**: The timestamp in epoch format when the score was calculated.
 CodecStats
  * **timestamp**: The timestamp when the stats were generated.
- * **type**: The type of the stats.
  * **id**: The unique identifier for the stats object.
+ * **mimeType**: The MIME type of the codec.
  * **payloadType**: The payload type of the codec.
  * **transportId**: The identifier of the transport associated with the codec.
- * **mimeType**: The MIME type of the codec.
  * **clockRate**: The clock rate of the codec in Hz.
  * **channels**: The number of audio channels for the codec, if applicable.
  * **sdpFmtpLine**: The SDP format-specific parameters line for the codec.
@@ -92,12 +95,16 @@ RemoteInboundRtpStats
  * **fractionLost**: The fraction of packets lost on this stream, calculated over a time interval.
  * **roundTripTimeMeasurements**: The total number of RTT measurements for this stream.
  * **appData**: Additional information attached to this stats
+QualityLimitationDurations
+ * **none**: Duration of no quality limitation in seconds.
+ * **cpu**: Duration of CPU-based quality limitation in seconds.
+ * **bandwidth**: Duration of bandwidth-based quality limitation in seconds.
+ * **other**: Duration of other quality limitation reasons in seconds.
 OutboundRtpStats
  * **timestamp**: The timestamp for this stats object in DOMHighResTimeStamp format.
  * **id**: The unique identifier for this stats object.
  * **ssrc**: The SSRC identifier of the RTP stream.
  * **kind**: The type of media ('audio' or 'video').
- * **qualityLimitationDurations**: The duration of quality limitation reasons categorized by type.
  * **transportId**: The ID of the transport used for this stream.
  * **codecId**: The ID of the codec used for this stream.
  * **packetsSent**: The total number of packets sent on this stream.
@@ -131,6 +138,7 @@ OutboundRtpStats
  * **powerEfficientEncoder**: Indicates whether the encoder is power efficient.
  * **active**: Indicates whether this stream is actively sending data.
  * **scalabilityMode**: The scalability mode of the encoder used for this stream.
+ * **qualityLimitationDurations**: The duration of quality limitation reasons categorized by type.
  * **appData**: Additional information attached to this stats.
 RemoteOutboundRtpStats
  * **timestamp**: The timestamp for this stats object in DOMHighResTimeStamp format.
@@ -148,28 +156,22 @@ RemoteOutboundRtpStats
  * **totalRoundTripTime**: The total round-trip time for this stream in seconds.
  * **roundTripTimeMeasurements**: The total number of round-trip time measurements for this stream.
  * **appData**: Additional information attached to this stats
-AudioSourceStats
+MediaSourceStats
  * **timestamp**: The timestamp of the stat.
  * **id**: A unique identifier for the stat.
+ * **kind**: The type of media ('audio' or 'video').
  * **trackIdentifier**: The identifier of the media track.
- * **kind**: The kind of media (audio/video).
  * **audioLevel**: The current audio level.
  * **totalAudioEnergy**: The total audio energy.
  * **totalSamplesDuration**: The total duration of audio samples.
  * **echoReturnLoss**: The echo return loss.
  * **echoReturnLossEnhancement**: The enhancement of echo return loss.
- * **appData**: Additional information attached to this stats
-VideoSourceStats
- * **timestamp**: The timestamp of the stat.
- * **id**: A unique identifier for the stat.
- * **trackIdentifier**: The identifier of the media track.
- * **kind**: The kind of media (audio/video).
  * **width**: The width of the video.
  * **height**: The height of the video.
  * **frames**: The total number of frames.
  * **framesPerSecond**: The frames per second of the video.
  * **appData**: Additional information attached to this stats
-AudioPlayoutStats
+MediaPlayoutStats
  * **timestamp**: The timestamp of the stat.
  * **id**: A unique identifier for the stat.
  * **kind**: The kind of media (audio/video).
@@ -240,6 +242,8 @@ IceCandidatePairStats
  * **transportId**: The transport id of the connection this candidate pair belongs to.
  * **localCandidateId**: The ID of the local ICE candidate in this pair.
  * **remoteCandidateId**: The ID of the remote ICE candidate in this pair.
+ * **state**: undefined (Possible values are: new,<br />inProgress,<br />failed,<br />succeeded)
+ * **nominated**: Whether this candidate pair has been nominated.
  * **packetsSent**: The number of packets sent using this candidate pair.
  * **packetsReceived**: The number of packets received using this candidate pair.
  * **bytesSent**: The total number of bytes sent using this candidate pair.
@@ -257,8 +261,6 @@ IceCandidatePairStats
  * **consentRequestsSent**: The number of ICE connection consent requests sent by this candidate pair.
  * **packetsDiscardedOnSend**: The number of packets discarded while attempting to send via this candidate pair.
  * **bytesDiscardedOnSend**: The total number of bytes discarded while attempting to send via this candidate pair.
- * **state**: undefined (Possible values are: new,<br />inProgress,<br />failed,<br />succeeded)
- * **nominated**: Whether this candidate pair has been nominated.
  * **appData**: Additional information attached to this stats
 CertificateStats
  * **timestamp**: The timestamp of the stat.
@@ -276,9 +278,8 @@ PeerConnectionSample
  * **remoteInboundRtps**: Remote Inbound RTPs
  * **outboundRtps**: Outbound RTPs
  * **remoteOutboundRtps**: Remote Outbound RTPs
- * **audioSources**: Audio Source Stats
- * **videoSources**: Video Source Stats
- * **audioPlayouts**: Audio Playout Stats
+ * **mediaSources**: Audio Source Stats
+ * **mediaPlayouts**: Media Playout Stats
  * **peerConnectionTransports**: PeerConnection Transport Stats
  * **dataChannels**: Data Channels Stats
  * **iceTransports**: ICE Transport Stats
@@ -288,9 +289,10 @@ PeerConnectionSample
 ClientEvent
  * **type**: The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
  * **payload**: The value associated with the event, if applicable.
- * **peerConnectionId**: The unique identifier of the peer connection for which the event was generated.
- * **trackId**: The identifier of the media track related to the event, if applicable.
- * **ssrc**: The SSRC (Synchronization Source) identifier associated with the event, if applicable.
+ * **timestamp**: The timestamp in epoch format when the event was generated.
+ClientIssue
+ * **type**: The name of the issue
+ * **payload**: The value associated with the event, if applicable.
  * **timestamp**: The timestamp in epoch format when the event was generated.
 ClientMetaData
  * **type**: The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
@@ -303,12 +305,14 @@ ExtensionStat
  * **type**: The type of the extension stats the custom app provides
  * **payload**: The payload of the extension stats the custom app provides
 ClientSample
- * **clientId**: Unique id of the client providing samples.
  * **timestamp**: The timestamp the sample is created in GMT
  * **callId**: the unique identifier of the call or session
+ * **clientId**: Unique id of the client providing samples.
  * **appData**: Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
+ * **scores**: List of scores calculated for the client.
  * **peerConnections**: Samples taken PeerConnections
- * **clientEvents**: A list of additional client events.
+ * **clientEvents**: A list of client events.
+ * **clientIssues**: A list of client issues.
  * **clientMetaItems**: A list of additional client events.
  * **extensionStats**: The WebRTC app provided custom stats payload
 Controls

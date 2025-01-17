@@ -56,7 +56,6 @@ export class AudioSourceEncoder implements Encoder<AudioSourceStats, ClientSampl
       id: stats.id,
       timestamp: this._timestampEncoder.encode(stats.timestamp),
       trackIdentifier: this._trackIdentifierEncoder.encode(stats.trackIdentifier),
-      kind: this._kindEncoder.encode(stats.kind),
       audioLevel: this._audioLevelEncoder.encode(stats.audioLevel ?? 0),
       totalAudioEnergy: this._totalAudioEnergyEncoder.encode(stats.totalAudioEnergy ?? 0),
       totalSamplesDuration: this._totalSamplesDurationEncoder.encode(stats.totalSamplesDuration ?? 0),

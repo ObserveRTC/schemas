@@ -13,7 +13,7 @@ export type ExtensionStat = {
 	/**
 	* The payload of the extension stats the custom app provides
 	*/
-	payload: string;
+	payload?: string;
 
 }
 
@@ -54,7 +54,28 @@ export type ClientMetaData = {
 }
 
 /**
-* A list of additional client events.
+* A list of client issues.
+*/
+export type ClientIssue = {
+	/**
+	* The name of the issue
+	*/
+	type: string;
+
+	/**
+	* The value associated with the event, if applicable.
+	*/
+	payload?: string;
+
+	/**
+	* The timestamp in epoch format when the event was generated.
+	*/
+	timestamp?: number;
+
+}
+
+/**
+* A list of client events.
 */
 export type ClientEvent = {
 	/**
@@ -66,21 +87,6 @@ export type ClientEvent = {
 	* The value associated with the event, if applicable.
 	*/
 	payload?: string;
-
-	/**
-	* The unique identifier of the peer connection for which the event was generated.
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The identifier of the media track related to the event, if applicable.
-	*/
-	trackId?: string;
-
-	/**
-	* The SSRC (Synchronization Source) identifier associated with the event, if applicable.
-	*/
-	ssrc?: number;
 
 	/**
 	* The timestamp in epoch format when the event was generated.
@@ -106,22 +112,22 @@ export type CertificateStats = {
 	/**
 	* The fingerprint of the certificate.
 	*/
-	fingerprint: string;
+	fingerprint?: string;
 
 	/**
 	* The algorithm used for the fingerprint (e.g., 'SHA-256').
 	*/
-	fingerprintAlgorithm: string;
+	fingerprintAlgorithm?: string;
 
 	/**
 	* The certificate encoded in base64 format.
 	*/
-	base64Certificate: string;
+	base64Certificate?: string;
 
 	/**
 	* The certificate ID of the issuer (nullable).
 	*/
-	issuerCertificateId: string;
+	issuerCertificateId?: string;
 
 	/**
 	* Additional information attached to this stats
@@ -147,108 +153,108 @@ export type IceCandidatePairStats = {
 	/**
 	* The transport id of the connection this candidate pair belongs to.
 	*/
-	transportId: string;
+	transportId?: string;
 
 	/**
 	* The ID of the local ICE candidate in this pair.
 	*/
-	localCandidateId: string;
+	localCandidateId?: string;
 
 	/**
 	* The ID of the remote ICE candidate in this pair.
 	*/
-	remoteCandidateId: string;
-
-	/**
-	* The number of packets sent using this candidate pair.
-	*/
-	packetsSent: number;
-
-	/**
-	* The number of packets received using this candidate pair.
-	*/
-	packetsReceived: number;
-
-	/**
-	* The total number of bytes sent using this candidate pair.
-	*/
-	bytesSent: number;
-
-	/**
-	* The total number of bytes received using this candidate pair.
-	*/
-	bytesReceived: number;
-
-	/**
-	* The timestamp of the last packet sent using this candidate pair.
-	*/
-	lastPacketSentTimestamp: number;
-
-	/**
-	* The timestamp of the last packet received using this candidate pair.
-	*/
-	lastPacketReceivedTimestamp: number;
-
-	/**
-	* The total round trip time (RTT) for this candidate pair in seconds.
-	*/
-	totalRoundTripTime: number;
-
-	/**
-	* The current round trip time (RTT) for this candidate pair in seconds.
-	*/
-	currentRoundTripTime: number;
-
-	/**
-	* The available outgoing bitrate (in bits per second) for this candidate pair.
-	*/
-	availableOutgoingBitrate: number;
-
-	/**
-	* The available incoming bitrate (in bits per second) for this candidate pair.
-	*/
-	availableIncomingBitrate: number;
-
-	/**
-	* The number of ICE connection requests received by this candidate pair.
-	*/
-	requestsReceived: number;
-
-	/**
-	* The number of ICE connection requests sent by this candidate pair.
-	*/
-	requestsSent: number;
-
-	/**
-	* The number of ICE connection responses received by this candidate pair.
-	*/
-	responsesReceived: number;
-
-	/**
-	* The number of ICE connection responses sent by this candidate pair.
-	*/
-	responsesSent: number;
-
-	/**
-	* The number of ICE connection consent requests sent by this candidate pair.
-	*/
-	consentRequestsSent: number;
-
-	/**
-	* The number of packets discarded while attempting to send via this candidate pair.
-	*/
-	packetsDiscardedOnSend: number;
-
-	/**
-	* The total number of bytes discarded while attempting to send via this candidate pair.
-	*/
-	bytesDiscardedOnSend: number;
+	remoteCandidateId?: string;
 
 	state?: "new" | "inProgress" | "failed" | "succeeded";
 	/**
 	* Whether this candidate pair has been nominated.
 	*/
 	nominated?: boolean;
+
+	/**
+	* The number of packets sent using this candidate pair.
+	*/
+	packetsSent?: number;
+
+	/**
+	* The number of packets received using this candidate pair.
+	*/
+	packetsReceived?: number;
+
+	/**
+	* The total number of bytes sent using this candidate pair.
+	*/
+	bytesSent?: number;
+
+	/**
+	* The total number of bytes received using this candidate pair.
+	*/
+	bytesReceived?: number;
+
+	/**
+	* The timestamp of the last packet sent using this candidate pair.
+	*/
+	lastPacketSentTimestamp?: number;
+
+	/**
+	* The timestamp of the last packet received using this candidate pair.
+	*/
+	lastPacketReceivedTimestamp?: number;
+
+	/**
+	* The total round trip time (RTT) for this candidate pair in seconds.
+	*/
+	totalRoundTripTime?: number;
+
+	/**
+	* The current round trip time (RTT) for this candidate pair in seconds.
+	*/
+	currentRoundTripTime?: number;
+
+	/**
+	* The available outgoing bitrate (in bits per second) for this candidate pair.
+	*/
+	availableOutgoingBitrate?: number;
+
+	/**
+	* The available incoming bitrate (in bits per second) for this candidate pair.
+	*/
+	availableIncomingBitrate?: number;
+
+	/**
+	* The number of ICE connection requests received by this candidate pair.
+	*/
+	requestsReceived?: number;
+
+	/**
+	* The number of ICE connection requests sent by this candidate pair.
+	*/
+	requestsSent?: number;
+
+	/**
+	* The number of ICE connection responses received by this candidate pair.
+	*/
+	responsesReceived?: number;
+
+	/**
+	* The number of ICE connection responses sent by this candidate pair.
+	*/
+	responsesSent?: number;
+
+	/**
+	* The number of ICE connection consent requests sent by this candidate pair.
+	*/
+	consentRequestsSent?: number;
+
+	/**
+	* The number of packets discarded while attempting to send via this candidate pair.
+	*/
+	packetsDiscardedOnSend?: number;
+
+	/**
+	* The total number of bytes discarded while attempting to send via this candidate pair.
+	*/
+	bytesDiscardedOnSend?: number;
 
 	/**
 	* Additional information attached to this stats
@@ -274,67 +280,67 @@ export type IceCandidateStats = {
 	/**
 	* The transport ID associated with the ICE candidate.
 	*/
-	transportId: string;
+	transportId?: string;
 
 	/**
 	* The IP address of the ICE candidate (nullable).
 	*/
-	address: string;
+	address?: string;
 
 	/**
 	* The port number of the ICE candidate.
 	*/
-	port: number;
+	port?: number;
 
 	/**
 	* The transport protocol used by the candidate (e.g., 'udp', 'tcp').
 	*/
-	protocol: string;
+	protocol?: string;
 
 	/**
 	* The type of the ICE candidate (e.g., 'host', 'srflx', 'relay').
 	*/
-	candidateType: string;
+	candidateType?: string;
 
 	/**
 	* The priority of the ICE candidate.
 	*/
-	priority: number;
+	priority?: number;
 
 	/**
 	* The URL of the ICE candidate.
 	*/
-	url: string;
+	url?: string;
 
 	/**
 	* The protocol used for the relay (e.g., 'tcp', 'udp').
 	*/
-	relayProtocol: string;
+	relayProtocol?: string;
 
 	/**
 	* A string representing the foundation for the ICE candidate.
 	*/
-	foundation: string;
+	foundation?: string;
 
 	/**
 	* The related address for the ICE candidate (if any).
 	*/
-	relatedAddress: string;
+	relatedAddress?: string;
 
 	/**
 	* The related port for the ICE candidate (if any).
 	*/
-	relatedPort: number;
+	relatedPort?: number;
 
 	/**
 	* The username fragment for the ICE candidate.
 	*/
-	usernameFragment: string;
+	usernameFragment?: string;
 
 	/**
 	* The TCP type of the ICE candidate (e.g., 'active', 'passive').
 	*/
-	tcpType: string;
+	tcpType?: string;
 
 	/**
 	* Additional information attached to this stats
@@ -360,82 +366,82 @@ export type IceTransportStats = {
 	/**
 	* The number of packets sent.
 	*/
-	packetsSent: number;
+	packetsSent?: number;
 
 	/**
 	* The number of packets received.
 	*/
-	packetsReceived: number;
+	packetsReceived?: number;
 
 	/**
 	* The number of bytes sent.
 	*/
-	bytesSent: number;
+	bytesSent?: number;
 
 	/**
 	* The number of bytes received.
 	*/
-	bytesReceived: number;
+	bytesReceived?: number;
 
 	/**
 	* The ICE role (e.g., 'controlling', 'controlled').
 	*/
-	iceRole: string;
+	iceRole?: string;
 
 	/**
 	* The local username fragment for ICE.
 	*/
-	iceLocalUsernameFragment: string;
+	iceLocalUsernameFragment?: string;
 
 	/**
 	* The DTLS transport state (e.g., 'new', 'connecting', 'connected').
 	*/
-	dtlsState: string;
+	dtlsState?: string;
 
 	/**
 	* The ICE transport state (e.g., 'new', 'checking', 'connected').
 	*/
-	iceState: string;
+	iceState?: string;
 
 	/**
 	* The ID of the selected ICE candidate pair.
 	*/
-	selectedCandidatePairId: string;
+	selectedCandidatePairId?: string;
 
 	/**
 	* The ID of the local certificate.
 	*/
-	localCertificateId: string;
+	localCertificateId?: string;
 
 	/**
 	* The ID of the remote certificate.
 	*/
-	remoteCertificateId: string;
+	remoteCertificateId?: string;
 
 	/**
 	* The TLS version used for encryption.
 	*/
-	tlsVersion: string;
+	tlsVersion?: string;
 
 	/**
 	* The DTLS cipher suite used.
 	*/
-	dtlsCipher: string;
+	dtlsCipher?: string;
 
 	/**
 	* The role in the DTLS handshake (e.g., 'client', 'server').
 	*/
-	dtlsRole: string;
+	dtlsRole?: string;
 
 	/**
 	* The SRTP cipher used for encryption.
 	*/
-	srtpCipher: string;
+	srtpCipher?: string;
 
 	/**
 	* The number of changes to the selected ICE candidate pair.
 	*/
-	selectedCandidatePairChanges: number;
+	selectedCandidatePairChanges?: number;
 
 	/**
 	* Additional information attached to this stats
@@ -461,42 +467,42 @@ export type DataChannelStats = {
 	/**
 	* The label of the data channel.
 	*/
-	label: string;
+	label?: string;
 
 	/**
 	* The protocol of the data channel.
 	*/
-	protocol: string;
+	protocol?: string;
 
 	/**
 	* The identifier for the data channel.
 	*/
-	dataChannelIdentifier: number;
+	dataChannelIdentifier?: number;
 
 	/**
 	* The state of the data channel (e.g., 'open', 'closed').
 	*/
-	state: string;
+	state?: string;
 
 	/**
 	* The number of messages sent on the data channel.
 	*/
-	messagesSent: number;
+	messagesSent?: number;
 
 	/**
 	* The number of bytes sent on the data channel.
 	*/
-	bytesSent: number;
+	bytesSent?: number;
 
 	/**
 	* The number of messages received on the data channel.
 	*/
-	messagesReceived: number;
+	messagesReceived?: number;
 
 	/**
 	* The number of bytes received on the data channel.
 	*/
-	bytesReceived: number;
+	bytesReceived?: number;
 
 	/**
 	* Additional information attached to this stats
@@ -522,12 +528,12 @@ export type PeerConnectionTransportStats = {
 	/**
 	* The number of data channels opened.
 	*/
-	dataChannelsOpened: number;
+	dataChannelsOpened?: number;
 
 	/**
 	* The number of data channels closed.
 	*/
-	dataChannelsClosed: number;
+	dataChannelsClosed?: number;
 
 	/**
 	* Additional information attached to this stats
@@ -537,9 +543,9 @@ export type PeerConnectionTransportStats = {
 }
 
 /**
-* Audio Playout Stats
+* Media Playout Stats
 */
-export type AudioPlayoutStats = {
+export type MediaPlayoutStats = {
 	/**
 	* The timestamp of the stat.
 	*/
@@ -558,78 +564,27 @@ export type AudioPlayoutStats = {
 	/**
 	* The duration of synthesized audio samples.
 	*/
-	synthesizedSamplesDuration: number;
+	synthesizedSamplesDuration?: number;
 
 	/**
 	* The number of synthesized audio samples events.
 	*/
-	synthesizedSamplesEvents: number;
+	synthesizedSamplesEvents?: number;
 
 	/**
 	* The total duration of all audio samples.
 	*/
-	totalSamplesDuration: number;
+	totalSamplesDuration?: number;
 
 	/**
 	* The total delay experienced during audio playout.
 	*/
-	totalPlayoutDelay: number;
+	totalPlayoutDelay?: number;
 
 	/**
 	* The total count of audio samples.
 	*/
-	totalSamplesCount: number;
-
-	/**
-	* Additional information attached to this stats
-	*/
-	appData?: Record<string, unknown>;
-
-}
-
-/**
-* Video Source Stats
-*/
-export type VideoSourceStats = {
-	/**
-	* The timestamp of the stat.
-	*/
-	timestamp: number;
-
-	/**
-	* A unique identifier for the stat.
-	*/
-	id: string;
-
-	/**
-	* The identifier of the media track.
-	*/
-	trackIdentifier: string;
-
-	/**
-	* The kind of media (audio/video).
-	*/
-	kind: string;
-
-	/**
-	* The width of the video.
-	*/
-	width: number;
-
-	/**
-	* The height of the video.
-	*/
-	height: number;
-
-	/**
-	* The total number of frames.
-	*/
-	frames: number;
-
-	/**
-	* The frames per second of the video.
-	*/
-	framesPerSecond: number;
+	totalSamplesCount?: number;
 
 	/**
 	* Additional information attached to this stats
@@ -641,7 +596,7 @@ export type VideoSourceStats = {
 /**
 * Audio Source Stats
 */
-export type AudioSourceStats = {
+export type MediaSourceStats = {
 	/**
 	* The timestamp of the stat.
 	*/
@@ -653,14 +608,14 @@ export type AudioSourceStats = {
 	id: string;
 
 	/**
-	* The identifier of the media track.
-	*/
-	trackIdentifier: string;
-
-	/**
-	* The kind of media (audio/video).
+	* The type of media ('audio' or 'video').
 	*/
 	kind: string;
+
+	/**
+	* The identifier of the media track.
+	*/
+	trackIdentifier?: string;
 
 	/**
 	* The current audio level.
@@ -686,6 +641,26 @@ export type AudioSourceStats = {
 	* The enhancement of echo return loss.
 	*/
 	echoReturnLossEnhancement?: number;
+
+	/**
+	* The width of the video.
+	*/
+	width?: number;
+
+	/**
+	* The height of the video.
+	*/
+	height?: number;
+
+	/**
+	* The total number of frames.
+	*/
+	frames?: number;
+
+	/**
+	* The frames per second of the video.
+	*/
+	framesPerSecond?: number;
 
 	/**
 	* Additional information attached to this stats
@@ -824,11 +799,6 @@ export type OutboundRtpStats = {
 	* The type of media ('audio' or 'video').
 	*/
 	kind: string;
-
-	/**
-	* The duration of quality limitation reasons categorized by type.
-	*/
-	qualityLimitationDurations: QualityLimitationDurations;
 
 	/**
 	* The ID of the transport used for this stream.
@@ -994,6 +964,11 @@ export type OutboundRtpStats = {
 	* The scalability mode of the encoder used for this stream.
 	*/
 	scalabilityMode?: string;
+
+	/**
+	* The duration of quality limitation reasons categorized by type.
+	*/
+	qualityLimitationDurations?: QualityLimitationDurations;
 
 	/**
 	* Additional information attached to this stats.
@@ -1429,29 +1404,24 @@ export type CodecStats = {
 	timestamp: number;
 
 	/**
-	* The type of the stats.
-	*/
-	type: string;
-
-	/**
 	* The unique identifier for the stats object.
 	*/
 	id: string;
 
 	/**
+	* The MIME type of the codec.
+	*/
+	mimeType: string;
+
+	/**
 	* The payload type of the codec.
 	*/
-	payloadType: number;
+	payloadType?: number;
 
 	/**
 	* The identifier of the transport associated with the codec.
 	*/
-	transportId: string;
-
-	/**
-	* The MIME type of the codec.
-	*/
-	mimeType: string;
+	transportId?: string;
 
 	/**
 	* The clock rate of the codec in Hz.
@@ -1517,17 +1487,12 @@ export type PeerConnectionSample = {
 	/**
 	* Audio Source Stats
 	*/
-	audioSources?: AudioSourceStats[];
+	mediaSources?: MediaSourceStats[];
 
 	/**
-	* Video Source Stats
+	* Media Playout Stats
 	*/
-	videoSources?: VideoSourceStats[];
-
-	/**
-	* Audio Playout Stats
-	*/
-	audioPlayouts?: AudioPlayoutStats[];
+	mediaPlayouts?: MediaPlayoutStats[];
 
 	/**
 	* PeerConnection Transport Stats
@@ -1562,14 +1527,30 @@ export type PeerConnectionSample = {
 }
 
 /**
+* List of scores calculated for the client.
+*/
+export type ClientScore = {
+	/**
+	* The calculated score.
+	*/
+	value?: number;
+
+	/**
+	* Remarks about the score.
+	*/
+	remarks?: string;
+
+	/**
+	* The timestamp in epoch format when the score was calculated.
+	*/
+	timestamp?: number;
+
+}
+
+/**
 * docs
 */
 export type ClientSample = {
-	/**
-	* Unique id of the client providing samples.
-	*/
-	clientId: string;
-
 	/**
 	* The timestamp the sample is created in GMT
 	*/
@@ -1581,9 +1562,19 @@ export type ClientSample = {
 	callId?: string;
 
 	/**
+	* Unique id of the client providing samples.
+	*/
+	clientId?: string;
+
+	/**
 	* Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
 	*/
 	appData?: Record<string, unknown>;
+
+	/**
+	* List of scores calculated for the client.
+	*/
+	scores?: ClientScore[];
 
 	/**
 	* Samples taken PeerConnections
@@ -1591,9 +1582,14 @@ export type ClientSample = {
 	peerConnections?: PeerConnectionSample[];
 
 	/**
-	* A list of additional client events.
+	* A list of client events.
 	*/
 	clientEvents?: ClientEvent[];
+
+	/**
+	* A list of client issues.
+	*/
+	clientIssues?: ClientIssue[];
 
 	/**
 	* A list of additional client events.

@@ -12,7 +12,8 @@
         {
             "name": "clientId",
             "doc": "Unique id of the client providing samples.",
-            "type": "string"
+            "type": ["null", "string"],
+            "default": null
         },
         {
             "name": "appData",
@@ -26,6 +27,23 @@
             "type": "long"
         }, 
         {
+            "name": "scores",
+            "doc": "List of scores calculated for the client.",
+            "type": ["null", {
+              "type": "array",
+              "items": {
+                "name": "ClientScore",
+                "type": "record",
+                "fields": [
+                  {"name": "value", "type": ["null", "int"], "default": null, "doc": "The calculated score." },
+                  {"name": "remarks", "type": ["null", "string"], "default": null, "doc": "Remarks about the score." },
+                  {"name": "timestamp", "type": ["null", "long"], "default": null, "doc": "The timestamp in epoch format when the score was calculated." }
+                ]
+              }
+            }],
+            "default": null
+        },
+        {
             "name" : "peerConnections",
             "doc": "Samples taken PeerConnections",
             "type" : ["null", {
@@ -36,7 +54,7 @@
         },
         {
             "name": "clientEvents",
-            "doc": "A list of additional client events.",
+            "doc": "A list of client events.",
             "type": ["null", {
               "type": "array",
               "items": {
@@ -45,9 +63,23 @@
                 "fields": [
                   {"name": "type", "doc": "The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).", "type": "string"},
                   {"name": "payload", "doc": "The value associated with the event, if applicable.", "type": ["null", "string"], "default": null},
-                  {"name": "peerConnectionId", "doc": "The unique identifier of the peer connection for which the event was generated.", "type": ["null", "string"], "default": null},
-                  {"name": "trackId", "doc": "The identifier of the media track related to the event, if applicable.", "type": ["null", "string"], "default": null},
-                  {"name": "ssrc", "doc": "The SSRC (Synchronization Source) identifier associated with the event, if applicable.", "type": ["null", "long"], "default": null},
+                  {"name": "timestamp", "doc": "The timestamp in epoch format when the event was generated.", "type": ["null", "long"], "default": null}
+                ]
+              }
+            }],
+            "default": null
+        },
+        {
+            "name": "clientIssues",
+            "doc": "A list of client issues.",
+            "type": ["null", {
+              "type": "array",
+              "items": {
+                "name": "ClientIssue",
+                "type": "record",
+                "fields": [
+                  {"name": "type", "doc": "The name of the issue", "type": "string"},
+                  {"name": "payload", "doc": "The value associated with the event, if applicable.", "type": ["null", "string"], "default": null},
                   {"name": "timestamp", "doc": "The timestamp in epoch format when the event was generated.", "type": ["null", "long"], "default": null}
                 ]
               }
@@ -91,8 +123,9 @@
                         },
                         {
                             "name": "payload",
-                            "type": "string",
-                            "doc": "The payload of the extension stats the custom app provides"
+                            "type": ["null", "string"],
+                            "doc": "The payload of the extension stats the custom app provides",
+                            "default": null
                         }
                     ]
                 }

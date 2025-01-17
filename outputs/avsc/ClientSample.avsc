@@ -15,7 +15,11 @@
     {
       "name": "clientId",
       "doc": "Unique id of the client providing samples.",
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
     },
     {
       "name": "appData",
@@ -30,6 +34,50 @@
       "name": "timestamp",
       "doc": "The timestamp the sample is created in GMT",
       "type": "long"
+    },
+    {
+      "name": "scores",
+      "doc": "List of scores calculated for the client.",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "ClientScore",
+            "type": "record",
+            "fields": [
+              {
+                "name": "value",
+                "type": [
+                  "null",
+                  "int"
+                ],
+                "default": null,
+                "doc": "The calculated score."
+              },
+              {
+                "name": "remarks",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null,
+                "doc": "Remarks about the score."
+              },
+              {
+                "name": "timestamp",
+                "type": [
+                  "null",
+                  "long"
+                ],
+                "default": null,
+                "doc": "The timestamp in epoch format when the score was calculated."
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
     },
     {
       "name": "peerConnections",
@@ -70,13 +118,8 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp when the stats were generated."
-                        },
-                        {
-                          "name": "type",
-                          "type": "string",
-                          "doc": "The type of the stats."
                         },
                         {
                           "name": "id",
@@ -85,12 +128,20 @@
                         },
                         {
                           "name": "payloadType",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The payload type of the codec."
                         },
                         {
                           "name": "transportId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The identifier of the transport associated with the codec."
                         },
                         {
@@ -744,7 +795,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp for this stats object in DOMHighResTimeStamp format."
                         },
                         {
@@ -880,7 +931,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp for this stats object in DOMHighResTimeStamp format."
                         },
                         {
@@ -1226,7 +1277,8 @@
                               ]
                             }
                           ],
-                          "doc": "The duration of quality limitation reasons categorized by type."
+                          "doc": "The duration of quality limitation reasons categorized by type.",
+                          "default": null
                         },
                         {
                           "name": "appData",
@@ -1256,7 +1308,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp for this stats object in DOMHighResTimeStamp format."
                         },
                         {
@@ -1380,19 +1432,19 @@
                 "default": null
               },
               {
-                "name": "audioSources",
+                "name": "mediaSources",
                 "doc": "Audio Source Stats",
                 "type": [
                   "null",
                   {
                     "type": "array",
                     "items": {
-                      "name": "AudioSourceStats",
+                      "name": "MediaSourceStats",
                       "type": "record",
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of the stat."
                         },
                         {
@@ -1401,14 +1453,18 @@
                           "doc": "A unique identifier for the stat."
                         },
                         {
-                          "name": "trackIdentifier",
-                          "type": "string",
-                          "doc": "The identifier of the media track."
-                        },
-                        {
                           "name": "kind",
                           "type": "string",
-                          "doc": "The kind of media (audio/video)."
+                          "doc": "The type of media ('audio' or 'video')."
+                        },
+                        {
+                          "name": "trackIdentifier",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
+                          "doc": "The identifier of the media track."
                         },
                         {
                           "name": "audioLevel",
@@ -1456,69 +1512,39 @@
                           "doc": "The enhancement of echo return loss."
                         },
                         {
-                          "name": "appData",
+                          "name": "width",
                           "type": [
                             "null",
-                            "string"
+                            "int"
                           ],
                           "default": null,
-                          "doc": "Additional information attached to this stats"
-                        }
-                      ]
-                    }
-                  }
-                ],
-                "default": null
-              },
-              {
-                "name": "videoSources",
-                "doc": "Video Source Stats",
-                "type": [
-                  "null",
-                  {
-                    "type": "array",
-                    "items": {
-                      "name": "VideoSourceStats",
-                      "type": "record",
-                      "fields": [
-                        {
-                          "name": "timestamp",
-                          "type": "double",
-                          "doc": "The timestamp of the stat."
-                        },
-                        {
-                          "name": "id",
-                          "type": "string",
-                          "doc": "A unique identifier for the stat."
-                        },
-                        {
-                          "name": "trackIdentifier",
-                          "type": "string",
-                          "doc": "The identifier of the media track."
-                        },
-                        {
-                          "name": "kind",
-                          "type": "string",
-                          "doc": "The kind of media (audio/video)."
-                        },
-                        {
-                          "name": "width",
-                          "type": "int",
                           "doc": "The width of the video."
                         },
                         {
                           "name": "height",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The height of the video."
                         },
                         {
                           "name": "frames",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The total number of frames."
                         },
                         {
                           "name": "framesPerSecond",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The frames per second of the video."
                         },
                         {
@@ -1537,19 +1563,19 @@
                 "default": null
               },
               {
-                "name": "audioPlayouts",
-                "doc": "Audio Playout Stats",
+                "name": "mediaPlayouts",
+                "doc": "Media Playout Stats",
                 "type": [
                   "null",
                   {
                     "type": "array",
                     "items": {
-                      "name": "AudioPlayoutStats",
+                      "name": "MediaPlayoutStats",
                       "type": "record",
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of the stat."
                         },
                         {
@@ -1564,27 +1590,47 @@
                         },
                         {
                           "name": "synthesizedSamplesDuration",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The duration of synthesized audio samples."
                         },
                         {
                           "name": "synthesizedSamplesEvents",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of synthesized audio samples events."
                         },
                         {
                           "name": "totalSamplesDuration",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The total duration of all audio samples."
                         },
                         {
                           "name": "totalPlayoutDelay",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The total delay experienced during audio playout."
                         },
                         {
                           "name": "totalSamplesCount",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The total count of audio samples."
                         },
                         {
@@ -1615,7 +1661,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of the stat."
                         },
                         {
@@ -1625,12 +1671,20 @@
                         },
                         {
                           "name": "dataChannelsOpened",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of data channels opened."
                         },
                         {
                           "name": "dataChannelsClosed",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of data channels closed."
                         },
                         {
@@ -1661,7 +1715,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of the stat."
                         },
                         {
@@ -1671,42 +1725,74 @@
                         },
                         {
                           "name": "label",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The label of the data channel."
                         },
                         {
                           "name": "protocol",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The protocol of the data channel."
                         },
                         {
                           "name": "dataChannelIdentifier",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The identifier for the data channel."
                         },
                         {
                           "name": "state",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The state of the data channel (e.g., 'open', 'closed')."
                         },
                         {
                           "name": "messagesSent",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of messages sent on the data channel."
                         },
                         {
                           "name": "bytesSent",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The number of bytes sent on the data channel."
                         },
                         {
                           "name": "messagesReceived",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of messages received on the data channel."
                         },
                         {
                           "name": "bytesReceived",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The number of bytes received on the data channel."
                         },
                         {
@@ -1737,7 +1823,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of the stat."
                         },
                         {
@@ -1747,82 +1833,146 @@
                         },
                         {
                           "name": "packetsSent",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of packets sent."
                         },
                         {
                           "name": "packetsReceived",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of packets received."
                         },
                         {
                           "name": "bytesSent",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The number of bytes sent."
                         },
                         {
                           "name": "bytesReceived",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The number of bytes received."
                         },
                         {
                           "name": "iceRole",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The ICE role (e.g., 'controlling', 'controlled')."
                         },
                         {
                           "name": "iceLocalUsernameFragment",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The local username fragment for ICE."
                         },
                         {
                           "name": "dtlsState",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The DTLS transport state (e.g., 'new', 'connecting', 'connected')."
                         },
                         {
                           "name": "iceState",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The ICE transport state (e.g., 'new', 'checking', 'connected')."
                         },
                         {
                           "name": "selectedCandidatePairId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The ID of the selected ICE candidate pair."
                         },
                         {
                           "name": "localCertificateId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The ID of the local certificate."
                         },
                         {
                           "name": "remoteCertificateId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The ID of the remote certificate."
                         },
                         {
                           "name": "tlsVersion",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The TLS version used for encryption."
                         },
                         {
                           "name": "dtlsCipher",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The DTLS cipher suite used."
                         },
                         {
                           "name": "dtlsRole",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The role in the DTLS handshake (e.g., 'client', 'server')."
                         },
                         {
                           "name": "srtpCipher",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The SRTP cipher used for encryption."
                         },
                         {
                           "name": "selectedCandidatePairChanges",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of changes to the selected ICE candidate pair."
                         },
                         {
@@ -1853,7 +2003,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of the stat."
                         },
                         {
@@ -1863,7 +2013,11 @@
                         },
                         {
                           "name": "transportId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The transport ID associated with the ICE candidate."
                         },
                         {
@@ -1872,61 +2026,106 @@
                             "null",
                             "string"
                           ],
+                          "default": null,
                           "doc": "The IP address of the ICE candidate (nullable)."
                         },
                         {
                           "name": "port",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The port number of the ICE candidate."
                         },
                         {
                           "name": "protocol",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The transport protocol used by the candidate (e.g., 'udp', 'tcp')."
                         },
                         {
                           "name": "candidateType",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The type of the ICE candidate (e.g., 'host', 'srflx', 'relay')."
                         },
                         {
                           "name": "priority",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The priority of the ICE candidate."
                         },
                         {
                           "name": "url",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The URL of the ICE candidate."
                         },
                         {
                           "name": "relayProtocol",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The protocol used for the relay (e.g., 'tcp', 'udp')."
                         },
                         {
                           "name": "foundation",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "A string representing the foundation for the ICE candidate."
                         },
                         {
                           "name": "relatedAddress",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The related address for the ICE candidate (if any)."
                         },
                         {
                           "name": "relatedPort",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The related port for the ICE candidate (if any)."
                         },
                         {
                           "name": "usernameFragment",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The username fragment for the ICE candidate."
                         },
                         {
                           "name": "tcpType",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The TCP type of the ICE candidate (e.g., 'active', 'passive')."
                         },
                         {
@@ -1962,22 +2161,34 @@
                         },
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of when the stats were recorded, in seconds."
                         },
                         {
                           "name": "transportId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The transport id of the connection this candidate pair belongs to."
                         },
                         {
                           "name": "localCandidateId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The ID of the local ICE candidate in this pair."
                         },
                         {
                           "name": "remoteCandidateId",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The ID of the remote ICE candidate in this pair."
                         },
                         {
@@ -2000,93 +2211,164 @@
                         },
                         {
                           "name": "nominated",
-                          "type": "boolean",
-                          "default": false,
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null,
                           "doc": "Whether this candidate pair has been nominated."
                         },
                         {
                           "name": "packetsSent",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of packets sent using this candidate pair."
                         },
                         {
                           "name": "packetsReceived",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of packets received using this candidate pair."
                         },
                         {
                           "name": "bytesSent",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The total number of bytes sent using this candidate pair."
                         },
                         {
                           "name": "bytesReceived",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The total number of bytes received using this candidate pair."
                         },
                         {
                           "name": "lastPacketSentTimestamp",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The timestamp of the last packet sent using this candidate pair."
                         },
                         {
                           "name": "lastPacketReceivedTimestamp",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The timestamp of the last packet received using this candidate pair."
                         },
                         {
                           "name": "totalRoundTripTime",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The total round trip time (RTT) for this candidate pair in seconds."
                         },
                         {
                           "name": "currentRoundTripTime",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The current round trip time (RTT) for this candidate pair in seconds."
                         },
                         {
                           "name": "availableOutgoingBitrate",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The available outgoing bitrate (in bits per second) for this candidate pair."
                         },
                         {
                           "name": "availableIncomingBitrate",
-                          "type": "double",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null,
                           "doc": "The available incoming bitrate (in bits per second) for this candidate pair."
                         },
                         {
                           "name": "requestsReceived",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of ICE connection requests received by this candidate pair."
                         },
                         {
                           "name": "requestsSent",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of ICE connection requests sent by this candidate pair."
                         },
                         {
                           "name": "responsesReceived",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of ICE connection responses received by this candidate pair."
                         },
                         {
                           "name": "responsesSent",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of ICE connection responses sent by this candidate pair."
                         },
                         {
                           "name": "consentRequestsSent",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of ICE connection consent requests sent by this candidate pair."
                         },
                         {
                           "name": "packetsDiscardedOnSend",
-                          "type": "int",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
                           "doc": "The number of packets discarded while attempting to send via this candidate pair."
                         },
                         {
                           "name": "bytesDiscardedOnSend",
-                          "type": "long",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
                           "doc": "The total number of bytes discarded while attempting to send via this candidate pair."
                         },
                         {
@@ -2117,7 +2399,7 @@
                       "fields": [
                         {
                           "name": "timestamp",
-                          "type": "double",
+                          "type": "long",
                           "doc": "The timestamp of the stat."
                         },
                         {
@@ -2127,17 +2409,29 @@
                         },
                         {
                           "name": "fingerprint",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The fingerprint of the certificate."
                         },
                         {
                           "name": "fingerprintAlgorithm",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The algorithm used for the fingerprint (e.g., 'SHA-256')."
                         },
                         {
                           "name": "base64Certificate",
-                          "type": "string",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null,
                           "doc": "The certificate encoded in base64 format."
                         },
                         {
@@ -2146,6 +2440,7 @@
                             "null",
                             "string"
                           ],
+                          "default": null,
                           "doc": "The certificate ID of the issuer (nullable)."
                         },
                         {
@@ -2171,7 +2466,7 @@
     },
     {
       "name": "clientEvents",
-      "doc": "A list of additional client events.",
+      "doc": "A list of client events.",
       "type": [
         "null",
         {
@@ -2195,29 +2490,42 @@
                 "default": null
               },
               {
-                "name": "peerConnectionId",
-                "doc": "The unique identifier of the peer connection for which the event was generated.",
-                "type": [
-                  "null",
-                  "string"
-                ],
-                "default": null
-              },
-              {
-                "name": "trackId",
-                "doc": "The identifier of the media track related to the event, if applicable.",
-                "type": [
-                  "null",
-                  "string"
-                ],
-                "default": null
-              },
-              {
-                "name": "ssrc",
-                "doc": "The SSRC (Synchronization Source) identifier associated with the event, if applicable.",
+                "name": "timestamp",
+                "doc": "The timestamp in epoch format when the event was generated.",
                 "type": [
                   "null",
                   "long"
+                ],
+                "default": null
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "clientIssues",
+      "doc": "A list of client issues.",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "ClientIssue",
+            "type": "record",
+            "fields": [
+              {
+                "name": "type",
+                "doc": "The name of the issue",
+                "type": "string"
+              },
+              {
+                "name": "payload",
+                "doc": "The value associated with the event, if applicable.",
+                "type": [
+                  "null",
+                  "string"
                 ],
                 "default": null
               },
@@ -2321,8 +2629,12 @@
               },
               {
                 "name": "payload",
-                "type": "string",
-                "doc": "The payload of the extension stats the custom app provides"
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "doc": "The payload of the extension stats the custom app provides",
+                "default": null
               }
             ]
           }

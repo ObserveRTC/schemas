@@ -4,6 +4,7 @@ Javascript bindings for ObserveRTC schemas
 - [samples](#samples)
 	* [ExtensionStat](#ExtensionStat)
 	* [ClientMetaData](#ClientMetaData)
+	* [ClientIssue](#ClientIssue)
 	* [ClientEvent](#ClientEvent)
 	* [CertificateStats](#CertificateStats)
 	* [IceCandidatePairStats](#IceCandidatePairStats)
@@ -11,9 +12,8 @@ Javascript bindings for ObserveRTC schemas
 	* [IceTransportStats](#IceTransportStats)
 	* [DataChannelStats](#DataChannelStats)
 	* [PeerConnectionTransportStats](#PeerConnectionTransportStats)
-	* [AudioPlayoutStats](#AudioPlayoutStats)
-	* [VideoSourceStats](#VideoSourceStats)
-	* [AudioSourceStats](#AudioSourceStats)
+	* [MediaPlayoutStats](#MediaPlayoutStats)
+	* [MediaSourceStats](#MediaSourceStats)
 	* [RemoteOutboundRtpStats](#RemoteOutboundRtpStats)
 	* [QualityLimitationDurations](#QualityLimitationDurations)
 	* [OutboundRtpStats](#OutboundRtpStats)
@@ -21,6 +21,7 @@ Javascript bindings for ObserveRTC schemas
 	* [InboundRtpStats](#InboundRtpStats)
 	* [CodecStats](#CodecStats)
 	* [PeerConnectionSample](#PeerConnectionSample)
+	* [ClientScore](#ClientScore)
 	* [ClientSample](#ClientSample)
 	* [TurnSession](#TurnSession)
 	* [TurnPeerAllocation](#TurnPeerAllocation)
@@ -35,17 +36,25 @@ Javascript bindings for ObserveRTC schemas
 	* [Controls](#Controls)
 	* [Samples](#Samples)
 - [Changelog](#Changelog)
+## ClientScore
+
+
+Field | Description 
+--- | ---
+value | The calculated score.
+remarks | Remarks about the score.
+timestamp | The timestamp in epoch format when the score was calculated.
+
 ## CodecStats
 
 
 Field | Description 
 --- | ---
 timestamp (**Mandatory**) | The timestamp when the stats were generated.
-type (**Mandatory**) | The type of the stats.
 id (**Mandatory**) | The unique identifier for the stats object.
-payloadType (**Mandatory**) | The payload type of the codec.
-transportId (**Mandatory**) | The identifier of the transport associated with the codec.
 mimeType (**Mandatory**) | The MIME type of the codec.
+payloadType | The payload type of the codec.
+transportId | The identifier of the transport associated with the codec.
 clockRate | The clock rate of the codec in Hz.
 channels | The number of audio channels for the codec, if applicable.
 sdpFmtpLine | The SDP format-specific parameters line for the codec.
@@ -144,7 +153,15 @@ fractionLost | The fraction of packets lost on this stream, calculated over a ti
 roundTripTimeMeasurements | The total number of RTT measurements for this stream.
 appData | Additional information attached to this stats
 
-## OutboundRtpStats
+## QualityLimitationDurations
+
+
+Field | Description 
+--- | ---
+none (**Mandatory**) | Duration of no quality limitation in seconds.
+cpu (**Mandatory**) | Duration of CPU-based quality limitation in seconds.
+bandwidth (**Mandatory**) | Duration of bandwidth-based quality limitation in seconds.
+other (**Mandatory**) | Duration of other quality limitation reasons in seconds.## OutboundRtpStats
 
 
 Field | Description 
@@ -153,7 +170,6 @@ timestamp (**Mandatory**) | The timestamp for this stats object in DOMHighResTim
 id (**Mandatory**) | The unique identifier for this stats object.
 ssrc (**Mandatory**) | The SSRC identifier of the RTP stream.
 kind (**Mandatory**) | The type of media ('audio' or 'video').
-qualityLimitationDurations (**Mandatory**) | The duration of quality limitation reasons categorized by type.
 transportId | The ID of the transport used for this stream.
 codecId | The ID of the codec used for this stream.
 packetsSent | The total number of packets sent on this stream.
@@ -187,6 +203,7 @@ encoderImplementation | The implementation of the encoder used for this stream.
 powerEfficientEncoder | Indicates whether the encoder is power efficient.
 active | Indicates whether this stream is actively sending data.
 scalabilityMode | The scalability mode of the encoder used for this stream.
+qualityLimitationDurations | The duration of quality limitation reasons categorized by type.
 appData | Additional information attached to this stats.
 
 ## RemoteOutboundRtpStats
@@ -210,38 +227,27 @@ totalRoundTripTime | The total round-trip time for this stream in seconds.
 roundTripTimeMeasurements | The total number of round-trip time measurements for this stream.
 appData | Additional information attached to this stats
 
-## AudioSourceStats
+## MediaSourceStats
 
 
 Field | Description 
 --- | ---
 timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
-trackIdentifier (**Mandatory**) | The identifier of the media track.
-kind (**Mandatory**) | The kind of media (audio/video).
+kind (**Mandatory**) | The type of media ('audio' or 'video').
+trackIdentifier | The identifier of the media track.
 audioLevel | The current audio level.
 totalAudioEnergy | The total audio energy.
 totalSamplesDuration | The total duration of audio samples.
 echoReturnLoss | The echo return loss.
 echoReturnLossEnhancement | The enhancement of echo return loss.
+width | The width of the video.
+height | The height of the video.
+frames | The total number of frames.
+framesPerSecond | The frames per second of the video.
 appData | Additional information attached to this stats
 
-## VideoSourceStats
-
-
-Field | Description 
---- | ---
-timestamp (**Mandatory**) | The timestamp of the stat.
-id (**Mandatory**) | A unique identifier for the stat.
-trackIdentifier (**Mandatory**) | The identifier of the media track.
-kind (**Mandatory**) | The kind of media (audio/video).
-width (**Mandatory**) | The width of the video.
-height (**Mandatory**) | The height of the video.
-frames (**Mandatory**) | The total number of frames.
-framesPerSecond (**Mandatory**) | The frames per second of the video.
-appData | Additional information attached to this stats
-
-## AudioPlayoutStats
+## MediaPlayoutStats
 
 
 Field | Description 
@@ -249,11 +255,11 @@ Field | Description
 timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
 kind (**Mandatory**) | The kind of media (audio/video).
-synthesizedSamplesDuration (**Mandatory**) | The duration of synthesized audio samples.
-synthesizedSamplesEvents (**Mandatory**) | The number of synthesized audio samples events.
-totalSamplesDuration (**Mandatory**) | The total duration of all audio samples.
-totalPlayoutDelay (**Mandatory**) | The total delay experienced during audio playout.
-totalSamplesCount (**Mandatory**) | The total count of audio samples.
+synthesizedSamplesDuration | The duration of synthesized audio samples.
+synthesizedSamplesEvents | The number of synthesized audio samples events.
+totalSamplesDuration | The total duration of all audio samples.
+totalPlayoutDelay | The total delay experienced during audio playout.
+totalSamplesCount | The total count of audio samples.
 appData | Additional information attached to this stats
 
 ## PeerConnectionTransportStats
@@ -263,8 +269,8 @@ Field | Description
 --- | ---
 timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
-dataChannelsOpened (**Mandatory**) | The number of data channels opened.
-dataChannelsClosed (**Mandatory**) | The number of data channels closed.
+dataChannelsOpened | The number of data channels opened.
+dataChannelsClosed | The number of data channels closed.
 appData | Additional information attached to this stats
 
 ## DataChannelStats
@@ -274,14 +280,14 @@ Field | Description
 --- | ---
 timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
-label (**Mandatory**) | The label of the data channel.
-protocol (**Mandatory**) | The protocol of the data channel.
-dataChannelIdentifier (**Mandatory**) | The identifier for the data channel.
-state (**Mandatory**) | The state of the data channel (e.g., 'open', 'closed').
-messagesSent (**Mandatory**) | The number of messages sent on the data channel.
-bytesSent (**Mandatory**) | The number of bytes sent on the data channel.
-messagesReceived (**Mandatory**) | The number of messages received on the data channel.
-bytesReceived (**Mandatory**) | The number of bytes received on the data channel.
+label | The label of the data channel.
+protocol | The protocol of the data channel.
+dataChannelIdentifier | The identifier for the data channel.
+state | The state of the data channel (e.g., 'open', 'closed').
+messagesSent | The number of messages sent on the data channel.
+bytesSent | The number of bytes sent on the data channel.
+messagesReceived | The number of messages received on the data channel.
+bytesReceived | The number of bytes received on the data channel.
 appData | Additional information attached to this stats
 
 ## IceTransportStats
@@ -291,22 +297,22 @@ Field | Description
 --- | ---
 timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
-packetsSent (**Mandatory**) | The number of packets sent.
-packetsReceived (**Mandatory**) | The number of packets received.
-bytesSent (**Mandatory**) | The number of bytes sent.
-bytesReceived (**Mandatory**) | The number of bytes received.
-iceRole (**Mandatory**) | The ICE role (e.g., 'controlling', 'controlled').
-iceLocalUsernameFragment (**Mandatory**) | The local username fragment for ICE.
-dtlsState (**Mandatory**) | The DTLS transport state (e.g., 'new', 'connecting', 'connected').
-iceState (**Mandatory**) | The ICE transport state (e.g., 'new', 'checking', 'connected').
-selectedCandidatePairId (**Mandatory**) | The ID of the selected ICE candidate pair.
-localCertificateId (**Mandatory**) | The ID of the local certificate.
-remoteCertificateId (**Mandatory**) | The ID of the remote certificate.
-tlsVersion (**Mandatory**) | The TLS version used for encryption.
-dtlsCipher (**Mandatory**) | The DTLS cipher suite used.
-dtlsRole (**Mandatory**) | The role in the DTLS handshake (e.g., 'client', 'server').
-srtpCipher (**Mandatory**) | The SRTP cipher used for encryption.
-selectedCandidatePairChanges (**Mandatory**) | The number of changes to the selected ICE candidate pair.
+packetsSent | The number of packets sent.
+packetsReceived | The number of packets received.
+bytesSent | The number of bytes sent.
+bytesReceived | The number of bytes received.
+iceRole | The ICE role (e.g., 'controlling', 'controlled').
+iceLocalUsernameFragment | The local username fragment for ICE.
+dtlsState | The DTLS transport state (e.g., 'new', 'connecting', 'connected').
+iceState | The ICE transport state (e.g., 'new', 'checking', 'connected').
+selectedCandidatePairId | The ID of the selected ICE candidate pair.
+localCertificateId | The ID of the local certificate.
+remoteCertificateId | The ID of the remote certificate.
+tlsVersion | The TLS version used for encryption.
+dtlsCipher | The DTLS cipher suite used.
+dtlsRole | The role in the DTLS handshake (e.g., 'client', 'server').
+srtpCipher | The SRTP cipher used for encryption.
+selectedCandidatePairChanges | The number of changes to the selected ICE candidate pair.
 appData | Additional information attached to this stats
 
 ## IceCandidateStats
@@ -316,19 +322,19 @@ Field | Description
 --- | ---
 timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
-transportId (**Mandatory**) | The transport ID associated with the ICE candidate.
-address (**Mandatory**) | The IP address of the ICE candidate (nullable).
-port (**Mandatory**) | The port number of the ICE candidate.
-protocol (**Mandatory**) | The transport protocol used by the candidate (e.g., 'udp', 'tcp').
-candidateType (**Mandatory**) | The type of the ICE candidate (e.g., 'host', 'srflx', 'relay').
-priority (**Mandatory**) | The priority of the ICE candidate.
-url (**Mandatory**) | The URL of the ICE candidate.
-relayProtocol (**Mandatory**) | The protocol used for the relay (e.g., 'tcp', 'udp').
-foundation (**Mandatory**) | A string representing the foundation for the ICE candidate.
-relatedAddress (**Mandatory**) | The related address for the ICE candidate (if any).
-relatedPort (**Mandatory**) | The related port for the ICE candidate (if any).
-usernameFragment (**Mandatory**) | The username fragment for the ICE candidate.
-tcpType (**Mandatory**) | The TCP type of the ICE candidate (e.g., 'active', 'passive').
+transportId | The transport ID associated with the ICE candidate.
+address | The IP address of the ICE candidate (nullable).
+port | The port number of the ICE candidate.
+protocol | The transport protocol used by the candidate (e.g., 'udp', 'tcp').
+candidateType | The type of the ICE candidate (e.g., 'host', 'srflx', 'relay').
+priority | The priority of the ICE candidate.
+url | The URL of the ICE candidate.
+relayProtocol | The protocol used for the relay (e.g., 'tcp', 'udp').
+foundation | A string representing the foundation for the ICE candidate.
+relatedAddress | The related address for the ICE candidate (if any).
+relatedPort | The related port for the ICE candidate (if any).
+usernameFragment | The username fragment for the ICE candidate.
+tcpType | The TCP type of the ICE candidate (e.g., 'active', 'passive').
 appData | Additional information attached to this stats
 
 ## IceCandidatePairStats
@@ -338,28 +344,28 @@ Field | Description
 --- | ---
 id (**Mandatory**) | The unique identifier for this RTCStats object.
 timestamp (**Mandatory**) | The timestamp of when the stats were recorded, in seconds.
-transportId (**Mandatory**) | The transport id of the connection this candidate pair belongs to.
-localCandidateId (**Mandatory**) | The ID of the local ICE candidate in this pair.
-remoteCandidateId (**Mandatory**) | The ID of the remote ICE candidate in this pair.
-packetsSent (**Mandatory**) | The number of packets sent using this candidate pair.
-packetsReceived (**Mandatory**) | The number of packets received using this candidate pair.
-bytesSent (**Mandatory**) | The total number of bytes sent using this candidate pair.
-bytesReceived (**Mandatory**) | The total number of bytes received using this candidate pair.
-lastPacketSentTimestamp (**Mandatory**) | The timestamp of the last packet sent using this candidate pair.
-lastPacketReceivedTimestamp (**Mandatory**) | The timestamp of the last packet received using this candidate pair.
-totalRoundTripTime (**Mandatory**) | The total round trip time (RTT) for this candidate pair in seconds.
-currentRoundTripTime (**Mandatory**) | The current round trip time (RTT) for this candidate pair in seconds.
-availableOutgoingBitrate (**Mandatory**) | The available outgoing bitrate (in bits per second) for this candidate pair.
-availableIncomingBitrate (**Mandatory**) | The available incoming bitrate (in bits per second) for this candidate pair.
-requestsReceived (**Mandatory**) | The number of ICE connection requests received by this candidate pair.
-requestsSent (**Mandatory**) | The number of ICE connection requests sent by this candidate pair.
-responsesReceived (**Mandatory**) | The number of ICE connection responses received by this candidate pair.
-responsesSent (**Mandatory**) | The number of ICE connection responses sent by this candidate pair.
-consentRequestsSent (**Mandatory**) | The number of ICE connection consent requests sent by this candidate pair.
-packetsDiscardedOnSend (**Mandatory**) | The number of packets discarded while attempting to send via this candidate pair.
-bytesDiscardedOnSend (**Mandatory**) | The total number of bytes discarded while attempting to send via this candidate pair.
+transportId | The transport id of the connection this candidate pair belongs to.
+localCandidateId | The ID of the local ICE candidate in this pair.
+remoteCandidateId | The ID of the remote ICE candidate in this pair.
 state | undefined (Possible values are: new,<br />inProgress,<br />failed,<br />succeeded)
 nominated | Whether this candidate pair has been nominated.
+packetsSent | The number of packets sent using this candidate pair.
+packetsReceived | The number of packets received using this candidate pair.
+bytesSent | The total number of bytes sent using this candidate pair.
+bytesReceived | The total number of bytes received using this candidate pair.
+lastPacketSentTimestamp | The timestamp of the last packet sent using this candidate pair.
+lastPacketReceivedTimestamp | The timestamp of the last packet received using this candidate pair.
+totalRoundTripTime | The total round trip time (RTT) for this candidate pair in seconds.
+currentRoundTripTime | The current round trip time (RTT) for this candidate pair in seconds.
+availableOutgoingBitrate | The available outgoing bitrate (in bits per second) for this candidate pair.
+availableIncomingBitrate | The available incoming bitrate (in bits per second) for this candidate pair.
+requestsReceived | The number of ICE connection requests received by this candidate pair.
+requestsSent | The number of ICE connection requests sent by this candidate pair.
+responsesReceived | The number of ICE connection responses received by this candidate pair.
+responsesSent | The number of ICE connection responses sent by this candidate pair.
+consentRequestsSent | The number of ICE connection consent requests sent by this candidate pair.
+packetsDiscardedOnSend | The number of packets discarded while attempting to send via this candidate pair.
+bytesDiscardedOnSend | The total number of bytes discarded while attempting to send via this candidate pair.
 appData | Additional information attached to this stats
 
 ## CertificateStats
@@ -369,10 +375,10 @@ Field | Description
 --- | ---
 timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
-fingerprint (**Mandatory**) | The fingerprint of the certificate.
-fingerprintAlgorithm (**Mandatory**) | The algorithm used for the fingerprint (e.g., 'SHA-256').
-base64Certificate (**Mandatory**) | The certificate encoded in base64 format.
-issuerCertificateId (**Mandatory**) | The certificate ID of the issuer (nullable).
+fingerprint | The fingerprint of the certificate.
+fingerprintAlgorithm | The algorithm used for the fingerprint (e.g., 'SHA-256').
+base64Certificate | The certificate encoded in base64 format.
+issuerCertificateId | The certificate ID of the issuer (nullable).
 appData | Additional information attached to this stats## PeerConnectionSample
 
 
@@ -388,9 +394,8 @@ inboundRtps | Inbound RTPs
 remoteInboundRtps | Remote Inbound RTPs
 outboundRtps | Outbound RTPs
 remoteOutboundRtps | Remote Outbound RTPs
-audioSources | Audio Source Stats
-videoSources | Video Source Stats
-audioPlayouts | Audio Playout Stats
+mediaSources | Audio Source Stats
+mediaPlayouts | Media Playout Stats
 peerConnectionTransports | PeerConnection Transport Stats
 dataChannels | Data Channels Stats
 iceTransports | ICE Transport Stats
@@ -405,9 +410,15 @@ Field | Description
 --- | ---
 type (**Mandatory**) | The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
 payload | The value associated with the event, if applicable.
-peerConnectionId | The unique identifier of the peer connection for which the event was generated.
-trackId | The identifier of the media track related to the event, if applicable.
-ssrc | The SSRC (Synchronization Source) identifier associated with the event, if applicable.
+timestamp | The timestamp in epoch format when the event was generated.
+
+## ClientIssue
+
+
+Field | Description 
+--- | ---
+type (**Mandatory**) | The name of the issue
+payload | The value associated with the event, if applicable.
 timestamp | The timestamp in epoch format when the event was generated.
 
 ## ClientMetaData
@@ -428,7 +439,7 @@ timestamp | The timestamp in epoch format when the event was generated.
 Field | Description 
 --- | ---
 type (**Mandatory**) | The type of the extension stats the custom app provides
-payload (**Mandatory**) | The payload of the extension stats the custom app provides## ClientSample
+payload | The payload of the extension stats the custom app provides## ClientSample
 
 
 docs
@@ -436,12 +447,14 @@ docs
 
 Field | Description 
 --- | ---
-clientId (**Mandatory**) | Unique id of the client providing samples.
 timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 callId | the unique identifier of the call or session
+clientId | Unique id of the client providing samples.
 appData | Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
+scores | List of scores calculated for the client.
 peerConnections | Samples taken PeerConnections
-clientEvents | A list of additional client events.
+clientEvents | A list of client events.
+clientIssues | A list of client issues.
 clientMetaItems | A list of additional client events.
 extensionStats | The WebRTC app provided custom stats payload
 
