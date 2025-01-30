@@ -67,6 +67,8 @@ export class ProtobufConverterV3 {
         } else if (types.length === 2) {
             type = types[1];
             required = false;
+        } else if (typeof types === 'object') {
+            type = types;
         }
         let isObject = typeof type === "object";
         let isArray = isObject && type.type === "array";
@@ -74,6 +76,8 @@ export class ProtobufConverterV3 {
             type = type.items;
         }
         isObject = typeof type === "object";
+
+        // field.name === 'kind' && console.log('kind', field, type, isArray, required, isObject);
         if (isObject && type.type === "enum") {
             this._symbols.set(field.name, type.symbols);
             if (!this._classEnum) {
@@ -145,13 +149,14 @@ export class ProtobufConverterV3 {
         return undefined;
     }
     _addField({ doc, name, type, isArray, required }) {
-        this._fields.push({
+        const field = {
             doc,
             name,
             type,
             isArray,
             required,
-        });
+        };
+        this._fields.push(field);
     }
 
     _getMessageField({ fieldNum, name, type, isArray, required }) {
@@ -162,6 +167,7 @@ export class ProtobufConverterV3 {
         // else if (required) result.push(`required`);
         // else result.push(`optional`);
         
+        // (!name || name === 'kind') && console.log('name', name, 'required', required, type, isArray);
         result.push(type);
         result.push(`${name} = ${fieldNum}`);
 
@@ -183,6 +189,7 @@ export class ProtobufConverterV3 {
             } else {
                 optionalFields.push(field);
             }
+            // field.name === 'kind' && console.log('kind', field);
         }
         [arrayFields, requiredFields, optionalFields].forEach(fields => {
             fields.sort((a, b) => {

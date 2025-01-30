@@ -6,17 +6,26 @@ package org.observertc.schemas.protobuf;
 * Schema Version: 3.0.0
 */
 message ClientSample {
-	message ClientScore {
-		optional string remarks = 1;
-		optional int64 timestamp = 2;
-		optional int32 value = 3;
-	}
 	message PeerConnectionSample {
+		message InboundTrackSample {
+			optional string id = 1;
+			optional string kind = 2;
+			optional int64 timestamp = 3;
+			optional string attachments = 4;
+			optional double score = 5;
+		}
+		message OutboundTrackSample {
+			optional string id = 1;
+			optional string kind = 2;
+			optional int64 timestamp = 3;
+			optional string attachments = 4;
+			optional double score = 5;
+		}
 		message CodecStats {
 			optional string id = 1;
 			optional string mimeType = 2;
 			optional int64 timestamp = 3;
-			optional bytes appData = 4;
+			optional string attachments = 4;
 			optional int32 channels = 5;
 			optional int32 clockRate = 6;
 			optional int32 payloadType = 7;
@@ -29,7 +38,7 @@ message ClientSample {
 			optional int64 ssrc = 3;
 			optional int64 timestamp = 4;
 			optional bytes trackIdentifier = 5;
-			optional bytes appData = 6;
+			optional string attachments = 6;
 			optional double audioLevel = 7;
 			optional int64 bytesReceived = 8;
 			optional string codecId = 9;
@@ -96,7 +105,7 @@ message ClientSample {
 			optional string kind = 2;
 			optional int64 ssrc = 3;
 			optional int64 timestamp = 4;
-			optional bytes appData = 5;
+			optional string attachments = 5;
 			optional string codecId = 6;
 			optional double fractionLost = 7;
 			optional double jitter = 8;
@@ -120,7 +129,7 @@ message ClientSample {
 			optional int64 ssrc = 3;
 			optional int64 timestamp = 4;
 			optional bool active = 5;
-			optional bytes appData = 6;
+			optional string attachments = 6;
 			optional int32 bytesSent = 7;
 			optional string codecId = 8;
 			optional string encoderImplementation = 9;
@@ -160,7 +169,7 @@ message ClientSample {
 			optional string kind = 2;
 			optional int64 ssrc = 3;
 			optional int64 timestamp = 4;
-			optional bytes appData = 5;
+			optional string attachments = 5;
 			optional int64 bytesSent = 6;
 			optional string codecId = 7;
 			optional string localId = 8;
@@ -176,7 +185,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 timestamp = 3;
-			optional bytes appData = 4;
+			optional string attachments = 4;
 			optional double audioLevel = 5;
 			optional double echoReturnLoss = 6;
 			optional double echoReturnLossEnhancement = 7;
@@ -192,7 +201,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 timestamp = 3;
-			optional bytes appData = 4;
+			optional string attachments = 4;
 			optional double synthesizedSamplesDuration = 5;
 			optional int32 synthesizedSamplesEvents = 6;
 			optional double totalPlayoutDelay = 7;
@@ -202,14 +211,14 @@ message ClientSample {
 		message PeerConnectionTransportStats {
 			optional string id = 1;
 			optional int64 timestamp = 2;
-			optional bytes appData = 3;
+			optional string attachments = 3;
 			optional int32 dataChannelsClosed = 4;
 			optional int32 dataChannelsOpened = 5;
 		}
 		message DataChannelStats {
 			optional string id = 1;
 			optional int64 timestamp = 2;
-			optional bytes appData = 3;
+			optional string attachments = 3;
 			optional int64 bytesReceived = 4;
 			optional int64 bytesSent = 5;
 			optional int32 dataChannelIdentifier = 6;
@@ -222,7 +231,7 @@ message ClientSample {
 		message IceTransportStats {
 			optional string id = 1;
 			optional int64 timestamp = 2;
-			optional bytes appData = 3;
+			optional string attachments = 3;
 			optional int64 bytesReceived = 4;
 			optional int64 bytesSent = 5;
 			optional string dtlsCipher = 6;
@@ -244,7 +253,7 @@ message ClientSample {
 			optional string id = 1;
 			optional int64 timestamp = 2;
 			optional string address = 3;
-			optional bytes appData = 4;
+			optional string attachments = 4;
 			optional string candidateType = 5;
 			optional string foundation = 6;
 			optional int32 port = 7;
@@ -268,7 +277,7 @@ message ClientSample {
 			}
 			optional string id = 1;
 			optional int64 timestamp = 2;
-			optional bytes appData = 3;
+			optional string attachments = 3;
 			optional double availableIncomingBitrate = 4;
 			optional double availableOutgoingBitrate = 5;
 			optional int64 bytesDiscardedOnSend = 6;
@@ -295,7 +304,7 @@ message ClientSample {
 		message CertificateStats {
 			optional string id = 1;
 			optional int64 timestamp = 2;
-			optional bytes appData = 3;
+			optional string attachments = 3;
 			optional string base64Certificate = 4;
 			optional string fingerprint = 5;
 			optional string fingerprintAlgorithm = 6;
@@ -308,14 +317,17 @@ message ClientSample {
 		repeated IceCandidateStats iceCandidates = 5;
 		repeated IceTransportStats iceTransports = 6;
 		repeated InboundRtpStats inboundRtps = 7;
-		repeated MediaPlayoutStats mediaPlayouts = 8;
-		repeated MediaSourceStats mediaSources = 9;
-		repeated OutboundRtpStats outboundRtps = 10;
-		repeated PeerConnectionTransportStats peerConnectionTransports = 11;
-		repeated RemoteInboundRtpStats remoteInboundRtps = 12;
-		repeated RemoteOutboundRtpStats remoteOutboundRtps = 13;
-		optional bytes peerConnectionId = 14;
-		optional bytes appData = 15;
+		repeated InboundTrackSample inboundTracks = 8;
+		repeated MediaPlayoutStats mediaPlayouts = 9;
+		repeated MediaSourceStats mediaSources = 10;
+		repeated OutboundRtpStats outboundRtps = 11;
+		repeated OutboundTrackSample outboundTracks = 12;
+		repeated PeerConnectionTransportStats peerConnectionTransports = 13;
+		repeated RemoteInboundRtpStats remoteInboundRtps = 14;
+		repeated RemoteOutboundRtpStats remoteOutboundRtps = 15;
+		optional bytes peerConnectionId = 16;
+		optional string attachments = 17;
+		optional double score = 18;
 	}
 	message ClientEvent {
 		optional string type = 1;
@@ -344,9 +356,9 @@ message ClientSample {
 	repeated ClientMetaData clientMetaItems = 3;
 	repeated ExtensionStat extensionStats = 4;
 	repeated PeerConnectionSample peerConnections = 5;
-	repeated ClientScore scores = 6;
-	optional int64 timestamp = 7;
-	optional bytes appData = 8;
-	optional bytes callId = 9;
-	optional bytes clientId = 10;
+	optional int64 timestamp = 6;
+	optional string attachments = 7;
+	optional bytes callId = 8;
+	optional bytes clientId = 9;
+	optional double score = 10;
 }

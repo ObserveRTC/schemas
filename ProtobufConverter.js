@@ -43,6 +43,8 @@ export class ProtobufConverter {
         } else if (types.length === 2) {
             type = types[1];
             required = false;
+        } else if (typeof types === 'object') {
+            type = types;
         }
         let isObject = typeof type === "object";
         let isArray = isObject && type.type === "array";

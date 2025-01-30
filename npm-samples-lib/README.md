@@ -20,8 +20,9 @@ Javascript bindings for ObserveRTC schemas
 	* [RemoteInboundRtpStats](#RemoteInboundRtpStats)
 	* [InboundRtpStats](#InboundRtpStats)
 	* [CodecStats](#CodecStats)
+	* [OutboundTrackSample](#OutboundTrackSample)
+	* [InboundTrackSample](#InboundTrackSample)
 	* [PeerConnectionSample](#PeerConnectionSample)
-	* [ClientScore](#ClientScore)
 	* [ClientSample](#ClientSample)
 	* [TurnSession](#TurnSession)
 	* [TurnPeerAllocation](#TurnPeerAllocation)
@@ -36,14 +37,27 @@ Javascript bindings for ObserveRTC schemas
 	* [Controls](#Controls)
 	* [Samples](#Samples)
 - [Changelog](#Changelog)
-## ClientScore
+## InboundTrackSample
 
 
 Field | Description 
 --- | ---
-value | The calculated score.
-remarks | Remarks about the score.
-timestamp | The timestamp in epoch format when the score was calculated.
+timestamp (**Mandatory**) | The timestamp when the stats were generated.
+id (**Mandatory**) | The unique identifier for the stats object.
+kind (**Mandatory**) | Kind of the media (e.g., 'audio' or 'video').
+score | Calculated score for track (details should be added to attachments)
+attachments | Additional information attached to this stats
+
+## OutboundTrackSample
+
+
+Field | Description 
+--- | ---
+timestamp (**Mandatory**) | The timestamp when the stats were generated.
+id (**Mandatory**) | The unique identifier for the stats object.
+kind (**Mandatory**) | Kind of the media (e.g., 'audio' or 'video').
+score | Calculated score for track (details should be added to attachments)
+attachments | Additional information attached to this stats
 
 ## CodecStats
 
@@ -58,7 +72,7 @@ transportId | The identifier of the transport associated with the codec.
 clockRate | The clock rate of the codec in Hz.
 channels | The number of audio channels for the codec, if applicable.
 sdpFmtpLine | The SDP format-specific parameters line for the codec.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## InboundRtpStats
 
@@ -130,7 +144,7 @@ fecSsrc | SSRC of the FEC stream.
 totalCorruptionProbability | Total corruption probability of packets.
 totalSquaredCorruptionProbability | Total squared corruption probability of packets.
 corruptionMeasurements | Number of corruption measurements.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## RemoteInboundRtpStats
 
@@ -151,7 +165,7 @@ roundTripTime | The most recent RTT measurement for this stream in seconds.
 totalRoundTripTime | The cumulative RTT for all packets on this stream in seconds.
 fractionLost | The fraction of packets lost on this stream, calculated over a time interval.
 roundTripTimeMeasurements | The total number of RTT measurements for this stream.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## QualityLimitationDurations
 
@@ -204,7 +218,7 @@ powerEfficientEncoder | Indicates whether the encoder is power efficient.
 active | Indicates whether this stream is actively sending data.
 scalabilityMode | The scalability mode of the encoder used for this stream.
 qualityLimitationDurations | The duration of quality limitation reasons categorized by type.
-appData | Additional information attached to this stats.
+attachments | Additional information attached to this stats.
 
 ## RemoteOutboundRtpStats
 
@@ -225,7 +239,7 @@ reportsSent | The total number of reports sent on this stream.
 roundTripTime | The current estimated round-trip time for this stream in seconds.
 totalRoundTripTime | The total round-trip time for this stream in seconds.
 roundTripTimeMeasurements | The total number of round-trip time measurements for this stream.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## MediaSourceStats
 
@@ -245,7 +259,7 @@ width | The width of the video.
 height | The height of the video.
 frames | The total number of frames.
 framesPerSecond | The frames per second of the video.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## MediaPlayoutStats
 
@@ -260,7 +274,7 @@ synthesizedSamplesEvents | The number of synthesized audio samples events.
 totalSamplesDuration | The total duration of all audio samples.
 totalPlayoutDelay | The total delay experienced during audio playout.
 totalSamplesCount | The total count of audio samples.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## PeerConnectionTransportStats
 
@@ -271,7 +285,7 @@ timestamp (**Mandatory**) | The timestamp of the stat.
 id (**Mandatory**) | A unique identifier for the stat.
 dataChannelsOpened | The number of data channels opened.
 dataChannelsClosed | The number of data channels closed.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## DataChannelStats
 
@@ -288,7 +302,7 @@ messagesSent | The number of messages sent on the data channel.
 bytesSent | The number of bytes sent on the data channel.
 messagesReceived | The number of messages received on the data channel.
 bytesReceived | The number of bytes received on the data channel.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## IceTransportStats
 
@@ -313,7 +327,7 @@ dtlsCipher | The DTLS cipher suite used.
 dtlsRole | The role in the DTLS handshake (e.g., 'client', 'server').
 srtpCipher | The SRTP cipher used for encryption.
 selectedCandidatePairChanges | The number of changes to the selected ICE candidate pair.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## IceCandidateStats
 
@@ -335,7 +349,7 @@ relatedAddress | The related address for the ICE candidate (if any).
 relatedPort | The related port for the ICE candidate (if any).
 usernameFragment | The username fragment for the ICE candidate.
 tcpType | The TCP type of the ICE candidate (e.g., 'active', 'passive').
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## IceCandidatePairStats
 
@@ -366,7 +380,7 @@ responsesSent | The number of ICE connection responses sent by this candidate pa
 consentRequestsSent | The number of ICE connection consent requests sent by this candidate pair.
 packetsDiscardedOnSend | The number of packets discarded while attempting to send via this candidate pair.
 bytesDiscardedOnSend | The total number of bytes discarded while attempting to send via this candidate pair.
-appData | Additional information attached to this stats
+attachments | Additional information attached to this stats
 
 ## CertificateStats
 
@@ -379,7 +393,7 @@ fingerprint | The fingerprint of the certificate.
 fingerprintAlgorithm | The algorithm used for the fingerprint (e.g., 'SHA-256').
 base64Certificate | The certificate encoded in base64 format.
 issuerCertificateId | The certificate ID of the issuer (nullable).
-appData | Additional information attached to this stats## PeerConnectionSample
+attachments | Additional information attached to this stats## PeerConnectionSample
 
 
 docs
@@ -388,7 +402,10 @@ docs
 Field | Description 
 --- | ---
 peerConnectionId (**Mandatory**) | Unique identifier of the stats object.
-appData | Additional information attached to this sample
+attachments | Additional information attached to this sample
+score | Calculated score for peer connection (details should be added to attachments)
+inboundTracks | Inbound Track Stats items
+outboundTracks | Outbound Track Stats items
 codecs | Codec items
 inboundRtps | Inbound RTPs
 remoteInboundRtps | Remote Inbound RTPs
@@ -450,8 +467,8 @@ Field | Description
 timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 callId | the unique identifier of the call or session
 clientId | Unique id of the client providing samples.
-appData | Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
-scores | List of scores calculated for the client.
+attachments | Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
+score | Calculated score for client (details should be added to attachments)
 peerConnections | Samples taken PeerConnections
 clientEvents | A list of client events.
 clientIssues | A list of client issues.

@@ -9,11 +9,58 @@
             "doc": "Unique identifier of the stats object." 
         },
         {
-            "name": "appData",
+            "name": "attachments",
             "doc": "Additional information attached to this sample",
             "type": ["null", "string"],
             "default": null
         },
+        {
+            "name": "score", 
+            "doc": "Calculated score for peer connection (details should be added to attachments)",
+            "type": ["null", "double"], 
+            "default": null
+        },
+        {
+            "name": "inboundTracks",
+            "doc": "Inbound Track Stats items",
+            "type": ["null", {
+                "type": "array",
+                "items": {
+                    "type": "record",
+                    "name": "InboundTrackSample",
+                    "fields": [
+                      {"name": "timestamp", "type": "long", "doc": "The timestamp when the stats were generated."},
+                      {"name": "id", "type": "string", "doc": "The unique identifier for the stats object."},
+                      {"name": "kind", "type": "string", "doc": "Kind of the media (e.g., 'audio' or 'video')." },
+                      {"name": "score", "type": ["null", "double"], "default": null, "doc": "Calculated score for track (details should be added to attachments)" },
+                      {"name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                    ]
+                  }
+                  
+            }],
+            "default": null
+        },
+        {
+            "name": "outboundTracks",
+            "doc": "Outbound Track Stats items",
+            "type": ["null", {
+                "type": "array",
+                "items": {
+                    "type": "record",
+                    "name": "OutboundTrackSample",
+                    "fields": [
+                      {"name": "timestamp", "type": "long", "doc": "The timestamp when the stats were generated."},
+                      {"name": "id", "type": "string", "doc": "The unique identifier for the stats object."},
+                      {"name": "kind", "type": "string", "doc": "Kind of the media (e.g., 'audio' or 'video')." },
+                      {"name": "score", "type": ["null", "double"], "default": null, "doc": "Calculated score for track (details should be added to attachments)" },
+                      {"name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                    ]
+                  }
+                  
+            }],
+            "default": null
+        },
+
         {
             "name": "codecs",
             "doc": "Codec items",
@@ -34,7 +81,7 @@
                       /** 
                     * Custom fields
                     */
-                    { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                    { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                   }
                   
@@ -119,7 +166,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -152,7 +199,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -215,7 +262,8 @@
                         {"name": "other", "type": "double", "doc": "Duration of other quality limitation reasons in seconds."}
                       ]
                     }], "doc": "The duration of quality limitation reasons categorized by type.", "default": null },
-                    {"name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats."}
+
+                    {"name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats."}
                   ]
               }
             }],
@@ -248,7 +296,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -285,7 +333,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -316,7 +364,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -339,7 +387,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -368,7 +416,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -405,7 +453,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -441,7 +489,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -489,7 +537,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],
@@ -514,7 +562,7 @@
                         /** 
                         * Custom fields
                         */
-                        { "name": "appData", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
+                        { "name": "attachments", "type": ["null", "string"], "default": null, "doc": "Additional information attached to this stats" }
                     ]
                 }
             }],

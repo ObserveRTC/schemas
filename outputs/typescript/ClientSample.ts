@@ -132,7 +132,7 @@ export type CertificateStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -259,7 +259,7 @@ export type IceCandidatePairStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -345,7 +345,7 @@ export type IceCandidateStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -446,7 +446,7 @@ export type IceTransportStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -507,7 +507,7 @@ export type DataChannelStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -538,7 +538,7 @@ export type PeerConnectionTransportStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -589,7 +589,7 @@ export type MediaPlayoutStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -665,7 +665,7 @@ export type MediaSourceStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -746,7 +746,7 @@ export type RemoteOutboundRtpStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -973,7 +973,7 @@ export type OutboundRtpStats = {
 	/**
 	* Additional information attached to this stats.
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -1054,7 +1054,7 @@ export type RemoteInboundRtpStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -1390,7 +1390,7 @@ export type InboundRtpStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -1441,7 +1441,69 @@ export type CodecStats = {
 	/**
 	* Additional information attached to this stats
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Outbound Track Stats items
+*/
+export type OutboundTrackSample = {
+	/**
+	* The timestamp when the stats were generated.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for the stats object.
+	*/
+	id: string;
+
+	/**
+	* Kind of the media (e.g., 'audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* Calculated score for track (details should be added to attachments)
+	*/
+	score?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Inbound Track Stats items
+*/
+export type InboundTrackSample = {
+	/**
+	* The timestamp when the stats were generated.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for the stats object.
+	*/
+	id: string;
+
+	/**
+	* Kind of the media (e.g., 'audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* Calculated score for track (details should be added to attachments)
+	*/
+	score?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
 
 }
 
@@ -1457,7 +1519,22 @@ export type PeerConnectionSample = {
 	/**
 	* Additional information attached to this sample
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
+
+	/**
+	* Calculated score for peer connection (details should be added to attachments)
+	*/
+	score?: number;
+
+	/**
+	* Inbound Track Stats items
+	*/
+	inboundTracks?: InboundTrackSample[];
+
+	/**
+	* Outbound Track Stats items
+	*/
+	outboundTracks?: OutboundTrackSample[];
 
 	/**
 	* Codec items
@@ -1527,27 +1604,6 @@ export type PeerConnectionSample = {
 }
 
 /**
-* List of scores calculated for the client.
-*/
-export type ClientScore = {
-	/**
-	* The calculated score.
-	*/
-	value?: number;
-
-	/**
-	* Remarks about the score.
-	*/
-	remarks?: string;
-
-	/**
-	* The timestamp in epoch format when the score was calculated.
-	*/
-	timestamp?: number;
-
-}
-
-/**
 * docs
 */
 export type ClientSample = {
@@ -1569,12 +1625,12 @@ export type ClientSample = {
 	/**
 	* Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
 	*/
-	appData?: Record<string, unknown>;
+	attachments?: Record<string, unknown>;
 
 	/**
-	* List of scores calculated for the client.
+	* Calculated score for client (details should be added to attachments)
 	*/
-	scores?: ClientScore[];
+	score?: number;
 
 	/**
 	* Samples taken PeerConnections

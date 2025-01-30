@@ -91,7 +91,7 @@ function getTsType(avroType, addDoc = true) {
     
 }
 
-function getAppDataTsType() {
+function getAttachmentsTsType() {
     return {
         tsType: "Record<string, unknown>",
         tsObj: undefined,
@@ -112,7 +112,7 @@ function makeTsObj(avroSchema, addDoc = true) {
         const tsTypes = [];
         for (const avroType of avroTypes) {
             if (avroType === "null") continue;
-            const { tsType, tsObj, tsDependencies } = field.name === 'appData' ? getAppDataTsType() : getTsType(avroType, addDoc);
+            const { tsType, tsObj, tsDependencies } = field.name === 'attachments' ? getAttachmentsTsType() : getTsType(avroType, addDoc);
             if (tsObj) {
                 dependencies.push(tsObj);
                 if (tsDependencies) {

@@ -6,17 +6,26 @@ package org.observertc.schemas.protobuf;
 * Schema Version: 3.0.0
 */
 message ClientSample {
-	message ClientScore {
-		string remarks = 1;
-		int64 timestamp = 2;
-		int32 value = 3;
-	}
 	message PeerConnectionSample {
+		message InboundTrackSample {
+			string id = 1;
+			string kind = 2;
+			int64 timestamp = 3;
+			string attachments = 4;
+			double score = 5;
+		}
+		message OutboundTrackSample {
+			string id = 1;
+			string kind = 2;
+			int64 timestamp = 3;
+			string attachments = 4;
+			double score = 5;
+		}
 		message CodecStats {
 			string id = 1;
 			string mimeType = 2;
 			int64 timestamp = 3;
-			bytes appData = 4;
+			string attachments = 4;
 			int32 channels = 5;
 			int32 clockRate = 6;
 			int32 payloadType = 7;
@@ -29,7 +38,7 @@ message ClientSample {
 			int64 ssrc = 3;
 			int64 timestamp = 4;
 			bytes trackIdentifier = 5;
-			bytes appData = 6;
+			string attachments = 6;
 			double audioLevel = 7;
 			int64 bytesReceived = 8;
 			string codecId = 9;
@@ -96,7 +105,7 @@ message ClientSample {
 			string kind = 2;
 			int64 ssrc = 3;
 			int64 timestamp = 4;
-			bytes appData = 5;
+			string attachments = 5;
 			string codecId = 6;
 			double fractionLost = 7;
 			double jitter = 8;
@@ -120,7 +129,7 @@ message ClientSample {
 			int64 ssrc = 3;
 			int64 timestamp = 4;
 			bool active = 5;
-			bytes appData = 6;
+			string attachments = 6;
 			int32 bytesSent = 7;
 			string codecId = 8;
 			string encoderImplementation = 9;
@@ -160,7 +169,7 @@ message ClientSample {
 			string kind = 2;
 			int64 ssrc = 3;
 			int64 timestamp = 4;
-			bytes appData = 5;
+			string attachments = 5;
 			int64 bytesSent = 6;
 			string codecId = 7;
 			string localId = 8;
@@ -176,7 +185,7 @@ message ClientSample {
 			string id = 1;
 			string kind = 2;
 			int64 timestamp = 3;
-			bytes appData = 4;
+			string attachments = 4;
 			double audioLevel = 5;
 			double echoReturnLoss = 6;
 			double echoReturnLossEnhancement = 7;
@@ -192,7 +201,7 @@ message ClientSample {
 			string id = 1;
 			string kind = 2;
 			int64 timestamp = 3;
-			bytes appData = 4;
+			string attachments = 4;
 			double synthesizedSamplesDuration = 5;
 			int32 synthesizedSamplesEvents = 6;
 			double totalPlayoutDelay = 7;
@@ -202,14 +211,14 @@ message ClientSample {
 		message PeerConnectionTransportStats {
 			string id = 1;
 			int64 timestamp = 2;
-			bytes appData = 3;
+			string attachments = 3;
 			int32 dataChannelsClosed = 4;
 			int32 dataChannelsOpened = 5;
 		}
 		message DataChannelStats {
 			string id = 1;
 			int64 timestamp = 2;
-			bytes appData = 3;
+			string attachments = 3;
 			int64 bytesReceived = 4;
 			int64 bytesSent = 5;
 			int32 dataChannelIdentifier = 6;
@@ -222,7 +231,7 @@ message ClientSample {
 		message IceTransportStats {
 			string id = 1;
 			int64 timestamp = 2;
-			bytes appData = 3;
+			string attachments = 3;
 			int64 bytesReceived = 4;
 			int64 bytesSent = 5;
 			string dtlsCipher = 6;
@@ -244,7 +253,7 @@ message ClientSample {
 			string id = 1;
 			int64 timestamp = 2;
 			string address = 3;
-			bytes appData = 4;
+			string attachments = 4;
 			string candidateType = 5;
 			string foundation = 6;
 			int32 port = 7;
@@ -268,7 +277,7 @@ message ClientSample {
 			}
 			string id = 1;
 			int64 timestamp = 2;
-			bytes appData = 3;
+			string attachments = 3;
 			double availableIncomingBitrate = 4;
 			double availableOutgoingBitrate = 5;
 			int64 bytesDiscardedOnSend = 6;
@@ -295,7 +304,7 @@ message ClientSample {
 		message CertificateStats {
 			string id = 1;
 			int64 timestamp = 2;
-			bytes appData = 3;
+			string attachments = 3;
 			string base64Certificate = 4;
 			string fingerprint = 5;
 			string fingerprintAlgorithm = 6;
@@ -308,14 +317,17 @@ message ClientSample {
 		repeated IceCandidateStats iceCandidates = 5;
 		repeated IceTransportStats iceTransports = 6;
 		repeated InboundRtpStats inboundRtps = 7;
-		repeated MediaPlayoutStats mediaPlayouts = 8;
-		repeated MediaSourceStats mediaSources = 9;
-		repeated OutboundRtpStats outboundRtps = 10;
-		repeated PeerConnectionTransportStats peerConnectionTransports = 11;
-		repeated RemoteInboundRtpStats remoteInboundRtps = 12;
-		repeated RemoteOutboundRtpStats remoteOutboundRtps = 13;
-		bytes peerConnectionId = 14;
-		bytes appData = 15;
+		repeated InboundTrackSample inboundTracks = 8;
+		repeated MediaPlayoutStats mediaPlayouts = 9;
+		repeated MediaSourceStats mediaSources = 10;
+		repeated OutboundRtpStats outboundRtps = 11;
+		repeated OutboundTrackSample outboundTracks = 12;
+		repeated PeerConnectionTransportStats peerConnectionTransports = 13;
+		repeated RemoteInboundRtpStats remoteInboundRtps = 14;
+		repeated RemoteOutboundRtpStats remoteOutboundRtps = 15;
+		bytes peerConnectionId = 16;
+		string attachments = 17;
+		double score = 18;
 	}
 	message ClientEvent {
 		string type = 1;
@@ -344,9 +356,9 @@ message ClientSample {
 	repeated ClientMetaData clientMetaItems = 3;
 	repeated ExtensionStat extensionStats = 4;
 	repeated PeerConnectionSample peerConnections = 5;
-	repeated ClientScore scores = 6;
-	int64 timestamp = 7;
-	bytes appData = 8;
-	bytes callId = 9;
-	bytes clientId = 10;
+	int64 timestamp = 6;
+	string attachments = 7;
+	bytes callId = 8;
+	bytes clientId = 9;
+	double score = 10;
 }

@@ -16,7 +16,7 @@
             "default": null
         },
         {
-            "name": "appData",
+            "name": "attachments",
             "doc": "Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)",
             "type": ["null", "string"],
             "default": null
@@ -27,21 +27,10 @@
             "type": "long"
         }, 
         {
-            "name": "scores",
-            "doc": "List of scores calculated for the client.",
-            "type": ["null", {
-              "type": "array",
-              "items": {
-                "name": "ClientScore",
-                "type": "record",
-                "fields": [
-                  {"name": "value", "type": ["null", "int"], "default": null, "doc": "The calculated score." },
-                  {"name": "remarks", "type": ["null", "string"], "default": null, "doc": "Remarks about the score." },
-                  {"name": "timestamp", "type": ["null", "long"], "default": null, "doc": "The timestamp in epoch format when the score was calculated." }
-                ]
-              }
-            }],
-            "default": null
+          "name": "score", 
+          "doc": "Calculated score for client (details should be added to attachments)",
+          "type": ["null", "double"], 
+          "default": null
         },
         {
             "name" : "peerConnections",

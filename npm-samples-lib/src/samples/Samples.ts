@@ -876,7 +876,7 @@ export type CustomSfuEvent = {
 	/**
 	* Additional attachment relevant for the event
 	*/
-	attachments?: string;
+	attachments?: Record<string, unknown>;
 
 	/**
 	* The EPOCH timestamp the event is generated
