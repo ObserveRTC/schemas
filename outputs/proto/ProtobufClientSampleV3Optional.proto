@@ -10,21 +10,21 @@ message ClientSample {
 		message InboundTrackSample {
 			optional string id = 1;
 			optional string kind = 2;
-			optional int64 timestamp = 3;
+			optional int32 timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
 		}
 		message OutboundTrackSample {
 			optional string id = 1;
 			optional string kind = 2;
-			optional int64 timestamp = 3;
+			optional int32 timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
 		}
 		message CodecStats {
 			optional string id = 1;
 			optional string mimeType = 2;
-			optional int64 timestamp = 3;
+			optional int32 timestamp = 3;
 			optional string attachments = 4;
 			optional int32 channels = 5;
 			optional int32 clockRate = 6;
@@ -36,7 +36,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 ssrc = 3;
-			optional int64 timestamp = 4;
+			optional int32 timestamp = 4;
 			optional bytes trackIdentifier = 5;
 			optional string attachments = 6;
 			optional double audioLevel = 7;
@@ -104,7 +104,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 ssrc = 3;
-			optional int64 timestamp = 4;
+			optional int32 timestamp = 4;
 			optional string attachments = 5;
 			optional string codecId = 6;
 			optional double fractionLost = 7;
@@ -127,7 +127,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 ssrc = 3;
-			optional int64 timestamp = 4;
+			optional int32 timestamp = 4;
 			optional bool active = 5;
 			optional string attachments = 6;
 			optional int32 bytesSent = 7;
@@ -168,7 +168,7 @@ message ClientSample {
 			optional string id = 1;
 			optional string kind = 2;
 			optional int64 ssrc = 3;
-			optional int64 timestamp = 4;
+			optional int32 timestamp = 4;
 			optional string attachments = 5;
 			optional int64 bytesSent = 6;
 			optional string codecId = 7;
@@ -184,7 +184,7 @@ message ClientSample {
 		message MediaSourceStats {
 			optional string id = 1;
 			optional string kind = 2;
-			optional int64 timestamp = 3;
+			optional int32 timestamp = 3;
 			optional string attachments = 4;
 			optional double audioLevel = 5;
 			optional double echoReturnLoss = 6;
@@ -200,7 +200,7 @@ message ClientSample {
 		message MediaPlayoutStats {
 			optional string id = 1;
 			optional string kind = 2;
-			optional int64 timestamp = 3;
+			optional int32 timestamp = 3;
 			optional string attachments = 4;
 			optional double synthesizedSamplesDuration = 5;
 			optional int32 synthesizedSamplesEvents = 6;
@@ -210,14 +210,14 @@ message ClientSample {
 		}
 		message PeerConnectionTransportStats {
 			optional string id = 1;
-			optional int64 timestamp = 2;
+			optional int32 timestamp = 2;
 			optional string attachments = 3;
 			optional int32 dataChannelsClosed = 4;
 			optional int32 dataChannelsOpened = 5;
 		}
 		message DataChannelStats {
 			optional string id = 1;
-			optional int64 timestamp = 2;
+			optional int32 timestamp = 2;
 			optional string attachments = 3;
 			optional int64 bytesReceived = 4;
 			optional int64 bytesSent = 5;
@@ -230,7 +230,7 @@ message ClientSample {
 		}
 		message IceTransportStats {
 			optional string id = 1;
-			optional int64 timestamp = 2;
+			optional int32 timestamp = 2;
 			optional string attachments = 3;
 			optional int64 bytesReceived = 4;
 			optional int64 bytesSent = 5;
@@ -251,7 +251,7 @@ message ClientSample {
 		}
 		message IceCandidateStats {
 			optional string id = 1;
-			optional int64 timestamp = 2;
+			optional int32 timestamp = 2;
 			optional string address = 3;
 			optional string attachments = 4;
 			optional string candidateType = 5;
@@ -276,7 +276,7 @@ message ClientSample {
 				SUCCEEDED = 3;
 			}
 			optional string id = 1;
-			optional int64 timestamp = 2;
+			optional int32 timestamp = 2;
 			optional string attachments = 3;
 			optional double availableIncomingBitrate = 4;
 			optional double availableOutgoingBitrate = 5;
@@ -303,7 +303,7 @@ message ClientSample {
 		}
 		message CertificateStats {
 			optional string id = 1;
-			optional int64 timestamp = 2;
+			optional int32 timestamp = 2;
 			optional string attachments = 3;
 			optional string base64Certificate = 4;
 			optional string fingerprint = 5;
@@ -332,19 +332,19 @@ message ClientSample {
 	message ClientEvent {
 		optional string type = 1;
 		optional string payload = 2;
-		optional int64 timestamp = 3;
+		optional int32 timestamp = 3;
 	}
 	message ClientIssue {
 		optional string type = 1;
 		optional string payload = 2;
-		optional int64 timestamp = 3;
+		optional int32 timestamp = 3;
 	}
 	message ClientMetaData {
 		optional string type = 1;
 		optional string payload = 2;
 		optional bytes peerConnectionId = 3;
 		optional int64 ssrc = 4;
-		optional int64 timestamp = 5;
+		optional int32 timestamp = 5;
 		optional bytes trackId = 6;
 	}
 	message ExtensionStat {
@@ -356,7 +356,7 @@ message ClientSample {
 	repeated ClientMetaData clientMetaItems = 3;
 	repeated ExtensionStat extensionStats = 4;
 	repeated PeerConnectionSample peerConnections = 5;
-	optional int64 timestamp = 6;
+	optional int32 timestamp = 6;
 	optional string attachments = 7;
 	optional bytes callId = 8;
 	optional bytes clientId = 9;

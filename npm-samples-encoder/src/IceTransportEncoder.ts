@@ -3,7 +3,7 @@ import { IceTransportStats as InputIceTransportStats } from "./InputSamples";
 import {
   NumberToNumberEncoder,
   StringToStringEncoder,
-  AppDataEncoder,
+  AttachmentEncoder,
 } from "./utils";
 import { ClientSample_PeerConnectionSample_IceTransportStats } from "./OutputSamples";
 
@@ -27,9 +27,9 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
   private readonly _dtlsRoleEncoder: StringToStringEncoder;
   private readonly _srtpCipherEncoder: StringToStringEncoder;
   private readonly _selectedCandidatePairChangesEncoder: NumberToNumberEncoder;
-  private readonly _appDataEncoder: AppDataEncoder;
+  private readonly _attachmentsEncoder: AttachmentEncoder;
 
-  constructor(appDataEncoder: AppDataEncoder) {
+  constructor(attachmentsEncoder: AttachmentEncoder) {
     this._timestampEncoder = new NumberToNumberEncoder();
     this._packetsSentEncoder = new NumberToNumberEncoder();
     this._packetsReceivedEncoder = new NumberToNumberEncoder();
@@ -47,7 +47,7 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
     this._dtlsRoleEncoder = new StringToStringEncoder();
     this._srtpCipherEncoder = new StringToStringEncoder();
     this._selectedCandidatePairChangesEncoder = new NumberToNumberEncoder();
-    this._appDataEncoder = appDataEncoder;
+    this._attachmentsEncoder = attachmentsEncoder;
   }
 	
 	public get visited(): boolean {
@@ -74,7 +74,7 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
     this._dtlsRoleEncoder.reset();
     this._srtpCipherEncoder.reset();
     this._selectedCandidatePairChangesEncoder.reset();
-    this._appDataEncoder.reset();
+    this._attachmentsEncoder.reset();
   }
 
   public encode(sample: InputIceTransportStats): ClientSample_PeerConnectionSample_IceTransportStats {
@@ -99,7 +99,7 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
       dtlsRole: this._dtlsRoleEncoder.encode(sample.dtlsRole),
       srtpCipher: this._srtpCipherEncoder.encode(sample.srtpCipher),
       selectedCandidatePairChanges: this._selectedCandidatePairChangesEncoder.encode(sample.selectedCandidatePairChanges),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
     });
   }
 }

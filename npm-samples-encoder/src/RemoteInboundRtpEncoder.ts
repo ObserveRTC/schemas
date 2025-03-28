@@ -1,5 +1,5 @@
 import {
-  AppDataEncoder,
+  AttachmentEncoder,
   NumberToNumberEncoder,
   StringToStringEncoder,
   OneTimePassEncoder,
@@ -29,7 +29,7 @@ export class RemoteInboundRtpEncoder implements Encoder<RemoteInboundRtpStats, C
 
   constructor(
 		ssrc: number,
-		private readonly _appDataEncoder: AppDataEncoder
+		private readonly _attachmentsEncoder: AttachmentEncoder
 	) {
 		this.ssrc = BigInt(ssrc);
 
@@ -89,7 +89,7 @@ export class RemoteInboundRtpEncoder implements Encoder<RemoteInboundRtpStats, C
       totalRoundTripTime: this._totalRoundTripTimeEncoder.encode(sample.totalRoundTripTime),
       fractionLost: this._fractionLostEncoder.encode(sample.fractionLost),
       roundTripTimeMeasurements: this._roundTripTimeMeasurementsEncoder.encode(sample.roundTripTimeMeasurements),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
     });
   }
 }

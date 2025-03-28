@@ -1,5 +1,5 @@
 import {
-  AppDataEncoder,
+  AttachmentEncoder,
   BooleanToBooleanEncoder,
   NumberToNumberEncoder,
   OneTimePassEncoder,
@@ -84,7 +84,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
 
   constructor(
     ssrc: number,
-    private readonly _appDataEncoder: AppDataEncoder
+    private readonly _attachmentsEncoder: AttachmentEncoder
   ) {
     this._ssrc = BigInt(ssrc);
 
@@ -182,7 +182,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
       kind: this._kindEncoder.encode(sample.kind),
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       active: this._activeEncoder.encode(sample.active),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
       bytesSent: this._bytesSentEncoder.encode(sample.bytesSent),
       codecId: this._codecIdEncoder.encode(sample.codecId),
       encoderImplementation: this._encoderImplementationEncoder.encode(sample.encoderImplementation),

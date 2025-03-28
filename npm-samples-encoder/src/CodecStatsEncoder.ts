@@ -2,7 +2,7 @@ import { Encoder } from "./utils";
 import { CodecStats as InputCodecStats } from "./InputSamples";
 import { ClientSample_PeerConnectionSample_CodecStats } from "./OutputSamples";
 import {
-  AppDataEncoder,
+  AttachmentEncoder,
   NumberToNumberEncoder,
   StringToStringEncoder,
 } from "./utils";
@@ -20,9 +20,9 @@ export class CodecStatsEncoder
   private readonly _clockRateEncoder: NumberToNumberEncoder;
   private readonly _channelsEncoder: NumberToNumberEncoder;
   private readonly _sdpFmtpLineEncoder: StringToStringEncoder;
-  private readonly _appDataEncoder: AppDataEncoder;
+  private readonly _attachmentsEncoder: AttachmentEncoder;
 
-  constructor(appDataEncoder: AppDataEncoder) {
+  constructor(attachmentsEncoder: AttachmentEncoder) {
     this._timestampEncoder = new NumberToNumberEncoder();
     this._typeEncoder = new StringToStringEncoder();
     this._payloadTypeEncoder = new NumberToNumberEncoder();
@@ -31,7 +31,7 @@ export class CodecStatsEncoder
     this._clockRateEncoder = new NumberToNumberEncoder();
     this._channelsEncoder = new NumberToNumberEncoder();
     this._sdpFmtpLineEncoder = new StringToStringEncoder();
-    this._appDataEncoder = appDataEncoder;
+    this._attachmentsEncoder = attachmentsEncoder;
   }
 
 	public get visited(): boolean {
@@ -41,7 +41,7 @@ export class CodecStatsEncoder
 	}
 
 	public reset(): void {
-		this._appDataEncoder.reset();
+		this._attachmentsEncoder.reset();
 		this._channelsEncoder.reset();
 		this._clockRateEncoder.reset();
 		this._mimeTypeEncoder.reset();
@@ -55,7 +55,6 @@ export class CodecStatsEncoder
   public encode(sample: InputCodecStats): ClientSample_PeerConnectionSample_CodecStats {
     return new ClientSample_PeerConnectionSample_CodecStats({
       timestamp: this._timestampEncoder.encode(sample.timestamp),
-      type: this._typeEncoder.encode(sample.type),
       id: sample.id,
       payloadType: this._payloadTypeEncoder.encode(sample.payloadType),
       transportId: this._transportIdEncoder.encode(sample.transportId),
@@ -63,7 +62,7 @@ export class CodecStatsEncoder
       clockRate: this._clockRateEncoder.encode(sample.clockRate),
       channels: this._channelsEncoder.encode(sample.channels),
       sdpFmtpLine: this._sdpFmtpLineEncoder.encode(sample.sdpFmtpLine),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
     });
   }
 }

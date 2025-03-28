@@ -25,10 +25,9 @@ export interface Encoder<I, O> {
 	encode(newValue?: I): O | undefined;
 	reset(): void;
 }
-export interface AppDataEncoder extends Encoder<Record<string, unknown>, Uint8Array> {
+export interface AttachmentEncoder extends Encoder<Record<string, unknown>, string> {
 	reset(): void;
 }
-
 
 
 export type ClientSampleEncoderSettings = {
@@ -38,108 +37,118 @@ export type ClientSampleEncoderSettings = {
 	trackIdIsUuid?: boolean;
 };
 
-export interface AppDataEncoderFactory {
-	createIceCandidatePairAppDataEncoder(): AppDataEncoder;
-	createCodecStatsAppDataEncoder(): AppDataEncoder;
-	createClientSampleAppDataEncoder(): AppDataEncoder;
-	createPeerConnectionSampleAppDataEncoder(): AppDataEncoder;
-	createCertificateAppDataEncoder(): AppDataEncoder;
-	createIceCandidateAppDataEncoder(): AppDataEncoder;
-	createIceTransportAppDataEncoder(): AppDataEncoder;
-	createInboundRtpAppDataEncoder(): AppDataEncoder;
-	createOutboundRtpAppDataEncoder(): AppDataEncoder;
-	createDataChannelAppDataEncoder(): AppDataEncoder;
-	createRemoteInboundRtpAppDataEncoder(): AppDataEncoder;
-	createRemoteOutboundRtpAppDataEncoder(): AppDataEncoder;
-	createAudioSourceAppDataEncoder(): AppDataEncoder;
-	createVideoSourceAppDataEncoder(): AppDataEncoder;
-	createAudioPlayoutAppDataEncoder(): AppDataEncoder;
-	createPeerConnectionTransportAppDataEncoder(): AppDataEncoder;
+export interface AttachmentsEncoderFactory {
+	createIceCandidatePairAttachmentEncoder(): AttachmentEncoder;
+	createCodecStatsAttachmentEncoder(): AttachmentEncoder;
+	createClientSampleAttachmentEncoder(): AttachmentEncoder;
+	createPeerConnectionSampleAttachmentEncoder(): AttachmentEncoder;
+	createCertificateAttachmentEncoder(): AttachmentEncoder;
+	createIceCandidateAttachmentEncoder(): AttachmentEncoder;
+	createIceTransportAttachmentEncoder(): AttachmentEncoder;
+	createInboundTrackAttachmentEncoder(): AttachmentEncoder;
+	createOutboundTrackAttachmentEncoder(): AttachmentEncoder;
+	createInboundRtpAttachmentEncoder(): AttachmentEncoder;
+	createOutboundRtpAttachmentEncoder(): AttachmentEncoder;
+	createDataChannelAttachmentEncoder(): AttachmentEncoder;
+	createRemoteInboundRtpAttachmentEncoder(): AttachmentEncoder;
+	createRemoteOutboundRtpAttachmentEncoder(): AttachmentEncoder;
+	createAudioSourceAttachmentEncoder(): AttachmentEncoder;
+	createVideoSourceAttachmentEncoder(): AttachmentEncoder;
+	createAudioPlayoutAttachmentEncoder(): AttachmentEncoder;
+	createPeerConnectionTransportAttachmentEncoder(): AttachmentEncoder;
 }
 
-export class DefaultAppDataEncoderFactory implements AppDataEncoderFactory {
-	public createIceCandidatePairAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+export class DefaultAttachmentEncoderFactory implements AttachmentsEncoderFactory {
+	public createIceCandidatePairAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 	
-	public createCodecStatsAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createCodecStatsAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createClientSampleAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createClientSampleAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
+	}
+
+	public createInboundTrackAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
+	}
+
+	public createOutboundTrackAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 	
-	public createPeerConnectionSampleAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createPeerConnectionSampleAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createCertificateAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createCertificateAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createIceCandidateAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createIceCandidateAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createIceTransportAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createIceTransportAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createInboundRtpAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createInboundRtpAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createOutboundRtpAppDataEncoder(): AppDataEncoder {
-		return new DefaultAppDataEncoder();
+	public createOutboundRtpAttachmentEncoder(): AttachmentEncoder {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createDataChannelAppDataEncoder() {
-		return new DefaultAppDataEncoder();
+	public createDataChannelAttachmentEncoder() {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createRemoteInboundRtpAppDataEncoder() {
-		return new DefaultAppDataEncoder();
+	public createRemoteInboundRtpAttachmentEncoder() {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createRemoteOutboundRtpAppDataEncoder() {
-		return new DefaultAppDataEncoder();
+	public createRemoteOutboundRtpAttachmentEncoder() {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createAudioSourceAppDataEncoder() {
-		return new DefaultAppDataEncoder();
+	public createAudioSourceAttachmentEncoder() {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createVideoSourceAppDataEncoder() {
-		return new DefaultAppDataEncoder();
+	public createVideoSourceAttachmentEncoder() {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createAudioPlayoutAppDataEncoder() {
-		return new DefaultAppDataEncoder();
+	public createAudioPlayoutAttachmentEncoder() {
+		return new DefaultAttachmentEncoder();
 	}
 
-	public createPeerConnectionTransportAppDataEncoder() {
-		return new DefaultAppDataEncoder();
+	public createPeerConnectionTransportAttachmentEncoder() {
+		return new DefaultAttachmentEncoder();
 	}
 }
 
-export class DefaultAppDataEncoder implements AppDataEncoder {
-	private _actualJsonStr?: string;
+export class DefaultAttachmentEncoder implements AttachmentEncoder {
+	private _actualValueRef?: Record<string, unknown>;
 
 	public constructor() {
 
 	}
 
 	public reset() {
-		this._actualJsonStr = undefined;
+		this._actualValueRef = undefined;
 	}
 
 	encode(newValue?: Record<string, unknown>) {
-		if (this._actualJsonStr) return;
+		if (this._actualValueRef && newValue === this._actualValueRef) return;
 		if (newValue === undefined) return;
-		const jsonStr = JSON.stringify(newValue);
-		this._actualJsonStr = jsonStr;
-		return textEncoder.encode(jsonStr);
+		this._actualValueRef = newValue;
+
+		return JSON.stringify(newValue);
 	}
 }
 

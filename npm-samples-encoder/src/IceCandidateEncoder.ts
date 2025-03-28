@@ -3,7 +3,7 @@ import { IceCandidateStats as InputIceCandidateStats } from "./InputSamples";
 import {
   NumberToNumberEncoder,
   StringToStringEncoder,
-  AppDataEncoder,
+  AttachmentEncoder,
 } from "./utils";
 import { ClientSample_PeerConnectionSample_IceCandidateStats } from "./OutputSamples";
 
@@ -25,9 +25,9 @@ export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, Clie
   private readonly _relatedPortEncoder: NumberToNumberEncoder;
   private readonly _usernameFragmentEncoder: StringToStringEncoder;
   private readonly _tcpTypeEncoder: StringToStringEncoder;
-  private readonly _appDataEncoder: AppDataEncoder;
+  private readonly _attachmentsEncoder: AttachmentEncoder;
 
-  constructor(appDataEncoder: AppDataEncoder) {
+  constructor(attachmentsEncoder: AttachmentEncoder) {
     this._timestampEncoder = new NumberToNumberEncoder();
     this._idEncoder = new StringToStringEncoder();
     this._transportIdEncoder = new StringToStringEncoder();
@@ -43,7 +43,7 @@ export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, Clie
     this._relatedPortEncoder = new NumberToNumberEncoder();
     this._usernameFragmentEncoder = new StringToStringEncoder();
     this._tcpTypeEncoder = new StringToStringEncoder();
-    this._appDataEncoder = appDataEncoder;
+    this._attachmentsEncoder = attachmentsEncoder;
   }
 
 	public get visited(): boolean {
@@ -68,7 +68,7 @@ export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, Clie
     this._relatedPortEncoder.reset();
     this._usernameFragmentEncoder.reset();
     this._tcpTypeEncoder.reset();
-    this._appDataEncoder.reset();
+    this._attachmentsEncoder.reset();
   }
 
   public encode(sample: InputIceCandidateStats): ClientSample_PeerConnectionSample_IceCandidateStats {
@@ -90,7 +90,7 @@ export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, Clie
       relatedPort: this._relatedPortEncoder.encode(sample.relatedPort),
       usernameFragment: this._usernameFragmentEncoder.encode(sample.usernameFragment),
       tcpType: this._tcpTypeEncoder.encode(sample.tcpType),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
     });
   }
 }

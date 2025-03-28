@@ -1,4 +1,4 @@
-import { AppDataEncoder, NumberToNumberEncoder, StringToStringEncoder } from "./utils";
+import { AttachmentEncoder, NumberToNumberEncoder, StringToStringEncoder } from "./utils";
 import { Encoder } from "./utils";
 import { PeerConnectionTransportStats } from "./InputSamples";
 import { ClientSample_PeerConnectionSample_PeerConnectionTransportStats } from "./OutputSamples";
@@ -12,14 +12,14 @@ export class PeerConnectionTransportEncoder
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _dataChannelsOpenedEncoder: NumberToNumberEncoder;
   private readonly _dataChannelsClosedEncoder: NumberToNumberEncoder;
-  private readonly _appDataEncoder: AppDataEncoder;
+  private readonly _attachmentsEncoder: AttachmentEncoder;
 
-  constructor(appDataEncoder: AppDataEncoder) {
+  constructor(attachmentsEncoder: AttachmentEncoder) {
     this._idEncoder = new StringToStringEncoder();
     this._timestampEncoder = new NumberToNumberEncoder();
     this._dataChannelsOpenedEncoder = new NumberToNumberEncoder();
     this._dataChannelsClosedEncoder = new NumberToNumberEncoder();
-    this._appDataEncoder = appDataEncoder;
+    this._attachmentsEncoder = attachmentsEncoder;
   }
 
   public get visited(): boolean {
@@ -33,7 +33,7 @@ export class PeerConnectionTransportEncoder
     this._timestampEncoder.reset();
     this._dataChannelsOpenedEncoder.reset();
     this._dataChannelsClosedEncoder.reset();
-    this._appDataEncoder.reset();
+    this._attachmentsEncoder.reset();
   }
 
   public encode(
@@ -50,7 +50,7 @@ export class PeerConnectionTransportEncoder
       dataChannelsClosed: this._dataChannelsClosedEncoder.encode(
         sample.dataChannelsClosed
       ),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
     });
   }
 }

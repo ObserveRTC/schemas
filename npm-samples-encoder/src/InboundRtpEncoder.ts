@@ -1,5 +1,5 @@
 import { 
-	AppDataEncoder, 
+	AttachmentEncoder, 
 	BooleanToBooleanEncoder, 
 	NumberToBigIntEncoder, 
 	NumberToNumberEncoder, 
@@ -17,7 +17,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 	private readonly _idEncoder: StringToStringEncoder;
 	private readonly _kindEncoder: StringToStringEncoder;
 	// private readonly _peerConnectionIdEncoder: Encoder<string, Uint8Array>;
-	private readonly _timestampEncoder: Encoder<number, bigint>;
+	private readonly _timestampEncoder: Encoder<number, number>;
 	// private readonly _trackIdentifierEncoder: Encoder<string, Uint8Array>;
 	// private readonly _appDataEncoder: Encoder<Uint8Array, Uint8Array>;
 	private readonly _audioLevelEncoder: NumberToNumberEncoder;
@@ -83,13 +83,13 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 
 	constructor(
         ssrc: number,
-				private readonly _trackIdentifierEncoder: Encoder<string, Uint8Array>,
-        private _appDataEncoder: AppDataEncoder,
+		private readonly _trackIdentifierEncoder: Encoder<string, Uint8Array>,
+        private _attachmentsEncoder: AttachmentEncoder,
     ) {
 			this._ssrc = BigInt(ssrc);
 			this._idEncoder = new StringToStringEncoder();
 			this._kindEncoder = new StringToStringEncoder();
-			this._timestampEncoder = new NumberToBigIntEncoder();
+			this._timestampEncoder = new NumberToNumberEncoder();
 			this._audioLevelEncoder = new NumberToNumberEncoder();
 			this._bytesReceivedEncoder = new NumberToBigIntEncoder();
 			this._codecIdEncoder = new OneTimePassEncoder<string>();
@@ -231,7 +231,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
         ssrc: this._ssrc,
 				trackIdentifier: this._trackIdentifierEncoder.encode(sample.trackIdentifier),
 
-        appData: this._appDataEncoder.encode(sample.appData),
+        attachments: this._attachmentsEncoder.encode(sample.attachments),
         id: this._idEncoder.encode(sample.id),
         kind: this._kindEncoder.encode(sample.kind),
         timestamp: this._timestampEncoder.encode(sample.timestamp),

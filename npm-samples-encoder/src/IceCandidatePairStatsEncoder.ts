@@ -3,7 +3,7 @@ import { IceCandidatePairStats, IceCandidatePairStats as InputIceCandidatePairSt
 import {
   NumberToNumberEncoder,
   StringToStringEncoder,
-  AppDataEncoder,
+  AttachmentEncoder,
 } from "./utils";
 import { ClientSample_PeerConnectionSample_IceCandidatePairStats } from "./OutputSamples";
 import { ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum } from "./OutputSamples";
@@ -33,10 +33,10 @@ export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairSta
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _totalRoundTripTimeEncoder: NumberToNumberEncoder;
   private readonly _transportIdEncoder: StringToStringEncoder;
-  private readonly _appDataEncoder: AppDataEncoder;
+  private readonly _attachmentsEncoder: AttachmentEncoder;
   private readonly _stateEncoder: IceCandidatePairStatsEnumEncoder;
 
-  constructor(appDataEncoder: AppDataEncoder) {
+  constructor(attachmentsEncoder: AttachmentEncoder) {
     this._availableIncomingBitrateEncoder = new NumberToNumberEncoder();
     this._availableOutgoingBitrateEncoder = new NumberToNumberEncoder();
     this._bytesDiscardedOnSendEncoder = new NumberToBigIntEncoder();
@@ -59,7 +59,7 @@ export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairSta
     this._timestampEncoder = new NumberToNumberEncoder();
     this._totalRoundTripTimeEncoder = new NumberToNumberEncoder();
     this._transportIdEncoder = new StringToStringEncoder();
-    this._appDataEncoder = appDataEncoder;
+    this._attachmentsEncoder = attachmentsEncoder;
     this._stateEncoder = new IceCandidatePairStatsEnumEncoder();
   }
 
@@ -92,7 +92,7 @@ export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairSta
     this._timestampEncoder.reset();
     this._totalRoundTripTimeEncoder.reset();
     this._transportIdEncoder.reset();
-    this._appDataEncoder.reset();
+    this._attachmentsEncoder.reset();
     this._stateEncoder.reset();
   }
 
@@ -123,7 +123,7 @@ export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairSta
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       totalRoundTripTime: this._totalRoundTripTimeEncoder.encode(sample.totalRoundTripTime),
       transportId: this._transportIdEncoder.encode(sample.transportId),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
       state: this._stateEncoder.encode(sample.state),
     });
   }

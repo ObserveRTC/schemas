@@ -3,7 +3,7 @@ import { DataChannelStats as InputDataChannelStats } from "./InputSamples"; // A
 import {
   NumberToNumberEncoder,
   StringToStringEncoder,
-  AppDataEncoder
+  AttachmentEncoder
 } from "./utils"; // Assuming these are utility encoders for the various types
 import { ClientSample_PeerConnectionSample_DataChannelStats } from "./OutputSamples"; // Assuming this is the output sample type
 
@@ -20,7 +20,7 @@ export class DataChannelEncoder implements Encoder<InputDataChannelStats, Client
   private readonly _bytesReceivedEncoder: NumberToBigIntEncoder;
 
   constructor(
-		private readonly _appDataEncoder: AppDataEncoder
+		private readonly _attachmentsEncoder: AttachmentEncoder
 	) {
     // Initialize encoders for each field based on their type
     this._timestampEncoder = new NumberToNumberEncoder();
@@ -67,7 +67,7 @@ export class DataChannelEncoder implements Encoder<InputDataChannelStats, Client
       bytesSent: this._bytesSentEncoder.encode(sample.bytesSent),
       messagesReceived: this._messagesReceivedEncoder.encode(sample.messagesReceived),
       bytesReceived: this._bytesReceivedEncoder.encode(sample.bytesReceived),
-      appData: this._appDataEncoder.encode(sample.appData),
+      attachments: this._attachmentsEncoder.encode(sample.attachments),
     });
   }
 }
