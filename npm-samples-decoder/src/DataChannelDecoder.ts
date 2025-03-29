@@ -1,92 +1,84 @@
-import { DataChannel } from './OutputSamples';
-import { Samples_ClientSample_DataChannel } from './InputSamples';
+import { Decoder, BigIntToNumberDecoder } from "./utils";
+import { ClientSample_PeerConnectionSample_DataChannelStats as InputDataChannelStats } from "./InputSamples";
+import { DataChannelStats as OutputDataChannelStats } from "./OutputSamples"; 
+import {
+  NumberToNumberDecoder,
+  StringToStringDecoder,
+  AttachmentDecoder
+} from "./utils";
 
-export class DataChannelDecoder {
-	private _dataChannelIdentifier?: number;
-	private _label?: string;
-	private _protocol?: string;
-	private _state?: string;
-	private _messageSent?: number;
-	private _bytesSent?: number;
-	private _messageReceived?: number;
-	private _bytesReceived?: number;
+const logger = console;
 
-	private _visited = false;
+export class DataChannelDecoder implements Decoder<InputDataChannelStats, OutputDataChannelStats | undefined> {
+  private _visited = false;
+  private readonly _timestampDecoder: NumberToNumberDecoder;
+  private readonly _labelDecoder: StringToStringDecoder;
+  private readonly _protocolDecoder: StringToStringDecoder;
+  private readonly _dataChannelIdentifierDecoder: NumberToNumberDecoder;
+  private readonly _stateDecoder: StringToStringDecoder;
+  private readonly _messagesSentDecoder: NumberToNumberDecoder;
+  private readonly _bytesSentDecoder: BigIntToNumberDecoder;
+  private readonly _messagesReceivedDecoder: NumberToNumberDecoder;
+  private readonly _bytesReceivedDecoder: BigIntToNumberDecoder;
 
-	public constructor(
-		public readonly peerConnectionId: string,
-		public readonly dataChannelIdentifier: number
-	) {
-	}
+  constructor(
+    private readonly _attachmentsDecoder: AttachmentDecoder
+  ) {
+    // Initialize decoders for each field based on their type
+    this._timestampDecoder = new NumberToNumberDecoder();
+    this._labelDecoder = new StringToStringDecoder();
+    this._protocolDecoder = new StringToStringDecoder();
+    this._dataChannelIdentifierDecoder = new NumberToNumberDecoder();
+    this._stateDecoder = new StringToStringDecoder();
+    this._messagesSentDecoder = new NumberToNumberDecoder();
+    this._bytesSentDecoder = new BigIntToNumberDecoder();
+    this._messagesReceivedDecoder = new NumberToNumberDecoder();
+    this._bytesReceivedDecoder = new BigIntToNumberDecoder();
+  }
 
-	public get visited(): boolean {
-		const result = this._visited;
-		this._visited = false;
-		return result;
-	}
+  public get visited(): boolean {
+    const result = this._visited;
+    this._visited = false;
+    return result;
+  }
 
-	public decode(sample: Samples_ClientSample_DataChannel): DataChannel {
-		this._visited = true;
-	
-		const result: DataChannel = {
-			dataChannelIdentifier: this._decodeDataChannelIdentifier(sample.dataChannelIdentifier),
-			peerConnectionId: this.peerConnectionId,
-			label: this._decodeLabel(sample.label),
-			protocol: this._decodeProtocol(sample.protocol),
-			state: this._decodeState(sample.state),
-			messageSent: this._decodeMessagesSent(sample.messageSent),
-			bytesSent: this._decodeBytesSent(sample.bytesSent),
-			messageReceived: this._decodeMessagesReceived(sample.messageReceived),
-			bytesReceived: this._decodeBytesReceived(sample.bytesReceived),
-		};
-		return result;
-	}
+  public reset(): void {
+    // Reset all decoders
+    this._timestampDecoder.reset();
+    this._labelDecoder.reset();
+    this._protocolDecoder.reset();
+    this._dataChannelIdentifierDecoder.reset();
+    this._stateDecoder.reset();
+    this._messagesSentDecoder.reset();
+    this._bytesSentDecoder.reset();
+    this._messagesReceivedDecoder.reset();
+    this._bytesReceivedDecoder.reset();
+    this._attachmentsDecoder.reset();
+  }
 
-	private _decodeDataChannelIdentifier(dataChannelIdentifier?: number): number | undefined {
-		if (dataChannelIdentifier === undefined) return this._dataChannelIdentifier;
-		this._dataChannelIdentifier = dataChannelIdentifier;
-		return this._dataChannelIdentifier;
-	}
-	
-	private _decodeLabel(label?: string): string | undefined {
-		if (!label) return this._label;
-		this._label = label;
-		return this._label;
-	}
-	
-	private _decodeProtocol(protocol?: string): string | undefined {
-		if (!protocol) return this._protocol;
-		this._protocol = protocol;
-		return this._protocol;
-	}
-	
-	private _decodeState(state?: string): string | undefined {
-		if (!state) return this._state;
-		this._state = state;
-		return this._state;
-	}
-	
-	private _decodeMessagesSent(messagesSent?: number): number | undefined {
-		if (messagesSent === undefined) return this._messageSent;
-		this._messageSent = Number(messagesSent);
-		return this._messageSent;
-	}
-	
-	private _decodeBytesSent(bytesSent?: bigint): number | undefined {
-		if (bytesSent === undefined) return this._bytesSent;
-		this._bytesSent = Number(bytesSent);
-		return this._bytesSent;
-	}
-	
-	private _decodeMessagesReceived(messagesReceived?: number): number | undefined {
-		if (messagesReceived === undefined) return this._messageReceived;
-		this._messageReceived = messagesReceived;
-		return this._messageReceived;
-	}
-	
-	private _decodeBytesReceived(bytesReceived?: bigint): number | undefined {
-		if (bytesReceived === undefined) return this._bytesReceived;
-		this._bytesReceived = Number(bytesReceived);
-		return this._bytesReceived;
-	}
+  public decode(input: InputDataChannelStats): OutputDataChannelStats | undefined {
+    this._visited = true;
+
+    const timestamp = this._timestampDecoder.decode(input.timestamp);
+    const id = input.id;
+
+    if (!timestamp || id === undefined) {
+      logger.warn("Invalid data channel sample: missing timestamp or id");
+      return undefined;
+    }
+
+    return {
+      timestamp,
+      id,
+      label: this._labelDecoder.decode(input.label),
+      protocol: this._protocolDecoder.decode(input.protocol),
+      dataChannelIdentifier: this._dataChannelIdentifierDecoder.decode(input.dataChannelIdentifier),
+      state: this._stateDecoder.decode(input.state),
+      messagesSent: this._messagesSentDecoder.decode(input.messagesSent),
+      bytesSent: this._bytesSentDecoder.decode(input.bytesSent),
+      messagesReceived: this._messagesReceivedDecoder.decode(input.messagesReceived),
+      bytesReceived: this._bytesReceivedDecoder.decode(input.bytesReceived),
+      attachments: this._attachmentsDecoder.decode(input.attachments),
+    };
+  }
 }

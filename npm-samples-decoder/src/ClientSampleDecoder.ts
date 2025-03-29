@@ -42,7 +42,7 @@ import { Samples_ClientSample_MediaDevice,
 	Samples_ClientSample_IceLocalCandidate_IceLocalCandidateEnum,
 	Samples_ClientSample_IceRemoteCandidate_IceRemoteCandidateEnum
 } from "./InputSamples";
-import { ClientSampleDecodingOptions } from './DecodingOptions';
+import { ClientSampleDecodingOptions } from './ClientIssueDecoder';
 
 export class ClientSampleDecoder {
 	public readonly options: ClientSampleDecodingOptions;
