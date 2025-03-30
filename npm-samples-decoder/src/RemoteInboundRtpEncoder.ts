@@ -5,10 +5,8 @@ import {
   OneTimePassDecoder,
   AttachmentDecoder
 } from "./utils";
-import { 
-  RemoteInboundRtpStats as OutputRemoteInboundRtpStats,
-  ClientSample_PeerConnectionSample_RemoteInboundRtpStats as InputRemoteInboundRtpStats 
-} from "./InputOutputSamples";
+import { RemoteInboundRtpStats as OutputRemoteInboundRtpStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_RemoteInboundRtpStats as InputRemoteInboundRtpStats } from "./InputSamples";
 
 const logger = console;
 
@@ -27,10 +25,10 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
   private readonly _totalRoundTripTimeDecoder: NumberToNumberDecoder;
   private readonly _fractionLostDecoder: NumberToNumberDecoder;
   private readonly _roundTripTimeMeasurementsDecoder: NumberToNumberDecoder;
-  private readonly _attachmentsDecoder: AttachmentDecoder;
 
   constructor(
-      private readonly _attachmentsDecoder: AttachmentDecoder
+    public readonly ssrc: number,
+    private readonly _attachmentsDecoder: AttachmentDecoder
   ) {
       this._timestampDecoder = new NumberToNumberDecoder();
       this._idDecoder = new StringToStringDecoder();
@@ -74,17 +72,18 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
 
       const timestamp = this._timestampDecoder.decode(input.timestamp);
       const id = this._idDecoder.decode(input.id);
+      const kind = this._kindDecoder.decode(input.kind);
 
-      if (!timestamp || !id) {
+      if (!timestamp || id === undefined || kind === undefined) {
           logger.warn("Invalid remote inbound RTP sample: missing timestamp or id");
           return undefined;
       }
 
       return {
-          ssrc: Number(input.ssrc),
+          ssrc: this.ssrc,
           timestamp,
           id,
-          kind: this._kindDecoder.decode(input.kind),
+          kind,
           transportId: this._transportIdDecoder.decode(input.transportId),
           codecId: this._codecIdDecoder.decode(input.codecId),
           packetsReceived: this._packetsReceivedDecoder.decode(input.packetsReceived),

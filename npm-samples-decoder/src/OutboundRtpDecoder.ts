@@ -6,39 +6,29 @@ import {
     StringToStringDecoder,
     AttachmentDecoder
 } from "./utils";
-import { ClientSample_PeerConnectionSample_OutboundRtpStats as InputOutboundRtpStats } from "./InputSamples";
-import { ClientSample_PeerConnectionSample_QualityLimitationDurations as InputQualityLimitationDurations } from "./InputSamples";
+import { 
+	ClientSample_PeerConnectionSample_OutboundRtpStats as InputOutboundRtpStats,
+	ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations as InputQualityLimitationDurations 
+} from "./InputSamples";
 import { OutboundRtpStats as OutputOutboundRtpStats } from "./OutputSamples";
 const logger = console;
 
-export class QualityLimitationDurationsDecoder implements Decoder<InputQualityLimitationDurations, OutputOutboundRtpStats['qualityLimitationDurations']> {
-    private _value: OutputOutboundRtpStats['qualityLimitationDurations'] | undefined;
-
-    public get actualValue() {
-        return this._value;
-    }
+export class QualityLimitationDurationsDecoder implements Decoder<InputQualityLimitationDurations, OutputOutboundRtpStats['qualityLimitationDurations'] | undefined> {
+    private _value?: OutputOutboundRtpStats['qualityLimitationDurations'];
 
     public reset() {
         this._value = undefined;
     }
 
     public decode(input?: InputQualityLimitationDurations): OutputOutboundRtpStats['qualityLimitationDurations'] | undefined {
-        if (!input) return undefined;
+        if (!input) return this._value;
         
         const newValue = {
-            bandwidth: input.bandwidth,
-            cpu: input.cpu,
-            none: input.none,
-            other: input.other
+            bandwidth: input.bandwidth ?? 0,
+            cpu: input.cpu ?? 0,
+            none: input.none ?? 0,
+            other: input.other ?? 0,
         };
-
-        if (this._value && 
-            this._value.bandwidth === newValue.bandwidth &&
-            this._value.cpu === newValue.cpu &&
-            this._value.none === newValue.none &&
-            this._value.other === newValue.other) {
-            return undefined;
-        }
 
         this._value = newValue;
         return newValue;
@@ -84,9 +74,9 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _totalEncodedBytesTargetDecoder: NumberToNumberDecoder;
     private readonly _totalPacketSendDelayDecoder: NumberToNumberDecoder;
     private readonly _transportIdDecoder: OneTimePassDecoder<string>;
-    private readonly _attachmentsDecoder: AttachmentDecoder;
 
     constructor(
+		public readonly ssrc: number,
         private readonly _attachmentsDecoder: AttachmentDecoder
     ) {
         this._idDecoder = new StringToStringDecoder();
@@ -179,16 +169,17 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
 
         const timestamp = this._timestampDecoder.decode(input.timestamp);
         const id = this._idDecoder.decode(input.id);
+		const kind = this._kindDecoder.decode(input.kind);
 
-        if (!timestamp || !id) {
+        if (!timestamp || id === undefined || !kind) {
             logger.warn("Invalid outbound RTP sample: missing timestamp or id");
             return undefined;
         }
 
         return {
-            ssrc: Number(input.ssrc),
+            ssrc: this.ssrc,
             id,
-            kind: this._kindDecoder.decode(input.kind),
+            kind,
             timestamp,
             active: this._activeDecoder.decode(input.active),
             attachments: this._attachmentsDecoder.decode(input.attachments),

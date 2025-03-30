@@ -22,6 +22,7 @@ export class DataChannelDecoder implements Decoder<InputDataChannelStats, Output
   private readonly _bytesReceivedDecoder: BigIntToNumberDecoder;
 
   constructor(
+	public readonly id: string,
     private readonly _attachmentsDecoder: AttachmentDecoder
   ) {
     // Initialize decoders for each field based on their type
@@ -60,16 +61,15 @@ export class DataChannelDecoder implements Decoder<InputDataChannelStats, Output
     this._visited = true;
 
     const timestamp = this._timestampDecoder.decode(input.timestamp);
-    const id = input.id;
 
-    if (!timestamp || id === undefined) {
+    if (!timestamp) {
       logger.warn("Invalid data channel sample: missing timestamp or id");
       return undefined;
     }
 
     return {
       timestamp,
-      id,
+      id: this.id,
       label: this._labelDecoder.decode(input.label),
       protocol: this._protocolDecoder.decode(input.protocol),
       dataChannelIdentifier: this._dataChannelIdentifierDecoder.decode(input.dataChannelIdentifier),

@@ -21,59 +21,60 @@ import {
 const logger = console;
 
 export class IceCandidatePairDecoder implements Decoder<InputIceCandidatePairStats, OutputIceCandidatePairStats | undefined> {
-  private _visited = false;
+	private _visited = false;
 
-  private readonly _availableIncomingBitrateDecoder: NumberToNumberDecoder;
-  private readonly _availableOutgoingBitrateDecoder: NumberToNumberDecoder;
-  private readonly _bytesDiscardedOnSendDecoder: BigIntToNumberDecoder;
-  private readonly _bytesReceivedDecoder: BigIntToNumberDecoder;
-  private readonly _bytesSentDecoder: BigIntToNumberDecoder;
-  private readonly _consentRequestsSentDecoder: NumberToNumberDecoder;
-  private readonly _currentRoundTripTimeDecoder: NumberToNumberDecoder;
-  private readonly _lastPacketReceivedTimestampDecoder: NumberToNumberDecoder;
-  private readonly _lastPacketSentTimestampDecoder: NumberToNumberDecoder;
-  private readonly _localCandidateIdDecoder: StringToStringDecoder;
-  private readonly _nominatedDecoder: BooleanToBooleanDecoder;
-  private readonly _packetsDiscardedOnSendDecoder: NumberToNumberDecoder;
-  private readonly _packetsReceivedDecoder: NumberToNumberDecoder;
-  private readonly _packetsSentDecoder: NumberToNumberDecoder;
-  private readonly _remoteCandidateIdDecoder: StringToStringDecoder;
-  private readonly _requestsReceivedDecoder: NumberToNumberDecoder;
-  private readonly _requestsSentDecoder: NumberToNumberDecoder;
-  private readonly _responsesReceivedDecoder: NumberToNumberDecoder;
-  private readonly _responsesSentDecoder: NumberToNumberDecoder;
-  private readonly _timestampDecoder: NumberToNumberDecoder;
-  private readonly _totalRoundTripTimeDecoder: NumberToNumberDecoder;
-  private readonly _transportIdDecoder: StringToStringDecoder;
-  private readonly _attachmentsDecoder: AttachmentDecoder;
-  private readonly _stateDecoder: IceCandidatePairStatsEnumDecoder;
+	private readonly _availableIncomingBitrateDecoder: NumberToNumberDecoder;
+	private readonly _availableOutgoingBitrateDecoder: NumberToNumberDecoder;
+	private readonly _bytesDiscardedOnSendDecoder: BigIntToNumberDecoder;
+	private readonly _bytesReceivedDecoder: BigIntToNumberDecoder;
+	private readonly _bytesSentDecoder: BigIntToNumberDecoder;
+	private readonly _consentRequestsSentDecoder: NumberToNumberDecoder;
+	private readonly _currentRoundTripTimeDecoder: NumberToNumberDecoder;
+	private readonly _lastPacketReceivedTimestampDecoder: NumberToNumberDecoder;
+	private readonly _lastPacketSentTimestampDecoder: NumberToNumberDecoder;
+	private readonly _localCandidateIdDecoder: StringToStringDecoder;
+	private readonly _nominatedDecoder: BooleanToBooleanDecoder;
+	private readonly _packetsDiscardedOnSendDecoder: NumberToNumberDecoder;
+	private readonly _packetsReceivedDecoder: NumberToNumberDecoder;
+	private readonly _packetsSentDecoder: NumberToNumberDecoder;
+	private readonly _remoteCandidateIdDecoder: StringToStringDecoder;
+	private readonly _requestsReceivedDecoder: NumberToNumberDecoder;
+	private readonly _requestsSentDecoder: NumberToNumberDecoder;
+	private readonly _responsesReceivedDecoder: NumberToNumberDecoder;
+	private readonly _responsesSentDecoder: NumberToNumberDecoder;
+	private readonly _timestampDecoder: NumberToNumberDecoder;
+	private readonly _totalRoundTripTimeDecoder: NumberToNumberDecoder;
+	private readonly _transportIdDecoder: StringToStringDecoder;
+	private readonly _stateDecoder: IceCandidatePairStatsEnumDecoder;
 
-  constructor(attachmentsDecoder: AttachmentDecoder) {
-    this._availableIncomingBitrateDecoder = new NumberToNumberDecoder();
-    this._availableOutgoingBitrateDecoder = new NumberToNumberDecoder();
-    this._bytesDiscardedOnSendDecoder = new BigIntToNumberDecoder();
-    this._bytesReceivedDecoder = new BigIntToNumberDecoder();
-    this._bytesSentDecoder = new BigIntToNumberDecoder();
-    this._consentRequestsSentDecoder = new NumberToNumberDecoder();
-    this._currentRoundTripTimeDecoder = new NumberToNumberDecoder();
-    this._lastPacketReceivedTimestampDecoder = new NumberToNumberDecoder();
-    this._lastPacketSentTimestampDecoder = new NumberToNumberDecoder();
-    this._localCandidateIdDecoder = new StringToStringDecoder();
-    this._nominatedDecoder = new BooleanToBooleanDecoder();
-    this._packetsDiscardedOnSendDecoder = new NumberToNumberDecoder();
-    this._packetsReceivedDecoder = new NumberToNumberDecoder();
-    this._packetsSentDecoder = new NumberToNumberDecoder();
-    this._remoteCandidateIdDecoder = new StringToStringDecoder();
-    this._requestsReceivedDecoder = new NumberToNumberDecoder();
-    this._requestsSentDecoder = new NumberToNumberDecoder();
-    this._responsesReceivedDecoder = new NumberToNumberDecoder();
-    this._responsesSentDecoder = new NumberToNumberDecoder();
-    this._timestampDecoder = new NumberToNumberDecoder();
-    this._totalRoundTripTimeDecoder = new NumberToNumberDecoder();
-    this._transportIdDecoder = new StringToStringDecoder();
-    this._attachmentsDecoder = attachmentsDecoder;
-    this._stateDecoder = new IceCandidatePairStatsEnumDecoder();
-  }
+  constructor(
+		public readonly id: string,
+		private readonly _attachmentsDecoder: AttachmentDecoder,
+	) {
+		this._availableIncomingBitrateDecoder = new NumberToNumberDecoder();
+		this._availableOutgoingBitrateDecoder = new NumberToNumberDecoder();
+		this._bytesDiscardedOnSendDecoder = new BigIntToNumberDecoder();
+		this._bytesReceivedDecoder = new BigIntToNumberDecoder();
+		this._bytesSentDecoder = new BigIntToNumberDecoder();
+		this._consentRequestsSentDecoder = new NumberToNumberDecoder();
+		this._currentRoundTripTimeDecoder = new NumberToNumberDecoder();
+		this._lastPacketReceivedTimestampDecoder = new NumberToNumberDecoder();
+		this._lastPacketSentTimestampDecoder = new NumberToNumberDecoder();
+		this._localCandidateIdDecoder = new StringToStringDecoder();
+		this._nominatedDecoder = new BooleanToBooleanDecoder();
+		this._packetsDiscardedOnSendDecoder = new NumberToNumberDecoder();
+		this._packetsReceivedDecoder = new NumberToNumberDecoder();
+		this._packetsSentDecoder = new NumberToNumberDecoder();
+		this._remoteCandidateIdDecoder = new StringToStringDecoder();
+		this._requestsReceivedDecoder = new NumberToNumberDecoder();
+		this._requestsSentDecoder = new NumberToNumberDecoder();
+		this._responsesReceivedDecoder = new NumberToNumberDecoder();
+		this._responsesSentDecoder = new NumberToNumberDecoder();
+		this._timestampDecoder = new NumberToNumberDecoder();
+		this._totalRoundTripTimeDecoder = new NumberToNumberDecoder();
+		this._transportIdDecoder = new StringToStringDecoder();
+		this._stateDecoder = new IceCandidatePairStatsEnumDecoder();
+	}
 
   public get visited(): boolean {
     const result = this._visited;
@@ -112,15 +113,14 @@ export class IceCandidatePairDecoder implements Decoder<InputIceCandidatePairSta
     this._visited = true;
 
     const timestamp = this._timestampDecoder.decode(input.timestamp);
-    const id = input.id;
 
-    if (!timestamp || !id) {
+    if (!timestamp) {
       logger.warn("Invalid ICE candidate pair sample: missing timestamp or id");
       return undefined;
     }
 
     return {
-      id,
+      id: this.id,
       availableIncomingBitrate: this._availableIncomingBitrateDecoder.decode(input.availableIncomingBitrate),
       availableOutgoingBitrate: this._availableOutgoingBitrateDecoder.decode(input.availableOutgoingBitrate),
       bytesDiscardedOnSend: this._bytesDiscardedOnSendDecoder.decode(input.bytesDiscardedOnSend),
@@ -149,30 +149,35 @@ export class IceCandidatePairDecoder implements Decoder<InputIceCandidatePairSta
   }
 }
 
-export class IceCandidatePairStatsEnumDecoder implements Decoder<InputIceCandidatePairState, Required<IceCandidatePairStats>['state']> {
+export class IceCandidatePairStatsEnumDecoder implements Decoder<InputIceCandidatePairState, Required<OutputIceCandidatePairStats>['state']> {
   
-  private _actualValue?: InputIceCandidatePairState;
+  private _actualValue?: OutputIceCandidatePairStats['state'];
 
   public reset() {
     this._actualValue = undefined;
   }
   
-  public decode(state: InputIceCandidatePairState): Required<IceCandidatePairStats>['state'] | undefined {
-    if (this._actualValue === state) return this._actualValue;
-    this._actualValue = state;
-
+  public decode(state?: InputIceCandidatePairState): Required<OutputIceCandidatePairStats>['state'] | undefined {
+    if (state === undefined) return this._actualValue
+    
     switch (state) {
       case InputIceCandidatePairState.NEW:
-        return 'new';
+        this._actualValue = 'new';
+		break;
       case InputIceCandidatePairState.INPROGRESS:
-        return 'inProgress';
+		this._actualValue = 'inProgress';
+		break;
       case InputIceCandidatePairState.FAILED:
-        return 'failed';
+		this._actualValue = 'failed';
+		break;
       case InputIceCandidatePairState.SUCCEEDED:
-        return 'succeeded';
+		this._actualValue = 'succeeded';
+		break;
       default:
         logger.warn(`Unknown IceCandidatePairStats state: ${state}`);
         return undefined;
     }
+
+	return this._actualValue;
   }
 }

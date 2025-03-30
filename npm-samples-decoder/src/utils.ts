@@ -1,5 +1,20 @@
 const textDecoder = new TextDecoder();
 
+export const logger = {
+	debug: (...args: unknown[]) => {
+		// console.debug(...args);
+	},
+	error: (...args: unknown[]) => {
+		// console.error(...args);
+	},
+	warn: (...args: unknown[]) => {
+		console.warn(...args);
+	},
+	info: (...args: unknown[]) => {
+		console.info(...args);
+	},
+}
+
 export interface Decoder<I, O> {
 	actualValue?: I;
 	decode(newValue?: I): O | undefined;
@@ -20,6 +35,8 @@ export type ClientSampleDecoderSettings = {
 export interface AttachmentsDecoderFactory {
 	createIceCandidatePairAttachmentDecoder(): AttachmentDecoder;
 	createCodecStatsAttachmentDecoder(): AttachmentDecoder;
+	createMediaSourceAttachmentDecoder(): AttachmentDecoder;
+	createMediaPlayoutAttachmentDecoder(): AttachmentDecoder;
 	createClientSampleAttachmentDecoder(): AttachmentDecoder;
 	createPeerConnectionSampleAttachmentDecoder(): AttachmentDecoder;
 	createCertificateAttachmentDecoder(): AttachmentDecoder;
@@ -32,9 +49,6 @@ export interface AttachmentsDecoderFactory {
 	createDataChannelAttachmentDecoder(): AttachmentDecoder;
 	createRemoteInboundRtpAttachmentDecoder(): AttachmentDecoder;
 	createRemoteOutboundRtpAttachmentDecoder(): AttachmentDecoder;
-	createAudioSourceAttachmentDecoder(): AttachmentDecoder;
-	createVideoSourceAttachmentDecoder(): AttachmentDecoder;
-	createAudioPlayoutAttachmentDecoder(): AttachmentDecoder;
 	createPeerConnectionTransportAttachmentDecoder(): AttachmentDecoder;
 }
 
@@ -95,15 +109,11 @@ export class DefaultAttachmentDecoderFactory implements AttachmentsDecoderFactor
 		return new DefaultAttachmentDecoder();
 	}
 
-	public createAudioSourceAttachmentDecoder() {
+	public createMediaSourceAttachmentDecoder() {
 		return new DefaultAttachmentDecoder();
 	}
 
-	public createVideoSourceAttachmentDecoder() {
-		return new DefaultAttachmentDecoder();
-	}
-
-	public createAudioPlayoutAttachmentDecoder() {
+	public createMediaPlayoutAttachmentDecoder() {
 		return new DefaultAttachmentDecoder();
 	}
 
@@ -111,6 +121,7 @@ export class DefaultAttachmentDecoderFactory implements AttachmentsDecoderFactor
 		return new DefaultAttachmentDecoder();
 	}
 }
+
 
 export class DefaultAttachmentDecoder implements AttachmentDecoder {
 	private _actual?: { value: string; data: Record<string, unknown> };
@@ -127,7 +138,7 @@ export class DefaultAttachmentDecoder implements AttachmentDecoder {
 		if (!newValue) return this._actual?.data;
 		if (this._actual && newValue === this._actual.value) return this._actual.data;
 		if (newValue === undefined) return;
-		
+
 		this._actual = {
 			value: newValue,
 			data: JSON.parse(newValue),
@@ -155,7 +166,7 @@ export class OneTimePassDecoder<T> implements Decoder<T, T> {
 	}
 }
 
-export class OneTimePassByteArrayToUuidDecoder implements Decoder<Uint8Array, string> {
+export class OneTimePassUuidByteArrayToStringDecoder implements Decoder<Uint8Array, string> {
 	private _result?: string;
 
 	public reset() {
@@ -164,13 +175,13 @@ export class OneTimePassByteArrayToUuidDecoder implements Decoder<Uint8Array, st
 
 	decode(newValue?: Uint8Array) {
 		if (newValue === undefined || this._result) return this._result;
-		this._result = byteArrayToUuid(newValue);
+		this._result = uuidByteArrayToString(newValue);
 
 		return this._result;
 	}
 }
 
-export class OneTimePassUint8ArrayToStringDecoder implements Decoder<Uint8Array, string> {
+export class OneTimePassByteArrayToStringDecoder implements Decoder<Uint8Array, string> {
 	private _result?: string;
 
 	public reset() {
@@ -206,7 +217,7 @@ export class StringToStringDecoder implements Decoder<string, string> {
 	}
 }
 
-export class Uint8ToStringArrayDecoder implements Decoder<Uint8Array, string> {
+export class Uint8ArrayToStringDecoder implements Decoder<Uint8Array, string> {
 	private _value: string | undefined;
 
 	public reset() {
@@ -295,7 +306,7 @@ export function bytesArrayToString(bytes: Uint8Array): string {
 	return textDecoder.decode(bytes);
 }
 
-export function byteArrayToUuid(byteArray: Uint8Array): string {
+export function uuidByteArrayToString(byteArray: Uint8Array): string {
 	if (byteArray.length !== 16) {
 		throw new Error('Invalid byte array length for UUID conversion');
 	}

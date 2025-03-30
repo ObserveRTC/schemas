@@ -27,9 +27,11 @@ export class IceCandidateDecoder implements Decoder<InputIceCandidateStats, Outp
   private readonly _relatedPortDecoder: NumberToNumberDecoder;
   private readonly _usernameFragmentDecoder: StringToStringDecoder;
   private readonly _tcpTypeDecoder: StringToStringDecoder;
-  private readonly _attachmentsDecoder: AttachmentDecoder;
 
-  constructor(attachmentsDecoder: AttachmentDecoder) {
+  constructor(
+	public readonly id: string,
+	private readonly _attachmentsDecoder: AttachmentDecoder,
+  ) {
     this._timestampDecoder = new NumberToNumberDecoder();
     this._idDecoder = new StringToStringDecoder();
     this._transportIdDecoder = new StringToStringDecoder();
@@ -45,7 +47,6 @@ export class IceCandidateDecoder implements Decoder<InputIceCandidateStats, Outp
     this._relatedPortDecoder = new NumberToNumberDecoder();
     this._usernameFragmentDecoder = new StringToStringDecoder();
     this._tcpTypeDecoder = new StringToStringDecoder();
-    this._attachmentsDecoder = attachmentsDecoder;
   }
 
   public get visited(): boolean {
@@ -77,16 +78,15 @@ export class IceCandidateDecoder implements Decoder<InputIceCandidateStats, Outp
     this._visited = true;
 
     const timestamp = this._timestampDecoder.decode(input.timestamp);
-    const id = this._idDecoder.decode(input.id);
 
-    if (!timestamp || id === undefined) {
+    if (!timestamp) {
       logger.warn("Invalid ICE candidate sample: missing timestamp or id");
       return undefined;
     }
 
     return {
       timestamp,
-      id,
+      id: this.id,
       transportId: this._transportIdDecoder.decode(input.transportId),
       address: this._addressDecoder.decode(input.address),
       port: this._portDecoder.decode(input.port),

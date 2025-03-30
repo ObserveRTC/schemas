@@ -229,8 +229,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 
     const result = new ClientSample_PeerConnectionSample_InboundRtpStats({
         ssrc: this._ssrc,
-				trackIdentifier: this._trackIdentifierEncoder.encode(sample.trackIdentifier),
-
+		trackIdentifier: this._trackIdentifierEncoder.encode(sample.trackIdentifier),
         attachments: this._attachmentsEncoder.encode(sample.attachments),
         id: this._idEncoder.encode(sample.id),
         kind: this._kindEncoder.encode(sample.kind),

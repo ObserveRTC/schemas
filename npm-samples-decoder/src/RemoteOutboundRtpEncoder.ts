@@ -6,10 +6,8 @@ import {
     OneTimePassDecoder,
     AttachmentDecoder
 } from "./utils";
-import { 
-    RemoteOutboundRtpStats as OutputRemoteOutboundRtpStats,
-    ClientSample_PeerConnectionSample_RemoteOutboundRtpStats as InputRemoteOutboundRtpStats 
-} from "./InputOutputSamples";
+import { RemoteOutboundRtpStats as OutputRemoteOutboundRtpStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_RemoteOutboundRtpStats as InputRemoteOutboundRtpStats } from "./InputSamples";
 
 const logger = console;
 
@@ -28,9 +26,9 @@ export class RemoteOutboundRtpDecoder implements Decoder<InputRemoteOutboundRtpS
     private readonly _roundTripTimeDecoder: NumberToNumberDecoder;
     private readonly _totalRoundTripTimeDecoder: NumberToNumberDecoder;
     private readonly _roundTripTimeMeasurementsDecoder: NumberToNumberDecoder;
-    private readonly _attachmentsDecoder: AttachmentDecoder;
 
     constructor(
+		public readonly ssrc: number,
         private readonly _attachmentsDecoder: AttachmentDecoder
     ) {
         this._timestampDecoder = new NumberToNumberDecoder();
@@ -75,17 +73,18 @@ export class RemoteOutboundRtpDecoder implements Decoder<InputRemoteOutboundRtpS
 
         const timestamp = this._timestampDecoder.decode(input.timestamp);
         const id = this._idDecoder.decode(input.id);
+		const kind = this._kindDecoder.decode(input.kind);
 
-        if (!timestamp || !id) {
+        if (!timestamp || id === undefined || kind === undefined) {
             logger.warn("Invalid remote outbound RTP sample: missing timestamp or id");
             return undefined;
         }
 
         return {
-            ssrc: Number(input.ssrc),
+            ssrc: this.ssrc,
             timestamp,
             id,
-            kind: this._kindDecoder.decode(input.kind),
+            kind,
             transportId: this._transportIdDecoder.decode(input.transportId),
             codecId: this._codecIdDecoder.decode(input.codecId),
             packetsSent: this._packetsSentDecoder.decode(input.packetsSent),

@@ -15,14 +15,15 @@ export class OutboundTrackSampleDecoder implements Decoder<InputOutboundTrackSam
   private readonly _idDecoder: StringToStringDecoder;
   private readonly _kindDecoder: StringToStringDecoder;
   private readonly _scoreDecoder: NumberToNumberDecoder;
-  private readonly _attachmentsDecoder: AttachmentDecoder;
 
-  constructor(attachmentsDecoder: AttachmentDecoder) {
+  constructor(
+    public readonly id: string,
+    private readonly _attachmentsDecoder: AttachmentDecoder,
+  ) {
     this._timestampDecoder = new NumberToNumberDecoder();
     this._idDecoder = new StringToStringDecoder();
     this._kindDecoder = new StringToStringDecoder();
     this._scoreDecoder = new NumberToNumberDecoder();
-    this._attachmentsDecoder = attachmentsDecoder;
   }
 
   public get visited(): boolean {
@@ -43,17 +44,16 @@ export class OutboundTrackSampleDecoder implements Decoder<InputOutboundTrackSam
     this._visited = true;
 
     const timestamp = this._timestampDecoder.decode(input.timestamp);
-    const id = this._idDecoder.decode(input.id);
     const kind = this._kindDecoder.decode(input.kind);
 
-    if (!timestamp || id === undefined || kind === undefined) {
+    if (!timestamp || kind === undefined) {
       logger.warn("Invalid outbound track sample: missing timestamp or id");
       return undefined;
     }
 
     return {
       timestamp,
-      id,
+      id: this.id,
       kind,
       score: this._scoreDecoder.decode(input.score),
       attachments: this._attachmentsDecoder.decode(input.attachments),

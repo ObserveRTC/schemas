@@ -228,7 +228,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 		let encoder = this._mediaSourceEncoders.get(input.id);
 		if (!encoder) {
 			encoder = new MediaSourceStatsEncoder(
-				this.parent.attachmentEncoderFactory.createAudioSourceAttachmentEncoder()
+				this.parent.attachmentEncoderFactory.createMediaSourceAttachmentEncoder()
 			);
 			this._mediaSourceEncoders.set(input.id, encoder);
 		}
@@ -239,7 +239,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 		let encoder = this._mediaPlayoutEncoders.get(input.id);
 		if (!encoder) {
 			encoder = new MediaPlayoutStatsEncoder(
-				this.parent.attachmentEncoderFactory.createAudioPlayoutAttachmentEncoder()
+				this.parent.attachmentEncoderFactory.createMediaPlayoutAttachmentEncoder()
 			);
 			this._mediaPlayoutEncoders.set(input.id, encoder);
 		}

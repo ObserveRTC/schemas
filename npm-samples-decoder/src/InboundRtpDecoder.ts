@@ -80,10 +80,10 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	private readonly _totalSquaredCorruptionProbabilityDecoder: NumberToNumberDecoder;
 	private readonly _totalSquaredInterFrameDelayDecoder: NumberToNumberDecoder;
 	private readonly _transportIdDecoder: OneTimePassDecoder<string>;
-  
 	constructor(
-	  private readonly _trackIdentifierDecoder: Decoder<Uint8Array, string>,
-	  private _attachmentsDecoder: AttachmentDecoder,
+		private readonly ssrc: number,
+		private readonly _trackIdentifierDecoder: Decoder<Uint8Array, string>,
+	  	private _attachmentsDecoder: AttachmentDecoder,
 	) {
 	  this._idDecoder = new StringToStringDecoder();
 	  this._kindDecoder = new StringToStringDecoder();
@@ -227,18 +227,20 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
   
 	  const timestamp = this._timestampDecoder.decode(input.timestamp);
 	  const id = this._idDecoder.decode(input.id);
+	  const kind = this._kindDecoder.decode(input.kind);
+	  const trackIdentifier = this._trackIdentifierDecoder.decode(input.trackIdentifier);
   
-	  if (!timestamp || id === undefined) {
+	  if (!timestamp || id === undefined || trackIdentifier === undefined || kind === undefined) {
 		logger.warn("Invalid inbound RTP sample: missing timestamp or id");
 		return undefined;
 	  }
   
 	  return {
-		ssrc: Number(input.ssrc),
-		trackIdentifier: this._trackIdentifierDecoder.decode(input.trackIdentifier),
+		ssrc: this.ssrc,
+		kind,
+		trackIdentifier,
 		attachments: this._attachmentsDecoder.decode(input.attachments),
 		id,
-		kind: this._kindDecoder.decode(input.kind),
 		timestamp,
 		audioLevel: this._audioLevelDecoder.decode(input.audioLevel),
 		bytesReceived: this._bytesReceivedDecoder.decode(input.bytesReceived),

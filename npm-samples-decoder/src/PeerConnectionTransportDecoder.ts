@@ -10,52 +10,52 @@ import { ClientSample_PeerConnectionSample_PeerConnectionTransportStats as Input
 const logger = console;
 
 export class PeerConnectionTransportDecoder implements Decoder<InputPeerConnectionTransportStats, OutputPeerConnectionTransportStats | undefined> {
-  private _visited = false;
-  private readonly _idDecoder: StringToStringDecoder;
-  private readonly _timestampDecoder: NumberToNumberDecoder;
-  private readonly _dataChannelsOpenedDecoder: NumberToNumberDecoder;
-  private readonly _dataChannelsClosedDecoder: NumberToNumberDecoder;
-  private readonly _attachmentsDecoder: AttachmentDecoder;
+	private _visited = false;
+	private readonly _idDecoder: StringToStringDecoder;
+	private readonly _timestampDecoder: NumberToNumberDecoder;
+	private readonly _dataChannelsOpenedDecoder: NumberToNumberDecoder;
+	private readonly _dataChannelsClosedDecoder: NumberToNumberDecoder;
 
-  constructor(attachmentsDecoder: AttachmentDecoder) {
-    this._idDecoder = new StringToStringDecoder();
-    this._timestampDecoder = new NumberToNumberDecoder();
-    this._dataChannelsOpenedDecoder = new NumberToNumberDecoder();
-    this._dataChannelsClosedDecoder = new NumberToNumberDecoder();
-    this._attachmentsDecoder = attachmentsDecoder;
-  }
+	constructor(
+		public readonly id: string,
+		private readonly _attachmentsDecoder: AttachmentDecoder,
+	) {
+		this._idDecoder = new StringToStringDecoder();
+		this._timestampDecoder = new NumberToNumberDecoder();
+		this._dataChannelsOpenedDecoder = new NumberToNumberDecoder();
+		this._dataChannelsClosedDecoder = new NumberToNumberDecoder();
+	}
 
-  public get visited(): boolean {
-    const result = this._visited;
-    this._visited = false;
-    return result;
-  }
+	public get visited(): boolean {
+		const result = this._visited;
+		this._visited = false;
+		return result;
+	}
 
-  public reset(): void {
-    this._idDecoder.reset();
-    this._timestampDecoder.reset();
-    this._dataChannelsOpenedDecoder.reset();
-    this._dataChannelsClosedDecoder.reset();
-    this._attachmentsDecoder.reset();
-  }
+	public reset(): void {
+		this._idDecoder.reset();
+		this._timestampDecoder.reset();
+		this._dataChannelsOpenedDecoder.reset();
+		this._dataChannelsClosedDecoder.reset();
+		this._attachmentsDecoder.reset();
+	}
 
-  public decode(input: InputPeerConnectionTransportStats): OutputPeerConnectionTransportStats | undefined {
-    this._visited = true;
+	public decode(input: InputPeerConnectionTransportStats): OutputPeerConnectionTransportStats | undefined {
+		this._visited = true;
 
-    const timestamp = this._timestampDecoder.decode(input.timestamp);
-    const id = this._idDecoder.decode(input.id);
+		const timestamp = this._timestampDecoder.decode(input.timestamp);
 
-    if (!timestamp || id === undefined) {
-      logger.warn("Invalid peer connection transport sample: missing timestamp or id");
-      return undefined;
-    }
+		if (!timestamp) {
+		logger.warn("Invalid peer connection transport sample: missing timestamp or id");
+		return undefined;
+		}
 
-    return {
-      id,
-      timestamp,
-      dataChannelsOpened: this._dataChannelsOpenedDecoder.decode(input.dataChannelsOpened),
-      dataChannelsClosed: this._dataChannelsClosedDecoder.decode(input.dataChannelsClosed),
-      attachments: this._attachmentsDecoder.decode(input.attachments),
-    };
-  }
+		return {
+		id: this.id,
+		timestamp,
+		dataChannelsOpened: this._dataChannelsOpenedDecoder.decode(input.dataChannelsOpened),
+		dataChannelsClosed: this._dataChannelsClosedDecoder.decode(input.dataChannelsClosed),
+		attachments: this._attachmentsDecoder.decode(input.attachments),
+		};
+	}
 }

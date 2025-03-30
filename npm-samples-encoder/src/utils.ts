@@ -40,6 +40,8 @@ export type ClientSampleEncoderSettings = {
 export interface AttachmentsEncoderFactory {
 	createIceCandidatePairAttachmentEncoder(): AttachmentEncoder;
 	createCodecStatsAttachmentEncoder(): AttachmentEncoder;
+	createMediaSourceAttachmentEncoder(): AttachmentEncoder;
+	createMediaPlayoutAttachmentEncoder(): AttachmentEncoder;
 	createClientSampleAttachmentEncoder(): AttachmentEncoder;
 	createPeerConnectionSampleAttachmentEncoder(): AttachmentEncoder;
 	createCertificateAttachmentEncoder(): AttachmentEncoder;
@@ -52,9 +54,6 @@ export interface AttachmentsEncoderFactory {
 	createDataChannelAttachmentEncoder(): AttachmentEncoder;
 	createRemoteInboundRtpAttachmentEncoder(): AttachmentEncoder;
 	createRemoteOutboundRtpAttachmentEncoder(): AttachmentEncoder;
-	createAudioSourceAttachmentEncoder(): AttachmentEncoder;
-	createVideoSourceAttachmentEncoder(): AttachmentEncoder;
-	createAudioPlayoutAttachmentEncoder(): AttachmentEncoder;
 	createPeerConnectionTransportAttachmentEncoder(): AttachmentEncoder;
 }
 
@@ -115,15 +114,11 @@ export class DefaultAttachmentEncoderFactory implements AttachmentsEncoderFactor
 		return new DefaultAttachmentEncoder();
 	}
 
-	public createAudioSourceAttachmentEncoder() {
+	public createMediaSourceAttachmentEncoder() {
 		return new DefaultAttachmentEncoder();
 	}
 
-	public createVideoSourceAttachmentEncoder() {
-		return new DefaultAttachmentEncoder();
-	}
-
-	public createAudioPlayoutAttachmentEncoder() {
+	public createMediaPlayoutAttachmentEncoder() {
 		return new DefaultAttachmentEncoder();
 	}
 
