@@ -156,7 +156,7 @@ message ClientSample {
 			int32 retransmittedBytesSent = 30;
 			int32 retransmittedPacketsSent = 31;
 			string rid = 32;
-			int32 rtxSsrc = 33;
+			int64 rtxSsrc = 33;
 			string scalabilityMode = 34;
 			double targetBitrate = 35;
 			double totalEncodeTime = 36;

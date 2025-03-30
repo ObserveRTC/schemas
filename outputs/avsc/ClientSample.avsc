@@ -1126,7 +1126,7 @@
                           "name": "rtxSsrc",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The SSRC for the RTX stream, if applicable."

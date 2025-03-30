@@ -799,7 +799,7 @@
               },
               {
                 "name": "rtxSsrc",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The SSRC for the RTX stream, if applicable."
               },

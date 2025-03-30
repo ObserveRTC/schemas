@@ -1159,9 +1159,9 @@ export class ClientSample_PeerConnectionSample_OutboundRtpStats extends Message<
   rid?: string;
 
   /**
-   * @generated from field: optional int32 rtxSsrc = 33;
+   * @generated from field: optional int64 rtxSsrc = 33;
    */
-  rtxSsrc?: number;
+  rtxSsrc?: bigint;
 
   /**
    * @generated from field: optional string scalabilityMode = 34;
@@ -1233,7 +1233,7 @@ export class ClientSample_PeerConnectionSample_OutboundRtpStats extends Message<
     { no: 30, name: "retransmittedBytesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 31, name: "retransmittedPacketsSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 32, name: "rid", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 33, name: "rtxSsrc", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 33, name: "rtxSsrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 34, name: "scalabilityMode", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 35, name: "targetBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 36, name: "totalEncodeTime", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
