@@ -67,6 +67,13 @@ function getTsType(avroType, addDoc = true) {
             tsObj = subTsObj;
             tsDependencies = subTsDependencies;
         } else if (subType === "enum") {
+            if (name === "RTCStatsIceCandidatePairState") {
+                const index = symbols.findIndex(s => s === "inProgress") ?? -1;
+
+                if (index > -1) {
+                    symbols[index] = "in-progress";
+                }
+            }
             tsType = `"` + symbols.join(`" | "`) + `"`;
         } else if (subType === "record") {
             tsType = name;

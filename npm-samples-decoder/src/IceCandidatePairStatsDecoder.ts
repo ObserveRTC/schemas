@@ -165,7 +165,10 @@ export class IceCandidatePairStatsEnumDecoder implements Decoder<InputIceCandida
         this._actualValue = 'new';
 		break;
       case InputIceCandidatePairState.INPROGRESS:
-		this._actualValue = 'inProgress';
+		this._actualValue = 'in-progress';
+		break;
+	  case InputIceCandidatePairState.WAITING:
+		this._actualValue = 'waiting';
 		break;
       case InputIceCandidatePairState.FAILED:
 		this._actualValue = 'failed';

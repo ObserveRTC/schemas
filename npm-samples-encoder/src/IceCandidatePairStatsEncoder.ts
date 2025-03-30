@@ -144,12 +144,14 @@ export class IceCandidatePairStatsEnumEncoder implements Encoder<Required<IceCan
 		switch (state) {
 			case 'new':
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.NEW;
-			case 'inProgress':
+      case 'in-progress':
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.INPROGRESS;
 			case 'failed':
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.FAILED;
 			case 'succeeded':
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.SUCCEEDED;
+      case 'waiting':
+        return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.WAITING;
 			default:
 				throw new Error(`Unknown IceCandidatePairStats state: ${state}`);
 		}

@@ -250,7 +250,7 @@ IceCandidatePairStats
  * **transportId**: The transport id of the connection this candidate pair belongs to.
  * **localCandidateId**: The ID of the local ICE candidate in this pair.
  * **remoteCandidateId**: The ID of the remote ICE candidate in this pair.
- * **state**: undefined (Possible values are: new,<br />inProgress,<br />failed,<br />succeeded)
+ * **state**: undefined (Possible values are: new,<br />inProgress,<br />waiting,<br />failed,<br />succeeded)
  * **nominated**: Whether this candidate pair has been nominated.
  * **packetsSent**: The number of packets sent using this candidate pair.
  * **packetsReceived**: The number of packets received using this candidate pair.

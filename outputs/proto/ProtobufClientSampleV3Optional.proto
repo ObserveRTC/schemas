@@ -272,8 +272,9 @@ message ClientSample {
 				/* For state */
 				NEW = 0;
 				INPROGRESS = 1;
-				FAILED = 2;
-				SUCCEEDED = 3;
+				WAITING = 2;
+				FAILED = 3;
+				SUCCEEDED = 4;
 			}
 			optional string id = 1;
 			optional int32 timestamp = 2;

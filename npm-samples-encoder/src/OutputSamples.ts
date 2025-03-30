@@ -2263,21 +2263,27 @@ export enum ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidate
   INPROGRESS = 1,
 
   /**
-   * @generated from enum value: FAILED = 2;
+   * @generated from enum value: WAITING = 2;
    */
-  FAILED = 2,
+  WAITING = 2,
 
   /**
-   * @generated from enum value: SUCCEEDED = 3;
+   * @generated from enum value: FAILED = 3;
    */
-  SUCCEEDED = 3,
+  FAILED = 3,
+
+  /**
+   * @generated from enum value: SUCCEEDED = 4;
+   */
+  SUCCEEDED = 4,
 }
 // Retrieve enum metadata with: proto3.getEnumType(ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum)
 proto3.util.setEnumType(ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum, "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidatePairStats.IceCandidatePairStatsEnum", [
   { no: 0, name: "NEW" },
   { no: 1, name: "INPROGRESS" },
-  { no: 2, name: "FAILED" },
-  { no: 3, name: "SUCCEEDED" },
+  { no: 2, name: "WAITING" },
+  { no: 3, name: "FAILED" },
+  { no: 4, name: "SUCCEEDED" },
 ]);
 
 /**
