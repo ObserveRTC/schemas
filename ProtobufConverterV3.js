@@ -117,7 +117,7 @@ export class ProtobufConverterV3 {
         if (this._uuidFields.has(field.name) || field.name === "appData") {
             protoType = "bytes";
         } else if (field.name === "timestamp") {
-            protoType = this._mapPrimitive("int");
+            protoType = this._mapPrimitive("double");
         } else {
             protoType = this._mapPrimitive(type);
         }

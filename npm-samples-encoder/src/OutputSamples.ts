@@ -39,7 +39,7 @@ export class ClientSample extends Message<ClientSample> {
   peerConnections: ClientSample_PeerConnectionSample[] = [];
 
   /**
-   * @generated from field: optional int32 timestamp = 6;
+   * @generated from field: optional double timestamp = 6;
    */
   timestamp?: number;
 
@@ -76,7 +76,7 @@ export class ClientSample extends Message<ClientSample> {
     { no: 3, name: "clientMetaItems", kind: "message", T: ClientSample_ClientMetaData, repeated: true },
     { no: 4, name: "extensionStats", kind: "message", T: ClientSample_ExtensionStat, repeated: true },
     { no: 5, name: "peerConnections", kind: "message", T: ClientSample_PeerConnectionSample, repeated: true },
-    { no: 6, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 6, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 7, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 8, name: "callId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 9, name: "clientId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
@@ -254,7 +254,7 @@ export class ClientSample_PeerConnectionSample_InboundTrackSample extends Messag
   kind?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 3;
+   * @generated from field: optional double timestamp = 3;
    */
   timestamp?: number;
 
@@ -278,7 +278,7 @@ export class ClientSample_PeerConnectionSample_InboundTrackSample extends Messag
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "score", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
   ]);
@@ -315,7 +315,7 @@ export class ClientSample_PeerConnectionSample_OutboundTrackSample extends Messa
   kind?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 3;
+   * @generated from field: optional double timestamp = 3;
    */
   timestamp?: number;
 
@@ -339,7 +339,7 @@ export class ClientSample_PeerConnectionSample_OutboundTrackSample extends Messa
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "score", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
   ]);
@@ -376,7 +376,7 @@ export class ClientSample_PeerConnectionSample_CodecStats extends Message<Client
   mimeType?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 3;
+   * @generated from field: optional double timestamp = 3;
    */
   timestamp?: number;
 
@@ -420,7 +420,7 @@ export class ClientSample_PeerConnectionSample_CodecStats extends Message<Client
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "mimeType", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "channels", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 6, name: "clockRate", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -466,7 +466,7 @@ export class ClientSample_PeerConnectionSample_InboundRtpStats extends Message<C
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional int32 timestamp = 4;
+   * @generated from field: optional double timestamp = 4;
    */
   timestamp?: number;
 
@@ -791,7 +791,7 @@ export class ClientSample_PeerConnectionSample_InboundRtpStats extends Message<C
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 5, name: "trackIdentifier", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 6, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 7, name: "audioLevel", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -893,7 +893,7 @@ export class ClientSample_PeerConnectionSample_RemoteInboundRtpStats extends Mes
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional int32 timestamp = 4;
+   * @generated from field: optional double timestamp = 4;
    */
   timestamp?: number;
 
@@ -963,7 +963,7 @@ export class ClientSample_PeerConnectionSample_RemoteInboundRtpStats extends Mes
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 5, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 6, name: "codecId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 7, name: "fractionLost", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -1014,7 +1014,7 @@ export class ClientSample_PeerConnectionSample_OutboundRtpStats extends Message<
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional int32 timestamp = 4;
+   * @generated from field: optional double timestamp = 4;
    */
   timestamp?: number;
 
@@ -1204,7 +1204,7 @@ export class ClientSample_PeerConnectionSample_OutboundRtpStats extends Message<
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 5, name: "active", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
     { no: 6, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 7, name: "bytesSent", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1334,7 +1334,7 @@ export class ClientSample_PeerConnectionSample_RemoteOutboundRtpStats extends Me
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional int32 timestamp = 4;
+   * @generated from field: optional double timestamp = 4;
    */
   timestamp?: number;
 
@@ -1404,7 +1404,7 @@ export class ClientSample_PeerConnectionSample_RemoteOutboundRtpStats extends Me
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 4, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 4, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 5, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 6, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 7, name: "codecId", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -1450,7 +1450,7 @@ export class ClientSample_PeerConnectionSample_MediaSourceStats extends Message<
   kind?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 3;
+   * @generated from field: optional double timestamp = 3;
    */
   timestamp?: number;
 
@@ -1519,7 +1519,7 @@ export class ClientSample_PeerConnectionSample_MediaSourceStats extends Message<
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "audioLevel", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 6, name: "echoReturnLoss", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -1565,7 +1565,7 @@ export class ClientSample_PeerConnectionSample_MediaPlayoutStats extends Message
   kind?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 3;
+   * @generated from field: optional double timestamp = 3;
    */
   timestamp?: number;
 
@@ -1609,7 +1609,7 @@ export class ClientSample_PeerConnectionSample_MediaPlayoutStats extends Message
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "kind", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "synthesizedSamplesDuration", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 6, name: "synthesizedSamplesEvents", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1645,7 +1645,7 @@ export class ClientSample_PeerConnectionSample_PeerConnectionTransportStats exte
   id?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 2;
+   * @generated from field: optional double timestamp = 2;
    */
   timestamp?: number;
 
@@ -1673,7 +1673,7 @@ export class ClientSample_PeerConnectionSample_PeerConnectionTransportStats exte
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.PeerConnectionTransportStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 3, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "dataChannelsClosed", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
     { no: 5, name: "dataChannelsOpened", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
@@ -1706,7 +1706,7 @@ export class ClientSample_PeerConnectionSample_DataChannelStats extends Message<
   id?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 2;
+   * @generated from field: optional double timestamp = 2;
    */
   timestamp?: number;
 
@@ -1764,7 +1764,7 @@ export class ClientSample_PeerConnectionSample_DataChannelStats extends Message<
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.DataChannelStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 3, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 5, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
@@ -1803,7 +1803,7 @@ export class ClientSample_PeerConnectionSample_IceTransportStats extends Message
   id?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 2;
+   * @generated from field: optional double timestamp = 2;
    */
   timestamp?: number;
 
@@ -1901,7 +1901,7 @@ export class ClientSample_PeerConnectionSample_IceTransportStats extends Message
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceTransportStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 3, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "bytesReceived", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
     { no: 5, name: "bytesSent", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
@@ -1948,7 +1948,7 @@ export class ClientSample_PeerConnectionSample_IceCandidateStats extends Message
   id?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 2;
+   * @generated from field: optional double timestamp = 2;
    */
   timestamp?: number;
 
@@ -2031,7 +2031,7 @@ export class ClientSample_PeerConnectionSample_IceCandidateStats extends Message
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidateStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 3, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "candidateType", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -2075,7 +2075,7 @@ export class ClientSample_PeerConnectionSample_IceCandidatePairStats extends Mes
   id?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 2;
+   * @generated from field: optional double timestamp = 2;
    */
   timestamp?: number;
 
@@ -2203,7 +2203,7 @@ export class ClientSample_PeerConnectionSample_IceCandidatePairStats extends Mes
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.IceCandidatePairStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 3, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "availableIncomingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 5, name: "availableOutgoingBitrate", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
@@ -2296,7 +2296,7 @@ export class ClientSample_PeerConnectionSample_CertificateStats extends Message<
   id?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 2;
+   * @generated from field: optional double timestamp = 2;
    */
   timestamp?: number;
 
@@ -2334,7 +2334,7 @@ export class ClientSample_PeerConnectionSample_CertificateStats extends Message<
   static readonly typeName = "org.observertc.schemas.protobuf.ClientSample.PeerConnectionSample.CertificateStats";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 2, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 3, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "base64Certificate", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "fingerprint", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
@@ -2374,7 +2374,7 @@ export class ClientSample_ClientEvent extends Message<ClientSample_ClientEvent> 
   payload?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 3;
+   * @generated from field: optional double timestamp = 3;
    */
   timestamp?: number;
 
@@ -2388,7 +2388,7 @@ export class ClientSample_ClientEvent extends Message<ClientSample_ClientEvent> 
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "payload", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_ClientEvent {
@@ -2423,7 +2423,7 @@ export class ClientSample_ClientIssue extends Message<ClientSample_ClientIssue> 
   payload?: string;
 
   /**
-   * @generated from field: optional int32 timestamp = 3;
+   * @generated from field: optional double timestamp = 3;
    */
   timestamp?: number;
 
@@ -2437,7 +2437,7 @@ export class ClientSample_ClientIssue extends Message<ClientSample_ClientIssue> 
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 2, name: "payload", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 3, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_ClientIssue {
@@ -2482,7 +2482,7 @@ export class ClientSample_ClientMetaData extends Message<ClientSample_ClientMeta
   ssrc?: bigint;
 
   /**
-   * @generated from field: optional int32 timestamp = 5;
+   * @generated from field: optional double timestamp = 5;
    */
   timestamp?: number;
 
@@ -2503,7 +2503,7 @@ export class ClientSample_ClientMetaData extends Message<ClientSample_ClientMeta
     { no: 2, name: "payload", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 3, name: "peerConnectionId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 4, name: "ssrc", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
-    { no: 5, name: "timestamp", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+    { no: 5, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 6, name: "trackId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
   ]);
 

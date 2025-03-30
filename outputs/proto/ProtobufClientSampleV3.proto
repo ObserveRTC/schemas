@@ -10,21 +10,21 @@ message ClientSample {
 		message InboundTrackSample {
 			string id = 1;
 			string kind = 2;
-			int32 timestamp = 3;
+			double timestamp = 3;
 			string attachments = 4;
 			double score = 5;
 		}
 		message OutboundTrackSample {
 			string id = 1;
 			string kind = 2;
-			int32 timestamp = 3;
+			double timestamp = 3;
 			string attachments = 4;
 			double score = 5;
 		}
 		message CodecStats {
 			string id = 1;
 			string mimeType = 2;
-			int32 timestamp = 3;
+			double timestamp = 3;
 			string attachments = 4;
 			int32 channels = 5;
 			int32 clockRate = 6;
@@ -36,7 +36,7 @@ message ClientSample {
 			string id = 1;
 			string kind = 2;
 			int64 ssrc = 3;
-			int32 timestamp = 4;
+			double timestamp = 4;
 			bytes trackIdentifier = 5;
 			string attachments = 6;
 			double audioLevel = 7;
@@ -104,7 +104,7 @@ message ClientSample {
 			string id = 1;
 			string kind = 2;
 			int64 ssrc = 3;
-			int32 timestamp = 4;
+			double timestamp = 4;
 			string attachments = 5;
 			string codecId = 6;
 			double fractionLost = 7;
@@ -127,7 +127,7 @@ message ClientSample {
 			string id = 1;
 			string kind = 2;
 			int64 ssrc = 3;
-			int32 timestamp = 4;
+			double timestamp = 4;
 			bool active = 5;
 			string attachments = 6;
 			int32 bytesSent = 7;
@@ -168,7 +168,7 @@ message ClientSample {
 			string id = 1;
 			string kind = 2;
 			int64 ssrc = 3;
-			int32 timestamp = 4;
+			double timestamp = 4;
 			string attachments = 5;
 			int64 bytesSent = 6;
 			string codecId = 7;
@@ -184,7 +184,7 @@ message ClientSample {
 		message MediaSourceStats {
 			string id = 1;
 			string kind = 2;
-			int32 timestamp = 3;
+			double timestamp = 3;
 			string attachments = 4;
 			double audioLevel = 5;
 			double echoReturnLoss = 6;
@@ -200,7 +200,7 @@ message ClientSample {
 		message MediaPlayoutStats {
 			string id = 1;
 			string kind = 2;
-			int32 timestamp = 3;
+			double timestamp = 3;
 			string attachments = 4;
 			double synthesizedSamplesDuration = 5;
 			int32 synthesizedSamplesEvents = 6;
@@ -210,14 +210,14 @@ message ClientSample {
 		}
 		message PeerConnectionTransportStats {
 			string id = 1;
-			int32 timestamp = 2;
+			double timestamp = 2;
 			string attachments = 3;
 			int32 dataChannelsClosed = 4;
 			int32 dataChannelsOpened = 5;
 		}
 		message DataChannelStats {
 			string id = 1;
-			int32 timestamp = 2;
+			double timestamp = 2;
 			string attachments = 3;
 			int64 bytesReceived = 4;
 			int64 bytesSent = 5;
@@ -230,7 +230,7 @@ message ClientSample {
 		}
 		message IceTransportStats {
 			string id = 1;
-			int32 timestamp = 2;
+			double timestamp = 2;
 			string attachments = 3;
 			int64 bytesReceived = 4;
 			int64 bytesSent = 5;
@@ -251,7 +251,7 @@ message ClientSample {
 		}
 		message IceCandidateStats {
 			string id = 1;
-			int32 timestamp = 2;
+			double timestamp = 2;
 			string address = 3;
 			string attachments = 4;
 			string candidateType = 5;
@@ -277,7 +277,7 @@ message ClientSample {
 				SUCCEEDED = 4;
 			}
 			string id = 1;
-			int32 timestamp = 2;
+			double timestamp = 2;
 			string attachments = 3;
 			double availableIncomingBitrate = 4;
 			double availableOutgoingBitrate = 5;
@@ -304,7 +304,7 @@ message ClientSample {
 		}
 		message CertificateStats {
 			string id = 1;
-			int32 timestamp = 2;
+			double timestamp = 2;
 			string attachments = 3;
 			string base64Certificate = 4;
 			string fingerprint = 5;
@@ -333,19 +333,19 @@ message ClientSample {
 	message ClientEvent {
 		string type = 1;
 		string payload = 2;
-		int32 timestamp = 3;
+		double timestamp = 3;
 	}
 	message ClientIssue {
 		string type = 1;
 		string payload = 2;
-		int32 timestamp = 3;
+		double timestamp = 3;
 	}
 	message ClientMetaData {
 		string type = 1;
 		string payload = 2;
 		bytes peerConnectionId = 3;
 		int64 ssrc = 4;
-		int32 timestamp = 5;
+		double timestamp = 5;
 		bytes trackId = 6;
 	}
 	message ExtensionStat {
@@ -357,7 +357,7 @@ message ClientSample {
 	repeated ClientMetaData clientMetaItems = 3;
 	repeated ExtensionStat extensionStats = 4;
 	repeated PeerConnectionSample peerConnections = 5;
-	int32 timestamp = 6;
+	double timestamp = 6;
 	string attachments = 7;
 	bytes callId = 8;
 	bytes clientId = 9;
