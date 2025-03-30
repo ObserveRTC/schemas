@@ -4,7 +4,8 @@ import {
     NumberToNumberDecoder,
     OneTimePassDecoder,
     StringToStringDecoder,
-    AttachmentDecoder
+    AttachmentDecoder,
+	BigIntToNumberDecoder
 } from "./utils";
 import { 
 	ClientSample_PeerConnectionSample_OutboundRtpStats as InputOutboundRtpStats,
@@ -67,7 +68,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _retransmittedBytesSentDecoder: NumberToNumberDecoder;
     private readonly _retransmittedPacketsSentDecoder: NumberToNumberDecoder;
     private readonly _ridDecoder: StringToStringDecoder;
-    private readonly _rtxSsrcDecoder: NumberToNumberDecoder;
+    private readonly _rtxSsrcDecoder: BigIntToNumberDecoder;
     private readonly _scalabilityModeDecoder: StringToStringDecoder;
     private readonly _targetBitrateDecoder: NumberToNumberDecoder;
     private readonly _totalEncodeTimeDecoder: NumberToNumberDecoder;
@@ -109,7 +110,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._retransmittedBytesSentDecoder = new NumberToNumberDecoder();
         this._retransmittedPacketsSentDecoder = new NumberToNumberDecoder();
         this._ridDecoder = new StringToStringDecoder();
-        this._rtxSsrcDecoder = new NumberToNumberDecoder();
+        this._rtxSsrcDecoder = new BigIntToNumberDecoder();
         this._scalabilityModeDecoder = new StringToStringDecoder();
         this._targetBitrateDecoder = new NumberToNumberDecoder();
         this._totalEncodeTimeDecoder = new NumberToNumberDecoder();

@@ -1,6 +1,7 @@
 import {
   AttachmentEncoder,
   BooleanToBooleanEncoder,
+  NumberToBigIntEncoder,
   NumberToNumberEncoder,
   OneTimePassEncoder,
   StringToStringEncoder,
@@ -74,7 +75,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
   private readonly _retransmittedBytesSentEncoder: NumberToNumberEncoder;
   private readonly _retransmittedPacketsSentEncoder: NumberToNumberEncoder;
   private readonly _ridEncoder: StringToStringEncoder;
-  private readonly _rtxSsrcEncoder: NumberToNumberEncoder;
+  private readonly _rtxSsrcEncoder: NumberToBigIntEncoder;
   private readonly _scalabilityModeEncoder: StringToStringEncoder;
   private readonly _targetBitrateEncoder: NumberToNumberEncoder;
   private readonly _totalEncodeTimeEncoder: NumberToNumberEncoder;
@@ -118,7 +119,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._retransmittedBytesSentEncoder = new NumberToNumberEncoder();
     this._retransmittedPacketsSentEncoder = new NumberToNumberEncoder();
     this._ridEncoder = new StringToStringEncoder();
-    this._rtxSsrcEncoder = new NumberToNumberEncoder();
+    this._rtxSsrcEncoder = new NumberToBigIntEncoder();
     this._scalabilityModeEncoder = new StringToStringEncoder();
     this._targetBitrateEncoder = new NumberToNumberEncoder();
     this._totalEncodeTimeEncoder = new NumberToNumberEncoder();
