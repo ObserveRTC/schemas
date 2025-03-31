@@ -79,6 +79,7 @@ export class ClientSampleDecoder {
     public decodeFromBytes(bytes: Uint8Array): OutputClientSample | undefined {
         try {
             const inputSample = InputClientSample.fromBinary(bytes);
+
             return this.decodeFromProtobuf(inputSample);
         } catch (error) {
             console.warn("Failed to decode ClientSample from bytes:", error);
@@ -89,7 +90,7 @@ export class ClientSampleDecoder {
     public decodeFromBase64(base64: string): OutputClientSample | undefined {
         try {
 			const bytes = Buffer.from(base64, 'base64');
-			
+
             return this.decodeFromBytes(bytes);
         } catch (error) {
             console.warn("Failed to decode ClientSample from base64:", error);
@@ -104,8 +105,8 @@ export class ClientSampleDecoder {
         const callId = this._callIdDecoder.decode(input.callId);
         const timestamp = this._timestampDecoder.decode(input.timestamp);
 
-        if (!clientId || !callId || !timestamp) {
-            console.warn("Invalid ClientSample: missing required fields (clientId, callId, or timestamp)");
+        if (!timestamp) {
+            console.warn("Invalid ClientSample: missing required fields (clientId, or timestamp)");
             return undefined;
         }
 
