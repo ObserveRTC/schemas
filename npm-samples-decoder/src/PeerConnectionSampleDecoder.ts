@@ -17,14 +17,14 @@ import { IceCandidateDecoder } from "./IceCandidateDecoder";
 import { IceCandidatePairDecoder } from "./IceCandidatePairStatsDecoder";
 import { IceTransportDecoder } from "./IceTransportDecoder";
 import { InboundRtpDecoder } from "./InboundRtpDecoder";
-import { InboundTrackSampleDecoder } from "./InboundTrackDecoder";
+import { InboundTrackDecoder } from "./InboundTrackDecoder";
 import { MediaPlayoutStatsDecoder } from "./MediaPlayoutDecoder";
 import { MediaSourceStatsDecoder } from "./MediaSourceDecoder";
 import { OutboundRtpDecoder } from "./OutboundRtpDecoder";
-import { OutboundTrackSampleDecoder } from "./OutboundTrackEncoder";
+import { OutboundTrackDecoder } from "./OutboundTrackDecoder";
 import { PeerConnectionTransportDecoder } from "./PeerConnectionTransportDecoder";
-import { RemoteInboundRtpDecoder } from "./RemoteInboundRtpEncoder";
-import { RemoteOutboundRtpDecoder } from "./RemoteOutboundRtpEncoder";
+import { RemoteInboundRtpDecoder } from "./RemoteInboundRtpDecoder";
+import { RemoteOutboundRtpDecoder } from "./RemoteOutboundRtpDecoder";
   
   const logger = console;
   
@@ -33,8 +33,8 @@ import { RemoteOutboundRtpDecoder } from "./RemoteOutboundRtpEncoder";
   
     private _attachmentsDecoder: AttachmentDecoder;
     private _scoreDecoder = new NumberToNumberDecoder();
-    private _inboundTracksDecoders = new Map<string, InboundTrackSampleDecoder>();
-    private _outboundTracksDecoders = new Map<string, OutboundTrackSampleDecoder>();
+    private _inboundTracksDecoders = new Map<string, InboundTrackDecoder>();
+    private _outboundTracksDecoders = new Map<string, OutboundTrackDecoder>();
     private _codecStatsDecoders = new Map<string, CodecStatsDecoder>();
     private _inboundRtpDecoders = new Map<bigint, InboundRtpDecoder>();
     private _remoteInboundRtpDecoders = new Map<bigint, RemoteInboundRtpDecoder>();
@@ -137,7 +137,7 @@ import { RemoteOutboundRtpDecoder } from "./RemoteOutboundRtpEncoder";
         let decoder = this._inboundTracksDecoders.get(input.id);
 
         if (!decoder) {
-            decoder = new InboundTrackSampleDecoder(
+            decoder = new InboundTrackDecoder(
                 input.id,
                 this.parent.attachmentDecoderFactory.createInboundTrackAttachmentDecoder()
             );
@@ -153,7 +153,7 @@ import { RemoteOutboundRtpDecoder } from "./RemoteOutboundRtpEncoder";
         let decoder = this._outboundTracksDecoders.get(input.id);
 
         if (!decoder) {
-            decoder = new OutboundTrackSampleDecoder(
+            decoder = new OutboundTrackDecoder(
                 input.id,
                 this.parent.attachmentDecoderFactory.createOutboundTrackAttachmentDecoder()
             );

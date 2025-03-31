@@ -9,7 +9,7 @@ import { ClientSample_PeerConnectionSample_InboundTrackSample as InputInboundTra
 
 const logger = console;
 
-export class InboundTrackSampleDecoder implements Decoder<InputInboundTrackSample, OutputInboundTrackSample | undefined> {
+export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, OutputInboundTrackSample | undefined> {
 	private _visited = false;
 	private readonly _timestampDecoder: NumberToNumberDecoder;
 	private readonly _idDecoder: StringToStringDecoder;
