@@ -54,7 +54,7 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
 
     return new OutputMediaPlayoutStats({
       timestamp: this._timestampEncoder.encode(sample.timestamp),
-      id: this._idEncoder.encode(sample.id),
+      id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
       synthesizedSamplesDuration: this._synthesizedSamplesDurationEncoder.encode(sample.synthesizedSamplesDuration),
       synthesizedSamplesEvents: this._synthesizedSamplesEventsEncoder.encode(sample.synthesizedSamplesEvents),
