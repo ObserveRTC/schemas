@@ -76,7 +76,7 @@ export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, Clie
 
     return new ClientSample_PeerConnectionSample_IceCandidateStats({
       timestamp: this._timestampEncoder.encode(sample.timestamp),
-      id: this._idEncoder.encode(sample.id),
+      id: sample.id,
       transportId: this._transportIdEncoder.encode(sample.transportId),
       address: this._addressEncoder.encode(sample.address),
       port: this._portEncoder.encode(sample.port),

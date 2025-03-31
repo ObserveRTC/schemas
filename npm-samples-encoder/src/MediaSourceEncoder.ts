@@ -69,7 +69,7 @@ export class MediaSourceStatsEncoder implements Encoder<InputMediaSourceStats, O
 
     return new OutputMediaSourceStats({
       timestamp: this._timestampEncoder.encode(sample.timestamp),
-      id: this._idEncoder.encode(sample.id),
+      id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
       trackIdentifier: this._trackIdentifierEncoder.encode(sample.trackIdentifier),
       audioLevel: this._audioLevelEncoder.encode(sample.audioLevel),

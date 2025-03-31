@@ -42,7 +42,7 @@ export class PeerConnectionTransportEncoder
     this._visited = true;
 
     return new ClientSample_PeerConnectionSample_PeerConnectionTransportStats({
-      id: this._idEncoder.encode(sample.id),
+      id: sample.id,
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       dataChannelsOpened: this._dataChannelsOpenedEncoder.encode(
         sample.dataChannelsOpened

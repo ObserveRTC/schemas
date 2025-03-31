@@ -42,7 +42,7 @@ export class InboundTrackSampleEncoder implements Encoder<InputInboundTrackSampl
 
     return new OutputInboundTrackSample({
       timestamp: this._timestampEncoder.encode(sample.timestamp),
-      id: this._idEncoder.encode(sample.id),
+      id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
       score: this._scoreEncoder.encode(sample.score),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
