@@ -1,9 +1,5 @@
 import {
     ClientSample as InputClientSample,
-    ClientSample_ClientEvent as InputClientEvent,
-    ClientSample_ClientIssue as InputClientIssue,
-    ClientSample_ClientMetaData as InputClientMetaData,
-    ClientSample_ExtensionStat as InputExtensionStat,
     ClientSample_PeerConnectionSample as InputPeerConnectionSample,
 } from "./InputSamples";
 import {
@@ -47,6 +43,7 @@ export class ClientSampleDecoder {
     private _attachmentDecoder: AttachmentDecoder;
     private _scoreDecoder = new NumberToNumberDecoder();
     private _visited = false;
+    private _actualValue: OutputClientSample | undefined = undefined;
 
     private _peerConnectionSampleDecoders = new Map<string, PeerConnectionSampleDecoder>();
 
@@ -74,6 +71,38 @@ export class ClientSampleDecoder {
         const result = this._visited;
         this._visited = false;
         return result;
+    }
+
+    public get actualValue(): OutputClientSample | undefined {
+        return this._actualValue;
+    }
+
+    public set actualValue(sample: OutputClientSample | undefined) {
+        if (!sample) return;
+        
+        this._visited = true;
+        this._actualValue = sample;
+
+        this._clientIdDecoder.reset();
+        this._callIdDecoder.reset();
+        this._timestampDecoder.reset();
+        this._attachmentDecoder.reset();
+        this._scoreDecoder.reset();
+
+        this.clientEventDecoder.reset();
+        this.clientIssueDecoder.reset();
+        this.clientMetaDataDecoder.reset();
+        this.extensionStatsDecoder.reset();
+
+        this._peerConnectionSampleDecoders.clear();
+        for (const pc of sample.peerConnections ?? []) {
+            const decoder = this._getOrCreatePeerConnectionSampleDecoder(pc.peerConnectionId);
+
+            decoder.actualValue = pc;
+        }
+
+        this._scoreDecoder.actualValue = sample.score;
+        this._attachmentDecoder.actualValue = sample.attachments;
     }
 
     public decodeFromBytes(bytes: Uint8Array): OutputClientSample | undefined {
@@ -130,7 +159,7 @@ export class ClientSampleDecoder {
             ?.map(this.clientIssueDecoder.decode.bind(this.clientIssueDecoder))
             ?.filter((issue): issue is OutputClientIssue => issue !== undefined);
 
-        const result: OutputClientSample = {
+        this._actualValue = {
             timestamp,
             callId,
             clientId,
@@ -145,7 +174,7 @@ export class ClientSampleDecoder {
 
         this._checkVisitsAndClean();
 
-        return result;
+        return this._actualValue;
     }
 
     public reset() {
@@ -160,9 +189,7 @@ export class ClientSampleDecoder {
         this.extensionStatsDecoder.reset();
     }
 
-    private _decodePeerConnectionSample(
-        input: InputPeerConnectionSample,
-    ): OutputPeerConnectionSample | undefined {
+    private _decodePeerConnectionSample(input: InputPeerConnectionSample): OutputPeerConnectionSample | undefined {
 		if (input.peerConnectionId === undefined) return undefined;
 
         const peerConnectionId = this.settings.peerConnectionIdIsUuid
@@ -174,15 +201,20 @@ export class ClientSampleDecoder {
 			return undefined;
 		}
 
-        let decoder = this._peerConnectionSampleDecoders.get(peerConnectionId);
-        if (!decoder) {
-            decoder = new PeerConnectionSampleDecoder(
-				peerConnectionId,
-				this
-			);
-            this._peerConnectionSampleDecoders.set(peerConnectionId, decoder);
-        }
+        const decoder = this._getOrCreatePeerConnectionSampleDecoder(peerConnectionId);
+
         return decoder.decode(input);
+    }
+
+    private _getOrCreatePeerConnectionSampleDecoder(id: string) {
+        let decoder = this._peerConnectionSampleDecoders.get(id);
+        
+        if (!decoder) {
+            decoder = new PeerConnectionSampleDecoder(id, this);
+            this._peerConnectionSampleDecoders.set(id, decoder);
+        }
+
+        return decoder;
     }
 
     private _checkVisitsAndClean() {

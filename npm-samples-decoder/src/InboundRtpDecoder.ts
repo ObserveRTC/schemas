@@ -17,6 +17,8 @@ const logger = console;
 export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputInboundRtpStats | undefined> {
 	private _visited = false;
   
+	
+
 	private readonly _idDecoder: StringToStringDecoder;
 	private readonly _kindDecoder: StringToStringDecoder;
 	private readonly _timestampDecoder: NumberToNumberDecoder;
@@ -80,6 +82,9 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	private readonly _totalSquaredCorruptionProbabilityDecoder: NumberToNumberDecoder;
 	private readonly _totalSquaredInterFrameDelayDecoder: NumberToNumberDecoder;
 	private readonly _transportIdDecoder: OneTimePassDecoder<string>;
+
+	private _actualValue: OutputInboundRtpStats | undefined = undefined;
+
 	constructor(
 		private readonly ssrc: number,
 		private readonly _trackIdentifierDecoder: Decoder<Uint8Array, string>,
@@ -235,7 +240,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 		return undefined;
 	  }
   
-	  return {
+	  this._actualValue = {
 		ssrc: this.ssrc,
 		kind,
 		trackIdentifier,
@@ -303,5 +308,94 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 		totalSquaredInterFrameDelay: this._totalSquaredInterFrameDelayDecoder.decode(input.totalSquaredInterFrameDelay),
 		transportId: this._transportIdDecoder.decode(input.transportId),
 	  };
+
+	  return this._actualValue;
+	}
+
+	public get actualValue(): OutputInboundRtpStats | undefined {
+		return this._actualValue;
+	}
+
+	public set actualValue(sample: OutputInboundRtpStats | undefined) {
+		if (!sample) return;
+		this._visited = true;
+		this._actualValue = sample;
+	
+		this._idDecoder.actualValue = sample.id;
+		this._kindDecoder.actualValue = sample.kind;
+		this._timestampDecoder.actualValue = sample.timestamp;
+		this._audioLevelDecoder.actualValue = sample.audioLevel;
+		this._bytesReceivedDecoder.actualValue = sample.bytesReceived;
+		this._codecIdDecoder.actualValue = sample.codecId;
+		this._concealedSamplesDecoder.actualValue = sample.concealedSamples;
+		this._concealmentEventsDecoder.actualValue = sample.concealmentEvents;
+		this._corruptionMeasurementsDecoder.actualValue = sample.corruptionMeasurements;
+		this._decoderImplementationDecoder.actualValue = sample.decoderImplementation;
+		this._estimatedPlayoutTimestampDecoder.actualValue = sample.estimatedPlayoutTimestamp;
+		this._fecBytesReceivedDecoder.actualValue = sample.fecBytesReceived;
+		this._fecPacketsDiscardedDecoder.actualValue = sample.fecPacketsDiscarded;
+		this._fecPacketsReceivedDecoder.actualValue = sample.fecPacketsReceived;
+		this._fecSsrcDecoder.actualValue = sample.fecSsrc;
+		this._firCountDecoder.actualValue = sample.firCount;
+		this._frameHeightDecoder.actualValue = sample.frameHeight;
+		this._frameWidthDecoder.actualValue = sample.frameWidth;
+		this._framesAssembledFromMultiplePacketsDecoder.actualValue = sample.framesAssembledFromMultiplePackets;
+		this._framesDecodedDecoder.actualValue = sample.framesDecoded;
+		this._framesDroppedDecoder.actualValue = sample.framesDropped;
+		this._framesPerSecondDecoder.actualValue = sample.framesPerSecond;
+
+		this._framesReceivedDecoder.actualValue = sample.framesReceived;
+		this._framesRenderedDecoder.actualValue = sample.framesRendered;
+		this._freezeCountDecoder.actualValue = sample.freezeCount;
+
+		this._headerBytesReceivedDecoder.actualValue = sample.headerBytesReceived;
+		this._insertedSamplesForDecelerationDecoder.actualValue = sample.insertedSamplesForDeceleration;
+		this._jitterDecoder.actualValue = sample.jitter;
+		this._jitterBufferDelayDecoder.actualValue = sample.jitterBufferDelay;
+			
+		this._jitterBufferEmittedCountDecoder.actualValue = sample.jitterBufferEmittedCount;
+		this._jitterBufferMinimumDelayDecoder.actualValue = sample.jitterBufferMinimumDelay;
+		this._jitterBufferTargetDelayDecoder.actualValue = sample.jitterBufferTargetDelay;
+		this._keyFramesDecodedDecoder.actualValue = sample.keyFramesDecoded;
+		this._lastPacketReceivedTimestampDecoder.actualValue = sample.lastPacketReceivedTimestamp;
+		this._midDecoder.actualValue = sample.mid;
+		this._nackCountDecoder.actualValue = sample.nackCount;
+		this._packetsDiscardedDecoder.actualValue = sample.packetsDiscarded;
+
+		this._packetsLostDecoder.actualValue = sample.packetsLost;
+
+		this._packetsReceivedDecoder.actualValue = sample.packetsReceived;
+
+		this._pauseCountDecoder.actualValue = sample.pauseCount;
+		this._pliCountDecoder.actualValue = sample.pliCount;
+		this._playoutIdDecoder.actualValue = sample.playoutId;
+		this._powerEfficientDecoderDecoder.actualValue = sample.powerEfficientDecoder;
+		this._qpSumDecoder.actualValue = sample.qpSum;
+		this._remoteIdDecoder.actualValue = sample.remoteId;
+		this._removedSamplesForAccelerationDecoder.actualValue = sample.removedSamplesForAcceleration;
+			
+		this._retransmittedBytesReceivedDecoder.actualValue = sample.retransmittedBytesReceived;
+		this._retransmittedPacketsReceivedDecoder.actualValue = sample.retransmittedPacketsReceived;
+		this._rtxSsrcDecoder.actualValue = sample.rtxSsrc;
+		this._silentConcealedSamplesDecoder.actualValue = sample.silentConcealedSamples;
+		this._totalAssemblyTimeDecoder.actualValue = sample.totalAssemblyTime;
+		this._totalAudioEnergyDecoder.actualValue = sample.totalAudioEnergy;
+
+		this._totalCorruptionProbabilityDecoder.actualValue = sample.totalCorruptionProbability;
+		this._totalDecodeTimeDecoder.actualValue = sample.totalDecodeTime;
+		this._totalFreezesDurationDecoder.actualValue = sample.totalFreezesDuration;
+		this._totalInterFrameDelayDecoder.actualValue = sample.totalInterFrameDelay;
+
+		this._totalPausesDurationDecoder.actualValue = sample.totalPausesDuration;
+		this._totalProcessingDelayDecoder.actualValue = sample.totalProcessingDelay;
+		this._totalSamplesDurationDecoder.actualValue = sample.totalSamplesDuration;
+		this._totalSamplesReceivedDecoder.actualValue = sample.totalSamplesReceived;
+
+		this._totalSquaredCorruptionProbabilityDecoder.actualValue = sample.totalSquaredCorruptionProbability;
+		this._totalSquaredInterFrameDelayDecoder.actualValue = sample.totalSquaredInterFrameDelay;
+		this._transportIdDecoder.actualValue = sample.transportId;
+
+		this._attachmentsDecoder.actualValue = sample.attachments;
+		this._trackIdentifierDecoder.actualValue = sample.trackIdentifier;
 	}
   }

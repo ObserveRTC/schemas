@@ -27,6 +27,8 @@ export class RemoteOutboundRtpDecoder implements Decoder<InputRemoteOutboundRtpS
     private readonly _totalRoundTripTimeDecoder: NumberToNumberDecoder;
     private readonly _roundTripTimeMeasurementsDecoder: NumberToNumberDecoder;
 
+    private _actualValue: OutputRemoteOutboundRtpStats | undefined = undefined;
+
     constructor(
 		public readonly ssrc: number,
         private readonly _attachmentsDecoder: AttachmentDecoder
@@ -76,11 +78,11 @@ export class RemoteOutboundRtpDecoder implements Decoder<InputRemoteOutboundRtpS
 		const kind = this._kindDecoder.decode(input.kind);
 
         if (!timestamp || id === undefined || kind === undefined) {
-            logger.warn("Invalid remote outbound RTP sample: missing timestamp or id");
+            logger.warn("Invalid remote outbound RTP sample: missing timestamp or id or kind", input);
             return undefined;
         }
 
-        return {
+        this._actualValue = {
             ssrc: this.ssrc,
             timestamp,
             id,
@@ -97,5 +99,33 @@ export class RemoteOutboundRtpDecoder implements Decoder<InputRemoteOutboundRtpS
             roundTripTimeMeasurements: this._roundTripTimeMeasurementsDecoder.decode(input.roundTripTimeMeasurements),
             attachments: this._attachmentsDecoder.decode(input.attachments),
         };
+
+        return this._actualValue;
+    }
+
+    public get actualValue(): OutputRemoteOutboundRtpStats | undefined {
+        return this._actualValue;
+    }
+
+    public set actualValue(sample: OutputRemoteOutboundRtpStats | undefined) {
+        if (!sample) return;
+
+        this._visited = true;
+        this._actualValue = sample;
+
+        this._timestampDecoder.actualValue = sample.timestamp;
+        this._idDecoder.actualValue = sample.id;
+        this._kindDecoder.actualValue = sample.kind;
+        this._transportIdDecoder.actualValue = sample.transportId;
+        this._codecIdDecoder.actualValue = sample.codecId;
+        this._packetsSentDecoder.actualValue = sample.packetsSent;
+        this._bytesSentDecoder.actualValue = sample.bytesSent;
+        this._localIdDecoder.actualValue = sample.localId;
+        this._remoteTimestampDecoder.actualValue = sample.remoteTimestamp;
+        this._reportsSentDecoder.actualValue = sample.reportsSent;
+        this._roundTripTimeDecoder.actualValue = sample.roundTripTime;
+        this._totalRoundTripTimeDecoder.actualValue = sample.totalRoundTripTime;
+        this._roundTripTimeMeasurementsDecoder.actualValue = sample.roundTripTimeMeasurements;
+        this._attachmentsDecoder.actualValue = sample.attachments;
     }
 }

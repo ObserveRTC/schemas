@@ -28,6 +28,8 @@ export class IceCandidateDecoder implements Decoder<InputIceCandidateStats, Outp
   private readonly _usernameFragmentDecoder: StringToStringDecoder;
   private readonly _tcpTypeDecoder: StringToStringDecoder;
 
+  private _actualValue: OutputIceCandidateStats | undefined = undefined;
+
   constructor(
 	public readonly id: string,
 	private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -84,7 +86,7 @@ export class IceCandidateDecoder implements Decoder<InputIceCandidateStats, Outp
       return undefined;
     }
 
-    return {
+    this._actualValue = {
       timestamp,
       id: this.id,
       transportId: this._transportIdDecoder.decode(input.transportId),
@@ -102,5 +104,36 @@ export class IceCandidateDecoder implements Decoder<InputIceCandidateStats, Outp
       tcpType: this._tcpTypeDecoder.decode(input.tcpType),
       attachments: this._attachmentsDecoder.decode(input.attachments),
     };
+
+    return this._actualValue;
   }
+
+
+  public get actualValue(): OutputIceCandidateStats | undefined {
+    return this._actualValue;
+  }
+    
+  public set actualValue(sample: OutputIceCandidateStats | undefined) {
+    if (!sample) return;
+    
+    this._visited = true;
+    this._actualValue = sample;
+  
+    this._timestampDecoder.actualValue = sample.timestamp;
+    this._transportIdDecoder.actualValue = sample.transportId;
+    this._addressDecoder.actualValue = sample.address;
+    this._portDecoder.actualValue = sample.port;
+    this._protocolDecoder.actualValue = sample.protocol;
+    this._candidateTypeDecoder.actualValue = sample.candidateType;
+    this._priorityDecoder.actualValue = sample.priority;
+    this._urlDecoder.actualValue = sample.url;
+    this._relayProtocolDecoder.actualValue = sample.relayProtocol;
+    this._foundationDecoder.actualValue = sample.foundation;
+    this._relatedAddressDecoder.actualValue = sample.relatedAddress;
+    this._relatedPortDecoder.actualValue = sample.relatedPort;
+    this._usernameFragmentDecoder.actualValue = sample.usernameFragment;
+    this._tcpTypeDecoder.actualValue = sample.tcpType;
+    this._attachmentsDecoder.actualValue = sample.attachments;
+  }
+
 }

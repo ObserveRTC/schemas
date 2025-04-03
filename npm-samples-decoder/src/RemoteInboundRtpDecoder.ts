@@ -26,6 +26,8 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
   private readonly _fractionLostDecoder: NumberToNumberDecoder;
   private readonly _roundTripTimeMeasurementsDecoder: NumberToNumberDecoder;
 
+  private _actualValue: OutputRemoteInboundRtpStats | undefined = undefined;
+
   constructor(
     public readonly ssrc: number,
     private readonly _attachmentsDecoder: AttachmentDecoder
@@ -79,7 +81,7 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
           return undefined;
       }
 
-      return {
+      this._actualValue = {
           ssrc: this.ssrc,
           timestamp,
           id,
@@ -96,5 +98,33 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
           roundTripTimeMeasurements: this._roundTripTimeMeasurementsDecoder.decode(input.roundTripTimeMeasurements),
           attachments: this._attachmentsDecoder.decode(input.attachments),
       };
+
+      return this._actualValue;
+  }
+
+  public get actualValue(): OutputRemoteInboundRtpStats | undefined {
+      return this._actualValue;
+  }
+
+  public set actualValue(sample: OutputRemoteInboundRtpStats | undefined) {
+      if (!sample) return;
+      
+      this._visited = true;
+      this._actualValue = sample;
+
+      this._timestampDecoder.actualValue = sample.timestamp;
+      this._idDecoder.actualValue = sample.id;
+      this._kindDecoder.actualValue = sample.kind;
+      this._transportIdDecoder.actualValue = sample.transportId;
+      this._codecIdDecoder.actualValue = sample.codecId;
+      this._packetsReceivedDecoder.actualValue = sample.packetsReceived;
+      this._packetsLostDecoder.actualValue = sample.packetsLost;
+      this._jitterDecoder.actualValue = sample.jitter;
+      this._localIdDecoder.actualValue = sample.localId;
+      this._roundTripTimeDecoder.actualValue = sample.roundTripTime;
+      this._totalRoundTripTimeDecoder.actualValue = sample.totalRoundTripTime;
+      this._fractionLostDecoder.actualValue = sample.fractionLost;
+      this._roundTripTimeMeasurementsDecoder.actualValue = sample.roundTripTimeMeasurements;
+      this._attachmentsDecoder.actualValue = sample.attachments;
   }
 }

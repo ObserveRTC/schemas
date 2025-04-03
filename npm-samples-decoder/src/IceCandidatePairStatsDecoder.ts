@@ -47,6 +47,8 @@ export class IceCandidatePairDecoder implements Decoder<InputIceCandidatePairSta
 	private readonly _transportIdDecoder: StringToStringDecoder;
 	private readonly _stateDecoder: IceCandidatePairStatsEnumDecoder;
 
+  private _actualValue: OutputIceCandidatePairStats | undefined = undefined;
+
   constructor(
 		public readonly id: string,
 		private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -119,7 +121,7 @@ export class IceCandidatePairDecoder implements Decoder<InputIceCandidatePairSta
       return undefined;
     }
 
-    return {
+    this._actualValue = {
       id: this.id,
       availableIncomingBitrate: this._availableIncomingBitrateDecoder.decode(input.availableIncomingBitrate),
       availableOutgoingBitrate: this._availableOutgoingBitrateDecoder.decode(input.availableOutgoingBitrate),
@@ -146,41 +148,79 @@ export class IceCandidatePairDecoder implements Decoder<InputIceCandidatePairSta
       attachments: this._attachmentsDecoder.decode(input.attachments),
       state: this._stateDecoder.decode(input.state),
     };
+
+    return this._actualValue;
+  }
+
+  public get actualValue(): OutputIceCandidatePairStats | undefined {
+    return this._actualValue;
+  }
+    
+  public set actualValue(sample: OutputIceCandidatePairStats | undefined) {
+    if (!sample) return;
+    
+    this._visited = true;
+    this._actualValue = sample;
+  
+    this._availableIncomingBitrateDecoder.actualValue = sample.availableIncomingBitrate;
+    this._availableOutgoingBitrateDecoder.actualValue = sample.availableOutgoingBitrate;
+    this._bytesDiscardedOnSendDecoder.actualValue = sample.bytesDiscardedOnSend;
+    this._bytesReceivedDecoder.actualValue = sample.bytesReceived;
+    this._bytesSentDecoder.actualValue = sample.bytesSent;
+    this._consentRequestsSentDecoder.actualValue = sample.consentRequestsSent;
+    this._currentRoundTripTimeDecoder.actualValue = sample.currentRoundTripTime;
+    this._lastPacketReceivedTimestampDecoder.actualValue = sample.lastPacketReceivedTimestamp;
+    this._lastPacketSentTimestampDecoder.actualValue = sample.lastPacketSentTimestamp;
+    this._localCandidateIdDecoder.actualValue = sample.localCandidateId;
+    this._nominatedDecoder.actualValue = sample.nominated;
+    this._packetsDiscardedOnSendDecoder.actualValue = sample.packetsDiscardedOnSend;
+    this._packetsReceivedDecoder.actualValue = sample.packetsReceived;
+    this._packetsSentDecoder.actualValue = sample.packetsSent;
+    this._remoteCandidateIdDecoder.actualValue = sample.remoteCandidateId;
+    this._requestsReceivedDecoder.actualValue = sample.requestsReceived;
+    this._requestsSentDecoder.actualValue = sample.requestsSent;
+    this._responsesReceivedDecoder.actualValue = sample.responsesReceived;
+    this._responsesSentDecoder.actualValue = sample.responsesSent;
+    this._timestampDecoder.actualValue = sample.timestamp;
+    this._totalRoundTripTimeDecoder.actualValue = sample.totalRoundTripTime;
+    this._transportIdDecoder.actualValue = sample.transportId;
+    this._attachmentsDecoder.actualValue = sample.attachments;
   }
 }
 
 export class IceCandidatePairStatsEnumDecoder implements Decoder<InputIceCandidatePairState, Required<OutputIceCandidatePairStats>['state']> {
   
-  private _actualValue?: OutputIceCandidatePairStats['state'];
+  public actualValue?: OutputIceCandidatePairStats['state'];
 
   public reset() {
-    this._actualValue = undefined;
+    this.actualValue = undefined;
   }
   
   public decode(state?: InputIceCandidatePairState): Required<OutputIceCandidatePairStats>['state'] | undefined {
-    if (state === undefined) return this._actualValue
-    
-    switch (state) {
-      case InputIceCandidatePairState.NEW:
-        this._actualValue = 'new';
-		break;
-      case InputIceCandidatePairState.INPROGRESS:
-		this._actualValue = 'in-progress';
-		break;
-	  case InputIceCandidatePairState.WAITING:
-		this._actualValue = 'waiting';
-		break;
-      case InputIceCandidatePairState.FAILED:
-		this._actualValue = 'failed';
-		break;
-      case InputIceCandidatePairState.SUCCEEDED:
-		this._actualValue = 'succeeded';
-		break;
-      default:
-        logger.warn(`Unknown IceCandidatePairStats state: ${state}`);
-        return undefined;
-    }
+      if (state === undefined) return this.actualValue
+      
+      switch (state) {
+        case InputIceCandidatePairState.NEW:
+          this.actualValue = 'new';
+      break;
+        case InputIceCandidatePairState.INPROGRESS:
+      this.actualValue = 'in-progress';
+      break;
+      case InputIceCandidatePairState.WAITING:
+      this.actualValue = 'waiting';
+      break;
+        case InputIceCandidatePairState.FAILED:
+      this.actualValue = 'failed';
+      break;
+        case InputIceCandidatePairState.SUCCEEDED:
+      this.actualValue = 'succeeded';
+      break;
+        default:
+          logger.warn(`Unknown IceCandidatePairStats state: ${state}`);
+          return undefined;
+      }
 
-	return this._actualValue;
+    return this.actualValue;
   }
+
 }

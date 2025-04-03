@@ -16,6 +16,8 @@ export class PeerConnectionTransportDecoder implements Decoder<InputPeerConnecti
 	private readonly _dataChannelsOpenedDecoder: NumberToNumberDecoder;
 	private readonly _dataChannelsClosedDecoder: NumberToNumberDecoder;
 
+	private _actualValue: OutputPeerConnectionTransportStats | undefined = undefined;
+
 	constructor(
 		public readonly id: string,
 		private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -50,12 +52,32 @@ export class PeerConnectionTransportDecoder implements Decoder<InputPeerConnecti
 		return undefined;
 		}
 
-		return {
-		id: this.id,
-		timestamp,
-		dataChannelsOpened: this._dataChannelsOpenedDecoder.decode(input.dataChannelsOpened),
-		dataChannelsClosed: this._dataChannelsClosedDecoder.decode(input.dataChannelsClosed),
-		attachments: this._attachmentsDecoder.decode(input.attachments),
+		this._actualValue = {
+			id: this.id,
+			timestamp,
+			dataChannelsOpened: this._dataChannelsOpenedDecoder.decode(input.dataChannelsOpened),
+			dataChannelsClosed: this._dataChannelsClosedDecoder.decode(input.dataChannelsClosed),
+			attachments: this._attachmentsDecoder.decode(input.attachments),
 		};
+
+		return this._actualValue;
 	}
+
+	public get actualValue(): OutputPeerConnectionTransportStats | undefined {
+		return this._actualValue;
+	}
+
+	public set actualValue(sample: OutputPeerConnectionTransportStats | undefined) {
+        if (!sample) return;
+        
+		this._actualValue = sample;
+		this._visited = true;
+
+		this._timestampDecoder.actualValue = sample.timestamp;
+		this._idDecoder.actualValue = sample.id;
+		this._dataChannelsOpenedDecoder.actualValue = sample.dataChannelsOpened;
+		this._dataChannelsClosedDecoder.actualValue = sample.dataChannelsClosed;
+		this._attachmentsDecoder.actualValue = sample.attachments;
+	}
+
 }

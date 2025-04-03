@@ -78,7 +78,7 @@ export class RemoteOutboundRtpEncoder implements Encoder<RemoteOutboundRtpStats,
 		return new ClientSample_PeerConnectionSample_RemoteOutboundRtpStats({
 			ssrc: this._ssrc,
 			timestamp: this._timestampEncoder.encode(sample.timestamp),
-			id: sample.id,
+			id: this._idEncoder.encode(sample.id),
 			kind: this._kindEncoder.encode(sample.kind),
 			transportId: this._transportIdEncoder.encode(sample.transportId),
 			codecId: this._codecIdEncoder.encode(sample.codecId),

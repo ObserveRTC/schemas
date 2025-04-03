@@ -105,6 +105,8 @@ export class ClientSampleEncoder {
 			extensionStats,
 		});
 
+		// console.warn("ClientSampleEncoder: ", clientSample, " -> ", result);
+
 		this._checkVisitsAndClean();
 
 		return result;

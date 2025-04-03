@@ -16,6 +16,8 @@ export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, Out
 	private readonly _kindDecoder: StringToStringDecoder;
 	private readonly _scoreDecoder: NumberToNumberDecoder;
 
+	private _actualValue: OutputInboundTrackSample | undefined = undefined;
+
 	constructor(
 		public readonly id: string,
 		private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -47,16 +49,35 @@ export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, Out
 		const kind = this._kindDecoder.decode(input.kind);
 
 		if (!timestamp || kind === undefined) {
-		logger.warn("Invalid inbound track sample: missing timestamp or id");
-		return undefined;
+			logger.warn("Invalid inbound track sample: missing timestamp or id");
+			return undefined;
 		}
 
-		return {
-		timestamp,
-		id: this.id,
-		kind,
-		score: this._scoreDecoder.decode(input.score),
-		attachments: this._attachmentsDecoder.decode(input.attachments),
+		this._actualValue = {
+			timestamp,
+			id: this.id,
+			kind,
+			score: this._scoreDecoder.decode(input.score),
+			attachments: this._attachmentsDecoder.decode(input.attachments),
 		};
+
+		return this._actualValue;
+	}
+
+	public get actualValue(): OutputInboundTrackSample | undefined {
+		return this._actualValue;
+	}
+
+	public set actualValue(sample: OutputInboundTrackSample | undefined) {
+        if (!sample) return;
+        
+		this._visited = true;
+		this._actualValue = sample;
+
+		this._timestampDecoder.actualValue = sample.timestamp;
+		this._idDecoder.actualValue = sample.id;
+		this._kindDecoder.actualValue = sample.kind;
+		this._scoreDecoder.actualValue = sample.score;
+		this._attachmentsDecoder.actualValue = sample.attachments;
 	}
 }

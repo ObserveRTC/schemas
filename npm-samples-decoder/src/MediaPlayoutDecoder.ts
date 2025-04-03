@@ -20,6 +20,8 @@ export class MediaPlayoutStatsDecoder implements Decoder<InputMediaPlayoutStats,
 	private readonly _totalPlayoutDelayDecoder: NumberToNumberDecoder;
 	private readonly _totalSamplesCountDecoder: NumberToNumberDecoder;
 
+	private _actualValue: OutputMediaPlayoutStats | undefined = undefined;
+
 	constructor(
 		public readonly id: string,
 		private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -59,11 +61,11 @@ export class MediaPlayoutStatsDecoder implements Decoder<InputMediaPlayoutStats,
 		const kind = this._kindDecoder.decode(input.kind);
 
 		if (!timestamp || kind === undefined) {
-		logger.warn("Invalid media playout stats sample: missing timestamp or id");
-		return undefined;
+			logger.warn("Invalid media playout stats sample: missing timestamp or id");
+			return undefined;
 		}
 
-		return {
+		this._actualValue = {
 			timestamp,
 			id: this.id,
 			kind,
@@ -74,5 +76,29 @@ export class MediaPlayoutStatsDecoder implements Decoder<InputMediaPlayoutStats,
 			totalSamplesCount: this._totalSamplesCountDecoder.decode(input.totalSamplesCount),
 			attachments: this._attachmentsDecoder.decode(input.attachments),
 		};
+
+		return this._actualValue;
 	}
+
+	public get actualValue(): OutputMediaPlayoutStats | undefined {
+		return this._actualValue;
+	}
+
+	public set actualValue(sample: OutputMediaPlayoutStats | undefined) {
+        if (!sample) return;
+        
+		this._visited = true;
+		this._actualValue = sample;
+
+		this._timestampDecoder.actualValue = sample.timestamp;
+		this._idDecoder.actualValue = sample.id;
+		this._kindDecoder.actualValue = sample.kind;
+		this._synthesizedSamplesDurationDecoder.actualValue = sample.synthesizedSamplesDuration;
+		this._synthesizedSamplesEventsDecoder.actualValue = sample.synthesizedSamplesEvents;
+		this._totalSamplesDurationDecoder.actualValue = sample.totalSamplesDuration;
+		this._totalPlayoutDelayDecoder.actualValue = sample.totalPlayoutDelay;
+		this._totalSamplesCountDecoder.actualValue = sample.totalSamplesCount;
+		this._attachmentsDecoder.actualValue = sample.attachments;
+	}
+
 }

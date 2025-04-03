@@ -13,6 +13,7 @@ export class CodecStatsDecoder
   implements Decoder<InputCodecStats, OutputCodecStats | undefined>
 {
 	private _visited = false;
+	private _actualValue: OutputCodecStats | undefined = undefined;
 
 	private readonly _timestampDecoder: NumberToNumberDecoder;
 	private readonly _typeDecoder: StringToStringDecoder;
@@ -66,7 +67,7 @@ export class CodecStatsDecoder
 		return undefined;
 		}
 
-		return {
+		this._actualValue = {
 			id: this.id,
 			timestamp,
 			payloadType: this._payloadTypeDecoder.decode(input.payloadType),
@@ -77,5 +78,28 @@ export class CodecStatsDecoder
 			sdpFmtpLine: this._sdpFmtpLineDecoder.decode(input.sdpFmtpLine),
 			attachments: this._attachmentsDecoder.decode(input.attachments),
 		};
+
+		return this._actualValue;
 	}
+
+	public get actualValue(): OutputCodecStats | undefined {
+		return this._actualValue;
+	}
+	  
+	public set actualValue(sample: OutputCodecStats | undefined) {
+        if (!sample) return;
+        
+		this._visited = true;
+		this._actualValue = sample;
+	
+		this._timestampDecoder.actualValue = sample.timestamp;
+		this._payloadTypeDecoder.actualValue = sample.payloadType;
+		this._transportIdDecoder.actualValue = sample.transportId;
+		this._mimeTypeDecoder.actualValue = sample.mimeType;
+		this._clockRateDecoder.actualValue = sample.clockRate;
+		this._channelsDecoder.actualValue = sample.channels;
+		this._sdpFmtpLineDecoder.actualValue = sample.sdpFmtpLine;
+		this._attachmentsDecoder.actualValue = sample.attachments;
+	}
+
 }

@@ -16,7 +16,7 @@ export const logger = {
 }
 
 export interface Decoder<I, O> {
-	actualValue?: I;
+	actualValue?: O;
 	decode(newValue?: I): O | undefined;
 	reset(): void;
 }
@@ -126,6 +126,18 @@ export class DefaultAttachmentDecoderFactory implements AttachmentsDecoderFactor
 export class DefaultAttachmentDecoder implements AttachmentDecoder {
 	private _actual?: { value: string; data: Record<string, unknown> };
 
+	public get actualValue() {
+		return this._actual?.data;
+	}
+	
+	public set actualValue(value: Record<string, unknown> | undefined) {
+		if (!value) return;
+		this._actual = {
+			value: JSON.stringify(value),
+			data: value,
+		};
+	}
+
 	public constructor() {
 
 	}
@@ -149,153 +161,137 @@ export class DefaultAttachmentDecoder implements AttachmentDecoder {
 }
 
 export class OneTimePassDecoder<T> implements Decoder<T, T> {
-	private _value: T | undefined;
-
-	public get actualValue() {
-		return this._value;
-	}
+	public actualValue: T | undefined;
 
 	public reset() {
-		this._value = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: T) {
-		if (this._value !== undefined) return;
-		this._value = newValue;
+		if (this.actualValue !== undefined) return;
+		this.actualValue = newValue;
 		return newValue;
 	}
 }
 
 export class OneTimePassUuidByteArrayToStringDecoder implements Decoder<Uint8Array, string> {
-	private _result?: string;
+	public actualValue?: string;
 
 	public reset() {
-		this._result = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: Uint8Array) {
-		if (newValue === undefined || this._result) return this._result;
-		this._result = uuidByteArrayToString(newValue);
+		if (newValue === undefined || this.actualValue) return this.actualValue;
+		this.actualValue = uuidByteArrayToString(newValue);
 
-		return this._result;
+		return this.actualValue;
 	}
 }
 
 export class OneTimePassByteArrayToStringDecoder implements Decoder<Uint8Array, string> {
-	private _result?: string;
+	public actualValue?: string;
 
 	public reset() {
-		this._result = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: Uint8Array) {
-		if (newValue === undefined || this._result) return this._result;
+		if (newValue === undefined || this.actualValue) return this.actualValue;
 		
-		this._result = textDecoder.decode(newValue);
+		this.actualValue = textDecoder.decode(newValue);
 		
-		return this._result;
+		return this.actualValue;
 	}
 }
 
 export class StringToStringDecoder implements Decoder<string, string> {
-	private _value: string | undefined;
-
-	public get actualValue() {
-		return this._value;
-	}
+	public actualValue: string | undefined;
 
 	public reset() {
-		this._value = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: string) {
-		if (!newValue) return this._value;
+		if (newValue === undefined) return this.actualValue;
 		
-		this._value = newValue;
+		this.actualValue = newValue;
 		
 		return newValue;
 	}
 }
 
 export class Uint8ArrayToStringDecoder implements Decoder<Uint8Array, string> {
-	private _value: string | undefined;
+	public actualValue: string | undefined;
 
 	public reset() {
-		this._value = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: Uint8Array) {
-		if (!newValue) return this._value;
-		this._value = textDecoder.decode(newValue);
+		if (!newValue) return this.actualValue;
+		this.actualValue = textDecoder.decode(newValue);
 
-		return this._value;
+		return this.actualValue;
 	}
 }
 
 export class NumberToStringDecoder implements Decoder<number, string> {
-	private _value: string | undefined;
+	public actualValue: string | undefined;
 
 	public reset() {
-		this._value = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: number) {
-		if (newValue === undefined) return this._value;
-		this._value = `${newValue}`;
+		if (newValue === undefined) return this.actualValue;
+		this.actualValue = `${newValue}`;
 
-		return this._value;
+		return this.actualValue;
 	}
 }
 
 export class BigIntToNumberDecoder implements Decoder<bigint, number> {
-	private _value: number | undefined;
+	public actualValue: number | undefined;
 
 	public reset() {
-		this._value = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: bigint) {
-		if (newValue === undefined) return this._value;
-		this._value = Number(newValue);
+		if (newValue === undefined) return this.actualValue;
+		this.actualValue = Number(newValue);
 
-		return this._value;
+		return this.actualValue;
 	}
 }
 
 export class NumberToNumberDecoder implements Decoder<number, number> {
-	private _value: number | undefined;
-
-	public get actualValue() {
-		return this._value;
-	}
+	public actualValue: number | undefined;
 
 	public reset() {
-		this._value = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: number) {
-		if (newValue === undefined) return this._value;
+		if (newValue === undefined) return this.actualValue;
 
-		this._value = newValue;
+		this.actualValue = newValue;
 
 		return newValue;
 	}
 }
 
 export class BooleanToBooleanDecoder implements Decoder<boolean, boolean> {
-	private _value: boolean | undefined;
-
-	public get actualValue() {
-		return this._value;
-	}
+	public actualValue: boolean | undefined;
 
 	public reset() {
-		this._value = undefined;
+		this.actualValue = undefined;
 	}
 
 	decode(newValue?: boolean) {
-		if (!newValue) return this._value;
-		this._value = newValue;
+		if (!newValue) return this.actualValue;
+		this.actualValue = newValue;
 
 		return newValue;
 	}

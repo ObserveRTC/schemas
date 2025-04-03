@@ -15,14 +15,14 @@ import { OutboundRtpStats as OutputOutboundRtpStats } from "./OutputSamples";
 const logger = console;
 
 export class QualityLimitationDurationsDecoder implements Decoder<InputQualityLimitationDurations, OutputOutboundRtpStats['qualityLimitationDurations'] | undefined> {
-    private _value?: OutputOutboundRtpStats['qualityLimitationDurations'];
+    public actualValue?: OutputOutboundRtpStats['qualityLimitationDurations'];
 
     public reset() {
-        this._value = undefined;
+        this.actualValue = undefined;
     }
 
     public decode(input?: InputQualityLimitationDurations): OutputOutboundRtpStats['qualityLimitationDurations'] | undefined {
-        if (!input) return this._value;
+        if (!input) return this.actualValue;
         
         const newValue = {
             bandwidth: input.bandwidth ?? 0,
@@ -31,7 +31,8 @@ export class QualityLimitationDurationsDecoder implements Decoder<InputQualityLi
             other: input.other ?? 0,
         };
 
-        this._value = newValue;
+        this.actualValue = newValue;
+
         return newValue;
     }
 }
@@ -76,6 +77,8 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _totalPacketSendDelayDecoder: NumberToNumberDecoder;
     private readonly _transportIdDecoder: OneTimePassDecoder<string>;
 
+    private _actualValue: OutputOutboundRtpStats | undefined = undefined;
+
     constructor(
 		public readonly ssrc: number,
         private readonly _attachmentsDecoder: AttachmentDecoder
@@ -117,6 +120,8 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._totalEncodedBytesTargetDecoder = new NumberToNumberDecoder();
         this._totalPacketSendDelayDecoder = new NumberToNumberDecoder();
         this._transportIdDecoder = new OneTimePassDecoder<string>();
+
+        
     }
 
     public get visited(): boolean {
@@ -173,11 +178,11 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
 		const kind = this._kindDecoder.decode(input.kind);
 
         if (!timestamp || id === undefined || !kind) {
-            logger.warn("Invalid outbound RTP sample: missing timestamp or id");
+            logger.warn("Invalid outbound RTP sample: missing timestamp or id", input, this);
             return undefined;
         }
 
-        return {
+        this._actualValue = {
             ssrc: this.ssrc,
             id,
             kind,
@@ -218,5 +223,58 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
             totalPacketSendDelay: this._totalPacketSendDelayDecoder.decode(input.totalPacketSendDelay),
             transportId: this._transportIdDecoder.decode(input.transportId),
         };
+
+        return this._actualValue;
     }
+
+    public get actualValue(): OutputOutboundRtpStats | undefined {
+        return this._actualValue;
+    }
+
+    public set actualValue(sample: OutputOutboundRtpStats | undefined) {
+        if (!sample) return;
+        
+        this._visited = true;
+        this._actualValue = sample;
+
+        this._timestampDecoder.actualValue = sample.timestamp;
+        this._idDecoder.actualValue = sample.id;
+        this._kindDecoder.actualValue = sample.kind;
+        this._activeDecoder.actualValue = sample.active;
+        this._bytesSentDecoder.actualValue = sample.bytesSent;
+        this._codecIdDecoder.actualValue = sample.codecId;
+        this._encoderImplementationDecoder.actualValue = sample.encoderImplementation;
+        this._firCountDecoder.actualValue = sample.firCount;
+        this._frameHeightDecoder.actualValue = sample.frameHeight;
+        this._frameWidthDecoder.actualValue = sample.frameWidth;
+        this._framesEncodedDecoder.actualValue = sample.framesEncoded;
+        this._framesPerSecondDecoder.actualValue = sample.framesPerSecond;
+        this._framesSentDecoder.actualValue = sample.framesSent;
+        this._headerBytesSentDecoder.actualValue = sample.headerBytesSent;
+        this._hugeFramesSentDecoder.actualValue = sample.hugeFramesSent;
+        this._keyFramesEncodedDecoder.actualValue = sample.keyFramesEncoded;
+        this._mediaSourceIdDecoder.actualValue = sample.mediaSourceId;
+        this._midDecoder.actualValue = sample.mid;
+        this._nackCountDecoder.actualValue = sample.nackCount;
+        this._packetsSentDecoder.actualValue = sample.packetsSent;
+        this._pliCountDecoder.actualValue = sample.pliCount;
+        this._powerEfficientEncoderDecoder.actualValue = sample.powerEfficientEncoder;
+        this._qpSumDecoder.actualValue = sample.qpSum;
+        this._qualityLimitationDurationsDecoder.actualValue = sample.qualityLimitationDurations;
+        this._qualityLimitationReasonDecoder.actualValue = sample.qualityLimitationReason;
+        this._qualityLimitationResolutionChangesDecoder.actualValue = sample.qualityLimitationResolutionChanges;
+        this._remoteIdDecoder.actualValue = sample.remoteId;
+        this._retransmittedBytesSentDecoder.actualValue = sample.retransmittedBytesSent;
+        this._retransmittedPacketsSentDecoder.actualValue = sample.retransmittedPacketsSent;
+        this._ridDecoder.actualValue = sample.rid;
+        this._rtxSsrcDecoder.actualValue = sample.rtxSsrc;
+        this._scalabilityModeDecoder.actualValue = sample.scalabilityMode;
+        this._targetBitrateDecoder.actualValue = sample.targetBitrate;
+        this._totalEncodeTimeDecoder.actualValue = sample.totalEncodeTime;
+        this._totalEncodedBytesTargetDecoder.actualValue = sample.totalEncodedBytesTarget;
+        this._totalPacketSendDelayDecoder.actualValue = sample.totalPacketSendDelay;
+        this._transportIdDecoder.actualValue = sample.transportId;
+        this._attachmentsDecoder.actualValue = sample.attachments;
+    }
+        
 }

@@ -30,6 +30,8 @@ export class IceTransportDecoder implements Decoder<InputIceTransportStats, Outp
 	private readonly _srtpCipherDecoder: StringToStringDecoder;
 	private readonly _selectedCandidatePairChangesDecoder: NumberToNumberDecoder;
 
+	private _actualValue: OutputIceTransportStats | undefined = undefined;
+
 	constructor(
 		public readonly id: string,
 		private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -86,30 +88,62 @@ export class IceTransportDecoder implements Decoder<InputIceTransportStats, Outp
 		const timestamp = this._timestampDecoder.decode(input.timestamp);
 
 		if (!timestamp) {
-		logger.warn("Invalid ICE transport sample: missing timestamp or id");
-		return undefined;
-		}
+			logger.warn("Invalid ICE transport sample: missing timestamp or id");
+			return undefined;
+			}
 
-		return {
-		id: this.id,
-		timestamp,
-		packetsSent: this._packetsSentDecoder.decode(input.packetsSent),
-		packetsReceived: this._packetsReceivedDecoder.decode(input.packetsReceived),
-		bytesSent: this._bytesSentDecoder.decode(input.bytesSent),
-		bytesReceived: this._bytesReceivedDecoder.decode(input.bytesReceived),
-		iceRole: this._iceRoleDecoder.decode(input.iceRole),
-		iceLocalUsernameFragment: this._iceLocalUsernameFragmentDecoder.decode(input.iceLocalUsernameFragment),
-		dtlsState: this._dtlsStateDecoder.decode(input.dtlsState),
-		iceState: this._iceStateDecoder.decode(input.iceState),
-		selectedCandidatePairId: this._selectedCandidatePairIdDecoder.decode(input.selectedCandidatePairId),
-		localCertificateId: this._localCertificateIdDecoder.decode(input.localCertificateId),
-		remoteCertificateId: this._remoteCertificateIdDecoder.decode(input.remoteCertificateId),
-		tlsVersion: this._tlsVersionDecoder.decode(input.tlsVersion),
-		dtlsCipher: this._dtlsCipherDecoder.decode(input.dtlsCipher),
-		dtlsRole: this._dtlsRoleDecoder.decode(input.dtlsRole),
-		srtpCipher: this._srtpCipherDecoder.decode(input.srtpCipher),
-		selectedCandidatePairChanges: this._selectedCandidatePairChangesDecoder.decode(input.selectedCandidatePairChanges),
-		attachments: this._attachmentsDecoder.decode(input.attachments),
+		this._actualValue = {
+			id: this.id,
+			timestamp,
+			packetsSent: this._packetsSentDecoder.decode(input.packetsSent),
+			packetsReceived: this._packetsReceivedDecoder.decode(input.packetsReceived),
+			bytesSent: this._bytesSentDecoder.decode(input.bytesSent),
+			bytesReceived: this._bytesReceivedDecoder.decode(input.bytesReceived),
+			iceRole: this._iceRoleDecoder.decode(input.iceRole),
+			iceLocalUsernameFragment: this._iceLocalUsernameFragmentDecoder.decode(input.iceLocalUsernameFragment),
+			dtlsState: this._dtlsStateDecoder.decode(input.dtlsState),
+			iceState: this._iceStateDecoder.decode(input.iceState),
+			selectedCandidatePairId: this._selectedCandidatePairIdDecoder.decode(input.selectedCandidatePairId),
+			localCertificateId: this._localCertificateIdDecoder.decode(input.localCertificateId),
+			remoteCertificateId: this._remoteCertificateIdDecoder.decode(input.remoteCertificateId),
+			tlsVersion: this._tlsVersionDecoder.decode(input.tlsVersion),
+			dtlsCipher: this._dtlsCipherDecoder.decode(input.dtlsCipher),
+			dtlsRole: this._dtlsRoleDecoder.decode(input.dtlsRole),
+			srtpCipher: this._srtpCipherDecoder.decode(input.srtpCipher),
+			selectedCandidatePairChanges: this._selectedCandidatePairChangesDecoder.decode(input.selectedCandidatePairChanges),
+			attachments: this._attachmentsDecoder.decode(input.attachments),
 		};
+
+		return this._actualValue;
+	}
+
+	public get actualValue(): OutputIceTransportStats | undefined {
+		return this._actualValue;
+	}
+	
+	public set actualValue(sample: OutputIceTransportStats | undefined) {
+        if (!sample) return;
+        
+		this._visited = true;
+		this._actualValue = sample;
+		
+		this._timestampDecoder.actualValue = sample.timestamp;
+		this._packetsSentDecoder.actualValue = sample.packetsSent;
+		this._packetsReceivedDecoder.actualValue = sample.packetsReceived;
+		this._bytesSentDecoder.actualValue = sample.bytesSent;
+		this._bytesReceivedDecoder.actualValue = sample.bytesReceived;
+		this._iceRoleDecoder.actualValue = sample.iceRole;
+		this._iceLocalUsernameFragmentDecoder.actualValue = sample.iceLocalUsernameFragment;
+		this._dtlsStateDecoder.actualValue = sample.dtlsState;
+		this._iceStateDecoder.actualValue = sample.iceState;
+		this._selectedCandidatePairIdDecoder.actualValue = sample.selectedCandidatePairId;
+		this._localCertificateIdDecoder.actualValue = sample.localCertificateId;
+		this._remoteCertificateIdDecoder.actualValue = sample.remoteCertificateId;
+		this._tlsVersionDecoder.actualValue = sample.tlsVersion;
+		this._dtlsCipherDecoder.actualValue = sample.dtlsCipher;
+		this._dtlsRoleDecoder.actualValue = sample.dtlsRole;
+		this._srtpCipherDecoder.actualValue = sample.srtpCipher;
+		this._selectedCandidatePairChangesDecoder.actualValue = sample.selectedCandidatePairChanges;
+		this._attachmentsDecoder.actualValue = sample.attachments;
 	}
 }

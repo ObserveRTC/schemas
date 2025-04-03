@@ -16,6 +16,8 @@ export class OutboundTrackDecoder implements Decoder<InputOutboundTrackSample, O
   private readonly _kindDecoder: StringToStringDecoder;
   private readonly _scoreDecoder: NumberToNumberDecoder;
 
+  private _actualValue: OutputOutboundTrackSample | undefined = undefined;
+
   constructor(
     public readonly id: string,
     private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -51,12 +53,31 @@ export class OutboundTrackDecoder implements Decoder<InputOutboundTrackSample, O
       return undefined;
     }
 
-    return {
+    this._actualValue = {
       timestamp,
       id: this.id,
       kind,
       score: this._scoreDecoder.decode(input.score),
       attachments: this._attachmentsDecoder.decode(input.attachments),
     };
+
+    return this._actualValue;
+  }
+
+  public get actualValue(): OutputOutboundTrackSample | undefined {
+    return this._actualValue;
+  }
+
+  public set actualValue(sample: OutputOutboundTrackSample | undefined) {
+    if (!sample) return;
+    
+    this._visited = true;
+    this._actualValue = sample;
+
+    this._timestampDecoder.actualValue = sample.timestamp;
+    this._idDecoder.actualValue = sample.id;
+    this._kindDecoder.actualValue = sample.kind;
+    this._scoreDecoder.actualValue = sample.score;
+    this._attachmentsDecoder.actualValue = sample.attachments;
   }
 }

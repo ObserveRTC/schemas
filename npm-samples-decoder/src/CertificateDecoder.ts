@@ -18,8 +18,9 @@ export class CertificateDecoder implements Decoder<InputCertificateStats, Output
     private readonly _base64CertificateDecoder: StringToStringDecoder;
     private readonly _issuerCertificateIdDecoder: StringToStringDecoder;
 
+    private _actualValue: OutputCertificateStats | undefined = undefined;
 
-  constructor(
+    public constructor(
         public readonly id: string,
         private readonly _attachmentsDecoder: AttachmentDecoder,
     ) {
@@ -54,7 +55,7 @@ export class CertificateDecoder implements Decoder<InputCertificateStats, Output
             return undefined;
         }
 
-        return {
+        this._actualValue = {
             timestamp,
             id: this.id,
             fingerprint: this._fingerprintDecoder.decode(sample.fingerprint),
@@ -63,5 +64,24 @@ export class CertificateDecoder implements Decoder<InputCertificateStats, Output
             issuerCertificateId: this._issuerCertificateIdDecoder.decode(sample.issuerCertificateId) ,
             attachments: this._attachmentsDecoder.decode(sample.attachments),
         };
+    }
+
+    public get actualValue(): OutputCertificateStats | undefined {
+        return this._actualValue;
+    }
+
+    public set actualValue(sample: OutputCertificateStats | undefined) {
+        if (!sample) return;
+        
+        this._visited = true;
+        this._actualValue = sample;
+
+        this._timestampDecoder.actualValue = sample.timestamp;
+        this._fingerprintDecoder.actualValue = sample.fingerprint;
+        this._fingerprintAlgorithmDecoder.actualValue = sample.fingerprintAlgorithm;
+        this._base64CertificateDecoder.actualValue = sample.base64Certificate;
+        this._issuerCertificateIdDecoder.actualValue = sample.issuerCertificateId;
+        this._attachmentsDecoder.actualValue = sample.attachments;
+
     }
 }

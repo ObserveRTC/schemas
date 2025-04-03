@@ -21,6 +21,8 @@ export class DataChannelDecoder implements Decoder<InputDataChannelStats, Output
   private readonly _messagesReceivedDecoder: NumberToNumberDecoder;
   private readonly _bytesReceivedDecoder: BigIntToNumberDecoder;
 
+  private _actualValue: OutputDataChannelStats | undefined;
+
   constructor(
 	public readonly id: string,
     private readonly _attachmentsDecoder: AttachmentDecoder
@@ -67,7 +69,7 @@ export class DataChannelDecoder implements Decoder<InputDataChannelStats, Output
       return undefined;
     }
 
-    return {
+    this._actualValue = {
       timestamp,
       id: this.id,
       label: this._labelDecoder.decode(input.label),
@@ -80,5 +82,29 @@ export class DataChannelDecoder implements Decoder<InputDataChannelStats, Output
       bytesReceived: this._bytesReceivedDecoder.decode(input.bytesReceived),
       attachments: this._attachmentsDecoder.decode(input.attachments),
     };
+
+    return this._actualValue;
+  }
+
+  public get actualValue(): OutputDataChannelStats | undefined {
+    return this._actualValue;
+  }
+    
+  public set actualValue(sample: OutputDataChannelStats | undefined) {
+    if (!sample) return;
+    
+    this._visited = true;
+    this._actualValue = sample;
+  
+    this._timestampDecoder.actualValue = sample.timestamp;
+    this._labelDecoder.actualValue = sample.label;
+    this._protocolDecoder.actualValue = sample.protocol;
+    this._dataChannelIdentifierDecoder.actualValue = sample.dataChannelIdentifier;
+    this._stateDecoder.actualValue = sample.state;
+    this._messagesSentDecoder.actualValue = sample.messagesSent;
+    this._bytesSentDecoder.actualValue = sample.bytesSent;
+    this._messagesReceivedDecoder.actualValue = sample.messagesReceived;
+    this._bytesReceivedDecoder.actualValue = sample.bytesReceived;
+    this._attachmentsDecoder.actualValue = sample.attachments;
   }
 }

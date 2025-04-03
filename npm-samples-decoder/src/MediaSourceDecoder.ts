@@ -25,6 +25,8 @@ export class MediaSourceStatsDecoder implements Decoder<InputMediaSourceStats, O
 	private readonly _framesDecoder: NumberToNumberDecoder;
 	private readonly _framesPerSecondDecoder: NumberToNumberDecoder;
 
+	private _actualValue: OutputMediaSourceStats | undefined = undefined;
+
 	constructor(
 		public readonly id: string,
 		private readonly _attachmentsDecoder: AttachmentDecoder,
@@ -79,7 +81,7 @@ export class MediaSourceStatsDecoder implements Decoder<InputMediaSourceStats, O
 		return undefined;
 		}
 
-		return {
+		this._actualValue = {
 			timestamp,
 			id,
 			kind,
@@ -95,5 +97,33 @@ export class MediaSourceStatsDecoder implements Decoder<InputMediaSourceStats, O
 			framesPerSecond: this._framesPerSecondDecoder.decode(input.framesPerSecond),
 			attachments: this._attachmentsDecoder.decode(input.attachments),
 		};
+
+		return this._actualValue;
+	}
+
+	public get actualValue(): OutputMediaSourceStats | undefined {
+		return this._actualValue;
+	}
+
+	public set actualValue(sample: OutputMediaSourceStats | undefined) {
+        if (!sample) return;
+        
+		this._visited = true;
+		this._actualValue = sample;
+
+		this._timestampDecoder.actualValue = sample.timestamp;
+		this._idDecoder.actualValue = sample.id;
+		this._kindDecoder.actualValue = sample.kind;
+		this._trackIdentifierDecoder.actualValue = sample.trackIdentifier;
+		this._audioLevelDecoder.actualValue = sample.audioLevel;
+		this._totalAudioEnergyDecoder.actualValue = sample.totalAudioEnergy;
+		this._totalSamplesDurationDecoder.actualValue = sample.totalSamplesDuration;
+		this._echoReturnLossDecoder.actualValue = sample.echoReturnLoss;
+		this._echoReturnLossEnhancementDecoder.actualValue = sample.echoReturnLossEnhancement;
+		this._widthDecoder.actualValue = sample.width;
+		this._heightDecoder.actualValue = sample.height;
+		this._framesDecoder.actualValue = sample.frames;
+		this._framesPerSecondDecoder.actualValue = sample.framesPerSecond;
+		this._attachmentsDecoder.actualValue = sample.attachments;
 	}
 }
