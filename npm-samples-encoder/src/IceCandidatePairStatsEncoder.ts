@@ -145,6 +145,7 @@ export class IceCandidatePairStatsEnumEncoder implements Encoder<Required<IceCan
 			case 'new':
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.NEW;
       case 'in-progress':
+      case 'inprogress':
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.INPROGRESS;
 			case 'failed':
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.FAILED;

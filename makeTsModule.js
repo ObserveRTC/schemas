@@ -72,6 +72,7 @@ function getTsType(avroType, addDoc = true) {
 
                 if (index > -1) {
                     symbols[index] = "in-progress";
+                    symbols.push("inprogress")
                 }
             }
             tsType = `"` + symbols.join(`" | "`) + `"`;
