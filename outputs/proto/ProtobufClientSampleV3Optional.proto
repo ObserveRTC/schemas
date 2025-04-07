@@ -275,6 +275,7 @@ message ClientSample {
 				WAITING = 2;
 				FAILED = 3;
 				SUCCEEDED = 4;
+				CANCELLED = 5;
 			}
 			optional string id = 1;
 			optional double timestamp = 2;

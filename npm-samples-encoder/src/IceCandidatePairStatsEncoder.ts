@@ -152,6 +152,8 @@ export class IceCandidatePairStatsEnumEncoder implements Encoder<Required<IceCan
 				return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.SUCCEEDED;
       case 'waiting':
         return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.WAITING;
+      case 'cancelled':
+        return ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum.CANCELLED;
 			default:
 				throw new Error(`Unknown IceCandidatePairStats state: ${state}`);
 		}

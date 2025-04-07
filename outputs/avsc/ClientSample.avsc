@@ -2277,7 +2277,8 @@
                                 "inProgress",
                                 "waiting",
                                 "failed",
-                                "succeeded"
+                                "succeeded",
+                                "cancelled"
                               ],
                               "doc": "The state of the ICE candidate pair."
                             }

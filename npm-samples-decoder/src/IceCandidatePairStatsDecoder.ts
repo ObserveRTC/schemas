@@ -201,23 +201,26 @@ export class IceCandidatePairStatsEnumDecoder implements Decoder<InputIceCandida
       
       switch (state) {
         case InputIceCandidatePairState.NEW:
-          this.actualValue = 'new';
-      break;
+        this.actualValue = 'new';
+        break;
         case InputIceCandidatePairState.INPROGRESS:
-      this.actualValue = 'in-progress';
-      break;
+        this.actualValue = 'in-progress';
+        break;
       case InputIceCandidatePairState.WAITING:
-      this.actualValue = 'waiting';
-      break;
-        case InputIceCandidatePairState.FAILED:
-      this.actualValue = 'failed';
-      break;
-        case InputIceCandidatePairState.SUCCEEDED:
-      this.actualValue = 'succeeded';
-      break;
-        default:
-          logger.warn(`Unknown IceCandidatePairStats state: ${state}`);
-          return undefined;
+        this.actualValue = 'waiting';
+        break;
+      case InputIceCandidatePairState.FAILED:
+        this.actualValue = 'failed';
+        break;
+      case InputIceCandidatePairState.SUCCEEDED:
+        this.actualValue = 'succeeded';
+        break;
+      case InputIceCandidatePairState.CANCELLED:
+        this.actualValue = 'cancelled';
+        break;
+      default:
+        logger.warn(`Unknown IceCandidatePairStats state: ${state}`);
+        return undefined;
       }
 
     return this.actualValue;
