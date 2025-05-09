@@ -1,8 +1,7 @@
 import { Decoder } from "./utils";
 import { ExtensionStat as OutputExtensionStats } from "./OutputSamples";
 import { ClientSample_ExtensionStat as InputExtensionStats } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export interface ExtensionStatsDecoder extends Decoder<InputExtensionStats, OutputExtensionStats | undefined> {
     // no additional methods

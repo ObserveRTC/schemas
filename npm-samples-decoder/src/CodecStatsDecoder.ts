@@ -6,8 +6,7 @@ import {
   NumberToNumberDecoder,
   StringToStringDecoder,
 } from "./utils";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export class CodecStatsDecoder
   implements Decoder<InputCodecStats, OutputCodecStats | undefined>

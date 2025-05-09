@@ -11,8 +11,7 @@ NumberToNumberDecoder,
 StringToStringDecoder,
 AttachmentDecoder
 } from "./utils";
-  
-const logger = console;
+import { logger } from "./Logger";
   
 export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputInboundRtpStats | undefined> {
 	private _visited = false;

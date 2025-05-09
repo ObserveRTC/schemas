@@ -25,10 +25,9 @@ import { OutboundTrackDecoder } from "./OutboundTrackDecoder";
 import { PeerConnectionTransportDecoder } from "./PeerConnectionTransportDecoder";
 import { RemoteInboundRtpDecoder } from "./RemoteInboundRtpDecoder";
 import { RemoteOutboundRtpDecoder } from "./RemoteOutboundRtpDecoder";
+import { logger } from "./Logger";
   
-  const logger = console;
-  
-  export class PeerConnectionSampleDecoder implements Decoder<InputPeerConnectionSample, OutputPeerConnectionSample | undefined> {
+export class PeerConnectionSampleDecoder implements Decoder<InputPeerConnectionSample, OutputPeerConnectionSample | undefined> {
     private _visited = false;
   
     private _attachmentsDecoder: AttachmentDecoder;

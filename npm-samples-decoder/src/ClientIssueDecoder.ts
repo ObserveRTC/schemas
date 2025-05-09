@@ -5,8 +5,7 @@ import {
   NumberToNumberDecoder,
 } from "./utils";
 import { ClientSample_ClientIssue as InputClientIssue } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export interface ClientIssueDecoder extends Decoder<InputClientIssue, OutputClientIssue | undefined> {
   // empty

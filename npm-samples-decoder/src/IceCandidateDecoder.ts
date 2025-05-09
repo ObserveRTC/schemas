@@ -6,8 +6,7 @@ import {
   StringToStringDecoder,
   AttachmentDecoder
 } from "./utils";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export class IceCandidateDecoder implements Decoder<InputIceCandidateStats, OutputIceCandidateStats | undefined> {
   private _visited = false;

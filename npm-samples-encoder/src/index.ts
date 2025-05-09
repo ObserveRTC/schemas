@@ -9,3 +9,4 @@ export type {
 	AttachmentEncoder,
 	AttachmentsEncoderFactory,
 } from './utils';
+export { logger } from './Logger'

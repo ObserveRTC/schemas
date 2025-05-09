@@ -6,8 +6,7 @@ Decoder,
   AttachmentDecoder,
 } from "./utils";
 import { ClientSample_PeerConnectionSample_CertificateStats as InputCertificateStats } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export class CertificateDecoder implements Decoder<InputCertificateStats, OutputCertificateStats | undefined> {
 	private _visited = false;

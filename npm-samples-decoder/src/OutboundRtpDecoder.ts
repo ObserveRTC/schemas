@@ -12,7 +12,7 @@ import {
 	ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations as InputQualityLimitationDurations 
 } from "./InputSamples";
 import { OutboundRtpStats as OutputOutboundRtpStats } from "./OutputSamples";
-const logger = console;
+import { logger } from "./Logger";
 
 export class QualityLimitationDurationsDecoder implements Decoder<InputQualityLimitationDurations, OutputOutboundRtpStats['qualityLimitationDurations'] | undefined> {
     public actualValue?: OutputOutboundRtpStats['qualityLimitationDurations'];

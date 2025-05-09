@@ -8,8 +8,7 @@ import {
 } from "./utils";
 import { RemoteOutboundRtpStats as OutputRemoteOutboundRtpStats } from "./OutputSamples";
 import { ClientSample_PeerConnectionSample_RemoteOutboundRtpStats as InputRemoteOutboundRtpStats } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export class RemoteOutboundRtpDecoder implements Decoder<InputRemoteOutboundRtpStats, OutputRemoteOutboundRtpStats | undefined> {
     private _visited = false;

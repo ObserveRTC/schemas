@@ -6,8 +6,7 @@ import {
   AttachmentDecoder,
 } from "./utils";
 import { ClientSample_PeerConnectionSample_OutboundTrackSample as InputOutboundTrackSample } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export class OutboundTrackDecoder implements Decoder<InputOutboundTrackSample, OutputOutboundTrackSample | undefined> {
   private _visited = false;

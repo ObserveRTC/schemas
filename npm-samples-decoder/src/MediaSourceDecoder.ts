@@ -6,8 +6,7 @@ import {
   AttachmentDecoder,
 } from "./utils";
 import { ClientSample_PeerConnectionSample_MediaSourceStats as InputMediaSourceStats } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export class MediaSourceStatsDecoder implements Decoder<InputMediaSourceStats, OutputMediaSourceStats | undefined> {
 	private _visited = false;

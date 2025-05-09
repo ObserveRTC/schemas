@@ -6,8 +6,7 @@ import {
   AttachmentDecoder,
 } from "./utils";
 import { ClientSample_PeerConnectionSample_PeerConnectionTransportStats as InputPeerConnectionTransportStats } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export class PeerConnectionTransportDecoder implements Decoder<InputPeerConnectionTransportStats, OutputPeerConnectionTransportStats | undefined> {
 	private _visited = false;

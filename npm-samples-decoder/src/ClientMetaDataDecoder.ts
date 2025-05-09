@@ -1,8 +1,7 @@
 import { Decoder, bytesArrayToString } from "./utils";
 import { ClientMetaData as OutputClientMetaData } from "./OutputSamples";
 import { ClientSample_ClientMetaData as InputClientMetaData } from "./InputSamples";
-
-const logger = console;
+import { logger } from "./Logger";
 
 export interface ClientMetaDataDecoder extends Decoder<InputClientMetaData, OutputClientMetaData | undefined> {
     // no additional methods
