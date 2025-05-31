@@ -37,10 +37,19 @@
     },
     {
       "name": "score",
-      "doc": "Calculated score for client (details should be added to attachments)",
+      "doc": "Calculated score for client (details should be added to scoreReasons)",
       "type": [
         "null",
         "double"
+      ],
+      "default": null
+    },
+    {
+      "name": "scoreReasons",
+      "doc": "Details for score calculation",
+      "type": [
+        "null",
+        "string"
       ],
       "default": null
     },
@@ -72,7 +81,7 @@
               },
               {
                 "name": "score",
-                "doc": "Calculated score for peer connection (details should be added to scoreDetails)",
+                "doc": "Calculated score for peer connection (details should be added to scoreReasons)",
                 "type": [
                   "null",
                   "double"
@@ -80,7 +89,7 @@
                 "default": null
               },
               {
-                "name": "scoreDetails",
+                "name": "scoreReasons",
                 "doc": "Details for score calculation",
                 "type": [
                   "null",
@@ -121,10 +130,10 @@
                             "double"
                           ],
                           "default": null,
-                          "doc": "Calculated score for track (details should be added to scoreDetails)"
+                          "doc": "Calculated score for track (details should be added to scoreReasons)"
                         },
                         {
-                          "name": "scoreDetails",
+                          "name": "scoreReasons",
                           "type": [
                             "null",
                             "string"
@@ -180,10 +189,10 @@
                             "double"
                           ],
                           "default": null,
-                          "doc": "Calculated score for track (details should be added to scoreDetails)"
+                          "doc": "Calculated score for track (details should be added to scoreReasons)"
                         },
                         {
-                          "name": "scoreDetails",
+                          "name": "scoreReasons",
                           "type": [
                             "null",
                             "string"

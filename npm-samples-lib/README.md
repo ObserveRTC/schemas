@@ -45,8 +45,8 @@ Field | Description
 timestamp (**Mandatory**) | The timestamp when the stats were generated.
 id (**Mandatory**) | The unique identifier for the stats object.
 kind (**Mandatory**) | Kind of the media (e.g., 'audio' or 'video').
-score | Calculated score for track (details should be added to scoreDetails)
-scoreDetails | Details for score calculation
+score | Calculated score for track (details should be added to scoreReasons)
+scoreReasons | Details for score calculation
 attachments | Additional information attached to this stats
 
 ## OutboundTrackSample
@@ -57,8 +57,8 @@ Field | Description
 timestamp (**Mandatory**) | The timestamp when the stats were generated.
 id (**Mandatory**) | The unique identifier for the stats object.
 kind (**Mandatory**) | Kind of the media (e.g., 'audio' or 'video').
-score | Calculated score for track (details should be added to scoreDetails)
-scoreDetails | Details for score calculation
+score | Calculated score for track (details should be added to scoreReasons)
+scoreReasons | Details for score calculation
 attachments | Additional information attached to this stats
 
 ## CodecStats
@@ -405,8 +405,8 @@ Field | Description
 --- | ---
 peerConnectionId (**Mandatory**) | Unique identifier of the stats object.
 attachments | Additional information attached to this sample
-score | Calculated score for peer connection (details should be added to scoreDetails)
-scoreDetails | Details for score calculation
+score | Calculated score for peer connection (details should be added to scoreReasons)
+scoreReasons | Details for score calculation
 inboundTracks | Inbound Track Stats items
 outboundTracks | Outbound Track Stats items
 codecs | Codec items
@@ -471,7 +471,8 @@ timestamp (**Mandatory**) | The timestamp the sample is created in GMT
 callId | the unique identifier of the call or session
 clientId | Unique id of the client providing samples.
 attachments | Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
-score | Calculated score for client (details should be added to attachments)
+score | Calculated score for client (details should be added to scoreReasons)
+scoreReasons | Details for score calculation
 peerConnections | Samples taken PeerConnections
 clientEvents | A list of client events.
 clientIssues | A list of client issues.

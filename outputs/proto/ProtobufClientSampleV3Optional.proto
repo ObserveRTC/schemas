@@ -13,7 +13,7 @@ message ClientSample {
 			optional double timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
-			optional string scoreDetails = 6;
+			optional string scoreReasons = 6;
 		}
 		message OutboundTrackSample {
 			optional string id = 1;
@@ -21,7 +21,7 @@ message ClientSample {
 			optional double timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
-			optional string scoreDetails = 6;
+			optional string scoreReasons = 6;
 		}
 		message CodecStats {
 			optional string id = 1;
@@ -332,7 +332,7 @@ message ClientSample {
 		optional bytes peerConnectionId = 16;
 		optional string attachments = 17;
 		optional double score = 18;
-		optional string scoreDetails = 19;
+		optional string scoreReasons = 19;
 	}
 	message ClientEvent {
 		optional string type = 1;
@@ -366,4 +366,5 @@ message ClientSample {
 	optional bytes callId = 8;
 	optional bytes clientId = 9;
 	optional double score = 10;
+	optional string scoreReasons = 11;
 }

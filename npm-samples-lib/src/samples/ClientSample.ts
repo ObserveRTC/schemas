@@ -1465,14 +1465,14 @@ export type OutboundTrackSample = {
 	kind: string;
 
 	/**
-	* Calculated score for track (details should be added to scoreDetails)
+	* Calculated score for track (details should be added to scoreReasons)
 	*/
 	score?: number;
 
 	/**
 	* Details for score calculation
 	*/
-	scoreDetails?: string;
+	scoreReasons?: string;
 
 	/**
 	* Additional information attached to this stats
@@ -1501,14 +1501,14 @@ export type InboundTrackSample = {
 	kind: string;
 
 	/**
-	* Calculated score for track (details should be added to scoreDetails)
+	* Calculated score for track (details should be added to scoreReasons)
 	*/
 	score?: number;
 
 	/**
 	* Details for score calculation
 	*/
-	scoreDetails?: string;
+	scoreReasons?: string;
 
 	/**
 	* Additional information attached to this stats
@@ -1532,14 +1532,14 @@ export type PeerConnectionSample = {
 	attachments?: Record<string, unknown>;
 
 	/**
-	* Calculated score for peer connection (details should be added to scoreDetails)
+	* Calculated score for peer connection (details should be added to scoreReasons)
 	*/
 	score?: number;
 
 	/**
 	* Details for score calculation
 	*/
-	scoreDetails?: string;
+	scoreReasons?: string;
 
 	/**
 	* Inbound Track Stats items
@@ -1643,9 +1643,14 @@ export type ClientSample = {
 	attachments?: Record<string, unknown>;
 
 	/**
-	* Calculated score for client (details should be added to attachments)
+	* Calculated score for client (details should be added to scoreReasons)
 	*/
 	score?: number;
+
+	/**
+	* Details for score calculation
+	*/
+	scoreReasons?: string;
 
 	/**
 	* Samples taken PeerConnections

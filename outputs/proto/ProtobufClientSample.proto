@@ -13,7 +13,7 @@ message ClientSample {
 			required int64 timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
-			optional string scoreDetails = 6;
+			optional string scoreReasons = 6;
 		}
 		message OutboundTrackSample {
 			required string id = 1;
@@ -21,7 +21,7 @@ message ClientSample {
 			required int64 timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
-			optional string scoreDetails = 6;
+			optional string scoreReasons = 6;
 		}
 		message CodecStats {
 			required string id = 1;
@@ -323,7 +323,7 @@ message ClientSample {
 		required string peerConnectionId = 16;
 		optional string attachments = 17;
 		optional double score = 18;
-		optional string scoreDetails = 19;
+		optional string scoreReasons = 19;
 	}
 	message ClientEvent {
 		required string type = 1;
@@ -357,4 +357,5 @@ message ClientSample {
 	optional string callId = 8;
 	optional string clientId = 9;
 	optional double score = 10;
+	optional string scoreReasons = 11;
 }

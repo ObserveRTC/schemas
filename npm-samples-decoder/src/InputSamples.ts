@@ -63,6 +63,11 @@ export class ClientSample extends Message<ClientSample> {
    */
   score?: number;
 
+  /**
+   * @generated from field: optional string scoreReasons = 11;
+   */
+  scoreReasons?: string;
+
   constructor(data?: PartialMessage<ClientSample>) {
     super();
     proto3.util.initPartial(data, this);
@@ -81,6 +86,7 @@ export class ClientSample extends Message<ClientSample> {
     { no: 8, name: "callId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 9, name: "clientId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 10, name: "score", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+    { no: 11, name: "scoreReasons", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample {
@@ -195,9 +201,9 @@ export class ClientSample_PeerConnectionSample extends Message<ClientSample_Peer
   score?: number;
 
   /**
-   * @generated from field: optional string scoreDetails = 19;
+   * @generated from field: optional string scoreReasons = 19;
    */
-  scoreDetails?: string;
+  scoreReasons?: string;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample>) {
     super();
@@ -225,7 +231,7 @@ export class ClientSample_PeerConnectionSample extends Message<ClientSample_Peer
     { no: 16, name: "peerConnectionId", kind: "scalar", T: 12 /* ScalarType.BYTES */, opt: true },
     { no: 17, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 18, name: "score", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 19, name: "scoreDetails", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 19, name: "scoreReasons", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample {
@@ -275,9 +281,9 @@ export class ClientSample_PeerConnectionSample_InboundTrackSample extends Messag
   score?: number;
 
   /**
-   * @generated from field: optional string scoreDetails = 6;
+   * @generated from field: optional string scoreReasons = 6;
    */
-  scoreDetails?: string;
+  scoreReasons?: string;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_InboundTrackSample>) {
     super();
@@ -292,7 +298,7 @@ export class ClientSample_PeerConnectionSample_InboundTrackSample extends Messag
     { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "score", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 6, name: "scoreDetails", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 6, name: "scoreReasons", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_InboundTrackSample {
@@ -342,9 +348,9 @@ export class ClientSample_PeerConnectionSample_OutboundTrackSample extends Messa
   score?: number;
 
   /**
-   * @generated from field: optional string scoreDetails = 6;
+   * @generated from field: optional string scoreReasons = 6;
    */
-  scoreDetails?: string;
+  scoreReasons?: string;
 
   constructor(data?: PartialMessage<ClientSample_PeerConnectionSample_OutboundTrackSample>) {
     super();
@@ -359,7 +365,7 @@ export class ClientSample_PeerConnectionSample_OutboundTrackSample extends Messa
     { no: 3, name: "timestamp", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
     { no: 4, name: "attachments", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "score", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
-    { no: 6, name: "scoreDetails", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 6, name: "scoreReasons", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ClientSample_PeerConnectionSample_OutboundTrackSample {
