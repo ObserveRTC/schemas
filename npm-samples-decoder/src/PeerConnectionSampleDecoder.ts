@@ -5,7 +5,8 @@ import {
     bytesArrayToString,
     uuidByteArrayToString,
     OneTimePassUuidByteArrayToStringDecoder,
-    OneTimePassByteArrayToStringDecoder
+    OneTimePassByteArrayToStringDecoder,
+    StringToStringDecoder
   } from "./utils";
   import { PeerConnectionSample as OutputPeerConnectionSample } from "./OutputSamples";
   import { ClientSample_PeerConnectionSample as InputPeerConnectionSample } from "./InputSamples";
@@ -32,6 +33,7 @@ export class PeerConnectionSampleDecoder implements Decoder<InputPeerConnectionS
   
     private _attachmentsDecoder: AttachmentDecoder;
     private _scoreDecoder = new NumberToNumberDecoder();
+    private _scoreReasonsDecoder = new StringToStringDecoder();
     private _inboundTracksDecoders = new Map<string, InboundTrackDecoder>();
     private _outboundTracksDecoders = new Map<string, OutboundTrackDecoder>();
     private _codecStatsDecoders = new Map<string, CodecStatsDecoder>();
@@ -66,6 +68,7 @@ export class PeerConnectionSampleDecoder implements Decoder<InputPeerConnectionS
     public reset(): void {
       this._attachmentsDecoder.reset();
       this._scoreDecoder.reset();
+      this._scoreReasonsDecoder.reset();
       this._inboundTracksDecoders.forEach(decoder => decoder.reset());
       this._outboundTracksDecoders.forEach(decoder => decoder.reset());
       this._codecStatsDecoders.forEach(decoder => decoder.reset());
@@ -92,12 +95,14 @@ export class PeerConnectionSampleDecoder implements Decoder<InputPeerConnectionS
         }
 
         const score = this._scoreDecoder.decode(input.score);
+        const scoreReasons = this._scoreReasonsDecoder.decode(input.scoreReasons);
         const attachments = this._attachmentsDecoder.decode(input.attachments);
 
         this._actualValue = {
             peerConnectionId: this.peerConnectionId,
             attachments,
             score,
+            scoreReasons,
             inboundTracks: input.inboundTracks?.map(track => this._decodeInboundTrack(track)).filter(Boolean) as OutputPeerConnectionSample['inboundTracks'],
             outboundTracks: input.outboundTracks?.map(track => this._decodeOutboundTrack(track)).filter(Boolean) as OutputPeerConnectionSample['outboundTracks'],
             codecs: input.codecs?.map(codec => this._decodeCodecStats(codec)).filter(Boolean) as OutputPeerConnectionSample['codecs'],
@@ -131,6 +136,7 @@ export class PeerConnectionSampleDecoder implements Decoder<InputPeerConnectionS
 
         this._attachmentsDecoder.actualValue = sample.attachments;
         this._scoreDecoder.actualValue = sample.score;
+        this._scoreReasonsDecoder.actualValue = sample.scoreReasons;
 
         this._inboundTracksDecoders.clear();
         for (const obj of sample.inboundTracks ?? []) {

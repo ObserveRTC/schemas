@@ -22,6 +22,7 @@ import {
 	NumberToNumberEncoder,
 	OneTimePassStringToUint8ArrayEncoder, 
 	OneTimePassUuidToByteArrayEncoder, 
+	StringToStringEncoder,
 	stringToBytesArray, 
 	uuidToByteArray 
 } from "./utils";
@@ -32,6 +33,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 
 	private _attachmentsEncoder: AttachmentEncoder;
 	private _scoreEncoder = new NumberToNumberEncoder();
+	private _scoreReasonsEncoder = new StringToStringEncoder();
 	private _inboundTracksEncoders = new Map<string, InboundTrackSampleEncoder>();
 	private _outboundTracksEncoders = new Map<string, OutboundTrackSampleEncoder>();
 	private _codecStatsEncoders = new Map<string, CodecStatsEncoder>();
@@ -68,6 +70,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 	public reset(): void {
 		this._attachmentsEncoder.reset();
 		this._scoreEncoder.reset();
+		this._scoreReasonsEncoder.reset();
 		this._inboundTracksEncoders.forEach((encoder) => encoder.reset());
 		this._outboundTracksEncoders.forEach((encoder) => encoder.reset());
 		this._codecStatsEncoders.forEach((encoder) => encoder.reset());
@@ -108,6 +111,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 			peerConnectionId: this._peerConnectionId,
 			attachments: this._attachmentsEncoder.encode(sample.attachments),
 			score: this._scoreEncoder.encode(sample.score),
+			scoreReasons: this._scoreReasonsEncoder.encode(sample.scoreReasons),
 			inboundTracks,
 			outboundTracks,
 			codecs,

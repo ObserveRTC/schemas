@@ -9,7 +9,7 @@ import {
 	ClientSample_PeerConnectionSample,
 	ClientSample as OutputClientSample,
 } from './OutputSamples';
-import { AttachmentEncoder, AttachmentsEncoderFactory, ClientSampleEncoderSettings, convertUint8ToBase64, DefaultAttachmentEncoderFactory, Encoder, NumberToNumberEncoder, OneTimePassStringToUint8ArrayEncoder, OneTimePassUuidToByteArrayEncoder, stringToBytesArray, uuidToByteArray } from "./utils";
+import { AttachmentEncoder, AttachmentsEncoderFactory, ClientSampleEncoderSettings, convertUint8ToBase64, DefaultAttachmentEncoderFactory, Encoder, NumberToNumberEncoder, OneTimePassStringToUint8ArrayEncoder, OneTimePassUuidToByteArrayEncoder, StringToStringEncoder, stringToBytesArray, uuidToByteArray } from "./utils";
 import { PeerConnectionSampleEncoder } from "./PeerConnectionSampleEncoder";
 import { ClientEventEncoder, DefaultClientEventEncoder } from "./ClientEventEncoder";
 import { ClientMetaDataEncoder, DefaultClientMetaDataEncoder } from "./ClientMetaDataEncoder";
@@ -31,6 +31,7 @@ export class ClientSampleEncoder {
 	private readonly _timestampEncoder = new NumberToNumberEncoder();
 	private _attachmentEncoder: AttachmentEncoder;
 	private _scoreEncoder = new NumberToNumberEncoder();
+	private _scoreReasonsEncoder = new StringToStringEncoder();
 	private _visited = false;
 
 	private _peerConnectionSampleEncoders = new Map<string, PeerConnectionSampleEncoder>();
@@ -98,6 +99,7 @@ export class ClientSampleEncoder {
 			clientId: this._clientId,
 			attachments: this._attachmentEncoder.encode(clientSample.attachments),
 			score: this._scoreEncoder.encode(clientSample.score),
+			scoreReasons: this._scoreReasonsEncoder.encode(clientSample.scoreReasons),
 			peerConnections,
 			clientEvents,
 			clientIssues,
@@ -117,6 +119,7 @@ export class ClientSampleEncoder {
 		this._callIdEncoder.reset();
 		this._attachmentEncoder.reset();
 		this._scoreEncoder.reset();
+		this._scoreReasonsEncoder.reset();
 		this._peerConnectionSampleEncoders.forEach((encoder) => encoder.reset());
 		this.clientEventEncoder.reset();
 		this.clientIssueEncoder.reset();

@@ -14,6 +14,7 @@ export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, Out
 	private readonly _idDecoder: StringToStringDecoder;
 	private readonly _kindDecoder: StringToStringDecoder;
 	private readonly _scoreDecoder: NumberToNumberDecoder;
+	private readonly _scoreReasonsDecoder: StringToStringDecoder;
 
 	private _actualValue: OutputInboundTrackSample | undefined = undefined;
 
@@ -25,6 +26,7 @@ export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, Out
 		this._idDecoder = new StringToStringDecoder();
 		this._kindDecoder = new StringToStringDecoder();
 		this._scoreDecoder = new NumberToNumberDecoder();
+		this._scoreReasonsDecoder = new StringToStringDecoder();
 	}
 
 	public get visited(): boolean {
@@ -38,6 +40,7 @@ export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, Out
 		this._idDecoder.reset();
 		this._kindDecoder.reset();
 		this._scoreDecoder.reset();
+		this._scoreReasonsDecoder.reset();
 		this._attachmentsDecoder.reset();
 	}
 
@@ -57,6 +60,7 @@ export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, Out
 			id: this.id,
 			kind,
 			score: this._scoreDecoder.decode(input.score),
+			scoreReasons: this._scoreReasonsDecoder.decode(input.scoreReasons),
 			attachments: this._attachmentsDecoder.decode(input.attachments),
 		};
 
@@ -77,6 +81,7 @@ export class InboundTrackDecoder implements Decoder<InputInboundTrackSample, Out
 		this._idDecoder.actualValue = sample.id;
 		this._kindDecoder.actualValue = sample.kind;
 		this._scoreDecoder.actualValue = sample.score;
+		this._scoreReasonsDecoder.actualValue = sample.scoreReasons;
 		this._attachmentsDecoder.actualValue = sample.attachments;
 	}
 }

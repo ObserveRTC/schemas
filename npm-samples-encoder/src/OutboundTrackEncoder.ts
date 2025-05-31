@@ -13,6 +13,7 @@ export class OutboundTrackSampleEncoder implements Encoder<InputOutboundTrackSam
   private readonly _idEncoder: StringToStringEncoder;
   private readonly _kindEncoder: StringToStringEncoder;
   private readonly _scoreEncoder: NumberToNumberEncoder;
+  private readonly _scoreReasonsEncoder: StringToStringEncoder;
   private readonly _attachmentsEncoder: AttachmentEncoder;
 
   constructor(attachmentsEncoder: AttachmentEncoder) {
@@ -20,6 +21,7 @@ export class OutboundTrackSampleEncoder implements Encoder<InputOutboundTrackSam
     this._idEncoder = new StringToStringEncoder();
     this._kindEncoder = new StringToStringEncoder();
     this._scoreEncoder = new NumberToNumberEncoder();
+    this._scoreReasonsEncoder = new StringToStringEncoder();
     this._attachmentsEncoder = attachmentsEncoder;
   }
 
@@ -34,6 +36,7 @@ export class OutboundTrackSampleEncoder implements Encoder<InputOutboundTrackSam
     this._idEncoder.reset();
     this._kindEncoder.reset();
     this._scoreEncoder.reset();
+    this._scoreReasonsEncoder.reset();
     this._attachmentsEncoder.reset();
   }
 
@@ -45,6 +48,7 @@ export class OutboundTrackSampleEncoder implements Encoder<InputOutboundTrackSam
       id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
       score: this._scoreEncoder.encode(sample.score),
+      scoreReasons: this._scoreReasonsEncoder.encode(sample.scoreReasons),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
     });
   }

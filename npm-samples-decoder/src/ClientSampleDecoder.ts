@@ -20,6 +20,7 @@ import {
     NumberToNumberDecoder,
 	OneTimePassByteArrayToStringDecoder,
 	OneTimePassUuidByteArrayToStringDecoder,
+	StringToStringDecoder,
 	uuidByteArrayToString,
 } from "./utils";
 import { PeerConnectionSampleDecoder } from "./PeerConnectionSampleDecoder";
@@ -42,6 +43,7 @@ export class ClientSampleDecoder {
     private readonly _timestampDecoder = new NumberToNumberDecoder();
     private _attachmentDecoder: AttachmentDecoder;
     private _scoreDecoder = new NumberToNumberDecoder();
+    private _scoreReasonsDecoder = new StringToStringDecoder();
     private _visited = false;
     private _actualValue: OutputClientSample | undefined = undefined;
 
@@ -88,6 +90,7 @@ export class ClientSampleDecoder {
         this._timestampDecoder.reset();
         this._attachmentDecoder.reset();
         this._scoreDecoder.reset();
+        this._scoreReasonsDecoder.reset();
 
         this.clientEventDecoder.reset();
         this.clientIssueDecoder.reset();
@@ -102,6 +105,7 @@ export class ClientSampleDecoder {
         }
 
         this._scoreDecoder.actualValue = sample.score;
+        this._scoreReasonsDecoder.actualValue = sample.scoreReasons;
         this._attachmentDecoder.actualValue = sample.attachments;
     }
 
@@ -165,6 +169,7 @@ export class ClientSampleDecoder {
             clientId,
             attachments: this._attachmentDecoder.decode(input.attachments),
             score: this._scoreDecoder.decode(input.score),
+            scoreReasons: this._scoreReasonsDecoder.decode(input.scoreReasons),
             peerConnections,
             clientEvents,
             clientIssues,
@@ -182,6 +187,7 @@ export class ClientSampleDecoder {
         this._callIdDecoder.reset();
         this._attachmentDecoder.reset();
         this._scoreDecoder.reset();
+        this._scoreReasonsDecoder.reset();
         this._peerConnectionSampleDecoders.forEach(decoder => decoder.reset());
         this.clientEventDecoder.reset();
         this.clientIssueDecoder.reset();
