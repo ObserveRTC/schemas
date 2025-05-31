@@ -13,6 +13,7 @@ message ClientSample {
 			optional double timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
+			optional string scoreDetails = 6;
 		}
 		message OutboundTrackSample {
 			optional string id = 1;
@@ -20,6 +21,7 @@ message ClientSample {
 			optional double timestamp = 3;
 			optional string attachments = 4;
 			optional double score = 5;
+			optional string scoreDetails = 6;
 		}
 		message CodecStats {
 			optional string id = 1;
@@ -130,7 +132,7 @@ message ClientSample {
 			optional double timestamp = 4;
 			optional bool active = 5;
 			optional string attachments = 6;
-			optional int32 bytesSent = 7;
+			optional int64 bytesSent = 7;
 			optional string codecId = 8;
 			optional string encoderImplementation = 9;
 			optional int32 firCount = 10;
@@ -139,7 +141,7 @@ message ClientSample {
 			optional int32 framesEncoded = 13;
 			optional double framesPerSecond = 14;
 			optional int32 framesSent = 15;
-			optional int32 headerBytesSent = 16;
+			optional int64 headerBytesSent = 16;
 			optional int32 hugeFramesSent = 17;
 			optional int32 keyFramesEncoded = 18;
 			optional string mediaSourceId = 19;
@@ -153,14 +155,14 @@ message ClientSample {
 			optional string qualityLimitationReason = 27;
 			optional int32 qualityLimitationResolutionChanges = 28;
 			optional string remoteId = 29;
-			optional int32 retransmittedBytesSent = 30;
+			optional int64 retransmittedBytesSent = 30;
 			optional int32 retransmittedPacketsSent = 31;
 			optional string rid = 32;
 			optional int64 rtxSsrc = 33;
 			optional string scalabilityMode = 34;
 			optional double targetBitrate = 35;
 			optional double totalEncodeTime = 36;
-			optional int32 totalEncodedBytesTarget = 37;
+			optional int64 totalEncodedBytesTarget = 37;
 			optional double totalPacketSendDelay = 38;
 			optional string transportId = 39;
 		}
@@ -330,6 +332,7 @@ message ClientSample {
 		optional bytes peerConnectionId = 16;
 		optional string attachments = 17;
 		optional double score = 18;
+		optional string scoreDetails = 19;
 	}
 	message ClientEvent {
 		optional string type = 1;

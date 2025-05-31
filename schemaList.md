@@ -2,13 +2,15 @@ InboundTrackSample
  * **timestamp**: The timestamp when the stats were generated.
  * **id**: The unique identifier for the stats object.
  * **kind**: Kind of the media (e.g., 'audio' or 'video').
- * **score**: Calculated score for track (details should be added to attachments)
+ * **score**: Calculated score for track (details should be added to scoreDetails)
+ * **scoreDetails**: Details for score calculation
  * **attachments**: Additional information attached to this stats
 OutboundTrackSample
  * **timestamp**: The timestamp when the stats were generated.
  * **id**: The unique identifier for the stats object.
  * **kind**: Kind of the media (e.g., 'audio' or 'video').
- * **score**: Calculated score for track (details should be added to attachments)
+ * **score**: Calculated score for track (details should be added to scoreDetails)
+ * **scoreDetails**: Details for score calculation
  * **attachments**: Additional information attached to this stats
 CodecStats
  * **timestamp**: The timestamp when the stats were generated.
@@ -31,7 +33,7 @@ InboundRtpStats
  * **packetsReceived**: Number of packets received on the RTP stream.
  * **packetsLost**: Number of packets lost on the RTP stream.
  * **jitter**: Jitter of the RTP stream in seconds.
- * **mid**: The MediaStream ID of the RTP stream.
+ * **mid**: The media stream identification tag from the SDP media section.
  * **remoteId**: Remote stats object ID associated with the RTP stream.
  * **framesDecoded**: Number of frames decoded.
  * **keyFramesDecoded**: Number of keyframes decoded.
@@ -55,9 +57,9 @@ InboundRtpStats
  * **fecPacketsReceived**: Total packets received from FEC.
  * **fecPacketsDiscarded**: Total FEC packets discarded.
  * **bytesReceived**: Total bytes received on the RTP stream.
- * **nackCount**: Number of NACKs sent.
- * **firCount**: Number of Full Intra Requests sent.
- * **pliCount**: Number of Picture Loss Indications sent.
+ * **nackCount**: Number of NACKs received.
+ * **firCount**: Number of Full Intra Requests received.
+ * **pliCount**: Number of Picture Loss Indications received.
  * **totalProcessingDelay**: Total processing delay in seconds.
  * **estimatedPlayoutTimestamp**: Estimated timestamp of playout.
  * **jitterBufferDelay**: Total jitter buffer delay in seconds.
@@ -143,7 +145,7 @@ OutboundRtpStats
  * **firCount**: The total number of FIR packets sent on this stream.
  * **pliCount**: The total number of PLI packets sent on this stream.
  * **encoderImplementation**: The implementation of the encoder used for this stream.
- * **powerEfficientEncoder**: Indicates whether the encoder is power efficient.
+ * **powerEfficientEncoder**: Indicates whether the encoder is power-efficient.
  * **active**: Indicates whether this stream is actively sending data.
  * **scalabilityMode**: The scalability mode of the encoder used for this stream.
  * **qualityLimitationDurations**: The duration of quality limitation reasons categorized by type.
@@ -231,7 +233,7 @@ IceCandidateStats
  * **timestamp**: The timestamp of the stat.
  * **id**: A unique identifier for the stat.
  * **transportId**: The transport ID associated with the ICE candidate.
- * **address**: The IP address of the ICE candidate (nullable).
+ * **address**: The IP address of the ICE candidate.
  * **port**: The port number of the ICE candidate.
  * **protocol**: The transport protocol used by the candidate (e.g., 'udp', 'tcp').
  * **candidateType**: The type of the ICE candidate (e.g., 'host', 'srflx', 'relay').
@@ -246,7 +248,7 @@ IceCandidateStats
  * **attachments**: Additional information attached to this stats
 IceCandidatePairStats
  * **id**: The unique identifier for this RTCStats object.
- * **timestamp**: The timestamp of when the stats were recorded, in seconds.
+ * **timestamp**: The timestamp of when the stats were recorded, in milliseconds.
  * **transportId**: The transport id of the connection this candidate pair belongs to.
  * **localCandidateId**: The ID of the local ICE candidate in this pair.
  * **remoteCandidateId**: The ID of the remote ICE candidate in this pair.
@@ -276,19 +278,20 @@ CertificateStats
  * **fingerprint**: The fingerprint of the certificate.
  * **fingerprintAlgorithm**: The algorithm used for the fingerprint (e.g., 'SHA-256').
  * **base64Certificate**: The certificate encoded in base64 format.
- * **issuerCertificateId**: The certificate ID of the issuer (nullable).
+ * **issuerCertificateId**: The certificate ID of the issuer.
  * **attachments**: Additional information attached to this stats
 PeerConnectionSample
  * **peerConnectionId**: Unique identifier of the stats object.
  * **attachments**: Additional information attached to this sample
- * **score**: Calculated score for peer connection (details should be added to attachments)
+ * **score**: Calculated score for peer connection (details should be added to scoreDetails)
+ * **scoreDetails**: Details for score calculation
  * **inboundTracks**: Inbound Track Stats items
  * **outboundTracks**: Outbound Track Stats items
  * **codecs**: Codec items
- * **inboundRtps**: Inbound RTPs
- * **remoteInboundRtps**: Remote Inbound RTPs
- * **outboundRtps**: Outbound RTPs
- * **remoteOutboundRtps**: Remote Outbound RTPs
+ * **inboundRtps**: Inbound RTP Stats
+ * **remoteInboundRtps**: Remote Inbound RTP Stats
+ * **outboundRtps**: Outbound RTP Stats
+ * **remoteOutboundRtps**: Remote Outbound RTP Stats
  * **mediaSources**: Audio Source Stats
  * **mediaPlayouts**: Media Playout Stats
  * **peerConnectionTransports**: PeerConnection Transport Stats
@@ -296,7 +299,7 @@ PeerConnectionSample
  * **iceTransports**: ICE Transport Stats
  * **iceCandidates**: ICE Candidate Stats
  * **iceCandidatePairs**: ICE Candidate Pair Stats
- * **certificates**: Certificates
+ * **certificates**: Certificate Stats
 ClientEvent
  * **type**: The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
  * **payload**: The value associated with the event, if applicable.

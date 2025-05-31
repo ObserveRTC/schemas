@@ -1,7 +1,7 @@
 {
   "name": "PeerConnectionSample",
   "type": "record",
-  "doc": "docs",
+  "doc": "A sample containing statistics and metrics for a WebRTC peer connection",
   "fields": [
     {
       "name": "peerConnectionId",
@@ -16,8 +16,14 @@
     },
     {
       "name": "score",
-      "doc": "Calculated score for peer connection (details should be added to attachments)",
+      "doc": "Calculated score for peer connection (details should be added to scoreDetails)",
       "type": ["null", "double"],
+      "default": null
+    },
+    {
+      "name": "scoreDetails",
+      "doc": "Details for score calculation",
+      "type": ["null", "string"],
       "default": null
     },
     {
@@ -50,7 +56,13 @@
                 "name": "score",
                 "type": ["null", "double"],
                 "default": null,
-                "doc": "Calculated score for track (details should be added to attachments)"
+                "doc": "Calculated score for track (details should be added to scoreDetails)"
+              },
+              {
+                "name": "scoreDetails",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Details for score calculation"
               },
               {
                 "name": "attachments",
@@ -94,7 +106,13 @@
                 "name": "score",
                 "type": ["null", "double"],
                 "default": null,
-                "doc": "Calculated score for track (details should be added to attachments)"
+                "doc": "Calculated score for track (details should be added to scoreDetails)"
+              },
+              {
+                "name": "scoreDetails",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Details for score calculation"
               },
               {
                 "name": "attachments",
@@ -183,7 +201,7 @@
 
     {
       "name": "inboundRtps",
-      "doc": "Inbound RTPs",
+      "doc": "Inbound RTP Stats",
       "type": [
         "null",
         {
@@ -251,7 +269,7 @@
                 "name": "mid",
                 "type": ["null", "string"],
                 "default": null,
-                "doc": "The MediaStream ID of the RTP stream."
+                "doc": "The media stream identification tag from the SDP media section."
               },
               {
                 "name": "remoteId",
@@ -395,19 +413,19 @@
                 "name": "nackCount",
                 "type": ["null", "int"],
                 "default": null,
-                "doc": "Number of NACKs sent."
+                "doc": "Number of NACKs received."
               },
               {
                 "name": "firCount",
                 "type": ["null", "int"],
                 "default": null,
-                "doc": "Number of Full Intra Requests sent."
+                "doc": "Number of Full Intra Requests received."
               },
               {
                 "name": "pliCount",
                 "type": ["null", "int"],
                 "default": null,
-                "doc": "Number of Picture Loss Indications sent."
+                "doc": "Number of Picture Loss Indications received."
               },
               {
                 "name": "totalProcessingDelay",
@@ -595,7 +613,7 @@
 
     {
       "name": "remoteInboundRtps",
-      "doc": "Remote Inbound RTPs",
+      "doc": "Remote Inbound RTP Stats",
       "type": [
         "null",
         {
@@ -702,7 +720,7 @@
 
     {
       "name": "outboundRtps",
-      "doc": "Outbound RTPs",
+      "doc": "Outbound RTP Stats",
       "type": [
         "null",
         {
@@ -751,7 +769,7 @@
               },
               {
                 "name": "bytesSent",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The total number of bytes sent on this stream."
               },
@@ -781,7 +799,7 @@
               },
               {
                 "name": "headerBytesSent",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The total number of header bytes sent on this stream."
               },
@@ -793,7 +811,7 @@
               },
               {
                 "name": "retransmittedBytesSent",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The number of retransmitted bytes sent on this stream."
               },
@@ -811,7 +829,7 @@
               },
               {
                 "name": "totalEncodedBytesTarget",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The total target encoded bytes for this stream."
               },
@@ -915,7 +933,7 @@
                 "name": "powerEfficientEncoder",
                 "type": ["null", "boolean"],
                 "default": null,
-                "doc": "Indicates whether the encoder is power efficient."
+                "doc": "Indicates whether the encoder is power-efficient."
               },
               {
                 "name": "active",
@@ -979,7 +997,7 @@
 
     {
       "name": "remoteOutboundRtps",
-      "doc": "Remote Outbound RTPs",
+      "doc": "Remote Outbound RTP Stats",
       "type": [
         "null",
         {
@@ -1565,7 +1583,7 @@
                 "name": "address",
                 "type": ["null", "string"],
                 "default": null,
-                "doc": "The IP address of the ICE candidate (nullable)."
+                "doc": "The IP address of the ICE candidate."
               },
               {
                 "name": "port",
@@ -1669,7 +1687,7 @@
               {
                 "name": "timestamp",
                 "type": "long",
-                "doc": "The timestamp of when the stats were recorded, in seconds."
+                "doc": "The timestamp of when the stats were recorded, in milliseconds."
               },
               {
                 "name": "transportId",
@@ -1835,7 +1853,7 @@
 
     {
       "name": "certificates",
-      "doc": "Certificates",
+      "doc": "Certificate Stats",
       "type": [
         "null",
         {
@@ -1876,7 +1894,7 @@
                 "name": "issuerCertificateId",
                 "type": ["null", "string"],
                 "default": null,
-                "doc": "The certificate ID of the issuer (nullable)."
+                "doc": "The certificate ID of the issuer."
               },
               /**
                * Custom fields

@@ -13,6 +13,7 @@ message ClientSample {
 			double timestamp = 3;
 			string attachments = 4;
 			double score = 5;
+			string scoreDetails = 6;
 		}
 		message OutboundTrackSample {
 			string id = 1;
@@ -20,6 +21,7 @@ message ClientSample {
 			double timestamp = 3;
 			string attachments = 4;
 			double score = 5;
+			string scoreDetails = 6;
 		}
 		message CodecStats {
 			string id = 1;
@@ -130,7 +132,7 @@ message ClientSample {
 			double timestamp = 4;
 			bool active = 5;
 			string attachments = 6;
-			int32 bytesSent = 7;
+			int64 bytesSent = 7;
 			string codecId = 8;
 			string encoderImplementation = 9;
 			int32 firCount = 10;
@@ -139,7 +141,7 @@ message ClientSample {
 			int32 framesEncoded = 13;
 			double framesPerSecond = 14;
 			int32 framesSent = 15;
-			int32 headerBytesSent = 16;
+			int64 headerBytesSent = 16;
 			int32 hugeFramesSent = 17;
 			int32 keyFramesEncoded = 18;
 			string mediaSourceId = 19;
@@ -153,14 +155,14 @@ message ClientSample {
 			string qualityLimitationReason = 27;
 			int32 qualityLimitationResolutionChanges = 28;
 			string remoteId = 29;
-			int32 retransmittedBytesSent = 30;
+			int64 retransmittedBytesSent = 30;
 			int32 retransmittedPacketsSent = 31;
 			string rid = 32;
 			int64 rtxSsrc = 33;
 			string scalabilityMode = 34;
 			double targetBitrate = 35;
 			double totalEncodeTime = 36;
-			int32 totalEncodedBytesTarget = 37;
+			int64 totalEncodedBytesTarget = 37;
 			double totalPacketSendDelay = 38;
 			string transportId = 39;
 		}
@@ -330,6 +332,7 @@ message ClientSample {
 		bytes peerConnectionId = 16;
 		string attachments = 17;
 		double score = 18;
+		string scoreDetails = 19;
 	}
 	message ClientEvent {
 		string type = 1;
