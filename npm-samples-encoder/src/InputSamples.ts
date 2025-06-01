@@ -1,2409 +1,5 @@
 
-export const schemaVersion = "2.2.12";
-
-/**
-* Session data
-*/
-export type TurnSession = {
-	/**
-	* Flag indicate to not generate report from this sample
-	*/
-	sessionId: string;
-
-	/**
-	* The Authentication Realm (RFC 8656)
-	*/
-	realm?: string;
-
-	/**
-	* The username of the used in authentication
-	*/
-	username?: string;
-
-	/**
-	* The id of the client the TURN session belongs to (ClientSample)
-	*/
-	clientId?: string;
-
-	/**
-	* The timestamp when the session has been started. Epoch in milliseconds, GMT
-	*/
-	started?: number;
-
-	/**
-	* For each Allocate request, the server SHOULD generate a new random nonce when the allocation is first attempted following the randomness recommendations in [RFC4086] and SHOULD expire the nonce at least once every hour during the lifetime of the allocation.  Epoch in millis GMT
-	*/
-	nonceExpirationTime?: number;
-
-	/**
-	* The address of the server the client connected to
-	*/
-	serverAddress?: string;
-
-	/**
-	* The portnumber the server listens the client requests
-	*/
-	serverPort?: number;
-
-	/**
-	* the transport protocol betwwen the client and the server (TCP, UDP, TCPTLS, UDPTLS, SCTP, SCTPTLS)
-	*/
-	transportProtocol?: string;
-
-	/**
-	* The address of the client connected from
-	*/
-	clientAddress?: string;
-
-	/**
-	* The portnumber the client requested from
-	*/
-	clientPort?: number;
-
-	/**
-	* the bitrate the TURN server sending to the client
-	*/
-	sendingBitrate?: number;
-
-	/**
-	* the bitrate the TURN server receiving from the client
-	*/
-	receivingBitrate?: number;
-
-	/**
-	* the amount of bytes sent to the client
-	*/
-	sentBytes?: number;
-
-	/**
-	* the amount of bytes received from the client
-	*/
-	receivedBytes?: number;
-
-	/**
-	* the amount of packets sent to the client
-	*/
-	sentPackets?: number;
-
-	/**
-	* the amount of packets received from the client
-	*/
-	receivedPackets?: number;
-
-}
-
-/**
-* Peer Alloocation data
-*/
-export type TurnPeerAllocation = {
-	/**
-	* a unique id for the allocation
-	*/
-	peerId: string;
-
-	/**
-	* The corresponded session the allocation belongs to
-	*/
-	sessionId: string;
-
-	/**
-	* The allocated address
-	*/
-	relayedAddress: string;
-
-	/**
-	* The allocated port
-	*/
-	relayedPort: number;
-
-	/**
-	* protocol (TCP, UDP)
-	*/
-	transportProtocol: string;
-
-	/**
-	* The address of the address the serever connect to
-	*/
-	peerAddress?: string;
-
-	/**
-	* The portnumber the server connects to
-	*/
-	peerPort?: number;
-
-	/**
-	* the bitrate the TURN server sending to the peer
-	*/
-	sendingBitrate?: number;
-
-	/**
-	* the bitrate the TURN server receiving from the peer
-	*/
-	receivingBitrate?: number;
-
-	/**
-	* the amount of bytes sent to the peer
-	*/
-	sentBytes?: number;
-
-	/**
-	* the amount of bytes received from the peer
-	*/
-	receivedBytes?: number;
-
-	/**
-	* the amount of packets sent to the peer
-	*/
-	sentPackets?: number;
-
-	/**
-	* the amount of packets received from the peer
-	*/
-	receivedPackets?: number;
-
-}
-
-/**
-* docs
-*/
-export type TurnSample = {
-	/**
-	* A unique id of the turn server
-	*/
-	serverId: string;
-
-	/**
-	* Peer Alloocation data
-	*/
-	allocations?: TurnPeerAllocation[];
-
-	/**
-	* Session data
-	*/
-	sessions?: TurnSession[];
-
-}
-
-/**
-* The Sfu provided custom stats payload
-*/
-export type SfuExtensionStats = {
-	/**
-	* The type of the extension stats the custom app provides
-	*/
-	type: string;
-
-	/**
-	* The payload of the extension stats the custom app provides
-	*/
-	payload: string;
-
-}
-
-/**
-* The Sfu Outbound Rtp Pad obtained measurements
-*/
-export type SfuSctpChannel = {
-	/**
-	* The id of the transport the RTP stream uses.
-	*/
-	transportId: string;
-
-	/**
-	* The id of the sctp stream
-	*/
-	streamId: string;
-
-	/**
-	* The id of the sctp stream
-	*/
-	channelId: string;
-
-	/**
-	* Flag indicate to not generate report from this sample
-	*/
-	noReport?: boolean;
-
-	/**
-	* Flag to indicate that the SCTP channel is used as an internally between SFU instances
-	*/
-	internal?: boolean;
-
-	/**
-	* The label of the sctp stream
-	*/
-	label?: string;
-
-	/**
-	* The protocol used to establish an sctp stream
-	*/
-	protocol?: string;
-
-	/**
-	* The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.
-	*/
-	sctpSmoothedRoundTripTime?: number;
-
-	/**
-	* The latest congestion window, corresponding to spinfo_cwnd defined in [RFC6458].
-	*/
-	sctpCongestionWindow?: number;
-
-	/**
-	* The latest receiver window, corresponding to sstat_rwnd defined in [RFC6458].
-	*/
-	sctpReceiverWindow?: number;
-
-	/**
-	* The latest maximum transmission unit, corresponding to spinfo_mtu defined in [RFC6458].
-	*/
-	sctpMtu?: number;
-
-	/**
-	* The number of unacknowledged DATA chunks, corresponding to sstat_unackdata defined in [RFC6458].
-	*/
-	sctpUnackData?: number;
-
-	/**
-	* The number of message received on the corresponded SCTP stream.
-	*/
-	messageReceived?: number;
-
-	/**
-	* The number of message sent on the corresponded SCTP stream.
-	*/
-	messageSent?: number;
-
-	/**
-	* The number of bytes received on the corresponded SCTP stream.
-	*/
-	bytesReceived?: number;
-
-	/**
-	* The number of bytes sent on the corresponded SCTP stream.
-	*/
-	bytesSent?: number;
-
-}
-
-/**
-* The Sfu Outbound Rtp Pad obtained measurements
-*/
-export type SfuOutboundRtpPad = {
-	/**
-	* The id of the transport the RTP stream uses.
-	*/
-	transportId: string;
-
-	/**
-	* The id of the stream this outbound RTP pad sinks the media from
-	*/
-	streamId: string;
-
-	/**
-	* The id of a group of RTP pad sinks the media stream out from the SFU.
-	*/
-	sinkId: string;
-
-	/**
-	* The id of Sfu pad.
-	*/
-	padId: string;
-
-	/**
-	* The synchronization source id of the RTP stream
-	*/
-	ssrc: number;
-
-	/**
-	* Flag indicate to not generate report from this sample
-	*/
-	noReport?: boolean;
-
-	/**
-	* Flag to indicate that the rtp pad is used as an internal communication between SFU instances
-	*/
-	internal?: boolean;
-
-	/**
-	* The callId the event belongs to
-	*/
-	callId?: string;
-
-	/**
-	* If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
-	*/
-	clientId?: string;
-
-	/**
-	* The id of the track the RTP stream related to at the client side
-	*/
-	trackId?: string;
-
-	/**
-	* the type of the media the stream carries ("audio" or "video")
-	*/
-	mediaType?: "audio" | "video";
-
-	/**
-	* The payload type field of the RTP header
-	*/
-	payloadType?: number;
-
-	/**
-	* The negotiated mimeType in the SDP
-	*/
-	mimeType?: string;
-
-	/**
-	* The clock rate of the media source the RTP header carries
-	*/
-	clockRate?: number;
-
-	/**
-	* The actual SDP line from the negotiation related to this RTP stream
-	*/
-	sdpFmtpLine?: string;
-
-	/**
-	*  The rid parameter of the corresponded RTP stream
-	*/
-	rid?: string;
-
-	/**
-	* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
-	*/
-	rtxSsrc?: number;
-
-	/**
-	* he bitrate the corresponded stream targets.
-	*/
-	targetBitrate?: number;
-
-	/**
-	* The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
-	*/
-	voiceActivityFlag?: boolean;
-
-	/**
-	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
-	*/
-	firCount?: number;
-
-	/**
-	* The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
-	*/
-	pliCount?: number;
-
-	/**
-	* The total number of negative acknowledgement received on the corresponded RTP stream.
-	*/
-	nackCount?: number;
-
-	/**
-	* The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
-	*/
-	sliCount?: number;
-
-	/**
-	* The total number of packets lost on the corresponded RTP stream.
-	*/
-	packetsLost?: number;
-
-	/**
-	* The total number of packets sent on the corresponded RTP stream.
-	*/
-	packetsSent?: number;
-
-	/**
-	* The total number of discarded packets on the corresponded RTP stream.
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets retransmitted on the corresponded RTP stream.
-	*/
-	packetsRetransmitted?: number;
-
-	/**
-	* The total number of packets failed to be encrypted on the corresponded RTP stream.
-	*/
-	packetsFailedEncryption?: number;
-
-	/**
-	* The total number of duplicated packets appeared on the corresponded RTP stream.
-	*/
-	packetsDuplicated?: number;
-
-	/**
-	* The total number of FEC packets sent on the corresponded RTP stream.
-	*/
-	fecPacketsSent?: number;
-
-	/**
-	* The total number of FEC packets discarded on the corresponded RTP stream.
-	*/
-	fecPacketsDiscarded?: number;
-
-	/**
-	* The total amount of payload bytes sent on the corresponded RTP stream.
-	*/
-	bytesSent?: number;
-
-	/**
-	* The total number of SR reports sent by the corresponded RTP stream
-	*/
-	rtcpSrSent?: number;
-
-	/**
-	* The total number of RR reports received on the corresponded RTP stream
-	*/
-	rtcpRrReceived?: number;
-
-	/**
-	* If rtx packets sent on the same stream then this number indicates how may has been sent
-	*/
-	rtxPacketsSent?: number;
-
-	/**
-	* If rtx packets are received on the same stream then this number indicates how may has been discarded
-	*/
-	rtxPacketsDiscarded?: number;
-
-	/**
-	* The number of frames sent on the corresponded RTP stream
-	*/
-	framesSent?: number;
-
-	/**
-	* Indicate the number of frames the Sfu has been encoded
-	*/
-	framesEncoded?: number;
-
-	/**
-	* Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
-	*/
-	keyFramesEncoded?: number;
-
-	/**
-	* The calculated fractionLost of the stream
-	*/
-	fractionLost?: number;
-
-	/**
-	* The calculated jitter of the stream
-	*/
-	jitter?: number;
-
-	/**
-	* The calculated RTT of the stream
-	*/
-	roundTripTime?: number;
-
-}
-
-/**
-* The Sfu Inbound Rtp Pad obtained measurements
-*/
-export type SfuInboundRtpPad = {
-	/**
-	* The id of the transport the RTP Pad uses.
-	*/
-	transportId: string;
-
-	/**
-	* The id of the media stream the RTP pad belongs to. This id is to group rtp pads (e.g.: simulcast) carrying payloads to the same media. 
-	*/
-	streamId: string;
-
-	/**
-	* The id of Sfu pad.
-	*/
-	padId: string;
-
-	/**
-	* The synchronization source id of the RTP stream
-	*/
-	ssrc: number;
-
-	/**
-	* Flag indicate to not generate report from this sample
-	*/
-	noReport?: boolean;
-
-	/**
-	* Flag to indicate that the rtp pad is used as an internal communication between SFU instances
-	*/
-	internal?: boolean;
-
-	/**
-	* the type of the media the stream carries ("audio" or "video")
-	*/
-	mediaType?: "audio" | "video";
-
-	/**
-	* The payload type field of the RTP header
-	*/
-	payloadType?: number;
-
-	/**
-	* The negotiated mimeType in the SDP
-	*/
-	mimeType?: string;
-
-	/**
-	* The clock rate of the media source the RTP header carries
-	*/
-	clockRate?: number;
-
-	/**
-	* The actual SDP line from the negotiation related to this RTP stream
-	*/
-	sdpFmtpLine?: string;
-
-	/**
-	*  The rid parameter of the corresponded RTP stream
-	*/
-	rid?: string;
-
-	/**
-	* If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
-	*/
-	rtxSsrc?: number;
-
-	/**
-	* he bitrate the corresponded stream targets.
-	*/
-	targetBitrate?: number;
-
-	/**
-	* The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
-	*/
-	voiceActivityFlag?: boolean;
-
-	/**
-	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
-	*/
-	firCount?: number;
-
-	/**
-	* The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
-	*/
-	pliCount?: number;
-
-	/**
-	* The total number of negative acknowledgement received on the corresponded RTP stream.
-	*/
-	nackCount?: number;
-
-	/**
-	* The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
-	*/
-	sliCount?: number;
-
-	/**
-	* The total number of packets lost on the corresponded RTP stream.
-	*/
-	packetsLost?: number;
-
-	/**
-	* The total number of packets received on the corresponded RTP stream.
-	*/
-	packetsReceived?: number;
-
-	/**
-	* The total number of discarded packets on the corresponded RTP stream.
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.
-	*/
-	packetsRepaired?: number;
-
-	/**
-	* The total number of packets failed to be decrypted on the corresponded RTP stream.
-	*/
-	packetsFailedDecryption?: number;
-
-	/**
-	* The total number of duplicated packets appeared on the corresponded RTP stream.
-	*/
-	packetsDuplicated?: number;
-
-	/**
-	* The total number of FEC packets received on the corresponded RTP stream.
-	*/
-	fecPacketsReceived?: number;
-
-	/**
-	* The total number of FEC packets discarded on the corresponded RTP stream.
-	*/
-	fecPacketsDiscarded?: number;
-
-	/**
-	* The total amount of payload bytes received on the corresponded RTP stream.
-	*/
-	bytesReceived?: number;
-
-	/**
-	* The total number of SR reports received by the corresponded RTP stream
-	*/
-	rtcpSrReceived?: number;
-
-	/**
-	* The total number of RR reports sent on the corresponded RTP stream
-	*/
-	rtcpRrSent?: number;
-
-	/**
-	* If rtx packets are sent or received on the same stream then this number indicates how may has been sent
-	*/
-	rtxPacketsReceived?: number;
-
-	/**
-	* If rtx packets are received on the same stream then this number indicates how may has been discarded
-	*/
-	rtxPacketsDiscarded?: number;
-
-	/**
-	* The number of frames received on the corresponded RTP stream
-	*/
-	framesReceived?: number;
-
-	/**
-	* Indicate the number of frames the Sfu has been decoded
-	*/
-	framesDecoded?: number;
-
-	/**
-	* Indicate the number of keyframes the Sfu has been decoded
-	*/
-	keyFramesDecoded?: number;
-
-	/**
-	* The calculated fractionLost of the stream
-	*/
-	fractionLost?: number;
-
-	/**
-	* The calculated jitter of the stream
-	*/
-	jitter?: number;
-
-	/**
-	* The calculated RTT of the stream
-	*/
-	roundTripTime?: number;
-
-}
-
-/**
-* The Sfu Transports obtained measurements
-*/
-export type SfuTransport = {
-	/**
-	* The generated unique identifier of the transport
-	*/
-	transportId: string;
-
-	/**
-	* Flag indicate to not generate report from this sample
-	*/
-	noReport?: boolean;
-
-	/**
-	* Flag to indicate that the transport is used as an internal transport between SFU instances
-	*/
-	internal?: boolean;
-
-	/**
-	* Represent the current value of the state attribute of the underlying RTCDtlsTransport.
-	*/
-	dtlsState?: string;
-
-	/**
-	* Represent the current value of the state attribute of the underlying RTCIceTransport
-	*/
-	iceState?: string;
-
-	/**
-	* Represents the the current value of the SCTP state of the transport of the SFU
-	*/
-	sctpState?: string;
-
-	/**
-	* Represent the current value of the role SFU takes place in ICE
-	*/
-	iceRole?: string;
-
-	/**
-	* The local address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
-	*/
-	localAddress?: string;
-
-	/**
-	* The local port number
-	*/
-	localPort?: number;
-
-	/**
-	* The protocol used by the transport
-	*/
-	protocol?: string;
-
-	/**
-	* The remote address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
-	*/
-	remoteAddress?: string;
-
-	/**
-	* The remote port number
-	*/
-	remotePort?: number;
-
-	/**
-	* The total amount of RTP bytes received on this transport
-	*/
-	rtpBytesReceived?: number;
-
-	/**
-	* The total amount of RTP bytes sent on this transport
-	*/
-	rtpBytesSent?: number;
-
-	/**
-	* The total amount of RTP packets received on this transport
-	*/
-	rtpPacketsReceived?: number;
-
-	/**
-	* The total amount of RTP packets sent on this transport
-	*/
-	rtpPacketsSent?: number;
-
-	/**
-	* The total amount of RTP packets lost on this transport
-	*/
-	rtpPacketsLost?: number;
-
-	/**
-	* The total amount of RTX bytes received on this transport
-	*/
-	rtxBytesReceived?: number;
-
-	/**
-	* The total amount of RTX bytes sent on this transport
-	*/
-	rtxBytesSent?: number;
-
-	/**
-	* The total amount of RTX packets received on this transport
-	*/
-	rtxPacketsReceived?: number;
-
-	/**
-	* The total amount of RTX packets sent on this transport
-	*/
-	rtxPacketsSent?: number;
-
-	/**
-	* The total amount of RTX packets lost on this transport
-	*/
-	rtxPacketsLost?: number;
-
-	/**
-	* The total amount of RTX packets discarded on this transport
-	*/
-	rtxPacketsDiscarded?: number;
-
-	/**
-	* The total amount of SCTP bytes received on this transport
-	*/
-	sctpBytesReceived?: number;
-
-	/**
-	* The total amount of SCTP bytes sent on this transport
-	*/
-	sctpBytesSent?: number;
-
-	/**
-	* The total amount of SCTP packets received on this transport
-	*/
-	sctpPacketsReceived?: number;
-
-	/**
-	* The total amount of SCTP packets sent on this transport
-	*/
-	sctpPacketsSent?: number;
-
-}
-
-/**
-* User provided custom call events
-*/
-export type CustomSfuEvent = {
-	/**
-	* the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..)
-	*/
-	name: string;
-
-	/**
-	* the value of the event
-	*/
-	value?: string;
-
-	/**
-	* The unique identifier of the sfu transport the event is related to
-	*/
-	transportId?: string;
-
-	/**
-	* The identifier of the sfu stream the event is related to
-	*/
-	sfuStreamId?: string;
-
-	/**
-	* The identifier of the sfu sink the event is related to
-	*/
-	sfuSinkId?: string;
-
-	/**
-	* the human readable message of the event
-	*/
-	message?: string;
-
-	/**
-	* Additional attachment relevant for the event
-	*/
-	attachments?: string;
-
-	/**
-	* The EPOCH timestamp the event is generated
-	*/
-	timestamp?: number;
-
-}
-
-/**
-* docs
-*/
-export type SfuSample = {
-	/**
-	* Unique generated id for the sfu samples are originated from
-	*/
-	sfuId: string;
-
-	/**
-	* The timestamp the sample is created in GMT
-	*/
-	timestamp: number;
-
-	/**
-	* The offset from GMT in hours
-	*/
-	timeZoneOffsetInHours?: number;
-
-	/**
-	* Special marker for the samples
-	*/
-	marker?: string;
-
-	/**
-	* User provided custom call events
-	*/
-	customSfuEvents?: CustomSfuEvent[];
-
-	/**
-	* The Sfu Transports obtained measurements
-	*/
-	transports?: SfuTransport[];
-
-	/**
-	* The Sfu Inbound Rtp Pad obtained measurements
-	*/
-	inboundRtpPads?: SfuInboundRtpPad[];
-
-	/**
-	* The Sfu Outbound Rtp Pad obtained measurements
-	*/
-	outboundRtpPads?: SfuOutboundRtpPad[];
-
-	/**
-	* The Sfu Outbound Rtp Pad obtained measurements
-	*/
-	sctpChannels?: SfuSctpChannel[];
-
-	/**
-	* The Sfu provided custom stats payload
-	*/
-	extensionStats?: SfuExtensionStats[];
-
-}
-
-/**
-* List of remote ICE candidates
-*/
-export type IceRemoteCandidate = {
-	/**
-	* Refers to the peer connection the local candidate belongs to
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The unique identifier of the local candidate
-	*/
-	id?: string;
-
-	/**
-	* The address of the local endpoint (Ipv4, Ipv6, FQDN)
-	*/
-	address?: string;
-
-	/**
-	* The port number of the local endpoint the ICE uses
-	*/
-	port?: number;
-
-	/**
-	* The protocol for the ICE
-	*/
-	protocol?: "tcp" | "udp";
-
-	/**
-	* The type of the local candidate
-	*/
-	candidateType?: string;
-
-	/**
-	* The priority of the local candidate
-	*/
-	priority?: number;
-
-	/**
-	* The url of the ICE server
-	*/
-	url?: string;
-
-	/**
-	* The relay protocol the local candidate uses
-	*/
-	relayProtocol?: "tcp" | "udp" | "tls";
-
-}
-
-/**
-* List of local ICE candidates
-*/
-export type IceLocalCandidate = {
-	/**
-	* Refers to the peer connection the local candidate belongs to
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The unique identifier of the local candidate
-	*/
-	id?: string;
-
-	/**
-	* The address of the local endpoint (Ipv4, Ipv6, FQDN)
-	*/
-	address?: string;
-
-	/**
-	* The port number of the local endpoint the ICE uses
-	*/
-	port?: number;
-
-	/**
-	* The protocol for the ICE
-	*/
-	protocol?: "tcp" | "udp";
-
-	/**
-	* The type of the local candidate
-	*/
-	candidateType?: string;
-
-	/**
-	* The priority of the local candidate
-	*/
-	priority?: number;
-
-	/**
-	* The url of the ICE server
-	*/
-	url?: string;
-
-	/**
-	* The relay protocol the local candidate uses
-	*/
-	relayProtocol?: "tcp" | "udp" | "tls";
-
-}
-
-/**
-* List of compound measurements related to outbound video tracks
-*/
-export type OutboundVideoTrack = {
-	/**
-	* The RTP SSRC field
-	*/
-	ssrc: number;
-
-	/**
-	* The id of the track
-	*/
-	trackId?: string;
-
-	/**
-	* The unique generated identifier of the peer connection the inbound audio track belongs to
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The id of the SFU stream this track is related to
-	*/
-	sfuStreamId?: string;
-
-	/**
-	* The total number of packets sent on the corresponded synchronization source
-	*/
-	packetsSent?: number;
-
-	/**
-	* The total number of bytes sent on the corresponded synchronization source
-	*/
-	bytesSent?: number;
-
-	/**
-	* The rid encoding parameter of the corresponded synchronization source
-	*/
-	rid?: string;
-
-	/**
-	* Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-	*/
-	headerBytesSent?: number;
-
-	/**
-	* Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
-	*/
-	retransmittedPacketsSent?: number;
-
-	/**
-	* Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
-	*/
-	retransmittedBytesSent?: number;
-
-	/**
-	* Reflects the current encoder target in bits per second.
-	*/
-	targetBitrate?: number;
-
-	/**
-	* The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
-	*/
-	totalEncodedBytesTarget?: number;
-
-	/**
-	* The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
-	*/
-	totalPacketSendDelay?: number;
-
-	/**
-	* The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-	*/
-	averageRtcpInterval?: number;
-
-	/**
-	* Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
-	*/
-	nackCount?: number;
-
-	/**
-	* Indicate the name of the encoder implementation library
-	*/
-	encoderImplementation?: string;
-
-	/**
-	* Indicates whether this RTP stream is configured to be sent or disabled
-	*/
-	active?: boolean;
-
-	/**
-	* The frame width in pixels of the frames targeted by the media encoder
-	*/
-	frameWidth?: number;
-
-	/**
-	* The frame height in pixels of the frames targeted by the media encoder
-	*/
-	frameHeight?: number;
-
-	/**
-	* The encoded number of frames in the last second on the corresponding media source
-	*/
-	framesPerSecond?: number;
-
-	/**
-	* The total number of frames sent on the corresponding RTP stream
-	*/
-	framesSent?: number;
-
-	/**
-	* The total number of huge frames (avgFrameSize * 2.5) on the corresponding RTP stream
-	*/
-	hugeFramesSent?: number;
-
-	/**
-	* The total number of frames encoded by the media source
-	*/
-	framesEncoded?: number;
-
-	/**
-	* The total number of keyframes encoded on the corresponding RTP stream
-	*/
-	keyFramesEncoded?: number;
-
-	/**
-	* The sum of the QP the media encoder provided on the corresponding RTP stream.
-	*/
-	qpSum?: number;
-
-	/**
-	* The total time in seconds spent in encoding media frames for the corresponding RTP stream.
-	*/
-	totalEncodeTime?: number;
-
-	/**
-	* Time elapsed in seconds when the RTC connection has not limited the quality
-	*/
-	qualityLimitationDurationNone?: number;
-
-	/**
-	* Time elapsed in seconds the RTC connection had a limitation because of CPU
-	*/
-	qualityLimitationDurationCPU?: number;
-
-	/**
-	* Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
-	*/
-	qualityLimitationDurationBandwidth?: number;
-
-	/**
-	* Time elapsed in seconds the RTC connection had a limitation because of Other factor
-	*/
-	qualityLimitationDurationOther?: number;
-
-	/**
-	* Indicate a reason for the quality limitation of the corresponded synchronization source
-	*/
-	qualityLimitationReason?: string;
-
-	/**
-	* The total number of resolution changes occurred on the corresponded RTP stream due to quality changes
-	*/
-	qualityLimitationResolutionChanges?: number;
-
-	/**
-	* The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
-	*/
-	firCount?: number;
-
-	/**
-	* The total number of Picture Loss Indication sent on the corresponded RTP stream
-	*/
-	pliCount?: number;
-
-	/**
-	* The total number of packets received on the corresponded synchronization source
-	*/
-	packetsReceived?: number;
-
-	/**
-	* The total number of bytes received on the corresponded synchronization source
-	*/
-	packetsLost?: number;
-
-	/**
-	* The corresponded synchronization source reported jitter
-	*/
-	jitter?: number;
-
-	/**
-	* RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
-	*/
-	roundTripTime?: number;
-
-	/**
-	* The sum of RTT measurements belongs to the corresponded synchronization source
-	*/
-	totalRoundTripTime?: number;
-
-	/**
-	* The receiver reported fractional lost belongs to the corresponded synchronization source
-	*/
-	fractionLost?: number;
-
-	/**
-	* The total number of calculated RR measurements received on this source
-	*/
-	roundTripTimeMeasurements?: number;
-
-	/**
-	* The total number of frames reported to be lost by the remote endpoint on the corresponded RTP stream
-	*/
-	framesDropped?: number;
-
-	/**
-	* True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
-	*/
-	relayedSource?: boolean;
-
-	/**
-	* The width, in pixels, of the last frame originating from the media source
-	*/
-	width?: number;
-
-	/**
-	* The height, in pixels, of the last frame originating from the media source
-	*/
-	height?: number;
-
-	/**
-	* The total number of frames originated from the media source
-	*/
-	frames?: number;
-
-}
-
-/**
-* List of compound measurements related to outbound audio tracks
-*/
-export type OutboundAudioTrack = {
-	/**
-	* The RTP SSRC field
-	*/
-	ssrc: number;
-
-	/**
-	* The id of the track
-	*/
-	trackId?: string;
-
-	/**
-	*  The unique generated identifier of the peer connection the inbound audio track belongs to
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The id of the SFU stream this track is related to
-	*/
-	sfuStreamId?: string;
-
-	/**
-	* The total number of packets sent on the corresponded synchronization source
-	*/
-	packetsSent?: number;
-
-	/**
-	* The total number of bytes sent on the corresponded synchronization source
-	*/
-	bytesSent?: number;
-
-	/**
-	* The rid encoding parameter of the corresponded synchronization source
-	*/
-	rid?: string;
-
-	/**
-	* Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-	*/
-	headerBytesSent?: number;
-
-	/**
-	* Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
-	*/
-	retransmittedPacketsSent?: number;
-
-	/**
-	* Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
-	*/
-	retransmittedBytesSent?: number;
-
-	/**
-	* Reflects the current encoder target in bits per second.
-	*/
-	targetBitrate?: number;
-
-	/**
-	* The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
-	*/
-	totalEncodedBytesTarget?: number;
-
-	/**
-	* The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
-	*/
-	totalPacketSendDelay?: number;
-
-	/**
-	* The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-	*/
-	averageRtcpInterval?: number;
-
-	/**
-	* Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
-	*/
-	nackCount?: number;
-
-	/**
-	* Indicate the name of the encoder implementation library
-	*/
-	encoderImplementation?: string;
-
-	/**
-	* Indicates whether this RTP stream is configured to be sent or disabled
-	*/
-	active?: boolean;
-
-	/**
-	* The total number of packets received on the corresponded synchronization source
-	*/
-	packetsReceived?: number;
-
-	/**
-	* The total number of bytes received on the corresponded synchronization source
-	*/
-	packetsLost?: number;
-
-	/**
-	* The corresponded synchronization source reported jitter
-	*/
-	jitter?: number;
-
-	/**
-	* RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
-	*/
-	roundTripTime?: number;
-
-	/**
-	* The sum of RTT measurements belongs to the corresponded synchronization source
-	*/
-	totalRoundTripTime?: number;
-
-	/**
-	* The receiver reported fractional lost belongs to the corresponded synchronization source
-	*/
-	fractionLost?: number;
-
-	/**
-	* The total number of calculated RR measurements received on this source
-	*/
-	roundTripTimeMeasurements?: number;
-
-	/**
-	* True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
-	*/
-	relayedSource?: boolean;
-
-	/**
-	* Represents the audio level reported by the media source
-	*/
-	audioLevel?: number;
-
-	/**
-	* Represents the energy level reported by the media source
-	*/
-	totalAudioEnergy?: number;
-
-	/**
-	* Represents the total duration of the audio samples the media source actually transconverted in seconds
-	*/
-	totalSamplesDuration?: number;
-
-	/**
-	* Represents the echo cancellation in decibels corresponded to the media source.
-	*/
-	echoReturnLoss?: number;
-
-	/**
-	* Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is caught from the media source.
-	*/
-	echoReturnLossEnhancement?: number;
-
-	/**
-	* The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
-	*/
-	droppedSamplesDuration?: number;
-
-	/**
-	* A counter increases every time a sample is dropped after a non-dropped sample
-	*/
-	droppedSamplesEvents?: number;
-
-	/**
-	* Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
-	*/
-	totalCaptureDelay?: number;
-
-	/**
-	* The total number of captured samples reaching the audio source
-	*/
-	totalSamplesCaptured?: number;
-
-}
-
-/**
-* List of compound measurements related to inbound video tracks
-*/
-export type InboundVideoTrack = {
-	/**
-	* The RTP SSRC field
-	*/
-	ssrc: number;
-
-	/**
-	* The id of the track
-	*/
-	trackId?: string;
-
-	/**
-	* The unique generated identifier of the peer connection the inbound audio track belongs to
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The remote clientId the source outbound track belongs to
-	*/
-	remoteClientId?: string;
-
-	/**
-	* The id of the SFU stream this track is sinked from
-	*/
-	sfuStreamId?: string;
-
-	/**
-	* The id of the sink this track belongs to in the SFU
-	*/
-	sfuSinkId?: string;
-
-	/**
-	* The total number of packets received on the corresponded synchronization source
-	*/
-	packetsReceived?: number;
-
-	/**
-	* The total number of bytes received on the corresponded synchronization source
-	*/
-	packetsLost?: number;
-
-	/**
-	* The corresponded synchronization source reported jitter
-	*/
-	jitter?: number;
-
-	/**
-	* The number of frames dropped prior to decode or missing chunks
-	*/
-	framesDropped?: number;
-
-	/**
-	* Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
-	*/
-	lastPacketReceivedTimestamp?: number;
-
-	/**
-	* Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
-	*/
-	headerBytesReceived?: number;
-
-	/**
-	* The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* Total number of FEC packets received over the corresponding synchronization source (ssrc)
-	*/
-	fecPacketsReceived?: number;
-
-	/**
-	* Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-	*/
-	fecPacketsDiscarded?: number;
-
-	/**
-	* Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-	*/
-	bytesReceived?: number;
-
-	/**
-	* Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
-	*/
-	nackCount?: number;
-
-	/**
-	* The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
-	*/
-	totalProcessingDelay?: number;
-
-	/**
-	* The estimated playout time of the corresponded synchronization source
-	*/
-	estimatedPlayoutTimestamp?: number;
-
-	/**
-	* The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
-	*/
-	jitterBufferDelay?: number;
-
-	/**
-	* This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
-	*/
-	jitterBufferTargetDelay?: number;
-
-	/**
-	* The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
-	*/
-	jitterBufferEmittedCount?: number;
-
-	/**
-	* This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
-	*/
-	jitterBufferMinimumDelay?: number;
-
-	/**
-	* Indicate the name of the decoder implementation library
-	*/
-	decoderImplementation?: string;
-
-	/**
-	* The total number of frames decoded on the corresponded RTP stream
-	*/
-	framesDecoded?: number;
-
-	/**
-	* The total number of keyframes decoded on the corresponding RTP stream
-	*/
-	keyFramesDecoded?: number;
-
-	/**
-	* The width of the frame of the video sent by the remote source on the corresponding RTP stream
-	*/
-	frameWidth?: number;
-
-	/**
-	* The height of the frame of the video sent by the remote source on the corresponding RTP stream
-	*/
-	frameHeight?: number;
-
-	/**
-	* The frame rate of the video sent by the remote source on the corresponding RTP stream
-	*/
-	framesPerSecond?: number;
-
-	/**
-	* The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponding RTP stream
-	*/
-	qpSum?: number;
-
-	/**
-	* The total time spent on decoding video on the corresponding RTP stream
-	*/
-	totalDecodeTime?: number;
-
-	/**
-	* The total interframe delay on the corresponding RTP stream
-	*/
-	totalInterFrameDelay?: number;
-
-	/**
-	* The total squared interframe delay on the corresponding synchronization source (ssrc). Useful for variance calculation for interframe delays
-	*/
-	totalSquaredInterFrameDelay?: number;
-
-	/**
-	* The total number of Full Intra Request (FIR) packets sent from this endpoint to the source on the corresponding RTP stream
-	*/
-	firCount?: number;
-
-	/**
-	* The total number of Picture Loss Indication (PLI) packets sent on the corresponding RTP stream
-	*/
-	pliCount?: number;
-
-	/**
-	* The total number of frames received on the corresponding RTP stream
-	*/
-	framesReceived?: number;
-
-	/**
-	* Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
-	*/
-	packetsSent?: number;
-
-	/**
-	* Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
-	*/
-	bytesSent?: number;
-
-	/**
-	* The timestamp corresponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
-	*/
-	remoteTimestamp?: number;
-
-	/**
-	* The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
-	*/
-	reportsSent?: number;
-
-	/**
-	* Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
-	*/
-	roundTripTime?: number;
-
-	/**
-	* Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
-	*/
-	totalRoundTripTime?: number;
-
-	/**
-	* Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
-	*/
-	roundTripTimeMeasurements?: number;
-
-}
-
-/**
-* List of compound measurements related to inbound audio tracks
-*/
-export type InboundAudioTrack = {
-	/**
-	* The RTP SSRC field
-	*/
-	ssrc: number;
-
-	/**
-	* The ID of the track
-	*/
-	trackId?: string;
-
-	/**
-	* The unique generated identifier of the peer connection the inbound audio track belongs to
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The remote client ID the source outbound track belongs to
-	*/
-	remoteClientId?: string;
-
-	/**
-	* The ID of the SFU stream this track is synced from
-	*/
-	sfuStreamId?: string;
-
-	/**
-	* The ID of the sink this track belongs to in the SFU
-	*/
-	sfuSinkId?: string;
-
-	/**
-	* The total number of packets received on the corresponding synchronization source
-	*/
-	packetsReceived?: number;
-
-	/**
-	* The total number of bytes received on the corresponding synchronization source
-	*/
-	packetsLost?: number;
-
-	/**
-	* The corresponding synchronization source reported jitter
-	*/
-	jitter?: number;
-
-	/**
-	* Represents the timestamp at which the last packet was received on the corresponding synchronization source (ssrc)
-	*/
-	lastPacketReceivedTimestamp?: number;
-
-	/**
-	* Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
-	*/
-	headerBytesReceived?: number;
-
-	/**
-	* The total number of packets that missed the playout point and were therefore discarded by the jitter buffer
-	*/
-	packetsDiscarded?: number;
-
-	/**
-	* Total number of FEC packets received over the corresponding synchronization source (ssrc)
-	*/
-	fecPacketsReceived?: number;
-
-	/**
-	* Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrival; 2) the target RTP packet has already been repaired.
-	*/
-	fecPacketsDiscarded?: number;
-
-	/**
-	* Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrival; 2) the target RTP packet has already been repaired.
-	*/
-	bytesReceived?: number;
-
-	/**
-	* Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponding synchronization source (ssrc)
-	*/
-	nackCount?: number;
-
-	/**
-	* The total processing delay in seconds spent on buffering RTP packets from receipt until packets are decoded
-	*/
-	totalProcessingDelay?: number;
-
-	/**
-	* The estimated playout time of the corresponding synchronization source
-	*/
-	estimatedPlayoutTimestamp?: number;
-
-	/**
-	* The total time of RTP packets spent in the jitter buffer waiting for frame completion due to network uncertainty.
-	*/
-	jitterBufferDelay?: number;
-
-	/**
-	* This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer.
-	*/
-	jitterBufferTargetDelay?: number;
-
-	/**
-	* The total number of audio samples or video frames that have come out of the jitter buffer on the corresponding synchronization source (ssrc)
-	*/
-	jitterBufferEmittedCount?: number;
-
-	/**
-	* This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
-	*/
-	jitterBufferMinimumDelay?: number;
-
-	/**
-	* The total number of audio samples received on the corresponded RTP stream
-	*/
-	totalSamplesReceived?: number;
-
-	/**
-	* The total number of samples decoded by the media decoder from the corresponded RTP stream
-	*/
-	concealedSamples?: number;
-
-	/**
-	* The total number of samples concealed from the corresponded RTP stream
-	*/
-	silentConcealedSamples?: number;
-
-	/**
-	* The total number of concealed event emitted to the media codec by the corresponded jitterbuffer
-	*/
-	concealmentEvents?: number;
-
-	/**
-	* The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay)
-	*/
-	insertedSamplesForDeceleration?: number;
-
-	/**
-	* The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
-	*/
-	removedSamplesForAcceleration?: number;
-
-	/**
-	* The current audio level
-	*/
-	audioLevel?: number;
-
-	/**
-	* Represents the energy level reported by the media source
-	*/
-	totalAudioEnergy?: number;
-
-	/**
-	* Represents the total duration of the audio samples the media source actually transconverted in seconds
-	*/
-	totalSamplesDuration?: number;
-
-	/**
-	* Indicate the name of the decoder implementation library
-	*/
-	decoderImplementation?: string;
-
-	/**
-	* Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
-	*/
-	packetsSent?: number;
-
-	/**
-	* Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
-	*/
-	bytesSent?: number;
-
-	/**
-	* The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
-	*/
-	remoteTimestamp?: number;
-
-	/**
-	* The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
-	*/
-	reportsSent?: number;
-
-	/**
-	* Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
-	*/
-	roundTripTime?: number;
-
-	/**
-	*  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
-	*/
-	totalRoundTripTime?: number;
-
-	/**
-	* Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
-	*/
-	roundTripTimeMeasurements?: number;
-
-	/**
-	* This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
-	*/
-	synthesizedSamplesDuration?: number;
-
-	/**
-	* The number of synthesized samples events.
-	*/
-	synthesizedSamplesEvents?: number;
-
-	/**
-	*  The playout delay includes the delay from being emitted to the actual time of playout on the device
-	*/
-	totalPlayoutDelay?: number;
-
-	/**
-	* When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
-	*/
-	totalSamplesCount?: number;
-
-}
-
-/**
-* List of certificates the client provided
-*/
-export type Certificate = {
-	/**
-	* The fingerprint of the certificate.
-	*/
-	fingerprint?: string;
-
-	/**
-	* The hash function used to generate the fingerprint.
-	*/
-	fingerprintAlgorithm?: string;
-
-	/**
-	* The DER encoded base-64 representation of the certificate.
-	*/
-	base64Certificate?: string;
-
-	/**
-	* The ID of the next certificate in the certificate chain
-	*/
-	issuerCertificateId?: string;
-
-}
-
-/**
-* List of codec the client has
-*/
-export type MediaCodecStats = {
-	/**
-	* Payload type used in the RTP encoding/decoding process.
-	*/
-	payloadType?: string;
-
-	/**
-	* Indicates the role of the codec (encode or decode)
-	*/
-	codecType?: "encode" | "decode";
-
-	/**
-	* The MIME type of the media, e.g., audio/opus.
-	*/
-	mimeType?: string;
-
-	/**
-	* The clock rate used in RTP transport to generate the timestamp for the carried frames
-	*/
-	clockRate?: number;
-
-	/**
-	* Audio Only. Represents the number of channels an audio media source has. Only interesting if stereo is presented
-	*/
-	channels?: number;
-
-	/**
-	* The SDP line determines the codec
-	*/
-	sdpFmtpLine?: string;
-
-}
-
-/**
-* WebRTC App provided information related to the operation system the client uses.
-*/
-export type MediaSourceStat = {
-	/**
-	* The unique identifier of the corresponding media track
-	*/
-	trackIdentifier?: string;
-
-	/**
-	* The type of the media the MediaSource produces.
-	*/
-	kind?: "audio" | "video";
-
-	/**
-	* Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.
-	*/
-	relayedSource?: boolean;
-
-	/**
-	* The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure level from 0 dBov.
-	*/
-	audioLevel?: number;
-
-	/**
-	* The audio energy of the media source. For calculation see www.w3.org/TR/webrtc-stats/#dom-rtcaudiosourcestats-totalaudioenergy
-	*/
-	totalAudioEnergy?: number;
-
-	/**
-	* The duration of the audio type media source
-	*/
-	totalSamplesDuration?: number;
-
-	/**
-	* if echo cancellation is applied on the media source, then this number represents the loss calculation defined in www.itu.int/rec/T-REC-G.168-201504-I/en
-	*/
-	echoReturnLoss?: number;
-
-	/**
-	* www.itu.int/rec/T-REC-G.168-201504-I/en
-	*/
-	echoReturnLossEnhancement?: number;
-
-	/**
-	* The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
-	*/
-	droppedSamplesDuration?: number;
-
-	/**
-	* A counter increases every time a sample is dropped after a non-dropped sample
-	*/
-	droppedSamplesEvents?: number;
-
-	/**
-	* Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
-	*/
-	totalCaptureDelay?: number;
-
-	/**
-	* The total number of captured samples reaching the audio source
-	*/
-	totalSamplesCaptured?: number;
-
-	/**
-	* The width, in pixels, of the last frame originating from the media source
-	*/
-	width?: number;
-
-	/**
-	* The height, in pixels, of the last frame originating from the media source
-	*/
-	height?: number;
-
-	/**
-	* The total number of frames originating from the media source
-	*/
-	frames?: number;
-
-	/**
-	* The number of frames originating from the media source in the last second
-	*/
-	framesPerSecond?: number;
-
-}
-
-/**
-* Candidate pair stats
-*/
-export type IceCandidatePair = {
-	/**
-	* The unique identifier of the peer connection
-	*/
-	candidatePairId: string;
-
-	/**
-	* The unique identifier of the peer connection
-	*/
-	peerConnectionId: string;
-
-	/**
-	* The label associated with the peer connection
-	*/
-	label?: string;
-
-	/**
-	* The identifier of the transport the ice candidate pair is negotiated on
-	*/
-	transportId?: string;
-
-	/**
-	* The unique identifier of the candidate the negotiated pair is selected on the local side
-	*/
-	localCandidateId?: string;
-
-	/**
-	* The unique identifier of the candidate the negotiated pair is selected on the remote side
-	*/
-	remoteCandidateId?: string;
-
-	/**
-	* The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponding transport
-	*/
-	state?: string;
-
-	/**
-	* Indicates if the ice candidate pair is nominated or not
-	*/
-	nominated?: boolean;
-
-	/**
-	* The total number of packets sent using the last selected candidate pair over the corresponding transport
-	*/
-	packetsSent?: number;
-
-	/**
-	* The total number of packets received using the last selected candidate pair over the corresponding transport
-	*/
-	packetsReceived?: number;
-
-	/**
-	* The total number of bytes sent using the last selected candidate pair over the corresponding transport
-	*/
-	bytesSent?: number;
-
-	/**
-	* The total number of bytes received using the last selected candidate pair over the corresponding transport
-	*/
-	bytesReceived?: number;
-
-	/**
-	* Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponding transport (UTC Epoch in ms)
-	*/
-	lastPacketSentTimestamp?: number;
-
-	/**
-	* Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponding transport (UTC Epoch in ms)
-	*/
-	lastPacketReceivedTimestamp?: number;
-
-	/**
-	* Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponding transport
-	*/
-	totalRoundTripTime?: number;
-
-	/**
-	* Represents the last round trip time measurement in seconds based on STUN connectivity check over the corresponding transport
-	*/
-	currentRoundTripTime?: number;
-
-	/**
-	* The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponding transport
-	*/
-	availableOutgoingBitrate?: number;
-
-	/**
-	* The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponding transport
-	*/
-	availableIncomingBitrate?: number;
-
-	/**
-	* Represents the total number of connectivity check requests received on the selected candidate pair using the corresponding transport
-	*/
-	requestsReceived?: number;
-
-	/**
-	* Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponding transport
-	*/
-	requestsSent?: number;
-
-	/**
-	* Represents the total number of connectivity check responses received on the selected candidate pair using the corresponding transport
-	*/
-	responsesReceived?: number;
-
-	/**
-	* Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponding transport
-	*/
-	responsesSent?: number;
-
-	/**
-	* Represents the total number of consent requests sent on the selected candidate pair using the corresponding transport
-	*/
-	consentRequestsSent?: number;
-
-	/**
-	* Total number of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponding transport
-	*/
-	packetsDiscardedOnSend?: number;
-
-	/**
-	* Total number of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponding transport
-	*/
-	bytesDiscardedOnSend?: number;
-
-}
-
-/**
-* Transport stats of Peer Connection
-*/
-export type PeerConnectionTransport = {
-	/**
-	* The identifier of the transport the ICE candidate pair is negotiated on
-	*/
-	transportId: string;
-
-	/**
-	* The unique identifier of the peer connection
-	*/
-	peerConnectionId: string;
-
-	/**
-	* The label associated with the peer connection
-	*/
-	label?: string;
-
-	/**
-	* Represents the total number of packets sent on the corresponding transport
-	*/
-	packetsSent?: number;
-
-	/**
-	* Represents the total number of packets received on the corresponding transport
-	*/
-	packetsReceived?: number;
-
-	/**
-	* Represents the total amount of bytes sent on the corresponding transport
-	*/
-	bytesSent?: number;
-
-	/**
-	* Represents the total amount of bytes received on the corresponding transport
-	*/
-	bytesReceived?: number;
-
-	/**
-	* Represents the current role of ICE under DTLS Transport
-	*/
-	iceRole?: string;
-
-	/**
-	* Represents the current local username fragment used in message validation procedures for ICE under DTLS Transport
-	*/
-	iceLocalUsernameFragment?: string;
-
-	/**
-	* Represents the current state of DTLS for the peer connection transport layer
-	*/
-	dtlsState?: string;
-
-	/**
-	* The identifier of the candidate pair the transport currently uses
-	*/
-	selectedCandidatePairId?: string;
-
-	/**
-	* Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
-	*/
-	iceState?: string;
-
-	/**
-	* If DTLS negotiated, it gives the ID of the local certificate
-	*/
-	localCertificateId?: string;
-
-	/**
-	* If DTLS negotiated, it gives the ID of the remote certificate
-	*/
-	remoteCertificateId?: string;
-
-	/**
-	* Represents the version number of the TLS used in the corresponding transport
-	*/
-	tlsVersion?: string;
-
-	/**
-	* Represents the name of the DTLS cipher used in the corresponding transport
-	*/
-	dtlsCipher?: string;
-
-	/**
-	* The role this host plays in DTLS negotiations
-	*/
-	dtlsRole?: "client" | "server" | "unknown";
-
-	/**
-	* Represents the name of the SRTP cipher used in the corresponding transport
-	*/
-	srtpCipher?: string;
-
-	/**
-	* Represents the name of the IANA TLS Supported Groups used in the corresponding transport
-	*/
-	tlsGroup?: string;
-
-	/**
-	* The total number of candidate pair changes over the peer connection
-	*/
-	selectedCandidatePairChanges?: number;
-
-}
-
-/**
-* Measurements about the data channels currently available on peer connections
-*/
-export type DataChannel = {
-	/**
-	* The id of the peer connection the data channel is assigned to
-	*/
-	peerConnectionId: string;
-
-	/**
-	* The id of the data channel assigned by the peer connection when it is opened
-	*/
-	dataChannelIdentifier?: number;
-
-	/**
-	* The label of the data channel
-	*/
-	label?: string;
-
-	/**
-	* The protocol the data channel utilizes
-	*/
-	protocol?: string;
-
-	/**
-	* The state of the data channel
-	*/
-	state?: string;
-
-	/**
-	* The total number of messages sent on the data channel
-	*/
-	messageSent?: number;
-
-	/**
-	* The total number of bytes sent on the data channel
-	*/
-	bytesSent?: number;
-
-	/**
-	* The total number of messages received on the data channel
-	*/
-	messageReceived?: number;
-
-	/**
-	* The total number of bytes received on the data channel
-	*/
-	bytesReceived?: number;
-
-}
-
-/**
-* User provided custom observer events
-*/
-export type CustomObserverEvent = {
-	/**
-	* the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
-	*/
-	name: string;
-
-	/**
-	* The identifier of the media track the event is related to
-	*/
-	mediaTrackId?: string;
-
-	/**
-	* the human readable message of the event
-	*/
-	message?: string;
-
-	/**
-	* Additional attachment relevant for the event
-	*/
-	attachments?: string;
-
-	/**
-	* The EPOCH timestamp the event is generated
-	*/
-	timestamp?: number;
-
-}
-
-/**
-* User provided custom call events
-*/
-export type CustomCallEvent = {
-	/**
-	* the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
-	*/
-	name: string;
-
-	/**
-	* the value of the event
-	*/
-	value?: string;
-
-	/**
-	* The unique identifier of the peer connection
-	*/
-	peerConnectionId?: string;
-
-	/**
-	* The identifier of the media track the event is related to
-	*/
-	mediaTrackId?: string;
-
-	/**
-	* the human readable message of the event
-	*/
-	message?: string;
-
-	/**
-	* Additional attachment relevant for the event
-	*/
-	attachments?: string;
-
-	/**
-	* The EPOCH timestamp the event is generated
-	*/
-	timestamp?: number;
-
-}
+export const schemaVersion = "3.0.0";
 
 /**
 * The WebRTC app provided custom stats payload
@@ -2417,102 +13,1608 @@ export type ExtensionStat = {
 	/**
 	* The payload of the extension stats the custom app provides
 	*/
-	payload: string;
+	payload?: string;
 
 }
 
 /**
-* The WebRTC app provided list of the media devices the client has.
+* A list of additional client events.
 */
-export type MediaDevice = {
+export type ClientMetaData = {
 	/**
-	* the provided id of the media input / output
+	* The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
 	*/
-	id?: string;
+	type: string;
 
 	/**
-	* The media kind of the media device
+	* The value associated with the event, if applicable.
 	*/
-	kind?: "videoinput" | "audioinput" | "audiooutput";
+	payload?: string;
 
 	/**
-	* The name of the device
+	* The unique identifier of the peer connection for which the event was generated.
+	*/
+	peerConnectionId?: string;
+
+	/**
+	* The identifier of the media track related to the event, if applicable.
+	*/
+	trackId?: string;
+
+	/**
+	* The SSRC (Synchronization Source) identifier associated with the event, if applicable.
+	*/
+	ssrc?: number;
+
+	/**
+	* The timestamp in epoch format when the event was generated.
+	*/
+	timestamp?: number;
+
+}
+
+/**
+* A list of client issues.
+*/
+export type ClientIssue = {
+	/**
+	* The name of the issue
+	*/
+	type: string;
+
+	/**
+	* The value associated with the event, if applicable.
+	*/
+	payload?: string;
+
+	/**
+	* The timestamp in epoch format when the event was generated.
+	*/
+	timestamp?: number;
+
+}
+
+/**
+* A list of client events.
+*/
+export type ClientEvent = {
+	/**
+	* The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
+	*/
+	type: string;
+
+	/**
+	* The value associated with the event, if applicable.
+	*/
+	payload?: string;
+
+	/**
+	* The timestamp in epoch format when the event was generated.
+	*/
+	timestamp?: number;
+
+}
+
+/**
+* Certificate Stats
+*/
+export type CertificateStats = {
+	/**
+	* The timestamp of the stat.
+	*/
+	timestamp: number;
+
+	/**
+	* A unique identifier for the stat.
+	*/
+	id: string;
+
+	/**
+	* The fingerprint of the certificate.
+	*/
+	fingerprint?: string;
+
+	/**
+	* The algorithm used for the fingerprint (e.g., 'SHA-256').
+	*/
+	fingerprintAlgorithm?: string;
+
+	/**
+	* The certificate encoded in base64 format.
+	*/
+	base64Certificate?: string;
+
+	/**
+	* The certificate ID of the issuer.
+	*/
+	issuerCertificateId?: string;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* ICE Candidate Pair Stats
+*/
+export type IceCandidatePairStats = {
+	/**
+	* The unique identifier for this RTCStats object.
+	*/
+	id: string;
+
+	/**
+	* The timestamp of when the stats were recorded, in milliseconds.
+	*/
+	timestamp: number;
+
+	/**
+	* The transport id of the connection this candidate pair belongs to.
+	*/
+	transportId?: string;
+
+	/**
+	* The ID of the local ICE candidate in this pair.
+	*/
+	localCandidateId?: string;
+
+	/**
+	* The ID of the remote ICE candidate in this pair.
+	*/
+	remoteCandidateId?: string;
+
+	state?: "new" | "in-progress" | "waiting" | "failed" | "succeeded" | "cancelled" | "inprogress";
+	/**
+	* Whether this candidate pair has been nominated.
+	*/
+	nominated?: boolean;
+
+	/**
+	* The number of packets sent using this candidate pair.
+	*/
+	packetsSent?: number;
+
+	/**
+	* The number of packets received using this candidate pair.
+	*/
+	packetsReceived?: number;
+
+	/**
+	* The total number of bytes sent using this candidate pair.
+	*/
+	bytesSent?: number;
+
+	/**
+	* The total number of bytes received using this candidate pair.
+	*/
+	bytesReceived?: number;
+
+	/**
+	* The timestamp of the last packet sent using this candidate pair.
+	*/
+	lastPacketSentTimestamp?: number;
+
+	/**
+	* The timestamp of the last packet received using this candidate pair.
+	*/
+	lastPacketReceivedTimestamp?: number;
+
+	/**
+	* The total round trip time (RTT) for this candidate pair in seconds.
+	*/
+	totalRoundTripTime?: number;
+
+	/**
+	* The current round trip time (RTT) for this candidate pair in seconds.
+	*/
+	currentRoundTripTime?: number;
+
+	/**
+	* The available outgoing bitrate (in bits per second) for this candidate pair.
+	*/
+	availableOutgoingBitrate?: number;
+
+	/**
+	* The available incoming bitrate (in bits per second) for this candidate pair.
+	*/
+	availableIncomingBitrate?: number;
+
+	/**
+	* The number of ICE connection requests received by this candidate pair.
+	*/
+	requestsReceived?: number;
+
+	/**
+	* The number of ICE connection requests sent by this candidate pair.
+	*/
+	requestsSent?: number;
+
+	/**
+	* The number of ICE connection responses received by this candidate pair.
+	*/
+	responsesReceived?: number;
+
+	/**
+	* The number of ICE connection responses sent by this candidate pair.
+	*/
+	responsesSent?: number;
+
+	/**
+	* The number of ICE connection consent requests sent by this candidate pair.
+	*/
+	consentRequestsSent?: number;
+
+	/**
+	* The number of packets discarded while attempting to send via this candidate pair.
+	*/
+	packetsDiscardedOnSend?: number;
+
+	/**
+	* The total number of bytes discarded while attempting to send via this candidate pair.
+	*/
+	bytesDiscardedOnSend?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* ICE Candidate Stats
+*/
+export type IceCandidateStats = {
+	/**
+	* The timestamp of the stat.
+	*/
+	timestamp: number;
+
+	/**
+	* A unique identifier for the stat.
+	*/
+	id: string;
+
+	/**
+	* The transport ID associated with the ICE candidate.
+	*/
+	transportId?: string;
+
+	/**
+	* The IP address of the ICE candidate.
+	*/
+	address?: string;
+
+	/**
+	* The port number of the ICE candidate.
+	*/
+	port?: number;
+
+	/**
+	* The transport protocol used by the candidate (e.g., 'udp', 'tcp').
+	*/
+	protocol?: string;
+
+	/**
+	* The type of the ICE candidate (e.g., 'host', 'srflx', 'relay').
+	*/
+	candidateType?: string;
+
+	/**
+	* The priority of the ICE candidate.
+	*/
+	priority?: number;
+
+	/**
+	* The URL of the ICE candidate.
+	*/
+	url?: string;
+
+	/**
+	* The protocol used for the relay (e.g., 'tcp', 'udp').
+	*/
+	relayProtocol?: string;
+
+	/**
+	* A string representing the foundation for the ICE candidate.
+	*/
+	foundation?: string;
+
+	/**
+	* The related address for the ICE candidate (if any).
+	*/
+	relatedAddress?: string;
+
+	/**
+	* The related port for the ICE candidate (if any).
+	*/
+	relatedPort?: number;
+
+	/**
+	* The username fragment for the ICE candidate.
+	*/
+	usernameFragment?: string;
+
+	/**
+	* The TCP type of the ICE candidate (e.g., 'active', 'passive').
+	*/
+	tcpType?: string;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* ICE Transport Stats
+*/
+export type IceTransportStats = {
+	/**
+	* The timestamp of the stat.
+	*/
+	timestamp: number;
+
+	/**
+	* A unique identifier for the stat.
+	*/
+	id: string;
+
+	/**
+	* The number of packets sent.
+	*/
+	packetsSent?: number;
+
+	/**
+	* The number of packets received.
+	*/
+	packetsReceived?: number;
+
+	/**
+	* The number of bytes sent.
+	*/
+	bytesSent?: number;
+
+	/**
+	* The number of bytes received.
+	*/
+	bytesReceived?: number;
+
+	/**
+	* The ICE role (e.g., 'controlling', 'controlled').
+	*/
+	iceRole?: string;
+
+	/**
+	* The local username fragment for ICE.
+	*/
+	iceLocalUsernameFragment?: string;
+
+	/**
+	* The DTLS transport state (e.g., 'new', 'connecting', 'connected').
+	*/
+	dtlsState?: string;
+
+	/**
+	* The ICE transport state (e.g., 'new', 'checking', 'connected').
+	*/
+	iceState?: string;
+
+	/**
+	* The ID of the selected ICE candidate pair.
+	*/
+	selectedCandidatePairId?: string;
+
+	/**
+	* The ID of the local certificate.
+	*/
+	localCertificateId?: string;
+
+	/**
+	* The ID of the remote certificate.
+	*/
+	remoteCertificateId?: string;
+
+	/**
+	* The TLS version used for encryption.
+	*/
+	tlsVersion?: string;
+
+	/**
+	* The DTLS cipher suite used.
+	*/
+	dtlsCipher?: string;
+
+	/**
+	* The role in the DTLS handshake (e.g., 'client', 'server').
+	*/
+	dtlsRole?: string;
+
+	/**
+	* The SRTP cipher used for encryption.
+	*/
+	srtpCipher?: string;
+
+	/**
+	* The number of changes to the selected ICE candidate pair.
+	*/
+	selectedCandidatePairChanges?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Data Channels Stats
+*/
+export type DataChannelStats = {
+	/**
+	* The timestamp of the stat.
+	*/
+	timestamp: number;
+
+	/**
+	* A unique identifier for the stat.
+	*/
+	id: string;
+
+	/**
+	* The label of the data channel.
 	*/
 	label?: string;
 
-}
-
-/**
-* WebRTC App provided information related to the operating system the client uses.
-*/
-export type OperationSystem = {
 	/**
-	* The name of the operating system (e.g., Linux) the WebRTC app uses
+	* The protocol of the data channel.
 	*/
-	name?: string;
+	protocol?: string;
 
 	/**
-	* The version of the operating system
+	* The identifier for the data channel.
 	*/
-	version?: string;
+	dataChannelIdentifier?: number;
 
 	/**
-	* The name of the version of the operating system
+	* The state of the data channel (e.g., 'open', 'closed').
 	*/
-	versionName?: string;
-
-}
-
-/**
-* WebRTC App provided information related to the browser the client uses.
-*/
-export type Browser = {
-	/**
-	* The name of the operating system (e.g., Linux) the WebRTC app uses
-	*/
-	name?: string;
+	state?: string;
 
 	/**
-	* The version of the operating system
+	* The number of messages sent on the data channel.
 	*/
-	version?: string;
-
-}
-
-/**
-* WebRTC App provided information related to the platform the client uses.
-*/
-export type Platform = {
-	/**
-	* The name of the platform
-	*/
-	type?: string;
+	messagesSent?: number;
 
 	/**
-	* The name of the vendor
+	* The number of bytes sent on the data channel.
 	*/
-	vendor?: string;
+	bytesSent?: number;
 
 	/**
-	* The name of the model
+	* The number of messages received on the data channel.
 	*/
-	model?: string;
+	messagesReceived?: number;
+
+	/**
+	* The number of bytes received on the data channel.
+	*/
+	bytesReceived?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
 
 }
 
 /**
-* WebRTC App provided information related to the engine the client uses.
+* PeerConnection Transport Stats
 */
-export type Engine = {
+export type PeerConnectionTransportStats = {
 	/**
-	* The name of the Engine
+	* The timestamp of the stat.
 	*/
-	name?: string;
+	timestamp: number;
 
 	/**
-	* The version of the engine
+	* A unique identifier for the stat.
 	*/
-	version?: string;
+	id: string;
+
+	/**
+	* The number of data channels opened.
+	*/
+	dataChannelsOpened?: number;
+
+	/**
+	* The number of data channels closed.
+	*/
+	dataChannelsClosed?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Media Playout Stats
+*/
+export type MediaPlayoutStats = {
+	/**
+	* The timestamp of the stat.
+	*/
+	timestamp: number;
+
+	/**
+	* A unique identifier for the stat.
+	*/
+	id: string;
+
+	/**
+	* The kind of media (audio/video).
+	*/
+	kind: string;
+
+	/**
+	* The duration of synthesized audio samples.
+	*/
+	synthesizedSamplesDuration?: number;
+
+	/**
+	* The number of synthesized audio samples events.
+	*/
+	synthesizedSamplesEvents?: number;
+
+	/**
+	* The total duration of all audio samples.
+	*/
+	totalSamplesDuration?: number;
+
+	/**
+	* The total delay experienced during audio playout.
+	*/
+	totalPlayoutDelay?: number;
+
+	/**
+	* The total count of audio samples.
+	*/
+	totalSamplesCount?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Audio Source Stats
+*/
+export type MediaSourceStats = {
+	/**
+	* The timestamp of the stat.
+	*/
+	timestamp: number;
+
+	/**
+	* A unique identifier for the stat.
+	*/
+	id: string;
+
+	/**
+	* The type of media ('audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* The identifier of the media track.
+	*/
+	trackIdentifier?: string;
+
+	/**
+	* The current audio level.
+	*/
+	audioLevel?: number;
+
+	/**
+	* The total audio energy.
+	*/
+	totalAudioEnergy?: number;
+
+	/**
+	* The total duration of audio samples.
+	*/
+	totalSamplesDuration?: number;
+
+	/**
+	* The echo return loss.
+	*/
+	echoReturnLoss?: number;
+
+	/**
+	* The enhancement of echo return loss.
+	*/
+	echoReturnLossEnhancement?: number;
+
+	/**
+	* The width of the video.
+	*/
+	width?: number;
+
+	/**
+	* The height of the video.
+	*/
+	height?: number;
+
+	/**
+	* The total number of frames.
+	*/
+	frames?: number;
+
+	/**
+	* The frames per second of the video.
+	*/
+	framesPerSecond?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Remote Outbound RTP Stats
+*/
+export type RemoteOutboundRtpStats = {
+	/**
+	* The timestamp for this stats object in DOMHighResTimeStamp format.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for this stats object.
+	*/
+	id: string;
+
+	/**
+	* The SSRC identifier of the RTP stream.
+	*/
+	ssrc: number;
+
+	/**
+	* The type of media ('audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* The ID of the transport used for this stream.
+	*/
+	transportId?: string;
+
+	/**
+	* The ID of the codec used for this stream.
+	*/
+	codecId?: string;
+
+	/**
+	* The total number of packets sent on this stream.
+	*/
+	packetsSent?: number;
+
+	/**
+	* The total number of bytes sent on this stream.
+	*/
+	bytesSent?: number;
+
+	/**
+	* The ID of the local object corresponding to this stream.
+	*/
+	localId?: string;
+
+	/**
+	* The remote timestamp for this stats object in DOMHighResTimeStamp format.
+	*/
+	remoteTimestamp?: number;
+
+	/**
+	* The total number of reports sent on this stream.
+	*/
+	reportsSent?: number;
+
+	/**
+	* The current estimated round-trip time for this stream in seconds.
+	*/
+	roundTripTime?: number;
+
+	/**
+	* The total round-trip time for this stream in seconds.
+	*/
+	totalRoundTripTime?: number;
+
+	/**
+	* The total number of round-trip time measurements for this stream.
+	*/
+	roundTripTimeMeasurements?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* The duration of quality limitation reasons categorized by type.
+*/
+export type QualityLimitationDurations = {
+	/**
+	* Duration of no quality limitation in seconds.
+	*/
+	none: number;
+
+	/**
+	* Duration of CPU-based quality limitation in seconds.
+	*/
+	cpu: number;
+
+	/**
+	* Duration of bandwidth-based quality limitation in seconds.
+	*/
+	bandwidth: number;
+
+	/**
+	* Duration of other quality limitation reasons in seconds.
+	*/
+	other: number;
+
+}
+
+/**
+* Outbound RTP Stats
+*/
+export type OutboundRtpStats = {
+	/**
+	* The timestamp for this stats object in DOMHighResTimeStamp format.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for this stats object.
+	*/
+	id: string;
+
+	/**
+	* The SSRC identifier of the RTP stream.
+	*/
+	ssrc: number;
+
+	/**
+	* The type of media ('audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* The ID of the transport used for this stream.
+	*/
+	transportId?: string;
+
+	/**
+	* The ID of the codec used for this stream.
+	*/
+	codecId?: string;
+
+	/**
+	* The total number of packets sent on this stream.
+	*/
+	packetsSent?: number;
+
+	/**
+	* The total number of bytes sent on this stream.
+	*/
+	bytesSent?: number;
+
+	/**
+	* The media ID associated with this RTP stream.
+	*/
+	mid?: string;
+
+	/**
+	* The ID of the media source associated with this stream.
+	*/
+	mediaSourceId?: string;
+
+	/**
+	* The ID of the remote object corresponding to this stream.
+	*/
+	remoteId?: string;
+
+	/**
+	* The RID value of the RTP stream.
+	*/
+	rid?: string;
+
+	/**
+	* The total number of header bytes sent on this stream.
+	*/
+	headerBytesSent?: number;
+
+	/**
+	* The number of retransmitted packets sent on this stream.
+	*/
+	retransmittedPacketsSent?: number;
+
+	/**
+	* The number of retransmitted bytes sent on this stream.
+	*/
+	retransmittedBytesSent?: number;
+
+	/**
+	* The SSRC for the RTX stream, if applicable.
+	*/
+	rtxSsrc?: number;
+
+	/**
+	* The target bitrate for this RTP stream in bits per second.
+	*/
+	targetBitrate?: number;
+
+	/**
+	* The total target encoded bytes for this stream.
+	*/
+	totalEncodedBytesTarget?: number;
+
+	/**
+	* The width of the frames sent in pixels.
+	*/
+	frameWidth?: number;
+
+	/**
+	* The height of the frames sent in pixels.
+	*/
+	frameHeight?: number;
+
+	/**
+	* The number of frames sent per second.
+	*/
+	framesPerSecond?: number;
+
+	/**
+	* The total number of frames sent on this stream.
+	*/
+	framesSent?: number;
+
+	/**
+	* The total number of huge frames sent on this stream.
+	*/
+	hugeFramesSent?: number;
+
+	/**
+	* The total number of frames encoded on this stream.
+	*/
+	framesEncoded?: number;
+
+	/**
+	* The total number of key frames encoded on this stream.
+	*/
+	keyFramesEncoded?: number;
+
+	/**
+	* The sum of QP values for all frames encoded on this stream.
+	*/
+	qpSum?: number;
+
+	/**
+	* The total time spent encoding frames on this stream in seconds.
+	*/
+	totalEncodeTime?: number;
+
+	/**
+	* The total delay for packets sent on this stream in seconds.
+	*/
+	totalPacketSendDelay?: number;
+
+	/**
+	* The reason for any quality limitation on this stream.
+	*/
+	qualityLimitationReason?: string;
+
+	/**
+	* The number of resolution changes due to quality limitations.
+	*/
+	qualityLimitationResolutionChanges?: number;
+
+	/**
+	* The total number of NACK packets sent on this stream.
+	*/
+	nackCount?: number;
+
+	/**
+	* The total number of FIR packets sent on this stream.
+	*/
+	firCount?: number;
+
+	/**
+	* The total number of PLI packets sent on this stream.
+	*/
+	pliCount?: number;
+
+	/**
+	* The implementation of the encoder used for this stream.
+	*/
+	encoderImplementation?: string;
+
+	/**
+	* Indicates whether the encoder is power-efficient.
+	*/
+	powerEfficientEncoder?: boolean;
+
+	/**
+	* Indicates whether this stream is actively sending data.
+	*/
+	active?: boolean;
+
+	/**
+	* The scalability mode of the encoder used for this stream.
+	*/
+	scalabilityMode?: string;
+
+	/**
+	* The duration of quality limitation reasons categorized by type.
+	*/
+	qualityLimitationDurations?: QualityLimitationDurations;
+
+	/**
+	* Additional information attached to this stats.
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Remote Inbound RTP Stats
+*/
+export type RemoteInboundRtpStats = {
+	/**
+	* The timestamp for this stats object in DOMHighResTimeStamp format.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for this stats object.
+	*/
+	id: string;
+
+	/**
+	* The SSRC identifier of the RTP stream.
+	*/
+	ssrc: number;
+
+	/**
+	* The type of media ('audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* The ID of the transport used for this stream.
+	*/
+	transportId?: string;
+
+	/**
+	* The ID of the codec used for this stream.
+	*/
+	codecId?: string;
+
+	/**
+	* The total number of packets received on this stream.
+	*/
+	packetsReceived?: number;
+
+	/**
+	* The total number of packets lost on this stream.
+	*/
+	packetsLost?: number;
+
+	/**
+	* The jitter value for this stream in seconds.
+	*/
+	jitter?: number;
+
+	/**
+	* The ID of the local object corresponding to this remote stream.
+	*/
+	localId?: string;
+
+	/**
+	* The most recent RTT measurement for this stream in seconds.
+	*/
+	roundTripTime?: number;
+
+	/**
+	* The cumulative RTT for all packets on this stream in seconds.
+	*/
+	totalRoundTripTime?: number;
+
+	/**
+	* The fraction of packets lost on this stream, calculated over a time interval.
+	*/
+	fractionLost?: number;
+
+	/**
+	* The total number of RTT measurements for this stream.
+	*/
+	roundTripTimeMeasurements?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Inbound RTP Stats
+*/
+export type InboundRtpStats = {
+	/**
+	* The time the stats were collected, in high-resolution time.
+	*/
+	timestamp: number;
+
+	/**
+	* Unique identifier of the stats object.
+	*/
+	id: string;
+
+	/**
+	* Synchronization source identifier of the RTP stream.
+	*/
+	ssrc: number;
+
+	/**
+	* Kind of the media (e.g., 'audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* Identifier for the media track associated with the RTP stream.
+	*/
+	trackIdentifier: string;
+
+	/**
+	* ID of the transport associated with the RTP stream.
+	*/
+	transportId?: string;
+
+	/**
+	* ID of the codec used for the RTP stream.
+	*/
+	codecId?: string;
+
+	/**
+	* Number of packets received on the RTP stream.
+	*/
+	packetsReceived?: number;
+
+	/**
+	* Number of packets lost on the RTP stream.
+	*/
+	packetsLost?: number;
+
+	/**
+	* Jitter of the RTP stream in seconds.
+	*/
+	jitter?: number;
+
+	/**
+	* The media stream identification tag from the SDP media section.
+	*/
+	mid?: string;
+
+	/**
+	* Remote stats object ID associated with the RTP stream.
+	*/
+	remoteId?: string;
+
+	/**
+	* Number of frames decoded.
+	*/
+	framesDecoded?: number;
+
+	/**
+	* Number of keyframes decoded.
+	*/
+	keyFramesDecoded?: number;
+
+	/**
+	* Number of frames rendered.
+	*/
+	framesRendered?: number;
+
+	/**
+	* Number of frames dropped.
+	*/
+	framesDropped?: number;
+
+	/**
+	* Width of the decoded video frames.
+	*/
+	frameWidth?: number;
+
+	/**
+	* Height of the decoded video frames.
+	*/
+	frameHeight?: number;
+
+	/**
+	* Frame rate in frames per second.
+	*/
+	framesPerSecond?: number;
+
+	/**
+	* Sum of the Quantization Parameter values for decoded frames.
+	*/
+	qpSum?: number;
+
+	/**
+	* Total time spent decoding in seconds.
+	*/
+	totalDecodeTime?: number;
+
+	/**
+	* Sum of inter-frame delays in seconds.
+	*/
+	totalInterFrameDelay?: number;
+
+	/**
+	* Sum of squared inter-frame delays in seconds.
+	*/
+	totalSquaredInterFrameDelay?: number;
+
+	/**
+	* Number of times playback was paused.
+	*/
+	pauseCount?: number;
+
+	/**
+	* Total duration of pauses in seconds.
+	*/
+	totalPausesDuration?: number;
+
+	/**
+	* Number of times playback was frozen.
+	*/
+	freezeCount?: number;
+
+	/**
+	* Total duration of freezes in seconds.
+	*/
+	totalFreezesDuration?: number;
+
+	/**
+	* Timestamp of the last packet received.
+	*/
+	lastPacketReceivedTimestamp?: number;
+
+	/**
+	* Total header bytes received.
+	*/
+	headerBytesReceived?: number;
+
+	/**
+	* Total packets discarded.
+	*/
+	packetsDiscarded?: number;
+
+	/**
+	* Total bytes received from FEC.
+	*/
+	fecBytesReceived?: number;
+
+	/**
+	* Total packets received from FEC.
+	*/
+	fecPacketsReceived?: number;
+
+	/**
+	* Total FEC packets discarded.
+	*/
+	fecPacketsDiscarded?: number;
+
+	/**
+	* Total bytes received on the RTP stream.
+	*/
+	bytesReceived?: number;
+
+	/**
+	* Number of NACKs received.
+	*/
+	nackCount?: number;
+
+	/**
+	* Number of Full Intra Requests received.
+	*/
+	firCount?: number;
+
+	/**
+	* Number of Picture Loss Indications received.
+	*/
+	pliCount?: number;
+
+	/**
+	* Total processing delay in seconds.
+	*/
+	totalProcessingDelay?: number;
+
+	/**
+	* Estimated timestamp of playout.
+	*/
+	estimatedPlayoutTimestamp?: number;
+
+	/**
+	* Total jitter buffer delay in seconds.
+	*/
+	jitterBufferDelay?: number;
+
+	/**
+	* Target delay for the jitter buffer in seconds.
+	*/
+	jitterBufferTargetDelay?: number;
+
+	/**
+	* Number of packets emitted from the jitter buffer.
+	*/
+	jitterBufferEmittedCount?: number;
+
+	/**
+	* Minimum delay of the jitter buffer in seconds.
+	*/
+	jitterBufferMinimumDelay?: number;
+
+	/**
+	* Total audio samples received.
+	*/
+	totalSamplesReceived?: number;
+
+	/**
+	* Number of concealed audio samples.
+	*/
+	concealedSamples?: number;
+
+	/**
+	* Number of silent audio samples concealed.
+	*/
+	silentConcealedSamples?: number;
+
+	/**
+	* Number of audio concealment events.
+	*/
+	concealmentEvents?: number;
+
+	/**
+	* Number of audio samples inserted for deceleration.
+	*/
+	insertedSamplesForDeceleration?: number;
+
+	/**
+	* Number of audio samples removed for acceleration.
+	*/
+	removedSamplesForAcceleration?: number;
+
+	/**
+	* Audio level in the range [0.0, 1.0].
+	*/
+	audioLevel?: number;
+
+	/**
+	* Total audio energy in the stream.
+	*/
+	totalAudioEnergy?: number;
+
+	/**
+	* Total duration of all received audio samples in seconds.
+	*/
+	totalSamplesDuration?: number;
+
+	/**
+	* Total number of frames received.
+	*/
+	framesReceived?: number;
+
+	/**
+	* Decoder implementation used for decoding frames.
+	*/
+	decoderImplementation?: string;
+
+	/**
+	* Playout identifier for the RTP stream.
+	*/
+	playoutId?: string;
+
+	/**
+	* Indicates if the decoder is power-efficient.
+	*/
+	powerEfficientDecoder?: boolean;
+
+	/**
+	* Number of frames assembled from multiple packets.
+	*/
+	framesAssembledFromMultiplePackets?: number;
+
+	/**
+	* Total assembly time for frames in seconds.
+	*/
+	totalAssemblyTime?: number;
+
+	/**
+	* Number of retransmitted packets received.
+	*/
+	retransmittedPacketsReceived?: number;
+
+	/**
+	* Number of retransmitted bytes received.
+	*/
+	retransmittedBytesReceived?: number;
+
+	/**
+	* SSRC of the retransmission stream.
+	*/
+	rtxSsrc?: number;
+
+	/**
+	* SSRC of the FEC stream.
+	*/
+	fecSsrc?: number;
+
+	/**
+	* Total corruption probability of packets.
+	*/
+	totalCorruptionProbability?: number;
+
+	/**
+	* Total squared corruption probability of packets.
+	*/
+	totalSquaredCorruptionProbability?: number;
+
+	/**
+	* Number of corruption measurements.
+	*/
+	corruptionMeasurements?: number;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Codec items
+*/
+export type CodecStats = {
+	/**
+	* The timestamp when the stats were generated.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for the stats object.
+	*/
+	id: string;
+
+	/**
+	* The MIME type of the codec.
+	*/
+	mimeType: string;
+
+	/**
+	* The payload type of the codec.
+	*/
+	payloadType?: number;
+
+	/**
+	* The identifier of the transport associated with the codec.
+	*/
+	transportId?: string;
+
+	/**
+	* The clock rate of the codec in Hz.
+	*/
+	clockRate?: number;
+
+	/**
+	* The number of audio channels for the codec, if applicable.
+	*/
+	channels?: number;
+
+	/**
+	* The SDP format-specific parameters line for the codec.
+	*/
+	sdpFmtpLine?: string;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Outbound Track Stats items
+*/
+export type OutboundTrackSample = {
+	/**
+	* The timestamp when the stats were generated.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for the stats object.
+	*/
+	id: string;
+
+	/**
+	* Kind of the media (e.g., 'audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* Calculated score for track (details should be added to scoreReasons)
+	*/
+	score?: number;
+
+	/**
+	* Details for score calculation
+	*/
+	scoreReasons?: string;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* Inbound Track Stats items
+*/
+export type InboundTrackSample = {
+	/**
+	* The timestamp when the stats were generated.
+	*/
+	timestamp: number;
+
+	/**
+	* The unique identifier for the stats object.
+	*/
+	id: string;
+
+	/**
+	* Kind of the media (e.g., 'audio' or 'video').
+	*/
+	kind: string;
+
+	/**
+	* Calculated score for track (details should be added to scoreReasons)
+	*/
+	score?: number;
+
+	/**
+	* Details for score calculation
+	*/
+	scoreReasons?: string;
+
+	/**
+	* Additional information attached to this stats
+	*/
+	attachments?: Record<string, unknown>;
+
+}
+
+/**
+* A sample containing statistics and metrics for a WebRTC peer connection
+*/
+export type PeerConnectionSample = {
+	/**
+	* Unique identifier of the stats object.
+	*/
+	peerConnectionId: string;
+
+	/**
+	* Additional information attached to this sample
+	*/
+	attachments?: Record<string, unknown>;
+
+	/**
+	* Calculated score for peer connection (details should be added to scoreReasons)
+	*/
+	score?: number;
+
+	/**
+	* Details for score calculation
+	*/
+	scoreReasons?: string;
+
+	/**
+	* Inbound Track Stats items
+	*/
+	inboundTracks?: InboundTrackSample[];
+
+	/**
+	* Outbound Track Stats items
+	*/
+	outboundTracks?: OutboundTrackSample[];
+
+	/**
+	* Codec items
+	*/
+	codecs?: CodecStats[];
+
+	/**
+	* Inbound RTP Stats
+	*/
+	inboundRtps?: InboundRtpStats[];
+
+	/**
+	* Remote Inbound RTP Stats
+	*/
+	remoteInboundRtps?: RemoteInboundRtpStats[];
+
+	/**
+	* Outbound RTP Stats
+	*/
+	outboundRtps?: OutboundRtpStats[];
+
+	/**
+	* Remote Outbound RTP Stats
+	*/
+	remoteOutboundRtps?: RemoteOutboundRtpStats[];
+
+	/**
+	* Audio Source Stats
+	*/
+	mediaSources?: MediaSourceStats[];
+
+	/**
+	* Media Playout Stats
+	*/
+	mediaPlayouts?: MediaPlayoutStats[];
+
+	/**
+	* PeerConnection Transport Stats
+	*/
+	peerConnectionTransports?: PeerConnectionTransportStats[];
+
+	/**
+	* Data Channels Stats
+	*/
+	dataChannels?: DataChannelStats[];
+
+	/**
+	* ICE Transport Stats
+	*/
+	iceTransports?: IceTransportStats[];
+
+	/**
+	* ICE Candidate Stats
+	*/
+	iceCandidates?: IceCandidateStats[];
+
+	/**
+	* ICE Candidate Pair Stats
+	*/
+	iceCandidatePairs?: IceCandidatePairStats[];
+
+	/**
+	* Certificate Stats
+	*/
+	certificates?: CertificateStats[];
 
 }
 
@@ -2521,205 +1623,58 @@ export type Engine = {
 */
 export type ClientSample = {
 	/**
-	* Unique id of the client providing samples. Must be a valid UUID.
-	*/
-	clientId: string;
-
-	/**
 	* The timestamp the sample is created in GMT
 	*/
 	timestamp: number;
 
 	/**
-	* If provided, the server uses the given id to match clients in the same call. Must be a valid UUID.
+	* the unique identifier of the call or session
 	*/
 	callId?: string;
 
 	/**
-	* The sequence number a source assigns to the sample. Each time the source takes a sample at a client, this number should be monotonically incremented.
+	* Unique id of the client providing samples.
 	*/
-	sampleSeq?: number;
+	clientId?: string;
 
 	/**
-	* The WebRTC app configured room id the client joined for the call.
+	* Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
 	*/
-	roomId?: string;
+	attachments?: Record<string, unknown>;
 
 	/**
-	* The WebRTC app configured human-readable user id the client is joined.
+	* Calculated score for client (details should be added to scoreReasons)
 	*/
-	userId?: string;
+	score?: number;
 
 	/**
-	* WebRTC App provided information related to the engine the client uses.
+	* Details for score calculation
 	*/
-	engine?: Engine;
+	scoreReasons?: string;
 
 	/**
-	* WebRTC App provided information related to the platform the client uses.
+	* Samples taken PeerConnections
 	*/
-	platform?: Platform;
+	peerConnections?: PeerConnectionSample[];
 
 	/**
-	* WebRTC App provided information related to the browser the client uses.
+	* A list of client events.
 	*/
-	browser?: Browser;
+	clientEvents?: ClientEvent[];
 
 	/**
-	* WebRTC App provided information related to the operating system the client uses.
+	* A list of client issues.
 	*/
-	os?: OperationSystem;
+	clientIssues?: ClientIssue[];
 
 	/**
-	* The WebRTC app provided list of the media constraints the client has.
+	* A list of additional client events.
 	*/
-	mediaConstraints?: string[];
-
-	/**
-	* The WebRTC app provided list of the media devices the client has.
-	*/
-	mediaDevices?: MediaDevice[];
-
-	/**
-	* The WebRTC app provided list of user media errors the client has.
-	*/
-	userMediaErrors?: string[];
+	clientMetaItems?: ClientMetaData[];
 
 	/**
 	* The WebRTC app provided custom stats payload
 	*/
 	extensionStats?: ExtensionStat[];
-
-	/**
-	* User provided custom call events
-	*/
-	customCallEvents?: CustomCallEvent[];
-
-	/**
-	* User provided custom observer events
-	*/
-	customObserverEvents?: CustomObserverEvent[];
-
-	/**
-	* The WebRTC app provided list of ICE servers the client used.
-	*/
-	iceServers?: string[];
-
-	/**
-	* The local part of the Signal Description Protocol to establish connections
-	*/
-	localSDPs?: string[];
-
-	/**
-	* Measurements about the data channels currently available on peer connections
-	*/
-	dataChannels?: DataChannel[];
-
-	/**
-	* Transport stats of Peer Connection
-	*/
-	pcTransports?: PeerConnectionTransport[];
-
-	/**
-	* Candidate pair stats
-	*/
-	iceCandidatePairs?: IceCandidatePair[];
-
-	/**
-	* WebRTC App provided information related to the operation system the client uses.
-	*/
-	mediaSources?: MediaSourceStat[];
-
-	/**
-	* List of codec the client has
-	*/
-	codecs?: MediaCodecStats[];
-
-	/**
-	* List of certificates the client provided
-	*/
-	certificates?: Certificate[];
-
-	/**
-	* List of compound measurements related to inbound audio tracks
-	*/
-	inboundAudioTracks?: InboundAudioTrack[];
-
-	/**
-	* List of compound measurements related to inbound video tracks
-	*/
-	inboundVideoTracks?: InboundVideoTrack[];
-
-	/**
-	* List of compound measurements related to outbound audio tracks
-	*/
-	outboundAudioTracks?: OutboundAudioTrack[];
-
-	/**
-	* List of compound measurements related to outbound video tracks
-	*/
-	outboundVideoTracks?: OutboundVideoTrack[];
-
-	/**
-	* List of local ICE candidates
-	*/
-	iceLocalCandidates?: IceLocalCandidate[];
-
-	/**
-	* List of remote ICE candidates
-	*/
-	iceRemoteCandidates?: IceRemoteCandidate[];
-
-	/**
-	* The offset from GMT in hours
-	*/
-	timeZoneOffsetInHours?: number;
-
-	/**
-	* Special marker for the samples
-	*/
-	marker?: string;
-
-}
-
-/**
-* Additional control flags indicate various operation has to be performed
-*/
-export type Controls = {
-	/**
-	* Indicate that the server should close the connection
-	*/
-	close?: boolean;
-
-	/**
-	* Holds a new claim to process
-	*/
-	accessClaim?: string;
-
-}
-
-/**
-* Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.
-*/
-export type Samples = {
-	/**
-	* Additional control flags indicate various operation has to be performed
-	*/
-	controls?: Controls;
-
-	/**
-	* Samples taken from the client
-	*/
-	clientSamples?: ClientSample[];
-
-	/**
-	* Samples taken from an Sfu
-	*/
-	sfuSamples?: SfuSample[];
-
-	/**
-	* Samples taken from the TURN server
-	*/
-	turnSamples?: TurnSample[];
 
 }

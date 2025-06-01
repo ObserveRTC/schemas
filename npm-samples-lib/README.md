@@ -1,888 +1,855 @@
-ObserveRTC Schemas
+# @observertc/sample-schemas-js
+
+[![npm version](https://badge.fury.io/js/@observertc%2Fsample-schemas-js.svg)](https://badge.fury.io/js/@observertc%2Fsample-schemas-js)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+TypeScript/JavaScript type definitions and schemas for ObserveRTC WebRTC observability samples. This library provides comprehensive, type-safe interfaces for all WebRTC statistics, events, and metrics used in the ObserveRTC ecosystem.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Sample Types](#sample-types)
+- [Usage Examples](#usage-examples)
+- [Type Safety](#type-safety)
+- [WebRTC Statistics Coverage](#webrtc-statistics-coverage)
+- [Integration Patterns](#integration-patterns)
+- [API Reference](#api-reference)
+- [Migration Guide](#migration-guide)
+- [Contributing](#contributing)
+
+## Overview
+
+This library contains TypeScript type definitions for all ObserveRTC sample schemas, providing a standardized way to work with WebRTC observability data. It covers the complete WebRTC Statistics API specification and includes custom extensions for enhanced monitoring capabilities.
+
+## Features
+
+### 🎯 **Complete Type Safety**
+
+- Full TypeScript definitions for all WebRTC statistics
+- Comprehensive interfaces for client, SFU, and TURN samples
+- Type-safe field access with IntelliSense support
+
+### 📊 **Comprehensive Coverage**
+
+- **Client Samples** - End-user WebRTC statistics and events
+- **PeerConnection Samples** - Complete peer connection metrics
+- **SFU Samples** - Selective Forwarding Unit statistics
+- **TURN Samples** - TURN server metrics and allocations
+
+### 🔧 **Advanced Features**
+
+- **Quality Scoring** - Built-in score and scoreReasons fields
+- **Extensible Attachments** - Custom metadata support
+- **High-Resolution Timestamps** - Microsecond precision timing
+- **Nested Statistics** - RTP, ICE, codec, and transport metrics
+
+### 🚀 **Developer Experience**
+
+- Zero runtime dependencies
+- Tree-shakeable ES modules
+- CommonJS compatibility
+- Comprehensive JSDoc documentation
+
+## Installation
+
+```bash
+npm install @observertc/sample-schemas-js
+```
+
+### Peer Dependencies
+
+This library works seamlessly with the ObserveRTC encoder/decoder ecosystem:
+
+```bash
+# For encoding samples
+npm install @observertc/samples-encoder
+
+# For decoding samples
+npm install @observertc/samples-decoder
+```
+
+## Quick Start
+
+### Basic Usage
+
+```typescript
+import {
+  ClientSample,
+  PeerConnectionSample,
+  SfuSample,
+  TurnSample,
+} from "@observertc/sample-schemas-js";
+
+// Create a client sample
+const clientSample: ClientSample = {
+  timestamp: Date.now(),
+  clientId: "client-123",
+  callId: "call-456",
+  sampleSeq: 1,
+  // Add your peer connection samples
+  peerConnectionSamples: [],
+};
+
+// Create a peer connection sample
+const pcSample: PeerConnectionSample = {
+  peerConnectionId: "pc-789",
+  timestamp: Date.now(),
+  score: 0.85,
+  scoreReasons: "Good connection quality with minimal packet loss",
+  // Add nested statistics
+  inboundTracks: [],
+  outboundTracks: [],
+  inboundRtps: [],
+  outboundRtps: [],
+};
+```
+
+### Working with RTP Statistics
+
+```typescript
+import {
+  InboundRtpStats,
+  OutboundRtpStats,
+} from "@observertc/sample-schemas-js";
+
+// Analyze inbound RTP performance
+function analyzeInboundRtp(stats: InboundRtpStats) {
+  const packetLossRate =
+    stats.packetsLost && stats.packetsReceived
+      ? stats.packetsLost / (stats.packetsReceived + stats.packetsLost)
+      : 0;
+
+  const jitterMs = (stats.jitter || 0) * 1000;
+
+  return {
+    quality: packetLossRate < 0.02 ? "good" : "poor",
+    packetLossRate,
+    jitterMs,
+    kind: stats.kind,
+    ssrc: stats.ssrc,
+  };
+}
+
+// Monitor outbound quality limitations
+function checkQualityLimitations(stats: OutboundRtpStats) {
+  if (stats.qualityLimitationReason) {
+    console.warn(`Quality limited by: ${stats.qualityLimitationReason}`);
+
+    if (stats.qualityLimitationDurations) {
+      const durations = stats.qualityLimitationDurations;
+      console.log("Limitation durations:", {
+        bandwidth: durations.bandwidth,
+        cpu: durations.cpu,
+        other: durations.other,
+      });
+    }
+  }
+}
+```
+
+## Sample Types
+
+### Core Sample Types
+
+| Type                   | Description                                | Use Case                                   |
+| ---------------------- | ------------------------------------------ | ------------------------------------------ |
+| `ClientSample`         | Complete client-side statistics collection | End-user monitoring, client-side analytics |
+| `PeerConnectionSample` | WebRTC peer connection metrics             | Connection quality assessment, debugging   |
+| `SfuSample`            | SFU (Selective Forwarding Unit) statistics | Server-side monitoring, capacity planning  |
+| `TurnSample`           | TURN server metrics and allocations        | TURN server monitoring, relay analysis     |
+
+### Nested Statistics Types
+
+#### RTP Statistics
+
+```typescript
+interface InboundRtpStats {
+  // Core identification
+  timestamp: number;
+  id: string;
+  ssrc: number;
+  kind: string;
+
+  // Quality metrics
+  packetsReceived?: number;
+  packetsLost?: number;
+  jitter?: number;
+
+  // Video-specific
+  framesDecoded?: number;
+  framesDropped?: number;
+  frameWidth?: number;
+  frameHeight?: number;
+
+  // Audio-specific
+  audioLevel?: number;
+  totalAudioEnergy?: number;
+  concealedSamples?: number;
+
+  // Advanced metrics
+  totalProcessingDelay?: number;
+  jitterBufferDelay?: number;
+  // ... many more fields
+}
+```
+
+#### ICE Statistics
+
+```typescript
+interface IceCandidatePairStats {
+  id: string;
+  timestamp: number;
+  localCandidateId?: string;
+  remoteCandidateId?: string;
+  state?:
+    | "new"
+    | "inProgress"
+    | "waiting"
+    | "failed"
+    | "succeeded"
+    | "cancelled";
+  nominated?: boolean;
+
+  // Performance metrics
+  currentRoundTripTime?: number;
+  totalRoundTripTime?: number;
+  availableOutgoingBitrate?: number;
+  availableIncomingBitrate?: number;
+
+  // Traffic statistics
+  packetsSent?: number;
+  packetsReceived?: number;
+  bytesSent?: number;
+  bytesReceived?: number;
+}
+```
+
+#### Media Statistics
+
+```typescript
+interface MediaSourceStats {
+  timestamp: number;
+  id: string;
+  kind: string;
+  trackIdentifier?: string;
+
+  // Audio source metrics
+  audioLevel?: number;
+  totalAudioEnergy?: number;
+  echoReturnLoss?: number;
+
+  // Video source metrics
+  width?: number;
+  height?: number;
+  frames?: number;
+  framesPerSecond?: number;
+}
+```
+
+## Usage Examples
+
+### Real-Time Quality Monitoring
+
+```typescript
+import {
+  ClientSample,
+  PeerConnectionSample,
+} from "@observertc/sample-schemas-js";
+
+class WebRTCQualityMonitor {
+  private qualityThresholds = {
+    excellent: 0.9,
+    good: 0.7,
+    fair: 0.5,
+    poor: 0.3,
+  };
+
+  assessCallQuality(clientSample: ClientSample): QualityReport {
+    const reports: QualityReport[] = [];
+
+    clientSample.peerConnectionSamples?.forEach((pcSample) => {
+      const report = this.assessPeerConnectionQuality(pcSample);
+      reports.push(report);
+    });
+
+    return this.aggregateQualityReports(reports);
+  }
+
+  private assessPeerConnectionQuality(
+    sample: PeerConnectionSample
+  ): QualityReport {
+    // Use built-in score if available
+    if (sample.score !== undefined) {
+      return {
+        score: sample.score,
+        reasons: sample.scoreReasons || "No details provided",
+        category: this.scoreToCategory(sample.score),
+      };
+    }
+
+    // Calculate custom quality score
+    const metrics = this.extractQualityMetrics(sample);
+    const score = this.calculateQualityScore(metrics);
+
+    return {
+      score,
+      reasons: this.generateQualityReasons(metrics),
+      category: this.scoreToCategory(score),
+      details: metrics,
+    };
+  }
+
+  private extractQualityMetrics(sample: PeerConnectionSample) {
+    const metrics = {
+      packetLoss: 0,
+      jitter: 0,
+      rtt: 0,
+      frameDrops: 0,
+      audioIssues: 0,
+    };
+
+    // Analyze inbound RTP streams
+    sample.inboundRtps?.forEach((rtp) => {
+      if (rtp.packetsLost && rtp.packetsReceived) {
+        const lossRate =
+          rtp.packetsLost / (rtp.packetsReceived + rtp.packetsLost);
+        metrics.packetLoss = Math.max(metrics.packetLoss, lossRate);
+      }
+
+      if (rtp.jitter) {
+        metrics.jitter = Math.max(metrics.jitter, rtp.jitter);
+      }
+
+      if (rtp.framesDropped && rtp.framesReceived) {
+        const dropRate = rtp.framesDropped / rtp.framesReceived;
+        metrics.frameDrops = Math.max(metrics.frameDrops, dropRate);
+      }
+    });
+
+    // Analyze ICE candidate pairs for RTT
+    sample.iceCandidatePairs?.forEach((pair) => {
+      if (pair.currentRoundTripTime) {
+        metrics.rtt = Math.max(metrics.rtt, pair.currentRoundTripTime);
+      }
+    });
+
+    return metrics;
+  }
+}
+
+interface QualityReport {
+  score: number;
+  reasons: string;
+  category: "excellent" | "good" | "fair" | "poor";
+  details?: any;
+}
+```
+
+### SFU Performance Analysis
+
+```typescript
+import {
+  SfuSample,
+  SfuTransport,
+  SfuInboundRtpPad,
+} from "@observertc/sample-schemas-js";
+
+class SfuPerformanceAnalyzer {
+  analyzeSfuPerformance(sample: SfuSample): SfuPerformanceReport {
+    return {
+      sfuId: sample.sfuId,
+      timestamp: sample.timestamp,
+      transportAnalysis: this.analyzeTransports(sample.transports || []),
+      streamAnalysis: this.analyzeStreams(sample.inboundRtpPads || []),
+      resourceUtilization: this.calculateResourceUtilization(sample),
+      alerts: this.generateAlerts(sample),
+    };
+  }
+
+  private analyzeTransports(transports: SfuTransport[]): TransportAnalysis {
+    const analysis: TransportAnalysis = {
+      totalTransports: transports.length,
+      activeTransports: 0,
+      totalPacketLoss: 0,
+      avgRtt: 0,
+      bandwidthUtilization: 0,
+    };
+
+    transports.forEach((transport) => {
+      // Check transport health
+      if (
+        transport.dtlsState === "connected" &&
+        transport.iceState === "connected"
+      ) {
+        analysis.activeTransports++;
+      }
+
+      // Calculate packet loss
+      const rtpLoss = transport.rtpPacketsLost || 0;
+      const rtpReceived = transport.rtpPacketsReceived || 0;
+      if (rtpReceived > 0) {
+        analysis.totalPacketLoss += rtpLoss / rtpReceived;
+      }
+
+      // Bandwidth calculation
+      const rtpBytes =
+        (transport.rtpBytesReceived || 0) + (transport.rtpBytesSent || 0);
+      analysis.bandwidthUtilization += rtpBytes;
+    });
+
+    analysis.avgPacketLoss =
+      analysis.totalPacketLoss / Math.max(transports.length, 1);
+
+    return analysis;
+  }
+
+  private generateAlerts(sample: SfuSample): Alert[] {
+    const alerts: Alert[] = [];
+
+    // Check for high packet loss on transports
+    sample.transports?.forEach((transport) => {
+      const lossRate = this.calculatePacketLossRate(transport);
+      if (lossRate > 0.05) {
+        // 5% packet loss threshold
+        alerts.push({
+          severity: "warning",
+          type: "high_packet_loss",
+          message: `Transport ${transport.transportId} has ${(
+            lossRate * 100
+          ).toFixed(2)}% packet loss`,
+          transportId: transport.transportId,
+        });
+      }
+    });
+
+    // Check for stream issues
+    sample.inboundRtpPads?.forEach((pad) => {
+      if (pad.fractionLost && pad.fractionLost > 0.03) {
+        alerts.push({
+          severity: "warning",
+          type: "stream_quality",
+          message: `Stream ${pad.streamId} experiencing quality issues`,
+          streamId: pad.streamId,
+        });
+      }
+    });
+
+    return alerts;
+  }
+}
+
+interface SfuPerformanceReport {
+  sfuId: string;
+  timestamp: number;
+  transportAnalysis: TransportAnalysis;
+  streamAnalysis: any;
+  resourceUtilization: any;
+  alerts: Alert[];
+}
+
+interface Alert {
+  severity: "info" | "warning" | "error";
+  type: string;
+  message: string;
+  transportId?: string;
+  streamId?: string;
+}
+```
+
+### Custom Event Tracking
+
+```typescript
+import {
+  ClientSample,
+  ClientEvent,
+  ClientIssue,
+} from "@observertc/sample-schemas-js";
+
+class WebRTCEventTracker {
+  trackUserExperience(clientSample: ClientSample): UserExperienceMetrics {
+    const events = clientSample.clientEvents || [];
+    const issues = clientSample.clientIssues || [];
+
+    return {
+      callDuration: this.calculateCallDuration(events),
+      connectionEvents: this.analyzeConnectionEvents(events),
+      qualityIssues: this.categorizeIssues(issues),
+      userActions: this.extractUserActions(events),
+    };
+  }
+
+  private analyzeConnectionEvents(
+    events: ClientEvent[]
+  ): ConnectionEventSummary {
+    const connectionEvents = events.filter(
+      (event) =>
+        event.name?.includes("CONNECTION") ||
+        event.name?.includes("ICE") ||
+        event.name?.includes("DTLS")
+    );
+
+    return {
+      totalEvents: connectionEvents.length,
+      reconnections: connectionEvents.filter((e) =>
+        e.name?.includes("RECONNECT")
+      ).length,
+      iceRestarts: connectionEvents.filter((e) =>
+        e.name?.includes("ICE_RESTART")
+      ).length,
+      connectionFailures: connectionEvents.filter((e) =>
+        e.name?.includes("FAILED")
+      ).length,
+    };
+  }
+
+  private categorizeIssues(issues: ClientIssue[]): IssuesSummary {
+    const categories = {
+      audio: issues.filter((issue) =>
+        issue.description?.toLowerCase().includes("audio")
+      ),
+      video: issues.filter((issue) =>
+        issue.description?.toLowerCase().includes("video")
+      ),
+      network: issues.filter(
+        (issue) =>
+          issue.description?.toLowerCase().includes("network") ||
+          issue.description?.toLowerCase().includes("connection")
+      ),
+      other: issues.filter(
+        (issue) =>
+          !issue.description?.toLowerCase().includes("audio") &&
+          !issue.description?.toLowerCase().includes("video") &&
+          !issue.description?.toLowerCase().includes("network")
+      ),
+    };
+
+    return {
+      total: issues.length,
+      byCategory: {
+        audio: categories.audio.length,
+        video: categories.video.length,
+        network: categories.network.length,
+        other: categories.other.length,
+      },
+      severity: this.calculateSeverityDistribution(issues),
+    };
+  }
+}
+```
+
+## Type Safety
+
+### Strict Type Checking
+
+```typescript
+// All fields are properly typed
+const sample: PeerConnectionSample = {
+  peerConnectionId: "pc-123", // string (required)
+  timestamp: Date.now(), // number (required)
+  score: 0.85, // number | undefined
+  scoreReasons: "Good quality", // string | undefined
+
+  // TypeScript will enforce correct types for all nested objects
+  inboundRtps: [
+    {
+      id: "inbound-rtp-1",
+      timestamp: Date.now(),
+      ssrc: 12345, // number (required)
+      kind: "video", // string (required)
+      packetsReceived: 1000, // number | undefined
+      packetsLost: 5, // number | undefined
+      jitter: 0.001, // number | undefined
+    },
+  ],
+};
+```
+
+### Type Guards and Validation
+
+```typescript
+// Type guard functions for runtime validation
+function isPeerConnectionSample(obj: any): obj is PeerConnectionSample {
+  return (
+    obj &&
+    typeof obj.peerConnectionId === "string" &&
+    typeof obj.timestamp === "number"
+  );
+}
+
+function isInboundRtpStats(obj: any): obj is InboundRtpStats {
+  return (
+    obj &&
+    typeof obj.id === "string" &&
+    typeof obj.ssrc === "number" &&
+    typeof obj.kind === "string"
+  );
+}
+
+// Usage with type safety
+function processSample(data: unknown) {
+  if (isPeerConnectionSample(data)) {
+    // TypeScript knows this is a PeerConnectionSample
+    console.log(`Processing PC: ${data.peerConnectionId}`);
+
+    data.inboundRtps?.forEach((rtp) => {
+      if (isInboundRtpStats(rtp)) {
+        // Type-safe access to RTP properties
+        analyzeRtpStream(rtp);
+      }
+    });
+  }
+}
+```
+
+## WebRTC Statistics Coverage
+
+### Complete W3C Specification Support
+
+This library implements the complete [WebRTC Statistics API](https://www.w3.org/TR/webrtc-stats/) specification:
+
+- ✅ **RTCStatsType** - All standard statistics types
+- ✅ **RTCRtpStreamStats** - RTP stream statistics
+- ✅ **RTCReceivedRtpStreamStats** - Received RTP statistics
+- ✅ **RTCSentRtpStreamStats** - Sent RTP statistics
+- ✅ **RTCInboundRtpStreamStats** - Inbound RTP statistics
+- ✅ **RTCOutboundRtpStreamStats** - Outbound RTP statistics
+- ✅ **RTCRemoteInboundRtpStreamStats** - Remote inbound statistics
+- ✅ **RTCRemoteOutboundRtpStreamStats** - Remote outbound statistics
+- ✅ **RTCMediaSourceStats** - Media source statistics
+- ✅ **RTCVideoSourceStats** - Video source statistics
+- ✅ **RTCAudioSourceStats** - Audio source statistics
+- ✅ **RTCVideoPlayoutStats** - Video playout statistics
+- ✅ **RTCAudioPlayoutStats** - Audio playout statistics
+- ✅ **RTCPeerConnectionStats** - Peer connection statistics
+- ✅ **RTCDataChannelStats** - Data channel statistics
+- ✅ **RTCTransportStats** - Transport statistics
+- ✅ **RTCIceCandidateStats** - ICE candidate statistics
+- ✅ **RTCIceCandidatePairStats** - ICE candidate pair statistics
+- ✅ **RTCCertificateStats** - Certificate statistics
+- ✅ **RTCCodecStats** - Codec statistics
+
+### Extended ObserveRTC Features
+
+Beyond the W3C specification, this library includes:
+
+- **Quality Scoring** - `score` and `scoreReasons` fields for automated quality assessment
+- **Custom Attachments** - `attachments` field for extensible metadata
+- **Enhanced Timestamps** - High-precision timing information
+- **SFU Statistics** - Specialized statistics for SFU deployments
+- **TURN Statistics** - TURN server and allocation metrics
+- **Client Events** - Custom event tracking and issue reporting
+
+## Integration Patterns
+
+### With Monitoring Systems
+
+```typescript
+import { ClientSample } from "@observertc/sample-schemas-js";
+
+// Integration with metrics collection
+class MetricsCollector {
+  collectMetrics(sample: ClientSample) {
+    // Extract key performance indicators
+    const metrics = this.extractKPIs(sample);
+
+    // Send to your monitoring system
+    this.sendToPrometheus(metrics);
+    this.sendToDatadog(metrics);
+    this.sendToElastic(metrics);
+  }
+
+  private extractKPIs(sample: ClientSample) {
+    const kpis = new Map<string, number>();
+
+    sample.peerConnectionSamples?.forEach((pcSample) => {
+      // Overall quality score
+      if (pcSample.score !== undefined) {
+        kpis.set("webrtc.quality.score", pcSample.score);
+      }
+
+      // Aggregate packet loss
+      const totalLoss = this.calculateTotalPacketLoss(pcSample);
+      kpis.set("webrtc.network.packet_loss_rate", totalLoss);
+
+      // Average jitter
+      const avgJitter = this.calculateAverageJitter(pcSample);
+      kpis.set("webrtc.network.jitter_ms", avgJitter * 1000);
+
+      // Active streams count
+      const streamCount =
+        (pcSample.inboundRtps?.length || 0) +
+        (pcSample.outboundRtps?.length || 0);
+      kpis.set("webrtc.streams.active_count", streamCount);
+    });
+
+    return kpis;
+  }
+}
+```
+
+### With Real-Time Analytics
+
+```typescript
+// Real-time stream for processing samples
+import { ClientSample } from "@observertc/sample-schemas-js";
+
+class RealTimeAnalytics {
+  private sampleBuffer: ClientSample[] = [];
+  private windowSize = 10; // Process last 10 samples
+
+  processSample(sample: ClientSample) {
+    this.sampleBuffer.push(sample);
+
+    if (this.sampleBuffer.length > this.windowSize) {
+      this.sampleBuffer.shift();
+    }
+
+    // Real-time analysis
+    const trends = this.analyzeTrends();
+    const anomalies = this.detectAnomalies();
+    const predictions = this.predictQuality();
+
+    // Trigger alerts if needed
+    this.checkAlertConditions(trends, anomalies);
+  }
+
+  private analyzeTrends(): QualityTrend[] {
+    const trends: QualityTrend[] = [];
+
+    // Analyze quality score trends
+    const scores = this.sampleBuffer
+      .flatMap((s) => s.peerConnectionSamples || [])
+      .map((pc) => pc.score)
+      .filter((score) => score !== undefined) as number[];
+
+    if (scores.length >= 3) {
+      const trend = this.calculateTrend(scores);
+      trends.push({
+        metric: "quality_score",
+        direction:
+          trend > 0.1 ? "improving" : trend < -0.1 ? "degrading" : "stable",
+        magnitude: Math.abs(trend),
+      });
+    }
+
+    return trends;
+  }
+}
+```
+
+## API Reference
+
+### Core Interfaces
+
+#### ClientSample
+
+```typescript
+interface ClientSample {
+  timestamp: number;
+  clientId: string;
+  callId?: string;
+  userId?: string;
+  sampleSeq: number;
+
+  // Nested samples
+  peerConnectionSamples?: PeerConnectionSample[];
+  clientEvents?: ClientEvent[];
+  clientIssues?: ClientIssue[];
+  clientMetaData?: ClientMetaData[];
+  extensionStats?: ExtensionStat[];
+
+  // Extensions
+  attachments?: string;
+}
+```
+
+#### PeerConnectionSample
+
+```typescript
+interface PeerConnectionSample {
+  peerConnectionId: string;
+  timestamp: number;
+
+  // Quality assessment
+  score?: number;
+  scoreReasons?: string;
+
+  // Statistics collections
+  inboundTracks?: InboundTrackSample[];
+  outboundTracks?: OutboundTrackSample[];
+  codecs?: CodecStats[];
+  inboundRtps?: InboundRtpStats[];
+  remoteInboundRtps?: RemoteInboundRtpStats[];
+  outboundRtps?: OutboundRtpStats[];
+  remoteOutboundRtps?: RemoteOutboundRtpStats[];
+  mediaSources?: MediaSourceStats[];
+  mediaPlayouts?: MediaPlayoutStats[];
+  peerConnectionTransports?: PeerConnectionTransportStats[];
+  dataChannels?: DataChannelStats[];
+  iceTransports?: IceTransportStats[];
+  iceCandidates?: IceCandidateStats[];
+  iceCandidatePairs?: IceCandidatePairStats[];
+  certificates?: CertificateStats[];
+
+  // Extensions
+  attachments?: string;
+}
+```
+
+For complete API documentation, see the generated TypeScript definitions in your IDE or the exported types.
+
+## Migration Guide
+
+### From Version 2.x to 3.x
+
+```typescript
+// Old (v2.x)
+interface OldSample {
+  peerConnectionId: string;
+  // score field didn't exist
+}
+
+// New (v3.x)
+interface NewSample {
+  peerConnectionId: string;
+  score?: number; // NEW: Quality scoring
+  scoreReasons?: string; // NEW: Score details
+  attachments?: string; // NEW: Extensible metadata
+}
+
+// Migration
+function migrateSample(oldSample: any): PeerConnectionSample {
+  return {
+    ...oldSample,
+    // Add new optional fields as needed
+    score: calculateScore(oldSample),
+    scoreReasons: generateReasons(oldSample),
+    attachments: JSON.stringify(oldSample.customData || {}),
+  };
+}
+```
+
+## Contributing
+
+We welcome contributions! Please follow these guidelines:
+
+1. **Types**: Ensure all new fields have proper TypeScript types
+2. **Documentation**: Add JSDoc comments for all public interfaces
+3. **Compatibility**: Maintain backward compatibility when possible
+4. **Testing**: Add tests for new type definitions
+
+### Development Setup
+
+```bash
+git clone https://github.com/observertc/schemas.git
+cd schemas/npm-samples-lib
+npm install
+npm run build
+```
+
 ---
-Javascript bindings for ObserveRTC schemas
-- [samples](#samples)
-	* [TurnSession](#TurnSession)
-	* [TurnPeerAllocation](#TurnPeerAllocation)
-	* [TurnSample](#TurnSample)
-	* [SfuExtensionStats](#SfuExtensionStats)
-	* [SfuSctpChannel](#SfuSctpChannel)
-	* [SfuOutboundRtpPad](#SfuOutboundRtpPad)
-	* [SfuInboundRtpPad](#SfuInboundRtpPad)
-	* [SfuTransport](#SfuTransport)
-	* [CustomSfuEvent](#CustomSfuEvent)
-	* [SfuSample](#SfuSample)
-	* [IceRemoteCandidate](#IceRemoteCandidate)
-	* [IceLocalCandidate](#IceLocalCandidate)
-	* [OutboundVideoTrack](#OutboundVideoTrack)
-	* [OutboundAudioTrack](#OutboundAudioTrack)
-	* [InboundVideoTrack](#InboundVideoTrack)
-	* [InboundAudioTrack](#InboundAudioTrack)
-	* [Certificate](#Certificate)
-	* [MediaCodecStats](#MediaCodecStats)
-	* [MediaSourceStat](#MediaSourceStat)
-	* [IceCandidatePair](#IceCandidatePair)
-	* [PeerConnectionTransport](#PeerConnectionTransport)
-	* [DataChannel](#DataChannel)
-	* [CustomObserverEvent](#CustomObserverEvent)
-	* [CustomCallEvent](#CustomCallEvent)
-	* [ExtensionStat](#ExtensionStat)
-	* [MediaDevice](#MediaDevice)
-	* [OperationSystem](#OperationSystem)
-	* [Browser](#Browser)
-	* [Platform](#Platform)
-	* [Engine](#Engine)
-	* [ClientSample](#ClientSample)
-	* [Controls](#Controls)
-	* [Samples](#Samples)
-- [Changelog](#Changelog)
-## Controls
 
-
-Field | Description 
---- | ---
-close | Indicate that the server should close the connection
-accessClaim | Holds a new claim to process
-
-## Engine
-
-
-Field | Description 
---- | ---
-name | The name of the Engine
-version | The version of the engine
-
-## Platform
-
-
-Field | Description 
---- | ---
-type | The name of the platform
-vendor | The name of the vendor
-model | The name of the model
-
-## Browser
-
-
-Field | Description 
---- | ---
-name | The name of the operating system (e.g., Linux) the WebRTC app uses
-version | The version of the operating system
-
-## OperationSystem
-
-
-Field | Description 
---- | ---
-name | The name of the operating system (e.g., Linux) the WebRTC app uses
-version | The version of the operating system
-versionName | The name of the version of the operating system
-
-## MediaDevice
-
-
-Field | Description 
---- | ---
-id | the provided id of the media input / output
-kind | The media kind of the media device (Possible values are: videoinput,<br />audioinput,<br />audiooutput)
-label | The name of the device
-
-## ExtensionStat
-
-
-Field | Description 
---- | ---
-type (**Mandatory**) | The type of the extension stats the custom app provides
-payload (**Mandatory**) | The payload of the extension stats the custom app provides
-
-## CustomCallEvent
-
-
-Field | Description 
---- | ---
-name (**Mandatory**) | the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
-value | the value of the event
-peerConnectionId | The unique identifier of the peer connection
-mediaTrackId | The identifier of the media track the event is related to
-message | the human readable message of the event
-attachments | Additional attachment relevant for the event
-timestamp | The EPOCH timestamp the event is generated
-
-## CustomObserverEvent
-
-
-Field | Description 
---- | ---
-name (**Mandatory**) | the name of the event used as identifier. (e.g.: MEDIA_TRACK_MUTED, USER_REJOINED, etc..)
-mediaTrackId | The identifier of the media track the event is related to
-message | the human readable message of the event
-attachments | Additional attachment relevant for the event
-timestamp | The EPOCH timestamp the event is generated
-
-## DataChannel
-
-
-Field | Description 
---- | ---
-peerConnectionId (**Mandatory**) | The id of the peer connection the data channel is assigned to
-dataChannelIdentifier | The id of the data channel assigned by the peer connection when it is opened
-label | The label of the data channel
-protocol | The protocol the data channel utilizes
-state | The state of the data channel
-messageSent | The total number of messages sent on the data channel
-bytesSent | The total number of bytes sent on the data channel
-messageReceived | The total number of messages received on the data channel
-bytesReceived | The total number of bytes received on the data channel
-
-## PeerConnectionTransport
-
-
-Field | Description 
---- | ---
-transportId (**Mandatory**) | The identifier of the transport the ICE candidate pair is negotiated on
-peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
-label | The label associated with the peer connection
-packetsSent | Represents the total number of packets sent on the corresponding transport
-packetsReceived | Represents the total number of packets received on the corresponding transport
-bytesSent | Represents the total amount of bytes sent on the corresponding transport
-bytesReceived | Represents the total amount of bytes received on the corresponding transport
-iceRole | Represents the current role of ICE under DTLS Transport
-iceLocalUsernameFragment | Represents the current local username fragment used in message validation procedures for ICE under DTLS Transport
-dtlsState | Represents the current state of DTLS for the peer connection transport layer
-selectedCandidatePairId | The identifier of the candidate pair the transport currently uses
-iceState | Represents the current transport state (RTCIceTransportState) of ICE for the peer connection transport layer
-localCertificateId | If DTLS negotiated, it gives the ID of the local certificate
-remoteCertificateId | If DTLS negotiated, it gives the ID of the remote certificate
-tlsVersion | Represents the version number of the TLS used in the corresponding transport
-dtlsCipher | Represents the name of the DTLS cipher used in the corresponding transport
-dtlsRole | The role this host plays in DTLS negotiations (Possible values are: client,<br />server,<br />unknown)
-srtpCipher | Represents the name of the SRTP cipher used in the corresponding transport
-tlsGroup | Represents the name of the IANA TLS Supported Groups used in the corresponding transport
-selectedCandidatePairChanges | The total number of candidate pair changes over the peer connection
-
-## IceCandidatePair
-
-
-Field | Description 
---- | ---
-candidatePairId (**Mandatory**) | The unique identifier of the peer connection
-peerConnectionId (**Mandatory**) | The unique identifier of the peer connection
-label | The label associated with the peer connection
-transportId | The identifier of the transport the ice candidate pair is negotiated on
-localCandidateId | The unique identifier of the candidate the negotiated pair is selected on the local side
-remoteCandidateId | The unique identifier of the candidate the negotiated pair is selected on the remote side
-state | The state of ICE Candidate Pairs (RTCStatsIceState) on the corresponding transport
-nominated | Indicates if the ice candidate pair is nominated or not
-packetsSent | The total number of packets sent using the last selected candidate pair over the corresponding transport
-packetsReceived | The total number of packets received using the last selected candidate pair over the corresponding transport
-bytesSent | The total number of bytes sent using the last selected candidate pair over the corresponding transport
-bytesReceived | The total number of bytes received using the last selected candidate pair over the corresponding transport
-lastPacketSentTimestamp | Represents the timestamp at which the last packet was sent on the selected candidate pair, excluding STUN packets over the corresponding transport (UTC Epoch in ms)
-lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the selected candidate pair, excluding STUN packets over the corresponding transport (UTC Epoch in ms)
-totalRoundTripTime | Represents the sum of all round trip time measurements in seconds since the beginning of the session, based on STUN connectivity check over the corresponding transport
-currentRoundTripTime | Represents the last round trip time measurement in seconds based on STUN connectivity check over the corresponding transport
-availableOutgoingBitrate | The sum of the underlying cc algorithm provided outgoing bitrate for the RTP streams over the corresponding transport
-availableIncomingBitrate | The sum of the underlying cc algorithm provided incoming bitrate for the RTP streams over the corresponding transport
-requestsReceived | Represents the total number of connectivity check requests received on the selected candidate pair using the corresponding transport
-requestsSent | Represents the total number of connectivity check requests sent on the selected candidate pair using the corresponding transport
-responsesReceived | Represents the total number of connectivity check responses received on the selected candidate pair using the corresponding transport
-responsesSent | Represents the total number of connectivity check responses sent on the selected candidate pair using the corresponding transport
-consentRequestsSent | Represents the total number of consent requests sent on the selected candidate pair using the corresponding transport
-packetsDiscardedOnSend | Total number of packets for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponding transport
-bytesDiscardedOnSend | Total number of bytes for this candidate pair that have been discarded due to socket errors on the selected candidate pair using the corresponding transport
-
-## MediaSourceStat
-
-
-Field | Description 
---- | ---
-trackIdentifier | The unique identifier of the corresponding media track
-kind | The type of the media the MediaSource produces. (Possible values are: audio,<br />video)
-relayedSource | Flag indicating if the media source is relayed or not, meaning the local endpoint is not the actual source of the media, but a proxy for that media.
-audioLevel | The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure level from 0 dBov.
-totalAudioEnergy | The audio energy of the media source. For calculation see www.w3.org/TR/webrtc-stats/#dom-rtcaudiosourcestats-totalaudioenergy
-totalSamplesDuration | The duration of the audio type media source
-echoReturnLoss | if echo cancellation is applied on the media source, then this number represents the loss calculation defined in www.itu.int/rec/T-REC-G.168-201504-I/en
-echoReturnLossEnhancement | www.itu.int/rec/T-REC-G.168-201504-I/en
-droppedSamplesDuration | The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
-droppedSamplesEvents | A counter increases every time a sample is dropped after a non-dropped sample
-totalCaptureDelay | Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
-totalSamplesCaptured | The total number of captured samples reaching the audio source
-width | The width, in pixels, of the last frame originating from the media source
-height | The height, in pixels, of the last frame originating from the media source
-frames | The total number of frames originating from the media source
-framesPerSecond | The number of frames originating from the media source in the last second
-
-## MediaCodecStats
-
-
-Field | Description 
---- | ---
-payloadType | Payload type used in the RTP encoding/decoding process.
-codecType | Indicates the role of the codec (encode or decode) (Possible values are: encode,<br />decode)
-mimeType | The MIME type of the media, e.g., audio/opus.
-clockRate | The clock rate used in RTP transport to generate the timestamp for the carried frames
-channels | Audio Only. Represents the number of channels an audio media source has. Only interesting if stereo is presented
-sdpFmtpLine | The SDP line determines the codec
-
-## Certificate
-
-
-Field | Description 
---- | ---
-fingerprint | The fingerprint of the certificate.
-fingerprintAlgorithm | The hash function used to generate the fingerprint.
-base64Certificate | The DER encoded base-64 representation of the certificate.
-issuerCertificateId | The ID of the next certificate in the certificate chain
-
-## InboundAudioTrack
-
-
-Field | Description 
---- | ---
-ssrc (**Mandatory**) | The RTP SSRC field
-trackId | The ID of the track
-peerConnectionId | The unique generated identifier of the peer connection the inbound audio track belongs to
-remoteClientId | The remote client ID the source outbound track belongs to
-sfuStreamId | The ID of the SFU stream this track is synced from
-sfuSinkId | The ID of the sink this track belongs to in the SFU
-packetsReceived | The total number of packets received on the corresponding synchronization source
-packetsLost | The total number of bytes received on the corresponding synchronization source
-jitter | The corresponding synchronization source reported jitter
-lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponding synchronization source (ssrc)
-headerBytesReceived | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
-packetsDiscarded | The total number of packets that missed the playout point and were therefore discarded by the jitter buffer
-fecPacketsReceived | Total number of FEC packets received over the corresponding synchronization source (ssrc)
-fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrival; 2) the target RTP packet has already been repaired.
-bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrival; 2) the target RTP packet has already been repaired.
-nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponding synchronization source (ssrc)
-totalProcessingDelay | The total processing delay in seconds spent on buffering RTP packets from receipt until packets are decoded
-estimatedPlayoutTimestamp | The estimated playout time of the corresponding synchronization source
-jitterBufferDelay | The total time of RTP packets spent in the jitter buffer waiting for frame completion due to network uncertainty.
-jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer.
-jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponding synchronization source (ssrc)
-jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
-totalSamplesReceived | The total number of audio samples received on the corresponded RTP stream
-concealedSamples | The total number of samples decoded by the media decoder from the corresponded RTP stream
-silentConcealedSamples | The total number of samples concealed from the corresponded RTP stream
-concealmentEvents | The total number of concealed event emitted to the media codec by the corresponded jitterbuffer
-insertedSamplesForDeceleration | The total number of samples inserted to decelarete the audio playout (happens when the jitterbuffer detects a shrinking buffer and need to increase the jitter buffer delay)
-removedSamplesForAcceleration | The total number of samples inserted to accelerate the audio playout (happens when the jitterbuffer detects a growing buffer and need to shrink the jitter buffer delay)
-audioLevel | The current audio level
-totalAudioEnergy | Represents the energy level reported by the media source
-totalSamplesDuration | Represents the total duration of the audio samples the media source actually transconverted in seconds
-decoderImplementation | Indicate the name of the decoder implementation library
-packetsSent | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
-bytesSent | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
-remoteTimestamp | The timestamp corresnponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
-reportsSent | The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
-roundTripTime | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
-totalRoundTripTime |  Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
-roundTripTimeMeasurements | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
-synthesizedSamplesDuration | This metric can be used together with totalSamplesDuration to calculate the percentage of played out media being synthesized
-synthesizedSamplesEvents | The number of synthesized samples events.
-totalPlayoutDelay |  The playout delay includes the delay from being emitted to the actual time of playout on the device
-totalSamplesCount | When audio samples are pulled by the playout device, this counter is incremented with the number of samples emitted for playout
-
-## InboundVideoTrack
-
-
-Field | Description 
---- | ---
-ssrc (**Mandatory**) | The RTP SSRC field
-trackId | The id of the track
-peerConnectionId | The unique generated identifier of the peer connection the inbound audio track belongs to
-remoteClientId | The remote clientId the source outbound track belongs to
-sfuStreamId | The id of the SFU stream this track is sinked from
-sfuSinkId | The id of the sink this track belongs to in the SFU
-packetsReceived | The total number of packets received on the corresponded synchronization source
-packetsLost | The total number of bytes received on the corresponded synchronization source
-jitter | The corresponded synchronization source reported jitter
-framesDropped | The number of frames dropped prior to decode or missing chunks
-lastPacketReceivedTimestamp | Represents the timestamp at which the last packet was received on the corresponded synchronization source (ssrc)
-headerBytesReceived | Total number of RTP header and padding bytes received over the corresponding synchronization source (ssrc)
-packetsDiscarded | The total number of packets missed the playout point and therefore discarded by the jitterbuffer
-fecPacketsReceived | Total number of FEC packets received over the corresponding synchronization source (ssrc)
-fecPacketsDiscarded | Total number of FEC packets discarded over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-bytesReceived | Total number of bytes received over the corresponding synchronization source (ssrc) due to 1) late arrive; 2) the target RTP packet has already been repaired.
-nackCount | Count the total number of Negative ACKnowledgement (NACK) packets sent and belongs to the corresponded synchronization source (ssrc)
-totalProcessingDelay | The total processing delay in seconds spend on buffering RTP packets from received up until packets are decoded
-estimatedPlayoutTimestamp | The estimated playout time of the corresponded synchronization source
-jitterBufferDelay | The total time of RTP packets spent in jitterbuffer waiting for frame completion due to network uncertenity.
-jitterBufferTargetDelay | This value is increased by the target jitter buffer delay every time a sample is emitted by the jitter buffer. The added target is the target delay, in seconds, at the time that the sample was emitted from the jitter buffer. 
-jitterBufferEmittedCount | The total number of audio samples or video frames that have come out of the jitter buffer on the corresponded synchronization source (ssrc)
-jitterBufferMinimumDelay | This metric is purely based on the network characteristics such as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no external factors would affect it
-decoderImplementation | Indicate the name of the decoder implementation library
-framesDecoded | The total number of frames decoded on the corresponded RTP stream
-keyFramesDecoded | The total number of keyframes decoded on the corresponding RTP stream
-frameWidth | The width of the frame of the video sent by the remote source on the corresponding RTP stream
-frameHeight | The height of the frame of the video sent by the remote source on the corresponding RTP stream
-framesPerSecond | The frame rate of the video sent by the remote source on the corresponding RTP stream
-qpSum | The QP sum (only interested in VP8,9) of the frame of the video sent by the remote source on the corresponding RTP stream
-totalDecodeTime | The total time spent on decoding video on the corresponding RTP stream
-totalInterFrameDelay | The total interframe delay on the corresponding RTP stream
-totalSquaredInterFrameDelay | The total squared interframe delay on the corresponding synchronization source (ssrc). Useful for variance calculation for interframe delays
-firCount | The total number of Full Intra Request (FIR) packets sent from this endpoint to the source on the corresponding RTP stream
-pliCount | The total number of Picture Loss Indication (PLI) packets sent on the corresponding RTP stream
-framesReceived | The total number of frames received on the corresponding RTP stream
-packetsSent | Total number of RTP packets sent at the remote endpoint to this endpoint on this synchronization source
-bytesSent | Total number of payload bytes sent at the remote endpoint to this endpoint on this synchronization source
-remoteTimestamp | The timestamp corresponds to the time in UTC Epoch the remote endpoint reported the statistics belong to the sender side and correspond to the synchronization source (ssrc)
-reportsSent | The number of SR reports the remote endpoint sent corresponded to synchronization source (ssrc) this report belongs to
-roundTripTime | Estimated round trip time for the SR reports based on DLRR reports on the corresponded RTP stream
-totalRoundTripTime | Represents the cumulative sum of all round trip time measurements performed on the corresponded RTP stream
-roundTripTimeMeasurements | Represents the total number of SR reports received with DLRR reports to be able to calculate the round trip time on the corresponded RTP stream
-
-## OutboundAudioTrack
-
-
-Field | Description 
---- | ---
-ssrc (**Mandatory**) | The RTP SSRC field
-trackId | The id of the track
-peerConnectionId |  The unique generated identifier of the peer connection the inbound audio track belongs to
-sfuStreamId | The id of the SFU stream this track is related to
-packetsSent | The total number of packets sent on the corresponded synchronization source
-bytesSent | The total number of bytes sent on the corresponded synchronization source
-rid | The rid encoding parameter of the corresponded synchronization source
-headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
-retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
-targetBitrate | Reflects the current encoder target in bits per second.
-totalEncodedBytesTarget | The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
-totalPacketSendDelay | The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
-averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-nackCount | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
-encoderImplementation | Indicate the name of the encoder implementation library
-active | Indicates whether this RTP stream is configured to be sent or disabled
-packetsReceived | The total number of packets received on the corresponded synchronization source
-packetsLost | The total number of bytes received on the corresponded synchronization source
-jitter | The corresponded synchronization source reported jitter
-roundTripTime | RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
-totalRoundTripTime | The sum of RTT measurements belongs to the corresponded synchronization source
-fractionLost | The receiver reported fractional lost belongs to the corresponded synchronization source
-roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
-relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
-audioLevel | Represents the audio level reported by the media source
-totalAudioEnergy | Represents the energy level reported by the media source
-totalSamplesDuration | Represents the total duration of the audio samples the media source actually transconverted in seconds
-echoReturnLoss | Represents the echo cancellation in decibels corresponded to the media source.
-echoReturnLossEnhancement | Represents the echo cancellation in decibels added as a postprocessing by the library after the audio is caught from the media source.
-droppedSamplesDuration | The total duration, in seconds, of samples produced by the device that got dropped before reaching the media source
-droppedSamplesEvents | A counter increases every time a sample is dropped after a non-dropped sample
-totalCaptureDelay | Total delay, in seconds, for each audio sample between the time the sample was emitted by the capture device and the sample reaching the source
-totalSamplesCaptured | The total number of captured samples reaching the audio source
-
-## OutboundVideoTrack
-
-
-Field | Description 
---- | ---
-ssrc (**Mandatory**) | The RTP SSRC field
-trackId | The id of the track
-peerConnectionId | The unique generated identifier of the peer connection the inbound audio track belongs to
-sfuStreamId | The id of the SFU stream this track is related to
-packetsSent | The total number of packets sent on the corresponded synchronization source
-bytesSent | The total number of bytes sent on the corresponded synchronization source
-rid | The rid encoding parameter of the corresponded synchronization source
-headerBytesSent | Total number of RTP header and padding bytes sent over the corresponding synchronization source (ssrc)
-retransmittedPacketsSent | Total number of retransmitted packets sent over the corresponding synchronization source (ssrc).
-retransmittedBytesSent | Total number of retransmitted bytes sent over the corresponding synchronization source (ssrc).
-targetBitrate | Reflects the current encoder target in bits per second.
-totalEncodedBytesTarget | The total number of bytes of RTP coherent frames encoded completly depending on the frame size the encoder targets
-totalPacketSendDelay | The total number of delay packets buffered at the sender side in seconds over the corresponding synchronization source
-averageRtcpInterval | The average RTCP interval between two consecutive compound RTCP packets sent for the corresponding synchronization source (ssrc)
-nackCount | Count the total number of Negative ACKnowledgement (NACK) packets received over the corresponding synchronization source (ssrc)
-encoderImplementation | Indicate the name of the encoder implementation library
-active | Indicates whether this RTP stream is configured to be sent or disabled
-frameWidth | The frame width in pixels of the frames targeted by the media encoder
-frameHeight | The frame height in pixels of the frames targeted by the media encoder
-framesPerSecond | The encoded number of frames in the last second on the corresponding media source
-framesSent | The total number of frames sent on the corresponding RTP stream
-hugeFramesSent | The total number of huge frames (avgFrameSize * 2.5) on the corresponding RTP stream
-framesEncoded | The total number of frames encoded by the media source
-keyFramesEncoded | The total number of keyframes encoded on the corresponding RTP stream
-qpSum | The sum of the QP the media encoder provided on the corresponding RTP stream.
-totalEncodeTime | The total time in seconds spent in encoding media frames for the corresponding RTP stream.
-qualityLimitationDurationNone | Time elapsed in seconds when the RTC connection has not limited the quality
-qualityLimitationDurationCPU | Time elapsed in seconds the RTC connection had a limitation because of CPU
-qualityLimitationDurationBandwidth | Time elapsed in seconds the RTC connection had a limitation because of Bandwidth
-qualityLimitationDurationOther | Time elapsed in seconds the RTC connection had a limitation because of Other factor
-qualityLimitationReason | Indicate a reason for the quality limitation of the corresponded synchronization source
-qualityLimitationResolutionChanges | The total number of resolution changes occurred on the corresponded RTP stream due to quality changes
-firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream
-pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream
-packetsReceived | The total number of packets received on the corresponded synchronization source
-packetsLost | The total number of bytes received on the corresponded synchronization source
-jitter | The corresponded synchronization source reported jitter
-roundTripTime | RTT measurement in seconds based on (most likely) SR, and RR belongs to the corresponded synchronization source
-totalRoundTripTime | The sum of RTT measurements belongs to the corresponded synchronization source
-fractionLost | The receiver reported fractional lost belongs to the corresponded synchronization source
-roundTripTimeMeasurements | The total number of calculated RR measurements received on this source
-framesDropped | The total number of frames reported to be lost by the remote endpoint on the corresponded RTP stream
-relayedSource | True if the corresponded media source is remote, false otherwise (or null depending on browser and version)
-width | The width, in pixels, of the last frame originating from the media source
-height | The height, in pixels, of the last frame originating from the media source
-frames | The total number of frames originated from the media source
-
-## IceLocalCandidate
-
-
-Field | Description 
---- | ---
-peerConnectionId | Refers to the peer connection the local candidate belongs to
-id | The unique identifier of the local candidate
-address | The address of the local endpoint (Ipv4, Ipv6, FQDN)
-port | The port number of the local endpoint the ICE uses
-protocol | The protocol for the ICE (Possible values are: tcp,<br />udp)
-candidateType | The type of the local candidate
-priority | The priority of the local candidate
-url | The url of the ICE server
-relayProtocol | The relay protocol the local candidate uses (Possible values are: tcp,<br />udp,<br />tls)
-
-## IceRemoteCandidate
-
-
-Field | Description 
---- | ---
-peerConnectionId | Refers to the peer connection the local candidate belongs to
-id | The unique identifier of the local candidate
-address | The address of the local endpoint (Ipv4, Ipv6, FQDN)
-port | The port number of the local endpoint the ICE uses
-protocol | The protocol for the ICE (Possible values are: tcp,<br />udp)
-candidateType | The type of the local candidate
-priority | The priority of the local candidate
-url | The url of the ICE server
-relayProtocol | The relay protocol the local candidate uses (Possible values are: tcp,<br />udp,<br />tls)## ClientSample
-
-
-docs
-
-
-Field | Description 
---- | ---
-clientId (**Mandatory**) | Unique id of the client providing samples. Must be a valid UUID.
-timestamp (**Mandatory**) | The timestamp the sample is created in GMT
-callId | If provided, the server uses the given id to match clients in the same call. Must be a valid UUID.
-sampleSeq | The sequence number a source assigns to the sample. Each time the source takes a sample at a client, this number should be monotonically incremented.
-roomId | The WebRTC app configured room id the client joined for the call.
-userId | The WebRTC app configured human-readable user id the client is joined.
-engine | WebRTC App provided information related to the engine the client uses.
-platform | WebRTC App provided information related to the platform the client uses.
-browser | WebRTC App provided information related to the browser the client uses.
-os | WebRTC App provided information related to the operating system the client uses.
-mediaConstraints | The WebRTC app provided list of the media constraints the client has.
-mediaDevices | The WebRTC app provided list of the media devices the client has.
-userMediaErrors | The WebRTC app provided list of user media errors the client has.
-extensionStats | The WebRTC app provided custom stats payload
-customCallEvents | User provided custom call events
-customObserverEvents | User provided custom observer events
-iceServers | The WebRTC app provided list of ICE servers the client used.
-localSDPs | The local part of the Signal Description Protocol to establish connections
-dataChannels | Measurements about the data channels currently available on peer connections
-pcTransports | Transport stats of Peer Connection
-iceCandidatePairs | Candidate pair stats
-mediaSources | WebRTC App provided information related to the operation system the client uses.
-codecs | List of codec the client has
-certificates | List of certificates the client provided
-inboundAudioTracks | List of compound measurements related to inbound audio tracks
-inboundVideoTracks | List of compound measurements related to inbound video tracks
-outboundAudioTracks | List of compound measurements related to outbound audio tracks
-outboundVideoTracks | List of compound measurements related to outbound video tracks
-iceLocalCandidates | List of local ICE candidates
-iceRemoteCandidates | List of remote ICE candidates
-timeZoneOffsetInHours | The offset from GMT in hours
-marker | Special marker for the samples
-
-## CustomSfuEvent
-
-
-Field | Description 
---- | ---
-name (**Mandatory**) | the name of the event used as identifier. (e.g.: CLIENT_REJOINED, etc..)
-value | the value of the event
-transportId | The unique identifier of the sfu transport the event is related to
-sfuStreamId | The identifier of the sfu stream the event is related to
-sfuSinkId | The identifier of the sfu sink the event is related to
-message | the human readable message of the event
-attachments | Additional attachment relevant for the event
-timestamp | The EPOCH timestamp the event is generated
-
-## SfuTransport
-
-
-Field | Description 
---- | ---
-transportId (**Mandatory**) | The generated unique identifier of the transport
-noReport | Flag indicate to not generate report from this sample
-internal | Flag to indicate that the transport is used as an internal transport between SFU instances
-dtlsState | Represent the current value of the state attribute of the underlying RTCDtlsTransport.
-iceState | Represent the current value of the state attribute of the underlying RTCIceTransport
-sctpState | Represents the the current value of the SCTP state of the transport of the SFU
-iceRole | Represent the current value of the role SFU takes place in ICE
-localAddress | The local address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
-localPort | The local port number
-protocol | The protocol used by the transport
-remoteAddress | The remote address of the ICE candidate selected for the transport (IPv4, IPv6, FQDN)
-remotePort | The remote port number
-rtpBytesReceived | The total amount of RTP bytes received on this transport
-rtpBytesSent | The total amount of RTP bytes sent on this transport
-rtpPacketsReceived | The total amount of RTP packets received on this transport
-rtpPacketsSent | The total amount of RTP packets sent on this transport
-rtpPacketsLost | The total amount of RTP packets lost on this transport
-rtxBytesReceived | The total amount of RTX bytes received on this transport
-rtxBytesSent | The total amount of RTX bytes sent on this transport
-rtxPacketsReceived | The total amount of RTX packets received on this transport
-rtxPacketsSent | The total amount of RTX packets sent on this transport
-rtxPacketsLost | The total amount of RTX packets lost on this transport
-rtxPacketsDiscarded | The total amount of RTX packets discarded on this transport
-sctpBytesReceived | The total amount of SCTP bytes received on this transport
-sctpBytesSent | The total amount of SCTP bytes sent on this transport
-sctpPacketsReceived | The total amount of SCTP packets received on this transport
-sctpPacketsSent | The total amount of SCTP packets sent on this transport
-
-## SfuInboundRtpPad
-
-
-Field | Description 
---- | ---
-transportId (**Mandatory**) | The id of the transport the RTP Pad uses.
-streamId (**Mandatory**) | The id of the media stream the RTP pad belongs to. This id is to group rtp pads (e.g.: simulcast) carrying payloads to the same media. 
-padId (**Mandatory**) | The id of Sfu pad.
-ssrc (**Mandatory**) | The synchronization source id of the RTP stream
-noReport | Flag indicate to not generate report from this sample
-internal | Flag to indicate that the rtp pad is used as an internal communication between SFU instances
-mediaType | the type of the media the stream carries ("audio" or "video") (Possible values are: audio,<br />video)
-payloadType | The payload type field of the RTP header
-mimeType | The negotiated mimeType in the SDP
-clockRate | The clock rate of the media source the RTP header carries
-sdpFmtpLine | The actual SDP line from the negotiation related to this RTP stream
-rid |  The rid parameter of the corresponded RTP stream
-rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
-targetBitrate | he bitrate the corresponded stream targets.
-voiceActivityFlag | The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
-firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
-pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
-nackCount | The total number of negative acknowledgement received on the corresponded RTP stream.
-sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
-packetsLost | The total number of packets lost on the corresponded RTP stream.
-packetsReceived | The total number of packets received on the corresponded RTP stream.
-packetsDiscarded | The total number of discarded packets on the corresponded RTP stream.
-packetsRepaired | The total number of packets repaired by either retransmission or FEC on the corresponded RTP stream.
-packetsFailedDecryption | The total number of packets failed to be decrypted on the corresponded RTP stream.
-packetsDuplicated | The total number of duplicated packets appeared on the corresponded RTP stream.
-fecPacketsReceived | The total number of FEC packets received on the corresponded RTP stream.
-fecPacketsDiscarded | The total number of FEC packets discarded on the corresponded RTP stream.
-bytesReceived | The total amount of payload bytes received on the corresponded RTP stream.
-rtcpSrReceived | The total number of SR reports received by the corresponded RTP stream
-rtcpRrSent | The total number of RR reports sent on the corresponded RTP stream
-rtxPacketsReceived | If rtx packets are sent or received on the same stream then this number indicates how may has been sent
-rtxPacketsDiscarded | If rtx packets are received on the same stream then this number indicates how may has been discarded
-framesReceived | The number of frames received on the corresponded RTP stream
-framesDecoded | Indicate the number of frames the Sfu has been decoded
-keyFramesDecoded | Indicate the number of keyframes the Sfu has been decoded
-fractionLost | The calculated fractionLost of the stream
-jitter | The calculated jitter of the stream
-roundTripTime | The calculated RTT of the stream
-
-## SfuOutboundRtpPad
-
-
-Field | Description 
---- | ---
-transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-streamId (**Mandatory**) | The id of the stream this outbound RTP pad sinks the media from
-sinkId (**Mandatory**) | The id of a group of RTP pad sinks the media stream out from the SFU.
-padId (**Mandatory**) | The id of Sfu pad.
-ssrc (**Mandatory**) | The synchronization source id of the RTP stream
-noReport | Flag indicate to not generate report from this sample
-internal | Flag to indicate that the rtp pad is used as an internal communication between SFU instances
-callId | The callId the event belongs to
-clientId | If the track id was provided by the Sfu, the observer can fill up the information of which client it belongs to
-trackId | The id of the track the RTP stream related to at the client side
-mediaType | the type of the media the stream carries ("audio" or "video") (Possible values are: audio,<br />video)
-payloadType | The payload type field of the RTP header
-mimeType | The negotiated mimeType in the SDP
-clockRate | The clock rate of the media source the RTP header carries
-sdpFmtpLine | The actual SDP line from the negotiation related to this RTP stream
-rid |  The rid parameter of the corresponded RTP stream
-rtxSsrc | If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
-targetBitrate | he bitrate the corresponded stream targets.
-voiceActivityFlag | The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
-firCount | The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
-pliCount | The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
-nackCount | The total number of negative acknowledgement received on the corresponded RTP stream.
-sliCount | The total number of SLI indicator sent from the endpoint on the corresponded RTP stream. Only for Audio stream
-packetsLost | The total number of packets lost on the corresponded RTP stream.
-packetsSent | The total number of packets sent on the corresponded RTP stream.
-packetsDiscarded | The total number of discarded packets on the corresponded RTP stream.
-packetsRetransmitted | The total number of packets retransmitted on the corresponded RTP stream.
-packetsFailedEncryption | The total number of packets failed to be encrypted on the corresponded RTP stream.
-packetsDuplicated | The total number of duplicated packets appeared on the corresponded RTP stream.
-fecPacketsSent | The total number of FEC packets sent on the corresponded RTP stream.
-fecPacketsDiscarded | The total number of FEC packets discarded on the corresponded RTP stream.
-bytesSent | The total amount of payload bytes sent on the corresponded RTP stream.
-rtcpSrSent | The total number of SR reports sent by the corresponded RTP stream
-rtcpRrReceived | The total number of RR reports received on the corresponded RTP stream
-rtxPacketsSent | If rtx packets sent on the same stream then this number indicates how may has been sent
-rtxPacketsDiscarded | If rtx packets are received on the same stream then this number indicates how may has been discarded
-framesSent | The number of frames sent on the corresponded RTP stream
-framesEncoded | Indicate the number of frames the Sfu has been encoded
-keyFramesEncoded | Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
-fractionLost | The calculated fractionLost of the stream
-jitter | The calculated jitter of the stream
-roundTripTime | The calculated RTT of the stream
-
-## SfuSctpChannel
-
-
-Field | Description 
---- | ---
-transportId (**Mandatory**) | The id of the transport the RTP stream uses.
-streamId (**Mandatory**) | The id of the sctp stream
-channelId (**Mandatory**) | The id of the sctp stream
-noReport | Flag indicate to not generate report from this sample
-internal | Flag to indicate that the SCTP channel is used as an internally between SFU instances
-label | The label of the sctp stream
-protocol | The protocol used to establish an sctp stream
-sctpSmoothedRoundTripTime | The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.
-sctpCongestionWindow | The latest congestion window, corresponding to spinfo_cwnd defined in [RFC6458].
-sctpReceiverWindow | The latest receiver window, corresponding to sstat_rwnd defined in [RFC6458].
-sctpMtu | The latest maximum transmission unit, corresponding to spinfo_mtu defined in [RFC6458].
-sctpUnackData | The number of unacknowledged DATA chunks, corresponding to sstat_unackdata defined in [RFC6458].
-messageReceived | The number of message received on the corresponded SCTP stream.
-messageSent | The number of message sent on the corresponded SCTP stream.
-bytesReceived | The number of bytes received on the corresponded SCTP stream.
-bytesSent | The number of bytes sent on the corresponded SCTP stream.
-
-## SfuExtensionStats
-
-
-Field | Description 
---- | ---
-type (**Mandatory**) | The type of the extension stats the custom app provides
-payload (**Mandatory**) | The payload of the extension stats the custom app provides## SfuSample
-
-
-docs
-
-
-Field | Description 
---- | ---
-sfuId (**Mandatory**) | Unique generated id for the sfu samples are originated from
-timestamp (**Mandatory**) | The timestamp the sample is created in GMT
-timeZoneOffsetInHours | The offset from GMT in hours
-marker | Special marker for the samples
-customSfuEvents | User provided custom call events
-transports | The Sfu Transports obtained measurements
-inboundRtpPads | The Sfu Inbound Rtp Pad obtained measurements
-outboundRtpPads | The Sfu Outbound Rtp Pad obtained measurements
-sctpChannels | The Sfu Outbound Rtp Pad obtained measurements
-extensionStats | The Sfu provided custom stats payload
-
-## TurnPeerAllocation
-
-
-Field | Description 
---- | ---
-peerId (**Mandatory**) | a unique id for the allocation
-sessionId (**Mandatory**) | The corresponded session the allocation belongs to
-relayedAddress (**Mandatory**) | The allocated address
-relayedPort (**Mandatory**) | The allocated port
-transportProtocol (**Mandatory**) | protocol (TCP, UDP)
-peerAddress | The address of the address the serever connect to
-peerPort | The portnumber the server connects to
-sendingBitrate | the bitrate the TURN server sending to the peer
-receivingBitrate | the bitrate the TURN server receiving from the peer
-sentBytes | the amount of bytes sent to the peer
-receivedBytes | the amount of bytes received from the peer
-sentPackets | the amount of packets sent to the peer
-receivedPackets | the amount of packets received from the peer
-
-## TurnSession
-
-
-Field | Description 
---- | ---
-sessionId (**Mandatory**) | Flag indicate to not generate report from this sample
-realm | The Authentication Realm (RFC 8656)
-username | The username of the used in authentication
-clientId | The id of the client the TURN session belongs to (ClientSample)
-started | The timestamp when the session has been started. Epoch in milliseconds, GMT
-nonceExpirationTime | For each Allocate request, the server SHOULD generate a new random nonce when the allocation is first attempted following the randomness recommendations in [RFC4086] and SHOULD expire the nonce at least once every hour during the lifetime of the allocation.  Epoch in millis GMT
-serverAddress | The address of the server the client connected to
-serverPort | The portnumber the server listens the client requests
-transportProtocol | the transport protocol betwwen the client and the server (TCP, UDP, TCPTLS, UDPTLS, SCTP, SCTPTLS)
-clientAddress | The address of the client connected from
-clientPort | The portnumber the client requested from
-sendingBitrate | the bitrate the TURN server sending to the client
-receivingBitrate | the bitrate the TURN server receiving from the client
-sentBytes | the amount of bytes sent to the client
-receivedBytes | the amount of bytes received from the client
-sentPackets | the amount of packets sent to the client
-receivedPackets | the amount of packets received from the client## TurnSample
-
-
-docs
-
-
-Field | Description 
---- | ---
-serverId (**Mandatory**) | A unique id of the turn server
-allocations | Peer Alloocation data
-sessions | Session data## Samples
-
-
-Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.
-
-
-Field | Description 
---- | ---
-controls | Additional control flags indicate various operation has to be performed
-clientSamples | Samples taken from the client
-sfuSamples | Samples taken from an Sfu
-turnSamples | Samples taken from the TURN server
-
-
-## Changelog
-## 2.2.2
- * Bugfix for Decoder library decoding IceCandidatePairs
- * remove `schemaVersion` from Reports
-
-## 2.2.1
- * Encoder and Decoder libraries are added
- * added `schemaVersion` to each generated Samples anre Reports
-
-## 2.2.0
-
-### Added
- * CustomCallEvent to ClientSample resembles a CallEventReport, but possible to report from the client side.
- * CustomSfuEvent to SfuSample resembles an SfuEventReport, but possible to report from the SFU side.
-
-
-## 2.1.8
- * change IceCandidatePair Report accordingly to IceCandidatePair sample
-
-## 2.1.7
- * change csv header lowercase to snake case
-
-## 2.1.6
- * change type of `framesDropped` in InboundVideoTrack report from `double` to `int`
-
-## 2.1.5
- * Make `label` field in PeerConnectionTransport optional
-
-## 2.1.4
- * Add `label` field to PeerConnectionTransport
-
-## 2.1.3
- * change type of `framesDropped` in InboundVideoTrack from `double` to `int`
-## 2.1.2
-
-### Renamed
- * `DataChannelStats` record to `DataChannel` in ClientSample
- * `IceCandidatePairStats` record to `IceCandidatePair` in ClientSample
-
-## 2.1.1
-
-### Restored
- * `senderId` field in W3CStats for backward compatibility in client-monitor
- * `rtcpTransportStatsId` field in W3CStats for backward compatibility in client-monitor
-
-
-## 2.1.0
-
-### Added
- * ice candidate pair stats in samples extracted from client transport
- * ice candidate pair report
- * peer connection transport report
- * `mid` field to ClientSamples inbound rtp related stats
- * `jitterBufferMinimumDelay` field to ClientSamples inbound rtp related stats
- * `playoutId` field to ClientSamples inbound rtp related stats
- * `packetsDiscarded` field to ClientSamples inbound rtp related stats
- * `jitterBufferTargetDelay` field to ClientSamples inbound rtp related stats
- * `active` field to ClientSample outbound rtp related stats
- * `droppedSamplesDuration` field to ClientSample audio source related stats
- * `droppedSamplesEvents` field to ClientSample audio source related stats
- * `totalCaptureDelay` field to ClientSample audio source related stats
- * `totalSamplesCaptured` field to ClientSample audio source related stats
- * `dtlsRole` to transport stats
- * `RTCAudioPlayoutStats` to inbound-rtp related stats
-
-
-### Modified
- * pcTransports is changed to contain only peer connection transport fields
-
-### Removed
- * client-transport-report
- 
- * `packetsDiscarded` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `packetsRepaired` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `burstPacketsLost` field from InboundAudioTrack,  InboundVideoTrack samples and reports
- * `burstPacketsDiscarded` field from InboundAudioTrack,  InboundVideoTrack samples and reports
- * `burstLossCount` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `burstDiscardCount` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `burstLossRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `burstDiscardRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `gapLossRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `gapDiscardRate` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `partialFramesLost` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `fullFramesLost` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `averageRtcpInterval` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `voiceActivityFlag` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `frameBitDepth` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `packetsFailedDecryption` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `packetsDuplicated` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `perDscpPacketsReceived` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `sliCount` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `fullFramesLost` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `totalSamplesDecoded` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `samplesDecodedWithSilk` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `samplesDecodedWithCelt` field from InboundAudioTrack, InboundVideoTrack samples and reports
- * `samplesreportsReceived` field from InboundAudioTrack, InboundVideoTrack samples and reports
-
- * `rtxSsrc` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `senderId` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `lastPacketSentTimestamp` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `packetsDiscardedOnSend` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `bytesDiscardedOnSend` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `fecPacketsSent` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `framesDiscardedOnSend` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `totalSamplesSent` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `samplesEncodedWithSilk` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `samplesEncodedWithCelt` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `voiceActivityFlag` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `sliCount` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `frameBitDepth` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `perDscpPacketsSent` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
- * `bitDepth` field from OutboundAudioTrack, OutboundVideoTrack samples and reports
-
-
-## 2.0.4
-
-### Added
- * csv column list for every report. Generated from the schema, required fields first, and fields are in sorted order
-
-## 2.0.3
-
-### Added
- * `remoteSfuId` to SfuInboundRtpPad reports
- * `remoteTransportId` to SfuInboundRtpPad reports
- * `remoteSinkId` to SfuInboundRtpPad reports
- * `remoteRtpPadId` to SfuInboundRtpPad reports
-
-## 2.0.2
-
-### Added
- * `roundTripTime` to SfuOutboundRtp report
-
-## 2.0.1
-
-### Added
- * `internal` attribute to SfuSctpChannel sample
- * `internal` attribute to SfuSctpStream report
- * `internal` attribute to SfuTransport report
-
-## 2.0.0
-
-init
+**Generated from ObserveRTC Schemas v3.0.0** - For the complete schema definitions and generation tools, see the [main repository](https://github.com/observertc/schemas).

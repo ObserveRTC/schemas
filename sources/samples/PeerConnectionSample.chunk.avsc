@@ -1,0 +1,1915 @@
+{
+  "name": "PeerConnectionSample",
+  "type": "record",
+  "doc": "A sample containing statistics and metrics for a WebRTC peer connection",
+  "fields": [
+    {
+      "name": "peerConnectionId",
+      "type": "string",
+      "doc": "Unique identifier of the stats object."
+    },
+    {
+      "name": "attachments",
+      "doc": "Additional information attached to this sample",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "score",
+      "doc": "Calculated score for peer connection (details should be added to scoreReasons)",
+      "type": ["null", "double"],
+      "default": null
+    },
+    {
+      "name": "scoreReasons",
+      "doc": "Details for score calculation",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "inboundTracks",
+      "doc": "Inbound Track Stats items",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "InboundTrackSample",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp when the stats were generated."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "The unique identifier for the stats object."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "Kind of the media (e.g., 'audio' or 'video')."
+              },
+              {
+                "name": "score",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Calculated score for track (details should be added to scoreReasons)"
+              },
+              {
+                "name": "scoreReasons",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Details for score calculation"
+              },
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "outboundTracks",
+      "doc": "Outbound Track Stats items",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "OutboundTrackSample",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp when the stats were generated."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "The unique identifier for the stats object."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "Kind of the media (e.g., 'audio' or 'video')."
+              },
+              {
+                "name": "score",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Calculated score for track (details should be added to scoreReasons)"
+              },
+              {
+                "name": "scoreReasons",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Details for score calculation"
+              },
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "codecs",
+      "doc": "Codec items",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "CodecStats",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp when the stats were generated."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "The unique identifier for the stats object."
+              },
+              {
+                "name": "payloadType",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The payload type of the codec."
+              },
+              {
+                "name": "transportId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The identifier of the transport associated with the codec."
+              },
+              {
+                "name": "mimeType",
+                "type": "string",
+                "doc": "The MIME type of the codec."
+              },
+              {
+                "name": "clockRate",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The clock rate of the codec in Hz."
+              },
+              {
+                "name": "channels",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of audio channels for the codec, if applicable."
+              },
+              {
+                "name": "sdpFmtpLine",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The SDP format-specific parameters line for the codec."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "inboundRtps",
+      "doc": "Inbound RTP Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "InboundRtpStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The time the stats were collected, in high-resolution time."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "Unique identifier of the stats object."
+              },
+              {
+                "name": "ssrc",
+                "type": "long",
+                "doc": "Synchronization source identifier of the RTP stream."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "Kind of the media (e.g., 'audio' or 'video')."
+              },
+              {
+                "name": "transportId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "ID of the transport associated with the RTP stream."
+              },
+              {
+                "name": "codecId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "ID of the codec used for the RTP stream."
+              },
+              {
+                "name": "packetsReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of packets received on the RTP stream."
+              },
+              {
+                "name": "packetsLost",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of packets lost on the RTP stream."
+              },
+              {
+                "name": "jitter",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Jitter of the RTP stream in seconds."
+              },
+              {
+                "name": "trackIdentifier",
+                "type": "string",
+                "doc": "Identifier for the media track associated with the RTP stream."
+              },
+              {
+                "name": "mid",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The media stream identification tag from the SDP media section."
+              },
+              {
+                "name": "remoteId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Remote stats object ID associated with the RTP stream."
+              },
+              {
+                "name": "framesDecoded",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of frames decoded."
+              },
+              {
+                "name": "keyFramesDecoded",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of keyframes decoded."
+              },
+              {
+                "name": "framesRendered",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of frames rendered."
+              },
+              {
+                "name": "framesDropped",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of frames dropped."
+              },
+              {
+                "name": "frameWidth",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Width of the decoded video frames."
+              },
+              {
+                "name": "frameHeight",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Height of the decoded video frames."
+              },
+              {
+                "name": "framesPerSecond",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Frame rate in frames per second."
+              },
+              {
+                "name": "qpSum",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Sum of the Quantization Parameter values for decoded frames."
+              },
+              {
+                "name": "totalDecodeTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total time spent decoding in seconds."
+              },
+              {
+                "name": "totalInterFrameDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Sum of inter-frame delays in seconds."
+              },
+              {
+                "name": "totalSquaredInterFrameDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Sum of squared inter-frame delays in seconds."
+              },
+              {
+                "name": "pauseCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of times playback was paused."
+              },
+              {
+                "name": "totalPausesDuration",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total duration of pauses in seconds."
+              },
+              {
+                "name": "freezeCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of times playback was frozen."
+              },
+              {
+                "name": "totalFreezesDuration",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total duration of freezes in seconds."
+              },
+              {
+                "name": "lastPacketReceivedTimestamp",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Timestamp of the last packet received."
+              },
+              {
+                "name": "headerBytesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Total header bytes received."
+              },
+              {
+                "name": "packetsDiscarded",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Total packets discarded."
+              },
+              {
+                "name": "fecBytesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Total bytes received from FEC."
+              },
+              {
+                "name": "fecPacketsReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Total packets received from FEC."
+              },
+              {
+                "name": "fecPacketsDiscarded",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Total FEC packets discarded."
+              },
+              {
+                "name": "bytesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Total bytes received on the RTP stream."
+              },
+              {
+                "name": "nackCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of NACKs received."
+              },
+              {
+                "name": "firCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of Full Intra Requests received."
+              },
+              {
+                "name": "pliCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of Picture Loss Indications received."
+              },
+              {
+                "name": "totalProcessingDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total processing delay in seconds."
+              },
+              {
+                "name": "estimatedPlayoutTimestamp",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Estimated timestamp of playout."
+              },
+              {
+                "name": "jitterBufferDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total jitter buffer delay in seconds."
+              },
+              {
+                "name": "jitterBufferTargetDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Target delay for the jitter buffer in seconds."
+              },
+              {
+                "name": "jitterBufferEmittedCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of packets emitted from the jitter buffer."
+              },
+              {
+                "name": "jitterBufferMinimumDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Minimum delay of the jitter buffer in seconds."
+              },
+              {
+                "name": "totalSamplesReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Total audio samples received."
+              },
+              {
+                "name": "concealedSamples",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of concealed audio samples."
+              },
+              {
+                "name": "silentConcealedSamples",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of silent audio samples concealed."
+              },
+              {
+                "name": "concealmentEvents",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of audio concealment events."
+              },
+              {
+                "name": "insertedSamplesForDeceleration",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of audio samples inserted for deceleration."
+              },
+              {
+                "name": "removedSamplesForAcceleration",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of audio samples removed for acceleration."
+              },
+              {
+                "name": "audioLevel",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Audio level in the range [0.0, 1.0]."
+              },
+              {
+                "name": "totalAudioEnergy",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total audio energy in the stream."
+              },
+              {
+                "name": "totalSamplesDuration",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total duration of all received audio samples in seconds."
+              },
+              {
+                "name": "framesReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Total number of frames received."
+              },
+              {
+                "name": "decoderImplementation",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Decoder implementation used for decoding frames."
+              },
+              {
+                "name": "playoutId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Playout identifier for the RTP stream."
+              },
+              {
+                "name": "powerEfficientDecoder",
+                "type": ["null", "boolean"],
+                "default": null,
+                "doc": "Indicates if the decoder is power-efficient."
+              },
+              {
+                "name": "framesAssembledFromMultiplePackets",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of frames assembled from multiple packets."
+              },
+              {
+                "name": "totalAssemblyTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total assembly time for frames in seconds."
+              },
+              {
+                "name": "retransmittedPacketsReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of retransmitted packets received."
+              },
+              {
+                "name": "retransmittedBytesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Number of retransmitted bytes received."
+              },
+              {
+                "name": "rtxSsrc",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "SSRC of the retransmission stream."
+              },
+              {
+                "name": "fecSsrc",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "SSRC of the FEC stream."
+              },
+              {
+                "name": "totalCorruptionProbability",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total corruption probability of packets."
+              },
+              {
+                "name": "totalSquaredCorruptionProbability",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "Total squared corruption probability of packets."
+              },
+              {
+                "name": "corruptionMeasurements",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Number of corruption measurements."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "remoteInboundRtps",
+      "doc": "Remote Inbound RTP Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "RemoteInboundRtpStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp for this stats object in DOMHighResTimeStamp format."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "The unique identifier for this stats object."
+              },
+              {
+                "name": "ssrc",
+                "type": "long",
+                "doc": "The SSRC identifier of the RTP stream."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "The type of media ('audio' or 'video')."
+              },
+              {
+                "name": "transportId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the transport used for this stream."
+              },
+              {
+                "name": "codecId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the codec used for this stream."
+              },
+              {
+                "name": "packetsReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of packets received on this stream."
+              },
+              {
+                "name": "packetsLost",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of packets lost on this stream."
+              },
+              {
+                "name": "jitter",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The jitter value for this stream in seconds."
+              },
+              {
+                "name": "localId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the local object corresponding to this remote stream."
+              },
+              {
+                "name": "roundTripTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The most recent RTT measurement for this stream in seconds."
+              },
+              {
+                "name": "totalRoundTripTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The cumulative RTT for all packets on this stream in seconds."
+              },
+              {
+                "name": "fractionLost",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The fraction of packets lost on this stream, calculated over a time interval."
+              },
+              {
+                "name": "roundTripTimeMeasurements",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of RTT measurements for this stream."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "outboundRtps",
+      "doc": "Outbound RTP Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "OutboundRtpStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp for this stats object in DOMHighResTimeStamp format."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "The unique identifier for this stats object."
+              },
+              {
+                "name": "ssrc",
+                "type": "long",
+                "doc": "The SSRC identifier of the RTP stream."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "The type of media ('audio' or 'video')."
+              },
+              {
+                "name": "transportId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the transport used for this stream."
+              },
+              {
+                "name": "codecId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the codec used for this stream."
+              },
+              {
+                "name": "packetsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of packets sent on this stream."
+              },
+              {
+                "name": "bytesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The total number of bytes sent on this stream."
+              },
+              {
+                "name": "mid",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The media ID associated with this RTP stream."
+              },
+              {
+                "name": "mediaSourceId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the media source associated with this stream."
+              },
+              {
+                "name": "remoteId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the remote object corresponding to this stream."
+              },
+              {
+                "name": "rid",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The RID value of the RTP stream."
+              },
+              {
+                "name": "headerBytesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The total number of header bytes sent on this stream."
+              },
+              {
+                "name": "retransmittedPacketsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of retransmitted packets sent on this stream."
+              },
+              {
+                "name": "retransmittedBytesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The number of retransmitted bytes sent on this stream."
+              },
+              {
+                "name": "rtxSsrc",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The SSRC for the RTX stream, if applicable."
+              },
+              {
+                "name": "targetBitrate",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The target bitrate for this RTP stream in bits per second."
+              },
+              {
+                "name": "totalEncodedBytesTarget",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The total target encoded bytes for this stream."
+              },
+              {
+                "name": "frameWidth",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The width of the frames sent in pixels."
+              },
+              {
+                "name": "frameHeight",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The height of the frames sent in pixels."
+              },
+              {
+                "name": "framesPerSecond",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The number of frames sent per second."
+              },
+              {
+                "name": "framesSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of frames sent on this stream."
+              },
+              {
+                "name": "hugeFramesSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of huge frames sent on this stream."
+              },
+              {
+                "name": "framesEncoded",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of frames encoded on this stream."
+              },
+              {
+                "name": "keyFramesEncoded",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of key frames encoded on this stream."
+              },
+              {
+                "name": "qpSum",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The sum of QP values for all frames encoded on this stream."
+              },
+              {
+                "name": "totalEncodeTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total time spent encoding frames on this stream in seconds."
+              },
+              {
+                "name": "totalPacketSendDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total delay for packets sent on this stream in seconds."
+              },
+              {
+                "name": "qualityLimitationReason",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The reason for any quality limitation on this stream."
+              },
+              {
+                "name": "qualityLimitationResolutionChanges",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of resolution changes due to quality limitations."
+              },
+              {
+                "name": "nackCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of NACK packets sent on this stream."
+              },
+              {
+                "name": "firCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of FIR packets sent on this stream."
+              },
+              {
+                "name": "pliCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of PLI packets sent on this stream."
+              },
+              {
+                "name": "encoderImplementation",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The implementation of the encoder used for this stream."
+              },
+              {
+                "name": "powerEfficientEncoder",
+                "type": ["null", "boolean"],
+                "default": null,
+                "doc": "Indicates whether the encoder is power-efficient."
+              },
+              {
+                "name": "active",
+                "type": ["null", "boolean"],
+                "default": null,
+                "doc": "Indicates whether this stream is actively sending data."
+              },
+              {
+                "name": "scalabilityMode",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The scalability mode of the encoder used for this stream."
+              },
+              {
+                "name": "qualityLimitationDurations",
+                "type": [
+                  "null",
+                  {
+                    "type": "record",
+                    "name": "QualityLimitationDurations",
+                    "fields": [
+                      {
+                        "name": "none",
+                        "type": "double",
+                        "doc": "Duration of no quality limitation in seconds."
+                      },
+                      {
+                        "name": "cpu",
+                        "type": "double",
+                        "doc": "Duration of CPU-based quality limitation in seconds."
+                      },
+                      {
+                        "name": "bandwidth",
+                        "type": "double",
+                        "doc": "Duration of bandwidth-based quality limitation in seconds."
+                      },
+                      {
+                        "name": "other",
+                        "type": "double",
+                        "doc": "Duration of other quality limitation reasons in seconds."
+                      }
+                    ]
+                  }
+                ],
+                "doc": "The duration of quality limitation reasons categorized by type.",
+                "default": null
+              },
+
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats."
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "remoteOutboundRtps",
+      "doc": "Remote Outbound RTP Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "RemoteOutboundRtpStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp for this stats object in DOMHighResTimeStamp format."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "The unique identifier for this stats object."
+              },
+              {
+                "name": "ssrc",
+                "type": "long",
+                "doc": "The SSRC identifier of the RTP stream."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "The type of media ('audio' or 'video')."
+              },
+              {
+                "name": "transportId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the transport used for this stream."
+              },
+              {
+                "name": "codecId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the codec used for this stream."
+              },
+              {
+                "name": "packetsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of packets sent on this stream."
+              },
+              {
+                "name": "bytesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The total number of bytes sent on this stream."
+              },
+              {
+                "name": "localId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the local object corresponding to this stream."
+              },
+              {
+                "name": "remoteTimestamp",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The remote timestamp for this stats object in DOMHighResTimeStamp format."
+              },
+              {
+                "name": "reportsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of reports sent on this stream."
+              },
+              {
+                "name": "roundTripTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The current estimated round-trip time for this stream in seconds."
+              },
+              {
+                "name": "totalRoundTripTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total round-trip time for this stream in seconds."
+              },
+              {
+                "name": "roundTripTimeMeasurements",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of round-trip time measurements for this stream."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "mediaSources",
+      "doc": "Audio Source Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "MediaSourceStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of the stat."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "A unique identifier for the stat."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "The type of media ('audio' or 'video')."
+              },
+              {
+                "name": "trackIdentifier",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The identifier of the media track."
+              },
+              /**
+               * Audio Source Fields
+               */
+              {
+                "name": "audioLevel",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The current audio level."
+              },
+              {
+                "name": "totalAudioEnergy",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total audio energy."
+              },
+              {
+                "name": "totalSamplesDuration",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total duration of audio samples."
+              },
+              {
+                "name": "echoReturnLoss",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The echo return loss."
+              },
+              {
+                "name": "echoReturnLossEnhancement",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The enhancement of echo return loss."
+              },
+              /**
+               * Video Source Fields
+               */
+              {
+                "name": "width",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The width of the video."
+              },
+              {
+                "name": "height",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The height of the video."
+              },
+              {
+                "name": "frames",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total number of frames."
+              },
+              {
+                "name": "framesPerSecond",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The frames per second of the video."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "mediaPlayouts",
+      "doc": "Media Playout Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "MediaPlayoutStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of the stat."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "A unique identifier for the stat."
+              },
+              {
+                "name": "kind",
+                "type": "string",
+                "doc": "The kind of media (audio/video)."
+              },
+
+              /**
+               * Audio Playout fields
+               */
+              {
+                "name": "synthesizedSamplesDuration",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The duration of synthesized audio samples."
+              },
+              {
+                "name": "synthesizedSamplesEvents",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of synthesized audio samples events."
+              },
+              {
+                "name": "totalSamplesDuration",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total duration of all audio samples."
+              },
+              {
+                "name": "totalPlayoutDelay",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total delay experienced during audio playout."
+              },
+              {
+                "name": "totalSamplesCount",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The total count of audio samples."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "peerConnectionTransports",
+      "doc": "PeerConnection Transport Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "PeerConnectionTransportStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of the stat."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "A unique identifier for the stat."
+              },
+              {
+                "name": "dataChannelsOpened",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of data channels opened."
+              },
+              {
+                "name": "dataChannelsClosed",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of data channels closed."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "dataChannels",
+      "doc": "Data Channels Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "DataChannelStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of the stat."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "A unique identifier for the stat."
+              },
+              {
+                "name": "label",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The label of the data channel."
+              },
+              {
+                "name": "protocol",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The protocol of the data channel."
+              },
+              {
+                "name": "dataChannelIdentifier",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The identifier for the data channel."
+              },
+              {
+                "name": "state",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The state of the data channel (e.g., 'open', 'closed')."
+              },
+              {
+                "name": "messagesSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of messages sent on the data channel."
+              },
+              {
+                "name": "bytesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The number of bytes sent on the data channel."
+              },
+              {
+                "name": "messagesReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of messages received on the data channel."
+              },
+              {
+                "name": "bytesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The number of bytes received on the data channel."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "iceTransports",
+      "doc": "ICE Transport Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "IceTransportStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of the stat."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "A unique identifier for the stat."
+              },
+              {
+                "name": "packetsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of packets sent."
+              },
+              {
+                "name": "packetsReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of packets received."
+              },
+              {
+                "name": "bytesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The number of bytes sent."
+              },
+              {
+                "name": "bytesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The number of bytes received."
+              },
+              {
+                "name": "iceRole",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ICE role (e.g., 'controlling', 'controlled')."
+              },
+              {
+                "name": "iceLocalUsernameFragment",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The local username fragment for ICE."
+              },
+              {
+                "name": "dtlsState",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The DTLS transport state (e.g., 'new', 'connecting', 'connected')."
+              },
+              {
+                "name": "iceState",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ICE transport state (e.g., 'new', 'checking', 'connected')."
+              },
+              {
+                "name": "selectedCandidatePairId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the selected ICE candidate pair."
+              },
+              {
+                "name": "localCertificateId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the local certificate."
+              },
+              {
+                "name": "remoteCertificateId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the remote certificate."
+              },
+              {
+                "name": "tlsVersion",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The TLS version used for encryption."
+              },
+              {
+                "name": "dtlsCipher",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The DTLS cipher suite used."
+              },
+              {
+                "name": "dtlsRole",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The role in the DTLS handshake (e.g., 'client', 'server')."
+              },
+              {
+                "name": "srtpCipher",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The SRTP cipher used for encryption."
+              },
+              {
+                "name": "selectedCandidatePairChanges",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of changes to the selected ICE candidate pair."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "iceCandidates",
+      "doc": "ICE Candidate Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "IceCandidateStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of the stat."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "A unique identifier for the stat."
+              },
+              {
+                "name": "transportId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The transport ID associated with the ICE candidate."
+              },
+              {
+                "name": "address",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The IP address of the ICE candidate."
+              },
+              {
+                "name": "port",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The port number of the ICE candidate."
+              },
+              {
+                "name": "protocol",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The transport protocol used by the candidate (e.g., 'udp', 'tcp')."
+              },
+              {
+                "name": "candidateType",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The type of the ICE candidate (e.g., 'host', 'srflx', 'relay')."
+              },
+              {
+                "name": "priority",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The priority of the ICE candidate."
+              },
+              {
+                "name": "url",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The URL of the ICE candidate."
+              },
+              {
+                "name": "relayProtocol",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The protocol used for the relay (e.g., 'tcp', 'udp')."
+              },
+              {
+                "name": "foundation",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "A string representing the foundation for the ICE candidate."
+              },
+              {
+                "name": "relatedAddress",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The related address for the ICE candidate (if any)."
+              },
+              {
+                "name": "relatedPort",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The related port for the ICE candidate (if any)."
+              },
+              {
+                "name": "usernameFragment",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The username fragment for the ICE candidate."
+              },
+              {
+                "name": "tcpType",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The TCP type of the ICE candidate (e.g., 'active', 'passive')."
+              },
+
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "iceCandidatePairs",
+      "doc": "ICE Candidate Pair Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "IceCandidatePairStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "The unique identifier for this RTCStats object."
+              },
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of when the stats were recorded, in milliseconds."
+              },
+              {
+                "name": "transportId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The transport id of the connection this candidate pair belongs to."
+              },
+              {
+                "name": "localCandidateId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the local ICE candidate in this pair."
+              },
+              {
+                "name": "remoteCandidateId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The ID of the remote ICE candidate in this pair."
+              },
+              {
+                "name": "state",
+                "type": [
+                  "null",
+                  {
+                    "type": "enum",
+                    "name": "RTCStatsIceCandidatePairState",
+                    "symbols": [
+                      "new",
+                      "inProgress",
+                      "waiting",
+                      "failed",
+                      "succeeded",
+                      "cancelled"
+                    ],
+                    "doc": "The state of the ICE candidate pair."
+                  }
+                ],
+                "default": null
+              },
+              {
+                "name": "nominated",
+                "type": ["null", "boolean"],
+                "default": null,
+                "doc": "Whether this candidate pair has been nominated."
+              },
+              {
+                "name": "packetsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of packets sent using this candidate pair."
+              },
+              {
+                "name": "packetsReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of packets received using this candidate pair."
+              },
+              {
+                "name": "bytesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The total number of bytes sent using this candidate pair."
+              },
+              {
+                "name": "bytesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The total number of bytes received using this candidate pair."
+              },
+              {
+                "name": "lastPacketSentTimestamp",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The timestamp of the last packet sent using this candidate pair."
+              },
+              {
+                "name": "lastPacketReceivedTimestamp",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The timestamp of the last packet received using this candidate pair."
+              },
+              {
+                "name": "totalRoundTripTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The total round trip time (RTT) for this candidate pair in seconds."
+              },
+              {
+                "name": "currentRoundTripTime",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The current round trip time (RTT) for this candidate pair in seconds."
+              },
+              {
+                "name": "availableOutgoingBitrate",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The available outgoing bitrate (in bits per second) for this candidate pair."
+              },
+              {
+                "name": "availableIncomingBitrate",
+                "type": ["null", "double"],
+                "default": null,
+                "doc": "The available incoming bitrate (in bits per second) for this candidate pair."
+              },
+              {
+                "name": "requestsReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of ICE connection requests received by this candidate pair."
+              },
+              {
+                "name": "requestsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of ICE connection requests sent by this candidate pair."
+              },
+              {
+                "name": "responsesReceived",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of ICE connection responses received by this candidate pair."
+              },
+              {
+                "name": "responsesSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of ICE connection responses sent by this candidate pair."
+              },
+              {
+                "name": "consentRequestsSent",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of ICE connection consent requests sent by this candidate pair."
+              },
+              {
+                "name": "packetsDiscardedOnSend",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "The number of packets discarded while attempting to send via this candidate pair."
+              },
+              {
+                "name": "bytesDiscardedOnSend",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "The total number of bytes discarded while attempting to send via this candidate pair."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    },
+
+    {
+      "name": "certificates",
+      "doc": "Certificate Stats",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": {
+            "name": "CertificateStats",
+            "type": "record",
+            "fields": [
+              {
+                "name": "timestamp",
+                "type": "long",
+                "doc": "The timestamp of the stat."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "doc": "A unique identifier for the stat."
+              },
+              {
+                "name": "fingerprint",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The fingerprint of the certificate."
+              },
+              {
+                "name": "fingerprintAlgorithm",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The algorithm used for the fingerprint (e.g., 'SHA-256')."
+              },
+              {
+                "name": "base64Certificate",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The certificate encoded in base64 format."
+              },
+              {
+                "name": "issuerCertificateId",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "The certificate ID of the issuer."
+              },
+              /**
+               * Custom fields
+               */
+              {
+                "name": "attachments",
+                "type": ["null", "string"],
+                "default": null,
+                "doc": "Additional information attached to this stats"
+              }
+            ]
+          }
+        }
+      ],
+      "default": null
+    }
+  ]
+}

@@ -24,7 +24,6 @@ const CSV_OUTPUTS_PATH = `./${OUTPUTS_PATH}/csv`;
 const SQL_OUTPUTS_PATH = `./${OUTPUTS_PATH}/sql`;
 
 const NPM_SAMPLES_LIB_PATH = "./npm-samples-lib";
-const NPM_REPORTS_LIB_PATH = "./npm-reports-lib";
 const W3C_STATS_IDENTIFIERS = "./sources/w3c/W3cStatsIdentifiers.ts";
 
 async function rmDir(folderPath) {
@@ -44,7 +43,7 @@ async function rmDir(folderPath) {
 }
 
 function fetchChunks() {
-    for (const schemaType of ["reports", "samples"]) {
+    for (const schemaType of ["samples"]) {
         const schemaPath = path.join(SOURCE_PATH, schemaType);
         for (const file of fs.readdirSync(schemaPath)) {
             if (!file.endsWith(".chunk.avsc")) continue;
@@ -60,7 +59,7 @@ function fetchChunks() {
 
 function fetchSources() {
     const sources = new Map();
-    for (const schemaType of ["reports", "samples"]) {
+    for (const schemaType of ["samples"]) {
         const schemaPath = path.join(SOURCE_PATH, schemaType);
         for (const file of fs.readdirSync(schemaPath)) {
             if (!file.endsWith("avsc")) continue;
@@ -94,7 +93,6 @@ const main = async () => {
     const sources = fetchSources();
     const w3cStatsIdentifiers = fs.readFileSync(W3C_STATS_IDENTIFIERS, 'utf-8');
     const npmSamplesLib = new NpmLib(NPM_SAMPLES_LIB_PATH);
-    const npmReportsLib = new NpmLib(NPM_REPORTS_LIB_PATH);
     const npmEncoderLib = new NpmSampleEncoderLib();
     const npmDecoderLib = new NpmSamplesDecoderLib();
     const version = fs.readFileSync(path.join(SOURCE_PATH, "version.txt"), 'utf-8');
@@ -103,13 +101,9 @@ const main = async () => {
     const markdownLists = [];
     const bigQueryTables = [];
     const redshiftTables = [];
-    const reportTypes = [
-        `/**\n * Schema Version: ${version} \n */`
-    ];
     for (const [fileName, source] of sources) {
         const avsc = source.getAvsc();
         const schemaType = source.getSchemaType();
-        const isReport = fileName.includes("report");
         let schema;
         try {
             schema = JSON.parse(avsc);
@@ -133,71 +127,40 @@ const main = async () => {
         
         fs.writeFileSync(path.join(TYPESCRIPT_OUTPUTS_PATH, `${schemaName}.ts`), module);
 
-        if (isReport) {
-            const { csvColumnList, createTable } = makeRedshiftSql(schema);
-            const { createTable: createBigqueryTable } = makeBigQuerySql(schema);
-            if (csvColumnList) {
-                fs.writeFileSync(path.join(CSV_OUTPUTS_PATH, `${schemaName}-csv-header.txt`), csvColumnList);
-            } else {
-                console.warn(`No csv header txt is generated for ${schemaName}`);
-            }
-
-            if (createTable) {
-                redshiftTables.push(createTable);
-                // fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `${schemaName}-redshift.sql`), createTable);
-            } else {
-                console.warn(`No redshift sql is generated for ${schemaName}`);
-            }
-            if (createBigqueryTable) {
-                bigQueryTables.push(createBigqueryTable);
-                // fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `${schemaName}-bigquery.sql`), createBigqueryTable);
-            } else {
-                console.warn(`No bigquery sql is generated for ${schemaName}`);
-            }
-            reportTypes.push(module);
-            npmReportsLib.addEntry({
-                fileName,
-                schemaName,
-                schemaType,
-                exports,
-                typescript: module,
-                markdown: markdownDoc,
-            });
-        } else {
+        if (fileName === "ClientSample") {
             npmDecoderLib.addSamplesTsCode(module);
             npmEncoderLib.addSamplesTsCode(module);
-            npmSamplesLib.addEntry({
-                fileName,
-                schemaName,
-                schemaType,
-                exports,
-                typescript: module,
-                markdown: markdownDoc,
-            });
         }
+        npmSamplesLib.addEntry({
+            fileName,
+            schemaName,
+            schemaType,
+            exports,
+            typescript: module,
+            markdown: markdownDoc,
+        });
+        
         fs.writeFileSync(path.join(AVSC_OUTPUTS_PATH, `${schemaName}.avsc`), avsc);
     }
     fs.writeFileSync(`schemaList.md`, markdownLists.join(`\n`))
     fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `bigquery.sql`), bigQueryTables.join("\n\n"));
     fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `redshift.sql`), redshiftTables.join("\n\n"));
-    fs.writeFileSync(path.join(TYPESCRIPT_OUTPUTS_PATH, `ReportTypes.ts`), reportTypes.join("\n"));
     
     // generate protobuf schema if we can
-    
-    const samplesSource = sources.get("samples");
-    if (samplesSource) {
-        const schema = JSON.parse(samplesSource.getAvsc());
+    const clientSampleSource = sources.get("ClientSample");
+    if (clientSampleSource) {
+        const schema = JSON.parse(clientSampleSource.getAvsc());
         const protobufSchema = protobufUtils.convertToProtobufSchema(schema, version);
-        fs.writeFileSync(path.join(PROTO_OUTPUTS_PATH, "ProtobufSamples.proto"), protobufSchema);
+        fs.writeFileSync(path.join(PROTO_OUTPUTS_PATH, "ProtobufClientSample.proto"), protobufSchema);
 
         const protobufSchemaV3 = protobufUtils.convertToProtobufSchemaV3(schema, version);
-        fs.writeFileSync(path.join(PROTO_OUTPUTS_PATH, "ProtobufSamplesV3.proto"), protobufSchemaV3);
+        fs.writeFileSync(path.join(PROTO_OUTPUTS_PATH, "ProtobufClientSampleV3.proto"), protobufSchemaV3);
 
         const protobufSchemaV3Optional = protobufUtils.convertToProtobufSchemaV3(schema, version, true);
-        const v3schemaOptionalPath = path.join(PROTO_OUTPUTS_PATH, "ProtobufSamplesV3Optional.proto");
+        const v3schemaOptionalPath = path.join(PROTO_OUTPUTS_PATH, "ProtobufClientSampleV3Optional.proto");
         fs.writeFileSync(v3schemaOptionalPath, protobufSchemaV3Optional);
         await protobufUtils.createTypescriptModels(v3schemaOptionalPath, path.join(TEMP_PATH));
-        const protobufSchemaV3OptionalTs = fs.readFileSync(path.join(TEMP_PATH, "outputs", "proto", "ProtobufSamplesV3Optional_pb.ts"), 'utf-8');
+        const protobufSchemaV3OptionalTs = fs.readFileSync(path.join(TEMP_PATH, "outputs", "proto", "ProtobufClientSampleV3Optional_pb.ts"), 'utf-8');
         npmEncoderLib.addSamplesProtobufTsCode(protobufSchemaV3OptionalTs);
         npmDecoderLib.addSamplesProtobufTsCode(protobufSchemaV3OptionalTs);
         // console.log(protobufSchemaV3OptionalTs);
@@ -207,20 +170,16 @@ const main = async () => {
     
     const changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
     npmSamplesLib.version = version;
-    npmReportsLib.version = version;
     npmEncoderLib.version = version;
     npmDecoderLib.version = version;
     
     npmSamplesLib.changelog = changelog;
-    npmReportsLib.changelog = changelog;
 
     npmSamplesLib.clear();
-    npmReportsLib.clear();
     npmEncoderLib.clear();
     npmDecoderLib.clear();
 
     npmSamplesLib.make();
-    npmReportsLib.make();
     npmEncoderLib.make();
     npmDecoderLib.make();
 

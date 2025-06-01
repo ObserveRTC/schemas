@@ -67,6 +67,14 @@ function getTsType(avroType, addDoc = true) {
             tsObj = subTsObj;
             tsDependencies = subTsDependencies;
         } else if (subType === "enum") {
+            if (name === "RTCStatsIceCandidatePairState") {
+                const index = symbols.findIndex(s => s === "inProgress") ?? -1;
+
+                if (index > -1) {
+                    symbols[index] = "in-progress";
+                    symbols.push("inprogress")
+                }
+            }
             tsType = `"` + symbols.join(`" | "`) + `"`;
         } else if (subType === "record") {
             tsType = name;
@@ -88,6 +96,15 @@ function getTsType(avroType, addDoc = true) {
         tsObj,
         tsDependencies,
     }
+    
+}
+
+function getAttachmentsTsType() {
+    return {
+        tsType: "Record<string, unknown>",
+        tsObj: undefined,
+        tsDependencies: undefined,
+    }
 }
 
 function makeTsObj(avroSchema, addDoc = true) {
@@ -103,7 +120,7 @@ function makeTsObj(avroSchema, addDoc = true) {
         const tsTypes = [];
         for (const avroType of avroTypes) {
             if (avroType === "null") continue;
-            const { tsType, tsObj, tsDependencies } = getTsType(avroType, addDoc);
+            const { tsType, tsObj, tsDependencies } = field.name === 'attachments' ? getAttachmentsTsType() : getTsType(avroType, addDoc);
             if (tsObj) {
                 dependencies.push(tsObj);
                 if (tsDependencies) {

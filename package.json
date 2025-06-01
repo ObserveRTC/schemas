@@ -1,6 +1,6 @@
 {
   "name": "schema-2.0",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Generator scripts for Schema repository for ObserveRTC",
   "main": "index.js",
   "scripts": {
@@ -24,5 +24,8 @@
     "json-schema-to-markdown": "^1.1.1",
     "protobufjs": "^6.11.2",
     "typedoc": "^0.22.12"
+  },
+  "devDependencies": {
+    "@bufbuild/protoc-gen-es": "^1.0.0"
   }
 }
