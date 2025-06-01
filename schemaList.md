@@ -384,7 +384,7 @@ SfuInboundRtpPad
  * **sdpFmtpLine**: The actual SDP line from the negotiation related to this RTP stream
  * **rid**:  The rid parameter of the corresponded RTP stream
  * **rtxSsrc**: If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
- * **targetBitrate**: he bitrate the corresponded stream targets.
+ * **targetBitrate**: The bitrate the corresponded stream targets.
  * **voiceActivityFlag**: The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
  * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
  * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
@@ -401,11 +401,11 @@ SfuInboundRtpPad
  * **bytesReceived**: The total amount of payload bytes received on the corresponded RTP stream.
  * **rtcpSrReceived**: The total number of SR reports received by the corresponded RTP stream
  * **rtcpRrSent**: The total number of RR reports sent on the corresponded RTP stream
- * **rtxPacketsReceived**: If rtx packets are sent or received on the same stream then this number indicates how may has been sent
- * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how may has been discarded
+ * **rtxPacketsReceived**: If rtx packets are sent or received on the same stream then this number indicates how many have been sent
+ * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how many have been discarded
  * **framesReceived**: The number of frames received on the corresponded RTP stream
- * **framesDecoded**: Indicate the number of frames the Sfu has been decoded
- * **keyFramesDecoded**: Indicate the number of keyframes the Sfu has been decoded
+ * **framesDecoded**: Indicates the number of frames the Sfu has decoded
+ * **keyFramesDecoded**: Indicates the number of keyframes the Sfu has decoded
  * **fractionLost**: The calculated fractionLost of the stream
  * **jitter**: The calculated jitter of the stream
  * **roundTripTime**: The calculated RTT of the stream
@@ -427,7 +427,7 @@ SfuOutboundRtpPad
  * **sdpFmtpLine**: The actual SDP line from the negotiation related to this RTP stream
  * **rid**:  The rid parameter of the corresponded RTP stream
  * **rtxSsrc**: If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
- * **targetBitrate**: he bitrate the corresponded stream targets.
+ * **targetBitrate**: The bitrate the corresponded stream targets.
  * **voiceActivityFlag**: The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
  * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
  * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
@@ -444,11 +444,11 @@ SfuOutboundRtpPad
  * **bytesSent**: The total amount of payload bytes sent on the corresponded RTP stream.
  * **rtcpSrSent**: The total number of SR reports sent by the corresponded RTP stream
  * **rtcpRrReceived**: The total number of RR reports received on the corresponded RTP stream
- * **rtxPacketsSent**: If rtx packets sent on the same stream then this number indicates how may has been sent
- * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how may has been discarded
+ * **rtxPacketsSent**: If rtx packets sent on the same stream then this number indicates how many have been sent
+ * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how many have been discarded
  * **framesSent**: The number of frames sent on the corresponded RTP stream
- * **framesEncoded**: Indicate the number of frames the Sfu has been encoded
- * **keyFramesEncoded**: Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
+ * **framesEncoded**: Indicates the number of frames the Sfu has encoded
+ * **keyFramesEncoded**: Indicates the number of keyframes the Sfu has encoded on the corresponded RTP stream
  * **fractionLost**: The calculated fractionLost of the stream
  * **jitter**: The calculated jitter of the stream
  * **roundTripTime**: The calculated RTT of the stream
@@ -457,7 +457,7 @@ SfuSctpChannel
  * **streamId**: The id of the sctp stream
  * **channelId**: The id of the sctp stream
  * **noReport**: Flag indicate to not generate report from this sample
- * **internal**: Flag to indicate that the SCTP channel is used as an internally between SFU instances
+ * **internal**: Flag to indicate that the SCTP channel is used as an internal communication between SFU instances
  * **label**: The label of the sctp stream
  * **protocol**: The protocol used to establish an sctp stream
  * **sctpSmoothedRoundTripTime**: The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.

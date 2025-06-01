@@ -538,7 +538,7 @@
                         },
                         {
                           "name": "targetBitrate",
-                          "doc": "he bitrate the corresponded stream targets.",
+                          "doc": "The bitrate the corresponded stream targets.",
                           "type": [
                             "null",
                             "int"
@@ -691,7 +691,7 @@
                         },
                         {
                           "name": "rtxPacketsReceived",
-                          "doc": "If rtx packets are sent or received on the same stream then this number indicates how may has been sent",
+                          "doc": "If rtx packets are sent or received on the same stream then this number indicates how many have been sent",
                           "type": [
                             "null",
                             "int"
@@ -700,7 +700,7 @@
                         },
                         {
                           "name": "rtxPacketsDiscarded",
-                          "doc": "If rtx packets are received on the same stream then this number indicates how may has been discarded",
+                          "doc": "If rtx packets are received on the same stream then this number indicates how many have been discarded",
                           "type": [
                             "null",
                             "int"
@@ -718,7 +718,7 @@
                         },
                         {
                           "name": "framesDecoded",
-                          "doc": "Indicate the number of frames the Sfu has been decoded",
+                          "doc": "Indicates the number of frames the Sfu has decoded",
                           "type": [
                             "null",
                             "int"
@@ -727,7 +727,7 @@
                         },
                         {
                           "name": "keyFramesDecoded",
-                          "doc": "Indicate the number of keyframes the Sfu has been decoded",
+                          "doc": "Indicates the number of keyframes the Sfu has decoded",
                           "type": [
                             "null",
                             "int"
@@ -920,7 +920,7 @@
                         },
                         {
                           "name": "targetBitrate",
-                          "doc": "he bitrate the corresponded stream targets.",
+                          "doc": "The bitrate the corresponded stream targets.",
                           "type": [
                             "null",
                             "int"
@@ -1073,7 +1073,7 @@
                         },
                         {
                           "name": "rtxPacketsSent",
-                          "doc": "If rtx packets sent on the same stream then this number indicates how may has been sent",
+                          "doc": "If rtx packets sent on the same stream then this number indicates how many have been sent",
                           "type": [
                             "null",
                             "int"
@@ -1082,7 +1082,7 @@
                         },
                         {
                           "name": "rtxPacketsDiscarded",
-                          "doc": "If rtx packets are received on the same stream then this number indicates how may has been discarded",
+                          "doc": "If rtx packets are received on the same stream then this number indicates how many have been discarded",
                           "type": [
                             "null",
                             "int"
@@ -1100,7 +1100,7 @@
                         },
                         {
                           "name": "framesEncoded",
-                          "doc": "Indicate the number of frames the Sfu has been encoded",
+                          "doc": "Indicates the number of frames the Sfu has encoded",
                           "type": [
                             "null",
                             "int"
@@ -1109,7 +1109,7 @@
                         },
                         {
                           "name": "keyFramesEncoded",
-                          "doc": "Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream",
+                          "doc": "Indicates the number of keyframes the Sfu has encoded on the corresponded RTP stream",
                           "type": [
                             "null",
                             "int"
@@ -1186,7 +1186,7 @@
                         },
                         {
                           "name": "internal",
-                          "doc": "Flag to indicate that the SCTP channel is used as an internally between SFU instances",
+                          "doc": "Flag to indicate that the SCTP channel is used as an internal communication between SFU instances",
                           "type": [
                             "null",
                             "boolean"
