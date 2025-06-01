@@ -43,7 +43,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _kindDecoder: StringToStringDecoder;
     private readonly _timestampDecoder: NumberToNumberDecoder;
     private readonly _activeDecoder: BooleanToBooleanDecoder;
-    private readonly _bytesSentDecoder: NumberToNumberDecoder;
+    private readonly _bytesSentDecoder: BigIntToNumberDecoder;
     private readonly _codecIdDecoder: OneTimePassDecoder<string>;
     private readonly _encoderImplementationDecoder: OneTimePassDecoder<string>;
     private readonly _firCountDecoder: NumberToNumberDecoder;
@@ -52,7 +52,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _framesEncodedDecoder: NumberToNumberDecoder;
     private readonly _framesPerSecondDecoder: NumberToNumberDecoder;
     private readonly _framesSentDecoder: NumberToNumberDecoder;
-    private readonly _headerBytesSentDecoder: NumberToNumberDecoder;
+    private readonly _headerBytesSentDecoder: BigIntToNumberDecoder;
     private readonly _hugeFramesSentDecoder: NumberToNumberDecoder;
     private readonly _keyFramesEncodedDecoder: NumberToNumberDecoder;
     private readonly _mediaSourceIdDecoder: OneTimePassDecoder<string>;
@@ -66,14 +66,14 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _qualityLimitationReasonDecoder: StringToStringDecoder;
     private readonly _qualityLimitationResolutionChangesDecoder: NumberToNumberDecoder;
     private readonly _remoteIdDecoder: StringToStringDecoder;
-    private readonly _retransmittedBytesSentDecoder: NumberToNumberDecoder;
+    private readonly _retransmittedBytesSentDecoder: BigIntToNumberDecoder;
     private readonly _retransmittedPacketsSentDecoder: NumberToNumberDecoder;
     private readonly _ridDecoder: StringToStringDecoder;
     private readonly _rtxSsrcDecoder: BigIntToNumberDecoder;
     private readonly _scalabilityModeDecoder: StringToStringDecoder;
     private readonly _targetBitrateDecoder: NumberToNumberDecoder;
     private readonly _totalEncodeTimeDecoder: NumberToNumberDecoder;
-    private readonly _totalEncodedBytesTargetDecoder: NumberToNumberDecoder;
+    private readonly _totalEncodedBytesTargetDecoder: BigIntToNumberDecoder;
     private readonly _totalPacketSendDelayDecoder: NumberToNumberDecoder;
     private readonly _transportIdDecoder: OneTimePassDecoder<string>;
 
@@ -87,7 +87,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._kindDecoder = new StringToStringDecoder();
         this._timestampDecoder = new NumberToNumberDecoder();
         this._activeDecoder = new BooleanToBooleanDecoder();
-        this._bytesSentDecoder = new NumberToNumberDecoder();
+        this._bytesSentDecoder = new BigIntToNumberDecoder();
         this._codecIdDecoder = new OneTimePassDecoder<string>();
         this._encoderImplementationDecoder = new OneTimePassDecoder<string>();
         this._firCountDecoder = new NumberToNumberDecoder();
@@ -96,7 +96,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._framesEncodedDecoder = new NumberToNumberDecoder();
         this._framesPerSecondDecoder = new NumberToNumberDecoder();
         this._framesSentDecoder = new NumberToNumberDecoder();
-        this._headerBytesSentDecoder = new NumberToNumberDecoder();
+        this._headerBytesSentDecoder = new BigIntToNumberDecoder();
         this._hugeFramesSentDecoder = new NumberToNumberDecoder();
         this._keyFramesEncodedDecoder = new NumberToNumberDecoder();
         this._mediaSourceIdDecoder = new OneTimePassDecoder<string>();
@@ -110,14 +110,14 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._qualityLimitationReasonDecoder = new StringToStringDecoder();
         this._qualityLimitationResolutionChangesDecoder = new NumberToNumberDecoder();
         this._remoteIdDecoder = new StringToStringDecoder();
-        this._retransmittedBytesSentDecoder = new NumberToNumberDecoder();
+        this._retransmittedBytesSentDecoder = new BigIntToNumberDecoder();
         this._retransmittedPacketsSentDecoder = new NumberToNumberDecoder();
         this._ridDecoder = new StringToStringDecoder();
         this._rtxSsrcDecoder = new BigIntToNumberDecoder();
         this._scalabilityModeDecoder = new StringToStringDecoder();
         this._targetBitrateDecoder = new NumberToNumberDecoder();
         this._totalEncodeTimeDecoder = new NumberToNumberDecoder();
-        this._totalEncodedBytesTargetDecoder = new NumberToNumberDecoder();
+        this._totalEncodedBytesTargetDecoder = new BigIntToNumberDecoder();
         this._totalPacketSendDelayDecoder = new NumberToNumberDecoder();
         this._transportIdDecoder = new OneTimePassDecoder<string>();
 

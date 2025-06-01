@@ -49,7 +49,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
   private readonly _kindEncoder: StringToStringEncoder;
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _activeEncoder: BooleanToBooleanEncoder;
-  private readonly _bytesSentEncoder: NumberToNumberEncoder;
+  private readonly _bytesSentEncoder: NumberToBigIntEncoder;
   private readonly _codecIdEncoder: OneTimePassEncoder<string>;
   private readonly _encoderImplementationEncoder: OneTimePassEncoder<string>;
   private readonly _firCountEncoder: NumberToNumberEncoder;
@@ -58,7 +58,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
   private readonly _framesEncodedEncoder: NumberToNumberEncoder;
   private readonly _framesPerSecondEncoder: NumberToNumberEncoder;
   private readonly _framesSentEncoder: NumberToNumberEncoder;
-  private readonly _headerBytesSentEncoder: NumberToNumberEncoder;
+  private readonly _headerBytesSentEncoder: NumberToBigIntEncoder;
   private readonly _hugeFramesSentEncoder: NumberToNumberEncoder;
   private readonly _keyFramesEncodedEncoder: NumberToNumberEncoder;
   private readonly _mediaSourceIdEncoder: OneTimePassEncoder<string>;
@@ -72,14 +72,14 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
   private readonly _qualityLimitationReasonEncoder: StringToStringEncoder;
   private readonly _qualityLimitationResolutionChangesEncoder: NumberToNumberEncoder;
   private readonly _remoteIdEncoder: StringToStringEncoder;
-  private readonly _retransmittedBytesSentEncoder: NumberToNumberEncoder;
+  private readonly _retransmittedBytesSentEncoder: NumberToBigIntEncoder;
   private readonly _retransmittedPacketsSentEncoder: NumberToNumberEncoder;
   private readonly _ridEncoder: StringToStringEncoder;
   private readonly _rtxSsrcEncoder: NumberToBigIntEncoder;
   private readonly _scalabilityModeEncoder: StringToStringEncoder;
   private readonly _targetBitrateEncoder: NumberToNumberEncoder;
   private readonly _totalEncodeTimeEncoder: NumberToNumberEncoder;
-  private readonly _totalEncodedBytesTargetEncoder: NumberToNumberEncoder;
+  private readonly _totalEncodedBytesTargetEncoder: NumberToBigIntEncoder;
   private readonly _totalPacketSendDelayEncoder: NumberToNumberEncoder;
   private readonly _transportIdEncoder: OneTimePassEncoder<string>;
 
@@ -93,7 +93,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._kindEncoder = new StringToStringEncoder();
     this._timestampEncoder = new NumberToNumberEncoder();
     this._activeEncoder = new BooleanToBooleanEncoder();
-    this._bytesSentEncoder = new NumberToNumberEncoder();
+    this._bytesSentEncoder = new NumberToBigIntEncoder();
     this._codecIdEncoder = new OneTimePassEncoder<string>();
     this._encoderImplementationEncoder = new OneTimePassEncoder<string>();
     this._firCountEncoder = new NumberToNumberEncoder();
@@ -102,7 +102,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._framesEncodedEncoder = new NumberToNumberEncoder();
     this._framesPerSecondEncoder = new NumberToNumberEncoder();
     this._framesSentEncoder = new NumberToNumberEncoder();
-    this._headerBytesSentEncoder = new NumberToNumberEncoder();
+    this._headerBytesSentEncoder = new NumberToBigIntEncoder();
     this._hugeFramesSentEncoder = new NumberToNumberEncoder();
     this._keyFramesEncodedEncoder = new NumberToNumberEncoder();
     this._mediaSourceIdEncoder = new OneTimePassEncoder<string>();
@@ -116,14 +116,14 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._qualityLimitationReasonEncoder = new StringToStringEncoder();
     this._qualityLimitationResolutionChangesEncoder = new NumberToNumberEncoder();
     this._remoteIdEncoder = new StringToStringEncoder();
-    this._retransmittedBytesSentEncoder = new NumberToNumberEncoder();
+    this._retransmittedBytesSentEncoder = new NumberToBigIntEncoder();
     this._retransmittedPacketsSentEncoder = new NumberToNumberEncoder();
     this._ridEncoder = new StringToStringEncoder();
     this._rtxSsrcEncoder = new NumberToBigIntEncoder();
     this._scalabilityModeEncoder = new StringToStringEncoder();
     this._targetBitrateEncoder = new NumberToNumberEncoder();
     this._totalEncodeTimeEncoder = new NumberToNumberEncoder();
-    this._totalEncodedBytesTargetEncoder = new NumberToNumberEncoder();
+    this._totalEncodedBytesTargetEncoder = new NumberToBigIntEncoder();
     this._totalPacketSendDelayEncoder = new NumberToNumberEncoder();
     this._transportIdEncoder = new OneTimePassEncoder<string>();
   }
