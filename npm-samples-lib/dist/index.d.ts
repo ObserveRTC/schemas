@@ -1,4 +1,5 @@
 export * from "./samples/ClientSample";
 export * from "./samples/Samples";
 export * as W3CStats from "./w3c/W3cStatsIdentifiers";
-export const version = "3.1.0";
+export declare const version = "3.0.0";
+//# sourceMappingURL=index.d.ts.map
