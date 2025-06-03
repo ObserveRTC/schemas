@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@observertc%2Fsamples-decoder.svg)](https://badge.fury.io/js/@observertc%2Fsamples-decoder)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-High-performance binary decoder for ObserveRTC WebRTC observability samples. This library provides efficient decoding of compressed WebRTC statistics back to their original format, enabling real-time processing and analytics on the server side.
+Binary decoder for ObserveRTC WebRTC observability samples. This library provides decoding of compressed WebRTC statistics back to their original format, enabling processing and analytics on the server side.
 
 ## Table of Contents
 
@@ -26,16 +26,16 @@ High-performance binary decoder for ObserveRTC WebRTC observability samples. Thi
 The ObserveRTC Samples Decoder reverses the compression process applied by the encoder, reconstructing full WebRTC observability data from binary Protocol Buffer messages. It handles:
 
 1. **Differential Decompression** - Reconstructs complete samples from delta changes
-2. **Protocol Buffer Deserialization** - Efficient binary data parsing
+2. **Protocol Buffer Deserialization** - Binary data parsing
 3. **State Management** - Maintains decoder state for accurate reconstruction
 4. **Type Safety** - Full TypeScript support for decoded samples
 
 ## Features
 
-### 🚀 **High Performance**
+### 🚀 **Optimized Performance**
 
-- **Ultra-Fast Decoding** - Sub-millisecond decoding for real-time analytics
-- **Memory Efficient** - Optimized memory usage with object pooling
+- **Efficient Decoding** - Designed for real-time analytics
+- **Memory Conscious** - Optimized memory usage with object pooling
 - **Streaming Support** - Process samples as they arrive
 
 ### 📦 **Complete Sample Support**
@@ -738,38 +738,18 @@ class CodecStatsDecoder {
 
 ## Performance
 
-### Decoding Performance
+The decoder utilizes Protocol Buffer deserialization and differential decompression to reconstruct WebRTC statistics from binary data. Performance characteristics will vary based on:
 
-Benchmark results on standard hardware (measurements in microseconds):
+- Sample complexity and encoded data size
+- Frequency of decoding operations
+- Hardware specifications
+- JavaScript engine optimizations
 
-| Operation                   | 1 Participant | 5 Participants | 10 Participants | 50 Participants |
-| --------------------------- | ------------- | -------------- | --------------- | --------------- |
-| Base64 Decode               | 120µs         | 280µs          | 520µs           | 2.1ms           |
-| Binary Decode               | 80µs          | 190µs          | 350µs           | 1.4ms           |
-| Differential Reconstruction | 45µs          | 110µs          | 200µs           | 0.8ms           |
-| Memory Usage                | 25KB          | 60KB           | 120KB           | 480KB           |
-
-### Throughput Measurements
-
-Real-world throughput for continuous decoding:
-
-| Scenario                       | Samples/Second | Memory Usage | CPU Usage |
-| ------------------------------ | -------------- | ------------ | --------- |
-| Small conference (5 clients)   | 50,000         | 120MB        | 2%        |
-| Medium conference (25 clients) | 10,000         | 300MB        | 8%        |
-| Large conference (100 clients) | 2,500          | 800MB        | 15%       |
-| Enterprise (500 clients)       | 500            | 2GB          | 35%       |
-
-### Real-World Analytics
-
-Production measurements from monitoring services:
-
-| Use Case             | Processing Latency | Data Rate | Success Rate |
-| -------------------- | ------------------ | --------- | ------------ |
-| Real-time dashboards | <5ms               | 1MB/s     | 99.9%        |
-| Stream analytics     | <10ms              | 5MB/s     | 99.8%        |
-| Batch processing     | <50ms              | 50MB/s    | 99.95%       |
-| Historical analysis  | <100ms             | 200MB/s   | 99.99%       |
+Performance considerations:
+- Reuse decoder instances to maintain state for differential decoding
+- Consider processing samples in batches for better throughput
+- Monitor memory usage with large datasets
+- Handle decoding errors gracefully in production environments
 
 ## Advanced Usage
 
@@ -1465,20 +1445,6 @@ git clone https://github.com/observertc/schemas.git
 cd schemas/npm-samples-decoder
 npm install
 npm run build
-npm test
-```
-
-### Performance Testing
-
-```bash
-# Run benchmark tests
-npm run benchmark
-
-# Test memory usage
-npm run test:memory
-
-# Validate decoding accuracy
-npm run test:accuracy
 ```
 
 ### Guidelines
