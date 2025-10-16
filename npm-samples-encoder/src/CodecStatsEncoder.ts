@@ -1,11 +1,12 @@
 import { Encoder } from "./utils";
 import { CodecStats as InputCodecStats } from "./InputSamples";
-import { ClientSample_PeerConnectionSample_CodecStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_CodecStats, ClientSample_PeerConnectionSample_CodecStatsSchema } from "./OutputSamples";
 import {
   AttachmentEncoder,
   NumberToNumberEncoder,
   StringToStringEncoder,
 } from "./utils";
+import { create as createMessage } from "@bufbuild/protobuf";
 
 export class CodecStatsEncoder
   implements Encoder<InputCodecStats, ClientSample_PeerConnectionSample_CodecStats>
@@ -53,7 +54,7 @@ export class CodecStatsEncoder
 	}
 
   public encode(sample: InputCodecStats): ClientSample_PeerConnectionSample_CodecStats {
-    return new ClientSample_PeerConnectionSample_CodecStats({
+    return createMessage(ClientSample_PeerConnectionSample_CodecStatsSchema, {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       payloadType: this._payloadTypeEncoder.encode(sample.payloadType),
@@ -63,6 +64,6 @@ export class CodecStatsEncoder
       channels: this._channelsEncoder.encode(sample.channels),
       sdpFmtpLine: this._sdpFmtpLineEncoder.encode(sample.sdpFmtpLine),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    })
   }
 }

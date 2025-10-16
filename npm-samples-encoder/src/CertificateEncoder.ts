@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_CertificateStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_CertificateStatsSchema } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class CertificateEncoder implements Encoder<InputCertificateStats, ClientSample_PeerConnectionSample_CertificateStats> {
+export class CertificateEncoder implements Encoder<InputCertificateStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_CertificateStatsSchema>> {
 	private _visited = false;
 
   private readonly _timestampEncoder: NumberToNumberEncoder;
@@ -41,10 +42,10 @@ export class CertificateEncoder implements Encoder<InputCertificateStats, Client
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputCertificateStats): ClientSample_PeerConnectionSample_CertificateStats {
+  public encode(sample: InputCertificateStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_CertificateStatsSchema> {
 		this._visited = true;
-		
-		return new ClientSample_PeerConnectionSample_CertificateStats({
+
+		return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       fingerprint: this._fingerprintEncoder.encode(sample.fingerprint),
@@ -52,6 +53,6 @@ export class CertificateEncoder implements Encoder<InputCertificateStats, Client
       base64Certificate: this._base64CertificateEncoder.encode(sample.base64Certificate),
       issuerCertificateId: this._issuerCertificateIdEncoder.encode(sample.issuerCertificateId) ,
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

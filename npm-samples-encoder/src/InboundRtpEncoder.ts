@@ -6,11 +6,12 @@ import {
 	OneTimePassEncoder, 
 	StringToStringEncoder 
 } from "./utils";
-import { ClientSample_PeerConnectionSample_InboundRtpStats } from './OutputSamples';
+import { ClientSample_PeerConnectionSample_InboundRtpStatsSchema } from './OutputSamples';
 import { Encoder } from "./utils";
 import { InboundRtpStats } from "./InputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_PeerConnectionSample_InboundRtpStats> {
+export class InboundRtpEncoder implements Encoder<InboundRtpStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_InboundRtpStatsSchema>> {
 	private readonly _ssrc: bigint;
 	private _visited = false;
 
@@ -224,10 +225,10 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 		this._transportIdEncoder.reset();
 	}
 
-	public encode(sample: InboundRtpStats): ClientSample_PeerConnectionSample_InboundRtpStats {
+	public encode(sample: InboundRtpStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_InboundRtpStatsSchema> {
     this._visited = true;
 
-    const result = new ClientSample_PeerConnectionSample_InboundRtpStats({
+    const result = {
         ssrc: this._ssrc,
 		trackIdentifier: this._trackIdentifierEncoder.encode(sample.trackIdentifier),
         attachments: this._attachmentsEncoder.encode(sample.attachments),
@@ -294,7 +295,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
         totalSquaredCorruptionProbability: this._totalSquaredCorruptionProbabilityEncoder.encode(sample.totalSquaredCorruptionProbability),
         totalSquaredInterFrameDelay: this._totalSquaredInterFrameDelayEncoder.encode(sample.totalSquaredInterFrameDelay),
         transportId: this._transportIdEncoder.encode(sample.transportId),
-    });
+    };
 		
 		return result;
 	}

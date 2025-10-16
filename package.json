@@ -18,14 +18,15 @@
     "assets:": "./avro"
   },
   "dependencies": {
-    "@bufbuild/protoc-gen-es": "^1.0.0",
     "argparse": "^2.0.1",
     "avro-js": "^1.10.2",
     "json-schema-to-markdown": "^1.1.1",
     "protobufjs": "^6.11.2",
-    "typedoc": "^0.22.12"
+    "typedoc": "^0.22.12",
+    "@bufbuild/protobuf": "^2.2.3"
   },
   "devDependencies": {
-    "@bufbuild/protoc-gen-es": "^1.0.0"
+    "@bufbuild/buf": "^1.50.0",
+    "@bufbuild/protoc-gen-es": "^2.2.3"
   }
 }

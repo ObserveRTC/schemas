@@ -1,11 +1,12 @@
 import { AttachmentEncoder, NumberToNumberEncoder, StringToStringEncoder } from "./utils";
 import { Encoder } from "./utils";
 import { PeerConnectionTransportStats } from "./InputSamples";
-import { ClientSample_PeerConnectionSample_PeerConnectionTransportStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_PeerConnectionTransportStatsSchema } from "./OutputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
 export class PeerConnectionTransportEncoder
   implements
-    Encoder<PeerConnectionTransportStats, ClientSample_PeerConnectionSample_PeerConnectionTransportStats>
+    Encoder<PeerConnectionTransportStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_PeerConnectionTransportStatsSchema>>
 {
   private _visited = false;
   private readonly _idEncoder: StringToStringEncoder;
@@ -38,10 +39,10 @@ export class PeerConnectionTransportEncoder
 
   public encode(
     sample: PeerConnectionTransportStats
-  ): ClientSample_PeerConnectionSample_PeerConnectionTransportStats {
+  ):  MessageInitShape<typeof ClientSample_PeerConnectionSample_PeerConnectionTransportStatsSchema> {
     this._visited = true;
 
-    return new ClientSample_PeerConnectionSample_PeerConnectionTransportStats({
+    return {
       id: sample.id,
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       dataChannelsOpened: this._dataChannelsOpenedEncoder.encode(
@@ -51,6 +52,6 @@ export class PeerConnectionTransportEncoder
         sample.dataChannelsClosed
       ),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

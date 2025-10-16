@@ -1,8 +1,8 @@
-
 import { ProtobufConverter } from "./ProtobufConverter.js";
 import { ProtobufConverterV3 } from "./ProtobufConverterV3.js";
 import * as pbjs from "protobufjs/cli/pbjs.js";
 import { exec } from 'child_process';
+import fs from 'fs';
 
 const uuidFields = new Set(
         [
@@ -70,14 +70,18 @@ export function convertToProtobufSchemaV3(avroSchema, version, allOptional = fal
 
 export async function createTypescriptModels(protoPath, genOutput) {
     await new Promise((resolve, reject) => {
-        const command = [
-            `PATH=$PATH:$(pwd)/node_modules/.bin`,
-            `protoc`,
-            // `./node_modules/.bin/protoc-gen-es`,
-            `-I . `,
-            `--es_out ${genOutput}`,
-            `--es_opt target=ts`,
-            protoPath
+         const outDir = genOutput || "outputs/proto";
+         // remove previously generated protos to avoid duplicate symbol errors
+         try {
+             if (fs.existsSync(outDir)) {
+                 fs.rmSync(outDir, { recursive: true, force: true });
+             }
+         } catch (err) {
+             // ignore removal errors, proceed to generation
+         }
+
+         const command = [
+            'npx buf generate',
         ].join(" ");
         exec(command, (error, stdout, stderr) => {
             if (error) reject(error);

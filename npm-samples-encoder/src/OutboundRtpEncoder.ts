@@ -6,11 +6,12 @@ import {
   OneTimePassEncoder,
   StringToStringEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_OutboundRtpStats, ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurationsSchema, ClientSample_PeerConnectionSample_OutboundRtpStatsSchema } from "./OutputSamples";
 import { Encoder } from "./utils";
 import { OutboundRtpStats } from "./InputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export class QualityLimitationDurationsEncoder implements Encoder<OutboundRtpStats['qualityLimitationDurations'], ClientSample_PeerConnectionSample_OutboundRtpStats['qualityLimitationDurations']> {
+export class QualityLimitationDurationsEncoder implements Encoder<OutboundRtpStats['qualityLimitationDurations'], MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurationsSchema>> {
   private _value: OutboundRtpStats['qualityLimitationDurations'] | undefined;
 
   public get actualValue() {
@@ -31,17 +32,17 @@ export class QualityLimitationDurationsEncoder implements Encoder<OutboundRtpSta
       return;
     } 
     this._value = newValue;
-    return new ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations({
+    return {
       bandwidth: newValue.bandwidth,
       cpu: newValue.cpu,
       none: newValue.none,
       other: newValue.other,
-    });
+    };
   }
 }
 
 
-export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSample_PeerConnectionSample_OutboundRtpStats> {
+export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundRtpStatsSchema>> {
   private readonly _ssrc: bigint;
   private _visited = false;
 
@@ -174,10 +175,10 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._transportIdEncoder.reset();
   }
 
-  public encode(sample: OutboundRtpStats): ClientSample_PeerConnectionSample_OutboundRtpStats {
+  public encode(sample: OutboundRtpStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundRtpStatsSchema> {
     this._visited = true;
 
-    const result = new ClientSample_PeerConnectionSample_OutboundRtpStats({
+    const result = {
       ssrc: this._ssrc,
       id: this._idEncoder.encode(sample.id),
       kind: this._kindEncoder.encode(sample.kind),
@@ -217,7 +218,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
       totalEncodedBytesTarget: this._totalEncodedBytesTargetEncoder.encode(sample.totalEncodedBytesTarget),
       totalPacketSendDelay: this._totalPacketSendDelayEncoder.encode(sample.totalPacketSendDelay),
       transportId: this._transportIdEncoder.encode(sample.transportId),
-    });
+    };
 
     return result;
 	}

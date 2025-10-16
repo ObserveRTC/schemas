@@ -104,6 +104,7 @@ RemoteInboundRtpStats
  * **totalRoundTripTime**: The cumulative RTT for all packets on this stream in seconds.
  * **fractionLost**: The fraction of packets lost on this stream, calculated over a time interval.
  * **roundTripTimeMeasurements**: The total number of RTT measurements for this stream.
+ * **packetsWithBleachedEct1Marking**: Number of packets with ECT(1) marking that were bleached by a middlebox.
  * **attachments**: Additional information attached to this stats
 QualityLimitationDurations
  * **none**: Duration of no quality limitation in seconds.
@@ -123,6 +124,7 @@ OutboundRtpStats
  * **mediaSourceId**: The ID of the media source associated with this stream.
  * **remoteId**: The ID of the remote object corresponding to this stream.
  * **rid**: The RID value of the RTP stream.
+ * **encodingIndex**: Index of the encoding in the encoding array.
  * **headerBytesSent**: The total number of header bytes sent on this stream.
  * **retransmittedPacketsSent**: The number of retransmitted packets sent on this stream.
  * **retransmittedBytesSent**: The number of retransmitted bytes sent on this stream.
@@ -137,9 +139,12 @@ OutboundRtpStats
  * **framesEncoded**: The total number of frames encoded on this stream.
  * **keyFramesEncoded**: The total number of key frames encoded on this stream.
  * **qpSum**: The sum of QP values for all frames encoded on this stream.
+ * **psnrSum**: Cumulative PSNR measurements categorized by type (e.g., Y, U, V).
+ * **psnrMeasurements**: Total number of PSNR measurements collected.
  * **totalEncodeTime**: The total time spent encoding frames on this stream in seconds.
  * **totalPacketSendDelay**: The total delay for packets sent on this stream in seconds.
- * **qualityLimitationReason**: The reason for any quality limitation on this stream.
+ * **qualityLimitationReason**: The reason for any quality limitation on this stream (e.g., 'cpu', 'bandwidth', 'other').
+ * **qualityLimitationDurations**: The duration of quality limitation reasons categorized by type.
  * **qualityLimitationResolutionChanges**: The number of resolution changes due to quality limitations.
  * **nackCount**: The total number of NACK packets sent on this stream.
  * **firCount**: The total number of FIR packets sent on this stream.
@@ -148,7 +153,7 @@ OutboundRtpStats
  * **powerEfficientEncoder**: Indicates whether the encoder is power-efficient.
  * **active**: Indicates whether this stream is actively sending data.
  * **scalabilityMode**: The scalability mode of the encoder used for this stream.
- * **qualityLimitationDurations**: The duration of quality limitation reasons categorized by type.
+ * **packetsSentWithEct1**: Number of packets sent with ECT(1) congestion marking.
  * **attachments**: Additional information attached to this stats.
 RemoteOutboundRtpStats
  * **timestamp**: The timestamp for this stats object in DOMHighResTimeStamp format.
@@ -228,7 +233,9 @@ IceTransportStats
  * **dtlsRole**: The role in the DTLS handshake (e.g., 'client', 'server').
  * **srtpCipher**: The SRTP cipher used for encryption.
  * **selectedCandidatePairChanges**: The number of changes to the selected ICE candidate pair.
- * **attachments**: Additional information attached to this stats
+ * **ccfbMessagesSent**: Number of congestion control feedback (CCFB) messages sent on this transport.
+ * **ccfbMessagesReceived**: Number of congestion control feedback (CCFB) messages received on this transport.
+ * **attachments**: Additional information attached to this stats.
 IceCandidateStats
  * **timestamp**: The timestamp of the stat.
  * **id**: A unique identifier for the stat.

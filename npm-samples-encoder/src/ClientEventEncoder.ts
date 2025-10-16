@@ -4,9 +4,10 @@ import {
   StringToStringEncoder,
   NumberToNumberEncoder,
 } from "./utils";
-import { ClientSample_ClientEvent as OutputClientEvent } from "./OutputSamples";
+import { ClientSample_ClientEventSchema } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export interface ClientEventEncoder extends Encoder<InputClientEvent, OutputClientEvent> {
+export interface ClientEventEncoder extends Encoder<InputClientEvent, MessageInitShape<typeof ClientSample_ClientEventSchema>> {
 	// empty
 }
 
@@ -34,13 +35,13 @@ export class DefaultClientEventEncoder implements ClientEventEncoder {
     this._timestampEncoder.reset();
   }
 
-  public encode(input: InputClientEvent): OutputClientEvent {
+  public encode(input: InputClientEvent): MessageInitShape<typeof ClientSample_ClientEventSchema> {
     this._visited = true;
 
-    return new OutputClientEvent({
+    return {
       type: this._typeEncoder.encode(input.type),
       payload: this._payloadEncoder.encode(input.payload),
       timestamp: this._timestampEncoder.encode(input.timestamp),
-    });
+    };
   }
 }

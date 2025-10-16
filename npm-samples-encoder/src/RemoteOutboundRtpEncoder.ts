@@ -3,14 +3,14 @@ import {
 	NumberToNumberEncoder,
 	StringToStringEncoder,
 	OneTimePassEncoder,
-	StringToUint8ArrayEncoder,
 	NumberToBigIntEncoder,
 	Encoder,
 } from "./utils";
 import { RemoteOutboundRtpStats } from "./InputSamples";
-import { ClientSample_PeerConnectionSample_RemoteOutboundRtpStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_RemoteOutboundRtpStatsSchema } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class RemoteOutboundRtpEncoder implements Encoder<RemoteOutboundRtpStats, ClientSample_PeerConnectionSample_RemoteOutboundRtpStats> {
+export class RemoteOutboundRtpEncoder implements Encoder<RemoteOutboundRtpStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_RemoteOutboundRtpStatsSchema>> {
 	private readonly _ssrc: bigint;
 	private _visited = false;
 
@@ -72,10 +72,10 @@ export class RemoteOutboundRtpEncoder implements Encoder<RemoteOutboundRtpStats,
 		this._roundTripTimeMeasurementsEncoder.reset();
 	}
 
-	public encode(sample: RemoteOutboundRtpStats): ClientSample_PeerConnectionSample_RemoteOutboundRtpStats {
+	public encode(sample: RemoteOutboundRtpStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_RemoteOutboundRtpStatsSchema> {
 		this._visited = true;
 		
-		return new ClientSample_PeerConnectionSample_RemoteOutboundRtpStats({
+		return {
 			ssrc: this._ssrc,
 			timestamp: this._timestampEncoder.encode(sample.timestamp),
 			id: this._idEncoder.encode(sample.id),
@@ -91,6 +91,6 @@ export class RemoteOutboundRtpEncoder implements Encoder<RemoteOutboundRtpStats,
 			totalRoundTripTime: this._totalRoundTripTimeEncoder.encode(sample.totalRoundTripTime),
 			roundTripTimeMeasurements: this._roundTripTimeMeasurementsEncoder.encode(sample.roundTripTimeMeasurements),
 			attachments: this._attachmentsEncoder.encode(sample.attachments),
-		});
+		};
 	}
 }

@@ -12,7 +12,7 @@ import { PeerConnectionSample as InputClientSample, PeerConnectionSample } from 
 import { MediaSourceStatsEncoder } from "./MediaSourceEncoder";
 import { OutboundRtpEncoder } from "./OutboundRtpEncoder";
 import { OutboundTrackSampleEncoder } from "./OutboundTrackEncoder";
-import { ClientSample_PeerConnectionSample } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample, ClientSample_PeerConnectionSampleSchema } from "./OutputSamples";
 import { PeerConnectionTransportEncoder } from "./PeerConnectionTransportEncoder";
 import { RemoteInboundRtpEncoder } from "./RemoteInboundRtpEncoder";
 import { RemoteOutboundRtpEncoder } from "./RemoteOutboundRtpEncoder";
@@ -26,8 +26,9 @@ import {
 	stringToBytesArray, 
 	uuidToByteArray 
 } from "./utils";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample, ClientSample_PeerConnectionSample>{
+export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample, MessageInitShape<typeof ClientSample_PeerConnectionSampleSchema>>{
 	private readonly _peerConnectionId: Uint8Array;
 	private _visited = false;
 
@@ -88,7 +89,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 		this._certificateEncoders.forEach((encoder) => encoder.reset());
 	}
 
-	public encode(sample: PeerConnectionSample): ClientSample_PeerConnectionSample {
+	public encode(sample: PeerConnectionSample): MessageInitShape<typeof ClientSample_PeerConnectionSampleSchema> {
 		this._visited = true;
 
 		const inboundTracks = sample.inboundTracks?.map(this._encodeInboundTracks.bind(this));
@@ -107,7 +108,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 		const iceCandidatePairs = sample.iceCandidatePairs?.map(this._encodeIceCandidatePair.bind(this));
 		const certificates = sample.certificates?.map(this._encodeCertificate.bind(this));
 
-		return new ClientSample_PeerConnectionSample({
+		return {
 			peerConnectionId: this._peerConnectionId,
 			attachments: this._attachmentsEncoder.encode(sample.attachments),
 			score: this._scoreEncoder.encode(sample.score),
@@ -127,7 +128,7 @@ export class PeerConnectionSampleEncoder implements Encoder<PeerConnectionSample
 			iceCandidates,
 			iceCandidatePairs,
 			certificates,
-		});
+		};
 	}
 
 	private _encodeCodecStats(input: Required<InputClientSample>['codecs'][number]) {

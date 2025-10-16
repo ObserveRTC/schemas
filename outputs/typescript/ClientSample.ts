@@ -444,7 +444,17 @@ export type IceTransportStats = {
 	selectedCandidatePairChanges?: number;
 
 	/**
-	* Additional information attached to this stats
+	* Number of congestion control feedback (CCFB) messages sent on this transport.
+	*/
+	ccfbMessagesSent?: number;
+
+	/**
+	* Number of congestion control feedback (CCFB) messages received on this transport.
+	*/
+	ccfbMessagesReceived?: number;
+
+	/**
+	* Additional information attached to this stats.
 	*/
 	attachments?: Record<string, unknown>;
 
@@ -841,6 +851,11 @@ export type OutboundRtpStats = {
 	rid?: string;
 
 	/**
+	* Index of the encoding in the encoding array.
+	*/
+	encodingIndex?: number;
+
+	/**
 	* The total number of header bytes sent on this stream.
 	*/
 	headerBytesSent?: number;
@@ -911,6 +926,16 @@ export type OutboundRtpStats = {
 	qpSum?: number;
 
 	/**
+	* Cumulative PSNR measurements categorized by type (e.g., Y, U, V).
+	*/
+	psnrSum?: ;
+
+	/**
+	* Total number of PSNR measurements collected.
+	*/
+	psnrMeasurements?: number;
+
+	/**
 	* The total time spent encoding frames on this stream in seconds.
 	*/
 	totalEncodeTime?: number;
@@ -921,9 +946,14 @@ export type OutboundRtpStats = {
 	totalPacketSendDelay?: number;
 
 	/**
-	* The reason for any quality limitation on this stream.
+	* The reason for any quality limitation on this stream (e.g., 'cpu', 'bandwidth', 'other').
 	*/
 	qualityLimitationReason?: string;
+
+	/**
+	* The duration of quality limitation reasons categorized by type.
+	*/
+	qualityLimitationDurations?: QualityLimitationDurations;
 
 	/**
 	* The number of resolution changes due to quality limitations.
@@ -966,9 +996,9 @@ export type OutboundRtpStats = {
 	scalabilityMode?: string;
 
 	/**
-	* The duration of quality limitation reasons categorized by type.
+	* Number of packets sent with ECT(1) congestion marking.
 	*/
-	qualityLimitationDurations?: QualityLimitationDurations;
+	packetsSentWithEct1?: number;
 
 	/**
 	* Additional information attached to this stats.
@@ -1050,6 +1080,11 @@ export type RemoteInboundRtpStats = {
 	* The total number of RTT measurements for this stream.
 	*/
 	roundTripTimeMeasurements?: number;
+
+	/**
+	* Number of packets with ECT(1) marking that were bleached by a middlebox.
+	*/
+	packetsWithBleachedEct1Marking?: number;
 
 	/**
 	* Additional information attached to this stats

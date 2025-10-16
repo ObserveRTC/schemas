@@ -44,7 +44,7 @@ message ClientSample {
 			double audioLevel = 7;
 			int64 bytesReceived = 8;
 			string codecId = 9;
-			int32 concealedSamples = 10;
+			int64 concealedSamples = 10;
 			int32 concealmentEvents = 11;
 			int32 corruptionMeasurements = 12;
 			string decoderImplementation = 13;
@@ -64,7 +64,7 @@ message ClientSample {
 			int32 framesRendered = 27;
 			int32 freezeCount = 28;
 			int64 headerBytesReceived = 29;
-			int32 insertedSamplesForDeceleration = 30;
+			int64 insertedSamplesForDeceleration = 30;
 			double jitter = 31;
 			double jitterBufferDelay = 32;
 			int32 jitterBufferEmittedCount = 33;
@@ -83,11 +83,11 @@ message ClientSample {
 			bool powerEfficientDecoder = 46;
 			double qpSum = 47;
 			string remoteId = 48;
-			int32 removedSamplesForAcceleration = 49;
+			int64 removedSamplesForAcceleration = 49;
 			int64 retransmittedBytesReceived = 50;
 			int32 retransmittedPacketsReceived = 51;
 			int64 rtxSsrc = 52;
-			int32 silentConcealedSamples = 53;
+			int64 silentConcealedSamples = 53;
 			double totalAssemblyTime = 54;
 			double totalAudioEnergy = 55;
 			double totalCorruptionProbability = 56;
@@ -97,7 +97,7 @@ message ClientSample {
 			double totalPausesDuration = 60;
 			double totalProcessingDelay = 61;
 			double totalSamplesDuration = 62;
-			int32 totalSamplesReceived = 63;
+			int64 totalSamplesReceived = 63;
 			double totalSquaredCorruptionProbability = 64;
 			double totalSquaredInterFrameDelay = 65;
 			string transportId = 66;
@@ -114,10 +114,11 @@ message ClientSample {
 			string localId = 9;
 			int32 packetsLost = 10;
 			int32 packetsReceived = 11;
-			double roundTripTime = 12;
-			int32 roundTripTimeMeasurements = 13;
-			double totalRoundTripTime = 14;
-			string transportId = 15;
+			int64 packetsWithBleachedEct1Marking = 12;
+			double roundTripTime = 13;
+			int64 roundTripTimeMeasurements = 14;
+			double totalRoundTripTime = 15;
+			string transportId = 16;
 		}
 		message OutboundRtpStats {
 			message QualityLimitationDurations {
@@ -135,36 +136,39 @@ message ClientSample {
 			int64 bytesSent = 7;
 			string codecId = 8;
 			string encoderImplementation = 9;
-			int32 firCount = 10;
-			int32 frameHeight = 11;
-			int32 frameWidth = 12;
-			int32 framesEncoded = 13;
-			double framesPerSecond = 14;
-			int32 framesSent = 15;
-			int64 headerBytesSent = 16;
-			int32 hugeFramesSent = 17;
-			int32 keyFramesEncoded = 18;
-			string mediaSourceId = 19;
-			string mid = 20;
-			int32 nackCount = 21;
-			int32 packetsSent = 22;
-			int32 pliCount = 23;
-			bool powerEfficientEncoder = 24;
-			double qpSum = 25;
-			QualityLimitationDurations qualityLimitationDurations = 26;
-			string qualityLimitationReason = 27;
-			int32 qualityLimitationResolutionChanges = 28;
-			string remoteId = 29;
-			int64 retransmittedBytesSent = 30;
-			int32 retransmittedPacketsSent = 31;
-			string rid = 32;
-			int64 rtxSsrc = 33;
-			string scalabilityMode = 34;
-			double targetBitrate = 35;
-			double totalEncodeTime = 36;
-			int64 totalEncodedBytesTarget = 37;
-			double totalPacketSendDelay = 38;
-			string transportId = 39;
+			int32 encodingIndex = 10;
+			int32 firCount = 11;
+			int32 frameHeight = 12;
+			int32 frameWidth = 13;
+			int32 framesEncoded = 14;
+			double framesPerSecond = 15;
+			int32 framesSent = 16;
+			int64 headerBytesSent = 17;
+			int32 hugeFramesSent = 18;
+			int32 keyFramesEncoded = 19;
+			string mediaSourceId = 20;
+			string mid = 21;
+			int32 nackCount = 22;
+			int32 packetsSent = 23;
+			int64 packetsSentWithEct1 = 24;
+			int32 pliCount = 25;
+			bool powerEfficientEncoder = 26;
+			int64 psnrMeasurements = 27;
+			int64 qpSum = 28;
+			QualityLimitationDurations qualityLimitationDurations = 29;
+			string qualityLimitationReason = 30;
+			int32 qualityLimitationResolutionChanges = 31;
+			string remoteId = 32;
+			int64 retransmittedBytesSent = 33;
+			int32 retransmittedPacketsSent = 34;
+			string rid = 35;
+			int64 rtxSsrc = 36;
+			string scalabilityMode = 37;
+			double targetBitrate = 38;
+			double totalEncodeTime = 39;
+			int64 totalEncodedBytesTarget = 40;
+			double totalPacketSendDelay = 41;
+			string transportId = 42;
 		}
 		message RemoteOutboundRtpStats {
 			string id = 1;
@@ -205,9 +209,9 @@ message ClientSample {
 			double timestamp = 3;
 			string attachments = 4;
 			double synthesizedSamplesDuration = 5;
-			int32 synthesizedSamplesEvents = 6;
+			int64 synthesizedSamplesEvents = 6;
 			double totalPlayoutDelay = 7;
-			int32 totalSamplesCount = 8;
+			int64 totalSamplesCount = 8;
 			double totalSamplesDuration = 9;
 		}
 		message PeerConnectionTransportStats {
@@ -236,20 +240,22 @@ message ClientSample {
 			string attachments = 3;
 			int64 bytesReceived = 4;
 			int64 bytesSent = 5;
-			string dtlsCipher = 6;
-			string dtlsRole = 7;
-			string dtlsState = 8;
-			string iceLocalUsernameFragment = 9;
-			string iceRole = 10;
-			string iceState = 11;
-			string localCertificateId = 12;
-			int32 packetsReceived = 13;
-			int32 packetsSent = 14;
-			string remoteCertificateId = 15;
-			int32 selectedCandidatePairChanges = 16;
-			string selectedCandidatePairId = 17;
-			string srtpCipher = 18;
-			string tlsVersion = 19;
+			int64 ccfbMessagesReceived = 6;
+			int64 ccfbMessagesSent = 7;
+			string dtlsCipher = 8;
+			string dtlsRole = 9;
+			string dtlsState = 10;
+			string iceLocalUsernameFragment = 11;
+			string iceRole = 12;
+			string iceState = 13;
+			string localCertificateId = 14;
+			int64 packetsReceived = 15;
+			int64 packetsSent = 16;
+			string remoteCertificateId = 17;
+			int64 selectedCandidatePairChanges = 18;
+			string selectedCandidatePairId = 19;
+			string srtpCipher = 20;
+			string tlsVersion = 21;
 		}
 		message IceCandidateStats {
 			string id = 1;

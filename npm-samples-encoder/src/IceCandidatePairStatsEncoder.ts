@@ -5,10 +5,11 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_IceCandidatePairStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_IceCandidatePairStatsSchema } from "./OutputSamples";
 import { ClientSample_PeerConnectionSample_IceCandidatePairStats_IceCandidatePairStatsEnum } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairStats, ClientSample_PeerConnectionSample_IceCandidatePairStats> {
+export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_IceCandidatePairStatsSchema>> {
   private _visited = false;
 
   private readonly _availableIncomingBitrateEncoder: NumberToNumberEncoder;
@@ -96,10 +97,10 @@ export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairSta
     this._stateEncoder.reset();
   }
 
-  public encode(sample: InputIceCandidatePairStats): ClientSample_PeerConnectionSample_IceCandidatePairStats {
+  public encode(sample: InputIceCandidatePairStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_IceCandidatePairStatsSchema> {
     this._visited = true;
 
-    return new ClientSample_PeerConnectionSample_IceCandidatePairStats({
+    return {
       id: sample.id,
       availableIncomingBitrate: this._availableIncomingBitrateEncoder.encode(sample.availableIncomingBitrate),
       availableOutgoingBitrate: this._availableOutgoingBitrateEncoder.encode(sample.availableOutgoingBitrate),
@@ -125,7 +126,7 @@ export class IceCandidatePairEncoder implements Encoder<InputIceCandidatePairSta
       transportId: this._transportIdEncoder.encode(sample.transportId),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
       state: this._stateEncoder.encode(sample.state),
-    });
+    };
   }
 }
 

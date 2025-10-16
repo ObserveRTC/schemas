@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_IceTransportStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_IceTransportStats, ClientSample_PeerConnectionSample_IceTransportStatsSchema } from "./OutputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export class IceTransportEncoder implements Encoder<InputIceTransportStats, ClientSample_PeerConnectionSample_IceTransportStats> {
+export class IceTransportEncoder implements Encoder<InputIceTransportStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_IceTransportStatsSchema>> {
 	private _visited = false;
 
   private readonly _timestampEncoder: NumberToNumberEncoder;
@@ -77,10 +78,10 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputIceTransportStats): ClientSample_PeerConnectionSample_IceTransportStats {
+  public encode(sample: InputIceTransportStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_IceTransportStatsSchema> {
     this._visited = true;
-		
-		return new ClientSample_PeerConnectionSample_IceTransportStats({
+
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       packetsSent: this._packetsSentEncoder.encode(sample.packetsSent),
@@ -100,6 +101,6 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
       srtpCipher: this._srtpCipherEncoder.encode(sample.srtpCipher),
       selectedCandidatePairChanges: this._selectedCandidatePairChangesEncoder.encode(sample.selectedCandidatePairChanges),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

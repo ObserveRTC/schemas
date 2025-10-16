@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_MediaPlayoutStats as OutputMediaPlayoutStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_MediaPlayoutStatsSchema } from "./OutputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats, OutputMediaPlayoutStats> {
+export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_MediaPlayoutStatsSchema>> {
   private _visited = false;
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _idEncoder: StringToStringEncoder;
@@ -49,10 +50,10 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputMediaPlayoutStats): OutputMediaPlayoutStats {
+  public encode(sample: InputMediaPlayoutStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_MediaPlayoutStatsSchema> {
     this._visited = true;
 
-    return new OutputMediaPlayoutStats({
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
@@ -62,6 +63,6 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
       totalPlayoutDelay: this._totalPlayoutDelayEncoder.encode(sample.totalPlayoutDelay),
       totalSamplesCount: this._totalSamplesCountEncoder.encode(sample.totalSamplesCount),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_OutboundTrackSample as OutputOutboundTrackSample } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_OutboundTrackSampleSchema } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class OutboundTrackSampleEncoder implements Encoder<InputOutboundTrackSample, OutputOutboundTrackSample> {
+export class OutboundTrackSampleEncoder implements Encoder<InputOutboundTrackSample, MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundTrackSampleSchema>> {
   private _visited = false;
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _idEncoder: StringToStringEncoder;
@@ -40,16 +41,16 @@ export class OutboundTrackSampleEncoder implements Encoder<InputOutboundTrackSam
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputOutboundTrackSample): OutputOutboundTrackSample {
+  public encode(sample: InputOutboundTrackSample): MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundTrackSampleSchema> {
     this._visited = true;
 
-    return new OutputOutboundTrackSample({
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
       score: this._scoreEncoder.encode(sample.score),
       scoreReasons: this._scoreReasonsEncoder.encode(sample.scoreReasons),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

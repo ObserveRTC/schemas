@@ -465,19 +465,19 @@
               },
               {
                 "name": "totalSamplesReceived",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "Total audio samples received."
               },
               {
                 "name": "concealedSamples",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "Number of concealed audio samples."
               },
               {
                 "name": "silentConcealedSamples",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "Number of silent audio samples concealed."
               },
@@ -489,13 +489,13 @@
               },
               {
                 "name": "insertedSamplesForDeceleration",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "Number of audio samples inserted for deceleration."
               },
               {
                 "name": "removedSamplesForAcceleration",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "Number of audio samples removed for acceleration."
               },
@@ -698,9 +698,15 @@
               },
               {
                 "name": "roundTripTimeMeasurements",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The total number of RTT measurements for this stream."
+              },
+              {
+                "name": "packetsWithBleachedEct1Marking",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Number of packets with ECT(1) marking that were bleached by a middlebox."
               },
               /**
                * Custom fields
@@ -798,6 +804,12 @@
                 "doc": "The RID value of the RTP stream."
               },
               {
+                "name": "encodingIndex",
+                "type": ["null", "int"],
+                "default": null,
+                "doc": "Index of the encoding in the encoding array."
+              },
+              {
                 "name": "headerBytesSent",
                 "type": ["null", "long"],
                 "default": null,
@@ -877,9 +889,27 @@
               },
               {
                 "name": "qpSum",
-                "type": ["null", "double"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The sum of QP values for all frames encoded on this stream."
+              },
+              {
+                "name": "psnrSum",
+                "type": [
+                  "null",
+                  {
+                    "type": "map",
+                    "values": "double"
+                  }
+                ],
+                "default": null,
+                "doc": "Cumulative PSNR measurements categorized by type (e.g., Y, U, V)."
+              },
+              {
+                "name": "psnrMeasurements",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Total number of PSNR measurements collected."
               },
               {
                 "name": "totalEncodeTime",
@@ -897,7 +927,41 @@
                 "name": "qualityLimitationReason",
                 "type": ["null", "string"],
                 "default": null,
-                "doc": "The reason for any quality limitation on this stream."
+                "doc": "The reason for any quality limitation on this stream (e.g., 'cpu', 'bandwidth', 'other')."
+              },
+              {
+                "name": "qualityLimitationDurations",
+                "type": [
+                  "null",
+                  {
+                    "type": "record",
+                    "name": "QualityLimitationDurations",
+                    "fields": [
+                      {
+                        "name": "none",
+                        "type": "double",
+                        "doc": "Duration of no quality limitation in seconds."
+                      },
+                      {
+                        "name": "cpu",
+                        "type": "double",
+                        "doc": "Duration of CPU-based quality limitation in seconds."
+                      },
+                      {
+                        "name": "bandwidth",
+                        "type": "double",
+                        "doc": "Duration of bandwidth-based quality limitation in seconds."
+                      },
+                      {
+                        "name": "other",
+                        "type": "double",
+                        "doc": "Duration of other quality limitation reasons in seconds."
+                      }
+                    ]
+                  }
+                ],
+                "doc": "The duration of quality limitation reasons categorized by type.",
+                "default": null
               },
               {
                 "name": "qualityLimitationResolutionChanges",
@@ -948,40 +1012,11 @@
                 "doc": "The scalability mode of the encoder used for this stream."
               },
               {
-                "name": "qualityLimitationDurations",
-                "type": [
-                  "null",
-                  {
-                    "type": "record",
-                    "name": "QualityLimitationDurations",
-                    "fields": [
-                      {
-                        "name": "none",
-                        "type": "double",
-                        "doc": "Duration of no quality limitation in seconds."
-                      },
-                      {
-                        "name": "cpu",
-                        "type": "double",
-                        "doc": "Duration of CPU-based quality limitation in seconds."
-                      },
-                      {
-                        "name": "bandwidth",
-                        "type": "double",
-                        "doc": "Duration of bandwidth-based quality limitation in seconds."
-                      },
-                      {
-                        "name": "other",
-                        "type": "double",
-                        "doc": "Duration of other quality limitation reasons in seconds."
-                      }
-                    ]
-                  }
-                ],
-                "doc": "The duration of quality limitation reasons categorized by type.",
-                "default": null
+                "name": "packetsSentWithEct1",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Number of packets sent with ECT(1) congestion marking."
               },
-
               {
                 "name": "attachments",
                 "type": ["null", "string"],
@@ -1247,7 +1282,7 @@
               },
               {
                 "name": "synthesizedSamplesEvents",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The number of synthesized audio samples events."
               },
@@ -1265,7 +1300,7 @@
               },
               {
                 "name": "totalSamplesCount",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The total count of audio samples."
               },
@@ -1442,13 +1477,13 @@
               },
               {
                 "name": "packetsSent",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The number of packets sent."
               },
               {
                 "name": "packetsReceived",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The number of packets received."
               },
@@ -1532,18 +1567,27 @@
               },
               {
                 "name": "selectedCandidatePairChanges",
-                "type": ["null", "int"],
+                "type": ["null", "long"],
                 "default": null,
                 "doc": "The number of changes to the selected ICE candidate pair."
               },
-              /**
-               * Custom fields
-               */
+              {
+                "name": "ccfbMessagesSent",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Number of congestion control feedback (CCFB) messages sent on this transport."
+              },
+              {
+                "name": "ccfbMessagesReceived",
+                "type": ["null", "long"],
+                "default": null,
+                "doc": "Number of congestion control feedback (CCFB) messages received on this transport."
+              },
               {
                 "name": "attachments",
                 "type": ["null", "string"],
                 "default": null,
-                "doc": "Additional information attached to this stats"
+                "doc": "Additional information attached to this stats."
               }
             ]
           }

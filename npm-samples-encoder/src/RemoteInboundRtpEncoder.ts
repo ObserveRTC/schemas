@@ -3,13 +3,13 @@ import {
   NumberToNumberEncoder,
   StringToStringEncoder,
   OneTimePassEncoder,
-	StringToUint8ArrayEncoder,
 } from "./utils";
 import { RemoteInboundRtpStats } from "./InputSamples";
-import { ClientSample_PeerConnectionSample_RemoteInboundRtpStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_RemoteInboundRtpStats, ClientSample_PeerConnectionSample_RemoteInboundRtpStatsSchema } from "./OutputSamples";
 import { Encoder } from "./utils";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export class RemoteInboundRtpEncoder implements Encoder<RemoteInboundRtpStats, ClientSample_PeerConnectionSample_RemoteInboundRtpStats> {
+export class RemoteInboundRtpEncoder implements Encoder<RemoteInboundRtpStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_RemoteInboundRtpStatsSchema>> {
 	public readonly ssrc: bigint;
   private _visited = false;
 
@@ -70,10 +70,10 @@ export class RemoteInboundRtpEncoder implements Encoder<RemoteInboundRtpStats, C
     this._roundTripTimeMeasurementsEncoder.reset();
   }
 
-  public encode(sample: RemoteInboundRtpStats): ClientSample_PeerConnectionSample_RemoteInboundRtpStats {
+  public encode(sample: RemoteInboundRtpStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_RemoteInboundRtpStatsSchema> {
     this._visited = true;
     
-    return new ClientSample_PeerConnectionSample_RemoteInboundRtpStats({
+    return {
 			ssrc: this.ssrc,
 			
       timestamp: this._timestampEncoder.encode(sample.timestamp),
@@ -90,6 +90,6 @@ export class RemoteInboundRtpEncoder implements Encoder<RemoteInboundRtpStats, C
       fractionLost: this._fractionLostEncoder.encode(sample.fractionLost),
       roundTripTimeMeasurements: this._roundTripTimeMeasurementsEncoder.encode(sample.roundTripTimeMeasurements),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

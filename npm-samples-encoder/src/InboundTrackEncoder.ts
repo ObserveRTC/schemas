@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_InboundTrackSample as OutputInboundTrackSample } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
+import { ClientSample_PeerConnectionSample_InboundTrackSampleSchema } from "./OutputSamples";
 
-export class InboundTrackSampleEncoder implements Encoder<InputInboundTrackSample, OutputInboundTrackSample> {
+export class InboundTrackSampleEncoder implements Encoder<InputInboundTrackSample, MessageInitShape<typeof ClientSample_PeerConnectionSample_InboundTrackSampleSchema>> {
   private _visited = false;
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _idEncoder: StringToStringEncoder;
@@ -37,15 +38,15 @@ export class InboundTrackSampleEncoder implements Encoder<InputInboundTrackSampl
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputInboundTrackSample): OutputInboundTrackSample {
+  public encode(sample: InputInboundTrackSample): MessageInitShape<typeof ClientSample_PeerConnectionSample_InboundTrackSampleSchema> {
     this._visited = true;
 
-    return new OutputInboundTrackSample({
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
       score: this._scoreEncoder.encode(sample.score),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }
