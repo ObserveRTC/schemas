@@ -279,11 +279,12 @@ message ClientSample {
 			enum IceCandidatePairStatsEnum {
 				/* For state */
 				NEW = 0;
-				INPROGRESS = 1;
-				WAITING = 2;
-				FAILED = 3;
-				SUCCEEDED = 4;
-				CANCELLED = 5;
+				FROZEN = 1;
+				INPROGRESS = 2;
+				WAITING = 3;
+				FAILED = 4;
+				SUCCEEDED = 5;
+				CANCELLED = 6;
 			}
 			string id = 1;
 			double timestamp = 2;

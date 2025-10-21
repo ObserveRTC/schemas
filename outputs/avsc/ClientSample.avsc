@@ -2376,6 +2376,7 @@
                               "name": "RTCStatsIceCandidatePairState",
                               "symbols": [
                                 "new",
+                                "frozen",
                                 "inProgress",
                                 "waiting",
                                 "failed",
