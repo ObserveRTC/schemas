@@ -1,5 +1,6 @@
-import { 
+import {
   Decoder,
+  BigIntToNumberDecoder,
   NumberToNumberDecoder,
   StringToStringDecoder,
   OneTimePassDecoder,
@@ -17,13 +18,18 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
   private readonly _transportIdDecoder: OneTimePassDecoder<string>;
   private readonly _codecIdDecoder: OneTimePassDecoder<string>;
   private readonly _packetsReceivedDecoder: NumberToNumberDecoder;
+  private readonly _packetsReceivedWithCeDecoder: NumberToNumberDecoder;
+  private readonly _packetsReceivedWithEct1Decoder: NumberToNumberDecoder;
+  private readonly _packetsReportedAsLostDecoder: NumberToNumberDecoder;
+  private readonly _packetsReportedAsLostButRecoveredDecoder: NumberToNumberDecoder;
   private readonly _packetsLostDecoder: NumberToNumberDecoder;
+  private readonly _packetsWithBleachedEct1MarkingDecoder: BigIntToNumberDecoder;
   private readonly _jitterDecoder: NumberToNumberDecoder;
   private readonly _localIdDecoder: StringToStringDecoder;
   private readonly _roundTripTimeDecoder: NumberToNumberDecoder;
   private readonly _totalRoundTripTimeDecoder: NumberToNumberDecoder;
   private readonly _fractionLostDecoder: NumberToNumberDecoder;
-  private readonly _roundTripTimeMeasurementsDecoder: NumberToNumberDecoder;
+  private readonly _roundTripTimeMeasurementsDecoder: BigIntToNumberDecoder;
 
   private _actualValue: OutputRemoteInboundRtpStats | undefined = undefined;
 
@@ -37,13 +43,18 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
       this._transportIdDecoder = new OneTimePassDecoder<string>();
       this._codecIdDecoder = new OneTimePassDecoder<string>();
       this._packetsReceivedDecoder = new NumberToNumberDecoder();
+      this._packetsReceivedWithCeDecoder = new NumberToNumberDecoder();
+      this._packetsReceivedWithEct1Decoder = new NumberToNumberDecoder();
+      this._packetsReportedAsLostDecoder = new NumberToNumberDecoder();
+      this._packetsReportedAsLostButRecoveredDecoder = new NumberToNumberDecoder();
       this._packetsLostDecoder = new NumberToNumberDecoder();
+      this._packetsWithBleachedEct1MarkingDecoder = new BigIntToNumberDecoder();
       this._jitterDecoder = new NumberToNumberDecoder();
       this._localIdDecoder = new StringToStringDecoder();
       this._roundTripTimeDecoder = new NumberToNumberDecoder();
       this._totalRoundTripTimeDecoder = new NumberToNumberDecoder();
       this._fractionLostDecoder = new NumberToNumberDecoder();
-      this._roundTripTimeMeasurementsDecoder = new NumberToNumberDecoder();
+      this._roundTripTimeMeasurementsDecoder = new BigIntToNumberDecoder();
   }
 
   public get visited(): boolean {
@@ -59,7 +70,12 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
       this._transportIdDecoder.reset();
       this._codecIdDecoder.reset();
       this._packetsReceivedDecoder.reset();
+      this._packetsReceivedWithCeDecoder.reset();
+      this._packetsReceivedWithEct1Decoder.reset();
+      this._packetsReportedAsLostDecoder.reset();
+      this._packetsReportedAsLostButRecoveredDecoder.reset();
       this._packetsLostDecoder.reset();
+      this._packetsWithBleachedEct1MarkingDecoder.reset();
       this._jitterDecoder.reset();
       this._localIdDecoder.reset();
       this._roundTripTimeDecoder.reset();
@@ -88,7 +104,12 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
           transportId: this._transportIdDecoder.decode(input.transportId),
           codecId: this._codecIdDecoder.decode(input.codecId),
           packetsReceived: this._packetsReceivedDecoder.decode(input.packetsReceived),
+          packetsReceivedWithCe: this._packetsReceivedWithCeDecoder.decode(input.packetsReceivedWithCe),
+          packetsReceivedWithEct1: this._packetsReceivedWithEct1Decoder.decode(input.packetsReceivedWithEct1),
+          packetsReportedAsLost: this._packetsReportedAsLostDecoder.decode(input.packetsReportedAsLost),
+          packetsReportedAsLostButRecovered: this._packetsReportedAsLostButRecoveredDecoder.decode(input.packetsReportedAsLostButRecovered),
           packetsLost: this._packetsLostDecoder.decode(input.packetsLost),
+          packetsWithBleachedEct1Marking: this._packetsWithBleachedEct1MarkingDecoder.decode(input.packetsWithBleachedEct1Marking),
           jitter: this._jitterDecoder.decode(input.jitter),
           localId: this._localIdDecoder.decode(input.localId),
           roundTripTime: this._roundTripTimeDecoder.decode(input.roundTripTime),
@@ -107,7 +128,7 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
 
   public set actualValue(sample: OutputRemoteInboundRtpStats | undefined) {
       if (!sample) return;
-      
+
       this._visited = true;
       this._actualValue = sample;
 
@@ -117,7 +138,12 @@ export class RemoteInboundRtpDecoder implements Decoder<InputRemoteInboundRtpSta
       this._transportIdDecoder.actualValue = sample.transportId;
       this._codecIdDecoder.actualValue = sample.codecId;
       this._packetsReceivedDecoder.actualValue = sample.packetsReceived;
+      this._packetsReceivedWithCeDecoder.actualValue = sample.packetsReceivedWithCe;
+      this._packetsReceivedWithEct1Decoder.actualValue = sample.packetsReceivedWithEct1;
+      this._packetsReportedAsLostDecoder.actualValue = sample.packetsReportedAsLost;
+      this._packetsReportedAsLostButRecoveredDecoder.actualValue = sample.packetsReportedAsLostButRecovered;
       this._packetsLostDecoder.actualValue = sample.packetsLost;
+      this._packetsWithBleachedEct1MarkingDecoder.actualValue = sample.packetsWithBleachedEct1Marking;
       this._jitterDecoder.actualValue = sample.jitter;
       this._localIdDecoder.actualValue = sample.localId;
       this._roundTripTimeDecoder.actualValue = sample.roundTripTime;

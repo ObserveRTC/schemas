@@ -360,6 +360,42 @@
                           "doc": "Number of packets received on the RTP stream."
                         },
                         {
+                          "name": "packetsReceivedWithEct1",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the ECT(1) marking."
+                        },
+                        {
+                          "name": "packetsReceivedWithCe",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the CE marking."
+                        },
+                        {
+                          "name": "packetsReportedAsLost",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit."
+                        },
+                        {
+                          "name": "packetsReportedAsLostButRecovered",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report."
+                        },
+                        {
                           "name": "packetsLost",
                           "type": [
                             "null",
@@ -951,6 +987,42 @@
                           "doc": "The total number of packets received on this stream."
                         },
                         {
+                          "name": "packetsReceivedWithEct1",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the ECT(1) marking."
+                        },
+                        {
+                          "name": "packetsReceivedWithCe",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the CE marking."
+                        },
+                        {
+                          "name": "packetsReportedAsLost",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit."
+                        },
+                        {
+                          "name": "packetsReportedAsLostButRecovered",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report."
+                        },
+                        {
                           "name": "packetsLost",
                           "type": [
                             "null",
@@ -1280,12 +1352,29 @@
                           "type": [
                             "null",
                             {
-                              "type": "map",
-                              "values": "double"
+                              "type": "record",
+                              "name": "PsnrSum",
+                              "fields": [
+                                {
+                                  "name": "y",
+                                  "type": "double",
+                                  "doc": "PSNR value for the Y (luminance) component."
+                                },
+                                {
+                                  "name": "u",
+                                  "type": "double",
+                                  "doc": "PSNR value for the U (chrominance) component."
+                                },
+                                {
+                                  "name": "v",
+                                  "type": "double",
+                                  "doc": "PSNR value for the V (chrominance) component."
+                                }
+                              ]
                             }
                           ],
                           "default": null,
-                          "doc": "Cumulative PSNR measurements categorized by type (e.g., Y, U, V)."
+                          "doc": "Cumulative PSNR measurements for Y, U, V components."
                         },
                         {
                           "name": "psnrMeasurements",

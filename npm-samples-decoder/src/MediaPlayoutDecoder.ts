@@ -1,4 +1,4 @@
-import { Decoder } from "./utils";
+import { Decoder, BigIntToNumberDecoder } from "./utils";
 import { MediaPlayoutStats as OutputMediaPlayoutStats } from "./OutputSamples";
 import {
   NumberToNumberDecoder,
@@ -14,10 +14,10 @@ export class MediaPlayoutStatsDecoder implements Decoder<InputMediaPlayoutStats,
 	private readonly _idDecoder: StringToStringDecoder;
 	private readonly _kindDecoder: StringToStringDecoder;
 	private readonly _synthesizedSamplesDurationDecoder: NumberToNumberDecoder;
-	private readonly _synthesizedSamplesEventsDecoder: NumberToNumberDecoder;
+	private readonly _synthesizedSamplesEventsDecoder: BigIntToNumberDecoder;
 	private readonly _totalSamplesDurationDecoder: NumberToNumberDecoder;
 	private readonly _totalPlayoutDelayDecoder: NumberToNumberDecoder;
-	private readonly _totalSamplesCountDecoder: NumberToNumberDecoder;
+	private readonly _totalSamplesCountDecoder: BigIntToNumberDecoder;
 
 	private _actualValue: OutputMediaPlayoutStats | undefined = undefined;
 
@@ -29,10 +29,10 @@ export class MediaPlayoutStatsDecoder implements Decoder<InputMediaPlayoutStats,
 		this._idDecoder = new StringToStringDecoder();
 		this._kindDecoder = new StringToStringDecoder();
 		this._synthesizedSamplesDurationDecoder = new NumberToNumberDecoder();
-		this._synthesizedSamplesEventsDecoder = new NumberToNumberDecoder();
+		this._synthesizedSamplesEventsDecoder = new BigIntToNumberDecoder();
 		this._totalSamplesDurationDecoder = new NumberToNumberDecoder();
 		this._totalPlayoutDelayDecoder = new NumberToNumberDecoder();
-		this._totalSamplesCountDecoder = new NumberToNumberDecoder();
+		this._totalSamplesCountDecoder = new BigIntToNumberDecoder();
 	}
 
 	public get visited(): boolean {
@@ -85,7 +85,7 @@ export class MediaPlayoutStatsDecoder implements Decoder<InputMediaPlayoutStats,
 
 	public set actualValue(sample: OutputMediaPlayoutStats | undefined) {
         if (!sample) return;
-        
+
 		this._visited = true;
 		this._actualValue = sample;
 

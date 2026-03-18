@@ -1,5 +1,5 @@
 
-export const schemaVersion = "3.1.0";
+export const schemaVersion = "3.2.0";
 
 /**
 * The WebRTC app provided custom stats payload
@@ -787,6 +787,27 @@ export type QualityLimitationDurations = {
 }
 
 /**
+* Cumulative PSNR measurements for Y, U, V components.
+*/
+export type PsnrSum = {
+	/**
+	* PSNR value for the Y (luminance) component.
+	*/
+	y: number;
+
+	/**
+	* PSNR value for the U (chrominance) component.
+	*/
+	u: number;
+
+	/**
+	* PSNR value for the V (chrominance) component.
+	*/
+	v: number;
+
+}
+
+/**
 * Outbound RTP Stats
 */
 export type OutboundRtpStats = {
@@ -926,9 +947,9 @@ export type OutboundRtpStats = {
 	qpSum?: number;
 
 	/**
-	* Cumulative PSNR measurements categorized by type (e.g., Y, U, V).
+	* Cumulative PSNR measurements for Y, U, V components.
 	*/
-	psnrSum?: ;
+	psnrSum?: PsnrSum;
 
 	/**
 	* Total number of PSNR measurements collected.
@@ -1047,6 +1068,26 @@ export type RemoteInboundRtpStats = {
 	packetsReceived?: number;
 
 	/**
+	* Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+	*/
+	packetsReceivedWithEct1?: number;
+
+	/**
+	* Total number of RTP packets received for this SSRC marked with the CE marking.
+	*/
+	packetsReceivedWithCe?: number;
+
+	/**
+	* Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+	*/
+	packetsReportedAsLost?: number;
+
+	/**
+	* Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
+	*/
+	packetsReportedAsLostButRecovered?: number;
+
+	/**
 	* The total number of packets lost on this stream.
 	*/
 	packetsLost?: number;
@@ -1136,6 +1177,26 @@ export type InboundRtpStats = {
 	* Number of packets received on the RTP stream.
 	*/
 	packetsReceived?: number;
+
+	/**
+	* Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+	*/
+	packetsReceivedWithEct1?: number;
+
+	/**
+	* Total number of RTP packets received for this SSRC marked with the CE marking.
+	*/
+	packetsReceivedWithCe?: number;
+
+	/**
+	* Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+	*/
+	packetsReportedAsLost?: number;
+
+	/**
+	* Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
+	*/
+	packetsReportedAsLostButRecovered?: number;
 
 	/**
 	* Number of packets lost on the RTP stream.

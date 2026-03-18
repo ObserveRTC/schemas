@@ -12,8 +12,8 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Mess
 	private _visited = false;
 
   private readonly _timestampEncoder: NumberToNumberEncoder;
-  private readonly _packetsSentEncoder: NumberToNumberEncoder;
-  private readonly _packetsReceivedEncoder: NumberToNumberEncoder;
+  private readonly _packetsSentEncoder: NumberToBigIntEncoder;
+  private readonly _packetsReceivedEncoder: NumberToBigIntEncoder;
   private readonly _bytesSentEncoder: NumberToBigIntEncoder;
   private readonly _bytesReceivedEncoder: NumberToBigIntEncoder;
   private readonly _iceRoleEncoder: StringToStringEncoder;
@@ -27,13 +27,13 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Mess
   private readonly _dtlsCipherEncoder: StringToStringEncoder;
   private readonly _dtlsRoleEncoder: StringToStringEncoder;
   private readonly _srtpCipherEncoder: StringToStringEncoder;
-  private readonly _selectedCandidatePairChangesEncoder: NumberToNumberEncoder;
+  private readonly _selectedCandidatePairChangesEncoder: NumberToBigIntEncoder;
   private readonly _attachmentsEncoder: AttachmentEncoder;
 
   constructor(attachmentsEncoder: AttachmentEncoder) {
     this._timestampEncoder = new NumberToNumberEncoder();
-    this._packetsSentEncoder = new NumberToNumberEncoder();
-    this._packetsReceivedEncoder = new NumberToNumberEncoder();
+    this._packetsSentEncoder = new NumberToBigIntEncoder();
+    this._packetsReceivedEncoder = new NumberToBigIntEncoder();
     this._bytesSentEncoder = new NumberToBigIntEncoder();
     this._bytesReceivedEncoder = new NumberToBigIntEncoder();
     this._iceRoleEncoder = new StringToStringEncoder();
@@ -47,10 +47,10 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Mess
     this._dtlsCipherEncoder = new StringToStringEncoder();
     this._dtlsRoleEncoder = new StringToStringEncoder();
     this._srtpCipherEncoder = new StringToStringEncoder();
-    this._selectedCandidatePairChangesEncoder = new NumberToNumberEncoder();
+    this._selectedCandidatePairChangesEncoder = new NumberToBigIntEncoder();
     this._attachmentsEncoder = attachmentsEncoder;
   }
-	
+
 	public get visited(): boolean {
 		const result = this._visited;
 		this._visited = false;

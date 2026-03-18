@@ -1,8 +1,8 @@
-import { 
-	Decoder, 
+import {
+	Decoder,
 	BigIntToNumberDecoder,
 	BooleanToBooleanDecoder,
-	OneTimePassDecoder 
+	OneTimePassDecoder
   } from "./utils";
 import { InboundRtpStats as OutputInboundRtpStats } from "./OutputSamples";
 import { ClientSample_PeerConnectionSample_InboundRtpStats as InputInboundRtpStats } from "./InputSamples";
@@ -12,11 +12,11 @@ StringToStringDecoder,
 AttachmentDecoder
 } from "./utils";
 import { logger } from "./Logger";
-  
+
 export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputInboundRtpStats | undefined> {
 	private _visited = false;
-  
-	
+
+
 
 	private readonly _idDecoder: StringToStringDecoder;
 	private readonly _kindDecoder: StringToStringDecoder;
@@ -24,7 +24,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	private readonly _audioLevelDecoder: NumberToNumberDecoder;
 	private readonly _bytesReceivedDecoder: BigIntToNumberDecoder;
 	private readonly _codecIdDecoder: OneTimePassDecoder<string>;
-	private readonly _concealedSamplesDecoder: NumberToNumberDecoder;
+	private readonly _concealedSamplesDecoder: BigIntToNumberDecoder;
 	private readonly _concealmentEventsDecoder: NumberToNumberDecoder;
 	private readonly _corruptionMeasurementsDecoder: NumberToNumberDecoder;
 	private readonly _decoderImplementationDecoder: StringToStringDecoder;
@@ -44,7 +44,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	private readonly _framesRenderedDecoder: NumberToNumberDecoder;
 	private readonly _freezeCountDecoder: NumberToNumberDecoder;
 	private readonly _headerBytesReceivedDecoder: BigIntToNumberDecoder;
-	private readonly _insertedSamplesForDecelerationDecoder: NumberToNumberDecoder;
+	private readonly _insertedSamplesForDecelerationDecoder: BigIntToNumberDecoder;
 	private readonly _jitterDecoder: NumberToNumberDecoder;
 	private readonly _jitterBufferDelayDecoder: NumberToNumberDecoder;
 	private readonly _jitterBufferEmittedCountDecoder: NumberToNumberDecoder;
@@ -57,17 +57,21 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	private readonly _packetsDiscardedDecoder: NumberToNumberDecoder;
 	private readonly _packetsLostDecoder: NumberToNumberDecoder;
 	private readonly _packetsReceivedDecoder: NumberToNumberDecoder;
+	private readonly _packetsReceivedWithCeDecoder: NumberToNumberDecoder;
+	private readonly _packetsReceivedWithEct1Decoder: NumberToNumberDecoder;
+	private readonly _packetsReportedAsLostDecoder: NumberToNumberDecoder;
+	private readonly _packetsReportedAsLostButRecoveredDecoder: NumberToNumberDecoder;
 	private readonly _pauseCountDecoder: NumberToNumberDecoder;
 	private readonly _pliCountDecoder: NumberToNumberDecoder;
 	private readonly _playoutIdDecoder: StringToStringDecoder;
 	private readonly _powerEfficientDecoderDecoder: BooleanToBooleanDecoder;
 	private readonly _qpSumDecoder: NumberToNumberDecoder;
 	private readonly _remoteIdDecoder: StringToStringDecoder;
-	private readonly _removedSamplesForAccelerationDecoder: NumberToNumberDecoder;
+	private readonly _removedSamplesForAccelerationDecoder: BigIntToNumberDecoder;
 	private readonly _retransmittedBytesReceivedDecoder: BigIntToNumberDecoder;
 	private readonly _retransmittedPacketsReceivedDecoder: NumberToNumberDecoder;
 	private readonly _rtxSsrcDecoder: BigIntToNumberDecoder;
-	private readonly _silentConcealedSamplesDecoder: NumberToNumberDecoder;
+	private readonly _silentConcealedSamplesDecoder: BigIntToNumberDecoder;
 	private readonly _totalAssemblyTimeDecoder: NumberToNumberDecoder;
 	private readonly _totalAudioEnergyDecoder: NumberToNumberDecoder;
 	private readonly _totalCorruptionProbabilityDecoder: NumberToNumberDecoder;
@@ -77,7 +81,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	private readonly _totalPausesDurationDecoder: NumberToNumberDecoder;
 	private readonly _totalProcessingDelayDecoder: NumberToNumberDecoder;
 	private readonly _totalSamplesDurationDecoder: NumberToNumberDecoder;
-	private readonly _totalSamplesReceivedDecoder: NumberToNumberDecoder;
+	private readonly _totalSamplesReceivedDecoder: BigIntToNumberDecoder;
 	private readonly _totalSquaredCorruptionProbabilityDecoder: NumberToNumberDecoder;
 	private readonly _totalSquaredInterFrameDelayDecoder: NumberToNumberDecoder;
 	private readonly _transportIdDecoder: OneTimePassDecoder<string>;
@@ -95,7 +99,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	  this._audioLevelDecoder = new NumberToNumberDecoder();
 	  this._bytesReceivedDecoder = new BigIntToNumberDecoder();
 	  this._codecIdDecoder = new OneTimePassDecoder<string>();
-	  this._concealedSamplesDecoder = new NumberToNumberDecoder();
+	  this._concealedSamplesDecoder = new BigIntToNumberDecoder();
 	  this._concealmentEventsDecoder = new NumberToNumberDecoder();
 	  this._corruptionMeasurementsDecoder = new NumberToNumberDecoder();
 	  this._decoderImplementationDecoder = new StringToStringDecoder();
@@ -115,7 +119,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	  this._framesRenderedDecoder = new NumberToNumberDecoder();
 	  this._freezeCountDecoder = new NumberToNumberDecoder();
 	  this._headerBytesReceivedDecoder = new BigIntToNumberDecoder();
-	  this._insertedSamplesForDecelerationDecoder = new NumberToNumberDecoder();
+	  this._insertedSamplesForDecelerationDecoder = new BigIntToNumberDecoder();
 	  this._jitterDecoder = new NumberToNumberDecoder();
 	  this._jitterBufferDelayDecoder = new NumberToNumberDecoder();
 	  this._jitterBufferEmittedCountDecoder = new NumberToNumberDecoder();
@@ -128,17 +132,21 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	  this._packetsDiscardedDecoder = new NumberToNumberDecoder();
 	  this._packetsLostDecoder = new NumberToNumberDecoder();
 	  this._packetsReceivedDecoder = new NumberToNumberDecoder();
+	  this._packetsReceivedWithCeDecoder = new NumberToNumberDecoder();
+	  this._packetsReceivedWithEct1Decoder = new NumberToNumberDecoder();
+	  this._packetsReportedAsLostDecoder = new NumberToNumberDecoder();
+	  this._packetsReportedAsLostButRecoveredDecoder = new NumberToNumberDecoder();
 	  this._pauseCountDecoder = new NumberToNumberDecoder();
 	  this._pliCountDecoder = new NumberToNumberDecoder();
 	  this._playoutIdDecoder = new StringToStringDecoder();
 	  this._powerEfficientDecoderDecoder = new BooleanToBooleanDecoder();
 	  this._qpSumDecoder = new NumberToNumberDecoder();
 	  this._remoteIdDecoder = new StringToStringDecoder();
-	  this._removedSamplesForAccelerationDecoder = new NumberToNumberDecoder();
+	  this._removedSamplesForAccelerationDecoder = new BigIntToNumberDecoder();
 	  this._retransmittedBytesReceivedDecoder = new BigIntToNumberDecoder();
 	  this._retransmittedPacketsReceivedDecoder = new NumberToNumberDecoder();
 	  this._rtxSsrcDecoder = new BigIntToNumberDecoder();
-	  this._silentConcealedSamplesDecoder = new NumberToNumberDecoder();
+	  this._silentConcealedSamplesDecoder = new BigIntToNumberDecoder();
 	  this._totalAssemblyTimeDecoder = new NumberToNumberDecoder();
 	  this._totalAudioEnergyDecoder = new NumberToNumberDecoder();
 	  this._totalCorruptionProbabilityDecoder = new NumberToNumberDecoder();
@@ -148,18 +156,18 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	  this._totalPausesDurationDecoder = new NumberToNumberDecoder();
 	  this._totalProcessingDelayDecoder = new NumberToNumberDecoder();
 	  this._totalSamplesDurationDecoder = new NumberToNumberDecoder();
-	  this._totalSamplesReceivedDecoder = new NumberToNumberDecoder();
+	  this._totalSamplesReceivedDecoder = new BigIntToNumberDecoder();
 	  this._totalSquaredCorruptionProbabilityDecoder = new NumberToNumberDecoder();
 	  this._totalSquaredInterFrameDelayDecoder = new NumberToNumberDecoder();
 	  this._transportIdDecoder = new OneTimePassDecoder<string>();
 	}
-  
+
 	public get visited(): boolean {
 	  const result = this._visited;
 	  this._visited = false;
 	  return result;
 	}
-  
+
 	public reset(): void {
 	  this._idDecoder.reset();
 	  this._kindDecoder.reset();
@@ -200,6 +208,10 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	  this._packetsDiscardedDecoder.reset();
 	  this._packetsLostDecoder.reset();
 	  this._packetsReceivedDecoder.reset();
+	  this._packetsReceivedWithCeDecoder.reset();
+	  this._packetsReceivedWithEct1Decoder.reset();
+	  this._packetsReportedAsLostDecoder.reset();
+	  this._packetsReportedAsLostButRecoveredDecoder.reset();
 	  this._pauseCountDecoder.reset();
 	  this._pliCountDecoder.reset();
 	  this._playoutIdDecoder.reset();
@@ -225,20 +237,20 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 	  this._totalSquaredInterFrameDelayDecoder.reset();
 	  this._transportIdDecoder.reset();
 	}
-  
+
 	public decode(input: InputInboundRtpStats): OutputInboundRtpStats | undefined {
 	  this._visited = true;
-  
+
 	  const timestamp = this._timestampDecoder.decode(input.timestamp);
 	  const id = this._idDecoder.decode(input.id);
 	  const kind = this._kindDecoder.decode(input.kind);
 	  const trackIdentifier = this._trackIdentifierDecoder.decode(input.trackIdentifier);
-  
+
 	  if (!timestamp || id === undefined || trackIdentifier === undefined || kind === undefined) {
 		logger.warn("Invalid inbound RTP sample: missing timestamp or id");
 		return undefined;
 	  }
-  
+
 	  this._actualValue = {
 		ssrc: this.ssrc,
 		kind,
@@ -282,6 +294,10 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 		packetsDiscarded: this._packetsDiscardedDecoder.decode(input.packetsDiscarded),
 		packetsLost: this._packetsLostDecoder.decode(input.packetsLost),
 		packetsReceived: this._packetsReceivedDecoder.decode(input.packetsReceived),
+		packetsReceivedWithCe: this._packetsReceivedWithCeDecoder.decode(input.packetsReceivedWithCe),
+		packetsReceivedWithEct1: this._packetsReceivedWithEct1Decoder.decode(input.packetsReceivedWithEct1),
+		packetsReportedAsLost: this._packetsReportedAsLostDecoder.decode(input.packetsReportedAsLost),
+		packetsReportedAsLostButRecovered: this._packetsReportedAsLostButRecoveredDecoder.decode(input.packetsReportedAsLostButRecovered),
 		pauseCount: this._pauseCountDecoder.decode(input.pauseCount),
 		pliCount: this._pliCountDecoder.decode(input.pliCount),
 		playoutId: this._playoutIdDecoder.decode(input.playoutId),
@@ -319,7 +335,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 		if (!sample) return;
 		this._visited = true;
 		this._actualValue = sample;
-	
+
 		this._idDecoder.actualValue = sample.id;
 		this._kindDecoder.actualValue = sample.kind;
 		this._timestampDecoder.actualValue = sample.timestamp;
@@ -351,7 +367,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 		this._insertedSamplesForDecelerationDecoder.actualValue = sample.insertedSamplesForDeceleration;
 		this._jitterDecoder.actualValue = sample.jitter;
 		this._jitterBufferDelayDecoder.actualValue = sample.jitterBufferDelay;
-			
+
 		this._jitterBufferEmittedCountDecoder.actualValue = sample.jitterBufferEmittedCount;
 		this._jitterBufferMinimumDelayDecoder.actualValue = sample.jitterBufferMinimumDelay;
 		this._jitterBufferTargetDelayDecoder.actualValue = sample.jitterBufferTargetDelay;
@@ -364,6 +380,10 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 		this._packetsLostDecoder.actualValue = sample.packetsLost;
 
 		this._packetsReceivedDecoder.actualValue = sample.packetsReceived;
+		this._packetsReceivedWithCeDecoder.actualValue = sample.packetsReceivedWithCe;
+		this._packetsReceivedWithEct1Decoder.actualValue = sample.packetsReceivedWithEct1;
+		this._packetsReportedAsLostDecoder.actualValue = sample.packetsReportedAsLost;
+		this._packetsReportedAsLostButRecoveredDecoder.actualValue = sample.packetsReportedAsLostButRecovered;
 
 		this._pauseCountDecoder.actualValue = sample.pauseCount;
 		this._pliCountDecoder.actualValue = sample.pliCount;
@@ -372,7 +392,7 @@ export class InboundRtpDecoder implements Decoder<InputInboundRtpStats, OutputIn
 		this._qpSumDecoder.actualValue = sample.qpSum;
 		this._remoteIdDecoder.actualValue = sample.remoteId;
 		this._removedSamplesForAccelerationDecoder.actualValue = sample.removedSamplesForAcceleration;
-			
+
 		this._retransmittedBytesReceivedDecoder.actualValue = sample.retransmittedBytesReceived;
 		this._retransmittedPacketsReceivedDecoder.actualValue = sample.retransmittedPacketsReceived;
 		this._rtxSsrcDecoder.actualValue = sample.rtxSsrc;

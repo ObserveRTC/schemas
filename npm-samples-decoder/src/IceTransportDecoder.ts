@@ -12,8 +12,8 @@ export class IceTransportDecoder implements Decoder<InputIceTransportStats, Outp
 	private _visited = false;
 
 	private readonly _timestampDecoder: NumberToNumberDecoder;
-	private readonly _packetsSentDecoder: NumberToNumberDecoder;
-	private readonly _packetsReceivedDecoder: NumberToNumberDecoder;
+	private readonly _packetsSentDecoder: BigIntToNumberDecoder;
+	private readonly _packetsReceivedDecoder: BigIntToNumberDecoder;
 	private readonly _bytesSentDecoder: BigIntToNumberDecoder;
 	private readonly _bytesReceivedDecoder: BigIntToNumberDecoder;
 	private readonly _iceRoleDecoder: StringToStringDecoder;
@@ -27,7 +27,7 @@ export class IceTransportDecoder implements Decoder<InputIceTransportStats, Outp
 	private readonly _dtlsCipherDecoder: StringToStringDecoder;
 	private readonly _dtlsRoleDecoder: StringToStringDecoder;
 	private readonly _srtpCipherDecoder: StringToStringDecoder;
-	private readonly _selectedCandidatePairChangesDecoder: NumberToNumberDecoder;
+	private readonly _selectedCandidatePairChangesDecoder: BigIntToNumberDecoder;
 
 	private _actualValue: OutputIceTransportStats | undefined = undefined;
 
@@ -36,8 +36,8 @@ export class IceTransportDecoder implements Decoder<InputIceTransportStats, Outp
 		private readonly _attachmentsDecoder: AttachmentDecoder,
 	) {
 		this._timestampDecoder = new NumberToNumberDecoder();
-		this._packetsSentDecoder = new NumberToNumberDecoder();
-		this._packetsReceivedDecoder = new NumberToNumberDecoder();
+		this._packetsSentDecoder = new BigIntToNumberDecoder();
+		this._packetsReceivedDecoder = new BigIntToNumberDecoder();
 		this._bytesSentDecoder = new BigIntToNumberDecoder();
 		this._bytesReceivedDecoder = new BigIntToNumberDecoder();
 		this._iceRoleDecoder = new StringToStringDecoder();
@@ -51,7 +51,7 @@ export class IceTransportDecoder implements Decoder<InputIceTransportStats, Outp
 		this._dtlsCipherDecoder = new StringToStringDecoder();
 		this._dtlsRoleDecoder = new StringToStringDecoder();
 		this._srtpCipherDecoder = new StringToStringDecoder();
-		this._selectedCandidatePairChangesDecoder = new NumberToNumberDecoder();
+		this._selectedCandidatePairChangesDecoder = new BigIntToNumberDecoder();
 	}
 
 	public get visited(): boolean {
@@ -119,13 +119,13 @@ export class IceTransportDecoder implements Decoder<InputIceTransportStats, Outp
 	public get actualValue(): OutputIceTransportStats | undefined {
 		return this._actualValue;
 	}
-	
+
 	public set actualValue(sample: OutputIceTransportStats | undefined) {
         if (!sample) return;
-        
+
 		this._visited = true;
 		this._actualValue = sample;
-		
+
 		this._timestampDecoder.actualValue = sample.timestamp;
 		this._packetsSentDecoder.actualValue = sample.packetsSent;
 		this._packetsReceivedDecoder.actualValue = sample.packetsReceived;

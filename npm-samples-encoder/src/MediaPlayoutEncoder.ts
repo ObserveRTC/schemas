@@ -1,4 +1,4 @@
-import { Encoder } from "./utils";
+import { Encoder, NumberToBigIntEncoder } from "./utils";
 import { MediaPlayoutStats as InputMediaPlayoutStats } from "./InputSamples";
 import {
   NumberToNumberEncoder,
@@ -14,10 +14,10 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
   private readonly _idEncoder: StringToStringEncoder;
   private readonly _kindEncoder: StringToStringEncoder;
   private readonly _synthesizedSamplesDurationEncoder: NumberToNumberEncoder;
-  private readonly _synthesizedSamplesEventsEncoder: NumberToNumberEncoder;
+  private readonly _synthesizedSamplesEventsEncoder: NumberToBigIntEncoder;
   private readonly _totalSamplesDurationEncoder: NumberToNumberEncoder;
   private readonly _totalPlayoutDelayEncoder: NumberToNumberEncoder;
-  private readonly _totalSamplesCountEncoder: NumberToNumberEncoder;
+  private readonly _totalSamplesCountEncoder: NumberToBigIntEncoder;
   private readonly _attachmentsEncoder: AttachmentEncoder;
 
   constructor(attachmentsEncoder: AttachmentEncoder) {
@@ -25,10 +25,10 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
     this._idEncoder = new StringToStringEncoder();
     this._kindEncoder = new StringToStringEncoder();
     this._synthesizedSamplesDurationEncoder = new NumberToNumberEncoder();
-    this._synthesizedSamplesEventsEncoder = new NumberToNumberEncoder();
+    this._synthesizedSamplesEventsEncoder = new NumberToBigIntEncoder();
     this._totalSamplesDurationEncoder = new NumberToNumberEncoder();
     this._totalPlayoutDelayEncoder = new NumberToNumberEncoder();
-    this._totalSamplesCountEncoder = new NumberToNumberEncoder();
+    this._totalSamplesCountEncoder = new NumberToBigIntEncoder();
     this._attachmentsEncoder = attachmentsEncoder;
   }
 

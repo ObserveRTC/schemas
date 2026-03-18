@@ -1,4 +1,4 @@
-import { 
+import {
     Decoder,
     BooleanToBooleanDecoder,
     NumberToNumberDecoder,
@@ -7,12 +7,35 @@ import {
     AttachmentDecoder,
 	BigIntToNumberDecoder
 } from "./utils";
-import { 
+import {
 	ClientSample_PeerConnectionSample_OutboundRtpStats as InputOutboundRtpStats,
-	ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations as InputQualityLimitationDurations 
+	ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations as InputQualityLimitationDurations,
+	ClientSample_PeerConnectionSample_OutboundRtpStats_PsnrSum as InputPsnrSum
 } from "./InputSamples";
 import { OutboundRtpStats as OutputOutboundRtpStats } from "./OutputSamples";
 import { logger } from "./Logger";
+
+export class PsnrSumDecoder implements Decoder<InputPsnrSum, OutputOutboundRtpStats['psnrSum'] | undefined> {
+    public actualValue?: OutputOutboundRtpStats['psnrSum'];
+
+    public reset() {
+        this.actualValue = undefined;
+    }
+
+    public decode(input?: InputPsnrSum): OutputOutboundRtpStats['psnrSum'] | undefined {
+        if (!input) return this.actualValue;
+
+        const newValue = {
+            y: input.y ?? 0,
+            u: input.u ?? 0,
+            v: input.v ?? 0,
+        };
+
+        this.actualValue = newValue;
+
+        return newValue;
+    }
+}
 
 export class QualityLimitationDurationsDecoder implements Decoder<InputQualityLimitationDurations, OutputOutboundRtpStats['qualityLimitationDurations'] | undefined> {
     public actualValue?: OutputOutboundRtpStats['qualityLimitationDurations'];
@@ -23,7 +46,7 @@ export class QualityLimitationDurationsDecoder implements Decoder<InputQualityLi
 
     public decode(input?: InputQualityLimitationDurations): OutputOutboundRtpStats['qualityLimitationDurations'] | undefined {
         if (!input) return this.actualValue;
-        
+
         const newValue = {
             bandwidth: input.bandwidth ?? 0,
             cpu: input.cpu ?? 0,
@@ -46,6 +69,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _bytesSentDecoder: BigIntToNumberDecoder;
     private readonly _codecIdDecoder: OneTimePassDecoder<string>;
     private readonly _encoderImplementationDecoder: OneTimePassDecoder<string>;
+    private readonly _encodingIndexDecoder: NumberToNumberDecoder;
     private readonly _firCountDecoder: NumberToNumberDecoder;
     private readonly _frameHeightDecoder: NumberToNumberDecoder;
     private readonly _frameWidthDecoder: NumberToNumberDecoder;
@@ -59,9 +83,12 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
     private readonly _midDecoder: OneTimePassDecoder<string>;
     private readonly _nackCountDecoder: NumberToNumberDecoder;
     private readonly _packetsSentDecoder: NumberToNumberDecoder;
+    private readonly _packetsSentWithEct1Decoder: BigIntToNumberDecoder;
     private readonly _pliCountDecoder: NumberToNumberDecoder;
     private readonly _powerEfficientEncoderDecoder: BooleanToBooleanDecoder;
-    private readonly _qpSumDecoder: NumberToNumberDecoder;
+    private readonly _psnrMeasurementsDecoder: BigIntToNumberDecoder;
+    private readonly _psnrSumDecoder: PsnrSumDecoder;
+    private readonly _qpSumDecoder: BigIntToNumberDecoder;
     private readonly _qualityLimitationDurationsDecoder: QualityLimitationDurationsDecoder;
     private readonly _qualityLimitationReasonDecoder: StringToStringDecoder;
     private readonly _qualityLimitationResolutionChangesDecoder: NumberToNumberDecoder;
@@ -90,6 +117,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._bytesSentDecoder = new BigIntToNumberDecoder();
         this._codecIdDecoder = new OneTimePassDecoder<string>();
         this._encoderImplementationDecoder = new OneTimePassDecoder<string>();
+        this._encodingIndexDecoder = new NumberToNumberDecoder();
         this._firCountDecoder = new NumberToNumberDecoder();
         this._frameHeightDecoder = new NumberToNumberDecoder();
         this._frameWidthDecoder = new NumberToNumberDecoder();
@@ -103,9 +131,12 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._midDecoder = new OneTimePassDecoder<string>();
         this._nackCountDecoder = new NumberToNumberDecoder();
         this._packetsSentDecoder = new NumberToNumberDecoder();
+        this._packetsSentWithEct1Decoder = new BigIntToNumberDecoder();
         this._pliCountDecoder = new NumberToNumberDecoder();
         this._powerEfficientEncoderDecoder = new BooleanToBooleanDecoder();
-        this._qpSumDecoder = new NumberToNumberDecoder();
+        this._psnrMeasurementsDecoder = new BigIntToNumberDecoder();
+        this._psnrSumDecoder = new PsnrSumDecoder();
+        this._qpSumDecoder = new BigIntToNumberDecoder();
         this._qualityLimitationDurationsDecoder = new QualityLimitationDurationsDecoder();
         this._qualityLimitationReasonDecoder = new StringToStringDecoder();
         this._qualityLimitationResolutionChangesDecoder = new NumberToNumberDecoder();
@@ -121,7 +152,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._totalPacketSendDelayDecoder = new NumberToNumberDecoder();
         this._transportIdDecoder = new OneTimePassDecoder<string>();
 
-        
+
     }
 
     public get visited(): boolean {
@@ -138,6 +169,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._bytesSentDecoder.reset();
         this._codecIdDecoder.reset();
         this._encoderImplementationDecoder.reset();
+        this._encodingIndexDecoder.reset();
         this._firCountDecoder.reset();
         this._frameHeightDecoder.reset();
         this._frameWidthDecoder.reset();
@@ -151,8 +183,11 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._midDecoder.reset();
         this._nackCountDecoder.reset();
         this._packetsSentDecoder.reset();
+        this._packetsSentWithEct1Decoder.reset();
         this._pliCountDecoder.reset();
         this._powerEfficientEncoderDecoder.reset();
+        this._psnrMeasurementsDecoder.reset();
+        this._psnrSumDecoder.reset();
         this._qpSumDecoder.reset();
         this._qualityLimitationDurationsDecoder.reset();
         this._qualityLimitationReasonDecoder.reset();
@@ -192,6 +227,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
             bytesSent: this._bytesSentDecoder.decode(input.bytesSent),
             codecId: this._codecIdDecoder.decode(input.codecId),
             encoderImplementation: this._encoderImplementationDecoder.decode(input.encoderImplementation),
+            encodingIndex: this._encodingIndexDecoder.decode(input.encodingIndex),
             firCount: this._firCountDecoder.decode(input.firCount),
             frameHeight: this._frameHeightDecoder.decode(input.frameHeight),
             frameWidth: this._frameWidthDecoder.decode(input.frameWidth),
@@ -205,8 +241,11 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
             mid: this._midDecoder.decode(input.mid),
             nackCount: this._nackCountDecoder.decode(input.nackCount),
             packetsSent: this._packetsSentDecoder.decode(input.packetsSent),
+            packetsSentWithEct1: this._packetsSentWithEct1Decoder.decode(input.packetsSentWithEct1),
             pliCount: this._pliCountDecoder.decode(input.pliCount),
             powerEfficientEncoder: this._powerEfficientEncoderDecoder.decode(input.powerEfficientEncoder),
+            psnrMeasurements: this._psnrMeasurementsDecoder.decode(input.psnrMeasurements),
+            psnrSum: this._psnrSumDecoder.decode(input.psnrSum),
             qpSum: this._qpSumDecoder.decode(input.qpSum),
             qualityLimitationDurations: this._qualityLimitationDurationsDecoder.decode(input.qualityLimitationDurations),
             qualityLimitationReason: this._qualityLimitationReasonDecoder.decode(input.qualityLimitationReason),
@@ -233,7 +272,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
 
     public set actualValue(sample: OutputOutboundRtpStats | undefined) {
         if (!sample) return;
-        
+
         this._visited = true;
         this._actualValue = sample;
 
@@ -244,6 +283,7 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._bytesSentDecoder.actualValue = sample.bytesSent;
         this._codecIdDecoder.actualValue = sample.codecId;
         this._encoderImplementationDecoder.actualValue = sample.encoderImplementation;
+        this._encodingIndexDecoder.actualValue = sample.encodingIndex;
         this._firCountDecoder.actualValue = sample.firCount;
         this._frameHeightDecoder.actualValue = sample.frameHeight;
         this._frameWidthDecoder.actualValue = sample.frameWidth;
@@ -257,8 +297,11 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._midDecoder.actualValue = sample.mid;
         this._nackCountDecoder.actualValue = sample.nackCount;
         this._packetsSentDecoder.actualValue = sample.packetsSent;
+        this._packetsSentWithEct1Decoder.actualValue = sample.packetsSentWithEct1;
         this._pliCountDecoder.actualValue = sample.pliCount;
         this._powerEfficientEncoderDecoder.actualValue = sample.powerEfficientEncoder;
+        this._psnrMeasurementsDecoder.actualValue = sample.psnrMeasurements;
+        this._psnrSumDecoder.actualValue = sample.psnrSum;
         this._qpSumDecoder.actualValue = sample.qpSum;
         this._qualityLimitationDurationsDecoder.actualValue = sample.qualityLimitationDurations;
         this._qualityLimitationReasonDecoder.actualValue = sample.qualityLimitationReason;
@@ -276,5 +319,5 @@ export class OutboundRtpDecoder implements Decoder<InputOutboundRtpStats, Output
         this._transportIdDecoder.actualValue = sample.transportId;
         this._attachmentsDecoder.actualValue = sample.attachments;
     }
-        
+
 }

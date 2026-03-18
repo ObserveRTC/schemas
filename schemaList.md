@@ -31,6 +31,10 @@ InboundRtpStats
  * **transportId**: ID of the transport associated with the RTP stream.
  * **codecId**: ID of the codec used for the RTP stream.
  * **packetsReceived**: Number of packets received on the RTP stream.
+ * **packetsReceivedWithEct1**: Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+ * **packetsReceivedWithCe**: Total number of RTP packets received for this SSRC marked with the CE marking.
+ * **packetsReportedAsLost**: Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+ * **packetsReportedAsLostButRecovered**: Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
  * **packetsLost**: Number of packets lost on the RTP stream.
  * **jitter**: Jitter of the RTP stream in seconds.
  * **mid**: The media stream identification tag from the SDP media section.
@@ -97,6 +101,10 @@ RemoteInboundRtpStats
  * **transportId**: The ID of the transport used for this stream.
  * **codecId**: The ID of the codec used for this stream.
  * **packetsReceived**: The total number of packets received on this stream.
+ * **packetsReceivedWithEct1**: Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+ * **packetsReceivedWithCe**: Total number of RTP packets received for this SSRC marked with the CE marking.
+ * **packetsReportedAsLost**: Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+ * **packetsReportedAsLostButRecovered**: Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
  * **packetsLost**: The total number of packets lost on this stream.
  * **jitter**: The jitter value for this stream in seconds.
  * **localId**: The ID of the local object corresponding to this remote stream.
@@ -106,6 +114,10 @@ RemoteInboundRtpStats
  * **roundTripTimeMeasurements**: The total number of RTT measurements for this stream.
  * **packetsWithBleachedEct1Marking**: Number of packets with ECT(1) marking that were bleached by a middlebox.
  * **attachments**: Additional information attached to this stats
+PsnrSum
+ * **y**: PSNR value for the Y (luminance) component.
+ * **u**: PSNR value for the U (chrominance) component.
+ * **v**: PSNR value for the V (chrominance) component.
 QualityLimitationDurations
  * **none**: Duration of no quality limitation in seconds.
  * **cpu**: Duration of CPU-based quality limitation in seconds.
@@ -139,7 +151,7 @@ OutboundRtpStats
  * **framesEncoded**: The total number of frames encoded on this stream.
  * **keyFramesEncoded**: The total number of key frames encoded on this stream.
  * **qpSum**: The sum of QP values for all frames encoded on this stream.
- * **psnrSum**: Cumulative PSNR measurements categorized by type (e.g., Y, U, V).
+ * **psnrSum**: Cumulative PSNR measurements for Y, U, V components.
  * **psnrMeasurements**: Total number of PSNR measurements collected.
  * **totalEncodeTime**: The total time spent encoding frames on this stream in seconds.
  * **totalPacketSendDelay**: The total delay for packets sent on this stream in seconds.

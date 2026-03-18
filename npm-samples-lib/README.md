@@ -16,6 +16,7 @@ Javascript bindings for ObserveRTC schemas
 	* [MediaSourceStats](#MediaSourceStats)
 	* [RemoteOutboundRtpStats](#RemoteOutboundRtpStats)
 	* [QualityLimitationDurations](#QualityLimitationDurations)
+	* [PsnrSum](#PsnrSum)
 	* [OutboundRtpStats](#OutboundRtpStats)
 	* [RemoteInboundRtpStats](#RemoteInboundRtpStats)
 	* [InboundRtpStats](#InboundRtpStats)
@@ -89,6 +90,10 @@ trackIdentifier (**Mandatory**) | Identifier for the media track associated with
 transportId | ID of the transport associated with the RTP stream.
 codecId | ID of the codec used for the RTP stream.
 packetsReceived | Number of packets received on the RTP stream.
+packetsReceivedWithEct1 | Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+packetsReceivedWithCe | Total number of RTP packets received for this SSRC marked with the CE marking.
+packetsReportedAsLost | Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+packetsReportedAsLostButRecovered | Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
 packetsLost | Number of packets lost on the RTP stream.
 jitter | Jitter of the RTP stream in seconds.
 mid | The media stream identification tag from the SDP media section.
@@ -160,6 +165,10 @@ kind (**Mandatory**) | The type of media ('audio' or 'video').
 transportId | The ID of the transport used for this stream.
 codecId | The ID of the codec used for this stream.
 packetsReceived | The total number of packets received on this stream.
+packetsReceivedWithEct1 | Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+packetsReceivedWithCe | Total number of RTP packets received for this SSRC marked with the CE marking.
+packetsReportedAsLost | Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+packetsReportedAsLostButRecovered | Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
 packetsLost | The total number of packets lost on this stream.
 jitter | The jitter value for this stream in seconds.
 localId | The ID of the local object corresponding to this remote stream.
@@ -167,7 +176,17 @@ roundTripTime | The most recent RTT measurement for this stream in seconds.
 totalRoundTripTime | The cumulative RTT for all packets on this stream in seconds.
 fractionLost | The fraction of packets lost on this stream, calculated over a time interval.
 roundTripTimeMeasurements | The total number of RTT measurements for this stream.
+packetsWithBleachedEct1Marking | Number of packets with ECT(1) marking that were bleached by a middlebox.
 attachments | Additional information attached to this stats
+
+## PsnrSum
+
+
+Field | Description 
+--- | ---
+y (**Mandatory**) | PSNR value for the Y (luminance) component.
+u (**Mandatory**) | PSNR value for the U (chrominance) component.
+v (**Mandatory**) | PSNR value for the V (chrominance) component.
 
 ## QualityLimitationDurations
 
@@ -194,6 +213,7 @@ mid | The media ID associated with this RTP stream.
 mediaSourceId | The ID of the media source associated with this stream.
 remoteId | The ID of the remote object corresponding to this stream.
 rid | The RID value of the RTP stream.
+encodingIndex | Index of the encoding in the encoding array.
 headerBytesSent | The total number of header bytes sent on this stream.
 retransmittedPacketsSent | The number of retransmitted packets sent on this stream.
 retransmittedBytesSent | The number of retransmitted bytes sent on this stream.
@@ -208,9 +228,12 @@ hugeFramesSent | The total number of huge frames sent on this stream.
 framesEncoded | The total number of frames encoded on this stream.
 keyFramesEncoded | The total number of key frames encoded on this stream.
 qpSum | The sum of QP values for all frames encoded on this stream.
+psnrSum | Cumulative PSNR measurements for Y, U, V components.
+psnrMeasurements | Total number of PSNR measurements collected.
 totalEncodeTime | The total time spent encoding frames on this stream in seconds.
 totalPacketSendDelay | The total delay for packets sent on this stream in seconds.
-qualityLimitationReason | The reason for any quality limitation on this stream.
+qualityLimitationReason | The reason for any quality limitation on this stream (e.g., 'cpu', 'bandwidth', 'other').
+qualityLimitationDurations | The duration of quality limitation reasons categorized by type.
 qualityLimitationResolutionChanges | The number of resolution changes due to quality limitations.
 nackCount | The total number of NACK packets sent on this stream.
 firCount | The total number of FIR packets sent on this stream.
@@ -219,7 +242,7 @@ encoderImplementation | The implementation of the encoder used for this stream.
 powerEfficientEncoder | Indicates whether the encoder is power-efficient.
 active | Indicates whether this stream is actively sending data.
 scalabilityMode | The scalability mode of the encoder used for this stream.
-qualityLimitationDurations | The duration of quality limitation reasons categorized by type.
+packetsSentWithEct1 | Number of packets sent with ECT(1) congestion marking.
 attachments | Additional information attached to this stats.
 
 ## RemoteOutboundRtpStats
@@ -329,7 +352,9 @@ dtlsCipher | The DTLS cipher suite used.
 dtlsRole | The role in the DTLS handshake (e.g., 'client', 'server').
 srtpCipher | The SRTP cipher used for encryption.
 selectedCandidatePairChanges | The number of changes to the selected ICE candidate pair.
-attachments | Additional information attached to this stats
+ccfbMessagesSent | Number of congestion control feedback (CCFB) messages sent on this transport.
+ccfbMessagesReceived | Number of congestion control feedback (CCFB) messages received on this transport.
+attachments | Additional information attached to this stats.
 
 ## IceCandidateStats
 
@@ -363,7 +388,7 @@ timestamp (**Mandatory**) | The timestamp of when the stats were recorded, in mi
 transportId | The transport id of the connection this candidate pair belongs to.
 localCandidateId | The ID of the local ICE candidate in this pair.
 remoteCandidateId | The ID of the remote ICE candidate in this pair.
-state | undefined (Possible values are: new,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
+state | undefined (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
 nominated | Whether this candidate pair has been nominated.
 packetsSent | The number of packets sent using this candidate pair.
 packetsReceived | The number of packets received using this candidate pair.

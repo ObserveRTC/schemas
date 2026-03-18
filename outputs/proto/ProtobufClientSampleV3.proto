@@ -3,7 +3,7 @@ syntax = "proto3";
 package org.observertc.schemas.protobuf;
 
 /**
-* Schema Version: 3.1.0
+* Schema Version: 3.2.0
 */
 message ClientSample {
 	message PeerConnectionSample {
@@ -77,30 +77,34 @@ message ClientSample {
 			int32 packetsDiscarded = 40;
 			int32 packetsLost = 41;
 			int32 packetsReceived = 42;
-			int32 pauseCount = 43;
-			string playoutId = 44;
-			int32 pliCount = 45;
-			bool powerEfficientDecoder = 46;
-			double qpSum = 47;
-			string remoteId = 48;
-			int64 removedSamplesForAcceleration = 49;
-			int64 retransmittedBytesReceived = 50;
-			int32 retransmittedPacketsReceived = 51;
-			int64 rtxSsrc = 52;
-			int64 silentConcealedSamples = 53;
-			double totalAssemblyTime = 54;
-			double totalAudioEnergy = 55;
-			double totalCorruptionProbability = 56;
-			double totalDecodeTime = 57;
-			double totalFreezesDuration = 58;
-			double totalInterFrameDelay = 59;
-			double totalPausesDuration = 60;
-			double totalProcessingDelay = 61;
-			double totalSamplesDuration = 62;
-			int64 totalSamplesReceived = 63;
-			double totalSquaredCorruptionProbability = 64;
-			double totalSquaredInterFrameDelay = 65;
-			string transportId = 66;
+			int32 packetsReceivedWithCe = 43;
+			int32 packetsReceivedWithEct1 = 44;
+			int32 packetsReportedAsLost = 45;
+			int32 packetsReportedAsLostButRecovered = 46;
+			int32 pauseCount = 47;
+			string playoutId = 48;
+			int32 pliCount = 49;
+			bool powerEfficientDecoder = 50;
+			double qpSum = 51;
+			string remoteId = 52;
+			int64 removedSamplesForAcceleration = 53;
+			int64 retransmittedBytesReceived = 54;
+			int32 retransmittedPacketsReceived = 55;
+			int64 rtxSsrc = 56;
+			int64 silentConcealedSamples = 57;
+			double totalAssemblyTime = 58;
+			double totalAudioEnergy = 59;
+			double totalCorruptionProbability = 60;
+			double totalDecodeTime = 61;
+			double totalFreezesDuration = 62;
+			double totalInterFrameDelay = 63;
+			double totalPausesDuration = 64;
+			double totalProcessingDelay = 65;
+			double totalSamplesDuration = 66;
+			int64 totalSamplesReceived = 67;
+			double totalSquaredCorruptionProbability = 68;
+			double totalSquaredInterFrameDelay = 69;
+			string transportId = 70;
 		}
 		message RemoteInboundRtpStats {
 			string id = 1;
@@ -114,13 +118,22 @@ message ClientSample {
 			string localId = 9;
 			int32 packetsLost = 10;
 			int32 packetsReceived = 11;
-			int64 packetsWithBleachedEct1Marking = 12;
-			double roundTripTime = 13;
-			int64 roundTripTimeMeasurements = 14;
-			double totalRoundTripTime = 15;
-			string transportId = 16;
+			int32 packetsReceivedWithCe = 12;
+			int32 packetsReceivedWithEct1 = 13;
+			int32 packetsReportedAsLost = 14;
+			int32 packetsReportedAsLostButRecovered = 15;
+			int64 packetsWithBleachedEct1Marking = 16;
+			double roundTripTime = 17;
+			int64 roundTripTimeMeasurements = 18;
+			double totalRoundTripTime = 19;
+			string transportId = 20;
 		}
 		message OutboundRtpStats {
+			message PsnrSum {
+				double u = 1;
+				double v = 2;
+				double y = 3;
+			}
 			message QualityLimitationDurations {
 				double bandwidth = 1;
 				double cpu = 2;
@@ -154,21 +167,22 @@ message ClientSample {
 			int32 pliCount = 25;
 			bool powerEfficientEncoder = 26;
 			int64 psnrMeasurements = 27;
-			int64 qpSum = 28;
-			QualityLimitationDurations qualityLimitationDurations = 29;
-			string qualityLimitationReason = 30;
-			int32 qualityLimitationResolutionChanges = 31;
-			string remoteId = 32;
-			int64 retransmittedBytesSent = 33;
-			int32 retransmittedPacketsSent = 34;
-			string rid = 35;
-			int64 rtxSsrc = 36;
-			string scalabilityMode = 37;
-			double targetBitrate = 38;
-			double totalEncodeTime = 39;
-			int64 totalEncodedBytesTarget = 40;
-			double totalPacketSendDelay = 41;
-			string transportId = 42;
+			PsnrSum psnrSum = 28;
+			int64 qpSum = 29;
+			QualityLimitationDurations qualityLimitationDurations = 30;
+			string qualityLimitationReason = 31;
+			int32 qualityLimitationResolutionChanges = 32;
+			string remoteId = 33;
+			int64 retransmittedBytesSent = 34;
+			int32 retransmittedPacketsSent = 35;
+			string rid = 36;
+			int64 rtxSsrc = 37;
+			string scalabilityMode = 38;
+			double targetBitrate = 39;
+			double totalEncodeTime = 40;
+			int64 totalEncodedBytesTarget = 41;
+			double totalPacketSendDelay = 42;
+			string transportId = 43;
 		}
 		message RemoteOutboundRtpStats {
 			string id = 1;

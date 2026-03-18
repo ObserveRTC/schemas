@@ -69,7 +69,7 @@ function fetchSources() {
             const avsc = fs.readFileSync(filePath, 'utf-8');
             const source = new SourceAvsc({
                 fileName,
-                avsc, 
+                avsc,
                 schemaType,
             });
             sources.set(fileName, source);
@@ -89,7 +89,7 @@ const main = async () => {
     ])
     fetchChunks();
     // console.log(chunks.chunkIds());
-    
+
     const sources = fetchSources();
     const w3cStatsIdentifiers = fs.readFileSync(W3C_STATS_IDENTIFIERS, 'utf-8');
     const npmSamplesLib = new NpmLib(NPM_SAMPLES_LIB_PATH);
@@ -124,7 +124,7 @@ const main = async () => {
         // console.log(list);
         const addDoc = true;
         const { module, exports } = makeTsModule(schema, version, addDoc);
-        
+
         fs.writeFileSync(path.join(TYPESCRIPT_OUTPUTS_PATH, `${schemaName}.ts`), module);
 
         if (fileName === "ClientSample") {
@@ -139,27 +139,31 @@ const main = async () => {
             typescript: module,
             markdown: markdownDoc,
         });
-        
+
         fs.writeFileSync(path.join(AVSC_OUTPUTS_PATH, `${schemaName}.avsc`), avsc);
     }
     fs.writeFileSync(`schemaList.md`, markdownLists.join(`\n`))
     fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `bigquery.sql`), bigQueryTables.join("\n\n"));
     fs.writeFileSync(path.join(SQL_OUTPUTS_PATH, `redshift.sql`), redshiftTables.join("\n\n"));
-    
+
     // generate protobuf schema if we can
     const clientSampleSource = sources.get("ClientSample");
     if (clientSampleSource) {
         const schema = JSON.parse(clientSampleSource.getAvsc());
+
+        // Write and process V3Optional proto first (for TypeScript generation via buf)
+        // before writing the other variants, to avoid symbol collisions in buf
+        const protobufSchemaV3Optional = protobufUtils.convertToProtobufSchemaV3(schema, version, true);
+        const v3schemaOptionalPath = path.join(PROTO_OUTPUTS_PATH, "ProtobufClientSampleV3Optional.proto");
+        fs.writeFileSync(v3schemaOptionalPath, protobufSchemaV3Optional);
+        await protobufUtils.createTypescriptModels(v3schemaOptionalPath, path.join(TEMP_PATH));
+
+        // Now write the other proto variants (not processed by buf)
         const protobufSchema = protobufUtils.convertToProtobufSchema(schema, version);
         fs.writeFileSync(path.join(PROTO_OUTPUTS_PATH, "ProtobufClientSample.proto"), protobufSchema);
 
         const protobufSchemaV3 = protobufUtils.convertToProtobufSchemaV3(schema, version);
         fs.writeFileSync(path.join(PROTO_OUTPUTS_PATH, "ProtobufClientSampleV3.proto"), protobufSchemaV3);
-
-        const protobufSchemaV3Optional = protobufUtils.convertToProtobufSchemaV3(schema, version, true);
-        const v3schemaOptionalPath = path.join(PROTO_OUTPUTS_PATH, "ProtobufClientSampleV3Optional.proto");
-        fs.writeFileSync(v3schemaOptionalPath, protobufSchemaV3Optional);
-        await protobufUtils.createTypescriptModels(v3schemaOptionalPath, path.join(TEMP_PATH));
         const protobufSchemaV3OptionalTs = fs.readFileSync(path.join(TEMP_PATH, "outputs", "proto", "ProtobufClientSampleV3Optional_pb.ts"), 'utf-8');
         npmEncoderLib.addSamplesProtobufTsCode(protobufSchemaV3OptionalTs);
         npmDecoderLib.addSamplesProtobufTsCode(protobufSchemaV3OptionalTs);
@@ -167,12 +171,12 @@ const main = async () => {
     } else {
         console.warn(`There was no Samples avro schema to generate the protobuf schema`);
     }
-    
+
     const changelog = fs.readFileSync(path.join(SOURCE_PATH, "CHANGELOG.md"), 'utf-8');
     npmSamplesLib.version = version;
     npmEncoderLib.version = version;
     npmDecoderLib.version = version;
-    
+
     npmSamplesLib.changelog = changelog;
 
     npmSamplesLib.clear();

@@ -81,7 +81,7 @@ export async function createTypescriptModels(protoPath, genOutput) {
          }
 
          const command = [
-            'npx buf generate',
+            `npx buf generate --path ${protoPath}`,
         ].join(" ");
         exec(command, (error, stdout, stderr) => {
             if (error) reject(error);

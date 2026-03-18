@@ -3,7 +3,7 @@ syntax = "proto3";
 package org.observertc.schemas.protobuf;
 
 /**
-* Schema Version: 3.1.0
+* Schema Version: 3.2.0
 */
 message ClientSample {
 	message PeerConnectionSample {
@@ -77,30 +77,34 @@ message ClientSample {
 			optional int32 packetsDiscarded = 40;
 			optional int32 packetsLost = 41;
 			optional int32 packetsReceived = 42;
-			optional int32 pauseCount = 43;
-			optional string playoutId = 44;
-			optional int32 pliCount = 45;
-			optional bool powerEfficientDecoder = 46;
-			optional double qpSum = 47;
-			optional string remoteId = 48;
-			optional int64 removedSamplesForAcceleration = 49;
-			optional int64 retransmittedBytesReceived = 50;
-			optional int32 retransmittedPacketsReceived = 51;
-			optional int64 rtxSsrc = 52;
-			optional int64 silentConcealedSamples = 53;
-			optional double totalAssemblyTime = 54;
-			optional double totalAudioEnergy = 55;
-			optional double totalCorruptionProbability = 56;
-			optional double totalDecodeTime = 57;
-			optional double totalFreezesDuration = 58;
-			optional double totalInterFrameDelay = 59;
-			optional double totalPausesDuration = 60;
-			optional double totalProcessingDelay = 61;
-			optional double totalSamplesDuration = 62;
-			optional int64 totalSamplesReceived = 63;
-			optional double totalSquaredCorruptionProbability = 64;
-			optional double totalSquaredInterFrameDelay = 65;
-			optional string transportId = 66;
+			optional int32 packetsReceivedWithCe = 43;
+			optional int32 packetsReceivedWithEct1 = 44;
+			optional int32 packetsReportedAsLost = 45;
+			optional int32 packetsReportedAsLostButRecovered = 46;
+			optional int32 pauseCount = 47;
+			optional string playoutId = 48;
+			optional int32 pliCount = 49;
+			optional bool powerEfficientDecoder = 50;
+			optional double qpSum = 51;
+			optional string remoteId = 52;
+			optional int64 removedSamplesForAcceleration = 53;
+			optional int64 retransmittedBytesReceived = 54;
+			optional int32 retransmittedPacketsReceived = 55;
+			optional int64 rtxSsrc = 56;
+			optional int64 silentConcealedSamples = 57;
+			optional double totalAssemblyTime = 58;
+			optional double totalAudioEnergy = 59;
+			optional double totalCorruptionProbability = 60;
+			optional double totalDecodeTime = 61;
+			optional double totalFreezesDuration = 62;
+			optional double totalInterFrameDelay = 63;
+			optional double totalPausesDuration = 64;
+			optional double totalProcessingDelay = 65;
+			optional double totalSamplesDuration = 66;
+			optional int64 totalSamplesReceived = 67;
+			optional double totalSquaredCorruptionProbability = 68;
+			optional double totalSquaredInterFrameDelay = 69;
+			optional string transportId = 70;
 		}
 		message RemoteInboundRtpStats {
 			optional string id = 1;
@@ -114,13 +118,22 @@ message ClientSample {
 			optional string localId = 9;
 			optional int32 packetsLost = 10;
 			optional int32 packetsReceived = 11;
-			optional int64 packetsWithBleachedEct1Marking = 12;
-			optional double roundTripTime = 13;
-			optional int64 roundTripTimeMeasurements = 14;
-			optional double totalRoundTripTime = 15;
-			optional string transportId = 16;
+			optional int32 packetsReceivedWithCe = 12;
+			optional int32 packetsReceivedWithEct1 = 13;
+			optional int32 packetsReportedAsLost = 14;
+			optional int32 packetsReportedAsLostButRecovered = 15;
+			optional int64 packetsWithBleachedEct1Marking = 16;
+			optional double roundTripTime = 17;
+			optional int64 roundTripTimeMeasurements = 18;
+			optional double totalRoundTripTime = 19;
+			optional string transportId = 20;
 		}
 		message OutboundRtpStats {
+			message PsnrSum {
+				optional double u = 1;
+				optional double v = 2;
+				optional double y = 3;
+			}
 			message QualityLimitationDurations {
 				optional double bandwidth = 1;
 				optional double cpu = 2;
@@ -154,21 +167,22 @@ message ClientSample {
 			optional int32 pliCount = 25;
 			optional bool powerEfficientEncoder = 26;
 			optional int64 psnrMeasurements = 27;
-			optional int64 qpSum = 28;
-			optional QualityLimitationDurations qualityLimitationDurations = 29;
-			optional string qualityLimitationReason = 30;
-			optional int32 qualityLimitationResolutionChanges = 31;
-			optional string remoteId = 32;
-			optional int64 retransmittedBytesSent = 33;
-			optional int32 retransmittedPacketsSent = 34;
-			optional string rid = 35;
-			optional int64 rtxSsrc = 36;
-			optional string scalabilityMode = 37;
-			optional double targetBitrate = 38;
-			optional double totalEncodeTime = 39;
-			optional int64 totalEncodedBytesTarget = 40;
-			optional double totalPacketSendDelay = 41;
-			optional string transportId = 42;
+			optional PsnrSum psnrSum = 28;
+			optional int64 qpSum = 29;
+			optional QualityLimitationDurations qualityLimitationDurations = 30;
+			optional string qualityLimitationReason = 31;
+			optional int32 qualityLimitationResolutionChanges = 32;
+			optional string remoteId = 33;
+			optional int64 retransmittedBytesSent = 34;
+			optional int32 retransmittedPacketsSent = 35;
+			optional string rid = 36;
+			optional int64 rtxSsrc = 37;
+			optional string scalabilityMode = 38;
+			optional double targetBitrate = 39;
+			optional double totalEncodeTime = 40;
+			optional int64 totalEncodedBytesTarget = 41;
+			optional double totalPacketSendDelay = 42;
+			optional string transportId = 43;
 		}
 		message RemoteOutboundRtpStats {
 			optional string id = 1;
