@@ -271,7 +271,7 @@ IceCandidatePairStats
  * **transportId**: The transport id of the connection this candidate pair belongs to.
  * **localCandidateId**: The ID of the local ICE candidate in this pair.
  * **remoteCandidateId**: The ID of the remote ICE candidate in this pair.
- * **state**: undefined (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
+ * **state**: (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
  * **nominated**: Whether this candidate pair has been nominated.
  * **packetsSent**: The number of packets sent using this candidate pair.
  * **packetsReceived**: The number of packets received using this candidate pair.
@@ -325,6 +325,7 @@ ClientEvent
  * **timestamp**: The timestamp in epoch format when the event was generated.
 ClientIssue
  * **type**: The name of the issue
+ * **key**: Identifier of the related issue or resolution when it is provided.
  * **payload**: The value associated with the event, if applicable.
  * **timestamp**: The timestamp in epoch format when the event was generated.
 ClientMetaData

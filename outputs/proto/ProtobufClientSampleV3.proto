@@ -362,8 +362,9 @@ message ClientSample {
 	}
 	message ClientIssue {
 		string type = 1;
-		string payload = 2;
-		double timestamp = 3;
+		string key = 2;
+		string payload = 3;
+		double timestamp = 4;
 	}
 	message ClientMetaData {
 		string type = 1;

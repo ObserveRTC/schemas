@@ -63,6 +63,11 @@ export type ClientIssue = {
 	type: string;
 
 	/**
+	* Identifier of the related issue or resolution when it is provided.
+	*/
+	key?: string;
+
+	/**
 	* The value associated with the event, if applicable.
 	*/
 	payload?: string;

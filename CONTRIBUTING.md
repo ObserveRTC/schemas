@@ -23,7 +23,7 @@ This project adheres to a code of conduct that we expect all contributors to fol
 
 ### Prerequisites
 
-- **Node.js** 16+ 
+- **Node.js** 22+
 - **npm** or **yarn**
 - **Git**
 - Basic understanding of:
@@ -46,14 +46,14 @@ This project adheres to a code of conduct that we expect all contributors to fol
 
 3. **Generate All Outputs**
    ```bash
-   npm run compile
+   npm run generate
    ```
    This will process all Avro schemas and generate:
-   - TypeScript/JavaScript type definitions
-   - SQL schemas for BigQuery, Redshift, PostgreSQL
-   - Protocol Buffer definitions
-   - CSV format specifications
-   - Compiled Avro schemas
+   - TypeScript type definitions
+   - Protocol Buffer definitions, compiled to TypeScript with `buf`
+   - Flattened Avro schemas
+   - Markdown documentation
+   - The three npm packages
 
 4. **Verify Setup**
    Check that all generated files are created in:
@@ -72,13 +72,13 @@ This project adheres to a code of conduct that we expect all contributors to fol
 │   ├── version.txt        # Current schema version
 │   └── CHANGELOG.md       # Schema change history
 ├── outputs/                # Generated outputs (auto-generated)
-│   ├── sql/               # Database schemas
+│   ├── typescript/        # Generated type definitions
 │   ├── proto/             # Protocol Buffer files
-│   ├── csv/               # CSV format specs
-│   └── avsc/              # Compiled Avro schemas
+│   └── avsc/              # Flattened Avro schemas
 ├── npm-samples-*/          # Generated NPM packages
-├── .github/               # GitHub workflows and templates
-└── *.js                  # Generator scripts
+├── src/                   # The generator (TypeScript)
+├── docs/GENERATOR.md      # How the generator works
+└── .github/               # GitHub workflows and templates
 ```
 
 ### Branch Strategy
@@ -172,9 +172,10 @@ docs(README): update schema change process documentation
   - **MAJOR**: Breaking changes, field removals
 
 #### 3. Validation Phase
-- Run `npm run compile` to generate all outputs
+- Run `npm run generate` to generate all outputs
+- Run `npm run verify` (type-check plus a staleness check)
 - Verify generated TypeScript types are correct
-- Check SQL schemas compile without errors
+- Review the diff of `outputs/proto/` for renumbered fields
 - Test with sample data if applicable
 
 ## Making Changes
@@ -214,13 +215,23 @@ docs(README): update schema change process documentation
 
 ```bash
 # Generate all outputs from schemas
-npm run compile
+npm run generate
 
-# Run specific generators (modify index.js to enable specific generators)
-node index.js
+# Regenerate a subset while iterating
+npm run generate:types
+npm run generate -- --only proto
 
-# Check for syntax errors in Avro schemas
-# (Errors will be shown during compilation)
+# Show what would change without writing anything
+npm run generate:dry-run
+
+# Validate schemas and require every field to be documented
+npm run schemas:validate
+
+# Fail if the committed outputs are stale (what CI should run)
+npm run verify
+
+# Full option list
+npm run generate -- --help
 ```
 
 ## Testing
@@ -229,10 +240,10 @@ node index.js
 
 After making changes, verify:
 
-- [ ] **Schema Validation**: All `.avsc` files are valid Avro schemas
+- [ ] **Schema Validation**: `npm run schemas:validate` passes
+- [ ] **Staleness**: `npm run generate:check` reports nothing out of date
 - [ ] **TypeScript Generation**: Generated TS types compile without errors
-- [ ] **SQL Generation**: Generated SQL schemas are syntactically correct
-- [ ] **Protocol Buffers**: Generated `.proto` files are valid
+- [ ] **Protocol Buffers**: Generated `.proto` files are valid, and no existing field was renumbered
 - [ ] **NPM Packages**: Generated packages have correct structure
 - [ ] **Documentation**: Generated docs are accurate and complete
 
@@ -245,10 +256,10 @@ After making changes, verify:
    npm run build
    ```
 
-2. **SQL Schema Validation**
-   - Check generated SQL files in `outputs/sql/`
-   - Verify syntax for each database type
-   - Ensure proper data type mappings
+2. **Protobuf Validation**
+   - Check the generated files in `outputs/proto/`
+   - Confirm no previously published field number changed
+   - Confirm `temp/outputs/proto/*_pb.ts` regenerated without buf errors
 
 ### Schema Compatibility Testing
 
@@ -262,7 +273,7 @@ When modifying existing schemas:
 ### Before Submitting
 
 1. **Branch Up-to-Date**: Rebase on latest `main`
-2. **Generate Outputs**: Run `npm run compile` 
+2. **Generate Outputs**: Run `npm run generate` 
 3. **Test Changes**: Follow testing checklist
 4. **Commit Messages**: Use conventional commit format
 5. **Documentation**: Update relevant docs
@@ -287,8 +298,8 @@ Brief description of changes and motivation.
 
 ## Testing
 - [ ] Generated TypeScript compiles successfully
-- [ ] SQL schemas are syntactically valid
-- [ ] Protocol buffers generate correctly
+- [ ] `npm run verify` passes
+- [ ] Protocol buffers generate correctly, with no field renumbered
 - [ ] Documentation is updated
 
 ## Versioning

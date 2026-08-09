@@ -21,13 +21,13 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^22.13.14",
-    "typescript": "^4.5.5"
+    "typescript": "^7.0.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/observertc/schemas"
   },
   "dependencies": {
-    "@bufbuild/protobuf": "^2.2.3"
+    "@bufbuild/protobuf": "^2.13.0"
   }
 }

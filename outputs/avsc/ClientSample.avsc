@@ -2789,6 +2789,15 @@
                 "type": "string"
               },
               {
+                "name": "key",
+                "doc": "Identifier of the related issue or resolution when it is provided.",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
+              },
+              {
                 "name": "payload",
                 "doc": "The value associated with the event, if applicable.",
                 "type": [

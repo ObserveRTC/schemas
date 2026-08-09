@@ -196,7 +196,9 @@ Field | Description
 none (**Mandatory**) | Duration of no quality limitation in seconds.
 cpu (**Mandatory**) | Duration of CPU-based quality limitation in seconds.
 bandwidth (**Mandatory**) | Duration of bandwidth-based quality limitation in seconds.
-other (**Mandatory**) | Duration of other quality limitation reasons in seconds.## OutboundRtpStats
+other (**Mandatory**) | Duration of other quality limitation reasons in seconds.
+
+## OutboundRtpStats
 
 
 Field | Description 
@@ -388,7 +390,7 @@ timestamp (**Mandatory**) | The timestamp of when the stats were recorded, in mi
 transportId | The transport id of the connection this candidate pair belongs to.
 localCandidateId | The ID of the local ICE candidate in this pair.
 remoteCandidateId | The ID of the remote ICE candidate in this pair.
-state | undefined (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
+state | (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
 nominated | Whether this candidate pair has been nominated.
 packetsSent | The number of packets sent using this candidate pair.
 packetsReceived | The number of packets received using this candidate pair.
@@ -420,7 +422,9 @@ fingerprint | The fingerprint of the certificate.
 fingerprintAlgorithm | The algorithm used for the fingerprint (e.g., 'SHA-256').
 base64Certificate | The certificate encoded in base64 format.
 issuerCertificateId | The certificate ID of the issuer.
-attachments | Additional information attached to this stats## PeerConnectionSample
+attachments | Additional information attached to this stats
+
+## PeerConnectionSample
 
 
 A sample containing statistics and metrics for a WebRTC peer connection
@@ -463,6 +467,7 @@ timestamp | The timestamp in epoch format when the event was generated.
 Field | Description 
 --- | ---
 type (**Mandatory**) | The name of the issue
+key | Identifier of the related issue or resolution when it is provided.
 payload | The value associated with the event, if applicable.
 timestamp | The timestamp in epoch format when the event was generated.
 
@@ -484,7 +489,9 @@ timestamp | The timestamp in epoch format when the event was generated.
 Field | Description 
 --- | ---
 type (**Mandatory**) | The type of the extension stats the custom app provides
-payload | The payload of the extension stats the custom app provides## ClientSample
+payload | The payload of the extension stats the custom app provides
+
+## ClientSample
 
 
 docs
@@ -680,7 +687,9 @@ bytesSent | The number of bytes sent on the corresponded SCTP stream.
 Field | Description 
 --- | ---
 type (**Mandatory**) | The type of the extension stats the custom app provides
-payload (**Mandatory**) | The payload of the extension stats the custom app provides## SfuSample
+payload (**Mandatory**) | The payload of the extension stats the custom app provides
+
+## SfuSample
 
 
 docs
@@ -739,7 +748,9 @@ receivingBitrate | the bitrate the TURN server receiving from the client
 sentBytes | the amount of bytes sent to the client
 receivedBytes | the amount of bytes received from the client
 sentPackets | the amount of packets sent to the client
-receivedPackets | the amount of packets received from the client## TurnSample
+receivedPackets | the amount of packets received from the client
+
+## TurnSample
 
 
 docs
@@ -749,7 +760,9 @@ Field | Description
 --- | ---
 serverId (**Mandatory**) | A unique id of the turn server
 allocations | Peer Alloocation data
-sessions | Session data## Samples
+sessions | Session data
+
+## Samples
 
 
 Observer created reports related to events (call started, call ended, client joined, etc...) indicated by the incoming samples.
