@@ -23,6 +23,12 @@ export const ARTIFACT_REQUIRES: Partial<Record<Artifact, readonly Artifact[]>> =
 };
 
 /**
+ * The single generated module that carries `export const schemaVersion`.
+ * See `typescript.includeSchemaVersion` below for why there can only be one.
+ */
+const SCHEMA_VERSION_OWNER = 'ClientSample';
+
+/**
  * Identifier fields that travel as opaque bytes on the wire instead of as
  * strings, saving ~50% on the most repeated fields in a sample.
  */
@@ -167,9 +173,13 @@ export function resolveConfig(overrides: ConfigOverrides = {}): GeneratorConfig 
 		typescript: {
 			fieldTypeOverrides: buildTsFieldTypeOverrides(),
 			enumSymbolOverrides: buildEnumSymbolOverrides(),
-			// Report schemas are produced by the observer, not sampled by a
-			// client, so they carry no schema version of their own.
-			includeSchemaVersion: (schemaName: string) => !schemaName.includes('Report'),
+			// `schemaVersion` describes the whole schema set, not one record, so
+			// exactly one module may export it. Emitting it from every module
+			// made `src/index.ts` re-export the same name twice, which is a
+			// TS2308 error and has been breaking `npm-samples-lib`'s build.
+			// ClientSample owns it because the codec packages re-export it from
+			// there (`export { schemaVersion } from './InputSamples'`).
+			includeSchemaVersion: (schemaName: string) => schemaName === SCHEMA_VERSION_OWNER,
 		},
 
 		emitDocs: overrides.emitDocs ?? true,

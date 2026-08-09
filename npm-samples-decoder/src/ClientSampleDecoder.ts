@@ -29,7 +29,7 @@ import { ClientEventDecoder, DefaultClientEventDecoder } from "./ClientEventDeco
 import { ClientMetaDataDecoder, DefaultClientMetaDataDecoder } from "./ClientMetaDataDecoder";
 import { DefaultExtensionStatsDecoder, ExtensionStatsDecoder } from "./ExtensionStatsDecoder";
 import { ClientIssueDecoder, DefaultClientIssueDecoder } from "./ClientIssueDecoder";
-import { fromBinary } from "@bufbuild/protobuf/dist/cjs/from-binary";
+import { fromBinary } from "@bufbuild/protobuf";
 
 export class ClientSampleDecoder {
     public readonly settings: ClientSampleDecoderSettings;

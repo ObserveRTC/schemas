@@ -1,5 +1,5 @@
 
-export const schemaVersion = "3.2.0";
+export const schemaVersion = "3.3.0";
 
 /**
 * The WebRTC app provided custom stats payload

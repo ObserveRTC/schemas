@@ -311,6 +311,9 @@ Three operational differences worth knowing:
 - **Generated `package.json` files gain a trailing newline.** The legacy
   serialiser omitted it, so every editor that adds one made the file look
   modified. One-time diff on the three packages, then stable.
+- **`schemaVersion` is emitted from `ClientSample` only**, not from every
+  module. See [breakage 2](#three-latent-breakages-this-uncovered) — exporting
+  it twice made `npm-samples-lib` fail to compile.
 
 ## Dependencies
 
@@ -329,10 +332,74 @@ The root `package.json` was trimmed to what the generator actually loads:
 Removed as unused: `argparse`, `json-schema-to-markdown`, `protobufjs`,
 `typedoc`.
 
-The three generated packages were bumped to `typescript@^7` and
-`@types/node@^22` as well. Their `tsconfig.json` files moved from
-`"moduleResolution": "node"` to `"node10"` — the same resolver, under the name
-TypeScript 5.0 and later expect.
+### The three published packages
+
+`npm-samples-lib`, `npm-samples-encoder` and `npm-samples-decoder` were bumped
+to `typescript@^7` and `@types/node@^22`, which required their build config to
+be rewritten. Each now uses:
+
+```jsonc
+"module": "nodenext",
+"moduleResolution": "nodenext",
+"rootDir": "./src",
+"types": [ "node" ]        // [] for npm-samples-lib, which needs no globals
+```
+
+Why each of those:
+
+- **`nodenext`, not `node`/`node10`.** `"moduleResolution": "node"` (and its
+  modern alias `node10`) is deprecated and errors under TypeScript 6, then stops
+  functioning in 7. It also predates the `exports` field, so it cannot resolve
+  `@bufbuild/protobuf/codegenv2` — a subpath that exists only in the package's
+  export map and has no directory on disk. `node16` resolves it but then rejects
+  the import, because `@bufbuild/protobuf` is `"type": "module"` and Node 16
+  cannot `require` an ES module. `nodenext` models Node 22, where it can.
+- **The emit is still CommonJS.** None of the packages declares
+  `"type": "module"`, so `nodenext` compiles every `.ts` as CJS. `dist/index.js`
+  keeps using `require`, `main`/`types` keep pointing at the same files, and
+  extensionless relative imports keep working. Consumers see no change.
+- **`rootDir` is now explicit.** TypeScript 6 stopped inferring it (TS5011).
+  Without it, output lands in `dist/src/` and `main: dist/index.js` breaks.
+- **`types` is explicit** so a stray `@types/*` package in the tree cannot
+  silently add globals to a published library.
+
+`target`/`lib` were deliberately left at `es2018` (lib) and `es2020` (codecs).
+Raising them changes the emitted JavaScript and therefore the minimum runtime;
+the encoder in particular runs in browsers, so that is a decision to make on
+purpose rather than as a side effect of a compiler upgrade.
+
+## Three latent breakages this uncovered
+
+Bringing the packages onto a current compiler surfaced three problems that were
+already there. All three are fixed.
+
+**1. `@observertc/samples-decoder` did not work at all.**
+`ClientSampleDecoder.ts` imported `fromBinary` from
+`@bufbuild/protobuf/dist/cjs/from-binary` — reaching past the package's public
+API into a path that stopped existing when protobuf-es v2 renamed `dist/cjs` to
+`dist/commonjs`. It fails at compile time *and* at runtime: requiring the
+published `dist/index.js` throws `ERR_PACKAGE_PATH_NOT_EXPORTED`. `fromBinary`
+is a normal root export, exactly as `toBinary` already was in the encoder, so
+the fix is a one-line import change.
+
+**2. `npm-samples-lib` did not compile.**
+Both `samples/ClientSample.ts` and `samples/Samples.ts` exported
+`export const schemaVersion`, and `src/index.ts` re-exports both with
+`export *` — TS2308, ambiguous re-export. `schemaVersion` describes the schema
+set rather than any one record, so the generator now emits it from exactly one
+module (`ClientSample`, because the codec packages re-export it from there).
+The package's public API is unchanged: `schemaVersion` is still exported from
+the barrel.
+
+**3. Neither failure was visible, because CI never builds.**
+Both release workflows run `npm publish --ignore-scripts`, which skips
+`prepare` — so `npm run build` never executes in CI and whatever `dist/` happens
+to be committed is what gets published. The committed `dist/` is from March and
+still declares `version = "3.0.0"` against a `package.json` of `3.2.0`.
+
+Worth deciding separately: drop `--ignore-scripts` so `prepare` builds on
+publish, or add an explicit build step to the workflows. Either way the
+committed `dist/` directories should be rebuilt before the next release.
 
 ---
 
