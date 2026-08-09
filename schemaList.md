@@ -271,7 +271,7 @@ IceCandidatePairStats
  * **transportId**: The transport id of the connection this candidate pair belongs to.
  * **localCandidateId**: The ID of the local ICE candidate in this pair.
  * **remoteCandidateId**: The ID of the remote ICE candidate in this pair.
- * **state**: (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
+ * **state**: The checklist state of this candidate pair. Values follow the W3C RTCStatsIceCandidatePairState enum (frozen, waiting, in-progress, failed, succeeded). Two further values are accepted for backward compatibility and are not part of the current spec: `new` (never standardised) and `cancelled` (removed from the spec after 2016). (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
  * **nominated**: Whether this candidate pair has been nominated.
  * **packetsSent**: The number of packets sent using this candidate pair.
  * **packetsReceived**: The number of packets received using this candidate pair.

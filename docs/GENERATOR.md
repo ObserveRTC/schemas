@@ -391,15 +391,93 @@ module (`ClientSample`, because the codec packages re-export it from there).
 The package's public API is unchanged: `schemaVersion` is still exported from
 the barrel.
 
-**3. Neither failure was visible, because CI never builds.**
-Both release workflows run `npm publish --ignore-scripts`, which skips
-`prepare` — so `npm run build` never executes in CI and whatever `dist/` happens
-to be committed is what gets published. The committed `dist/` is from March and
-still declares `version = "3.0.0"` against a `package.json` of `3.2.0`.
+**3. Neither failure was visible, because CI never built and never published.**
+See [Publishing](#publishing).
 
-Worth deciding separately: drop `--ignore-scripts` so `prepare` builds on
-publish, or add an explicit build step to the workflows. Either way the
-committed `dist/` directories should be rebuilt before the next release.
+---
+
+## Publishing
+
+### Why the workflows were failing
+
+Every release run ended with:
+
+```
+npm error code E404
+npm error 404 Not Found - PUT https://registry.npmjs.org/@observertc%2fsample-schemas-js
+```
+
+That is not a missing package. All three exist on the registry
+(`@observertc/sample-schemas-js` at 2.2.12, `@observertc/samples-encoder` and
+`@observertc/samples-decoder` at 3.0.0). npm answers **404 to a `PUT` you are
+not authorised to make**, so that an unauthorised caller cannot discover which
+private packages exist. A 404 on publish for a package that demonstrably exists
+means authentication, not existence.
+
+The cause: **npm permanently revoked all classic tokens on 9 December 2025.**
+The workflows authenticated with
+
+```yaml
+npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+```
+
+against a classic automation token. That token is dead and cannot be restored,
+so every publish since has failed — which is why the registry still serves
+2.2.12 of the schema library while `sources/version.txt` says 3.3.0.
+
+### What replaced it
+
+The workflows now use **OIDC trusted publishing**: GitHub mints a short-lived
+token per run and npm verifies it against a publisher you register on the
+package. There is no secret to store or rotate. The changes:
+
+- `permissions: id-token: write` — without it there is no OIDC token and the
+  publish fails the same way.
+- `npm install -g npm@latest` — trusted publishing needs npm ≥ 11.5.1 and the
+  npm bundled with Node 22 is older.
+- No `NPM_TOKEN`, no `npm config set _authToken`.
+- An explicit `npm run build` step, because `npm publish --ignore-scripts` skips
+  `prepare` and the packages would otherwise ship whatever `dist/` was committed.
+- `actions/checkout@v4` and `actions/setup-node@v4`; the old `@v2`/`@v1` pins
+  are long deprecated. `::set-output` replaced with `$GITHUB_OUTPUT`.
+
+Provenance attestation is on by default under trusted publishing, so
+`--provenance` is not needed.
+
+### One-time setup, per package
+
+This cannot be done from the repository — it has to be configured on npmjs.com,
+once for each of the three packages, under *Settings → Trusted Publisher*:
+
+| Field | Value |
+| --- | --- |
+| Organization or user | `observertc` |
+| Repository | `schemas` |
+| Workflow filename | see below — must match exactly, including the extension |
+| Allowed actions | `npm publish` |
+
+| Package | Workflow filename |
+| --- | --- |
+| `@observertc/sample-schemas-js` | `release-samples-lib.yaml` |
+| `@observertc/samples-encoder` | `release-samples-encoder-lib.yaml` |
+| `@observertc/samples-decoder` | `release-samples-decoder-lib.yaml` |
+
+npm does not validate this configuration when you save it, so a typo in the
+workflow filename surfaces only as an authentication failure at publish time.
+
+If a package ever needs to be published from somewhere other than GitHub
+Actions, use a granular access token instead — 7 days by default, 90 maximum.
+Classic tokens no longer exist.
+
+### Two caveats in the current triggers
+
+- The workflows still run on `pull_request`, publishing a `develop-<version>-rc`
+  build for every PR. OIDC tokens are not issued to pull requests **from forks**,
+  so those runs will fail. Same-repository branches are fine. If external
+  contributions are expected, move the release to `push` or `workflow_dispatch`.
+- The committed `dist/` directories are from March 2026 and still declare
+  `version = "3.0.0"`. The explicit build step makes that irrelevant for what
+  gets published, but they are stale in git and worth regenerating.
 
 ---
 

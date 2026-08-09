@@ -1823,19 +1823,44 @@
                   {
                     "type": "enum",
                     "name": "RTCStatsIceCandidatePairState",
+                    /*
+                     * Kept deliberately wider than the current W3C enum so that
+                     * older clients keep validating. The spec today defines only:
+                     *   "frozen", "waiting", "in-progress", "failed", "succeeded"
+                     *
+                     * "inProgress" is the spec's "in-progress" -- Avro enum symbols
+                     * must match [A-Za-z_][A-Za-z0-9_]*, so the hyphen cannot be
+                     * spelled here. The generator rewrites it back to "in-progress"
+                     * (and also accepts the legacy one-word "inprogress") when it
+                     * emits the TypeScript union; see enumSymbolOverrides in
+                     * src/config.ts. Do not "fix" this to a hyphen -- it will not
+                     * parse as Avro.
+                     */
                     "symbols": [
+                      /* DEPRECATED: never part of the W3C enum. ObserveRTC-only
+                         value, retained for backward compatibility. */
                       "new",
                       "frozen",
+                      /* Spec spelling is "in-progress"; see the note above.
+                         The 2014-10-21 FPWD through the 2016-12-14 WD spelled it
+                         "inprogress" (one word). */
                       "inProgress",
                       "waiting",
                       "failed",
                       "succeeded",
+                      /* DEPRECATED: removed from the W3C enum after
+                         w3c/webrtc-stats issue #66 ("There is no ICE 'cancelled'
+                         state", opened 2016-10-11) established that RFC 5245
+                         section 5.7.4 defines no such state. Last published in the
+                         2016-12-14 Working Draft; absent from the spec since.
+                         Retained for backward compatibility. */
                       "cancelled"
                     ],
                     "doc": "The state of the ICE candidate pair."
                   }
                 ],
-                "default": null
+                "default": null,
+                "doc": "The checklist state of this candidate pair. Values follow the W3C RTCStatsIceCandidatePairState enum (frozen, waiting, in-progress, failed, succeeded). Two further values are accepted for backward compatibility and are not part of the current spec: `new` (never standardised) and `cancelled` (removed from the spec after 2016)."
               },
               {
                 "name": "nominated",

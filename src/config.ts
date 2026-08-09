@@ -147,7 +147,10 @@ export function resolveConfig(overrides: ConfigOverrides = {}): GeneratorConfig 
 		sourcesDir,
 		schemaTypes: ['samples'],
 		versionFile: path.join(sourcesDir, 'version.txt'),
-		changelogFile: path.join(sourcesDir, 'CHANGELOG.md'),
+		// Lives at the repository root, where a changelog is expected to be —
+		// GitHub renders it on the repo page and npm links to it. It is still
+		// appended to the schema library's README by the samples-lib target.
+		changelogFile: path.join(root, 'CHANGELOG.md'),
 		w3cStatsIdentifiersFile: path.join(sourcesDir, 'w3c', 'W3cStatsIdentifiers.ts'),
 
 		outputsDir,

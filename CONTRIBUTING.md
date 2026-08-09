@@ -69,14 +69,14 @@ This project adheres to a code of conduct that we expect all contributors to fol
 ├── sources/                 # Source Avro schema definitions
 │   ├── samples/            # Core sample schema files (.avsc)
 │   ├── w3c/               # W3C-specific schemas
-│   ├── version.txt        # Current schema version
-│   └── CHANGELOG.md       # Schema change history
+│   └── version.txt        # Current schema version
 ├── outputs/                # Generated outputs (auto-generated)
 │   ├── typescript/        # Generated type definitions
 │   ├── proto/             # Protocol Buffer files
 │   └── avsc/              # Flattened Avro schemas
 ├── npm-samples-*/          # Generated NPM packages
 ├── src/                   # The generator (TypeScript)
+├── CHANGELOG.md           # Schema change history
 ├── docs/GENERATOR.md      # How the generator works
 └── .github/               # GitHub workflows and templates
 ```
@@ -334,7 +334,7 @@ ObserveRTC Schemas follows [Semantic Versioning](https://semver.org/):
 2. **Update Version Files**: 
    - `package.json` version
    - `sources/version.txt`
-   - `sources/CHANGELOG.md`
+   - `CHANGELOG.md`
 3. **Generate Release**: Automated workflows handle NPM package publishing
 4. **Release Notes**: Document changes and migration notes
 

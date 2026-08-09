@@ -103,7 +103,19 @@ function renderReadme({ tableOfContents, schemaSections, changelog }: ReadmeArgs
 
 	lines.push(...schemaSections);
 
-	if (changelog) lines.push('## Changelog', changelog);
+	if (changelog) lines.push('## Changelog', changelogBody(changelog));
 
 	return lines.join('\n');
+}
+
+/**
+ * The changelog file starts with an `# Changelog` title and a short preamble
+ * aimed at contributors. Both are noise once the file is spliced under the
+ * README's own `## Changelog` heading — and the stray `#` would break the
+ * README's heading hierarchy — so everything before the first version section
+ * is dropped.
+ */
+function changelogBody(changelog: string): string {
+	const firstSection = changelog.search(/^## /m);
+	return firstSection === -1 ? changelog : changelog.slice(firstSection);
 }

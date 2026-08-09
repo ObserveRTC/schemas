@@ -12,12 +12,13 @@ A comprehensive schema generator for WebRTC observability that creates type-safe
 - [Schema Structure](#schema-structure)
 - [Development](#development)
 - [Versioning](#versioning)
+- [Publishing](#publishing)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
 
-ObserveRTC Schemas provides a standardized way to describe WebRTC statistics, events, and metrics across different programming languages and data storage systems. The schema generator processes Avro schema definitions and creates type-safe bindings for TypeScript/JavaScript, SQL schemas for databases, and other format outputs.
+ObserveRTC Schemas provides a standardized way to describe WebRTC statistics, events, and metrics across different programming languages. The schema generator processes Avro schema definitions and creates type-safe TypeScript bindings, Protocol Buffer schemas, flattened Avro schemas and Markdown documentation.
 
 ## Features
 
@@ -126,8 +127,7 @@ npm run schemas:list        # list the discovered schemas and chunks
 ├── sources/                 # Source Avro schema definitions
 │   ├── samples/            # Sample schema files (.avsc) and reusable chunks
 │   ├── w3c/                # W3C stats identifiers, copied into the library
-│   ├── version.txt         # Current schema version
-│   └── CHANGELOG.md        # Schema change history
+│   └── version.txt         # Current schema version
 ├── src/                    # The generator (TypeScript)
 ├── outputs/                # Generated outputs
 │   ├── typescript/         # Generated type definitions
@@ -136,6 +136,7 @@ npm run schemas:list        # list the discovered schemas and chunks
 ├── npm-samples-lib/        # Generated core TypeScript library
 ├── npm-samples-encoder/    # Encoding utilities
 ├── npm-samples-decoder/    # Decoding utilities
+├── CHANGELOG.md            # Schema change history
 └── docs/GENERATOR.md       # How the generator works
 ```
 
@@ -168,9 +169,17 @@ ObserveRTC Schemas uses [Semantic Versioning](https://semver.org/) with the foll
 - **MINOR** - New fields, schema updates (typically matches WebRTC draft date: YYYYMMDD)
 - **MAJOR** - Breaking changes to schema structure
 
-### Current Version: 3.0.0
+The current version lives in `sources/version.txt` and is stamped into every
+generated artifact. See [`CHANGELOG.md`](CHANGELOG.md) for the release history.
 
 Based on WebRTC Statistics API specifications and optimized for real-world WebRTC monitoring scenarios.
+
+## Publishing
+
+The three npm packages are released by GitHub Actions using **npm trusted
+publishing (OIDC)** — there is no `NPM_TOKEN`. Each package needs a Trusted
+Publisher registered once on npmjs.com pointing at its workflow file; the exact
+settings are in [`docs/GENERATOR.md`](docs/GENERATOR.md#publishing).
 
 ## Contributing
 

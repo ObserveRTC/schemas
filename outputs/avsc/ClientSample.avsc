@@ -2475,7 +2475,8 @@
                               "doc": "The state of the ICE candidate pair."
                             }
                           ],
-                          "default": null
+                          "default": null,
+                          "doc": "The checklist state of this candidate pair. Values follow the W3C RTCStatsIceCandidatePairState enum (frozen, waiting, in-progress, failed, succeeded). Two further values are accepted for backward compatibility and are not part of the current spec: `new` (never standardised) and `cancelled` (removed from the spec after 2016)."
                         },
                         {
                           "name": "nominated",

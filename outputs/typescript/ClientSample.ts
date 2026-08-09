@@ -170,7 +170,11 @@ export type IceCandidatePairStats = {
 	*/
 	remoteCandidateId?: string;
 
+	/**
+	* The checklist state of this candidate pair. Values follow the W3C RTCStatsIceCandidatePairState enum (frozen, waiting, in-progress, failed, succeeded). Two further values are accepted for backward compatibility and are not part of the current spec: `new` (never standardised) and `cancelled` (removed from the spec after 2016).
+	*/
 	state?: "new" | "frozen" | "in-progress" | "waiting" | "failed" | "succeeded" | "cancelled" | "inprogress";
+
 	/**
 	* Whether this candidate pair has been nominated.
 	*/
