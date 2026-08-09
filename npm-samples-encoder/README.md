@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@observertc%2Fsamples-encoder.svg)](https://badge.fury.io/js/@observertc%2Fsamples-encoder)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-High-performance binary encoder for ObserveRTC WebRTC observability samples. This library provides efficient, bandwidth-optimized encoding of WebRTC statistics using differential compression and Protocol Buffers for minimal transport overhead.
+Binary encoder for ObserveRTC WebRTC client-side observability samples. This library provides encoding of WebRTC statistics using differential compression and Protocol Buffers for transport optimization.
 
 ## Table of Contents
 
@@ -11,6 +11,7 @@ High-performance binary encoder for ObserveRTC WebRTC observability samples. Thi
 - [Features](#features)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Constructor Options](#constructor-options)
 - [Real-World Example with Client Monitor](#real-world-example-with-client-monitor)
 - [Encoding Strategy](#encoding-strategy)
 - [API Reference](#api-reference)
@@ -22,27 +23,27 @@ High-performance binary encoder for ObserveRTC WebRTC observability samples. Thi
 
 ## Overview
 
-The ObserveRTC Samples Encoder transforms WebRTC observability data into highly compressed binary formats optimized for real-time transmission. It achieves dramatic size reductions through:
+The ObserveRTC ClientSampleEncoder transforms WebRTC client-side observability data into compressed binary formats for transmission. It achieves size reductions through:
 
 1. **Differential Encoding** - Only transmitting changes since the last sample
-2. **Protocol Buffer Serialization** - Efficient binary encoding format
-3. **Type-Specific Optimizations** - Custom encoders for each sample type
+2. **Protocol Buffer Serialization** - Binary encoding format
+3. **UUID Optimization** - Efficient encoding of UUID identifiers
 4. **Stateful Compression** - Maintaining state across encoding operations
 
 ## Features
 
-### 🚀 **High Performance**
+### 🚀 **Optimized Performance**
 
-- **90%+ Size Reduction** - Typical compression ratios through differential encoding
-- **Sub-millisecond Encoding** - Optimized for real-time applications
-- **Memory Efficient** - Minimal memory footprint with reusable encoders
+- **Size Reduction** - Compression through differential encoding
+- **Efficient Encoding** - Designed for real-time applications
+- **Memory Conscious** - Reusable encoder instances
 
-### 📦 **Comprehensive Sample Support**
+### 📦 **Client-Side Sample Support**
 
 - **ClientSample** - Complete client-side statistics encoding
 - **PeerConnectionSample** - WebRTC peer connection metrics encoding
-- **SfuSample** - SFU statistics encoding
-- **TurnSample** - TURN server metrics encoding
+- **RTP Statistics** - Inbound and outbound RTP stream encoding
+- **ICE Statistics** - ICE candidate and transport encoding
 
 ### 🔧 **Flexible Output Formats**
 
@@ -74,29 +75,35 @@ npm install @observertc/sample-schemas-js
 
 ## Quick Start
 
-### Basic Sample Encoding
+### Basic ClientSample Encoding
 
 ```typescript
-import { SamplesEncoder } from "@observertc/samples-encoder";
-import { ClientSample } from "@observertc/sample-schemas-js";
+import { ClientSampleEncoder } from "@observertc/samples-encoder";
+import type { ClientSample } from "@observertc/sample-schemas-js";
 
 // Create encoder instance
-const encoder = new SamplesEncoder();
+const encoder = new ClientSampleEncoder("client-123");
 
 // Prepare sample data
-const samples = {
-  clientSamples: [
+const clientSample: ClientSample = {
+  timestamp: Date.now(),
+  clientId: "client-123",
+  callId: "call-456",
+  sampleSeq: 1,
+  score: 0.85,
+  scoreReasons: "Good connection quality",
+  peerConnections: [
     {
+      peerConnectionId: "pc-789",
       timestamp: Date.now(),
-      clientId: "client-123",
-      callId: "call-456",
-      sampleSeq: 1,
-      peerConnectionSamples: [
+      score: 0.90,
+      scoreReasons: "Excellent audio quality",
+      inboundRtps: [
         {
-          peerConnectionId: "pc-789",
-          timestamp: Date.now(),
-          score: 0.85,
-          scoreReasons: "Good connection quality",
+          ssrc: 12345,
+          packetsReceived: 100,
+          packetsLost: 2,
+          jitter: 0.015,
         },
       ],
     },
@@ -104,61 +111,103 @@ const samples = {
 };
 
 // Encode to Base64 (ideal for HTTP/JSON transport)
-const base64Encoded = encoder.encodeToBase64(samples);
+const base64Encoded = encoder.encodeToBase64(clientSample);
 console.log(`Encoded size: ${base64Encoded.length} characters`);
 
 // Encode to binary (ideal for WebSocket transport)
-const binaryEncoded = encoder.encodeToBytes(samples);
+const binaryEncoded = encoder.encodeToBytes(clientSample);
 console.log(`Binary size: ${binaryEncoded.length} bytes`);
 
 // Send via your transport mechanism
 sendToServer(base64Encoded);
 ```
 
-### Individual Sample Type Encoding
+## Constructor Options
+
+### ClientSampleEncoder Constructor
 
 ```typescript
-import {
-  ClientSampleEncoder,
-  SfuSampleEncoder,
-  PeerConnectionSampleEncoder,
-} from "@observertc/samples-encoder";
-
-// Client-side WebRTC monitoring
-const clientEncoder = new ClientSampleEncoder();
-const clientSample = {
-  timestamp: Date.now(),
-  clientId: "web-client-1",
-  callId: "conference-room-1",
-  sampleSeq: 42,
-  peerConnectionSamples: [],
-};
-
-const encodedClient = clientEncoder.encodeToBase64(clientSample);
-
-// SFU monitoring
-const sfuEncoder = new SfuSampleEncoder();
-const sfuSample = {
-  sfuId: "sfu-node-1",
-  timestamp: Date.now(),
-  transports: [],
-  inboundRtpPads: [],
-  outboundRtpPads: [],
-};
-
-const encodedSfu = sfuEncoder.encodeToBytes(sfuSample);
-
-// Peer Connection specific encoding
-const pcEncoder = new PeerConnectionSampleEncoder();
-const pcSample = {
-  peerConnectionId: "pc-connection-1",
-  timestamp: Date.now(),
-  score: 0.92,
-  scoreReasons: "Excellent audio/video quality with low latency",
-};
-
-const encodedPc = pcEncoder.encodeToBase64(pcSample);
+constructor(clientId: string, settings?: Partial<ClientSampleEncoderSettings>)
 ```
+
+#### Parameters
+
+- **`clientId`** (required): The unique identifier for the client. This is encoded once and reused across all samples from this encoder instance.
+
+- **`settings`** (optional): Configuration options for encoding behavior.
+
+#### Settings Interface
+
+```typescript
+interface ClientSampleEncoderSettings {
+  clientIdIsUuid?: boolean;
+  callIdIsUuid?: boolean; 
+  peerConnectionIdIsUuid?: boolean;
+  trackIdIsUuid?: boolean;
+}
+```
+
+#### Settings Explanation
+
+- **`clientIdIsUuid`** (default: `false`)
+  - When `true`: Encodes the `clientId` as a compact 16-byte UUID representation
+  - When `false`: Encodes the `clientId` as a UTF-8 string
+  - **Use case**: Set to `true` if your client IDs are UUIDs (e.g., "550e8400-e29b-41d4-a716-446655440000") to save ~20 bytes per encoding
+
+- **`callIdIsUuid`** (default: `false`)
+  - When `true`: Encodes `callId` fields as compact 16-byte UUID representations
+  - When `false`: Encodes `callId` fields as UTF-8 strings
+  - **Use case**: Set to `true` if your call IDs are UUIDs to optimize encoding size
+
+- **`peerConnectionIdIsUuid`** (default: `false`)
+  - When `true`: Encodes `peerConnectionId` fields as compact 16-byte UUID representations
+  - When `false`: Encodes `peerConnectionId` fields as UTF-8 strings
+  - **Use case**: Set to `true` if your peer connection IDs are UUIDs
+
+- **`trackIdIsUuid`** (default: `false`)
+  - When `true`: Encodes `trackId` fields in RTP statistics as compact 16-byte UUID representations
+  - When `false`: Encodes `trackId` fields as UTF-8 strings
+  - **Use case**: Set to `true` if your WebRTC track IDs are UUIDs
+
+#### Constructor Examples
+
+```typescript
+// Basic usage with string IDs
+const encoder1 = new ClientSampleEncoder("web-client-001");
+
+// Optimized for UUID-based identifiers
+const encoder2 = new ClientSampleEncoder("550e8400-e29b-41d4-a716-446655440000", {
+  clientIdIsUuid: true,
+  callIdIsUuid: true,
+  peerConnectionIdIsUuid: true,
+  trackIdIsUuid: true
+});
+
+// Mixed approach - only some IDs are UUIDs
+const encoder3 = new ClientSampleEncoder("client-123", {
+  callIdIsUuid: true,      // Call IDs are UUIDs
+  peerConnectionIdIsUuid: false,  // PC IDs are strings like "pc-1", "pc-2"
+  trackIdIsUuid: false     // Track IDs are strings
+});
+
+// Encoder for production with optimized settings
+const productionEncoder = new ClientSampleEncoder(clientId, {
+  clientIdIsUuid: true,    // 36-char UUID -> 16 bytes (56% space saving)
+  callIdIsUuid: true,      // Conference room UUIDs
+  peerConnectionIdIsUuid: false,  // Generated strings like "RTCPeerConnection_1"
+  trackIdIsUuid: false     // WebRTC track IDs are typically not UUIDs
+});
+```
+
+#### Performance Impact of Settings
+
+| Setting | String Size | UUID Size | Space Saving |
+|---------|-------------|-----------|--------------|
+| 36-char UUID | ~38 bytes | 16 bytes | ~58% |
+| 20-char string | ~22 bytes | N/A | Use string encoding |
+| 10-char string | ~12 bytes | N/A | Use string encoding |
+
+**Recommendation**: Only set UUID flags to `true` if your identifiers are actual UUIDs. Using UUID encoding on non-UUID strings will cause encoding errors.
 
 ## Real-World Example with Client Monitor
 
@@ -174,17 +223,24 @@ npm install @observertc/client-monitor-js @observertc/samples-encoder
 
 ```typescript
 import { ClientMonitor } from "@observertc/client-monitor-js";
-import { SamplesEncoder } from "@observertc/samples-encoder";
+import { ClientSampleEncoder } from "@observertc/samples-encoder";
 
 class WebRTCAnalytics {
   private monitor: ClientMonitor;
-  private encoder = new SamplesEncoder();
+  private encoder: ClientSampleEncoder;
 
-  constructor(private peerConnection: RTCPeerConnection) {
+  constructor(private peerConnection: RTCPeerConnection, clientId: string) {
     // Initialize client monitor with your peer connection
     this.monitor = new ClientMonitor({
       collectingPeriodInMs: 5000, // Collect stats every 5 seconds
       samplingPeriodInMs: 1000, // Sample WebRTC stats every second
+    });
+
+    // Create encoder with optimized settings for your ID format
+    this.encoder = new ClientSampleEncoder(clientId, {
+      clientIdIsUuid: clientId.includes('-'), // Auto-detect UUID format
+      callIdIsUuid: true, // Assuming call IDs are UUIDs
+      peerConnectionIdIsUuid: false, // PC IDs are typically strings
     });
 
     // Start monitoring
@@ -195,15 +251,13 @@ class WebRTCAnalytics {
   private handleSample(clientSample: ClientSample): void {
     try {
       // Encode the real ClientSample data
-      const encodedData = this.encoder.encodeToBase64({
-        clientSamples: [clientSample],
-      });
+      const encodedData = this.encoder.encodeToBase64(clientSample);
 
       // Send to your analytics backend
       this.sendToAnalytics(encodedData, clientSample);
 
       console.log(
-        `Encoded ${clientSample.peerConnectionSamples?.length} peer connections`
+        `Encoded ${clientSample.peerConnections?.length} peer connections`
       );
       console.log(`Compressed size: ${encodedData.length} characters`);
     } catch (error) {
@@ -262,7 +316,8 @@ async function setupWebRTCWithAnalytics() {
   });
 
   // Initialize analytics with real monitoring
-  const analytics = new WebRTCAnalytics(peerConnection);
+  const clientId = crypto.randomUUID(); // UUID format
+  const analytics = new WebRTCAnalytics(peerConnection, clientId);
 
   // Start collecting and encoding real WebRTC stats
   analytics.start();
@@ -288,113 +343,6 @@ async function setupWebRTCWithAnalytics() {
 }
 ```
 
-### React Hook Integration
-
-```typescript
-import { useEffect, useRef, useState } from "react";
-import { ClientMonitor } from "@observertc/client-monitor-js";
-import { SamplesEncoder } from "@observertc/samples-encoder";
-
-function useWebRTCAnalytics(peerConnection: RTCPeerConnection | null) {
-  const monitorRef = useRef<ClientMonitor | null>(null);
-  const encoderRef = useRef(new SamplesEncoder());
-  const [analyticsData, setAnalyticsData] = useState<{
-    samplesCollected: number;
-    totalDataSent: number;
-    avgCompressionRatio: number;
-  }>({
-    samplesCollected: 0,
-    totalDataSent: 0,
-    avgCompressionRatio: 0,
-  });
-
-  useEffect(() => {
-    if (!peerConnection) return;
-
-    // Create monitor instance
-    const monitor = new ClientMonitor({
-      collectingPeriodInMs: 5000,
-      samplingPeriodInMs: 1000,
-    });
-
-    monitor.addStatsProvider(peerConnection);
-
-    monitor.onSampleCreated = (clientSample: ClientSample) => {
-      // Encode real WebRTC data
-      const encodedData = encoderRef.current.encodeToBase64({
-        clientSamples: [clientSample],
-      });
-
-      // Calculate metrics
-      const originalSize = JSON.stringify(clientSample).length;
-      const encodedSize = encodedData.length * 1.33;
-      const compressionRatio = (1 - encodedSize / originalSize) * 100;
-
-      // Update analytics state
-      setAnalyticsData((prev) => ({
-        samplesCollected: prev.samplesCollected + 1,
-        totalDataSent: prev.totalDataSent + encodedData.length,
-        avgCompressionRatio: (prev.avgCompressionRatio + compressionRatio) / 2,
-      }));
-
-      // Send to backend
-      sendEncodedData(encodedData);
-    };
-
-    monitor.start();
-    monitorRef.current = monitor;
-
-    return () => {
-      monitor.stop();
-      monitorRef.current = null;
-    };
-  }, [peerConnection]);
-
-  const sendEncodedData = async (encodedData: string) => {
-    try {
-      await fetch("/api/webrtc-stats", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: encodedData }),
-      });
-    } catch (error) {
-      console.error("Failed to send encoded data:", error);
-    }
-  };
-
-  return {
-    analyticsData,
-    stop: () => monitorRef.current?.stop(),
-  };
-}
-
-// Usage in React component
-function VideoCallComponent() {
-  const [peerConnection, setPeerConnection] =
-    useState<RTCPeerConnection | null>(null);
-  const { analyticsData, stop } = useWebRTCAnalytics(peerConnection);
-
-  useEffect(() => {
-    const pc = new RTCPeerConnection();
-    setPeerConnection(pc);
-
-    return () => {
-      stop();
-      pc.close();
-    };
-  }, []);
-
-  return (
-    <div>
-      <h3>WebRTC Analytics</h3>
-      <p>Samples Collected: {analyticsData.samplesCollected}</p>
-      <p>Data Sent: {(analyticsData.totalDataSent / 1024).toFixed(2)} KB</p>
-      <p>Avg Compression: {analyticsData.avgCompressionRatio.toFixed(1)}%</p>
-    </div>
-  );
-}
-```
-
 ## Encoding Strategy
 
 ### Differential Compression
@@ -404,13 +352,13 @@ The encoder achieves high compression ratios by only transmitting field changes:
 ```typescript
 import { ClientSampleEncoder } from "@observertc/samples-encoder";
 
-const encoder = new ClientSampleEncoder();
+const encoder = new ClientSampleEncoder("client-1");
 
 // First sample - full data transmitted
-const sample1 = {
+const sample1: ClientSample = {
   timestamp: 1000,
   clientId: "client-1",
-  peerConnectionSamples: [
+  peerConnections: [
     {
       peerConnectionId: "pc-1",
       inboundRtps: [
@@ -429,16 +377,16 @@ const encoded1 = encoder.encodeToBase64(sample1);
 console.log(`Full sample size: ${encoded1.length}`);
 
 // Second sample - only changes transmitted
-const sample2 = {
+const sample2: ClientSample = {
   timestamp: 2000, // Changed
-  clientId: "client-1", // Same
-  peerConnectionSamples: [
+  clientId: "client-1", // Same (not transmitted)
+  peerConnections: [
     {
-      peerConnectionId: "pc-1", // Same
+      peerConnectionId: "pc-1", // Same (not transmitted)
       inboundRtps: [
         {
-          id: "inbound-1", // Same
-          ssrc: 12345, // Same
+          id: "inbound-1", // Same (not transmitted)
+          ssrc: 12345, // Same (not transmitted)
           packetsReceived: 150, // Changed (+50)
           packetsLost: 2, // Changed (+1)
         },
@@ -453,62 +401,31 @@ console.log(`Differential size: ${encoded2.length}`); // Much smaller!
 
 ### Protocol Buffer Optimization
 
-Each sample type is optimized with custom Protocol Buffer schemas:
+ClientSample is optimized with custom Protocol Buffer schemas:
 
 ```protobuf
 // Simplified example of ClientSample protobuf schema
 message ClientSample {
   optional int64 timestamp = 1;
-  optional string clientId = 2;
-  optional string callId = 3;
-  optional int32 sampleSeq = 4;
-  repeated PeerConnectionSample peerConnectionSamples = 5;
+  optional bytes clientId = 2;
+  optional bytes callId = 3;
+  optional double score = 4;
+  optional string scoreReasons = 5;
+  repeated PeerConnectionSample peerConnections = 6;
   // ... other fields
 }
 
 message PeerConnectionSample {
-  optional string peerConnectionId = 1;
+  optional bytes peerConnectionId = 1;
   optional double score = 2;
   optional string scoreReasons = 3;
   repeated InboundRtpStats inboundRtps = 4;
+  repeated OutboundRtpStats outboundRtps = 5;
   // ... other nested types
 }
 ```
 
 ## API Reference
-
-### SamplesEncoder
-
-Universal encoder for all sample types:
-
-```typescript
-class SamplesEncoder {
-  /**
-   * Encode samples to Base64 string
-   * @param samples - Samples object containing various sample types
-   * @returns Base64 encoded string
-   */
-  encodeToBase64(samples: Samples): string;
-
-  /**
-   * Encode samples to binary format
-   * @param samples - Samples object containing various sample types
-   * @returns Uint8Array containing binary data
-   */
-  encodeToBytes(samples: Samples): Uint8Array;
-
-  /**
-   * Reset encoder state (clears differential compression cache)
-   */
-  reset(): void;
-}
-
-interface Samples {
-  clientSamples?: ClientSample[];
-  sfuSamples?: SfuSample[];
-  turnSamples?: TurnSample[];
-}
-```
 
 ### ClientSampleEncoder
 
@@ -516,6 +433,13 @@ Specialized encoder for client-side WebRTC samples:
 
 ```typescript
 class ClientSampleEncoder {
+  /**
+   * Create a new ClientSampleEncoder
+   * @param clientId - The unique identifier for this client
+   * @param settings - Optional encoding configuration
+   */
+  constructor(clientId: string, settings?: Partial<ClientSampleEncoderSettings>);
+
   /**
    * Encode client sample to Base64
    * @param sample - Client sample data
@@ -537,119 +461,60 @@ class ClientSampleEncoder {
   getState(): any;
 
   /**
-   * Reset encoder state
+   * Reset encoder state (clears differential compression cache)
    */
   reset(): void;
-}
-```
 
-### SfuSampleEncoder
+  /**
+   * Check if encoder was used in last encoding cycle
+   * @returns true if encoder processed data recently
+   */
+  get visited(): boolean;
 
-Optimized encoder for SFU statistics:
-
-```typescript
-class SfuSampleEncoder {
-  encodeToBase64(sample: SfuSample): string;
-  encodeToBytes(sample: SfuSample): Uint8Array;
-  reset(): void;
-}
-```
-
-### Individual Component Encoders
-
-For fine-grained control, individual component encoders are available:
-
-```typescript
-// RTP Statistics Encoders
-class InboundRtpEncoder {
-  encode(stats: InboundRtpStats): InboundRtpStatsProto;
-  reset(): void;
+  /**
+   * Access encoder settings
+   */
+  readonly settings: ClientSampleEncoderSettings;
 }
 
-class OutboundRtpEncoder {
-  encode(stats: OutboundRtpStats): OutboundRtpStatsProto;
-  reset(): void;
-}
-
-// ICE Statistics Encoders
-class IceCandidatePairStatsEncoder {
-  encode(stats: IceCandidatePairStats): IceCandidatePairStatsProto;
-  reset(): void;
-}
-
-class IceTransportEncoder {
-  encode(stats: IceTransportStats): IceTransportStatsProto;
-  reset(): void;
-}
-
-// Media Encoders
-class MediaSourceEncoder {
-  encode(stats: MediaSourceStats): MediaSourceStatsProto;
-  reset(): void;
-}
-
-class CodecStatsEncoder {
-  encode(stats: CodecStats): CodecStatsProto;
-  reset(): void;
+interface ClientSampleEncoderSettings {
+  clientIdIsUuid?: boolean;
+  callIdIsUuid?: boolean;
+  peerConnectionIdIsUuid?: boolean;
+  trackIdIsUuid?: boolean;
 }
 ```
 
 ## Performance
 
-### Compression Ratios
+The encoder utilizes differential compression and Protocol Buffer serialization to reduce data size for transport. Performance characteristics will vary based on:
 
-Real-world compression performance for different scenarios:
+- Sample complexity and size
+- Frequency of data changes (differential encoding is more effective with incremental updates)
+- Hardware specifications
+- JavaScript engine optimizations
 
-| Sample Type               | Original Size | Encoded Size | Compression Ratio |
-| ------------------------- | ------------- | ------------ | ----------------- |
-| ClientSample (1 PC)       | ~2.5KB        | ~0.3KB       | 87% reduction     |
-| ClientSample (2 PCs)      | ~4.8KB        | ~0.7KB       | 85% reduction     |
-| ClientSample (5 PCs)      | ~12KB         | ~1.6KB       | 87% reduction     |
-| SfuSample (10 transports) | ~8KB          | ~1.2KB       | 85% reduction     |
-| SfuSample (50 streams)    | ~25KB         | ~3.5KB       | 86% reduction     |
-
-### Encoding Performance
-
-Benchmark results on standard hardware (measurements in milliseconds):
-
-| Operation                | 1 Participant | 5 Participants | 10 Participants | 50 Participants |
-| ------------------------ | ------------- | -------------- | --------------- | --------------- |
-| First Encode (Full)      | 0.8ms         | 2.1ms          | 4.2ms           | 18.5ms          |
-| Subsequent Encode (Diff) | 0.2ms         | 0.6ms          | 1.1ms           | 4.8ms           |
-| Memory Usage             | 50KB          | 120KB          | 240KB           | 950KB           |
-
-### Real-World Measurements
-
-Production measurements from live WebRTC applications:
-
-| Conference Size   | Sampling Interval | Avg Encoded Size | Network Savings |
-| ----------------- | ----------------- | ---------------- | --------------- |
-| 1-on-1 call       | 5 seconds         | 0.32KB           | 89% reduction   |
-| 4-person meeting  | 5 seconds         | 0.78KB           | 87% reduction   |
-| 10-person meeting | 5 seconds         | 1.65KB           | 86% reduction   |
-| 50-person webinar | 5 seconds         | 3.2KB            | 84% reduction   |
+For optimal performance:
+- Reuse encoder instances to maintain compression state
+- Consider batching multiple samples when possible
+- Monitor memory usage in long-running applications
 
 ## Advanced Usage
 
 ### Custom Encoding Pipeline
 
 ```typescript
-import {
-  ClientSampleEncoder,
-  PeerConnectionSampleEncoder,
-  InboundRtpEncoder,
-  OutboundRtpEncoder,
-} from "@observertc/samples-encoder";
+import { ClientSampleEncoder } from "@observertc/samples-encoder";
 
 class CustomWebRTCEncoder {
-  private clientEncoder = new ClientSampleEncoder();
-  private rtpEncoders = new Map<
-    string,
-    {
-      inbound: InboundRtpEncoder;
-      outbound: OutboundRtpEncoder;
-    }
-  >();
+  private encoder: ClientSampleEncoder;
+
+  constructor(clientId: string) {
+    this.encoder = new ClientSampleEncoder(clientId, {
+      clientIdIsUuid: true,
+      callIdIsUuid: true,
+    });
+  }
 
   encodeClientSample(sample: ClientSample): Uint8Array {
     // Pre-process sample data
@@ -659,14 +524,14 @@ class CustomWebRTCEncoder {
     const compressedSample = this.applyCustomCompression(optimizedSample);
 
     // Encode with differential compression
-    return this.clientEncoder.encodeToBytes(compressedSample);
+    return this.encoder.encodeToBytes(compressedSample);
   }
 
   private preprocessSample(sample: ClientSample): ClientSample {
     // Remove unnecessary fields for bandwidth optimization
     return {
       ...sample,
-      peerConnectionSamples: sample.peerConnectionSamples?.map((pc) => ({
+      peerConnections: sample.peerConnections?.map((pc) => ({
         ...pc,
         // Keep only essential RTP statistics
         inboundRtps: pc.inboundRtps?.filter(
@@ -683,7 +548,7 @@ class CustomWebRTCEncoder {
     // Custom field-level optimizations
     return {
       ...sample,
-      peerConnectionSamples: sample.peerConnectionSamples?.map((pc) => ({
+      peerConnections: sample.peerConnections?.map((pc) => ({
         ...pc,
         // Round floating point values to reduce precision
         score: pc.score ? Math.round(pc.score * 100) / 100 : undefined,
@@ -703,14 +568,18 @@ class CustomWebRTCEncoder {
 ### Batch Encoding
 
 ```typescript
-import { SamplesEncoder } from "@observertc/samples-encoder";
+import { ClientSampleEncoder } from "@observertc/samples-encoder";
 
-class BatchSampleEncoder {
-  private encoder = new SamplesEncoder();
-  private sampleBuffer: any[] = [];
+class BatchClientEncoder {
+  private encoder: ClientSampleEncoder;
+  private sampleBuffer: ClientSample[] = [];
   private batchSize = 10;
 
-  addSample(sample: any) {
+  constructor(clientId: string) {
+    this.encoder = new ClientSampleEncoder(clientId);
+  }
+
+  addSample(sample: ClientSample) {
     this.sampleBuffer.push(sample);
 
     if (this.sampleBuffer.length >= this.batchSize) {
@@ -721,28 +590,23 @@ class BatchSampleEncoder {
   private flushBatch() {
     if (this.sampleBuffer.length === 0) return;
 
-    // Group samples by type
-    const batchedSamples = {
-      clientSamples: this.sampleBuffer.filter((s) => s.clientId),
-      sfuSamples: this.sampleBuffer.filter((s) => s.sfuId),
-      turnSamples: this.sampleBuffer.filter((s) => s.serverId),
-    };
+    // Encode each sample in sequence for optimal differential compression
+    const encodedSamples = this.sampleBuffer.map(sample => 
+      this.encoder.encodeToBase64(sample)
+    );
 
-    // Encode batch
-    const encodedBatch = this.encoder.encodeToBase64(batchedSamples);
-
-    // Send to server
-    this.sendBatch(encodedBatch);
+    // Send batch to server
+    this.sendBatch(encodedSamples);
 
     // Clear buffer
     this.sampleBuffer = [];
   }
 
-  private sendBatch(encodedData: string) {
+  private sendBatch(encodedSamples: string[]) {
     fetch("/api/webrtc-samples", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: encodedData }),
+      body: JSON.stringify({ samples: encodedSamples }),
     });
   }
 }
@@ -753,13 +617,17 @@ class BatchSampleEncoder {
 ```typescript
 import { ClientSampleEncoder } from "@observertc/samples-encoder";
 
-class StreamingSampleEncoder {
-  private encoder = new ClientSampleEncoder();
+class StreamingClientEncoder {
+  private encoder: ClientSampleEncoder;
   private compressionStats = {
     totalSamples: 0,
     totalOriginalSize: 0,
     totalEncodedSize: 0,
   };
+
+  constructor(clientId: string) {
+    this.encoder = new ClientSampleEncoder(clientId);
+  }
 
   *encodeStream(sampleStream: Iterable<ClientSample>): Generator<Uint8Array> {
     for (const sample of sampleStream) {
@@ -805,154 +673,177 @@ class StreamingSampleEncoder {
 
 ## Integration Examples
 
-### Real-Time WebRTC Monitoring
+### React Hook Integration
 
-```typescript
+```typitten
+import { useEffect, useRef, useState } from "react";
+import { ClientMonitor } from "@observertc/client-monitor-js";
 import { ClientSampleEncoder } from "@observertc/samples-encoder";
 
-class WebRTCMonitor {
-  private encoder = new ClientSampleEncoder();
-  private peerConnection: RTCPeerConnection;
-  private clientId = crypto.randomUUID();
+function useWebRTCEncoder(peerConnection: RTCPeerConnection | null, clientId: string) {
+  const monitorRef = useRef<ClientMonitor | null>(null);
+  const encoderRef = useRef(new ClientSampleEncoder(clientId, {
+    clientIdIsUuid: clientId.includes('-'),
+  }));
+  
+  const [analyticsData, setAnalyticsData] = useState<{
+    samplesCollected: number;
+    totalDataSent: number;
+    avgCompressionRatio: number;
+  }>({
+    samplesCollected: 0,
+    totalDataSent: 0,
+    avgCompressionRatio: 0,
+  });
 
-  startMonitoring(intervalMs: number = 5000) {
-    setInterval(async () => {
-      const sample = await this.collectSample();
-      const encoded = this.encoder.encodeToBase64(sample);
+  useEffect(() => {
+    if (!peerConnection) return;
 
-      // Send to monitoring service
-      this.sendToMonitoringService(encoded);
-    }, intervalMs);
-  }
+    // Create monitor instance
+    const monitor = new ClientMonitor({
+      collectingPeriodInMs: 5000,
+      samplingPeriodInMs: 1000,
+    });
 
-  private async collectSample(): Promise<ClientSample> {
-    const stats = await this.peerConnection.getStats();
-    const timestamp = Date.now();
+    monitor.addStatsProvider(peerConnection);
 
-    // Convert WebRTC stats to ObserveRTC format
-    const pcSample = this.convertWebRTCStats(stats, timestamp);
+    monitor.onSampleCreated = (clientSample: ClientSample) => {
+      // Encode real WebRTC data
+      const encodedData = encoderRef.current.encodeToBase64(clientSample);
 
-    return {
-      timestamp,
-      clientId: this.clientId,
-      callId: this.getCurrentCallId(),
-      sampleSeq: this.getNextSequenceNumber(),
-      peerConnectionSamples: [pcSample],
+      // Calculate metrics
+      const originalSize = JSON.stringify(clientSample).length;
+      const encodedSize = encodedData.length * 1.33;
+      const compressionRatio = (1 - encodedSize / originalSize) * 100;
+
+      // Update analytics state
+      setAnalyticsData((prev) => ({
+        samplesCollected: prev.samplesCollected + 1,
+        totalDataSent: prev.totalDataSent + encodedData.length,
+        avgCompressionRatio: (prev.avgCompressionRatio + compressionRatio) / 2,
+      }));
+
+      // Send to backend
+      sendEncodedData(encodedData);
     };
-  }
 
-  private sendToMonitoringService(encodedData: string) {
-    // WebSocket transport
-    if (this.websocket?.readyState === WebSocket.OPEN) {
-      this.websocket.send(
-        JSON.stringify({
-          type: "webrtc-sample",
-          data: encodedData,
-        })
-      );
-    }
+    monitor.start();
+    monitorRef.current = monitor;
 
-    // HTTP fallback
-    else {
-      fetch("/api/webrtc-samples", {
+    return () => {
+      monitor.stop();
+      monitorRef.current = null;
+    };
+  }, [peerConnection, clientId]);
+
+  const sendEncodedData = async (encodedData: string) => {
+    try {
+      await fetch("/api/webrtc-stats", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data: encodedData }),
-      }).catch(console.error);
+      });
+    } catch (error) {
+      console.error("Failed to send encoded data:", error);
     }
-  }
+  };
+
+  return {
+    analyticsData,
+    stop: () => monitorRef.current?.stop(),
+  };
 }
-```
 
-### SFU Integration
+// Usage in React component
+function VideoCallComponent() {
+  const [peerConnection, setPeerConnection] =
+    useState<RTCPeerConnection | null>(null);
+  const clientId = useMemo(() => crypto.randomUUID(), []);
+  const { analyticsData, stop } = useWebRTCEncoder(peerConnection, clientId);
 
-```typescript
-import { SfuSampleEncoder } from "@observertc/samples-encoder";
+  useEffect(() => {
+    const pc = new RTCPeerConnection();
+    setPeerConnection(pc);
 
-class SfuMonitor {
-  private encoder = new SfuSampleEncoder();
-  private sfuId: string;
-
-  constructor(sfuId: string) {
-    this.sfuId = sfuId;
-  }
-
-  collectAndEncodeSample(): string {
-    const sample: SfuSample = {
-      sfuId: this.sfuId,
-      timestamp: Date.now(),
-      transports: this.collectTransportStats(),
-      inboundRtpPads: this.collectInboundRtpStats(),
-      outboundRtpPads: this.collectOutboundRtpStats(),
-      sctpChannels: this.collectSctpStats(),
+    return () => {
+      stop();
+      pc.close();
     };
+  }, []);
 
-    return this.encoder.encodeToBase64(sample);
-  }
-
-  private collectTransportStats(): SfuTransport[] {
-    // Collect from your SFU implementation
-    return this.sfu.getTransports().map((transport) => ({
-      transportId: transport.id,
-      dtlsState: transport.dtlsState,
-      iceState: transport.iceState,
-      rtpBytesReceived: transport.rtpBytesReceived,
-      rtpBytesSent: transport.rtpBytesSent,
-      // ... other transport metrics
-    }));
-  }
+  return (
+    <div>
+      <h3>WebRTC Analytics</h3>
+      <p>Client ID: {clientId}</p>
+      <p>Samples Collected: {analyticsData.samplesCollected}</p>
+      <p>Data Sent: {(analyticsData.totalDataSent / 1024).toFixed(2)} KB</p>
+      <p>Avg Compression: {analyticsData.avgCompressionRatio.toFixed(1)}%</p>
+    </div>
+  );
 }
 ```
 
-### React/Vue Integration
+### WebSocket Integration
 
 ```typescript
 import { ClientSampleEncoder } from "@observertc/samples-encoder";
-import { useRef, useEffect } from "react";
 
-function useWebRTCEncoder(peerConnection: RTCPeerConnection) {
-  const encoderRef = useRef(new ClientSampleEncoder());
-  const clientIdRef = useRef(crypto.randomUUID());
+class WebRTCWebSocketClient {
+  private encoder: ClientSampleEncoder;
+  private ws: WebSocket;
 
-  const encodeCurrentStats = useCallback(async () => {
-    if (!peerConnection) return null;
+  constructor(clientId: string, websocketUrl: string) {
+    this.encoder = new ClientSampleEncoder(clientId, {
+      clientIdIsUuid: true,
+      callIdIsUuid: true,
+    });
+    
+    this.ws = new WebSocket(websocketUrl);
+    this.setupWebSocket();
+  }
 
-    const stats = await peerConnection.getStats();
-    const sample = convertWebRTCStatsToSample(stats, clientIdRef.current);
+  private setupWebSocket() {
+    this.ws.onopen = () => {
+      console.log("WebSocket connected");
+      
+      // Send client identification
+      this.ws.send(JSON.stringify({
+        type: "client-connected",
+        clientId: this.encoder.settings,
+      }));
+    };
 
-    return encoderRef.current.encodeToBase64(sample);
-  }, [peerConnection]);
-
-  const resetEncoder = useCallback(() => {
-    encoderRef.current.reset();
-  }, []);
-
-  // Reset on peer connection changes
-  useEffect(() => {
-    resetEncoder();
-  }, [peerConnection, resetEncoder]);
-
-  return { encodeCurrentStats, resetEncoder };
-}
-
-// Usage in component
-function VideoCallComponent() {
-  const [peerConnection] = useState(() => new RTCPeerConnection());
-  const { encodeCurrentStats } = useWebRTCEncoder(peerConnection);
-
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const encodedStats = await encodeCurrentStats();
-      if (encodedStats) {
-        // Send to analytics service
-        sendAnalytics(encodedStats);
+    this.ws.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      
+      if (message.type === "request-stats") {
+        this.sendCurrentStats();
       }
-    }, 10000); // Every 10 seconds
+    };
+  }
 
-    return () => clearInterval(interval);
-  }, [encodeCurrentStats]);
+  public sendClientSample(sample: ClientSample) {
+    try {
+      // Encode as binary for WebSocket
+      const encodedData = this.encoder.encodeToBytes(sample);
+      
+      // Send binary data
+      this.ws.send(encodedData);
+      
+      console.log(`Sent ${encodedData.length} bytes via WebSocket`);
+    } catch (error) {
+      console.error("Failed to encode and send sample:", error);
+    }
+  }
 
-  return <div>{/* Your video call UI */}</div>;
+  private async sendCurrentStats() {
+    // Get current WebRTC stats and send
+    if (this.peerConnection) {
+      const stats = await this.peerConnection.getStats();
+      const sample = this.convertStatsToSample(stats);
+      this.sendClientSample(sample);
+    }
+  }
 }
 ```
 
@@ -964,7 +855,7 @@ function VideoCallComponent() {
 
 ```typescript
 // Problem: Encoded samples larger than expected
-const encoder = new ClientSampleEncoder();
+const encoder = new ClientSampleEncoder("client-123");
 
 // Solution 1: Reset encoder state periodically
 setInterval(() => {
@@ -975,7 +866,7 @@ setInterval(() => {
 function optimizeSample(sample: ClientSample): ClientSample {
   return {
     ...sample,
-    peerConnectionSamples: sample.peerConnectionSamples?.map((pc) => ({
+    peerConnections: sample.peerConnections?.map((pc) => ({
       ...pc,
       // Remove empty arrays
       inboundRtps: pc.inboundRtps?.filter((rtp) => rtp.packetsReceived > 0),
@@ -991,10 +882,14 @@ function optimizeSample(sample: ClientSample): ClientSample {
 
 ```typescript
 // Problem: Encoder consuming too much memory
-class ManagedEncoder {
-  private encoder = new ClientSampleEncoder();
+class ManagedClientEncoder {
+  private encoder: ClientSampleEncoder;
   private sampleCount = 0;
   private readonly resetInterval = 100; // Reset every 100 samples
+
+  constructor(clientId: string) {
+    this.encoder = new ClientSampleEncoder(clientId);
+  }
 
   encode(sample: ClientSample): string {
     // Periodic reset to prevent memory buildup
@@ -1007,27 +902,23 @@ class ManagedEncoder {
 }
 ```
 
-#### Type Errors
+#### UUID Encoding Errors
 
 ```typescript
-// Problem: TypeScript compilation errors
-import type { ClientSample } from "@observertc/sample-schemas-js";
+// Problem: Using UUID settings with non-UUID strings
+const encoder = new ClientSampleEncoder("client-123", {
+  clientIdIsUuid: true, // ❌ Wrong! "client-123" is not a UUID
+});
 
-// Ensure proper typing
-function encodeSample(sample: unknown): string {
-  // Type guard for safety
-  if (!isValidClientSample(sample)) {
-    throw new Error("Invalid sample format");
-  }
-
-  const encoder = new ClientSampleEncoder();
-  return encoder.encodeToBase64(sample);
-}
-
-function isValidClientSample(obj: any): obj is ClientSample {
-  return (
-    obj && typeof obj.timestamp === "number" && typeof obj.clientId === "string"
-  );
+// Solution: Verify ID format before setting UUID flags
+function createOptimizedEncoder(clientId: string) {
+  const isUuidFormat = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(clientId);
+  
+  return new ClientSampleEncoder(clientId, {
+    clientIdIsUuid: isUuidFormat,
+    callIdIsUuid: true, // Assume call IDs are always UUIDs
+    peerConnectionIdIsUuid: false, // PC IDs are typically strings
+  });
 }
 ```
 
@@ -1036,9 +927,15 @@ function isValidClientSample(obj: any): obj is ClientSample {
 ```typescript
 import { ClientSampleEncoder } from "@observertc/samples-encoder";
 
-class DebuggableEncoder {
-  private encoder = new ClientSampleEncoder();
+class DebuggableClientEncoder {
+  private encoder: ClientSampleEncoder;
   private debug = process.env.NODE_ENV === "development";
+
+  constructor(clientId: string) {
+    this.encoder = new ClientSampleEncoder(clientId, {
+      clientIdIsUuid: clientId.includes('-'),
+    });
+  }
 
   encode(sample: ClientSample): string {
     if (this.debug) {
@@ -1055,7 +952,7 @@ class DebuggableEncoder {
           (1 - (encoded.length / JSON.stringify(sample).length) * 1.33) * 100
         }%`
       );
-      console.log("Encoder state:", this.encoder.getState());
+      console.log("Encoder visited:", this.encoder.visited);
     }
 
     return encoded;
@@ -1074,20 +971,6 @@ git clone https://github.com/observertc/schemas.git
 cd schemas/npm-samples-encoder
 npm install
 npm run build
-npm test
-```
-
-### Performance Testing
-
-```bash
-# Run benchmark tests
-npm run benchmark
-
-# Profile memory usage
-npm run profile
-
-# Test compression ratios
-npm run test:compression
 ```
 
 ### Guidelines

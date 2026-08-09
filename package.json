@@ -1,31 +1,53 @@
 {
-  "name": "schema-2.0",
+  "name": "observertc-schemas",
   "version": "3.0.0",
-  "description": "Generator scripts for Schema repository for ObserveRTC",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "node index.js"
-  },
+  "description": "Schema generator for ObserveRTC: Avro sources in, TypeScript / protobuf / Markdown bindings out",
+  "private": true,
   "type": "module",
+  "main": "dist/cli.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "generate": "tsx src/cli.ts",
+    "compile": "tsx src/cli.ts",
+    "generate:check": "tsx src/cli.ts --check",
+    "generate:dry-run": "tsx src/cli.ts --dry-run --verbose",
+    "generate:types": "tsx src/cli.ts --only typescript,avsc",
+    "generate:proto": "tsx src/cli.ts --only proto",
+    "generate:packages": "tsx src/cli.ts --only proto,samples-lib,encoder,decoder",
+    "generate:docs": "tsx src/cli.ts --only markdown,samples-lib",
+    "schemas:list": "tsx src/cli.ts list",
+    "schemas:validate": "tsx src/cli.ts validate --fail-on-warn",
+    "schemas:clean": "tsx src/cli.ts clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json",
+    "verify": "npm run typecheck && npm run generate:check",
+    "test": "npm run verify"
+  },
   "keywords": [
     "observertc",
-    "schemas"
+    "schemas",
+    "webrtc",
+    "avro",
+    "protobuf",
+    "codegen"
   ],
   "author": "Balazs Kreith",
   "license": "Apache-2.0",
-  "directories": {
-    "assets:": "./avro"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/observertc/schemas"
   },
   "dependencies": {
-    "@bufbuild/protoc-gen-es": "^1.0.0",
-    "argparse": "^2.0.1",
-    "avro-js": "^1.10.2",
-    "json-schema-to-markdown": "^1.1.1",
-    "protobufjs": "^6.11.2",
-    "typedoc": "^0.22.12"
+    "avro-js": "^1.12.1"
   },
   "devDependencies": {
-    "@bufbuild/protoc-gen-es": "^1.0.0"
+    "@bufbuild/buf": "^1.72.0",
+    "@bufbuild/protobuf": "^2.13.0",
+    "@bufbuild/protoc-gen-es": "^2.13.0",
+    "@types/node": "^22.13.14",
+    "tsx": "^4.23.11",
+    "typescript": "^7.0.2"
   }
 }

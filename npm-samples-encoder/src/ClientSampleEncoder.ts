@@ -3,10 +3,16 @@ import {
 } from "./InputSamples";
 import { 
 	ClientSample_ClientEvent,
+	ClientSample_ClientEventSchema,
 	ClientSample_ClientIssue,
+	ClientSample_ClientIssueSchema,
 	ClientSample_ClientMetaData,
+	ClientSample_ClientMetaDataSchema,
 	ClientSample_ExtensionStat,
+	ClientSample_ExtensionStatSchema,
 	ClientSample_PeerConnectionSample,
+	ClientSample_PeerConnectionSampleSchema,
+	ClientSampleSchema,
 	ClientSample as OutputClientSample,
 } from './OutputSamples';
 import { AttachmentEncoder, AttachmentsEncoderFactory, ClientSampleEncoderSettings, convertUint8ToBase64, DefaultAttachmentEncoderFactory, Encoder, NumberToNumberEncoder, OneTimePassStringToUint8ArrayEncoder, OneTimePassUuidToByteArrayEncoder, StringToStringEncoder, stringToBytesArray, uuidToByteArray } from "./utils";
@@ -15,6 +21,7 @@ import { ClientEventEncoder, DefaultClientEventEncoder } from "./ClientEventEnco
 import { ClientMetaDataEncoder, DefaultClientMetaDataEncoder } from "./ClientMetaDataEncoder";
 import { DefaultExtensionStatsEncoder, ExtensionStatsEncoder } from "./ExtensionStatsEncoder";
 import { ClientIssueEncoder, DefaultClientIssueEncoder } from "./ClientIssueEncoder";
+import { toBinary, create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
 
 export class ClientSampleEncoder {
@@ -57,43 +64,43 @@ export class ClientSampleEncoder {
 	}
 
 	public encodeToBytes(clientSample: InputClientSample): Uint8Array {
-		return this.encodeToProtobufSamples(clientSample).toBinary()
+		return toBinary(ClientSampleSchema, this.encodeToProtobufSamples(clientSample));
 	}
 
 	public encodeToBase64(clientSample: InputClientSample): string {
-		const bytes = this.encodeToProtobufSamples(clientSample).toBinary();
+		const bytes = toBinary(ClientSampleSchema, this.encodeToProtobufSamples(clientSample));
 		return convertUint8ToBase64(bytes);
 	}
 
 	public encodeToProtobufSamples(clientSample: InputClientSample): OutputClientSample {
 		this._visited = true;
 
-		const clientEvents: ClientSample_ClientEvent[] | undefined = clientSample
+		const clientEvents: MessageInitShape<typeof ClientSample_ClientEventSchema>[] | undefined = clientSample
 			.clientEvents
 			?.map(this.clientEventEncoder.encode.bind(this.clientEventEncoder))
 			?.filter((event) => event !== undefined) as ClientSample_ClientEvent[];
 
-		const clientMetaItems: ClientSample_ClientMetaData[] | undefined = clientSample
+		const clientMetaItems: MessageInitShape<typeof ClientSample_ClientMetaDataSchema>[] | undefined = clientSample
 			.clientMetaItems
 			?.map(this.clientMetaDataEncoder.encode.bind(this.clientMetaDataEncoder))
 			?.filter((metaItem) => metaItem !== undefined) as ClientSample_ClientMetaData[];
-		
-		const extensionStats: ClientSample_ExtensionStat[] | undefined = clientSample
+
+		const extensionStats: MessageInitShape<typeof ClientSample_ExtensionStatSchema>[] | undefined = clientSample
 			.extensionStats
 			?.map(this.extensionStatsEncoder.encode.bind(this.extensionStatsEncoder))
 			?.filter((extensionStat) => extensionStat !== undefined) as ClientSample_ExtensionStat[];
 
-		const peerConnections: ClientSample_PeerConnectionSample[] | undefined = clientSample
+		const peerConnections: MessageInitShape<typeof ClientSample_PeerConnectionSampleSchema>[] | undefined = clientSample
 			.peerConnections
 			?.map(this._encodePeerConnectionSample.bind(this))
 			?.filter((peerConnection) => peerConnection !== undefined) as ClientSample_PeerConnectionSample[];
 
-		const clientIssues: ClientSample_ClientIssue[] | undefined = clientSample
+		const clientIssues: MessageInitShape<typeof ClientSample_ClientIssueSchema>[] | undefined = clientSample
 			.clientIssues
 			?.map(this.clientIssueEncoder.encode.bind(this.clientIssueEncoder))
 			?.filter((issue) => issue !== undefined) as ClientSample_ClientIssue[];
 
-		const result = new OutputClientSample({
+		const result = createMessage(ClientSampleSchema, {
 			timestamp: this._timestampEncoder.encode(clientSample.timestamp),
 			callId: this._callIdEncoder.encode(clientSample.callId),
 			clientId: this._clientId,
@@ -106,6 +113,7 @@ export class ClientSampleEncoder {
 			clientMetaItems,
 			extensionStats,
 		});
+		
 
 		// console.warn("ClientSampleEncoder: ", clientSample, " -> ", result);
 
@@ -130,7 +138,7 @@ export class ClientSampleEncoder {
 
 	private _encodePeerConnectionSample(
 		input: Required<InputClientSample>['peerConnections'][number], 
-	): OutputClientSample['peerConnections'][number] {
+	): MessageInitShape<typeof ClientSample_PeerConnectionSampleSchema> {
 		let encoder = this._peerConnectionSampleEncoders.get(input.peerConnectionId);
 		if (!encoder) {
 			encoder = new PeerConnectionSampleEncoder(input.peerConnectionId, this);

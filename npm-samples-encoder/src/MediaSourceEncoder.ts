@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_MediaSourceStats as OutputMediaSourceStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_MediaSourceStatsSchema } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class MediaSourceStatsEncoder implements Encoder<InputMediaSourceStats, OutputMediaSourceStats> {
+export class MediaSourceStatsEncoder implements Encoder<InputMediaSourceStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_MediaSourceStatsSchema>> {
   private _visited = false;
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _idEncoder: StringToStringEncoder;
@@ -64,10 +65,10 @@ export class MediaSourceStatsEncoder implements Encoder<InputMediaSourceStats, O
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputMediaSourceStats): OutputMediaSourceStats {
+  public encode(sample: InputMediaSourceStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_MediaSourceStatsSchema> {
     this._visited = true;
 
-    return new OutputMediaSourceStats({
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
@@ -82,6 +83,6 @@ export class MediaSourceStatsEncoder implements Encoder<InputMediaSourceStats, O
       frames: this._framesEncoder.encode(sample.frames),
       framesPerSecond: this._framesPerSecondEncoder.encode(sample.framesPerSecond),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

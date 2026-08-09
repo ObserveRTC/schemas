@@ -5,14 +5,15 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_IceTransportStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_IceTransportStats, ClientSample_PeerConnectionSample_IceTransportStatsSchema } from "./OutputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export class IceTransportEncoder implements Encoder<InputIceTransportStats, ClientSample_PeerConnectionSample_IceTransportStats> {
+export class IceTransportEncoder implements Encoder<InputIceTransportStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_IceTransportStatsSchema>> {
 	private _visited = false;
 
   private readonly _timestampEncoder: NumberToNumberEncoder;
-  private readonly _packetsSentEncoder: NumberToNumberEncoder;
-  private readonly _packetsReceivedEncoder: NumberToNumberEncoder;
+  private readonly _packetsSentEncoder: NumberToBigIntEncoder;
+  private readonly _packetsReceivedEncoder: NumberToBigIntEncoder;
   private readonly _bytesSentEncoder: NumberToBigIntEncoder;
   private readonly _bytesReceivedEncoder: NumberToBigIntEncoder;
   private readonly _iceRoleEncoder: StringToStringEncoder;
@@ -26,13 +27,13 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
   private readonly _dtlsCipherEncoder: StringToStringEncoder;
   private readonly _dtlsRoleEncoder: StringToStringEncoder;
   private readonly _srtpCipherEncoder: StringToStringEncoder;
-  private readonly _selectedCandidatePairChangesEncoder: NumberToNumberEncoder;
+  private readonly _selectedCandidatePairChangesEncoder: NumberToBigIntEncoder;
   private readonly _attachmentsEncoder: AttachmentEncoder;
 
   constructor(attachmentsEncoder: AttachmentEncoder) {
     this._timestampEncoder = new NumberToNumberEncoder();
-    this._packetsSentEncoder = new NumberToNumberEncoder();
-    this._packetsReceivedEncoder = new NumberToNumberEncoder();
+    this._packetsSentEncoder = new NumberToBigIntEncoder();
+    this._packetsReceivedEncoder = new NumberToBigIntEncoder();
     this._bytesSentEncoder = new NumberToBigIntEncoder();
     this._bytesReceivedEncoder = new NumberToBigIntEncoder();
     this._iceRoleEncoder = new StringToStringEncoder();
@@ -46,10 +47,10 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
     this._dtlsCipherEncoder = new StringToStringEncoder();
     this._dtlsRoleEncoder = new StringToStringEncoder();
     this._srtpCipherEncoder = new StringToStringEncoder();
-    this._selectedCandidatePairChangesEncoder = new NumberToNumberEncoder();
+    this._selectedCandidatePairChangesEncoder = new NumberToBigIntEncoder();
     this._attachmentsEncoder = attachmentsEncoder;
   }
-	
+
 	public get visited(): boolean {
 		const result = this._visited;
 		this._visited = false;
@@ -77,10 +78,10 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputIceTransportStats): ClientSample_PeerConnectionSample_IceTransportStats {
+  public encode(sample: InputIceTransportStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_IceTransportStatsSchema> {
     this._visited = true;
-		
-		return new ClientSample_PeerConnectionSample_IceTransportStats({
+
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       packetsSent: this._packetsSentEncoder.encode(sample.packetsSent),
@@ -100,6 +101,6 @@ export class IceTransportEncoder implements Encoder<InputIceTransportStats, Clie
       srtpCipher: this._srtpCipherEncoder.encode(sample.srtpCipher),
       selectedCandidatePairChanges: this._selectedCandidatePairChangesEncoder.encode(sample.selectedCandidatePairChanges),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

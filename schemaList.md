@@ -31,6 +31,10 @@ InboundRtpStats
  * **transportId**: ID of the transport associated with the RTP stream.
  * **codecId**: ID of the codec used for the RTP stream.
  * **packetsReceived**: Number of packets received on the RTP stream.
+ * **packetsReceivedWithEct1**: Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+ * **packetsReceivedWithCe**: Total number of RTP packets received for this SSRC marked with the CE marking.
+ * **packetsReportedAsLost**: Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+ * **packetsReportedAsLostButRecovered**: Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
  * **packetsLost**: Number of packets lost on the RTP stream.
  * **jitter**: Jitter of the RTP stream in seconds.
  * **mid**: The media stream identification tag from the SDP media section.
@@ -97,6 +101,10 @@ RemoteInboundRtpStats
  * **transportId**: The ID of the transport used for this stream.
  * **codecId**: The ID of the codec used for this stream.
  * **packetsReceived**: The total number of packets received on this stream.
+ * **packetsReceivedWithEct1**: Total number of RTP packets received for this SSRC marked with the ECT(1) marking.
+ * **packetsReceivedWithCe**: Total number of RTP packets received for this SSRC marked with the CE marking.
+ * **packetsReportedAsLost**: Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit.
+ * **packetsReportedAsLostButRecovered**: Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report.
  * **packetsLost**: The total number of packets lost on this stream.
  * **jitter**: The jitter value for this stream in seconds.
  * **localId**: The ID of the local object corresponding to this remote stream.
@@ -104,7 +112,12 @@ RemoteInboundRtpStats
  * **totalRoundTripTime**: The cumulative RTT for all packets on this stream in seconds.
  * **fractionLost**: The fraction of packets lost on this stream, calculated over a time interval.
  * **roundTripTimeMeasurements**: The total number of RTT measurements for this stream.
+ * **packetsWithBleachedEct1Marking**: Number of packets with ECT(1) marking that were bleached by a middlebox.
  * **attachments**: Additional information attached to this stats
+PsnrSum
+ * **y**: PSNR value for the Y (luminance) component.
+ * **u**: PSNR value for the U (chrominance) component.
+ * **v**: PSNR value for the V (chrominance) component.
 QualityLimitationDurations
  * **none**: Duration of no quality limitation in seconds.
  * **cpu**: Duration of CPU-based quality limitation in seconds.
@@ -123,6 +136,7 @@ OutboundRtpStats
  * **mediaSourceId**: The ID of the media source associated with this stream.
  * **remoteId**: The ID of the remote object corresponding to this stream.
  * **rid**: The RID value of the RTP stream.
+ * **encodingIndex**: Index of the encoding in the encoding array.
  * **headerBytesSent**: The total number of header bytes sent on this stream.
  * **retransmittedPacketsSent**: The number of retransmitted packets sent on this stream.
  * **retransmittedBytesSent**: The number of retransmitted bytes sent on this stream.
@@ -137,9 +151,12 @@ OutboundRtpStats
  * **framesEncoded**: The total number of frames encoded on this stream.
  * **keyFramesEncoded**: The total number of key frames encoded on this stream.
  * **qpSum**: The sum of QP values for all frames encoded on this stream.
+ * **psnrSum**: Cumulative PSNR measurements for Y, U, V components.
+ * **psnrMeasurements**: Total number of PSNR measurements collected.
  * **totalEncodeTime**: The total time spent encoding frames on this stream in seconds.
  * **totalPacketSendDelay**: The total delay for packets sent on this stream in seconds.
- * **qualityLimitationReason**: The reason for any quality limitation on this stream.
+ * **qualityLimitationReason**: The reason for any quality limitation on this stream (e.g., 'cpu', 'bandwidth', 'other').
+ * **qualityLimitationDurations**: The duration of quality limitation reasons categorized by type.
  * **qualityLimitationResolutionChanges**: The number of resolution changes due to quality limitations.
  * **nackCount**: The total number of NACK packets sent on this stream.
  * **firCount**: The total number of FIR packets sent on this stream.
@@ -148,7 +165,7 @@ OutboundRtpStats
  * **powerEfficientEncoder**: Indicates whether the encoder is power-efficient.
  * **active**: Indicates whether this stream is actively sending data.
  * **scalabilityMode**: The scalability mode of the encoder used for this stream.
- * **qualityLimitationDurations**: The duration of quality limitation reasons categorized by type.
+ * **packetsSentWithEct1**: Number of packets sent with ECT(1) congestion marking.
  * **attachments**: Additional information attached to this stats.
 RemoteOutboundRtpStats
  * **timestamp**: The timestamp for this stats object in DOMHighResTimeStamp format.
@@ -228,7 +245,9 @@ IceTransportStats
  * **dtlsRole**: The role in the DTLS handshake (e.g., 'client', 'server').
  * **srtpCipher**: The SRTP cipher used for encryption.
  * **selectedCandidatePairChanges**: The number of changes to the selected ICE candidate pair.
- * **attachments**: Additional information attached to this stats
+ * **ccfbMessagesSent**: Number of congestion control feedback (CCFB) messages sent on this transport.
+ * **ccfbMessagesReceived**: Number of congestion control feedback (CCFB) messages received on this transport.
+ * **attachments**: Additional information attached to this stats.
 IceCandidateStats
  * **timestamp**: The timestamp of the stat.
  * **id**: A unique identifier for the stat.
@@ -252,7 +271,7 @@ IceCandidatePairStats
  * **transportId**: The transport id of the connection this candidate pair belongs to.
  * **localCandidateId**: The ID of the local ICE candidate in this pair.
  * **remoteCandidateId**: The ID of the remote ICE candidate in this pair.
- * **state**: undefined (Possible values are: new,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
+ * **state**: The checklist state of this candidate pair. Values follow the W3C RTCStatsIceCandidatePairState enum (frozen, waiting, in-progress, failed, succeeded). Two further values are accepted for backward compatibility and are not part of the current spec: `new` (never standardised) and `cancelled` (removed from the spec after 2016). (Possible values are: new,<br />frozen,<br />inProgress,<br />waiting,<br />failed,<br />succeeded,<br />cancelled)
  * **nominated**: Whether this candidate pair has been nominated.
  * **packetsSent**: The number of packets sent using this candidate pair.
  * **packetsReceived**: The number of packets received using this candidate pair.
@@ -306,6 +325,7 @@ ClientEvent
  * **timestamp**: The timestamp in epoch format when the event was generated.
 ClientIssue
  * **type**: The name of the issue
+ * **key**: Identifier of the related issue or resolution when it is provided.
  * **payload**: The value associated with the event, if applicable.
  * **timestamp**: The timestamp in epoch format when the event was generated.
 ClientMetaData
@@ -384,7 +404,7 @@ SfuInboundRtpPad
  * **sdpFmtpLine**: The actual SDP line from the negotiation related to this RTP stream
  * **rid**:  The rid parameter of the corresponded RTP stream
  * **rtxSsrc**: If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
- * **targetBitrate**: he bitrate the corresponded stream targets.
+ * **targetBitrate**: The bitrate the corresponded stream targets.
  * **voiceActivityFlag**: The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
  * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
  * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
@@ -401,11 +421,11 @@ SfuInboundRtpPad
  * **bytesReceived**: The total amount of payload bytes received on the corresponded RTP stream.
  * **rtcpSrReceived**: The total number of SR reports received by the corresponded RTP stream
  * **rtcpRrSent**: The total number of RR reports sent on the corresponded RTP stream
- * **rtxPacketsReceived**: If rtx packets are sent or received on the same stream then this number indicates how may has been sent
- * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how may has been discarded
+ * **rtxPacketsReceived**: If rtx packets are sent or received on the same stream then this number indicates how many have been sent
+ * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how many have been discarded
  * **framesReceived**: The number of frames received on the corresponded RTP stream
- * **framesDecoded**: Indicate the number of frames the Sfu has been decoded
- * **keyFramesDecoded**: Indicate the number of keyframes the Sfu has been decoded
+ * **framesDecoded**: Indicates the number of frames the Sfu has decoded
+ * **keyFramesDecoded**: Indicates the number of keyframes the Sfu has decoded
  * **fractionLost**: The calculated fractionLost of the stream
  * **jitter**: The calculated jitter of the stream
  * **roundTripTime**: The calculated RTT of the stream
@@ -427,7 +447,7 @@ SfuOutboundRtpPad
  * **sdpFmtpLine**: The actual SDP line from the negotiation related to this RTP stream
  * **rid**:  The rid parameter of the corresponded RTP stream
  * **rtxSsrc**: If RTX is negotiated as a separate stream, this is the SSRC of the RTX stream that is associated with this stream's ssrc. 
- * **targetBitrate**: he bitrate the corresponded stream targets.
+ * **targetBitrate**: The bitrate the corresponded stream targets.
  * **voiceActivityFlag**: The RTP header V flag indicate of the activity of the media source by the media codec if the RTP transport ships it through
  * **firCount**: The total number FIR packets sent from this endpoint to the source on the corresponded RTP stream. Only for Video streams
  * **pliCount**: The total number of Picture Loss Indication sent on the corresponded RTP stream. Only for Video streams
@@ -444,11 +464,11 @@ SfuOutboundRtpPad
  * **bytesSent**: The total amount of payload bytes sent on the corresponded RTP stream.
  * **rtcpSrSent**: The total number of SR reports sent by the corresponded RTP stream
  * **rtcpRrReceived**: The total number of RR reports received on the corresponded RTP stream
- * **rtxPacketsSent**: If rtx packets sent on the same stream then this number indicates how may has been sent
- * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how may has been discarded
+ * **rtxPacketsSent**: If rtx packets sent on the same stream then this number indicates how many have been sent
+ * **rtxPacketsDiscarded**: If rtx packets are received on the same stream then this number indicates how many have been discarded
  * **framesSent**: The number of frames sent on the corresponded RTP stream
- * **framesEncoded**: Indicate the number of frames the Sfu has been encoded
- * **keyFramesEncoded**: Indicate the number of keyframes the Sfu has been encoded on the corresponded RTP stream
+ * **framesEncoded**: Indicates the number of frames the Sfu has encoded
+ * **keyFramesEncoded**: Indicates the number of keyframes the Sfu has encoded on the corresponded RTP stream
  * **fractionLost**: The calculated fractionLost of the stream
  * **jitter**: The calculated jitter of the stream
  * **roundTripTime**: The calculated RTT of the stream
@@ -457,7 +477,7 @@ SfuSctpChannel
  * **streamId**: The id of the sctp stream
  * **channelId**: The id of the sctp stream
  * **noReport**: Flag indicate to not generate report from this sample
- * **internal**: Flag to indicate that the SCTP channel is used as an internally between SFU instances
+ * **internal**: Flag to indicate that the SCTP channel is used as an internal communication between SFU instances
  * **label**: The label of the sctp stream
  * **protocol**: The protocol used to establish an sctp stream
  * **sctpSmoothedRoundTripTime**: The latest smoothed round-trip time value, corresponding to spinfo_srtt defined in [RFC6458] but converted to seconds. If there has been no round-trip time measurements yet, this value is undefined.

@@ -1,22 +1,23 @@
-import { Encoder } from "./utils";
+import { Encoder, NumberToBigIntEncoder } from "./utils";
 import { MediaPlayoutStats as InputMediaPlayoutStats } from "./InputSamples";
 import {
   NumberToNumberEncoder,
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_MediaPlayoutStats as OutputMediaPlayoutStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_MediaPlayoutStatsSchema } from "./OutputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats, OutputMediaPlayoutStats> {
+export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_MediaPlayoutStatsSchema>> {
   private _visited = false;
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _idEncoder: StringToStringEncoder;
   private readonly _kindEncoder: StringToStringEncoder;
   private readonly _synthesizedSamplesDurationEncoder: NumberToNumberEncoder;
-  private readonly _synthesizedSamplesEventsEncoder: NumberToNumberEncoder;
+  private readonly _synthesizedSamplesEventsEncoder: NumberToBigIntEncoder;
   private readonly _totalSamplesDurationEncoder: NumberToNumberEncoder;
   private readonly _totalPlayoutDelayEncoder: NumberToNumberEncoder;
-  private readonly _totalSamplesCountEncoder: NumberToNumberEncoder;
+  private readonly _totalSamplesCountEncoder: NumberToBigIntEncoder;
   private readonly _attachmentsEncoder: AttachmentEncoder;
 
   constructor(attachmentsEncoder: AttachmentEncoder) {
@@ -24,10 +25,10 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
     this._idEncoder = new StringToStringEncoder();
     this._kindEncoder = new StringToStringEncoder();
     this._synthesizedSamplesDurationEncoder = new NumberToNumberEncoder();
-    this._synthesizedSamplesEventsEncoder = new NumberToNumberEncoder();
+    this._synthesizedSamplesEventsEncoder = new NumberToBigIntEncoder();
     this._totalSamplesDurationEncoder = new NumberToNumberEncoder();
     this._totalPlayoutDelayEncoder = new NumberToNumberEncoder();
-    this._totalSamplesCountEncoder = new NumberToNumberEncoder();
+    this._totalSamplesCountEncoder = new NumberToBigIntEncoder();
     this._attachmentsEncoder = attachmentsEncoder;
   }
 
@@ -49,10 +50,10 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputMediaPlayoutStats): OutputMediaPlayoutStats {
+  public encode(sample: InputMediaPlayoutStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_MediaPlayoutStatsSchema> {
     this._visited = true;
 
-    return new OutputMediaPlayoutStats({
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       kind: this._kindEncoder.encode(sample.kind),
@@ -62,6 +63,6 @@ export class MediaPlayoutStatsEncoder implements Encoder<InputMediaPlayoutStats,
       totalPlayoutDelay: this._totalPlayoutDelayEncoder.encode(sample.totalPlayoutDelay),
       totalSamplesCount: this._totalSamplesCountEncoder.encode(sample.totalSamplesCount),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

@@ -1,16 +1,17 @@
-import { 
-	AttachmentEncoder, 
-	BooleanToBooleanEncoder, 
-	NumberToBigIntEncoder, 
-	NumberToNumberEncoder, 
-	OneTimePassEncoder, 
-	StringToStringEncoder 
+import {
+	AttachmentEncoder,
+	BooleanToBooleanEncoder,
+	NumberToBigIntEncoder,
+	NumberToNumberEncoder,
+	OneTimePassEncoder,
+	StringToStringEncoder
 } from "./utils";
-import { ClientSample_PeerConnectionSample_InboundRtpStats } from './OutputSamples';
+import { ClientSample_PeerConnectionSample_InboundRtpStatsSchema } from './OutputSamples';
 import { Encoder } from "./utils";
 import { InboundRtpStats } from "./InputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_PeerConnectionSample_InboundRtpStats> {
+export class InboundRtpEncoder implements Encoder<InboundRtpStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_InboundRtpStatsSchema>> {
 	private readonly _ssrc: bigint;
 	private _visited = false;
 
@@ -23,7 +24,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 	private readonly _audioLevelEncoder: NumberToNumberEncoder;
 	private readonly _bytesReceivedEncoder: Encoder<number, bigint>;
 	private readonly _codecIdEncoder: OneTimePassEncoder<string>;
-	private readonly _concealedSamplesEncoder: NumberToNumberEncoder;
+	private readonly _concealedSamplesEncoder: NumberToBigIntEncoder;
 	private readonly _concealmentEventsEncoder: NumberToNumberEncoder;
 	private readonly _corruptionMeasurementsEncoder: NumberToNumberEncoder;
 	private readonly _decoderImplementationEncoder: StringToStringEncoder;
@@ -43,7 +44,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 	private readonly _framesRenderedEncoder: NumberToNumberEncoder;
 	private readonly _freezeCountEncoder: NumberToNumberEncoder;
 	private readonly _headerBytesReceivedEncoder: Encoder<number, bigint>;
-	private readonly _insertedSamplesForDecelerationEncoder: NumberToNumberEncoder;
+	private readonly _insertedSamplesForDecelerationEncoder: NumberToBigIntEncoder;
 	private readonly _jitterEncoder: NumberToNumberEncoder;
 	private readonly _jitterBufferDelayEncoder: NumberToNumberEncoder;
 	private readonly _jitterBufferEmittedCountEncoder: NumberToNumberEncoder;
@@ -56,17 +57,21 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 	private readonly _packetsDiscardedEncoder: NumberToNumberEncoder;
 	private readonly _packetsLostEncoder: NumberToNumberEncoder;
 	private readonly _packetsReceivedEncoder: NumberToNumberEncoder;
+	private readonly _packetsReceivedWithCeEncoder: NumberToNumberEncoder;
+	private readonly _packetsReceivedWithEct1Encoder: NumberToNumberEncoder;
+	private readonly _packetsReportedAsLostEncoder: NumberToNumberEncoder;
+	private readonly _packetsReportedAsLostButRecoveredEncoder: NumberToNumberEncoder;
 	private readonly _pauseCountEncoder: NumberToNumberEncoder;
 	private readonly _pliCountEncoder: NumberToNumberEncoder;
 	private readonly _playoutIdEncoder: StringToStringEncoder;
 	private readonly _powerEfficientDecoderEncoder: BooleanToBooleanEncoder;
 	private readonly _qpSumEncoder: NumberToNumberEncoder;
 	private readonly _remoteIdEncoder: StringToStringEncoder;
-	private readonly _removedSamplesForAccelerationEncoder: NumberToNumberEncoder;
+	private readonly _removedSamplesForAccelerationEncoder: NumberToBigIntEncoder;
 	private readonly _retransmittedBytesReceivedEncoder: NumberToBigIntEncoder;
 	private readonly _retransmittedPacketsReceivedEncoder: NumberToNumberEncoder;
 	private readonly _rtxSsrcEncoder: NumberToBigIntEncoder;
-	private readonly _silentConcealedSamplesEncoder: NumberToNumberEncoder;
+	private readonly _silentConcealedSamplesEncoder: NumberToBigIntEncoder;
 	private readonly _totalAssemblyTimeEncoder: NumberToNumberEncoder;
 	private readonly _totalAudioEnergyEncoder: NumberToNumberEncoder;
 	private readonly _totalCorruptionProbabilityEncoder: NumberToNumberEncoder;
@@ -76,7 +81,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 	private readonly _totalPausesDurationEncoder: NumberToNumberEncoder;
 	private readonly _totalProcessingDelayEncoder: NumberToNumberEncoder;
 	private readonly _totalSamplesDurationEncoder: NumberToNumberEncoder;
-	private readonly _totalSamplesReceivedEncoder: NumberToNumberEncoder;
+	private readonly _totalSamplesReceivedEncoder: NumberToBigIntEncoder;
 	private readonly _totalSquaredCorruptionProbabilityEncoder: NumberToNumberEncoder;
 	private readonly _totalSquaredInterFrameDelayEncoder: NumberToNumberEncoder;
 	private readonly _transportIdEncoder: OneTimePassEncoder<string>;
@@ -93,7 +98,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 			this._audioLevelEncoder = new NumberToNumberEncoder();
 			this._bytesReceivedEncoder = new NumberToBigIntEncoder();
 			this._codecIdEncoder = new OneTimePassEncoder<string>();
-			this._concealedSamplesEncoder = new NumberToNumberEncoder();
+			this._concealedSamplesEncoder = new NumberToBigIntEncoder();
 			this._concealmentEventsEncoder = new NumberToNumberEncoder();
 			this._corruptionMeasurementsEncoder = new NumberToNumberEncoder();
 			this._decoderImplementationEncoder = new StringToStringEncoder();
@@ -113,7 +118,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 			this._framesRenderedEncoder = new NumberToNumberEncoder();
 			this._freezeCountEncoder = new NumberToNumberEncoder();
 			this._headerBytesReceivedEncoder = new NumberToBigIntEncoder();
-			this._insertedSamplesForDecelerationEncoder = new NumberToNumberEncoder();
+			this._insertedSamplesForDecelerationEncoder = new NumberToBigIntEncoder();
 			this._jitterEncoder = new NumberToNumberEncoder();
 			this._jitterBufferDelayEncoder = new NumberToNumberEncoder();
 			this._jitterBufferEmittedCountEncoder = new NumberToNumberEncoder();
@@ -126,17 +131,21 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 			this._packetsDiscardedEncoder = new NumberToNumberEncoder();
 			this._packetsLostEncoder = new NumberToNumberEncoder();
 			this._packetsReceivedEncoder = new NumberToNumberEncoder();
+			this._packetsReceivedWithCeEncoder = new NumberToNumberEncoder();
+			this._packetsReceivedWithEct1Encoder = new NumberToNumberEncoder();
+			this._packetsReportedAsLostEncoder = new NumberToNumberEncoder();
+			this._packetsReportedAsLostButRecoveredEncoder = new NumberToNumberEncoder();
 			this._pauseCountEncoder = new NumberToNumberEncoder();
 			this._pliCountEncoder = new NumberToNumberEncoder();
 			this._playoutIdEncoder = new StringToStringEncoder();
 			this._powerEfficientDecoderEncoder = new BooleanToBooleanEncoder();
 			this._qpSumEncoder = new NumberToNumberEncoder();
 			this._remoteIdEncoder = new StringToStringEncoder();
-			this._removedSamplesForAccelerationEncoder = new NumberToNumberEncoder();
+			this._removedSamplesForAccelerationEncoder = new NumberToBigIntEncoder();
 			this._retransmittedBytesReceivedEncoder = new NumberToBigIntEncoder();
 			this._retransmittedPacketsReceivedEncoder = new NumberToNumberEncoder();
 			this._rtxSsrcEncoder = new NumberToBigIntEncoder();
-			this._silentConcealedSamplesEncoder = new NumberToNumberEncoder();
+			this._silentConcealedSamplesEncoder = new NumberToBigIntEncoder();
 			this._totalAssemblyTimeEncoder = new NumberToNumberEncoder();
 			this._totalAudioEnergyEncoder = new NumberToNumberEncoder();
 			this._totalCorruptionProbabilityEncoder = new NumberToNumberEncoder();
@@ -146,7 +155,7 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 			this._totalPausesDurationEncoder = new NumberToNumberEncoder();
 			this._totalProcessingDelayEncoder = new NumberToNumberEncoder();
 			this._totalSamplesDurationEncoder = new NumberToNumberEncoder();
-			this._totalSamplesReceivedEncoder = new NumberToNumberEncoder();
+			this._totalSamplesReceivedEncoder = new NumberToBigIntEncoder();
 			this._totalSquaredCorruptionProbabilityEncoder = new NumberToNumberEncoder();
 			this._totalSquaredInterFrameDelayEncoder = new NumberToNumberEncoder();
 			this._transportIdEncoder = new OneTimePassEncoder<string>();
@@ -198,6 +207,10 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 		this._packetsDiscardedEncoder.reset();
 		this._packetsLostEncoder.reset();
 		this._packetsReceivedEncoder.reset();
+		this._packetsReceivedWithCeEncoder.reset();
+		this._packetsReceivedWithEct1Encoder.reset();
+		this._packetsReportedAsLostEncoder.reset();
+		this._packetsReportedAsLostButRecoveredEncoder.reset();
 		this._pauseCountEncoder.reset();
 		this._pliCountEncoder.reset();
 		this._playoutIdEncoder.reset();
@@ -224,10 +237,10 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
 		this._transportIdEncoder.reset();
 	}
 
-	public encode(sample: InboundRtpStats): ClientSample_PeerConnectionSample_InboundRtpStats {
+	public encode(sample: InboundRtpStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_InboundRtpStatsSchema> {
     this._visited = true;
 
-    const result = new ClientSample_PeerConnectionSample_InboundRtpStats({
+    const result = {
         ssrc: this._ssrc,
 		trackIdentifier: this._trackIdentifierEncoder.encode(sample.trackIdentifier),
         attachments: this._attachmentsEncoder.encode(sample.attachments),
@@ -270,6 +283,10 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
         packetsDiscarded: this._packetsDiscardedEncoder.encode(sample.packetsDiscarded),
         packetsLost: this._packetsLostEncoder.encode(sample.packetsLost),
         packetsReceived: this._packetsReceivedEncoder.encode(sample.packetsReceived),
+        packetsReceivedWithCe: this._packetsReceivedWithCeEncoder.encode(sample.packetsReceivedWithCe),
+        packetsReceivedWithEct1: this._packetsReceivedWithEct1Encoder.encode(sample.packetsReceivedWithEct1),
+        packetsReportedAsLost: this._packetsReportedAsLostEncoder.encode(sample.packetsReportedAsLost),
+        packetsReportedAsLostButRecovered: this._packetsReportedAsLostButRecoveredEncoder.encode(sample.packetsReportedAsLostButRecovered),
         pauseCount: this._pauseCountEncoder.encode(sample.pauseCount),
         pliCount: this._pliCountEncoder.encode(sample.pliCount),
         playoutId: this._playoutIdEncoder.encode(sample.playoutId),
@@ -294,8 +311,8 @@ export class InboundRtpEncoder implements Encoder<InboundRtpStats, ClientSample_
         totalSquaredCorruptionProbability: this._totalSquaredCorruptionProbabilityEncoder.encode(sample.totalSquaredCorruptionProbability),
         totalSquaredInterFrameDelay: this._totalSquaredInterFrameDelayEncoder.encode(sample.totalSquaredInterFrameDelay),
         transportId: this._transportIdEncoder.encode(sample.transportId),
-    });
-		
+    };
+
 		return result;
 	}
 }

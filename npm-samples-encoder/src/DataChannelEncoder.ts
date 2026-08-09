@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder
 } from "./utils"; // Assuming these are utility encoders for the various types
-import { ClientSample_PeerConnectionSample_DataChannelStats } from "./OutputSamples"; // Assuming this is the output sample type
+import { ClientSample_PeerConnectionSample_DataChannelStatsSchema } from "./OutputSamples"; // Assuming this is the output sample type
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class DataChannelEncoder implements Encoder<InputDataChannelStats, ClientSample_PeerConnectionSample_DataChannelStats> {
+export class DataChannelEncoder implements Encoder<InputDataChannelStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_DataChannelStatsSchema>> {
   private _visited = false;
   private readonly _timestampEncoder: NumberToNumberEncoder;
   private readonly _labelEncoder: StringToStringEncoder;
@@ -53,10 +54,10 @@ export class DataChannelEncoder implements Encoder<InputDataChannelStats, Client
     this._bytesReceivedEncoder.reset();
   }
 
-  public encode(sample: InputDataChannelStats): ClientSample_PeerConnectionSample_DataChannelStats {
+  public encode(sample: InputDataChannelStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_DataChannelStatsSchema> {
     this._visited = true;
-    
-    return new ClientSample_PeerConnectionSample_DataChannelStats({
+
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       label: this._labelEncoder.encode(sample.label),
@@ -68,6 +69,6 @@ export class DataChannelEncoder implements Encoder<InputDataChannelStats, Client
       messagesReceived: this._messagesReceivedEncoder.encode(sample.messagesReceived),
       bytesReceived: this._bytesReceivedEncoder.encode(sample.bytesReceived),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }

@@ -1,4 +1,5 @@
 import {
+    ClientSampleSchema,
     ClientSample as InputClientSample,
     ClientSample_PeerConnectionSample as InputPeerConnectionSample,
 } from "./InputSamples";
@@ -28,6 +29,7 @@ import { ClientEventDecoder, DefaultClientEventDecoder } from "./ClientEventDeco
 import { ClientMetaDataDecoder, DefaultClientMetaDataDecoder } from "./ClientMetaDataDecoder";
 import { DefaultExtensionStatsDecoder, ExtensionStatsDecoder } from "./ExtensionStatsDecoder";
 import { ClientIssueDecoder, DefaultClientIssueDecoder } from "./ClientIssueDecoder";
+import { fromBinary } from "@bufbuild/protobuf";
 
 export class ClientSampleDecoder {
     public readonly settings: ClientSampleDecoderSettings;
@@ -111,7 +113,7 @@ export class ClientSampleDecoder {
 
     public decodeFromBytes(bytes: Uint8Array): OutputClientSample | undefined {
         try {
-            const inputSample = InputClientSample.fromBinary(bytes);
+            const inputSample = fromBinary(ClientSampleSchema, Buffer.from(bytes));
 
             return this.decodeFromProtobuf(inputSample);
         } catch (error) {

@@ -360,6 +360,42 @@
                           "doc": "Number of packets received on the RTP stream."
                         },
                         {
+                          "name": "packetsReceivedWithEct1",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the ECT(1) marking."
+                        },
+                        {
+                          "name": "packetsReceivedWithCe",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the CE marking."
+                        },
+                        {
+                          "name": "packetsReportedAsLost",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit."
+                        },
+                        {
+                          "name": "packetsReportedAsLostButRecovered",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report."
+                        },
+                        {
                           "name": "packetsLost",
                           "type": [
                             "null",
@@ -683,7 +719,7 @@
                           "name": "totalSamplesReceived",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "Total audio samples received."
@@ -692,7 +728,7 @@
                           "name": "concealedSamples",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "Number of concealed audio samples."
@@ -701,7 +737,7 @@
                           "name": "silentConcealedSamples",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "Number of silent audio samples concealed."
@@ -719,7 +755,7 @@
                           "name": "insertedSamplesForDeceleration",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "Number of audio samples inserted for deceleration."
@@ -728,7 +764,7 @@
                           "name": "removedSamplesForAcceleration",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "Number of audio samples removed for acceleration."
@@ -951,6 +987,42 @@
                           "doc": "The total number of packets received on this stream."
                         },
                         {
+                          "name": "packetsReceivedWithEct1",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the ECT(1) marking."
+                        },
+                        {
+                          "name": "packetsReceivedWithCe",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets received for this SSRC marked with the CE marking."
+                        },
+                        {
+                          "name": "packetsReportedAsLost",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets for which an RFC8888 report has been sent with a zero R bit."
+                        },
+                        {
+                          "name": "packetsReportedAsLostButRecovered",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Total number of RTP packets reported as lost but later recovered in a subsequent RFC8888 report."
+                        },
+                        {
                           "name": "packetsLost",
                           "type": [
                             "null",
@@ -1008,10 +1080,19 @@
                           "name": "roundTripTimeMeasurements",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The total number of RTT measurements for this stream."
+                        },
+                        {
+                          "name": "packetsWithBleachedEct1Marking",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
+                          "doc": "Number of packets with ECT(1) marking that were bleached by a middlebox."
                         },
                         {
                           "name": "attachments",
@@ -1130,6 +1211,15 @@
                           ],
                           "default": null,
                           "doc": "The RID value of the RTP stream."
+                        },
+                        {
+                          "name": "encodingIndex",
+                          "type": [
+                            "null",
+                            "int"
+                          ],
+                          "default": null,
+                          "doc": "Index of the encoding in the encoding array."
                         },
                         {
                           "name": "headerBytesSent",
@@ -1252,10 +1342,48 @@
                           "name": "qpSum",
                           "type": [
                             "null",
-                            "double"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The sum of QP values for all frames encoded on this stream."
+                        },
+                        {
+                          "name": "psnrSum",
+                          "type": [
+                            "null",
+                            {
+                              "type": "record",
+                              "name": "PsnrSum",
+                              "fields": [
+                                {
+                                  "name": "y",
+                                  "type": "double",
+                                  "doc": "PSNR value for the Y (luminance) component."
+                                },
+                                {
+                                  "name": "u",
+                                  "type": "double",
+                                  "doc": "PSNR value for the U (chrominance) component."
+                                },
+                                {
+                                  "name": "v",
+                                  "type": "double",
+                                  "doc": "PSNR value for the V (chrominance) component."
+                                }
+                              ]
+                            }
+                          ],
+                          "default": null,
+                          "doc": "Cumulative PSNR measurements for Y, U, V components."
+                        },
+                        {
+                          "name": "psnrMeasurements",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
+                          "doc": "Total number of PSNR measurements collected."
                         },
                         {
                           "name": "totalEncodeTime",
@@ -1282,7 +1410,41 @@
                             "string"
                           ],
                           "default": null,
-                          "doc": "The reason for any quality limitation on this stream."
+                          "doc": "The reason for any quality limitation on this stream (e.g., 'cpu', 'bandwidth', 'other')."
+                        },
+                        {
+                          "name": "qualityLimitationDurations",
+                          "type": [
+                            "null",
+                            {
+                              "type": "record",
+                              "name": "QualityLimitationDurations",
+                              "fields": [
+                                {
+                                  "name": "none",
+                                  "type": "double",
+                                  "doc": "Duration of no quality limitation in seconds."
+                                },
+                                {
+                                  "name": "cpu",
+                                  "type": "double",
+                                  "doc": "Duration of CPU-based quality limitation in seconds."
+                                },
+                                {
+                                  "name": "bandwidth",
+                                  "type": "double",
+                                  "doc": "Duration of bandwidth-based quality limitation in seconds."
+                                },
+                                {
+                                  "name": "other",
+                                  "type": "double",
+                                  "doc": "Duration of other quality limitation reasons in seconds."
+                                }
+                              ]
+                            }
+                          ],
+                          "doc": "The duration of quality limitation reasons categorized by type.",
+                          "default": null
                         },
                         {
                           "name": "qualityLimitationResolutionChanges",
@@ -1357,38 +1519,13 @@
                           "doc": "The scalability mode of the encoder used for this stream."
                         },
                         {
-                          "name": "qualityLimitationDurations",
+                          "name": "packetsSentWithEct1",
                           "type": [
                             "null",
-                            {
-                              "type": "record",
-                              "name": "QualityLimitationDurations",
-                              "fields": [
-                                {
-                                  "name": "none",
-                                  "type": "double",
-                                  "doc": "Duration of no quality limitation in seconds."
-                                },
-                                {
-                                  "name": "cpu",
-                                  "type": "double",
-                                  "doc": "Duration of CPU-based quality limitation in seconds."
-                                },
-                                {
-                                  "name": "bandwidth",
-                                  "type": "double",
-                                  "doc": "Duration of bandwidth-based quality limitation in seconds."
-                                },
-                                {
-                                  "name": "other",
-                                  "type": "double",
-                                  "doc": "Duration of other quality limitation reasons in seconds."
-                                }
-                              ]
-                            }
+                            "long"
                           ],
-                          "doc": "The duration of quality limitation reasons categorized by type.",
-                          "default": null
+                          "default": null,
+                          "doc": "Number of packets sent with ECT(1) congestion marking."
                         },
                         {
                           "name": "attachments",
@@ -1711,7 +1848,7 @@
                           "name": "synthesizedSamplesEvents",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The number of synthesized audio samples events."
@@ -1738,7 +1875,7 @@
                           "name": "totalSamplesCount",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The total count of audio samples."
@@ -1945,7 +2082,7 @@
                           "name": "packetsSent",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The number of packets sent."
@@ -1954,7 +2091,7 @@
                           "name": "packetsReceived",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The number of packets received."
@@ -2080,10 +2217,28 @@
                           "name": "selectedCandidatePairChanges",
                           "type": [
                             "null",
-                            "int"
+                            "long"
                           ],
                           "default": null,
                           "doc": "The number of changes to the selected ICE candidate pair."
+                        },
+                        {
+                          "name": "ccfbMessagesSent",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
+                          "doc": "Number of congestion control feedback (CCFB) messages sent on this transport."
+                        },
+                        {
+                          "name": "ccfbMessagesReceived",
+                          "type": [
+                            "null",
+                            "long"
+                          ],
+                          "default": null,
+                          "doc": "Number of congestion control feedback (CCFB) messages received on this transport."
                         },
                         {
                           "name": "attachments",
@@ -2092,7 +2247,7 @@
                             "string"
                           ],
                           "default": null,
-                          "doc": "Additional information attached to this stats"
+                          "doc": "Additional information attached to this stats."
                         }
                       ]
                     }
@@ -2310,6 +2465,7 @@
                               "name": "RTCStatsIceCandidatePairState",
                               "symbols": [
                                 "new",
+                                "frozen",
                                 "inProgress",
                                 "waiting",
                                 "failed",
@@ -2319,7 +2475,8 @@
                               "doc": "The state of the ICE candidate pair."
                             }
                           ],
-                          "default": null
+                          "default": null,
+                          "doc": "The checklist state of this candidate pair. Values follow the W3C RTCStatsIceCandidatePairState enum (frozen, waiting, in-progress, failed, succeeded). Two further values are accepted for backward compatibility and are not part of the current spec: `new` (never standardised) and `cancelled` (removed from the spec after 2016)."
                         },
                         {
                           "name": "nominated",
@@ -2631,6 +2788,15 @@
                 "name": "type",
                 "doc": "The name of the issue",
                 "type": "string"
+              },
+              {
+                "name": "key",
+                "doc": "Identifier of the related issue or resolution when it is provided.",
+                "type": [
+                  "null",
+                  "string"
+                ],
+                "default": null
               },
               {
                 "name": "payload",

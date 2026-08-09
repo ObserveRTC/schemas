@@ -6,11 +6,40 @@ import {
   OneTimePassEncoder,
   StringToStringEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_OutboundRtpStats, ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_OutboundRtpStats_PsnrSumSchema, ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurationsSchema, ClientSample_PeerConnectionSample_OutboundRtpStatsSchema } from "./OutputSamples";
 import { Encoder } from "./utils";
 import { OutboundRtpStats } from "./InputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export class QualityLimitationDurationsEncoder implements Encoder<OutboundRtpStats['qualityLimitationDurations'], ClientSample_PeerConnectionSample_OutboundRtpStats['qualityLimitationDurations']> {
+export class PsnrSumEncoder implements Encoder<OutboundRtpStats['psnrSum'], MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundRtpStats_PsnrSumSchema>> {
+  private _value: OutboundRtpStats['psnrSum'] | undefined;
+
+  public get actualValue() {
+    return this._value;
+  }
+
+  public reset() {
+    this._value = undefined;
+  }
+
+  encode(newValue?: OutboundRtpStats['psnrSum']) {
+    if (newValue === undefined) return;
+    if (newValue.y === this._value?.y &&
+      newValue.u === this._value?.u &&
+      newValue.v === this._value?.v
+    ) {
+      return;
+    }
+    this._value = newValue;
+    return {
+      y: newValue.y,
+      u: newValue.u,
+      v: newValue.v,
+    };
+  }
+}
+
+export class QualityLimitationDurationsEncoder implements Encoder<OutboundRtpStats['qualityLimitationDurations'], MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurationsSchema>> {
   private _value: OutboundRtpStats['qualityLimitationDurations'] | undefined;
 
   public get actualValue() {
@@ -23,25 +52,25 @@ export class QualityLimitationDurationsEncoder implements Encoder<OutboundRtpSta
 
   encode(newValue?: OutboundRtpStats['qualityLimitationDurations']) {
     if (newValue === undefined) return;
-    if (newValue.bandwidth === this._value?.bandwidth && 
-      newValue.cpu === this._value?.cpu && 
-      newValue.none === this._value?.none && 
-      newValue.other === this._value?.other 
+    if (newValue.bandwidth === this._value?.bandwidth &&
+      newValue.cpu === this._value?.cpu &&
+      newValue.none === this._value?.none &&
+      newValue.other === this._value?.other
     ) {
       return;
-    } 
+    }
     this._value = newValue;
-    return new ClientSample_PeerConnectionSample_OutboundRtpStats_QualityLimitationDurations({
+    return {
       bandwidth: newValue.bandwidth,
       cpu: newValue.cpu,
       none: newValue.none,
       other: newValue.other,
-    });
+    };
   }
 }
 
 
-export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSample_PeerConnectionSample_OutboundRtpStats> {
+export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundRtpStatsSchema>> {
   private readonly _ssrc: bigint;
   private _visited = false;
 
@@ -52,6 +81,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
   private readonly _bytesSentEncoder: NumberToBigIntEncoder;
   private readonly _codecIdEncoder: OneTimePassEncoder<string>;
   private readonly _encoderImplementationEncoder: OneTimePassEncoder<string>;
+  private readonly _encodingIndexEncoder: NumberToNumberEncoder;
   private readonly _firCountEncoder: NumberToNumberEncoder;
   private readonly _frameHeightEncoder: NumberToNumberEncoder;
   private readonly _frameWidthEncoder: NumberToNumberEncoder;
@@ -65,9 +95,12 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
   private readonly _midEncoder: OneTimePassEncoder<string>;
   private readonly _nackCountEncoder: NumberToNumberEncoder;
   private readonly _packetsSentEncoder: NumberToNumberEncoder;
+  private readonly _packetsSentWithEct1Encoder: NumberToBigIntEncoder;
   private readonly _pliCountEncoder: NumberToNumberEncoder;
   private readonly _powerEfficientEncoderEncoder: BooleanToBooleanEncoder;
-  private readonly _qpSumEncoder: NumberToNumberEncoder;
+  private readonly _psnrMeasurementsEncoder: NumberToBigIntEncoder;
+  private readonly _psnrSumEncoder: PsnrSumEncoder;
+  private readonly _qpSumEncoder: NumberToBigIntEncoder;
   private readonly _qualityLimitationDurationsEncoder: QualityLimitationDurationsEncoder;
   private readonly _qualityLimitationReasonEncoder: StringToStringEncoder;
   private readonly _qualityLimitationResolutionChangesEncoder: NumberToNumberEncoder;
@@ -96,6 +129,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._bytesSentEncoder = new NumberToBigIntEncoder();
     this._codecIdEncoder = new OneTimePassEncoder<string>();
     this._encoderImplementationEncoder = new OneTimePassEncoder<string>();
+    this._encodingIndexEncoder = new NumberToNumberEncoder();
     this._firCountEncoder = new NumberToNumberEncoder();
     this._frameHeightEncoder = new NumberToNumberEncoder();
     this._frameWidthEncoder = new NumberToNumberEncoder();
@@ -109,9 +143,12 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._midEncoder = new OneTimePassEncoder<string>();
     this._nackCountEncoder = new NumberToNumberEncoder();
     this._packetsSentEncoder = new NumberToNumberEncoder();
+    this._packetsSentWithEct1Encoder = new NumberToBigIntEncoder();
     this._pliCountEncoder = new NumberToNumberEncoder();
     this._powerEfficientEncoderEncoder = new BooleanToBooleanEncoder();
-    this._qpSumEncoder = new NumberToNumberEncoder();
+    this._psnrMeasurementsEncoder = new NumberToBigIntEncoder();
+    this._psnrSumEncoder = new PsnrSumEncoder();
+    this._qpSumEncoder = new NumberToBigIntEncoder();
     this._qualityLimitationDurationsEncoder = new QualityLimitationDurationsEncoder();
     this._qualityLimitationReasonEncoder = new StringToStringEncoder();
     this._qualityLimitationResolutionChangesEncoder = new NumberToNumberEncoder();
@@ -142,6 +179,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._bytesSentEncoder.reset();
     this._codecIdEncoder.reset();
     this._encoderImplementationEncoder.reset();
+    this._encodingIndexEncoder.reset();
     this._firCountEncoder.reset();
     this._frameHeightEncoder.reset();
     this._frameWidthEncoder.reset();
@@ -155,8 +193,11 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._midEncoder.reset();
     this._nackCountEncoder.reset();
     this._packetsSentEncoder.reset();
+    this._packetsSentWithEct1Encoder.reset();
     this._pliCountEncoder.reset();
     this._powerEfficientEncoderEncoder.reset();
+    this._psnrMeasurementsEncoder.reset();
+    this._psnrSumEncoder.reset();
     this._qpSumEncoder.reset();
     this._qualityLimitationDurationsEncoder.reset();
     this._qualityLimitationReasonEncoder.reset();
@@ -174,10 +215,10 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
     this._transportIdEncoder.reset();
   }
 
-  public encode(sample: OutboundRtpStats): ClientSample_PeerConnectionSample_OutboundRtpStats {
+  public encode(sample: OutboundRtpStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_OutboundRtpStatsSchema> {
     this._visited = true;
 
-    const result = new ClientSample_PeerConnectionSample_OutboundRtpStats({
+    const result = {
       ssrc: this._ssrc,
       id: this._idEncoder.encode(sample.id),
       kind: this._kindEncoder.encode(sample.kind),
@@ -187,6 +228,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
       bytesSent: this._bytesSentEncoder.encode(sample.bytesSent),
       codecId: this._codecIdEncoder.encode(sample.codecId),
       encoderImplementation: this._encoderImplementationEncoder.encode(sample.encoderImplementation),
+      encodingIndex: this._encodingIndexEncoder.encode(sample.encodingIndex),
       firCount: this._firCountEncoder.encode(sample.firCount),
       frameHeight: this._frameHeightEncoder.encode(sample.frameHeight),
       frameWidth: this._frameWidthEncoder.encode(sample.frameWidth),
@@ -200,8 +242,11 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
       mid: this._midEncoder.encode(sample.mid),
       nackCount: this._nackCountEncoder.encode(sample.nackCount),
       packetsSent: this._packetsSentEncoder.encode(sample.packetsSent),
+      packetsSentWithEct1: this._packetsSentWithEct1Encoder.encode(sample.packetsSentWithEct1),
       pliCount: this._pliCountEncoder.encode(sample.pliCount),
       powerEfficientEncoder: this._powerEfficientEncoderEncoder.encode(sample.powerEfficientEncoder),
+      psnrMeasurements: this._psnrMeasurementsEncoder.encode(sample.psnrMeasurements),
+      psnrSum: this._psnrSumEncoder.encode(sample.psnrSum),
       qpSum: this._qpSumEncoder.encode(sample.qpSum),
       qualityLimitationDurations: this._qualityLimitationDurationsEncoder.encode(sample.qualityLimitationDurations),
       qualityLimitationReason: this._qualityLimitationReasonEncoder.encode(sample.qualityLimitationReason),
@@ -217,7 +262,7 @@ export class OutboundRtpEncoder implements Encoder<OutboundRtpStats, ClientSampl
       totalEncodedBytesTarget: this._totalEncodedBytesTargetEncoder.encode(sample.totalEncodedBytesTarget),
       totalPacketSendDelay: this._totalPacketSendDelayEncoder.encode(sample.totalPacketSendDelay),
       transportId: this._transportIdEncoder.encode(sample.transportId),
-    });
+    };
 
     return result;
 	}

@@ -1,17 +1,19 @@
 {
-	"compileOnSave": true,
-	"compilerOptions":
-	{
+	"compilerOptions": {
 		"lib": [ "es2018", "dom" ],
 		"target": "es2018",
-		"module": "commonjs",
-		"moduleResolution": "node",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"esModuleInterop": true,
 		"isolatedModules": true,
 		"strict": true,
+		"rootDir": "./src",
 		"outDir": "./dist",
 		"declaration": true,
-		"declarationMap": true
+		"declarationMap": true,
+		"sourceMap": true,
+		"types": [],
+		"forceConsistentCasingInFileNames": true
 	},
 	"include": [ "src" ]
 }

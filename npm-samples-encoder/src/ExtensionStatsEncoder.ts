@@ -1,9 +1,9 @@
 import { Encoder } from "./utils";
 import { ExtensionStat as InputExtensionStats } from "./InputSamples";
-import { StringToStringEncoder } from "./utils";
-import { ClientSample_ExtensionStat } from "./OutputSamples";
+import { ClientSample_ExtensionStat, ClientSample_ExtensionStatSchema } from "./OutputSamples";
+import { create as createMessage, MessageInitShape } from "@bufbuild/protobuf";
 
-export interface ExtensionStatsEncoder extends Encoder<InputExtensionStats, ClientSample_ExtensionStat> {
+export interface ExtensionStatsEncoder extends Encoder<InputExtensionStats, MessageInitShape<typeof ClientSample_ExtensionStatSchema>> {
 	// no additional methods
 }
 
@@ -13,10 +13,10 @@ export class DefaultExtensionStatsEncoder implements ExtensionStatsEncoder {
 		// no-op
 	}
 
-  public encode(sample: InputExtensionStats): ClientSample_ExtensionStat {
-    return new ClientSample_ExtensionStat({
+  public encode(sample: InputExtensionStats): MessageInitShape<typeof ClientSample_ExtensionStatSchema> {
+    return {
       type: sample.type,
-			payload: sample.payload,
-    });
+      payload: sample.payload,
+    };
   }
 }

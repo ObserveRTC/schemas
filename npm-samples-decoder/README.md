@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@observertc%2Fsamples-decoder.svg)](https://badge.fury.io/js/@observertc%2Fsamples-decoder)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-High-performance binary decoder for ObserveRTC WebRTC observability samples. This library provides efficient decoding of compressed WebRTC statistics back to their original format, enabling real-time processing and analytics on the server side.
+Binary decoder for ObserveRTC WebRTC client-side observability samples. This library provides decoding of compressed WebRTC statistics back to their original format, enabling processing and analytics on the server side.
 
 ## Table of Contents
 
@@ -11,6 +11,8 @@ High-performance binary decoder for ObserveRTC WebRTC observability samples. Thi
 - [Features](#features)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Constructor Options](#constructor-options)
+- [actualValue Property](#actualvalue-property)
 - [Real-World Example with Client Monitor](#real-world-example-with-client-monitor)
 - [Decoding Strategy](#decoding-strategy)
 - [API Reference](#api-reference)
@@ -23,27 +25,27 @@ High-performance binary decoder for ObserveRTC WebRTC observability samples. Thi
 
 ## Overview
 
-The ObserveRTC Samples Decoder reverses the compression process applied by the encoder, reconstructing full WebRTC observability data from binary Protocol Buffer messages. It handles:
+The ObserveRTC ClientSampleDecoder reverses the compression process applied by the encoder, reconstructing full WebRTC client-side observability data from binary Protocol Buffer messages. It handles:
 
 1. **Differential Decompression** - Reconstructs complete samples from delta changes
-2. **Protocol Buffer Deserialization** - Efficient binary data parsing
+2. **Protocol Buffer Deserialization** - Binary data parsing
 3. **State Management** - Maintains decoder state for accurate reconstruction
 4. **Type Safety** - Full TypeScript support for decoded samples
 
 ## Features
 
-### 🚀 **High Performance**
+### 🚀 **Optimized Performance**
 
-- **Ultra-Fast Decoding** - Sub-millisecond decoding for real-time analytics
-- **Memory Efficient** - Optimized memory usage with object pooling
+- **Efficient Decoding** - Designed for real-time analytics
+- **Memory Conscious** - Optimized memory usage with object pooling
 - **Streaming Support** - Process samples as they arrive
 
-### 📦 **Complete Sample Support**
+### 📦 **Client-Side Sample Support**
 
 - **ClientSample** - Decode client-side WebRTC statistics
 - **PeerConnectionSample** - Decode peer connection metrics
-- **SfuSample** - Decode SFU statistics
-- **TurnSample** - Decode TURN server metrics
+- **RTP Statistics** - Decode inbound and outbound RTP stream data
+- **ICE Statistics** - Decode ICE candidate and transport data
 
 ### 🔧 **Flexible Input Formats**
 
@@ -75,73 +77,385 @@ npm install @observertc/sample-schemas-js
 
 ## Quick Start
 
-### Basic Sample Decoding
+### Basic ClientSample Decoding
 
 ```typescript
-import { SamplesDecoder } from '@observertc/samples-decoder';
-import type { Samples } from '@observertc/sample-schemas-js';
+import { ClientSampleDecoder } from '@observertc/samples-decoder';
+import type { ClientSample } from '@observertc/sample-schemas-js';
 
 // Create decoder instance
-const decoder = new SamplesDecoder();
+const decoder = new ClientSampleDecoder();
 
 // Decode from Base64 (from HTTP/JSON transport)
 const base64EncodedData = "CgQIyAEQAhIFCgMIA.."; // From encoder
-const decodedSamples: Samples = decoder.decodeFromBase64(base64EncodedData);
+const decodedSample: ClientSample = decoder.decodeFromBase64(base64EncodedData);
 
 // Decode from binary (from WebSocket transport)
 const binaryData = new Uint8Array([...]); // From encoder
-const decodedFromBinary: Samples = decoder.decodeFromBytes(binaryData);
+const decodedFromBinary: ClientSample = decoder.decodeFromBytes(binaryData);
 
 // Access decoded data
-if (decodedSamples.clientSamples) {
-  decodedSamples.clientSamples.forEach(clientSample => {
-    console.log(`Client ${clientSample.clientId} at ${clientSample.timestamp}`);
+if (decodedSample) {
+  console.log(`Client ${decodedSample.clientId} at ${decodedSample.timestamp}`);
 
-    clientSample.peerConnectionSamples?.forEach(pcSample => {
-      console.log(`PC ${pcSample.peerConnectionId} score: ${pcSample.score}`);
+  decodedSample.peerConnections?.forEach(pcSample => {
+    console.log(`PC ${pcSample.peerConnectionId} score: ${pcSample.score}`);
 
-      pcSample.inboundRtps?.forEach(rtp => {
-        console.log(`RTP ${rtp.ssrc}: ${rtp.packetsReceived} packets received`);
-      });
+    pcSample.inboundRtps?.forEach(rtp => {
+      console.log(`RTP ${rtp.ssrc}: ${rtp.packetsReceived} packets received`);
     });
   });
 }
 ```
 
-### Individual Sample Type Decoding
+## Constructor Options
+
+### ClientSampleDecoder Constructor
 
 ```typescript
-import {
-  ClientSampleDecoder,
-  SfuSampleDecoder,
-  PeerConnectionSampleDecoder,
-} from "@observertc/samples-decoder";
-
-// Client-side WebRTC monitoring
-const clientDecoder = new ClientSampleDecoder();
-const encodedClientData = "CgQIyAEQAhIFCgMIA..";
-const clientSample = clientDecoder.decodeFromBase64(encodedClientData);
-
-console.log(
-  `Decoded client ${clientSample.clientId} with ${clientSample.peerConnectionSamples?.length} peer connections`
-);
-
-// SFU monitoring
-const sfuDecoder = new SfuSampleDecoder();
-const encodedSfuData = new Uint8Array([8, 200, 1, 16, 2, 18, 5, 10, 3, 8, 97]);
-const sfuSample = sfuDecoder.decodeFromBytes(encodedSfuData);
-
-console.log(
-  `Decoded SFU ${sfuSample.sfuId} with ${sfuSample.transports?.length} transports`
-);
-
-// Peer Connection specific decoding
-const pcDecoder = new PeerConnectionSampleDecoder();
-const encodedPcData = "GgUIARABGgUIBhAH...";
-const pcSample = pcDecoder.decodeFromBase64(encodedPcData);
-
-console.log(`Decoded PC ${pcSample.peerConnectionId} score: ${pcSample.score}`);
+constructor(settings?: Partial<ClientSampleDecoderSettings>)
 ```
+
+#### Parameters
+
+- **`settings`** (optional): Configuration options for decoding behavior that must match the encoder settings.
+
+#### Settings Interface
+
+```typescript
+interface ClientSampleDecoderSettings {
+  clientIdIsUuid?: boolean;
+  callIdIsUuid?: boolean; 
+  peerConnectionIdIsUuid?: boolean;
+  trackIdIsUuid?: boolean;
+}
+```
+
+#### Settings Explanation
+
+- **`clientIdIsUuid`** (default: `false`)
+  - When `true`: Decodes `clientId` from compact 16-byte UUID representation
+  - When `false`: Decodes `clientId` from UTF-8 string
+  - **Important**: Must match the encoder's `clientIdIsUuid` setting
+
+- **`callIdIsUuid`** (default: `false`)
+  - When `true`: Decodes `callId` fields from compact 16-byte UUID representations
+  - When `false`: Decodes `callId` fields from UTF-8 strings
+  - **Important**: Must match the encoder's `callIdIsUuid` setting
+
+- **`peerConnectionIdIsUuid`** (default: `false`)
+  - When `true`: Decodes `peerConnectionId` fields from compact 16-byte UUID representations
+  - When `false`: Decodes `peerConnectionId` fields from UTF-8 strings
+  - **Important**: Must match the encoder's `peerConnectionIdIsUuid` setting
+
+- **`trackIdIsUuid`** (default: `false`)
+  - When `true`: Decodes `trackId` fields in RTP statistics from compact 16-byte UUID representations
+  - When `false`: Decodes `trackId` fields from UTF-8 strings
+  - **Important**: Must match the encoder's `trackIdIsUuid` setting
+
+#### Constructor Examples
+
+```typescript
+// Basic usage with string IDs
+const decoder1 = new ClientSampleDecoder();
+
+// Optimized for UUID-based identifiers (must match encoder settings)
+const decoder2 = new ClientSampleDecoder({
+  clientIdIsUuid: true,
+  callIdIsUuid: true,
+  peerConnectionIdIsUuid: true,
+  trackIdIsUuid: true
+});
+
+// Mixed approach - only some IDs are UUIDs
+const decoder3 = new ClientSampleDecoder({
+  callIdIsUuid: true,      // Call IDs are UUIDs
+  peerConnectionIdIsUuid: false,  // PC IDs are strings like "pc-1", "pc-2"
+  trackIdIsUuid: false     // Track IDs are strings
+});
+
+// Production decoder with settings matching encoder
+const productionDecoder = new ClientSampleDecoder({
+  clientIdIsUuid: true,    // 16 bytes -> 36-char UUID
+  callIdIsUuid: true,      // Conference room UUIDs
+  peerConnectionIdIsUuid: false,  // Generated strings like "RTCPeerConnection_1"
+  trackIdIsUuid: false     // WebRTC track IDs are typically not UUIDs
+});
+```
+
+**Critical Note**: The decoder settings **must exactly match** the encoder settings that were used to encode the data. Mismatched settings will result in decoding errors or corrupted data.
+
+## actualValue Property
+
+### Why actualValue is Necessary
+
+**Critical for Advanced Decoding Scenarios**: The `actualValue` property is essential when you need to manually control the differential decoding state. Differential encoding/decoding works by only transmitting changes between samples, not complete data. The decoder maintains an internal "baseline" state to reconstruct full samples from these delta changes.
+
+**When Normal Decoding Isn't Enough**: In most cases, the decoder automatically manages this state as it processes a continuous stream of encoded samples. However, there are scenarios where you need to manually set or reset this baseline:
+
+1. **🔄 Recovery from Connection Loss** - When your data stream is interrupted and you need to resume from a known state
+2. **🎯 Precise State Control** - When testing or validating specific decoding behavior  
+3. **⚖️ Load Balancing** - When synchronizing multiple decoder instances
+4. **📊 Analytics Replay** - When replaying data streams from specific checkpoints
+
+### Understanding Differential Decoding State
+
+The `actualValue` property is a powerful feature that allows you to manually set the baseline state for differential decoding. This is particularly useful for advanced scenarios where you need precise control over the decoding process.
+
+```typescript
+interface ClientSampleDecoder {
+  get actualValue(): ClientSample | undefined;
+  set actualValue(sample: ClientSample | undefined);
+}
+```
+
+### How actualValue Works
+
+```typescript
+import { ClientSampleDecoder } from '@observertc/samples-decoder';
+
+const decoder = new ClientSampleDecoder();
+
+// 1. Set a baseline sample manually
+const baselineSample: ClientSample = {
+  timestamp: 1000,
+  clientId: "client-123",
+  callId: "call-456",
+  score: 0.8,
+  scoreReasons: "Good quality",
+  peerConnections: [
+    {
+      peerConnectionId: "pc-1",
+      score: 0.85,
+      inboundRtps: [
+        {
+          ssrc: 12345,
+          packetsReceived: 100,
+          packetsLost: 2,
+        },
+      ],
+    },
+  ],
+};
+
+// Set the baseline - this prepares the decoder for differential updates
+decoder.actualValue = baselineSample;
+
+// 2. Now decode differential updates
+const encodedDifferentialUpdate = "..."; // From encoder with changes
+const decodedUpdate = decoder.decodeFromBase64(encodedDifferentialUpdate);
+
+// The decoder will apply the differential changes to the baseline
+console.log(decodedUpdate.peerConnections[0].inboundRtps[0].packetsReceived); // e.g., 150 (100 + 50 change)
+```
+
+### Why This Matters: Differential Encoding Explained
+
+```typescript
+// Without actualValue - automatic state management
+const decoder = new ClientSampleDecoder();
+
+// First sample: encoder sends FULL data (establishes baseline)
+const fullSample = decoder.decodeFromBase64("CgQIyAEQAh..."); // Complete sample
+// Decoder now has internal baseline: packetsReceived = 100
+
+// Second sample: encoder sends ONLY changes (+50 packets)
+const deltaUpdate = decoder.decodeFromBase64("CgQI1AEQAx..."); // Only delta
+// Decoder reconstructs: 100 + 50 = 150 packets
+
+// With actualValue - manual state control
+const controlledDecoder = new ClientSampleDecoder();
+
+// You can set the baseline manually
+controlledDecoder.actualValue = {
+  // ... your known baseline sample
+  peerConnections: [{ 
+    inboundRtps: [{ packetsReceived: 100 }] 
+  }]
+};
+
+// Now delta updates will be applied to YOUR baseline
+const reconstructed = controlledDecoder.decodeFromBase64("CgQI1AEQAx...");
+// Result: YOUR_baseline + delta = accurate reconstruction
+```
+
+### Use Cases for actualValue
+
+#### 1. **Resuming Decoding After Interruption**
+
+```typescript
+class ResilientDecoder {
+  private decoder = new ClientSampleDecoder();
+  private lastKnownSample: ClientSample | null = null;
+
+  decodeWithResumption(encodedData: string): ClientSample | null {
+    try {
+      return this.decoder.decodeFromBase64(encodedData);
+    } catch (error) {
+      if (this.lastKnownSample && error.message.includes('differential')) {
+        // Reset decoder state with last known good sample
+        console.log("Resuming decoder from last known state");
+        this.decoder.actualValue = this.lastKnownSample;
+        
+        // Retry decoding
+        return this.decoder.decodeFromBase64(encodedData);
+      }
+      throw error;
+    }
+  }
+
+  onSuccessfulDecode(sample: ClientSample) {
+    this.lastKnownSample = sample; // Save for potential recovery
+  }
+}
+```
+
+#### 2. **Synchronizing Multiple Decoders**
+
+```typescript
+class MultiStreamDecoder {
+  private primaryDecoder = new ClientSampleDecoder();
+  private backupDecoder = new ClientSampleDecoder();
+
+  syncDecoders(referenceSample: ClientSample) {
+    // Synchronize both decoders to the same state
+    this.primaryDecoder.actualValue = referenceSample;
+    this.backupDecoder.actualValue = referenceSample;
+    
+    console.log("Both decoders synchronized to timestamp:", referenceSample.timestamp);
+  }
+
+  decodeWithBackup(encodedData: string): ClientSample | null {
+    try {
+      const result = this.primaryDecoder.decodeFromBase64(encodedData);
+      
+      // Keep backup in sync
+      if (result) {
+        this.backupDecoder.actualValue = result;
+      }
+      
+      return result;
+    } catch (error) {
+      console.warn("Primary decoder failed, switching to backup");
+      return this.backupDecoder.decodeFromBase64(encodedData);
+    }
+  }
+}
+```
+
+#### 3. **Testing and Validation**
+
+```typescript
+describe('ClientSampleDecoder differential behavior', () => {
+  it('should correctly apply differential updates', () => {
+    const decoder = new ClientSampleDecoder();
+    
+    // Set known baseline
+    const baseline: ClientSample = {
+      timestamp: 1000,
+      clientId: "test-client",
+      peerConnections: [{
+        peerConnectionId: "test-pc",
+        inboundRtps: [{
+          ssrc: 123,
+          packetsReceived: 100,
+        }]
+      }]
+    };
+    
+    decoder.actualValue = baseline;
+    
+    // Encode a differential update separately
+    const encoder = new ClientSampleEncoder("test-client");
+    encoder.encodeToBase64(baseline); // Set encoder baseline
+    
+    const update: ClientSample = {
+      ...baseline,
+      timestamp: 2000,
+      peerConnections: [{
+        ...baseline.peerConnections[0],
+        inboundRtps: [{
+          ...baseline.peerConnections[0].inboundRtps[0],
+          packetsReceived: 150, // +50 packets
+        }]
+      }]
+    };
+    
+    const encodedUpdate = encoder.encodeToBase64(update);
+    const decodedUpdate = decoder.decodeFromBase64(encodedUpdate);
+    
+    expect(decodedUpdate.peerConnections[0].inboundRtps[0].packetsReceived).toBe(150);
+  });
+});
+```
+
+#### 4. **Stream Replay and Analysis**
+
+```typescript
+class StreamReplayAnalyzer {
+  private decoder = new ClientSampleDecoder();
+  private samples: ClientSample[] = [];
+
+  replayFromCheckpoint(checkpointSample: ClientSample, encodedUpdates: string[]) {
+    // Start replay from a specific checkpoint
+    this.decoder.actualValue = checkpointSample;
+    this.samples = [checkpointSample];
+    
+    console.log(`Starting replay from timestamp ${checkpointSample.timestamp}`);
+    
+    for (const encodedUpdate of encodedUpdates) {
+      const decoded = this.decoder.decodeFromBase64(encodedUpdate);
+      if (decoded) {
+        this.samples.push(decoded);
+        this.analyzeQualityTrend(decoded);
+      }
+    }
+  }
+
+  private analyzeQualityTrend(sample: ClientSample) {
+    if (this.samples.length >= 2) {
+      const prev = this.samples[this.samples.length - 2];
+      const current = sample;
+      
+      if (prev.score && current.score) {
+        const trend = current.score - prev.score;
+        console.log(`Quality trend: ${trend > 0 ? '↑' : trend < 0 ? '↓' : '→'} ${trend.toFixed(3)}`);
+      }
+    }
+  }
+}
+```
+
+### actualValue Best Practices
+
+1. **Always check for null/undefined** before setting actualValue
+2. **Use it sparingly** - Normal decoding doesn't require manual state management
+3. **Ensure type compatibility** - The sample structure should match expected format
+4. **Clean up resources** - Reset decoder when switching contexts
+
+```typescript
+// Good practice example
+class ManagedDecoder {
+  private decoder = new ClientSampleDecoder();
+
+  setBaseline(sample: ClientSample | null) {
+    if (sample && this.isValidSample(sample)) {
+      this.decoder.actualValue = sample;
+      console.log(`Decoder baseline set to timestamp ${sample.timestamp}`);
+    } else {
+      console.warn("Invalid baseline sample provided");
+    }
+  }
+
+  private isValidSample(sample: ClientSample): boolean {
+    return !!(sample.timestamp && sample.clientId);
+  }
+
+  reset() {
+    this.decoder.reset();
+    console.log("Decoder state cleared");
+  }
+}
 
 ## Real-World Example with Client Monitor
 
@@ -738,38 +1052,18 @@ class CodecStatsDecoder {
 
 ## Performance
 
-### Decoding Performance
+The decoder utilizes Protocol Buffer deserialization and differential decompression to reconstruct WebRTC statistics from binary data. Performance characteristics will vary based on:
 
-Benchmark results on standard hardware (measurements in microseconds):
+- Sample complexity and encoded data size
+- Frequency of decoding operations
+- Hardware specifications
+- JavaScript engine optimizations
 
-| Operation                   | 1 Participant | 5 Participants | 10 Participants | 50 Participants |
-| --------------------------- | ------------- | -------------- | --------------- | --------------- |
-| Base64 Decode               | 120µs         | 280µs          | 520µs           | 2.1ms           |
-| Binary Decode               | 80µs          | 190µs          | 350µs           | 1.4ms           |
-| Differential Reconstruction | 45µs          | 110µs          | 200µs           | 0.8ms           |
-| Memory Usage                | 25KB          | 60KB           | 120KB           | 480KB           |
-
-### Throughput Measurements
-
-Real-world throughput for continuous decoding:
-
-| Scenario                       | Samples/Second | Memory Usage | CPU Usage |
-| ------------------------------ | -------------- | ------------ | --------- |
-| Small conference (5 clients)   | 50,000         | 120MB        | 2%        |
-| Medium conference (25 clients) | 10,000         | 300MB        | 8%        |
-| Large conference (100 clients) | 2,500          | 800MB        | 15%       |
-| Enterprise (500 clients)       | 500            | 2GB          | 35%       |
-
-### Real-World Analytics
-
-Production measurements from monitoring services:
-
-| Use Case             | Processing Latency | Data Rate | Success Rate |
-| -------------------- | ------------------ | --------- | ------------ |
-| Real-time dashboards | <5ms               | 1MB/s     | 99.9%        |
-| Stream analytics     | <10ms              | 5MB/s     | 99.8%        |
-| Batch processing     | <50ms              | 50MB/s    | 99.95%       |
-| Historical analysis  | <100ms             | 200MB/s   | 99.99%       |
+Performance considerations:
+- Reuse decoder instances to maintain state for differential decoding
+- Consider processing samples in batches for better throughput
+- Monitor memory usage with large datasets
+- Handle decoding errors gracefully in production environments
 
 ## Advanced Usage
 
@@ -1465,20 +1759,6 @@ git clone https://github.com/observertc/schemas.git
 cd schemas/npm-samples-decoder
 npm install
 npm run build
-npm test
-```
-
-### Performance Testing
-
-```bash
-# Run benchmark tests
-npm run benchmark
-
-# Test memory usage
-npm run test:memory
-
-# Validate decoding accuracy
-npm run test:accuracy
 ```
 
 ### Guidelines

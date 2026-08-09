@@ -5,9 +5,10 @@ import {
   StringToStringEncoder,
   AttachmentEncoder,
 } from "./utils";
-import { ClientSample_PeerConnectionSample_IceCandidateStats } from "./OutputSamples";
+import { ClientSample_PeerConnectionSample_IceCandidateStats, ClientSample_PeerConnectionSample_IceCandidateStatsSchema } from "./OutputSamples";
+import { MessageInitShape } from "@bufbuild/protobuf";
 
-export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, ClientSample_PeerConnectionSample_IceCandidateStats> {
+export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, MessageInitShape<typeof ClientSample_PeerConnectionSample_IceCandidateStatsSchema>> {
 	private _visited = false;
 
   private readonly _timestampEncoder: NumberToNumberEncoder;
@@ -71,10 +72,10 @@ export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, Clie
     this._attachmentsEncoder.reset();
   }
 
-  public encode(sample: InputIceCandidateStats): ClientSample_PeerConnectionSample_IceCandidateStats {
+  public encode(sample: InputIceCandidateStats): MessageInitShape<typeof ClientSample_PeerConnectionSample_IceCandidateStatsSchema> {
 		this._visited = true;
 
-    return new ClientSample_PeerConnectionSample_IceCandidateStats({
+    return {
       timestamp: this._timestampEncoder.encode(sample.timestamp),
       id: sample.id,
       transportId: this._transportIdEncoder.encode(sample.transportId),
@@ -91,6 +92,6 @@ export class IceCandidateEncoder implements Encoder<InputIceCandidateStats, Clie
       usernameFragment: this._usernameFragmentEncoder.encode(sample.usernameFragment),
       tcpType: this._tcpTypeEncoder.encode(sample.tcpType),
       attachments: this._attachmentsEncoder.encode(sample.attachments),
-    });
+    };
   }
 }
