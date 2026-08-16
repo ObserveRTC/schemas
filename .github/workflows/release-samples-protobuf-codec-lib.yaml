@@ -1,0 +1,71 @@
+name: Release Samples Protobuf Codec Library
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./npm-samples-protobuf-codec
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Install packages
+        run: npm ci || npm install
+        working-directory: ${{env.working-directory}}
+
+      # The wire format is a contract with every deployed decoder, so the
+      # golden fixtures gate the publish rather than merely reporting on it.
+      - name: Typecheck
+        run: npm run typecheck
+        working-directory: ${{env.working-directory}}
+
+      - name: Test
+        run: npm test
+        working-directory: ${{env.working-directory}}
+
+      - name: Build
+        run: npm run build
+        working-directory: ${{env.working-directory}}
+
+      - name: Setup Custom Contexts
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+          echo "##[set-output name=version;]$(cat ./package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')"
+          echo "##[set-output name=short_sha;]$(git rev-parse --short HEAD)"
+        id: job_context
+        working-directory: ${{env.working-directory}}
+
+      - name: Make snapshot version
+        if: steps.job_context.outputs.branch != 'main'
+        run: |
+          npm version prerelease --preid=${{ steps.job_context.outputs.short_sha }} --git-tag-version false
+        working-directory: ${{env.working-directory}}
+
+      - name: Publish package to latest
+        if: steps.job_context.outputs.branch == 'main'
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --ignore-scripts --access public
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish package to branch-tag
+        if: steps.job_context.outputs.branch != 'main'
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --ignore-scripts --access public --tag $(echo "develop-${{ steps.job_context.outputs.version }}-rc" | sed 's/[.]//g')
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
