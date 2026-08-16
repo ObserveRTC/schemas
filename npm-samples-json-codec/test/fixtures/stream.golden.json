@@ -1,0 +1,1076 @@
+{
+	"description": "Eight samples of a one-peer-connection call, as JSON deltas",
+	"schemaVersion": "3.3.0",
+	"clientId": "client-42",
+	"byteLengths": [
+		2893,
+		1698,
+		1786,
+		1811,
+		1775,
+		1938,
+		1613,
+		1629
+	],
+	"messages": [
+		{
+			"timestamp": 1756000000000,
+			"callId": "call-7f3a",
+			"score": 4.534,
+			"attachments": {
+				"app": "observertc-tests",
+				"build": "deterministic"
+			},
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.188,
+					"attachments": {
+						"role": "publisher",
+						"region": "eu-north-1"
+					},
+					"inboundRtps": [
+						{
+							"id": "IT01A",
+							"timestamp": 1756000000000,
+							"ssrc": 1234567890,
+							"kind": "audio",
+							"trackIdentifier": "track-remote-audio",
+							"transportId": "T01",
+							"codecId": "CIT01_111_minptime=10",
+							"mid": "0",
+							"bytesReceived": 41980,
+							"packetsReceived": 142,
+							"packetsLost": 0,
+							"jitter": 0.019,
+							"audioLevel": 0.228,
+							"totalAudioEnergy": 0.409,
+							"concealedSamples": 0,
+							"powerEfficientDecoder": false,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 0
+							}
+						},
+						{
+							"id": "IT02V",
+							"timestamp": 1756000000000,
+							"ssrc": 2345678901,
+							"kind": "video",
+							"trackIdentifier": "track-remote-video",
+							"transportId": "T01",
+							"codecId": "CIT01_96_level-asymmetry-allowed=1",
+							"mid": "1",
+							"bytesReceived": 377820,
+							"packetsReceived": 1136,
+							"framesDecoded": 30,
+							"frameWidth": 1280,
+							"frameHeight": 720,
+							"framesPerSecond": 30,
+							"headerBytesReceived": 9007199254740000,
+							"decoderImplementation": "",
+							"attachments": {
+								"source": "unit-test",
+								"tick": 0
+							}
+						}
+					],
+					"outboundRtps": [
+						{
+							"id": "OT01A",
+							"timestamp": 1756000000000,
+							"ssrc": 4567890123,
+							"kind": "audio",
+							"transportId": "T01",
+							"mid": "0",
+							"bytesSent": 54390,
+							"packetsSent": 171,
+							"active": true,
+							"targetBitrate": 32000
+						},
+						{
+							"id": "OT02V",
+							"timestamp": 1756000000000,
+							"ssrc": 5678901234,
+							"kind": "video",
+							"transportId": "T01",
+							"mid": "1",
+							"bytesSent": 598290,
+							"packetsSent": 1539,
+							"framesEncoded": 30,
+							"frameWidth": 1280,
+							"frameHeight": 720,
+							"qualityLimitationReason": "none",
+							"qualityLimitationDurations": {
+								"none": 0,
+								"cpu": 0,
+								"bandwidth": 0,
+								"other": 0
+							},
+							"psnrSum": {
+								"y": 65.966,
+								"u": 66.461,
+								"v": 50.35
+							},
+							"psnrMeasurements": 30,
+							"scalabilityMode": "L1T3"
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000000000,
+							"mimeType": "audio/opus",
+							"clockRate": 48000,
+							"channels": 2,
+							"payloadType": 111
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000000000,
+							"mimeType": "video/H264",
+							"clockRate": 90000,
+							"payloadType": 96
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000000000,
+							"kind": "audio",
+							"score": 4.8
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000000000,
+							"kind": "video",
+							"score": 4.2
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000000000,
+							"kind": "video",
+							"score": 4.9
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000000000,
+							"state": "waiting",
+							"nominated": false,
+							"localCandidateId": "LC01",
+							"remoteCandidateId": "RC01",
+							"currentRoundTripTime": 0.124,
+							"availableOutgoingBitrate": 1800886,
+							"bytesSent": 54390,
+							"bytesReceived": 41980
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000000000,
+							"dtlsState": "connected",
+							"iceState": "checking",
+							"selectedCandidatePairId": "CP01",
+							"bytesSent": 54390,
+							"bytesReceived": 41980,
+							"packetsSent": 171,
+							"packetsReceived": 142
+						}
+					]
+				}
+			],
+			"clientEvents": [
+				{
+					"type": "CLIENT_JOINED",
+					"timestamp": 1756000000000,
+					"payload": "{\"role\":\"host\"}"
+				},
+				{
+					"type": "CLIENT_JOINED",
+					"timestamp": 1756000000000,
+					"payload": "{\"role\":\"guest\"}"
+				}
+			],
+			"clientId": "client-42"
+		},
+		{
+			"timestamp": 1756000001000,
+			"score": 4.436,
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.287,
+					"inboundRtps": [
+						{
+							"timestamp": 1756000001000,
+							"ssrc": 1234567890,
+							"bytesReceived": 88601,
+							"packetsReceived": 283,
+							"jitter": 0,
+							"audioLevel": 0.156,
+							"totalAudioEnergy": 2.554,
+							"concealedSamples": 480,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 1
+							}
+						},
+						{
+							"timestamp": 1756000001000,
+							"ssrc": 2345678901,
+							"bytesReceived": 797409,
+							"packetsReceived": 2264,
+							"framesDecoded": 60,
+							"headerBytesReceived": 9007199254740001,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 1
+							}
+						}
+					],
+					"outboundRtps": [
+						{
+							"timestamp": 1756000001000,
+							"ssrc": 4567890123,
+							"bytesSent": 112026,
+							"packetsSent": 332
+						},
+						{
+							"timestamp": 1756000001000,
+							"ssrc": 5678901234,
+							"bytesSent": 1232286,
+							"packetsSent": 2988,
+							"framesEncoded": 60,
+							"qualityLimitationDurations": {
+								"none": 1
+							},
+							"psnrSum": {
+								"y": 50.081,
+								"u": 2.63,
+								"v": 24.685
+							},
+							"psnrMeasurements": 60
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000001000
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000001000
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000001000
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000001000
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000001000
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000001000,
+							"state": "in-progress",
+							"currentRoundTripTime": 0.089,
+							"availableOutgoingBitrate": 1874984,
+							"bytesSent": 112026,
+							"bytesReceived": 88601
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000001000,
+							"iceState": "connected",
+							"bytesSent": 112026,
+							"bytesReceived": 88601,
+							"packetsSent": 332,
+							"packetsReceived": 283
+						}
+					]
+				}
+			],
+			"clientMetaItems": [
+				{
+					"type": "MEDIA_TRACK_ADDED",
+					"timestamp": 1756000001000,
+					"peerConnectionId": "pc-01",
+					"trackId": "track-local-video",
+					"ssrc": 5678901234
+				}
+			],
+			"clientId": "client-42"
+		},
+		{
+			"timestamp": 1756000002000,
+			"score": 4.582,
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.284,
+					"inboundRtps": [
+						{
+							"timestamp": 1756000002000,
+							"ssrc": 1234567890,
+							"bytesReceived": 132530,
+							"packetsReceived": 432,
+							"jitter": 0.007,
+							"audioLevel": 0.908,
+							"totalAudioEnergy": 0.334,
+							"concealedSamples": 960,
+							"powerEfficientDecoder": true,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 2
+							}
+						},
+						{
+							"timestamp": 1756000002000,
+							"ssrc": 2345678901,
+							"bytesReceived": 1192770,
+							"packetsReceived": 3456,
+							"framesDecoded": 90,
+							"headerBytesReceived": 9007199254740002,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 2
+							}
+						}
+					],
+					"outboundRtps": [
+						{
+							"timestamp": 1756000002000,
+							"ssrc": 4567890123,
+							"bytesSent": 170601,
+							"packetsSent": 507
+						},
+						{
+							"timestamp": 1756000002000,
+							"ssrc": 5678901234,
+							"bytesSent": 1876611,
+							"packetsSent": 4563,
+							"framesEncoded": 90,
+							"qualityLimitationDurations": {
+								"none": 2
+							},
+							"psnrSum": {
+								"y": 64.465,
+								"u": 78.944,
+								"v": 71.976
+							},
+							"psnrMeasurements": 90
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000002000
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000002000
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000002000
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000002000
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000002000
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000002000,
+							"state": "succeeded",
+							"nominated": true,
+							"currentRoundTripTime": 0.038,
+							"availableOutgoingBitrate": 1875063,
+							"bytesSent": 170601,
+							"bytesReceived": 132530
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000002000,
+							"bytesSent": 170601,
+							"bytesReceived": 132530,
+							"packetsSent": 507,
+							"packetsReceived": 432
+						}
+					],
+					"dataChannels": [
+						{
+							"id": "DC01",
+							"timestamp": 1756000002000,
+							"label": "signalling",
+							"state": "open",
+							"protocol": "",
+							"messagesSent": 2,
+							"bytesSent": 128
+						}
+					]
+				}
+			],
+			"extensionStats": [
+				{
+					"type": "app-metric",
+					"payload": "{\"queue\":3}"
+				}
+			],
+			"clientId": "client-42"
+		},
+		{
+			"timestamp": 1756000003000,
+			"score": 4.372999999999999,
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.35,
+					"inboundRtps": [
+						{
+							"timestamp": 1756000003000,
+							"ssrc": 1234567890,
+							"bytesReceived": 180460,
+							"packetsReceived": 569,
+							"jitter": 0.013,
+							"audioLevel": 0.15,
+							"totalAudioEnergy": 0.436,
+							"concealedSamples": 1440,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 3
+							}
+						},
+						{
+							"timestamp": 1756000003000,
+							"ssrc": 2345678901,
+							"bytesReceived": 1624140,
+							"packetsReceived": 4552,
+							"framesDecoded": 120,
+							"headerBytesReceived": 9007199254740003,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 3
+							}
+						},
+						{
+							"id": "IT03V",
+							"timestamp": 1756000003000,
+							"ssrc": 3456789012,
+							"kind": "video",
+							"trackIdentifier": "track-remote-screen",
+							"transportId": "T01",
+							"bytesReceived": 5000,
+							"packetsReceived": 20,
+							"framesDecoded": 5
+						}
+					],
+					"outboundRtps": [
+						{
+							"timestamp": 1756000003000,
+							"ssrc": 4567890123,
+							"bytesSent": 224661,
+							"packetsSent": 691
+						},
+						{
+							"timestamp": 1756000003000,
+							"ssrc": 5678901234,
+							"bytesSent": 2471271,
+							"packetsSent": 6219,
+							"framesEncoded": 120,
+							"qualityLimitationDurations": {
+								"none": 3
+							},
+							"psnrSum": {
+								"y": 44.499,
+								"u": 36.296,
+								"v": 35.428
+							},
+							"psnrMeasurements": 120
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000003000
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000003000
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000003000
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000003000
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000003000
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000003000,
+							"currentRoundTripTime": 0.025,
+							"availableOutgoingBitrate": 1810064,
+							"bytesSent": 224661,
+							"bytesReceived": 180460
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000003000,
+							"bytesSent": 224661,
+							"bytesReceived": 180460,
+							"packetsSent": 691,
+							"packetsReceived": 569
+						}
+					],
+					"dataChannels": [
+						{
+							"id": "DC01",
+							"timestamp": 1756000003000,
+							"messagesSent": 3,
+							"bytesSent": 192
+						}
+					]
+				}
+			],
+			"clientId": "client-42"
+		},
+		{
+			"timestamp": 1756000004000,
+			"score": 4.215999999999999,
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.276,
+					"inboundRtps": [
+						{
+							"timestamp": 1756000004000,
+							"ssrc": 1234567890,
+							"bytesReceived": 221999,
+							"packetsReceived": 699,
+							"jitter": 0.018,
+							"audioLevel": 0.672,
+							"totalAudioEnergy": 3.2,
+							"concealedSamples": 1920,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 4
+							}
+						},
+						{
+							"timestamp": 1756000004000,
+							"ssrc": 2345678901,
+							"bytesReceived": 1997991,
+							"packetsReceived": 5592,
+							"framesDecoded": 150,
+							"frameWidth": 640,
+							"frameHeight": 360,
+							"headerBytesReceived": 9007199254740004,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 4
+							}
+						},
+						{
+							"timestamp": 1756000004000,
+							"ssrc": 3456789012,
+							"bytesReceived": 10000,
+							"packetsReceived": 40,
+							"framesDecoded": 10
+						}
+					],
+					"outboundRtps": [
+						{
+							"timestamp": 1756000004000,
+							"ssrc": 4567890123,
+							"bytesSent": 278556,
+							"packetsSent": 858,
+							"active": false
+						},
+						{
+							"timestamp": 1756000004000,
+							"ssrc": 5678901234,
+							"bytesSent": 3064116,
+							"packetsSent": 7722,
+							"framesEncoded": 150,
+							"qualityLimitationDurations": {
+								"none": 4
+							},
+							"psnrSum": {
+								"y": 46.967,
+								"u": 48.135,
+								"v": 48.985
+							},
+							"psnrMeasurements": 150
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000004000
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000004000
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000004000
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000004000
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000004000
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000004000,
+							"currentRoundTripTime": 0.101,
+							"availableOutgoingBitrate": 1982288,
+							"bytesSent": 278556,
+							"bytesReceived": 221999
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000004000,
+							"bytesSent": 278556,
+							"bytesReceived": 221999,
+							"packetsSent": 858,
+							"packetsReceived": 699
+						}
+					],
+					"dataChannels": [
+						{
+							"id": "DC01",
+							"timestamp": 1756000004000,
+							"messagesSent": 4,
+							"bytesSent": 256
+						}
+					]
+				}
+			],
+			"clientId": "client-42"
+		},
+		{
+			"timestamp": 1756000005000,
+			"score": 4.324,
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.273,
+					"scoreReasons": "high-rtt",
+					"inboundRtps": [
+						{
+							"timestamp": 1756000005000,
+							"ssrc": 1234567890,
+							"bytesReceived": 269919,
+							"packetsReceived": 840,
+							"jitter": 0.006,
+							"audioLevel": 0.747,
+							"totalAudioEnergy": 1.379,
+							"concealedSamples": 2400,
+							"powerEfficientDecoder": false,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 5
+							}
+						},
+						{
+							"timestamp": 1756000005000,
+							"ssrc": 2345678901,
+							"bytesReceived": 2429271,
+							"packetsReceived": 6720,
+							"framesDecoded": 180,
+							"headerBytesReceived": 9007199254740005,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 5
+							}
+						},
+						{
+							"timestamp": 1756000005000,
+							"ssrc": 3456789012,
+							"bytesReceived": 15000,
+							"packetsReceived": 60,
+							"framesDecoded": 15
+						}
+					],
+					"outboundRtps": [
+						{
+							"timestamp": 1756000005000,
+							"ssrc": 4567890123,
+							"bytesSent": 330617,
+							"packetsSent": 1033,
+							"active": true
+						},
+						{
+							"timestamp": 1756000005000,
+							"ssrc": 5678901234,
+							"bytesSent": 3636787,
+							"packetsSent": 9297,
+							"framesEncoded": 180,
+							"qualityLimitationReason": "bandwidth",
+							"qualityLimitationDurations": {
+								"none": 5
+							},
+							"psnrSum": {
+								"y": 29.613,
+								"u": 57.807,
+								"v": 11.135
+							},
+							"psnrMeasurements": 180
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000005000
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000005000
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000005000
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000005000
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000005000
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000005000,
+							"currentRoundTripTime": 0.091,
+							"availableOutgoingBitrate": 1810308,
+							"bytesSent": 330617,
+							"bytesReceived": 269919
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000005000,
+							"bytesSent": 330617,
+							"bytesReceived": 269919,
+							"packetsSent": 1033,
+							"packetsReceived": 840
+						}
+					],
+					"dataChannels": [
+						{
+							"id": "DC01",
+							"timestamp": 1756000005000,
+							"messagesSent": 5,
+							"bytesSent": 320
+						}
+					]
+				}
+			],
+			"clientIssues": [
+				{
+					"type": "FREEZE",
+					"key": "track-remote-video",
+					"timestamp": 1756000005000,
+					"payload": "{\"ms\":420}"
+				}
+			],
+			"clientId": "client-42"
+		},
+		{
+			"timestamp": 1756000006000,
+			"score": 4.306,
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.477,
+					"inboundRtps": [
+						{
+							"timestamp": 1756000006000,
+							"ssrc": 1234567890,
+							"bytesReceived": 317119,
+							"packetsReceived": 979,
+							"jitter": 0.002,
+							"audioLevel": 0.161,
+							"totalAudioEnergy": 3.114,
+							"concealedSamples": 2880,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 6
+							}
+						},
+						{
+							"timestamp": 1756000006000,
+							"ssrc": 2345678901,
+							"bytesReceived": 2854071,
+							"packetsReceived": 7832,
+							"framesDecoded": 210,
+							"headerBytesReceived": 9007199254740006,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 6
+							}
+						}
+					],
+					"outboundRtps": [
+						{
+							"timestamp": 1756000006000,
+							"ssrc": 4567890123,
+							"bytesSent": 388317,
+							"packetsSent": 1201
+						},
+						{
+							"timestamp": 1756000006000,
+							"ssrc": 5678901234,
+							"bytesSent": 4271487,
+							"packetsSent": 10809,
+							"framesEncoded": 210,
+							"qualityLimitationDurations": {
+								"bandwidth": 1
+							},
+							"psnrSum": {
+								"y": 70.745,
+								"u": 2.161,
+								"v": 19.947
+							},
+							"psnrMeasurements": 210
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000006000
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000006000
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000006000
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000006000
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000006000
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000006000,
+							"currentRoundTripTime": 0.03,
+							"availableOutgoingBitrate": 1990678,
+							"bytesSent": 388317,
+							"bytesReceived": 317119
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000006000,
+							"bytesSent": 388317,
+							"bytesReceived": 317119,
+							"packetsSent": 1201,
+							"packetsReceived": 979
+						}
+					],
+					"dataChannels": [
+						{
+							"id": "DC01",
+							"timestamp": 1756000006000,
+							"messagesSent": 6,
+							"bytesSent": 384
+						}
+					]
+				}
+			],
+			"clientId": "client-42"
+		},
+		{
+			"timestamp": 1756000007000,
+			"score": 4.3229999999999995,
+			"peerConnections": [
+				{
+					"peerConnectionId": "pc-01",
+					"score": 4.365,
+					"inboundRtps": [
+						{
+							"timestamp": 1756000007000,
+							"ssrc": 1234567890,
+							"bytesReceived": 358256,
+							"packetsReceived": 1109,
+							"jitter": 0.017,
+							"audioLevel": 0.255,
+							"totalAudioEnergy": 0.057,
+							"concealedSamples": 3360,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 7
+							}
+						},
+						{
+							"timestamp": 1756000007000,
+							"ssrc": 2345678901,
+							"bytesReceived": 3224304,
+							"packetsReceived": 8872,
+							"framesDecoded": 240,
+							"headerBytesReceived": 9007199254740007,
+							"attachments": {
+								"source": "unit-test",
+								"tick": 7
+							}
+						}
+					],
+					"outboundRtps": [
+						{
+							"timestamp": 1756000007000,
+							"ssrc": 4567890123,
+							"bytesSent": 442359,
+							"packetsSent": 1379
+						},
+						{
+							"timestamp": 1756000007000,
+							"ssrc": 5678901234,
+							"bytesSent": 4865949,
+							"packetsSent": 12411,
+							"framesEncoded": 240,
+							"qualityLimitationDurations": {
+								"bandwidth": 2
+							},
+							"psnrSum": {
+								"y": 70.493,
+								"u": 66.942,
+								"v": 7.214
+							},
+							"psnrMeasurements": 240
+						}
+					],
+					"codecs": [
+						{
+							"id": "CIT01_111_minptime=10",
+							"timestamp": 1756000007000
+						},
+						{
+							"id": "CIT01_96_level-asymmetry-allowed=1",
+							"timestamp": 1756000007000
+						}
+					],
+					"inboundTracks": [
+						{
+							"id": "track-remote-audio",
+							"timestamp": 1756000007000
+						},
+						{
+							"id": "track-remote-video",
+							"timestamp": 1756000007000
+						}
+					],
+					"outboundTracks": [
+						{
+							"id": "track-local-video",
+							"timestamp": 1756000007000
+						}
+					],
+					"iceCandidatePairs": [
+						{
+							"id": "CP01",
+							"timestamp": 1756000007000,
+							"currentRoundTripTime": 0.069,
+							"availableOutgoingBitrate": 1830671,
+							"bytesSent": 442359,
+							"bytesReceived": 358256
+						}
+					],
+					"iceTransports": [
+						{
+							"id": "T01",
+							"timestamp": 1756000007000,
+							"bytesSent": 442359,
+							"bytesReceived": 358256,
+							"packetsSent": 1379,
+							"packetsReceived": 1109
+						}
+					],
+					"dataChannels": [
+						{
+							"id": "DC01",
+							"timestamp": 1756000007000,
+							"messagesSent": 7,
+							"bytesSent": 448
+						}
+					]
+				}
+			],
+			"clientId": "client-42"
+		}
+	]
+}

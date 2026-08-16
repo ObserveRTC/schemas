@@ -38,9 +38,25 @@ The schema generator produces several standalone npm packages and output formats
 | Package                                               | Description                                 | Repository               |
 | ----------------------------------------------------- | ------------------------------------------- | ------------------------ |
 | [`@observertc/schemas`](npm-samples-lib/)             | Core TypeScript/JavaScript type definitions | `./npm-samples-lib/`     |
-| [`@observertc/samples-protobuf-codec`](npm-samples-protobuf-codec/) | Protobuf delta codec — encodes and decodes samples | `./npm-samples-protobuf-codec/` |
-| [`@observertc/samples-encoder`](npm-samples-encoder/) | Binary encoding utilities for samples *(superseded by the codec)* | `./npm-samples-encoder/` |
-| [`@observertc/samples-decoder`](npm-samples-decoder/) | Binary decoding utilities for samples *(superseded by the codec)* | `./npm-samples-decoder/` |
+| [`@observertc/samples-protobuf-codec`](npm-samples-protobuf-codec/) | Protobuf delta codec — smallest payload | `./npm-samples-protobuf-codec/` |
+| [`@observertc/samples-json-codec`](npm-samples-json-codec/) | JSON delta codec — zero dependencies, ~2 KB | `./npm-samples-json-codec/` |
+
+Both codecs implement the same delta: each message carries only what changed
+since the previous sample. They share their semantics, their error codes and
+their API shape, so they are interchangeable. Pick protobuf when bytes on the
+wire are the binding constraint, JSON when the transport already compresses and
+you would rather have no dependencies and a readable payload.
+
+### Removed packages
+
+`@observertc/samples-encoder` and `@observertc/samples-decoder` are deprecated
+and have been removed from this repository. Their last generated sources are in
+git history at `cc8c7f8`; version 3.3.0 stays installable from npm, and its wire
+format is unchanged, so an encoder or decoder already deployed still
+interoperates with the codec and the two ends can migrate independently.
+
+Use [`@observertc/samples-protobuf-codec`](npm-samples-protobuf-codec/), which
+does both directions in one package.
 
 ### Other Formats
 
@@ -134,9 +150,9 @@ npm run schemas:list        # list the discovered schemas and chunks
 │   ├── typescript/         # Generated type definitions
 │   ├── proto/              # Protocol Buffer files
 │   └── avsc/               # Flattened Avro schemas
-├── npm-samples-lib/        # Generated core TypeScript library
-├── npm-samples-encoder/    # Encoding utilities
-├── npm-samples-decoder/    # Decoding utilities
+├── npm-samples-lib/            # Generated core TypeScript library
+├── npm-samples-protobuf-codec/ # Protobuf delta codec (encode + decode)
+├── npm-samples-json-codec/     # JSON delta codec (encode + decode)
 ├── CHANGELOG.md            # Schema change history
 └── docs/GENERATOR.md       # How the generator works
 ```

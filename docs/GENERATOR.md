@@ -76,13 +76,13 @@ parsing.
      under `src/samples/`, the W3C identifiers, a barrel `src/index.ts`, a
      README built from the per-schema Markdown plus `CHANGELOG.md`, and a
      version bump.
-   - `npm-samples-encoder` — `src/InputSamples.ts` = plain types,
-     `src/OutputSamples.ts` = protobuf types.
-   - `npm-samples-decoder` — the same two files, swapped.
    - `npm-samples-protobuf-codec` — `src/generated/samples.ts` = plain types,
      `src/generated/protobuf.ts` = the buf output. One package for both
      directions; the rest of it is hand-written and reads the field mapping off
      the protobuf descriptor at runtime.
+   - `npm-samples-json-codec` — `src/generated/samples.ts` and nothing else.
+     JSON is self-describing, so that codec needs the types for its signatures
+     and no schema at runtime, which is what lets it ship with no dependencies.
 6. **Stamp.** `outputs/generated.txt` records the version and time.
    `schemaList.md` at the repository root collects every outline.
 
@@ -189,7 +189,8 @@ src/
   targets/
     npm-package.ts                    shared plan type + version bump
     samples-lib.ts                    @observertc/sample-schemas-js layout
-    codec-lib.ts                      encoder and decoder layout
+    protobuf-codec-lib.ts             @observertc/samples-protobuf-codec layout
+    json-codec-lib.ts                 @observertc/samples-json-codec layout
 ```
 
 Four ideas carry most of the weight:
@@ -231,7 +232,7 @@ Every common invocation has a script, so nobody has to remember flag spellings:
 | `npm run generate:dry-run` | verbose report of what would change |
 | `npm run generate:types` | `--only typescript,avsc` |
 | `npm run generate:proto` | `--only proto` |
-| `npm run generate:packages` | `--only proto,samples-lib,encoder,decoder,protobuf-codec` |
+| `npm run generate:packages` | `--only proto,samples-lib,protobuf-codec` |
 | `npm run generate:codec` | `--only proto,protobuf-codec` |
 | `npm run generate:docs` | `--only markdown,samples-lib` |
 | `npm run schemas:list` | list schemas, chunks and artifacts |
@@ -252,7 +253,7 @@ Anything else goes through `npm run generate -- <flags>`.
 | Flag | Effect |
 | --- | --- |
 | `--root <dir>` | repository root, default `process.cwd()` |
-| `--only <list>` | comma-separated artifacts: `avsc, typescript, markdown, proto, samples-lib, encoder, decoder` |
+| `--only <list>` | comma-separated artifacts: `avsc, typescript, markdown, proto, samples-lib, protobuf-codec, json-codec` |
 | `--skip <list>` | as above, subtractive |
 | `--dry-run` | compute everything, write nothing |
 | `--check` | `--dry-run` plus exit 1 on any difference |
@@ -264,9 +265,9 @@ Anything else goes through `npm run generate -- <flags>`.
 | `--verbose` / `--quiet` | logging level |
 | `-h`, `--help` | usage |
 
-`encoder` and `decoder` embed the buf-generated TypeScript, so they require
-`proto`; asking for one without the other is a usage error rather than a
-confusing crash.
+`protobuf-codec` embeds the buf-generated TypeScript, so it requires `proto`;
+asking for one without the other is a usage error rather than a confusing
+crash. `json-codec` has no such dependency and can be generated on its own.
 
 `--check` is the one worth wiring into CI. It fails when the committed outputs
 do not match what the current sources would produce — the failure mode where
@@ -293,7 +294,6 @@ Verified byte-identical to the legacy generator:
 - `outputs/proto/ProtobufClientSampleV3Optional.proto`
 - `outputs/proto/ProtobufClientSampleV3.proto`
 - `npm-samples-lib/src/index.ts` and every `src/samples/*.ts`
-- `npm-samples-encoder/src/*.ts`, `npm-samples-decoder/src/*.ts`
 - `npm-samples-protobuf-codec/src/generated/*.ts`
 
 Three deliberate differences, all in Markdown:
@@ -465,9 +465,33 @@ once for each of the three packages, under *Settings → Trusted Publisher*:
 | Package | Workflow filename |
 | --- | --- |
 | `@observertc/sample-schemas-js` | `release-samples-lib.yaml` |
-| `@observertc/samples-encoder` | `release-samples-encoder-lib.yaml` |
-| `@observertc/samples-decoder` | `release-samples-decoder-lib.yaml` |
 | `@observertc/samples-protobuf-codec` | `release-samples-protobuf-codec-lib.yaml` |
+| `@observertc/samples-json-codec` | `release-samples-json-codec-lib.yaml` |
+
+`@observertc/samples-encoder` and `@observertc/samples-decoder` are deprecated;
+their packages and workflows were removed, and the `encoder` and `decoder`
+artifacts no longer exist in the pipeline. Git history at `cc8c7f8` has the last
+generated state of both.
+
+### Deprecating a package
+
+Removing the workflow stops new releases, and `"private": true` in the manifest
+stops a manual `npm publish`. Neither of those tells anyone who already depends
+on the package — for that, the registry needs to be told directly, which takes
+a publish token and so is a one-off manual step:
+
+```sh
+npm deprecate "@observertc/samples-encoder@*" \
+  "Deprecated - use @observertc/samples-protobuf-codec instead"
+npm deprecate "@observertc/samples-decoder@*" \
+  "Deprecated - use @observertc/samples-protobuf-codec instead"
+```
+
+`@*` covers every published version, including ones released before the
+deprecation. npm then prints the message on every `npm install` that resolves
+the package. Deprecation is reversible — `npm deprecate <pkg>@* ""` clears it —
+and it does **not** unpublish anything: existing installs keep working, which is
+the point.
 
 npm does not validate this configuration when you save it, so a typo in the
 workflow filename surfaces only as an authentication failure at publish time.

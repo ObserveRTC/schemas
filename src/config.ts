@@ -2,8 +2,13 @@ import path from 'node:path';
 
 /**
  * Every artifact the pipeline can produce. `--only` / `--skip` select from this
- * list; `encoder` and `decoder` additionally require `proto`, since they embed
- * the buf-generated TypeScript.
+ * list; `protobuf-codec` additionally requires `proto`, since it embeds the
+ * buf-generated TypeScript. `json-codec` does not — JSON is self-describing, so
+ * that package only needs the sample types.
+ *
+ * `encoder` and `decoder` used to be here. Both packages are deprecated and
+ * have been removed from the repository; see the changelog, or git history at
+ * `cc8c7f8` for their last generated state.
  */
 export const ARTIFACTS = [
 	'avsc',
@@ -11,16 +16,13 @@ export const ARTIFACTS = [
 	'markdown',
 	'proto',
 	'samples-lib',
-	'encoder',
-	'decoder',
 	'protobuf-codec',
+	'json-codec',
 ] as const;
 
 export type Artifact = (typeof ARTIFACTS)[number];
 
 export const ARTIFACT_REQUIRES: Partial<Record<Artifact, readonly Artifact[]>> = {
-	encoder: ['proto'],
-	decoder: ['proto'],
 	'protobuf-codec': ['proto'],
 };
 
@@ -110,9 +112,8 @@ export interface GeneratorConfig {
 	readonly schemaListFile: string;
 
 	readonly samplesLibDir: string;
-	readonly encoderLibDir: string;
-	readonly decoderLibDir: string;
 	readonly protobufCodecLibDir: string;
+	readonly jsonCodecLibDir: string;
 
 	readonly protobuf: {
 		/** Schema whose proto variants are generated. */
@@ -165,9 +166,8 @@ export function resolveConfig(overrides: ConfigOverrides = {}): GeneratorConfig 
 		schemaListFile: path.join(root, 'schemaList.md'),
 
 		samplesLibDir: path.join(root, 'npm-samples-lib'),
-		encoderLibDir: path.join(root, 'npm-samples-encoder'),
-		decoderLibDir: path.join(root, 'npm-samples-decoder'),
 		protobufCodecLibDir: path.join(root, 'npm-samples-protobuf-codec'),
+		jsonCodecLibDir: path.join(root, 'npm-samples-json-codec'),
 
 		protobuf: {
 			rootSchema: 'ClientSample',

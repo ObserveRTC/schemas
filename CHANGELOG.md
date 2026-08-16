@@ -3,10 +3,10 @@
 All notable changes to the ObserveRTC schemas and their generated libraries.
 
 The version here is the **schema version** in `sources/version.txt`. The
-published packages — `@observertc/sample-schemas-js`,
-`@observertc/samples-protobuf-codec`, and the superseded
-`@observertc/samples-encoder` and `@observertc/samples-decoder` — are versioned
-in lockstep with it by the generator.
+published packages — `@observertc/sample-schemas-js` and
+`@observertc/samples-protobuf-codec` — are versioned in lockstep with it by the
+generator. `@observertc/samples-encoder` and `@observertc/samples-decoder` are
+deprecated: they stopped at 3.3.0 and have been removed from the repository.
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/);
 versioning follows [Semantic Versioning](https://semver.org/). Dates are the
@@ -19,6 +19,27 @@ are as originally written.
 
 ### Added
 
+- **`@observertc/samples-json-codec`** — the same delta codec over plain JSON,
+  with **zero runtime dependencies** and a ~2.1 KB gzipped bundle (the protobuf
+  codec is ~29.8 KB, since it carries the protobuf runtime and descriptor).
+  - A delta is a `ClientSample` with the unchanged parts left out — nothing
+    renamed, tagged or wrapped — so a message is readable in a log without a
+    decoder, and a golden-fixture diff shows exactly which field started or
+    stopped being sent.
+  - Identical semantics to the protobuf codec: forward-fill, keyed collections,
+    `reset()` as a keyframe, matching error codes. The two are interchangeable.
+  - On the recorded test stream, JSON is 2.73× the protobuf payload raw and
+    **1.41×** gzipped — so with `permessage-deflate` or any compressing
+    transport the real cost is about 40%.
+  - `NaN` and `Infinity` are rejected rather than silently serialised to `null`.
+  - The decoder returns a sample it does not retain, so a pipeline that
+    annotates samples in place cannot corrupt the stream.
+  - Whole codec is two pure functions, a `diff` and a `merge` that are exact
+    inverses, in under 300 lines. The only configuration is which arrays are
+    keyed collections; a new schema field needs no change to it.
+- Generator artifact `json-codec`. Unlike `protobuf-codec` it does not require
+  `proto` — JSON is self-describing, so the package only needs the sample types.
+  `npm run generate:codec` now produces both codecs.
 - **`@observertc/samples-protobuf-codec`** — one package that both encodes plain
   `ClientSample`s into protobuf and decodes them back, replacing the separate
   `@observertc/samples-encoder` and `@observertc/samples-decoder`. Same wire
@@ -69,11 +90,36 @@ package (the old packages are unchanged):
 - A decoder that joined a stream late returned a half-built sample; it now
   raises `STREAM_DESYNC`.
 
-### Deprecated
+### Removed
 
-- `@observertc/samples-encoder` and `@observertc/samples-decoder`. Still
-  generated and published, still on the same wire format; new work should use
-  `@observertc/samples-protobuf-codec`.
+- **`@observertc/samples-encoder` and `@observertc/samples-decoder` are
+  deprecated and removed from this repository.** They stopped at 3.3.0 and will
+  not be regenerated, versioned or published again. Their last generated
+  sources are in git history at `cc8c7f8`.
+
+  Version 3.3.0 stays installable from npm — removing the sources is not an
+  unpublish. The wire format is unchanged, so either package still interoperates
+  with `@observertc/samples-protobuf-codec`; the two ends of a stream can
+  migrate independently.
+
+  What went with them:
+  - `npm-samples-encoder/` and `npm-samples-decoder/`.
+  - The `encoder` and `decoder` generator artifacts, and
+    `src/targets/codec-lib.ts`. `--only encoder` is now an unknown-artifact
+    error.
+  - `release-samples-encoder-lib.yaml` and `release-samples-decoder-lib.yaml`.
+
+  The registry-side deprecation is a manual step, since it needs a publish
+  token (see `docs/GENERATOR.md`). It matters more now that the READMEs are
+  gone — the npm page still shows the last published README, which has no
+  deprecation notice on it, so this warning is the only one consumers will see:
+
+  ```sh
+  npm deprecate "@observertc/samples-encoder@*" \
+    "Deprecated - use @observertc/samples-protobuf-codec instead"
+  npm deprecate "@observertc/samples-decoder@*" \
+    "Deprecated - use @observertc/samples-protobuf-codec instead"
+  ```
 
 ## 3.3.0
 

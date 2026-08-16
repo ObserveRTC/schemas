@@ -60,8 +60,7 @@ This project adheres to a code of conduct that we expect all contributors to fol
    - `outputs/` directory for various formats
    - `npm-samples-lib/` for TypeScript library
    - `npm-samples-protobuf-codec/` for the protobuf delta codec
-   - `npm-samples-encoder/` and `npm-samples-decoder/` for the superseded
-     one-direction utilities
+   - `npm-samples-json-codec/` for the JSON delta codec
 
 ## Development Workflow
 
@@ -345,8 +344,10 @@ ObserveRTC Schemas follows [Semantic Versioning](https://semver.org/):
 The project maintains three NPM packages with automated releases:
 - `@observertc/schemas` - Core TypeScript definitions
 - `@observertc/samples-protobuf-codec` - Protobuf delta codec (encode + decode)
-- `@observertc/samples-encoder` - Binary encoding utilities *(superseded)*
-- `@observertc/samples-decoder` - Binary decoding utilities *(superseded)*
+- `@observertc/samples-json-codec` - JSON delta codec, zero dependencies
+
+`@observertc/samples-encoder` and `@observertc/samples-decoder` are deprecated
+and no longer live here; see git history at `cc8c7f8`.
 
 GitHub Actions automatically publish new versions when changes are merged to `main`.
 

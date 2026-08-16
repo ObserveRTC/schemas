@@ -11,7 +11,7 @@ import { generateMarkdownDoc } from './generators/markdown/generate.js';
 import { bufGenerate } from './generators/protobuf/buf.js';
 import { generateProto3File } from './generators/protobuf/proto3-generator.js';
 import { generateTypeScriptModule } from './generators/typescript/generate.js';
-import { planCodecLib } from './targets/codec-lib.js';
+import { planJsonCodecLib } from './targets/json-codec-lib.js';
 import { planProtobufCodecLib } from './targets/protobuf-codec-lib.js';
 import { planSamplesLib, type SamplesLibEntry } from './targets/samples-lib.js';
 import type { TargetPlan } from './targets/npm-package.js';
@@ -126,38 +126,12 @@ export async function runPipeline(options: PipelineOptions): Promise<PipelineRes
 		collect(plan, files, managedDirs);
 	}
 
-	for (const role of ['encoder', 'decoder'] as const) {
-		if (!artifacts.has(role)) continue;
-
+	if (artifacts.has('protobuf-codec')) {
 		const protobufTs = protobuf?.generatedTs;
 		if (!protobufTs) {
 			// Only reachable in a dry run on a tree with no previous buf output
 			// (`temp/` is gitignored, so a fresh checkout has none). Skipping is
 			// better than failing: everything else can still be checked.
-			if (!writer.isDryRun) {
-				throw new UsageError(
-					`The ${role} package needs the buf-generated TypeScript, which was not produced`,
-				);
-			}
-			logger.warn(`skipping the ${role} package — no protobuf TypeScript available`);
-			continue;
-		}
-
-		const plan = await planCodecLib({
-			dir: role === 'encoder' ? config.encoderLibDir : config.decoderLibDir,
-			role,
-			samplesTs: requireRootSchema(rendered, config).typescript,
-			protobufTs,
-			version,
-		});
-		collect(plan, files, managedDirs);
-	}
-
-	if (artifacts.has('protobuf-codec')) {
-		const protobufTs = protobuf?.generatedTs;
-		if (!protobufTs) {
-			// Same dry-run caveat as the legacy codec packages below: `temp/` is
-			// gitignored, so a fresh checkout has no buf output to reuse.
 			if (!writer.isDryRun) {
 				throw new UsageError(
 					'The protobuf-codec package needs the buf-generated TypeScript, which was not produced',
@@ -176,6 +150,18 @@ export async function runPipeline(options: PipelineOptions): Promise<PipelineRes
 				managedDirs,
 			);
 		}
+	}
+
+	if (artifacts.has('json-codec')) {
+		collect(
+			await planJsonCodecLib({
+				dir: config.jsonCodecLibDir,
+				samplesTs: requireRootSchema(rendered, config).typescript,
+				version,
+			}),
+			files,
+			managedDirs,
+		);
 	}
 
 	// The stamp embeds the current time, so it would make `--check` report drift
