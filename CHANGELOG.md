@@ -15,7 +15,11 @@ date the version was set in `sources/version.txt`.
 Entries from 3.1.0 onward were reconstructed from git history; earlier entries
 are as originally written.
 
-## Unreleased
+## 3.4.0
+
+### Changed
+
+- **`ClientSample.scoreReasons`** changed from an optional string to an optional array of strings (string[]). This allows multiple independent reasons to be attached to a calculated client score instead of encoding all score details into a single string value. Previous shape: `scoreReasons?: string | null;` New shape: `scoreReasons?: string[] | null;`  This is a schema and wire-format change, so producers and consumers should be updated to use the 3.4.0 generated schemas together.
 
 ### Added
 

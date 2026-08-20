@@ -8,20 +8,20 @@ package org.observertc.schemas.protobuf;
 message ClientSample {
 	message PeerConnectionSample {
 		message InboundTrackSample {
-			string id = 1;
-			string kind = 2;
-			double timestamp = 3;
-			string attachments = 4;
-			double score = 5;
-			string scoreReasons = 6;
+			repeated string scoreReasons = 1;
+			string id = 2;
+			string kind = 3;
+			double timestamp = 4;
+			string attachments = 5;
+			double score = 6;
 		}
 		message OutboundTrackSample {
-			string id = 1;
-			string kind = 2;
-			double timestamp = 3;
-			string attachments = 4;
-			double score = 5;
-			string scoreReasons = 6;
+			repeated string scoreReasons = 1;
+			string id = 2;
+			string kind = 3;
+			double timestamp = 4;
+			string attachments = 5;
+			double score = 6;
 		}
 		message CodecStats {
 			string id = 1;
@@ -350,10 +350,10 @@ message ClientSample {
 		repeated PeerConnectionTransportStats peerConnectionTransports = 13;
 		repeated RemoteInboundRtpStats remoteInboundRtps = 14;
 		repeated RemoteOutboundRtpStats remoteOutboundRtps = 15;
-		bytes peerConnectionId = 16;
-		string attachments = 17;
-		double score = 18;
-		string scoreReasons = 19;
+		repeated string scoreReasons = 16;
+		bytes peerConnectionId = 17;
+		string attachments = 18;
+		double score = 19;
 	}
 	message ClientEvent {
 		string type = 1;
@@ -383,10 +383,10 @@ message ClientSample {
 	repeated ClientMetaData clientMetaItems = 3;
 	repeated ExtensionStat extensionStats = 4;
 	repeated PeerConnectionSample peerConnections = 5;
-	double timestamp = 6;
-	string attachments = 7;
-	bytes callId = 8;
-	bytes clientId = 9;
-	double score = 10;
-	string scoreReasons = 11;
+	repeated string scoreReasons = 6;
+	double timestamp = 7;
+	string attachments = 8;
+	bytes callId = 9;
+	bytes clientId = 10;
+	double score = 11;
 }

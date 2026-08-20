@@ -49,7 +49,10 @@
       "doc": "Details for score calculation",
       "type": [
         "null",
-        "string"
+        {
+          "type": "array",
+          "items": "string"
+        }
       ],
       "default": null
     },
@@ -93,7 +96,10 @@
                 "doc": "Details for score calculation",
                 "type": [
                   "null",
-                  "string"
+                  {
+                    "type": "array",
+                    "items": "string"
+                  }
                 ],
                 "default": null
               },
@@ -134,12 +140,15 @@
                         },
                         {
                           "name": "scoreReasons",
+                          "doc": "Details for score calculation",
                           "type": [
                             "null",
-                            "string"
+                            {
+                              "type": "array",
+                              "items": "string"
+                            }
                           ],
-                          "default": null,
-                          "doc": "Details for score calculation"
+                          "default": null
                         },
                         {
                           "name": "attachments",
@@ -193,12 +202,15 @@
                         },
                         {
                           "name": "scoreReasons",
+                          "doc": "Details for score calculation",
                           "type": [
                             "null",
-                            "string"
+                            {
+                              "type": "array",
+                              "items": "string"
+                            }
                           ],
-                          "default": null,
-                          "doc": "Details for score calculation"
+                          "default": null
                         },
                         {
                           "name": "attachments",

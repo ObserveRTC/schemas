@@ -1577,7 +1577,7 @@ export type OutboundTrackSample = {
 	/**
 	* Details for score calculation
 	*/
-	scoreReasons?: string;
+	scoreReasons?: string[];
 
 	/**
 	* Additional information attached to this stats
@@ -1613,7 +1613,7 @@ export type InboundTrackSample = {
 	/**
 	* Details for score calculation
 	*/
-	scoreReasons?: string;
+	scoreReasons?: string[];
 
 	/**
 	* Additional information attached to this stats
@@ -1644,7 +1644,7 @@ export type PeerConnectionSample = {
 	/**
 	* Details for score calculation
 	*/
-	scoreReasons?: string;
+	scoreReasons?: string[];
 
 	/**
 	* Inbound Track Stats items
@@ -1755,7 +1755,7 @@ export type ClientSample = {
 	/**
 	* Details for score calculation
 	*/
-	scoreReasons?: string;
+	scoreReasons?: string[];
 
 	/**
 	* Samples taken PeerConnections

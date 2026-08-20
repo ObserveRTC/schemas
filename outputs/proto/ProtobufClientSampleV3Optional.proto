@@ -8,20 +8,20 @@ package org.observertc.schemas.protobuf;
 message ClientSample {
 	message PeerConnectionSample {
 		message InboundTrackSample {
-			optional string id = 1;
-			optional string kind = 2;
-			optional double timestamp = 3;
-			optional string attachments = 4;
-			optional double score = 5;
-			optional string scoreReasons = 6;
+			repeated string scoreReasons = 1;
+			optional string id = 2;
+			optional string kind = 3;
+			optional double timestamp = 4;
+			optional string attachments = 5;
+			optional double score = 6;
 		}
 		message OutboundTrackSample {
-			optional string id = 1;
-			optional string kind = 2;
-			optional double timestamp = 3;
-			optional string attachments = 4;
-			optional double score = 5;
-			optional string scoreReasons = 6;
+			repeated string scoreReasons = 1;
+			optional string id = 2;
+			optional string kind = 3;
+			optional double timestamp = 4;
+			optional string attachments = 5;
+			optional double score = 6;
 		}
 		message CodecStats {
 			optional string id = 1;
@@ -350,10 +350,10 @@ message ClientSample {
 		repeated PeerConnectionTransportStats peerConnectionTransports = 13;
 		repeated RemoteInboundRtpStats remoteInboundRtps = 14;
 		repeated RemoteOutboundRtpStats remoteOutboundRtps = 15;
-		optional bytes peerConnectionId = 16;
-		optional string attachments = 17;
-		optional double score = 18;
-		optional string scoreReasons = 19;
+		repeated string scoreReasons = 16;
+		optional bytes peerConnectionId = 17;
+		optional string attachments = 18;
+		optional double score = 19;
 	}
 	message ClientEvent {
 		optional string type = 1;
@@ -383,10 +383,10 @@ message ClientSample {
 	repeated ClientMetaData clientMetaItems = 3;
 	repeated ExtensionStat extensionStats = 4;
 	repeated PeerConnectionSample peerConnections = 5;
-	optional double timestamp = 6;
-	optional string attachments = 7;
-	optional bytes callId = 8;
-	optional bytes clientId = 9;
-	optional double score = 10;
-	optional string scoreReasons = 11;
+	repeated string scoreReasons = 6;
+	optional double timestamp = 7;
+	optional string attachments = 8;
+	optional bytes callId = 9;
+	optional bytes clientId = 10;
+	optional double score = 11;
 }

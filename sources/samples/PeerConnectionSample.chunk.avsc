@@ -23,7 +23,13 @@
     {
       "name": "scoreReasons",
       "doc": "Details for score calculation",
-      "type": ["null", "string"],
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": "string"
+        }
+      ],
       "default": null
     },
     {
@@ -60,9 +66,15 @@
               },
               {
                 "name": "scoreReasons",
-                "type": ["null", "string"],
-                "default": null,
-                "doc": "Details for score calculation"
+                "doc": "Details for score calculation",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": "string"
+                  }
+                ],
+                "default": null
               },
               {
                 "name": "attachments",
@@ -110,9 +122,15 @@
               },
               {
                 "name": "scoreReasons",
-                "type": ["null", "string"],
-                "default": null,
-                "doc": "Details for score calculation"
+                "doc": "Details for score calculation",
+                "type": [
+                  "null",
+                  {
+                    "type": "array",
+                    "items": "string"
+                  }
+                ],
+                "default": null
               },
               {
                 "name": "attachments",
