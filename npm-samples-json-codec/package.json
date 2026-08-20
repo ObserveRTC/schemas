@@ -1,6 +1,6 @@
 {
   "name": "@observertc/samples-json-codec",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "Zero-dependency JSON delta codec for ObserveRTC ClientSamples - encodes each sample as the difference from the previous one",
   "keywords": [
     "observertc",
