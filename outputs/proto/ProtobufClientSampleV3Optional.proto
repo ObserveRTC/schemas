@@ -3,7 +3,7 @@ syntax = "proto3";
 package org.observertc.schemas.protobuf;
 
 /**
-* Schema Version: 3.4.0
+* Schema Version: 3.5.0
 */
 message ClientSample {
 	message PeerConnectionSample {

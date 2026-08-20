@@ -137,8 +137,15 @@ export const ENUM_PLAIN_ALIASES: Readonly<Record<string, string>> = {
 	INPROGRESS: 'in-progress',
 };
 
-/** The one field whose `string` on the wire is a JSON document, not a name. */
-export const JSON_FIELDS: ReadonlySet<string> = new Set(['attachments']);
+/**
+ * Fields whose `string` on the wire is a JSON document, not a name. In the
+ * plain sample types `attachments` is a free-form record and `payload` (on
+ * events, issues, meta items and extension stats) is a record of primitives;
+ * proto3
+ * cannot express either, so both travel as JSON strings and convert through
+ * the JSON converter.
+ */
+export const JSON_FIELDS: ReadonlySet<string> = new Set(['attachments', 'payload']);
 
 export function shortTypeName(typeName: string): string {
 	return typeName.startsWith(`${PROTO_PACKAGE}.`)

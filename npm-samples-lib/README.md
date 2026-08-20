@@ -458,7 +458,7 @@ certificates | Certificate Stats
 Field | Description 
 --- | ---
 type (**Mandatory**) | The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
-payload | The value associated with the event, if applicable.
+payload | The attributes of the event, if applicable.
 timestamp | The timestamp in epoch format when the event was generated.
 
 ## ClientIssue
@@ -468,7 +468,7 @@ Field | Description
 --- | ---
 type (**Mandatory**) | The name of the issue
 key | Identifier of the related issue or resolution when it is provided.
-payload | The value associated with the event, if applicable.
+payload | The attributes of the issue, if applicable.
 timestamp | The timestamp in epoch format when the event was generated.
 
 ## ClientMetaData
@@ -477,7 +477,7 @@ timestamp | The timestamp in epoch format when the event was generated.
 Field | Description 
 --- | ---
 type (**Mandatory**) | The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
-payload | The value associated with the event, if applicable.
+payload | The attributes of the meta data entry, if applicable.
 peerConnectionId | The unique identifier of the peer connection for which the event was generated.
 trackId | The identifier of the media track related to the event, if applicable.
 ssrc | The SSRC (Synchronization Source) identifier associated with the event, if applicable.
@@ -776,6 +776,16 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 3.5.0
+
+### Changed
+
+- **All payloads are records, not pre-serialised strings.** `ClientEvent.payload`, `ClientIssue.payload`, `ClientMetaData.payload` and `ExtensionStat.payload` changed from an optional string to an optional map of primitives — `Record<string, boolean | string | number>` in the generated TypeScript (Avro: `["null", {"type": "map", "values": ["boolean", "string", "double"]}]`, keeping the null-first optional convention). Producers no longer `JSON.stringify` every payload before buffering it, and consumers read payload fields directly instead of parsing a nested JSON document.
+
+  **Why (measured, Node 22, realistic samples with 35–40 payloads):** a pre-stringified payload gets every quote escaped when the whole sample serialises, inflating the payload bytes by **~12%** on the wire; serialising the sample is **~18% faster** end to end (0.37ms → 0.30ms per sample) and the events portion alone **~54% faster** (0.042ms → 0.020ms), because each payload was previously walked twice — once by its own `JSON.stringify` at buffering time (30–40 calls per sample, now zero, along with their intermediate-string garbage) and once more character-by-character for escaping. Server-side decode saves ~3% (one parse instead of 1 + N) and payload fields become directly queryable without a second parse.
+
+  **Codec impact:** on the protobuf wire the payload still travels as a JSON `string` (proto3 cannot express a union-valued map — same convention as `attachments`); the protobuf codec converts it through its JSON-fields mechanism, keyed on the field name, so all four payload fields are covered and protobuf field numbering is unchanged. The JSON codec needs no change: events, issues, meta items and extension stats are value lists written whole, and object values were already handled generically. The TypeScript generator learned to render union-valued Avro maps for this.
+
 ## 3.4.0
 
 ### Changed

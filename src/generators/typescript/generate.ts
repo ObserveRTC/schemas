@@ -137,6 +137,37 @@ function buildAlias(record: AvroRecord, options: TypeScriptOptions): BuiltAlias 
 }
 
 function mapType(type: AvroType, options: TypeScriptOptions): MappedType {
+	if (isUnion(type)) {
+		// A union in a nested type position (e.g. the values of a map). The
+		// null branch never renders — optionality is expressed by the field —
+		// and duplicates collapse so `int | long` reads `number`, not
+		// `number | number`.
+		const rendered: string[] = [];
+		let alias: TsTypeAlias | undefined;
+		const dependencies: TsTypeAlias[] = [];
+
+		for (const branch of type) {
+			if (isNullType(branch)) continue;
+
+			const mapped = mapType(branch, options);
+
+			if (mapped.alias) {
+				if (alias) dependencies.push(mapped.alias);
+				else alias = mapped.alias;
+				dependencies.push(...(mapped.dependencies ?? []));
+			}
+			if (mapped.tsType !== undefined && !rendered.includes(mapped.tsType)) {
+				rendered.push(mapped.tsType);
+			}
+		}
+
+		return {
+			tsType: rendered.length > 0 ? rendered.join(' | ') : undefined,
+			alias,
+			dependencies: dependencies.length > 0 ? dependencies : undefined,
+		};
+	}
+
 	if (isArray(type)) {
 		const items = mapType(type.items, options);
 		return {
@@ -163,10 +194,11 @@ function mapType(type: AvroType, options: TypeScriptOptions): MappedType {
 
 	if (isMap(type)) {
 		const values = mapType(type.values, options);
-		options.logger.warn(
-			`Avro maps have no legacy TypeScript mapping; emitting Record<string, ${values.tsType}>`,
-		);
-		return { tsType: `Record<string, ${values.tsType}>` };
+		return {
+			tsType: `Record<string, ${values.tsType}>`,
+			alias: values.alias,
+			dependencies: values.dependencies,
+		};
 	}
 
 	if (typeof type === 'string') {

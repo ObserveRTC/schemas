@@ -14,7 +14,7 @@ export const file_ProtobufClientSampleV3Optional: GenFile = /*@__PURE__*/
 
 /**
  * *
- * Schema Version: 3.4.0
+ * Schema Version: 3.5.0
  *
  * @generated from message org.observertc.schemas.protobuf.ClientSample
  */

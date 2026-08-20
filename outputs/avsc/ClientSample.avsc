@@ -2763,10 +2763,17 @@
               },
               {
                 "name": "payload",
-                "doc": "The value associated with the event, if applicable.",
+                "doc": "The attributes of the event, if applicable.",
                 "type": [
                   "null",
-                  "string"
+                  {
+                    "type": "map",
+                    "values": [
+                      "boolean",
+                      "string",
+                      "double"
+                    ]
+                  }
                 ],
                 "default": null
               },
@@ -2812,10 +2819,17 @@
               },
               {
                 "name": "payload",
-                "doc": "The value associated with the event, if applicable.",
+                "doc": "The attributes of the issue, if applicable.",
                 "type": [
                   "null",
-                  "string"
+                  {
+                    "type": "map",
+                    "values": [
+                      "boolean",
+                      "string",
+                      "double"
+                    ]
+                  }
                 ],
                 "default": null
               },
@@ -2852,10 +2866,17 @@
               },
               {
                 "name": "payload",
-                "doc": "The value associated with the event, if applicable.",
+                "doc": "The attributes of the meta data entry, if applicable.",
                 "type": [
                   "null",
-                  "string"
+                  {
+                    "type": "map",
+                    "values": [
+                      "boolean",
+                      "string",
+                      "double"
+                    ]
+                  }
                 ],
                 "default": null
               },
@@ -2921,7 +2942,14 @@
                 "name": "payload",
                 "type": [
                   "null",
-                  "string"
+                  {
+                    "type": "map",
+                    "values": [
+                      "boolean",
+                      "string",
+                      "double"
+                    ]
+                  }
                 ],
                 "doc": "The payload of the extension stats the custom app provides",
                 "default": null

@@ -62,6 +62,11 @@ function buildProtoFieldTypeOverrides(): Map<string, string> {
 	for (const field of UUID_FIELDS) overrides.set(field, 'bytes');
 	// Free-form JSON blob; never interpreted by the pipeline.
 	overrides.set('appData', 'bytes');
+	// In Avro/TypeScript the payload is a map of primitives; proto3 cannot
+	// express a union-valued map, so on the protobuf wire it travels as a JSON
+	// document in a string — the same convention `attachments` uses. The
+	// protobuf codec converts through its JSON_FIELDS set.
+	overrides.set('payload', 'string');
 	// Avro says `long`, but timestamps are transported as doubles so that
 	// sub-millisecond values survive the round trip through JavaScript.
 	overrides.set('timestamp', 'double');

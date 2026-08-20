@@ -321,16 +321,16 @@ PeerConnectionSample
  * **certificates**: Certificate Stats
 ClientEvent
  * **type**: The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
- * **payload**: The value associated with the event, if applicable.
+ * **payload**: The attributes of the event, if applicable.
  * **timestamp**: The timestamp in epoch format when the event was generated.
 ClientIssue
  * **type**: The name of the issue
  * **key**: Identifier of the related issue or resolution when it is provided.
- * **payload**: The value associated with the event, if applicable.
+ * **payload**: The attributes of the issue, if applicable.
  * **timestamp**: The timestamp in epoch format when the event was generated.
 ClientMetaData
  * **type**: The name of the event used as an identifier (e.g., MEDIA_TRACK_MUTED, USER_REJOINED, etc.).
- * **payload**: The value associated with the event, if applicable.
+ * **payload**: The attributes of the meta data entry, if applicable.
  * **peerConnectionId**: The unique identifier of the peer connection for which the event was generated.
  * **trackId**: The identifier of the media track related to the event, if applicable.
  * **ssrc**: The SSRC (Synchronization Source) identifier associated with the event, if applicable.
