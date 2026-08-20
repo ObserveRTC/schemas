@@ -185,7 +185,7 @@ export function buildSampleStream(options: StreamOptions = {}): ClientSample[] {
 		const peerConnection: PeerConnectionSample = {
 			peerConnectionId,
 			score: 4.5 - jitter(0.5),
-			scoreReasons: tick < 5 ? undefined : 'high-rtt',
+			scoreReasons: tick < 5 ? undefined : ['high-rtt'],
 			// Rebuilt every tick with equal content: the codec compares by value,
 			// so this must not put anything on the wire after the first sample.
 			attachments: { role: 'publisher', region: 'eu-north-1' },
@@ -253,21 +253,21 @@ export function buildSampleStream(options: StreamOptions = {}): ClientSample[] {
 			clientEvents:
 				tick === 0
 					? [
-							{ type: 'CLIENT_JOINED', timestamp, payload: JSON.stringify({ role: 'host' }) },
+							{ type: 'CLIENT_JOINED', timestamp, payload: { role: 'host' } },
 							// Two events of the same type in one sample: the previous
 							// encoder deduplicated the second one's `type` away.
-							{ type: 'CLIENT_JOINED', timestamp, payload: JSON.stringify({ role: 'guest' }) },
+							{ type: 'CLIENT_JOINED', timestamp, payload: { role: 'guest' } },
 						]
 					: undefined,
 			clientIssues:
 				tick === 5
-					? [{ type: 'FREEZE', key: 'track-remote-video', timestamp, payload: '{"ms":420}' }]
+					? [{ type: 'FREEZE', key: 'track-remote-video', timestamp, payload: { ms: 420 } }]
 					: undefined,
 			clientMetaItems:
 				tick === 1
 					? [{ type: 'MEDIA_TRACK_ADDED', timestamp, peerConnectionId, trackId: 'track-local-video', ssrc: 5_678_901_234 }]
 					: undefined,
-			extensionStats: tick === 2 ? [{ type: 'app-metric', payload: '{"queue":3}' }] : undefined,
+			extensionStats: tick === 2 ? [{ type: 'app-metric', payload: { queue: 3 } }] : undefined,
 		});
 	}
 

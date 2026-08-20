@@ -38,7 +38,7 @@ describe('round trip', () => {
 		const decoded = roundTrip(buildSampleStream())[0]!;
 
 		expect(decoded.clientEvents).toHaveLength(2);
-		expect(decoded.clientEvents![1]!.payload).toBe(JSON.stringify({ role: 'guest' }));
+		expect(decoded.clientEvents![1]!.payload).toEqual({ role: 'guest' });
 	});
 
 	it('tracks a stream that joins and leaves mid-call', () => {

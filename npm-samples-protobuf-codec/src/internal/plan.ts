@@ -49,6 +49,7 @@ export interface ValueConverter {
 
 export type FieldPlan =
 	| { readonly kind: 'scalar'; readonly name: string; readonly converter: ValueConverter }
+	| { readonly kind: 'primitiveList'; readonly name: string; readonly converter: ValueConverter }
 	| { readonly kind: 'struct'; readonly name: string; readonly plan: MessagePlan }
 	| { readonly kind: 'valueList'; readonly name: string; readonly plan: MessagePlan }
 	| {
@@ -118,10 +119,22 @@ function buildFieldPlan(
 	const name = field.localName;
 
 	if (field.fieldKind === 'list') {
+		if (field.listKind === 'scalar') {
+			// A list of bare primitives — `scoreReasons` — has no entry identity to
+			// diff against, so it is written whole whenever present, exactly like a
+			// value list. Repeated proto3 fields have no presence of their own,
+			// which fits: an absent list and an empty one mean the same thing.
+			return {
+				kind: 'primitiveList',
+				name,
+				converter: scalarConverter(name, field.scalar, context),
+			};
+		}
+
 		if (field.listKind !== 'message') {
 			throw new ProtobufCodecError(
 				'INVALID_OPTION',
-				'Repeated scalar and enum fields are not part of the sample schema',
+				'Repeated enum fields are not part of the sample schema',
 				{ path: `${messageName}.${name}` },
 			);
 		}

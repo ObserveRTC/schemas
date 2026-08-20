@@ -44,6 +44,14 @@ export const VALUE_LISTS: ReadonlySet<string> = new Set([
 ]);
 
 /**
+ * Arrays of bare primitives rather than of records. They have no entry
+ * identity to match across samples, so they follow the same rule as every
+ * other collection: defined by the newest message, written whole whenever
+ * present.
+ */
+export const PRIMITIVE_LISTS: ReadonlySet<string> = new Set(['scoreReasons']);
+
+/**
  * Object-valued fields whose own fields are worth diffing individually.
  *
  * Everything else object-valued — in practice only `attachments` — is caller

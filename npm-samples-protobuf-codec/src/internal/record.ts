@@ -60,6 +60,9 @@ export class RecordEncoder {
 				case 'scalar':
 					this.encodeScalar(field, plain, wire, path);
 					break;
+				case 'primitiveList':
+					this.encodePrimitiveList(field, plain, wire, path);
+					break;
 				case 'struct':
 					this.encodeStruct(field, plain, wire, path);
 					break;
@@ -93,6 +96,24 @@ export class RecordEncoder {
 
 		this.last.set(field.name, value);
 		wire[field.name] = field.converter.toWire(value, `${path}.${field.name}`);
+	}
+
+	private encodePrimitiveList(
+		field: Extract<FieldPlan, { kind: 'primitiveList' }>,
+		plain: PlainRecord,
+		wire: PlainRecord,
+		path: string,
+	): void {
+		const items = plain[field.name];
+		if (!Array.isArray(items) || items.length === 0) return;
+
+		// Bare primitives — `scoreReasons` — carry no entry identity to diff
+		// against, so the list is written whole whenever the sample has it. No
+		// state: a repeated proto3 field cannot distinguish absent from empty, so
+		// "not sent" already means "no entries" on both sides.
+		wire[field.name] = items.map((item, index) =>
+			field.converter.toWire(item, `${path}.${field.name}[${index}]`),
+		);
 	}
 
 	private encodeStruct(
@@ -235,6 +256,9 @@ export class RecordDecoder {
 				case 'scalar':
 					this.decodeScalar(field, wire, plain, path);
 					break;
+				case 'primitiveList':
+					this.decodePrimitiveList(field, wire, plain, path);
+					break;
 				case 'struct':
 					this.decodeStruct(field, wire, plain, path);
 					break;
@@ -265,6 +289,20 @@ export class RecordDecoder {
 
 		const retained = this.state.get(field.name);
 		if (retained !== undefined) plain[field.name] = retained;
+	}
+
+	private decodePrimitiveList(
+		field: Extract<FieldPlan, { kind: 'primitiveList' }>,
+		wire: PlainRecord,
+		plain: PlainRecord,
+		path: string,
+	): void {
+		const items = wire[field.name];
+		if (!Array.isArray(items) || items.length === 0) return;
+
+		plain[field.name] = items.map((item, index) =>
+			field.converter.toPlain(item, `${path}.${field.name}[${index}]`),
+		);
 	}
 
 	private decodeStruct(

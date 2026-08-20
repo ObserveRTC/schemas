@@ -1,16 +1,16 @@
 {
 	"description": "Eight samples of a one-peer-connection call, as JSON deltas",
-	"schemaVersion": "3.3.0",
+	"schemaVersion": "3.5.0",
 	"clientId": "client-42",
 	"byteLengths": [
-		2893,
+		2881,
 		1698,
-		1786,
+		1782,
 		1811,
 		1775,
-		1938,
-		1613,
-		1629
+		1936,
+		1641,
+		1657
 	],
 	"messages": [
 		{
@@ -188,12 +188,16 @@
 				{
 					"type": "CLIENT_JOINED",
 					"timestamp": 1756000000000,
-					"payload": "{\"role\":\"host\"}"
+					"payload": {
+						"role": "host"
+					}
 				},
 				{
 					"type": "CLIENT_JOINED",
 					"timestamp": 1756000000000,
-					"payload": "{\"role\":\"guest\"}"
+					"payload": {
+						"role": "guest"
+					}
 				}
 			],
 			"clientId": "client-42"
@@ -442,7 +446,9 @@
 			"extensionStats": [
 				{
 					"type": "app-metric",
-					"payload": "{\"queue\":3}"
+					"payload": {
+						"queue": 3
+					}
 				}
 			],
 			"clientId": "client-42"
@@ -709,7 +715,9 @@
 				{
 					"peerConnectionId": "pc-01",
 					"score": 4.273,
-					"scoreReasons": "high-rtt",
+					"scoreReasons": [
+						"high-rtt"
+					],
 					"inboundRtps": [
 						{
 							"timestamp": 1756000005000,
@@ -833,7 +841,9 @@
 					"type": "FREEZE",
 					"key": "track-remote-video",
 					"timestamp": 1756000005000,
-					"payload": "{\"ms\":420}"
+					"payload": {
+						"ms": 420
+					}
 				}
 			],
 			"clientId": "client-42"
@@ -845,6 +855,9 @@
 				{
 					"peerConnectionId": "pc-01",
 					"score": 4.477,
+					"scoreReasons": [
+						"high-rtt"
+					],
 					"inboundRtps": [
 						{
 							"timestamp": 1756000006000,
@@ -962,6 +975,9 @@
 				{
 					"peerConnectionId": "pc-01",
 					"score": 4.365,
+					"scoreReasons": [
+						"high-rtt"
+					],
 					"inboundRtps": [
 						{
 							"timestamp": 1756000007000,

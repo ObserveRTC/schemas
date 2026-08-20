@@ -2,6 +2,7 @@ import { JsonCodecError, type JsonCodecErrorCode } from './errors.js';
 import {
 	COLLECTION_KEYS,
 	DEFAULT_COLLECTION_KEY,
+	PRIMITIVE_LISTS,
 	REQUIRED_FIELDS,
 	ROOT_REQUIRED_FIELDS,
 	STRUCT_FIELDS,
@@ -128,6 +129,13 @@ function diffList(
 ): unknown[] | undefined {
 	if (next.length === 0) return undefined;
 
+	if (PRIMITIVE_LISTS.has(field)) {
+		// Arrays of bare primitives — `scoreReasons` — have no entry identity to
+		// match across samples. Like every other collection, they are defined by
+		// the newest message and written whole whenever present.
+		return next.map((entry, index) => asPrimitiveOrThrow(entry, `${path}[${index}]`));
+	}
+
 	if (VALUE_LISTS.has(field)) {
 		// One-off records with no identity: written whole, remembered never.
 		return next.map((entry, index) =>
@@ -224,6 +232,10 @@ function mergeList(
 ): unknown[] {
 	const required = REQUIRED_FIELDS[field] ?? [];
 
+	if (PRIMITIVE_LISTS.has(field)) {
+		return delta.map((entry, index) => asPrimitiveOrThrow(entry, `${path}[${index}]`));
+	}
+
 	if (VALUE_LISTS.has(field)) {
 		return delta.map((entry, index) =>
 			mergeRecord(
@@ -272,6 +284,23 @@ function asRecord(value: unknown): JsonRecord | undefined {
 	return typeof value === 'object' && value !== null && !Array.isArray(value)
 		? (value as JsonRecord)
 		: undefined;
+}
+
+function asPrimitiveOrThrow(value: unknown, path: string): string | number | boolean {
+	if (typeof value === 'number') {
+		if (!Number.isFinite(value)) {
+			throw new JsonCodecError('INVALID_VALUE', 'Expected a finite number', {
+				path,
+				received: value,
+			});
+		}
+		return value;
+	}
+	if (typeof value === 'string' || typeof value === 'boolean') return value;
+	throw new JsonCodecError('MALFORMED_INPUT', 'Expected a primitive value', {
+		path,
+		received: value,
+	});
 }
 
 function asRecordOrThrow(value: unknown, path: string): JsonRecord {

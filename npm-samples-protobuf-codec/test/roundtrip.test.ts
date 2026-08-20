@@ -59,7 +59,7 @@ describe('round trip', () => {
 			'CLIENT_JOINED',
 			'CLIENT_JOINED',
 		]);
-		expect(decoded.clientEvents![1]!.payload).toBe(JSON.stringify({ role: 'guest' }));
+		expect(decoded.clientEvents![1]!.payload).toEqual({ role: 'guest' });
 	});
 
 	it('tracks a stream that joins and leaves mid-call', () => {

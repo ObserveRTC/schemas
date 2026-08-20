@@ -45,6 +45,9 @@ const COLLECTION_KEYS: Record<string, string> = {
 /** Collections that carry no identity and are never merged across samples. */
 const VALUE_LISTS = new Set(['clientEvents', 'clientIssues', 'clientMetaItems', 'extensionStats']);
 
+/** Arrays of bare primitives, carried whole rather than entry-diffed. */
+const PRIMITIVE_LISTS = new Set(['scoreReasons']);
+
 /**
  * An independent, deliberately naive model of what the decoder must produce:
  * the running forward-fill of the stream.
@@ -68,6 +71,11 @@ function forwardFill(previous: Record<string, unknown> | undefined, current: Rec
 		if (value === undefined) continue;
 
 		if (Array.isArray(value)) {
+			if (PRIMITIVE_LISTS.has(key)) {
+				merged[key] = [...value];
+				continue;
+			}
+
 			const previousItems = (previous?.[key] as Record<string, unknown>[] | undefined) ?? [];
 			const keyField = COLLECTION_KEYS[key] ?? 'id';
 
