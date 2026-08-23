@@ -15,6 +15,12 @@ date the version was set in `sources/version.txt`.
 Entries from 3.1.0 onward were reconstructed from git history; earlier entries
 are as originally written.
 
+## 3.6.0
+
+### Changed
+
+- **`scoreReasons` is a map of contributions, not a list of labels.** `ClientSample.scoreReasons`, `PeerConnectionSample.scoreReasons`, `InboundTrackSample.scoreReasons` and `OutboundTrackSample.scoreReasons` changed from an optional array of strings to an optional map of doubles — `Record<string, number>` in the generated TypeScript (Avro: `["null", {"type": "map", "values": "double"}]`) — mapping each reason to how much it contributed to the calculated score. On the protobuf wire the field is now a real `map<string, double>`: the generator learned to emit proto3 maps for primitive-valued Avro maps (union-valued maps such as `payload` keep travelling as JSON strings), and a map field sorts with the repeated group so neighbouring field numbers are unchanged. Both codecs treat the field exactly as they treated the string array — written whole whenever present, never carried forward, an empty map meaning the same as an absent one. This is a schema and wire-format change, so producers and consumers should move to the 3.6.0 generated schemas together.
+
 ## 3.5.0
 
 ### Changed

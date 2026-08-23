@@ -3,6 +3,7 @@ import {
 	COLLECTION_KEYS,
 	DEFAULT_COLLECTION_KEY,
 	PRIMITIVE_LISTS,
+	PRIMITIVE_MAPS,
 	REQUIRED_FIELDS,
 	ROOT_REQUIRED_FIELDS,
 	STRUCT_FIELDS,
@@ -84,6 +85,15 @@ export function diffRecord(
 			continue;
 		}
 
+		if (PRIMITIVE_MAPS.has(field)) {
+			// Maps of bare primitives — `scoreReasons` — have no per-key history
+			// worth diffing. Like every other collection, they are defined by the
+			// newest message and written whole whenever present.
+			const entries = copyPrimitiveMap(value, fieldPath);
+			if (entries) delta[field] = entries;
+			continue;
+		}
+
 		if (STRUCT_FIELDS.has(field)) {
 			const nested = diffRecord(asRecord(before), value as JsonRecord, fieldPath);
 			// An unchanged sub-object is simply left out.
@@ -130,9 +140,9 @@ function diffList(
 	if (next.length === 0) return undefined;
 
 	if (PRIMITIVE_LISTS.has(field)) {
-		// Arrays of bare primitives — `scoreReasons` — have no entry identity to
-		// match across samples. Like every other collection, they are defined by
-		// the newest message and written whole whenever present.
+		// Arrays of bare primitives have no entry identity to match across
+		// samples. Like every other collection, they are defined by the newest
+		// message and written whole whenever present.
 		return next.map((entry, index) => asPrimitiveOrThrow(entry, `${path}[${index}]`));
 	}
 
@@ -182,9 +192,10 @@ export function mergeRecord(
 
 	for (const field of Object.keys(previous ?? {})) {
 		const value = previous![field];
-		// Collections are defined by the newest message; scalars and sub-objects
-		// persist until something overwrites them.
-		if (Array.isArray(value)) continue;
+		// Collections — primitive maps included — are defined by the newest
+		// message; scalars and sub-objects persist until something overwrites
+		// them.
+		if (Array.isArray(value) || PRIMITIVE_MAPS.has(field)) continue;
 		if (value !== undefined) merged[field] = value;
 	}
 
@@ -196,6 +207,12 @@ export function mergeRecord(
 
 		if (Array.isArray(value)) {
 			merged[field] = mergeList(previous?.[field], value, field, fieldPath, context);
+			continue;
+		}
+
+		if (PRIMITIVE_MAPS.has(field)) {
+			const entries = copyPrimitiveMap(value, fieldPath);
+			if (entries) merged[field] = entries;
 			continue;
 		}
 
@@ -301,6 +318,36 @@ function asPrimitiveOrThrow(value: unknown, path: string): string | number | boo
 		path,
 		received: value,
 	});
+}
+
+/**
+ * A validated copy of a primitive-valued map — `scoreReasons`. Returns
+ * `undefined` for an empty map, which the format reads exactly like an absent
+ * one: no entries.
+ */
+function copyPrimitiveMap(value: unknown, path: string): JsonRecord | undefined {
+	const record = asRecordOrThrow(value, path);
+	const copy: JsonRecord = {};
+
+	for (const key of Object.keys(record)) {
+		const entry = record[key];
+		if (entry === undefined || entry === null) continue;
+		if (typeof entry !== 'number') {
+			throw new JsonCodecError('MALFORMED_INPUT', 'Expected a number', {
+				path: `${path}["${key}"]`,
+				received: entry,
+			});
+		}
+		if (!Number.isFinite(entry)) {
+			throw new JsonCodecError('INVALID_VALUE', 'Expected a finite number', {
+				path: `${path}["${key}"]`,
+				received: entry,
+			});
+		}
+		copy[key] = entry;
+	}
+
+	return Object.keys(copy).length > 0 ? copy : undefined;
 }
 
 function asRecordOrThrow(value: unknown, path: string): JsonRecord {

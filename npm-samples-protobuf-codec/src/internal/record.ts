@@ -63,6 +63,9 @@ export class RecordEncoder {
 				case 'primitiveList':
 					this.encodePrimitiveList(field, plain, wire, path);
 					break;
+				case 'primitiveMap':
+					this.encodePrimitiveMap(field, plain, wire, path);
+					break;
 				case 'struct':
 					this.encodeStruct(field, plain, wire, path);
 					break;
@@ -107,13 +110,42 @@ export class RecordEncoder {
 		const items = plain[field.name];
 		if (!Array.isArray(items) || items.length === 0) return;
 
-		// Bare primitives — `scoreReasons` — carry no entry identity to diff
-		// against, so the list is written whole whenever the sample has it. No
-		// state: a repeated proto3 field cannot distinguish absent from empty, so
-		// "not sent" already means "no entries" on both sides.
+		// Bare primitives carry no entry identity to diff against, so the list
+		// is written whole whenever the sample has it. No state: a repeated
+		// proto3 field cannot distinguish absent from empty, so "not sent"
+		// already means "no entries" on both sides.
 		wire[field.name] = items.map((item, index) =>
 			field.converter.toWire(item, `${path}.${field.name}[${index}]`),
 		);
+	}
+
+	private encodePrimitiveMap(
+		field: Extract<FieldPlan, { kind: 'primitiveMap' }>,
+		plain: PlainRecord,
+		wire: PlainRecord,
+		path: string,
+	): void {
+		const entries = plain[field.name];
+		if (entries === undefined || entries === null) return;
+		if (typeof entries !== 'object' || Array.isArray(entries)) {
+			throw new ProtobufCodecError('INVALID_VALUE', 'Expected an object of primitive values', {
+				path: `${path}.${field.name}`,
+				received: entries,
+			});
+		}
+
+		// A primitive map — `scoreReasons`, reason -> contribution — carries no
+		// per-key history to diff against, so it is written whole whenever the
+		// sample has it. No state: a proto3 map cannot distinguish absent from
+		// empty, so "not sent" already means "no entries" on both sides.
+		const encoded: PlainRecord = {};
+		let size = 0;
+		for (const [key, value] of Object.entries(entries as PlainRecord)) {
+			if (value === undefined || value === null) continue;
+			encoded[key] = field.converter.toWire(value, `${path}.${field.name}["${key}"]`);
+			size += 1;
+		}
+		if (size > 0) wire[field.name] = encoded;
 	}
 
 	private encodeStruct(
@@ -259,6 +291,9 @@ export class RecordDecoder {
 				case 'primitiveList':
 					this.decodePrimitiveList(field, wire, plain, path);
 					break;
+				case 'primitiveMap':
+					this.decodePrimitiveMap(field, wire, plain, path);
+					break;
 				case 'struct':
 					this.decodeStruct(field, wire, plain, path);
 					break;
@@ -303,6 +338,26 @@ export class RecordDecoder {
 		plain[field.name] = items.map((item, index) =>
 			field.converter.toPlain(item, `${path}.${field.name}[${index}]`),
 		);
+	}
+
+	private decodePrimitiveMap(
+		field: Extract<FieldPlan, { kind: 'primitiveMap' }>,
+		wire: PlainRecord,
+		plain: PlainRecord,
+		path: string,
+	): void {
+		const entries = wire[field.name];
+		if (entries === undefined || entries === null || typeof entries !== 'object') return;
+
+		const decoded: PlainRecord = {};
+		let size = 0;
+		for (const [key, value] of Object.entries(entries as PlainRecord)) {
+			decoded[key] = field.converter.toPlain(value, `${path}.${field.name}["${key}"]`);
+			size += 1;
+		}
+		// An empty wire map is indistinguishable from an absent one, and both
+		// mean the same thing: no entries this sample.
+		if (size > 0) plain[field.name] = decoded;
 	}
 
 	private decodeStruct(

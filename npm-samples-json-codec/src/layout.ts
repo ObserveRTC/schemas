@@ -47,9 +47,18 @@ export const VALUE_LISTS: ReadonlySet<string> = new Set([
  * Arrays of bare primitives rather than of records. They have no entry
  * identity to match across samples, so they follow the same rule as every
  * other collection: defined by the newest message, written whole whenever
- * present.
+ * present. Currently empty — `scoreReasons` became a primitive map in 3.6.0 —
+ * but the rule stays, ready for the next such field.
  */
-export const PRIMITIVE_LISTS: ReadonlySet<string> = new Set(['scoreReasons']);
+export const PRIMITIVE_LISTS: ReadonlySet<string> = new Set();
+
+/**
+ * Maps of bare primitives — `scoreReasons`, reason -> how much it contributed
+ * to the score. Keys have no history worth diffing key by key, so a primitive
+ * map follows the collection rule rather than the struct rule: defined by the
+ * newest message, written whole whenever present, and never carried forward.
+ */
+export const PRIMITIVE_MAPS: ReadonlySet<string> = new Set(['scoreReasons']);
 
 /**
  * Object-valued fields whose own fields are worth diffing individually.

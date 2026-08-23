@@ -47,7 +47,7 @@ timestamp (**Mandatory**) | The timestamp when the stats were generated.
 id (**Mandatory**) | The unique identifier for the stats object.
 kind (**Mandatory**) | Kind of the media (e.g., 'audio' or 'video').
 score | Calculated score for track (details should be added to scoreReasons)
-scoreReasons | Details for score calculation
+scoreReasons | Reasons for the score calculation, mapping each reason to how much it contributed to the score
 attachments | Additional information attached to this stats
 
 ## OutboundTrackSample
@@ -59,7 +59,7 @@ timestamp (**Mandatory**) | The timestamp when the stats were generated.
 id (**Mandatory**) | The unique identifier for the stats object.
 kind (**Mandatory**) | Kind of the media (e.g., 'audio' or 'video').
 score | Calculated score for track (details should be added to scoreReasons)
-scoreReasons | Details for score calculation
+scoreReasons | Reasons for the score calculation, mapping each reason to how much it contributed to the score
 attachments | Additional information attached to this stats
 
 ## CodecStats
@@ -435,7 +435,7 @@ Field | Description
 peerConnectionId (**Mandatory**) | Unique identifier of the stats object.
 attachments | Additional information attached to this sample
 score | Calculated score for peer connection (details should be added to scoreReasons)
-scoreReasons | Details for score calculation
+scoreReasons | Reasons for the score calculation, mapping each reason to how much it contributed to the score
 inboundTracks | Inbound Track Stats items
 outboundTracks | Outbound Track Stats items
 codecs | Codec items
@@ -504,7 +504,7 @@ callId | the unique identifier of the call or session
 clientId | Unique id of the client providing samples.
 attachments | Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
 score | Calculated score for client (details should be added to scoreReasons)
-scoreReasons | Details for score calculation
+scoreReasons | Reasons for the score calculation, mapping each reason to how much it contributed to the score
 peerConnections | Samples taken PeerConnections
 clientEvents | A list of client events.
 clientIssues | A list of client issues.
@@ -776,6 +776,12 @@ turnSamples | Samples taken from the TURN server
 
 
 ## Changelog
+## 3.6.0
+
+### Changed
+
+- **`scoreReasons` is a map of contributions, not a list of labels.** `ClientSample.scoreReasons`, `PeerConnectionSample.scoreReasons`, `InboundTrackSample.scoreReasons` and `OutboundTrackSample.scoreReasons` changed from an optional array of strings to an optional map of doubles — `Record<string, number>` in the generated TypeScript (Avro: `["null", {"type": "map", "values": "double"}]`) — mapping each reason to how much it contributed to the calculated score. On the protobuf wire the field is now a real `map<string, double>`: the generator learned to emit proto3 maps for primitive-valued Avro maps (union-valued maps such as `payload` keep travelling as JSON strings), and a map field sorts with the repeated group so neighbouring field numbers are unchanged. Both codecs treat the field exactly as they treated the string array — written whole whenever present, never carried forward, an empty map meaning the same as an absent one. This is a schema and wire-format change, so producers and consumers should move to the 3.6.0 generated schemas together.
+
 ## 3.5.0
 
 ### Changed

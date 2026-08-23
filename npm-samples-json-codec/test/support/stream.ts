@@ -185,7 +185,7 @@ export function buildSampleStream(options: StreamOptions = {}): ClientSample[] {
 		const peerConnection: PeerConnectionSample = {
 			peerConnectionId,
 			score: 4.5 - jitter(0.5),
-			scoreReasons: tick < 5 ? undefined : ['high-rtt'],
+			scoreReasons: tick < 5 ? undefined : { 'high-rtt': -0.4, 'packet-loss': -0.1 },
 			// Rebuilt every tick with equal content: the codec compares by value,
 			// so this must not put anything on the wire after the first sample.
 			attachments: { role: 'publisher', region: 'eu-north-1' },

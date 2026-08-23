@@ -50,6 +50,7 @@ export interface ValueConverter {
 export type FieldPlan =
 	| { readonly kind: 'scalar'; readonly name: string; readonly converter: ValueConverter }
 	| { readonly kind: 'primitiveList'; readonly name: string; readonly converter: ValueConverter }
+	| { readonly kind: 'primitiveMap'; readonly name: string; readonly converter: ValueConverter }
 	| { readonly kind: 'struct'; readonly name: string; readonly plan: MessagePlan }
 	| { readonly kind: 'valueList'; readonly name: string; readonly plan: MessagePlan }
 	| {
@@ -120,10 +121,10 @@ function buildFieldPlan(
 
 	if (field.fieldKind === 'list') {
 		if (field.listKind === 'scalar') {
-			// A list of bare primitives — `scoreReasons` — has no entry identity to
-			// diff against, so it is written whole whenever present, exactly like a
-			// value list. Repeated proto3 fields have no presence of their own,
-			// which fits: an absent list and an empty one mean the same thing.
+			// A list of bare primitives has no entry identity to diff against, so
+			// it is written whole whenever present, exactly like a value list.
+			// Repeated proto3 fields have no presence of their own, which fits: an
+			// absent list and an empty one mean the same thing.
 			return {
 				kind: 'primitiveList',
 				name,
@@ -166,11 +167,22 @@ function buildFieldPlan(
 	}
 
 	if (field.fieldKind === 'map') {
-		throw new ProtobufCodecError(
-			'INVALID_OPTION',
-			'Map fields are not part of the sample schema',
-			{ path: `${messageName}.${name}` },
-		);
+		if (field.mapKind !== 'scalar' || field.mapKey !== ScalarType.STRING) {
+			throw new ProtobufCodecError(
+				'INVALID_OPTION',
+				'Only string-keyed maps of scalars are part of the sample schema',
+				{ path: `${messageName}.${name}` },
+			);
+		}
+		// A map of bare primitives — `scoreReasons` — has no per-key history to
+		// diff against, so it is written whole whenever present, exactly like a
+		// primitive list. proto3 maps have no presence of their own, which fits:
+		// an absent map and an empty one mean the same thing.
+		return {
+			kind: 'primitiveMap',
+			name,
+			converter: scalarConverter(name, field.scalar, context),
+		};
 	}
 
 	return { kind: 'scalar', name, converter: scalarConverter(name, field.scalar, context) };

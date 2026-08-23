@@ -46,12 +46,12 @@
     },
     {
       "name": "scoreReasons",
-      "doc": "Details for score calculation",
+      "doc": "Reasons for the score calculation, mapping each reason to how much it contributed to the score",
       "type": [
         "null",
         {
-          "type": "array",
-          "items": "string"
+          "type": "map",
+          "values": "double"
         }
       ],
       "default": null
@@ -93,12 +93,12 @@
               },
               {
                 "name": "scoreReasons",
-                "doc": "Details for score calculation",
+                "doc": "Reasons for the score calculation, mapping each reason to how much it contributed to the score",
                 "type": [
                   "null",
                   {
-                    "type": "array",
-                    "items": "string"
+                    "type": "map",
+                    "values": "double"
                   }
                 ],
                 "default": null
@@ -140,12 +140,12 @@
                         },
                         {
                           "name": "scoreReasons",
-                          "doc": "Details for score calculation",
+                          "doc": "Reasons for the score calculation, mapping each reason to how much it contributed to the score",
                           "type": [
                             "null",
                             {
-                              "type": "array",
-                              "items": "string"
+                              "type": "map",
+                              "values": "double"
                             }
                           ],
                           "default": null
@@ -202,12 +202,12 @@
                         },
                         {
                           "name": "scoreReasons",
-                          "doc": "Details for score calculation",
+                          "doc": "Reasons for the score calculation, mapping each reason to how much it contributed to the score",
                           "type": [
                             "null",
                             {
-                              "type": "array",
-                              "items": "string"
+                              "type": "map",
+                              "values": "double"
                             }
                           ],
                           "default": null

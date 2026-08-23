@@ -3,12 +3,12 @@ syntax = "proto3";
 package org.observertc.schemas.protobuf;
 
 /**
-* Schema Version: 3.5.0
+* Schema Version: 3.6.0
 */
 message ClientSample {
 	message PeerConnectionSample {
 		message InboundTrackSample {
-			repeated string scoreReasons = 1;
+			map<string, double> scoreReasons = 1;
 			string id = 2;
 			string kind = 3;
 			double timestamp = 4;
@@ -16,7 +16,7 @@ message ClientSample {
 			double score = 6;
 		}
 		message OutboundTrackSample {
-			repeated string scoreReasons = 1;
+			map<string, double> scoreReasons = 1;
 			string id = 2;
 			string kind = 3;
 			double timestamp = 4;
@@ -350,7 +350,7 @@ message ClientSample {
 		repeated PeerConnectionTransportStats peerConnectionTransports = 13;
 		repeated RemoteInboundRtpStats remoteInboundRtps = 14;
 		repeated RemoteOutboundRtpStats remoteOutboundRtps = 15;
-		repeated string scoreReasons = 16;
+		map<string, double> scoreReasons = 16;
 		bytes peerConnectionId = 17;
 		string attachments = 18;
 		double score = 19;
@@ -383,7 +383,7 @@ message ClientSample {
 	repeated ClientMetaData clientMetaItems = 3;
 	repeated ExtensionStat extensionStats = 4;
 	repeated PeerConnectionSample peerConnections = 5;
-	repeated string scoreReasons = 6;
+	map<string, double> scoreReasons = 6;
 	double timestamp = 7;
 	string attachments = 8;
 	bytes callId = 9;

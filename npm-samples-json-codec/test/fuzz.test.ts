@@ -45,8 +45,8 @@ const COLLECTION_KEYS: Record<string, string> = {
 /** Collections that carry no identity and are never merged across samples. */
 const VALUE_LISTS = new Set(['clientEvents', 'clientIssues', 'clientMetaItems', 'extensionStats']);
 
-/** Arrays of bare primitives, carried whole rather than entry-diffed. */
-const PRIMITIVE_LISTS = new Set(['scoreReasons']);
+/** Maps of bare primitives, carried whole rather than key-diffed. */
+const PRIMITIVE_MAPS = new Set(['scoreReasons']);
 
 /**
  * An independent, deliberately naive model of what the decoder must produce:
@@ -61,9 +61,9 @@ function forwardFill(previous: Record<string, unknown> | undefined, current: Rec
 	const merged: Record<string, unknown> = {};
 
 	for (const [key, value] of Object.entries(previous ?? {})) {
-		// Collections are defined by the newest sample; scalars and sub-messages
-		// persist until they are overwritten.
-		if (Array.isArray(value)) continue;
+		// Collections — primitive maps included — are defined by the newest
+		// sample; scalars and sub-messages persist until they are overwritten.
+		if (Array.isArray(value) || PRIMITIVE_MAPS.has(key)) continue;
 		merged[key] = value;
 	}
 
@@ -71,11 +71,6 @@ function forwardFill(previous: Record<string, unknown> | undefined, current: Rec
 		if (value === undefined) continue;
 
 		if (Array.isArray(value)) {
-			if (PRIMITIVE_LISTS.has(key)) {
-				merged[key] = [...value];
-				continue;
-			}
-
 			const previousItems = (previous?.[key] as Record<string, unknown>[] | undefined) ?? [];
 			const keyField = COLLECTION_KEYS[key] ?? 'id';
 
@@ -86,6 +81,14 @@ function forwardFill(previous: Record<string, unknown> | undefined, current: Rec
 						const match = previousItems.find((candidate) => candidate[keyField] === entry[keyField]);
 						return forwardFill(match, entry);
 					});
+			continue;
+		}
+
+		if (PRIMITIVE_MAPS.has(key)) {
+			// Written whole whenever present; an empty map means the same as an
+			// absent one, so it never reaches the decoded sample.
+			const entries = value as Record<string, unknown>;
+			if (Object.keys(entries).length > 0) merged[key] = { ...entries };
 			continue;
 		}
 

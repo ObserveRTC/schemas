@@ -3,14 +3,14 @@ InboundTrackSample
  * **id**: The unique identifier for the stats object.
  * **kind**: Kind of the media (e.g., 'audio' or 'video').
  * **score**: Calculated score for track (details should be added to scoreReasons)
- * **scoreReasons**: Details for score calculation
+ * **scoreReasons**: Reasons for the score calculation, mapping each reason to how much it contributed to the score
  * **attachments**: Additional information attached to this stats
 OutboundTrackSample
  * **timestamp**: The timestamp when the stats were generated.
  * **id**: The unique identifier for the stats object.
  * **kind**: Kind of the media (e.g., 'audio' or 'video').
  * **score**: Calculated score for track (details should be added to scoreReasons)
- * **scoreReasons**: Details for score calculation
+ * **scoreReasons**: Reasons for the score calculation, mapping each reason to how much it contributed to the score
  * **attachments**: Additional information attached to this stats
 CodecStats
  * **timestamp**: The timestamp when the stats were generated.
@@ -303,7 +303,7 @@ PeerConnectionSample
  * **peerConnectionId**: Unique identifier of the stats object.
  * **attachments**: Additional information attached to this sample
  * **score**: Calculated score for peer connection (details should be added to scoreReasons)
- * **scoreReasons**: Details for score calculation
+ * **scoreReasons**: Reasons for the score calculation, mapping each reason to how much it contributed to the score
  * **inboundTracks**: Inbound Track Stats items
  * **outboundTracks**: Outbound Track Stats items
  * **codecs**: Codec items
@@ -344,7 +344,7 @@ ClientSample
  * **clientId**: Unique id of the client providing samples.
  * **attachments**: Additional information attached to this sample (e.g.: roomId, userId, displayName, etc...)
  * **score**: Calculated score for client (details should be added to scoreReasons)
- * **scoreReasons**: Details for score calculation
+ * **scoreReasons**: Reasons for the score calculation, mapping each reason to how much it contributed to the score
  * **peerConnections**: Samples taken PeerConnections
  * **clientEvents**: A list of client events.
  * **clientIssues**: A list of client issues.

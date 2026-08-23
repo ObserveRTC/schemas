@@ -1,9 +1,11 @@
 import {
 	isArray,
 	isEnum,
+	isMap,
 	isRecord,
 	isUnion,
 	type AvroField,
+	type AvroMap,
 	type AvroRecord,
 	type AvroType,
 } from '../../avro/schema.js';
@@ -15,7 +17,9 @@ export interface Proto3Options {
 	/**
 	 * Field name -> proto type, applied to scalar fields only (records, arrays
 	 * and enums keep their derived type). This is where `callId: bytes` and
-	 * `timestamp: double` live.
+	 * `timestamp: double` live. An overridden map field — `payload`, whose
+	 * union values proto3 cannot express — also takes its override instead of
+	 * becoming a proto3 map.
 	 */
 	readonly fieldTypeOverrides: ReadonlyMap<string, string>;
 	/**
@@ -41,6 +45,8 @@ interface ProtoField {
 	readonly name: string;
 	readonly type: string;
 	readonly isArray: boolean;
+	/** A proto3 `map<...>` field: wire-repeated, and no label of its own. */
+	readonly isMap: boolean;
 	readonly required: boolean;
 }
 
@@ -115,6 +121,7 @@ class Proto3Message implements ProtoRenderable {
 				name: field.name,
 				type: this.enumName,
 				isArray: false,
+				isMap: false,
 				required: false,
 			});
 			return;
@@ -126,7 +133,23 @@ class Proto3Message implements ProtoRenderable {
 				name: field.name,
 				type: itemType.name,
 				isArray: isRepeated,
+				isMap: false,
 				required,
+			});
+			return;
+		}
+
+		if (isMap(itemType) && !this.options.fieldTypeOverrides.has(field.name)) {
+			// A primitive-valued Avro map — `scoreReasons` — becomes a proto3 map.
+			// Union-valued maps cannot be expressed in proto3; those carry a
+			// `fieldTypeOverrides` entry (see `payload`) and never reach this
+			// branch.
+			this.fields.push({
+				name: field.name,
+				type: `map<string, ${resolveMapValueType(field.name, itemType)}>`,
+				isArray: false,
+				isMap: true,
+				required: false,
 			});
 			return;
 		}
@@ -135,6 +158,7 @@ class Proto3Message implements ProtoRenderable {
 			name: field.name,
 			type: this.resolveScalarType(field.name, itemType),
 			isArray: isRepeated,
+			isMap: false,
 			required,
 		});
 	}
@@ -189,14 +213,18 @@ class Proto3Message implements ProtoRenderable {
 		return mapped;
 	}
 
-	/** Repeated, then required, then optional; each group sorted by name. */
+	/**
+	 * Repeated, then required, then optional; each group sorted by name. Map
+	 * fields count as repeated — that is what they are on the wire, and it keeps
+	 * a field's number stable when it changes between a repeated and a map type.
+	 */
 	private orderedFields(): ProtoField[] {
 		const repeated: ProtoField[] = [];
 		const required: ProtoField[] = [];
 		const optional: ProtoField[] = [];
 
 		for (const field of this.fields) {
-			if (field.isArray) repeated.push(field);
+			if (field.isArray || field.isMap) repeated.push(field);
 			else if (field.required) required.push(field);
 			else optional.push(field);
 		}
@@ -207,8 +235,10 @@ class Proto3Message implements ProtoRenderable {
 
 	private renderField(field: ProtoField, fieldNumber: number): string {
 		const parts: string[] = [];
+		// A map field takes no label: proto3 forbids `repeated` and `optional`
+		// on maps, and gives them no explicit presence.
 		if (field.isArray) parts.push('repeated');
-		else if (this.options.allOptional) parts.push('optional');
+		else if (this.options.allOptional && !field.isMap) parts.push('optional');
 		parts.push(field.type, `${field.name} = ${fieldNumber}`);
 		return `${parts.join(' ')};`;
 	}
@@ -231,6 +261,24 @@ class Proto3Message implements ProtoRenderable {
 		lines.push('}');
 		return { name: this.enumName, render: () => lines };
 	}
+}
+
+/** The proto3 scalar for a primitive-valued Avro map's values. */
+function resolveMapValueType(fieldName: string, type: AvroMap): string {
+	const values = type.values;
+	if (typeof values !== 'string') {
+		throw new SchemaGenError('Only primitive-valued Avro maps can become proto3 maps', {
+			field: fieldName,
+			values: JSON.stringify(values),
+		});
+	}
+	const mapped = PRIMITIVE_PROTO_TYPES[values];
+	if (!mapped) {
+		throw new SchemaGenError(`No proto3 mapping for Avro map value type "${values}"`, {
+			field: fieldName,
+		});
+	}
+	return mapped;
 }
 
 /**
