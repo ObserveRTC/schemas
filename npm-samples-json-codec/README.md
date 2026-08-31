@@ -165,6 +165,10 @@ if (!result.ok) {
 
 `NaN` and `Infinity` are rejected rather than encoded: `JSON.stringify` turns
 them into `null` without complaint, which would silently corrupt the stream.
+This holds at any depth — a payload or an `attachments` object may nest freely,
+and a non-finite number anywhere inside one is reported with the path that
+reached it. A `bigint` is rejected on the same grounds; a value carrying its own
+`toJSON`, such as a `Date`, is left to serialise itself.
 
 The package writes nothing to `console` on its own. Pass a `logger` if you want
 to hear about recoverable oddities.

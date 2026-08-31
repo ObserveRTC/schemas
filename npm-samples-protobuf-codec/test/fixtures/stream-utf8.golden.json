@@ -1,6 +1,6 @@
 {
 	"description": "Eight samples of a one-peer-connection call, identifiers as utf8 bytes",
-	"schemaVersion": "3.6.0",
+	"schemaVersion": "3.7.0",
 	"options": {
 		"clientId": "client-42"
 	},

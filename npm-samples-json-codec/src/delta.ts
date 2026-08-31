@@ -102,10 +102,14 @@ export function diffRecord(
 		}
 
 		if (typeof value === 'object') {
-			// Opaque caller data — `attachments`. Compared by value, so an object
-			// rebuilt with equal content every tick costs nothing, and one mutated
-			// in place is still noticed.
-			if (!jsonEqual(before, value)) delta[field] = cloneJson(value);
+			// Opaque caller data — `attachments`, and the payloads on events,
+			// issues, meta items and extension stats. Compared by value, so an
+			// object rebuilt with equal content every tick costs nothing, and one
+			// mutated in place is still noticed.
+			if (!jsonEqual(before, value)) {
+				assertJsonSafe(value, fieldPath, new Set());
+				delta[field] = cloneJson(value);
+			}
 			continue;
 		}
 
@@ -362,6 +366,62 @@ function jsonEqual(a: unknown, b: unknown): boolean {
 	if (a === b) return true;
 	if (a === undefined || b === undefined) return false;
 	return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/**
+ * Reject what `JSON.stringify` would quietly turn into something else.
+ *
+ * The scalar check in {@link diffRecord} only ever saw the top level of a
+ * record, which was enough while the only opaque value was `attachments`. Since
+ * 3.7.0 a payload may nest to any depth, so a `NaN` three levels down inside one
+ * would reach `cloneJson` and come back as `null` without a word — precisely the
+ * silent corruption the scalar check exists to prevent.
+ *
+ * Only the two cases that actually change the value are rejected: a non-finite
+ * number, which becomes `null`, and a `bigint`, which makes `JSON.stringify`
+ * throw a bare `TypeError`. A function or a `symbol` is left alone — dropping
+ * those is ordinary JSON behaviour and loses nothing a caller meant to send. A
+ * value with its own `toJSON` is left to decide its own form, which is how a
+ * `Date` in `attachments` keeps working.
+ *
+ * Runs only on a value that changed, and walks what `cloneJson` is about to
+ * walk anyway.
+ */
+function assertJsonSafe(value: unknown, path: string, seen: Set<object>): void {
+	if (typeof value === 'number') {
+		if (!Number.isFinite(value)) {
+			throw new JsonCodecError('INVALID_VALUE', 'Expected a finite number', {
+				path,
+				received: value,
+			});
+		}
+		return;
+	}
+
+	if (typeof value === 'bigint') {
+		throw new JsonCodecError('INVALID_VALUE', 'A bigint has no JSON form', {
+			path,
+			received: String(value),
+		});
+	}
+
+	if (typeof value !== 'object' || value === null) return;
+	if (typeof (value as { toJSON?: unknown }).toJSON === 'function') return;
+
+	if (seen.has(value)) {
+		throw new JsonCodecError('MALFORMED_INPUT', 'Value contains a cycle', { path });
+	}
+	seen.add(value);
+
+	if (Array.isArray(value)) {
+		value.forEach((entry, index) => assertJsonSafe(entry, `${path}[${index}]`, seen));
+	} else {
+		for (const key of Object.keys(value as JsonRecord)) {
+			assertJsonSafe((value as JsonRecord)[key], `${path}["${key}"]`, seen);
+		}
+	}
+
+	seen.delete(value);
 }
 
 /**
