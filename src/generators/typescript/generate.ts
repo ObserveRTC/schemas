@@ -16,6 +16,10 @@ import { TsTypeAlias } from './ts-type-alias.js';
  * A field whose TypeScript type is dictated by convention rather than by its
  * Avro type. `attachments` is declared as an opaque JSON string in Avro but is
  * always a JSON object in practice, so consumers get the structured type.
+ *
+ * Keyed by bare field name, or by `Record.field` to reach one record's field
+ * only. The scoped key is looked up first, so a bare entry states the rule and
+ * a scoped entry states the exception.
  */
 export type FieldTypeOverrides = ReadonlyMap<string, string>;
 
@@ -108,7 +112,8 @@ function buildAlias(record: AvroRecord, options: TypeScriptOptions): BuiltAlias 
 		const required = isFieldRequired(field);
 		const fieldDoc = options.emitDocs ? field.doc : undefined;
 		const branches = isUnion(field.type) ? field.type : [field.type];
-		const override = options.fieldTypeOverrides.get(field.name);
+		const override = options.fieldTypeOverrides.get(`${record.name}.${field.name}`)
+			?? options.fieldTypeOverrides.get(field.name);
 
 		const renderedBranches: Array<string | undefined> = [];
 		for (const branch of branches) {

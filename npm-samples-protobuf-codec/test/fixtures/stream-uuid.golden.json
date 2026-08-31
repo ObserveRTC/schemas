@@ -1,6 +1,6 @@
 {
 	"description": "The same call with every identifier packed as 16 uuid bytes",
-	"schemaVersion": "3.6.0",
+	"schemaVersion": "3.7.0",
 	"options": {
 		"clientId": "f1e2d3c4-b5a6-4978-8a9b-0c1d2e3f4a5b",
 		"identifiers": {

@@ -1,6 +1,6 @@
 {
 	"description": "Eight samples of a one-peer-connection call, as JSON deltas",
-	"schemaVersion": "3.6.0",
+	"schemaVersion": "3.7.0",
 	"clientId": "client-42",
 	"byteLengths": [
 		2881,

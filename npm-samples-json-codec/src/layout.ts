@@ -63,10 +63,15 @@ export const PRIMITIVE_MAPS: ReadonlySet<string> = new Set(['scoreReasons']);
 /**
  * Object-valued fields whose own fields are worth diffing individually.
  *
- * Everything else object-valued — in practice only `attachments` — is caller
- * data of a shape we know nothing about, and is replaced wholesale when it
- * changes. Diffing into it would need a way to say "this key was removed",
- * which this format deliberately does not have.
+ * Everything else object-valued — `attachments`, and the `payload` on events,
+ * issues, meta items and extension stats — is caller data of a shape we know
+ * nothing about, and is replaced wholesale when it changes. Diffing into it
+ * would need a way to say "this key was removed", which this format
+ * deliberately does not have, and it would have to hold a per-key history of a
+ * structure that may nest to any depth.
+ *
+ * That wholesale replacement is why nesting cost the codec nothing when it
+ * arrived in 3.7.0: a payload was already written whole whenever it changed.
  */
 export const STRUCT_FIELDS: ReadonlySet<string> = new Set([
 	'psnrSum',

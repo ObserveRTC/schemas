@@ -247,8 +247,60 @@ const BIGINT_CONVERTER: ValueConverter = {
 };
 
 /**
- * `attachments` is an opaque, caller-owned object. It travels as JSON because
- * the schema has no way to describe its shape.
+ * Reject what `JSON.stringify` would quietly turn into something else.
+ *
+ * Only the two cases that actually change the value: a non-finite number, which
+ * becomes `null`, and a `bigint`, which makes `JSON.stringify` throw a bare
+ * `TypeError` from inside the codec. A function or a `symbol` is left alone —
+ * dropping those is ordinary JSON behaviour — and a value with its own `toJSON`
+ * decides its own form, which is how a `Date` in `attachments` keeps working.
+ *
+ * This matters more since 3.7.0, when payloads gained the ability to nest: a
+ * `NaN` several levels down inside one is otherwise indistinguishable, on the
+ * far side of the wire, from a null the caller meant to send. The JSON codec
+ * rejects the same two cases with the same error codes.
+ */
+function assertJsonSafe(value: unknown, path: string, seen: Set<object>): void {
+	if (typeof value === 'number') {
+		if (!Number.isFinite(value)) {
+			throw new ProtobufCodecError('INVALID_VALUE', 'Expected a finite number', {
+				path,
+				received: value,
+			});
+		}
+		return;
+	}
+
+	if (typeof value === 'bigint') {
+		throw new ProtobufCodecError('INVALID_VALUE', 'A bigint has no JSON form', {
+			path,
+			received: String(value),
+		});
+	}
+
+	if (typeof value !== 'object' || value === null) return;
+	if (typeof (value as { toJSON?: unknown }).toJSON === 'function') return;
+
+	if (seen.has(value)) {
+		throw new ProtobufCodecError('MALFORMED_INPUT', 'Value contains a cycle', { path });
+	}
+	seen.add(value);
+
+	if (Array.isArray(value)) {
+		value.forEach((entry, index) => assertJsonSafe(entry, `${path}[${index}]`, seen));
+	} else {
+		for (const key of Object.keys(value as Record<string, unknown>)) {
+			assertJsonSafe((value as Record<string, unknown>)[key], `${path}["${key}"]`, seen);
+		}
+	}
+
+	seen.delete(value);
+}
+
+/**
+ * `attachments` is an opaque, caller-owned object, and so is a `payload` — which
+ * since 3.7.0 may nest to any depth. Both travel as JSON because the schema has
+ * no way to describe their shape and proto3 has no way to express it.
  *
  * Change detection compares the serialised form, not the reference: a caller
  * that rebuilds an equivalent object every tick — which is the normal thing to
@@ -256,6 +308,7 @@ const BIGINT_CONVERTER: ValueConverter = {
  */
 const JSON_CONVERTER: ValueConverter = {
 	toWire: (plain, path) => {
+		assertJsonSafe(plain, path, new Set());
 		try {
 			return JSON.stringify(plain);
 		} catch (cause) {

@@ -1,1 +1,1 @@
-Generated from schema version 3.6.0 at Sun, 23 Aug 2026 13:07:58 GMT
+Generated from schema version 3.7.0 at Mon, 31 Aug 2026 10:12:25 GMT

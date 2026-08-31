@@ -2768,11 +2768,59 @@
                   "null",
                   {
                     "type": "map",
-                    "values": [
-                      "boolean",
-                      "string",
-                      "double"
-                    ]
+                    "values": {
+                      "name": "AnyValue",
+                      "type": "record",
+                      "doc": "One payload value: a primitive, a nested object, or an array of either. The record refers to itself, so payloads may nest to any depth.",
+                      "fields": [
+                        {
+                          "name": "boolValue",
+                          "type": [
+                            "null",
+                            "boolean"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "stringValue",
+                          "type": [
+                            "null",
+                            "string"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "numberValue",
+                          "type": [
+                            "null",
+                            "double"
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "objectValue",
+                          "type": [
+                            "null",
+                            {
+                              "type": "map",
+                              "values": "AnyValue"
+                            }
+                          ],
+                          "default": null
+                        },
+                        {
+                          "name": "arrayValue",
+                          "type": [
+                            "null",
+                            {
+                              "type": "array",
+                              "items": "AnyValue"
+                            }
+                          ],
+                          "default": null
+                        }
+                      ]
+                    }
                   }
                 ],
                 "default": null
@@ -2824,11 +2872,7 @@
                   "null",
                   {
                     "type": "map",
-                    "values": [
-                      "boolean",
-                      "string",
-                      "double"
-                    ]
+                    "values": "AnyValue"
                   }
                 ],
                 "default": null
@@ -2871,11 +2915,7 @@
                   "null",
                   {
                     "type": "map",
-                    "values": [
-                      "boolean",
-                      "string",
-                      "double"
-                    ]
+                    "values": "AnyValue"
                   }
                 ],
                 "default": null
@@ -2944,11 +2984,7 @@
                   "null",
                   {
                     "type": "map",
-                    "values": [
-                      "boolean",
-                      "string",
-                      "double"
-                    ]
+                    "values": "AnyValue"
                   }
                 ],
                 "doc": "The payload of the extension stats the custom app provides",
