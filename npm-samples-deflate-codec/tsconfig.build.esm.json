@@ -1,0 +1,15 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		// The package itself is CommonJS (no `"type"` in package.json), so the
+		// nodenext settings inherited from tsconfig.json would emit CommonJS
+		// here too. `esnext` + `bundler` is what produces real ESM while still
+		// resolving the `import` condition of dependency export maps.
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"noEmit": false,
+		"rootDir": "./src",
+		"outDir": "./dist/esm"
+	},
+	"include": ["src"]
+}

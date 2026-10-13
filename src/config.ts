@@ -5,8 +5,8 @@ import type { CppFieldKind, CppFieldTypeOverrides } from './generators/cpp/gener
 /**
  * Every artifact the pipeline can produce. `--only` / `--skip` select from this
  * list; `protobuf-codec` additionally requires `proto`, since it embeds the
- * buf-generated TypeScript. `json-codec` does not — JSON is self-describing, so
- * that package only needs the sample types.
+ * buf-generated TypeScript. `json-codec` and `deflate-codec` do not — JSON is
+ * self-describing, so those packages only need the sample types.
  *
  * `encoder` and `decoder` used to be here. Both packages are deprecated and
  * have been removed from the repository; see the changelog, or git history at
@@ -20,6 +20,7 @@ export const ARTIFACTS = [
 	'samples-lib',
 	'protobuf-codec',
 	'json-codec',
+	'deflate-codec',
 	'cpp',
 ] as const;
 
@@ -159,6 +160,7 @@ export interface GeneratorConfig {
 	readonly samplesLibDir: string;
 	readonly protobufCodecLibDir: string;
 	readonly jsonCodecLibDir: string;
+	readonly deflateCodecLibDir: string;
 
 	readonly protobuf: {
 		/** Schema whose proto variants are generated. */
@@ -223,6 +225,7 @@ export function resolveConfig(overrides: ConfigOverrides = {}): GeneratorConfig 
 		samplesLibDir: path.join(root, 'npm-samples-lib'),
 		protobufCodecLibDir: path.join(root, 'npm-samples-protobuf-codec'),
 		jsonCodecLibDir: path.join(root, 'npm-samples-json-codec'),
+		deflateCodecLibDir: path.join(root, 'npm-samples-deflate-codec'),
 
 		protobuf: {
 			rootSchema: 'ClientSample',
