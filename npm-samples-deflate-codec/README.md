@@ -1,5 +1,6 @@
 # @observertc/samples-deflate-codec
 
+[![npm](https://img.shields.io/npm/v/@observertc/samples-deflate-codec.svg)](https://www.npmjs.com/package/@observertc/samples-deflate-codec)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Compressed delta codec for ObserveRTC `ClientSample`s. **Zero runtime

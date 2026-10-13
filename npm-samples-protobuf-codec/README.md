@@ -1,5 +1,6 @@
 # @observertc/samples-protobuf-codec
 
+[![npm](https://img.shields.io/npm/v/@observertc/samples-protobuf-codec.svg)](https://www.npmjs.com/package/@observertc/samples-protobuf-codec)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Protobuf codec for ObserveRTC `ClientSample`s.

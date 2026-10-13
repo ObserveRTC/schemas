@@ -1,5 +1,6 @@
 # @observertc/samples-json-codec
 
+[![npm](https://img.shields.io/npm/v/@observertc/samples-json-codec.svg)](https://www.npmjs.com/package/@observertc/samples-json-codec)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 JSON delta codec for ObserveRTC `ClientSample`s. **Zero runtime dependencies**,
