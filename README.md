@@ -13,6 +13,7 @@ A comprehensive schema generator for WebRTC observability that creates type-safe
 - [Development](#development)
   - [Developing your own codec](#developing-your-own-codec)
 - [Versioning](#versioning)
+  - [Releasing a new version](#releasing-a-new-version)
 - [Publishing](#publishing)
 - [Contributing](#contributing)
 - [License](#license)
@@ -36,12 +37,12 @@ The schema generator produces several standalone npm packages and output formats
 
 ### NPM Packages
 
-| Package                                               | Description                                 | Repository               |
-| ----------------------------------------------------- | ------------------------------------------- | ------------------------ |
-| [`@observertc/schemas`](npm-samples-lib/)             | Core TypeScript/JavaScript type definitions | `./npm-samples-lib/`     |
-| [`@observertc/samples-protobuf-codec`](npm-samples-protobuf-codec/) | Protobuf delta codec — smallest payload | `./npm-samples-protobuf-codec/` |
-| [`@observertc/samples-json-codec`](npm-samples-json-codec/) | JSON delta codec — zero dependencies, ~2 KB | `./npm-samples-json-codec/` |
-| [`@observertc/samples-deflate-codec`](npm-samples-deflate-codec/) | Compressed delta codec — structural diff, dictionary-coded, per-message deflate | `./npm-samples-deflate-codec/` |
+| Package | npm | Description | Source |
+| ------- | --- | ----------- | ------ |
+| `@observertc/sample-schemas-js` | [![npm](https://img.shields.io/npm/v/@observertc/sample-schemas-js.svg)](https://www.npmjs.com/package/@observertc/sample-schemas-js) | Core TypeScript/JavaScript type definitions | [`./npm-samples-lib/`](npm-samples-lib/) |
+| `@observertc/samples-protobuf-codec` | [![npm](https://img.shields.io/npm/v/@observertc/samples-protobuf-codec.svg)](https://www.npmjs.com/package/@observertc/samples-protobuf-codec) | Protobuf delta codec — smallest payload | [`./npm-samples-protobuf-codec/`](npm-samples-protobuf-codec/) |
+| `@observertc/samples-json-codec` | [![npm](https://img.shields.io/npm/v/@observertc/samples-json-codec.svg)](https://www.npmjs.com/package/@observertc/samples-json-codec) | JSON delta codec — zero dependencies, ~2 KB | [`./npm-samples-json-codec/`](npm-samples-json-codec/) |
+| `@observertc/samples-deflate-codec` | [![npm](https://img.shields.io/npm/v/@observertc/samples-deflate-codec.svg)](https://www.npmjs.com/package/@observertc/samples-deflate-codec) | Compressed delta codec — structural diff, dictionary-coded, per-message deflate | [`./npm-samples-deflate-codec/`](npm-samples-deflate-codec/) |
 
 The protobuf and JSON codecs implement the same generic delta: each message
 carries only what changed since the previous sample. They share their
@@ -132,7 +133,7 @@ This will:
 3. Write TypeScript type definitions to `outputs/typescript/`
    and the C++ headers to `outputs/cpp/`
 4. Write Protocol Buffer definitions to `outputs/proto/` and compile them to TypeScript with `buf`
-5. Assemble the three npm packages and bump their versions
+5. Assemble the four npm packages and stamp `sources/version.txt` into each `package.json`
 6. Write the Markdown reference to `schemaList.md` and the schema library README
 
 The generator is a TypeScript CLI; `npm run generate -- --help` lists every
@@ -176,7 +177,7 @@ npm run schemas:list        # list the discovered schemas and chunks
 2. Add documentation for the new field
 3. Run `npm run generate` to regenerate all outputs
 4. Test the generated code
-5. Update version numbers as appropriate
+5. Bump `sources/version.txt` and run `npm run generate:packages` (see [Releasing a new version](#releasing-a-new-version))
 
 > **Protobuf field numbers are derived from field order.** Inserting a field
 > anywhere but the end of its group (repeated, then required, then optional;
@@ -272,11 +273,43 @@ ObserveRTC Schemas uses [Semantic Versioning](https://semver.org/) with the foll
 The current version lives in `sources/version.txt` and is stamped into every
 generated artifact. See [`CHANGELOG.md`](CHANGELOG.md) for the release history.
 
+### Releasing a new version
+
+`sources/version.txt` is the **only** place a version is set. Every npm package
+(`npm-samples-lib`, `npm-samples-protobuf-codec`, `npm-samples-json-codec`,
+`npm-samples-deflate-codec`) gets its `package.json` version from it when the
+generator runs, so the packages always release in lockstep. Do not edit a
+package's `version` by hand: the next `npm run generate` overwrites it and
+`generate:check` flags it as drift.
+
+A change does **not** get a new release version on its own. Adding a package or
+a feature without touching `version.txt` republishes under the current number.
+To cut a release:
+
+1. Set the new version in `sources/version.txt` (e.g. `3.7.0` → `3.8.0`).
+2. Run `npm run generate:packages` to stamp it into every `package.json`.
+3. Add a `CHANGELOG.md` entry, commit, open a PR and merge it.
+
+What each workflow run publishes:
+
+| Trigger | Version published | npm dist-tag |
+|---------|-------------------|--------------|
+| Pull request into `main` | `npm version prerelease` on top of `package.json`, so `3.7.0` becomes `3.7.1-<short-sha>.0` | `develop-<version without dots>-rc`, e.g. `develop-370-rc` |
+| Push to `main` | `package.json` version as is, e.g. `3.7.0` | `latest` |
+
+npm never accepts the same version twice. If `version.txt` was not bumped and
+that version is already on the registry, the `main` publish fails with
+`E403 ... cannot publish over the previously published versions`. Bump
+`version.txt` and merge again.
+
+A new package is the one exception: it publishes the current version for the
+first time, so it does not need a bump.
+
 Based on WebRTC Statistics API specifications and optimized for real-world WebRTC monitoring scenarios.
 
 ## Publishing
 
-The three npm packages are released by GitHub Actions using **npm trusted
+The npm packages are released by GitHub Actions using **npm trusted
 publishing (OIDC)** — there is no `NPM_TOKEN`. Each package needs a Trusted
 Publisher registered once on npmjs.com pointing at its workflow file; the exact
 settings are in [`docs/GENERATOR.md`](docs/GENERATOR.md#publishing).

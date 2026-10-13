@@ -15,7 +15,7 @@
     "getstats",
     "zero-dependency"
   ],
-  "author": "Balazs Kreith",
+  "author": "Håvar Aambø Fosstveit",
   "license": "Apache-2.0",
   "homepage": "https://github.com/observertc/schemas/tree/main/npm-samples-deflate-codec#readme",
   "repository": {
