@@ -83,6 +83,10 @@ parsing.
    - `npm-samples-json-codec` — `src/generated/samples.ts` and nothing else.
      JSON is self-describing, so that codec needs the types for its signatures
      and no schema at runtime, which is what lets it ship with no dependencies.
+   - `npm-samples-deflate-codec` — `src/generated/samples.ts` and nothing
+     else, the same as the JSON codec: its structural diff is JSON underneath,
+     so the package needs the types for its signatures and no schema at
+     runtime.
 6. **Stamp.** `outputs/generated.txt` records the version and time.
    `schemaList.md` at the repository root collects every outline.
 

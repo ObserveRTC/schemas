@@ -335,7 +335,7 @@ function collectStruct(record: AvroRecord, options: CppOptions, structs: CppStru
 			options.logger.warn(`${record.name}.${field.name}: a union of ${branches.length} types is carried as JSON`);
 			type = { kind: 'json' };
 		} else {
-			const mapped = mapType(branches[0], options, structs, seen, fieldDoc, `${record.name}.${field.name}`);
+			const mapped = mapType(branches[0]!, options, structs, seen, fieldDoc, `${record.name}.${field.name}`);
 
 			type = mapped.type;
 			if (mapped.enumSymbols) {
@@ -387,7 +387,7 @@ function mapType(
 	if (isUnion(type)) {
 		const branches = type.filter((branch) => !isNullType(branch));
 
-		if (branches.length === 1) return mapType(branches[0], options, structs, seen, fieldDoc, where);
+		if (branches.length === 1) return mapType(branches[0]!, options, structs, seen, fieldDoc, where);
 
 		options.logger.warn(`${where}: a nested union of ${branches.length} types is carried as JSON`);
 		return { type: { kind: 'json' } };

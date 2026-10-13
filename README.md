@@ -41,12 +41,18 @@ The schema generator produces several standalone npm packages and output formats
 | [`@observertc/schemas`](npm-samples-lib/)             | Core TypeScript/JavaScript type definitions | `./npm-samples-lib/`     |
 | [`@observertc/samples-protobuf-codec`](npm-samples-protobuf-codec/) | Protobuf delta codec — smallest payload | `./npm-samples-protobuf-codec/` |
 | [`@observertc/samples-json-codec`](npm-samples-json-codec/) | JSON delta codec — zero dependencies, ~2 KB | `./npm-samples-json-codec/` |
+| [`@observertc/samples-deflate-codec`](npm-samples-deflate-codec/) | Compressed delta codec — structural diff, dictionary-coded, per-message deflate | `./npm-samples-deflate-codec/` |
 
-Both codecs implement the same delta: each message carries only what changed
-since the previous sample. They share their semantics, their error codes and
-their API shape, so they are interchangeable. Pick protobuf when bytes on the
-wire are the binding constraint, JSON when the transport already compresses and
-you would rather have no dependencies and a readable payload.
+The protobuf and JSON codecs implement the same generic delta: each message
+carries only what changed since the previous sample. They share their
+semantics, their error codes and their API shape, so they are
+interchangeable. Pick protobuf when bytes on the wire are the binding
+constraint, JSON when the transport already compresses and you would rather
+have no dependencies and a readable payload.
+
+The deflate codec speaks a delta of its own — structural, built for the shape
+of a `ClientSample` — and adds field-name dictionary coding and per-message
+deflate on top. Same error codes and API shape, a smaller wire.
 
 ### Removed packages
 
@@ -158,6 +164,7 @@ npm run schemas:list        # list the discovered schemas and chunks
 ├── npm-samples-lib/            # Generated core TypeScript library
 ├── npm-samples-protobuf-codec/ # Protobuf delta codec (encode + decode)
 ├── npm-samples-json-codec/     # JSON delta codec (encode + decode)
+├── npm-samples-deflate-codec/  # Compressed delta codec (encode + decode)
 ├── CHANGELOG.md            # Schema change history
 ├── AGENTS.md               # Guide for agents: schema, extension, codec development
 └── docs/GENERATOR.md       # How the generator works

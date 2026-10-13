@@ -170,6 +170,20 @@ export async function runPipeline(options: PipelineOptions): Promise<PipelineRes
 		);
 	}
 
+	if (artifacts.has('deflate-codec')) {
+		// The deflate codec is a JSON codec underneath: the same generated
+		// types, no runtime schema.
+		collect(
+			await planJsonCodecLib({
+				dir: config.deflateCodecLibDir,
+				samplesTs: requireRootSchema(rendered, config).typescript,
+				version,
+			}),
+			files,
+			managedDirs,
+		);
+	}
+
 	// The stamp embeds the current time, so it would make `--check` report drift
 	// on every run. It is only meaningful for a real write anyway.
 	if (!writer.isDryRun) {
