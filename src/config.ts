@@ -1,5 +1,7 @@
 import path from 'node:path';
 
+import type { CppFieldKind, CppFieldTypeOverrides } from './generators/cpp/generate.js';
+
 /**
  * Every artifact the pipeline can produce. `--only` / `--skip` select from this
  * list; `protobuf-codec` additionally requires `proto`, since it embeds the
@@ -18,6 +20,7 @@ export const ARTIFACTS = [
 	'samples-lib',
 	'protobuf-codec',
 	'json-codec',
+	'cpp',
 ] as const;
 
 export type Artifact = (typeof ARTIFACTS)[number];
@@ -98,6 +101,23 @@ function buildTsFieldTypeOverrides(): Map<string, string> {
 }
 
 /**
+ * Fields whose C++ representation is fixed regardless of their Avro type. Keyed
+ * like the TypeScript overrides: a bare field name, or `Record.field`, which wins.
+ */
+function buildCppFieldTypeOverrides(): Map<string, CppFieldKind> {
+	return new Map<string, CppFieldKind>([
+		// Free-form JSON objects, as in TypeScript.
+		['attachments', 'json'],
+		['payload', 'json'],
+		// A JSON string on the wire, as in TypeScript.
+		['SfuExtensionStats.payload', 'string'],
+		// Sub-millisecond precision survives, as in proto; a whole value is still
+		// written back as an integer, so the field stays a valid Avro long.
+		['timestamp', 'double'],
+	]);
+}
+
+/**
  * Enum symbol rewrites. `RTCStatsIceCandidatePairState` is spelled
  * `inProgress` in the W3C IDL but browsers have shipped `in-progress` and
  * `inprogress`; all three are accepted.
@@ -129,6 +149,7 @@ export interface GeneratorConfig {
 
 	readonly outputsDir: string;
 	readonly typescriptOutputDir: string;
+	readonly cppOutputDir: string;
 	readonly avscOutputDir: string;
 	readonly protoOutputDir: string;
 	readonly tempDir: string;
@@ -153,6 +174,15 @@ export interface GeneratorConfig {
 	readonly typescript: {
 		readonly fieldTypeOverrides: ReadonlyMap<string, string>;
 		readonly enumSymbolOverrides: ReadonlyMap<string, (symbols: readonly string[]) => string[]>;
+		readonly includeSchemaVersion: (schemaName: string) => boolean;
+	};
+
+	readonly cpp: {
+		/** The namespace every generated struct lives in. */
+		readonly namespace: string;
+		/** The shared JSON helpers header, written beside the modules. */
+		readonly supportHeader: string;
+		readonly fieldTypeOverrides: CppFieldTypeOverrides;
 		readonly includeSchemaVersion: (schemaName: string) => boolean;
 	};
 
@@ -183,6 +213,7 @@ export function resolveConfig(overrides: ConfigOverrides = {}): GeneratorConfig 
 
 		outputsDir,
 		typescriptOutputDir: path.join(outputsDir, 'typescript'),
+		cppOutputDir: path.join(outputsDir, 'cpp'),
 		avscOutputDir: path.join(outputsDir, 'avsc'),
 		protoOutputDir: path.join(outputsDir, 'proto'),
 		tempDir: path.join(root, 'temp'),
@@ -210,6 +241,15 @@ export function resolveConfig(overrides: ConfigOverrides = {}): GeneratorConfig 
 			// TS2308 error and has been breaking `npm-samples-lib`'s build.
 			// ClientSample owns it because the codec packages re-export it from
 			// there (`export { schemaVersion } from './InputSamples'`).
+			includeSchemaVersion: (schemaName: string) => schemaName === SCHEMA_VERSION_OWNER,
+		},
+
+		cpp: {
+			namespace: 'observertc::schemas',
+			supportHeader: 'JsonSupport.hpp',
+			fieldTypeOverrides: buildCppFieldTypeOverrides(),
+			// One header owns `SchemaVersion`, for the same reason as in TypeScript:
+			// including two headers that both defined it would not compile.
 			includeSchemaVersion: (schemaName: string) => schemaName === SCHEMA_VERSION_OWNER,
 		},
 

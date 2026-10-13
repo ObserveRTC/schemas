@@ -1,7 +1,7 @@
 {
   "name": "observertc-schemas",
   "version": "3.0.0",
-  "description": "Schema generator for ObserveRTC: Avro sources in, TypeScript / protobuf / Markdown bindings out",
+  "description": "Schema generator for ObserveRTC: Avro sources in, TypeScript / C++ / protobuf / Markdown bindings out",
   "private": true,
   "type": "module",
   "main": "dist/cli.js",
@@ -15,6 +15,7 @@
     "generate:dry-run": "tsx src/cli.ts --dry-run --verbose",
     "generate:types": "tsx src/cli.ts --only typescript,avsc",
     "generate:proto": "tsx src/cli.ts --only proto",
+    "generate:cpp": "tsx src/cli.ts --only cpp",
     "generate:packages": "tsx src/cli.ts --only proto,samples-lib,protobuf-codec,json-codec",
     "generate:codec": "tsx src/cli.ts --only proto,protobuf-codec,json-codec",
     "generate:docs": "tsx src/cli.ts --only markdown,samples-lib",

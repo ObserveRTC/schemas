@@ -183,6 +183,7 @@ src/
   generators/
     typescript/ts-type-alias.ts       renders one `export type`
     typescript/generate.ts            Avro record → TypeScript module
+    cpp/generate.ts                   Avro record → header-only C++ module
     markdown/generate.ts              Avro record → Markdown + outline
     protobuf/proto3-generator.ts      Avro record → .proto
     protobuf/buf.ts                   buf invocation
@@ -566,3 +567,30 @@ the order of re-exports in `src/index.ts` does not depend on the filesystem.
 Write a generator under `src/generators/` that returns strings, add the artifact
 name to `ARTIFACTS` in `src/config.ts`, and push its files in `runPipeline`. It
 gets `--only`, `--skip`, `--dry-run` and `--check` support for free.
+
+### The C++ output
+
+`npm run generate:cpp` writes one header per schema to `outputs/cpp/` — the C++
+counterpart of `outputs/typescript/` — plus `JsonSupport.hpp`, which they all
+include. Each Avro record becomes a struct in `observertc::schemas` with
+`nlohmann::json ToJson() const` and `static T FromJson(const nlohmann::json&)`.
+The headers are header-only and need C++17 and nlohmann::json.
+
+The mapping, all in `src/generators/cpp/generate.ts`:
+
+- A field with a `default` (or a `null` branch) is a `std::optional`; a field
+  without one is a plain member. `ToJson()` leaves absent optionals out.
+- `int` / `long` → `int64_t`, `float` / `double` → `double`, `boolean` → `bool`,
+  `string` / `bytes` / enums → `std::string` (an enum's symbols are listed in
+  the field's comment, after the same rewrites the TypeScript output applies).
+- Arrays → `std::vector`, maps of scalars → `std::map<std::string, T>`, a map of
+  records (`AnyValue`) → `nlohmann::json`.
+- The special cases live in `config.ts` as `buildCppFieldTypeOverrides()`:
+  `attachments` and `payload` are `nlohmann::json`, `SfuExtensionStats.payload`
+  is a string, and `timestamp` is a `double` that is written back as an integer
+  when whole, so it stays a valid Avro long.
+- `FromJson()` is tolerant: a missing or mistyped field reads as absent, and a
+  number may arrive as a string (older libwebrtc builds serialise 64-bit members
+  that way).
+- Only `ClientSample.hpp` defines `SchemaVersion`, for the same reason only one
+  TypeScript module exports `schemaVersion`.

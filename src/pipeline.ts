@@ -7,6 +7,7 @@ import { ARTIFACT_REQUIRES, type Artifact, type GeneratorConfig } from './config
 import { UsageError } from './core/errors.js';
 import { FileWriter, type GeneratedFile, type WriteMode } from './core/file-writer.js';
 import type { Logger } from './core/logger.js';
+import { generateCppModule, generateCppSupportHeader } from './generators/cpp/generate.js';
 import { generateMarkdownDoc } from './generators/markdown/generate.js';
 import { bufGenerate } from './generators/protobuf/buf.js';
 import { generateProto3File } from './generators/protobuf/proto3-generator.js';
@@ -93,6 +94,11 @@ export async function runPipeline(options: PipelineOptions): Promise<PipelineRes
 			});
 		}
 		managedDirs.push(config.typescriptOutputDir);
+	}
+
+	if (artifacts.has('cpp')) {
+		files.push(...renderCpp(sources, config, version, logger));
+		managedDirs.push(config.cppOutputDir);
 	}
 
 	if (artifacts.has('markdown')) {
@@ -203,6 +209,41 @@ function renderSchema(
 	});
 
 	return { source, typescript: code, exports, markdown, outline };
+}
+
+/**
+ * One header-only module per schema under `outputs/cpp`, the C++ counterpart of
+ * `outputs/typescript`, plus the JSON helpers header they all include.
+ */
+function renderCpp(
+	sources: readonly AvroSource[],
+	config: GeneratorConfig,
+	version: string,
+	logger: Logger,
+): GeneratedFile[] {
+	const files: GeneratedFile[] = [
+		{
+			path: path.join(config.cppOutputDir, config.cpp.supportHeader),
+			content: generateCppSupportHeader({ namespace: config.cpp.namespace, schemaVersion: version }),
+		},
+	];
+
+	for (const source of sources) {
+		const { code } = generateCppModule(source.schema, {
+			schemaVersion: version,
+			emitDocs: config.emitDocs,
+			namespace: config.cpp.namespace,
+			fieldTypeOverrides: config.cpp.fieldTypeOverrides,
+			enumSymbolOverrides: config.typescript.enumSymbolOverrides,
+			includeSchemaVersion: config.cpp.includeSchemaVersion,
+			supportHeader: config.cpp.supportHeader,
+			logger: logger.child(source.schemaName),
+		});
+
+		files.push({ path: path.join(config.cppOutputDir, `${source.schemaName}.hpp`), content: code });
+	}
+
+	return files;
 }
 
 interface ProtobufArgs {

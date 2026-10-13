@@ -11,6 +11,7 @@ A comprehensive schema generator for WebRTC observability that creates type-safe
 - [Generated Projects](#generated-projects)
 - [Schema Structure](#schema-structure)
 - [Development](#development)
+  - [Developing your own codec](#developing-your-own-codec)
 - [Versioning](#versioning)
 - [Publishing](#publishing)
 - [Contributing](#contributing)
@@ -63,6 +64,7 @@ does both directions in one package.
 | Format               | Description                                        | Location               |
 | -------------------- | -------------------------------------------------- | ---------------------- |
 | **TypeScript**       | Type definitions for every schema                  | `outputs/typescript/`  |
+| **C++**              | Header-only structs with `ToJson()` / `FromJson()` (nlohmann::json, C++17) | `outputs/cpp/` |
 | **Protocol Buffers** | `.proto` files for cross-language serialization    | `outputs/proto/`       |
 | **Avro**             | Flattened Avro schemas, with all chunks expanded    | `outputs/avsc/`        |
 | **Markdown**         | Field-by-field reference for every schema           | `schemaList.md`        |
@@ -122,6 +124,7 @@ This will:
 1. Read and validate the Avro schema files in `sources/samples/`
 2. Write flattened Avro schemas to `outputs/avsc/`
 3. Write TypeScript type definitions to `outputs/typescript/`
+   and the C++ headers to `outputs/cpp/`
 4. Write Protocol Buffer definitions to `outputs/proto/` and compile them to TypeScript with `buf`
 5. Assemble the three npm packages and bump their versions
 6. Write the Markdown reference to `schemaList.md` and the schema library README
@@ -134,6 +137,7 @@ Useful shortcuts:
 npm run generate:check      # fail if the committed outputs are stale (CI)
 npm run generate:dry-run    # show what would change, write nothing
 npm run generate:types      # regenerate only the TypeScript and Avro outputs
+npm run generate:cpp        # regenerate only the C++ headers
 npm run schemas:validate    # validate schemas and check every field is documented
 npm run schemas:list        # list the discovered schemas and chunks
 ```
@@ -148,12 +152,14 @@ npm run schemas:list        # list the discovered schemas and chunks
 ├── src/                    # The generator (TypeScript)
 ├── outputs/                # Generated outputs
 │   ├── typescript/         # Generated type definitions
+│   ├── cpp/                # Generated C++ headers (header-only)
 │   ├── proto/              # Protocol Buffer files
 │   └── avsc/               # Flattened Avro schemas
 ├── npm-samples-lib/            # Generated core TypeScript library
 ├── npm-samples-protobuf-codec/ # Protobuf delta codec (encode + decode)
 ├── npm-samples-json-codec/     # JSON delta codec (encode + decode)
 ├── CHANGELOG.md            # Schema change history
+├── AGENTS.md               # Guide for agents: schema, extension, codec development
 └── docs/GENERATOR.md       # How the generator works
 ```
 
@@ -176,6 +182,76 @@ npm run schemas:list        # list the discovered schemas and chunks
 - Use appropriate Avro types (`null` unions for optional fields)
 - Follow naming conventions (camelCase for field names)
 - Add `attachments` field for extensibility where appropriate
+
+### Developing your own codec
+
+The two codecs are one design over two wire formats, so a third — CBOR,
+MessagePack, Avro binary, anything — should be the same design again. The full
+contract and a step-by-step checklist are in [`AGENTS.md`](AGENTS.md#developing-a-codec);
+this is the outline.
+
+**1. Pick a template.**
+
+| Your format is… | Start from | Why |
+| --- | --- | --- |
+| Self-describing (CBOR, MessagePack, …) | `npm-samples-json-codec/` | The delta is a plain object. Reuse `src/delta.ts` and `src/layout.ts` as they are and swap only the serialiser around `encode()` / `decode()`. |
+| Schema-driven (Avro binary, FlatBuffers, …) | `npm-samples-protobuf-codec/` | Generate the format's schema in the generator, rewrite the descriptor walk and value converters in `src/internal/plan.ts`, and keep the format-agnostic state machines in `src/internal/record.ts`. |
+
+```sh
+cp -R npm-samples-json-codec npm-samples-<format>-codec
+rm -rf npm-samples-<format>-codec/{dist,node_modules,test/fixtures/*.golden.json}
+```
+
+Rename the package to `@observertc/samples-<format>-codec` and the error class
+to `<Format>CodecError`. Keep the dual CJS/ESM build files as they are.
+
+**2. Keep the contract.** A new codec must be a drop-in swap for the other two:
+
+- each message carries only what changed; an unchanged field is omitted and
+  the decoder keeps its last value — there is no "field removed" marker;
+- collections are keyed (`peerConnectionId`, `ssrc` for RTP streams, `id`
+  otherwise), list every current entry, and drop entries that disappear;
+- events, issues, meta items and extension stats are written whole and
+  never remembered; `scoreReasons` is written whole and never carried forward;
+- `attachments` and payloads are opaque, compared by value, and rejected if
+  they contain `NaN`, `Infinity`, a `bigint` or a cycle;
+- `clientId` rides on every message; `reset()` on both halves is a keyframe;
+- the same API (`ClientSampleEncoder`, `ClientSampleDecoder`,
+  `createClientSampleCodec`, `tryDecode`, `reset`) and the same four error
+  codes: `MALFORMED_INPUT`, `STREAM_DESYNC`, `INVALID_VALUE`, `INVALID_OPTION`;
+- runs in browsers: no `Buffer`, no Node built-ins, nothing written to
+  `console`.
+
+**3. Wire it into the generator**, which owns only `src/generated/` and the
+package version:
+
+- `src/targets/<format>-codec-lib.ts`, modelled on `json-codec-lib.ts`;
+- `'<format>-codec'` in `ARTIFACTS` (plus `ARTIFACT_REQUIRES` if it needs
+  another output), and a `<format>CodecLibDir` in `src/config.ts`;
+- an `if (artifacts.has('<format>-codec'))` block in `src/pipeline.ts`;
+- the artifact added to the `generate:codec` and `generate:packages` scripts.
+
+```sh
+npm run generate -- --only <format>-codec
+```
+
+**4. Port the tests.** Copy `test/` from the template. `test/support/stream.ts`
+is a deterministic recorded call shared by every codec — keep it unchanged so
+all codecs are tested on the same input. Assert on the emitted deltas, not
+only on round trips, and commit byte-exact golden fixtures
+(`npm run test:update-goldens`). Decoded output and error codes must match the
+existing codecs for the same input.
+
+**5. Release and document.** Add `.github/workflows/release-samples-<format>-codec-lib.yaml`
+(copy the JSON codec's), register a Trusted Publisher for it on npmjs.com (see
+[`docs/GENERATOR.md`](docs/GENERATOR.md#publishing)), and add the package to the
+table above, the "Which codec do I want?" tables in each codec README,
+`CONTRIBUTING.md` and `CHANGELOG.md`.
+
+When the schema itself changes, check whether the codecs' layout tables need
+updating. The protobuf codec reads structure from its descriptor, but the JSON
+codec treats any unlisted object as an opaque blob. The table in
+[`AGENTS.md`](AGENTS.md#3-extending-the-schema) lists each case.
 
 ## Versioning
 

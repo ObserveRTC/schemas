@@ -260,7 +260,7 @@ async function runClean(context: CommandContext): Promise<number> {
 	const writer = new FileWriter(config.root, mode === 'write' ? 'write' : 'dry-run', logger);
 	const nothingToKeep = new Set<string>();
 
-	for (const dir of [config.typescriptOutputDir, config.avscOutputDir, config.protoOutputDir]) {
+	for (const dir of [config.typescriptOutputDir, config.cppOutputDir, config.avscOutputDir, config.protoOutputDir]) {
 		await writer.prune(dir, nothingToKeep);
 	}
 	await writer.remove(config.tempDir);
